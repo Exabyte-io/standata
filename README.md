@@ -1,30 +1,31 @@
-# template-definitions-js-py
+# Standata
 
 
-A template for a dual repository (JavaScript and Python).
+Examples of entity data structures in the [ESSE](https://github.com/Exabyte-io/esse) data format (Essential Source 
+of Schemas and Examples).
 
-The GitHub workflow requires the following variables to be defined:
+## Installation
 
-  - `secrets.BOT_GITHUB_TOKEN`
-  - `secrets.BOT_GITHUB_KEY`
+### Python
 
-## Initialization
+The `standata` package is compatible with Python 3.8+. It can be installed as a Python package either via PyPI
+or as an editable local installation as below.
 
-When creating a new repository from this template, follow the items on the following checklist:
+```shell
+pip install exabyte-standata
+```
 
-  - [ ] In `pyproject.toml` update `project.name`, `project.description`, and `project.classifiers`
-        (if applicable).
-  - [ ] Add Python dependencies to `pyproject.toml`. The `requirements*.txt` files can be generated
-        automatically using `pip-compile`.
-  - [ ] In `./src/py` replace the `templator` directory with your Python package name.
-  - [ ] Install `pre-commit` if not already present (e.g. `pip install pre-commit`).
-  - [ ] In `package.json`, update `"name"` and `"description"`.
-  - [ ] Add JS/TS dependencies as usual (`npm install <pkg>` or `npm install --save-dev <pkg>`).
+Editable local installation in a virtual environment:
+```shell
+virtualenv .venv
+source .venv/bin/activate
+pip install -e PATH_TO_STANDATA_REPOSITORY
+```
 
-### Pre-Commit Hooks
+### Node
 
-The pre-commit hooks are managed by the `pre-commit` tool (see [docs](https://pre-commit.com/)) in **both** Python
-and JavaScript/TypeScript. In order to set up the pre-commit hooks in the JS/TS development flow similar to `husky`,
-the `bootstrap.js` script was added. With `pre-commit` installed, running the `bootstrap.js` script is equivalent
-to `husky install`. Note that the hooks are only activated when the package is installed locally (`npm install`)
-and not when installed as a dependency.
+Standata can be installed as a Node.js package via NPM (node package manager).
+
+```shell
+npm install @exabyte-io/standata
+```
