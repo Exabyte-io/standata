@@ -1,0 +1,56 @@
+categories:
+    type:
+        - semiconductor
+        - solar energy material
+        - storage medium
+        - organic electronics
+        - battery/energy storage
+        - composite
+        - polymer
+        - metals & alloys
+        - solvent
+        - catalysis
+        - consumer packaged goods
+        - glass
+        - ceramic
+    form_factor:
+        - bulk
+        - surface
+        - interface
+    dimensionality:
+        - 0D
+        - 1D
+        - 2D
+        - 3D
+        - 4D
+    electrical_conductivity:
+        - metal
+        - semi-metal
+        - semiconductor
+        - insulator
+    magnetism:
+        - ferromagnetic
+        - anti-ferromagnetic
+        - paramagnetic
+        - diamagnetic
+        - non-magnetic
+    superconductivity:
+        - type I
+        - type II
+    composition:
+        - oxide
+        - nitride
+        - carbide
+
+entities:
+  - filename: Na4Cl4.json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - non-magnetic
+  - filename: Si.json
+    categories:
+      - 3D
+      - bulk
+      - semiconductor
