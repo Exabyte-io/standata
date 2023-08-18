@@ -56,7 +56,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           unit-test-directory: tests/py/unit
-          bot-ssh-key: ${{ secrets.BOT_GITHUB_KEY }}
 
   run-js-tests:
     runs-on: ubuntu-latest
