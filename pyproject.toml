@@ -1,7 +1,7 @@
 [project]
-name = "templator"
+name = "standata"
 dynamic = ["version"]
-description = "A template for Python projects."
+description = "Examples of entities following the Mat3ra data standard."
 readme = "README.md"
 requires-python = ">=3.8"
 license = {file = "LICENSE.md"}
@@ -16,12 +16,13 @@ classifiers = [
 ]
 dependencies = [
     # add requirements here
-    "numpy"
+    "pyyaml",
+    "pandas",
 ]
 
 [project.optional-dependencies]
 dev = ["pre-commit", "black", "ruff", "isort", "mypy", "pip-tools"]
-test = ["coverage", "mock"]
+test = ["pytest", "pytest-cov", "pytest-mock"]
 
 # Entrypoint scripts can be defined here, see examples below.
 [project.scripts]
@@ -55,7 +56,8 @@ extend-exclude = '''
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
 extend-exclude = [
-    "src/js"
+    "src/js",
+    "tests/js",
 ]
 line-length = 120
 target-version = "py38"
