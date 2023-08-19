@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/Exabyte-io/pre-commit-hooks
-    rev: 2023.6.28
+    rev: bdb93aaba358046ea89614da5a20145ecc570cef
     hooks:
       - id: ruff
       - id: black
