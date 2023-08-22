@@ -76,6 +76,6 @@ export class Standata {
     find_entities(...tags: string[]): object[] {
         const categories_ = this.convertTagToCategory(...tags);
         const filenames = this.filterByCategories(...categories_) || [];
-        return filenames.map((f) => this.loadEntity(f)).filter(Boolean);
+        return filenames.map((f) => this.loadEntity(f)).filter((e): e is object => e !== undefined);
     }
 }
