@@ -1,7 +1,7 @@
 {
-    "name": "template-dual",
+    "name": "standata",
     "version": "0.0.0",
-    "description": "Template Py JS",
+    "description": "Examples of entities following the Mat3ra data standard.",
     "author": "Exabyte Inc.",
     "license": "ISC",
     "main": "lib/index.js",
