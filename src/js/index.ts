@@ -1,3 +1,2 @@
-export function greet(name: string): string {
-    return `Hello ${name}!`;
-}
+export { Standata } from "./base";
+export { MaterialStandata } from "./materials";
