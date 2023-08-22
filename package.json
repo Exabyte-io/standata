@@ -60,7 +60,7 @@
         "postinstall": "npm run transpile",
         "prepare": "node bootstrap.js",
         "prettier": "prettier --check src/js tests/js",
-        "test": "nyc --reporter=text mocha --recursive --bail tests/js",
+        "test": "mocha",
         "transpile": "tsc"
     },
     "engines": {
