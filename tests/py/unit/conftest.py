@@ -1,5 +1,7 @@
-import pytest
 from pathlib import Path
+
+import pytest
+
 from standata import Standata
 
 
@@ -10,4 +12,4 @@ def materials_config_path() -> Path:
 
 @pytest.fixture(scope="module")
 def materials_standata() -> Standata:
-    return Standata("materials/categories.yml")
+    return Standata.from_file("materials/categories.yml")
