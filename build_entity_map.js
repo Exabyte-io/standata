@@ -27,3 +27,18 @@ buildAsset({
     assetPath: "./materials/categories.yml",
     targetPath: "./src/js/entities/materials.json",
 });
+
+buildAsset({
+    assetPath: "./properties/categories.yml",
+    targetPath: "./src/js/entities/properties.json",
+});
+
+buildAsset({
+    assetPath: "./applications/categories.yml",
+    targetPath: "./src/js/entities/applications.json",
+});
+
+buildAsset({
+    assetPath: "./workflows/categories.yml",
+    targetPath: "./src/js/entities/workflows.json",
+});
