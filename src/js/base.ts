@@ -49,7 +49,11 @@ export class Standata {
             const { filename } = entity;
             // eslint-disable-next-line no-restricted-syntax
             for (const category of categories_) {
-                lookupTable[category] = lookupTable[category]?.add(filename) || new Set([filename]);
+                if (category in lookupTable) {
+                    lookupTable[category].add(filename);
+                } else {
+                    lookupTable[category] = new Set([filename]);
+                }
             }
         }
         return lookupTable;
@@ -65,10 +69,10 @@ export class Standata {
         if (!categories.length) {
             return [];
         }
-        const filenames = this.entities.map((e) => e.filename);
+        let filenames = this.entities.map((e) => e.filename);
         // eslint-disable-next-line no-restricted-syntax
         for (const category of categories) {
-            filenames.filter((f) => this.lookupTable[category]?.has(f));
+            filenames = filenames.filter((f) => this.lookupTable[category]?.has(f));
         }
         return filenames;
     }
