@@ -92,7 +92,7 @@ class Standata:
             'electrical_conductivity' and 'type'. This function returns all occurrences of a tag as
             '<category_type>/<tag>'.
         """
-        return [cf for cf in self.categories if any([cf.endswith(t) for t in tags])]
+        return [cf for cf in self.categories if any([cf.split("/")[1] == t for t in tags])]
 
     def __create_table(self) -> pd.DataFrame:
         """Creates lookup table for filenames and associated categories.
