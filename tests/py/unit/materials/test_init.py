@@ -5,7 +5,7 @@ from standata import Standata
 
 def test_standata_init_path(materials_config_path: Path):
     """Constructor extracts categories and entities from config file."""
-    std = Standata(materials_config_path)
+    std = Standata.from_file(materials_config_path)
     assert len(std.entities) >= 1
     assert len(std.categories) >= 1
 

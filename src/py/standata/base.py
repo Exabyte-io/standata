@@ -7,56 +7,78 @@ import yaml
 
 EntityItem = TypedDict("EntityItem", {"filename": str, "categories": List[str]})
 
-EntityConfig = TypedDict("EntityConfig", {"categories": Dict[str, str], "entities": List[EntityItem]})
+EntityConfig = TypedDict("EntityConfig", {"categories": Dict[str, List[str]], "entities": List[EntityItem]})
 
 
 class Standata:
     """The Standata class associates the entity data files with categories and allows for tag-based queries.
 
     Attributes:
-        entity_config_path: Path to the entity config file (categories.yml).
         entity_dir: Path to the folder containing entity data files.
         entities: List of entity items specifying filename and categories.
         category_map: Dictionary mapping category types to category tags.
         categories: List of unique categories from flattening the category_map dictionary.
         lookup_table: Category-filename lookup table.
-
     """
 
-    def __init__(self, entity_config_path: Union[str, Path]):
+    def __init__(self, entity_config: EntityConfig, entity_dir: Union[str, Path]):
         """Initializes categories and the entity list.
 
         Args:
-             entity_config_path: The path to the entity config file `categories.yml`.
+             entity_config: The contents of the entity config file (`categories.yml`).
+             entity_dir: The path to the directory containing all entities.
         """
-        self.entity_config_path: Path = Path(entity_config_path).resolve()
-        self.entity_dir: Path = self.entity_config_path.parent
+        self.entity_dir: Path = Path(entity_dir).resolve()
+        self.category_map: Dict[str, List[str]] = entity_config["categories"]
+        self.entities: List[EntityItem] = entity_config["entities"]
 
-        cfg = self.__load_config()
-        self.entities: List[EntityItem] = cfg["entities"]
-        self.category_map: Dict[str, str] = cfg["categories"]
-        self.categories: List[str] = self.__flatten_categories()
+        self.categories: List[str] = Standata.flatten_categories(entity_config["categories"])
         self.lookup_table: pd.DataFrame = self.__create_table()
 
-    def __load_config(self) -> EntityConfig:
-        """Loads entity config from file (Yaml)."""
+    @classmethod
+    def from_file(cls, entity_config_path: Union[Path, str]) -> "Standata":
+        """Creates Standata class instance from entity config file (categories.yml).
+
+        Args:
+            entity_config_path: The path to the entity config file `categories.yml`.
+
+        Note:
+            Here, we assume that the entity config file is located in the same directory as all entity files.
+        """
+        filepath = Path(entity_config_path)
+        cfg: EntityConfig = Standata.load_config(filepath)
+        instance = cls(entity_config=cfg, entity_dir=filepath.parent)
+        return instance
+
+    @staticmethod
+    def load_config(entity_config_path: Path) -> EntityConfig:
+        """Loads entity config from file (Yaml).
+
+        Args:
+            entity_config_path: The path to the entity config file `categories.yml`.
+        """
         entity_config: EntityConfig = {"categories": {}, "entities": []}
         try:
-            with open(self.entity_config_path, "r") as stream:
+            with open(entity_config_path.resolve(), "r") as stream:
                 entity_config = yaml.safe_load(stream)
         except yaml.YAMLError as e:
             print(e)
         return entity_config
 
-    def __flatten_categories(self, separator: str = "/") -> List[str]:
+    @staticmethod
+    def flatten_categories(category_map: Dict[str, List[str]], separator: str = "/") -> List[str]:
         """Flattens categories dictionary to list of categories.
+
+        Args:
+            category_map: Dictionary mapping category types to category tags.
+            separator: Separation character used to join category type and tag.
 
         Example::
 
-            self.categories = {"size": ["S", "M", "L"]}
-            self.__flatten_categories() # returns ["size/S", "size/M", "size/L"]
+            Standata.flatten_categories({"size": ["S", "M", "L"]})
+            # returns ["size/S", "size/M", "size/L"]
         """
-        category_groups = [list(map(lambda x: f"{key}{separator}{x}", val)) for key, val in self.category_map.items()]
+        category_groups = [list(map(lambda x: f"{key}{separator}{x}", val)) for key, val in category_map.items()]
         return [item for sublist in category_groups for item in sublist]
 
     def convert_tag_to_category(self, *tags: str):
@@ -70,7 +92,7 @@ class Standata:
             'electrical_conductivity' and 'type'. This function returns all occurrences of a tag as
             '<category_type>/<tag>'.
         """
-        return [cf for cf in self.categories if any([cf.endswith(t) for t in tags])]
+        return [cf for cf in self.categories if any([cf.split("/")[1] == t for t in tags])]
 
     def __create_table(self) -> pd.DataFrame:
         """Creates lookup table for filenames and associated categories.
