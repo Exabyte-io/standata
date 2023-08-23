@@ -47,7 +47,7 @@ class Standata:
         """
         filepath = Path(entity_config_path)
         cfg: EntityConfig = Standata.load_config(filepath)
-        instance = Standata(entity_config=cfg, entity_dir=filepath.parent)
+        instance = cls(entity_config=cfg, entity_dir=filepath.parent)
         return instance
 
     @staticmethod
