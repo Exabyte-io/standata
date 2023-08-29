@@ -11,7 +11,7 @@ def main(
     destination: Optional[str] = typer.Option("--destination", "-d", help="Where to place symlink directory."),
 ):
     cfg_path = Path(entity_config)
-    std = Standata(cfg_path)
+    std = Standata.from_file(cfg_path)
 
     save_dir = cfg_path.parent
     if destination and Path(destination).resolve().exists():
