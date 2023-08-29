@@ -1,5 +1,5 @@
 {
-    "name": "standata",
+    "name": "@exabyte-io/standata",
     "version": "0.0.0",
     "description": "Examples of entities following the Mat3ra data standard.",
     "author": "Exabyte Inc.",
