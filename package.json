@@ -54,6 +54,7 @@
     },
     "scripts": {
         "build:categories": "ts-node src/js/cli.ts",
+        "build:runtime-data": "node build_runtime_data.js",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
