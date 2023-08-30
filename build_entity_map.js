@@ -11,12 +11,14 @@ const yaml = require("js-yaml");
 
 function buildAsset({ assetPath, targetPath }) {
     const fileContent = fs.readFileSync(assetPath, { encoding: "utf-8" });
-    const obj = yaml.load(fileContent);
+    const obj = {};
+    obj.standataConfig = yaml.load(fileContent);
 
-    obj.entities?.forEach((entity) => {
+    obj.filesMapByName = {};
+    obj.standataConfig.entities?.forEach((entity) => {
         const entityPath = path.join(path.dirname(assetPath), entity.filename);
         const content = fs.readFileSync(path.resolve(entityPath), { encoding: "utf-8" });
-        obj[entity.filename] = JSON.parse(content);
+        obj.filesMapByName[entity.filename] = JSON.parse(content);
     });
 
     fs.writeFileSync(targetPath, JSON.stringify(obj) + "\n", "utf8");
@@ -25,20 +27,20 @@ function buildAsset({ assetPath, targetPath }) {
 
 buildAsset({
     assetPath: "./materials/categories.yml",
-    targetPath: "./src/js/entities/materials.json",
+    targetPath: "./src/js/runtime_data/materials.json",
 });
 
 buildAsset({
     assetPath: "./properties/categories.yml",
-    targetPath: "./src/js/entities/properties.json",
+    targetPath: "./src/js/runtime_data/properties.json",
 });
 
 buildAsset({
     assetPath: "./applications/categories.yml",
-    targetPath: "./src/js/entities/applications.json",
+    targetPath: "./src/js/runtime_data/applications.json",
 });
 
 buildAsset({
     assetPath: "./workflows/categories.yml",
-    targetPath: "./src/js/entities/workflows.json",
+    targetPath: "./src/js/runtime_data/workflows.json",
 });
