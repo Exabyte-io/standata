@@ -1,6 +1,6 @@
 /**
- * build_entity_map uses node API to read all entity category files from the FS
- * at build time and writes them out to a single JSON file for
+ * build_runtime_data uses node API to read all entity category files from the FS
+ * at build time and writes them out to JSON files for
  * downstream consumption to avoid FS calls in the browser.
  */
 
