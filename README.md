@@ -30,7 +30,15 @@ Standata can be installed as a Node.js package via NPM (node package manager).
 npm install @exabyte-io/standata
 ```
 
-## Script
+#### Runtime Data
+
+To avoid file system calls on the client, the entity categories and data structures are made available at runtime via
+the files in `src/js/runtime_data`. These files are generated automatically using the following command:
+```shell
+npm run build:runtime-data
+```
+
+## CLI Script
 
 ### Python
 The Python package adds a command line script `standata-symlinks` that creates a category-based file tree where
