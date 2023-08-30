@@ -1,13 +1,6 @@
 import { Standata } from "./base";
-import APPLICATIONS from "./entities/applications.json";
+import APPLICATIONS from "./runtime_data/applications.json";
 
 export class ApplicationStandata extends Standata {
-    constructor() {
-        super(APPLICATIONS);
-    }
-
-    // eslint-disable-next-line class-methods-use-this
-    protected loadEntity(filename: string): object | undefined {
-        return APPLICATIONS[filename];
-    }
+    static runtimeData = APPLICATIONS;
 }
