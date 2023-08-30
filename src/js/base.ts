@@ -12,7 +12,17 @@ export interface StandataConfig {
     entities: EntityItem[];
 }
 
+interface RuntimeData {
+    standataConfig: StandataConfig;
+    filesMapByName: object;
+}
+
 export class Standata {
+    static runtimeData: RuntimeData = {
+        standataConfig: { entities: [], categories: {} },
+        filesMapByName: {},
+    };
+
     entities: EntityItem[];
 
     categories: string[];
@@ -23,9 +33,10 @@ export class Standata {
         [key: string]: Set<string>;
     };
 
-    constructor({ categories, entities }: StandataConfig) {
-        this.categoryMap = categories || {};
-        this.entities = entities || [];
+    constructor(config?: StandataConfig) {
+        const ctor = this.constructor as typeof Standata;
+        this.categoryMap = config ? config.categories : ctor.runtimeData.standataConfig.categories;
+        this.entities = config ? config.entities : ctor.runtimeData.standataConfig.entities;
         this.categories = this.flattenCategories();
         this.lookupTable = this.createLookupTable();
     }
@@ -59,10 +70,9 @@ export class Standata {
         return lookupTable;
     }
 
-    // eslint-disable-next-line class-methods-use-this
     protected loadEntity(filename: string): object | undefined {
-        console.warn(`loadEntity(${filename}) must be implemented in derived class!`);
-        return { filename };
+        const ctor = this.constructor as typeof Standata;
+        return ctor.runtimeData?.filesMapByName?.[filename];
     }
 
     protected filterByCategories(...categories: string[]): string[] {
