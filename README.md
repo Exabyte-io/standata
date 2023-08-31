@@ -1,30 +1,78 @@
-# template-definitions-js-py
+# Standata
 
 
-A template for a dual repository (JavaScript and Python).
+Examples of entity data structures in the [ESSE](https://github.com/Exabyte-io/esse) data format (Essential Source
+of Schemas and Examples).
 
-The GitHub workflow requires the following variables to be defined:
+## Installation
 
-  - `secrets.BOT_GITHUB_TOKEN`
-  - `secrets.BOT_GITHUB_KEY`
+### Python
 
-## Initialization
+The `standata` package is compatible with Python 3.8+. It can be installed as a Python package either via PyPI
+or as an editable local installation as below.
 
-When creating a new repository from this template, follow the items on the following checklist:
+```shell
+pip install standata
+```
 
-  - [ ] In `pyproject.toml` update `project.name`, `project.description`, and `project.classifiers`
-        (if applicable).
-  - [ ] Add Python dependencies to `pyproject.toml`. The `requirements*.txt` files can be generated
-        automatically using `pip-compile`.
-  - [ ] In `./src/py` replace the `templator` directory with your Python package name.
-  - [ ] Install `pre-commit` if not already present (e.g. `pip install pre-commit`).
-  - [ ] In `package.json`, update `"name"` and `"description"`.
-  - [ ] Add JS/TS dependencies as usual (`npm install <pkg>` or `npm install --save-dev <pkg>`).
+Editable local installation in a virtual environment:
+```shell
+virtualenv .venv
+source .venv/bin/activate
+pip install -e PATH_TO_STANDATA_REPOSITORY
+```
 
-### Pre-Commit Hooks
+### Node
 
-The pre-commit hooks are managed by the `pre-commit` tool (see [docs](https://pre-commit.com/)) in **both** Python
-and JavaScript/TypeScript. In order to set up the pre-commit hooks in the JS/TS development flow similar to `husky`,
-the `bootstrap.js` script was added. With `pre-commit` installed, running the `bootstrap.js` script is equivalent
-to `husky install`. Note that the hooks are only activated when the package is installed locally (`npm install`)
-and not when installed as a dependency.
+Standata can be installed as a Node.js package via NPM (node package manager).
+
+```shell
+npm install @exabyte-io/standata
+```
+
+#### Runtime Data
+
+To avoid file system calls on the client, the entity categories and data structures are made available at runtime via
+the files in `src/js/runtime_data`. These files are generated automatically using the following command:
+```shell
+npm run build:runtime-data
+```
+
+## CLI Script
+
+### Python
+The Python package adds a command line script `standata-symlinks` that creates a category-based file tree where
+entity data files are symbolically linked in directories named after the categories associated with the entity.
+The resulting file tree will be contained in a directory names `by_category`.
+The script expects the (relative or absolute) path to an entity config file (`categories.yml`). The destination
+of the file tree can be modified by passing the `--destination`/`-d` option.
+```shell
+# consult help page to view all options
+standata-symlinks --help
+
+# creates symbolic links in materials/by_category
+standata-symlinks materials/categories.yml
+
+# creates symbolic links for materials in tmp/by_category
+standata-symlinks materials/categories.yml
+```
+
+### Node
+Analogous to the command line script in Python, the repository also features a script in
+TypeScript (`src/js/cli.ts`) and (after transpiling) in JavaScript (`lib/cli.js`).
+The script takes the entity config file as a mandatory positional argument and the
+alternative location for the directory containing the symbolic links (`--destination`/`-d`).
+```shell
+# creates symbolic links in materials/by_category (node)
+node lib/cli.js materials/categories.yml
+
+# creates symbolic links in materials/by_category (ts-node)
+ts-node src/js/cli.ts materials/categories.yml
+
+# creates symbolic links for materials in tmp/by_category
+ts-node src/js/cli.ts -d tmp materials/categories.yml
+
+# run via npm
+npm run build:categories -- materials/categories.yml
+
+```

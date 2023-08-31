@@ -5,6 +5,16 @@
 #    pip-compile --output-file=requirements.txt pyproject.toml
 #
 numpy==1.24.4
-    # via templator (pyproject.toml)
-# install package to run tests
--e .[test]
+    # via pandas
+pandas==2.0.3
+    # via exabyte-standata (pyproject.toml)
+python-dateutil==2.8.2
+    # via pandas
+pytz==2023.3
+    # via pandas
+pyyaml==6.0.1
+    # via exabyte-standata (pyproject.toml)
+six==1.16.0
+    # via python-dateutil
+tzdata==2023.3
+    # via pandas

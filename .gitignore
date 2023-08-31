@@ -169,3 +169,6 @@ node_modules/
 
 ########### GENERAL #############
 *.DS_Store
+
+########### STANDATA #############
+by_category

@@ -1,6 +1,6 @@
 name: Continuous Testing and Publication
 
-on: [push]
+on: [push] # yamllint disable-line rule:truthy
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -25,6 +25,11 @@ jobs:
           repository: Exabyte-io/actions
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
           path: actions
+
+      - name: Run Yaml linter
+        uses: ./actions/yaml/lint
+        with:
+          python-version: ${{ matrix.python-version }}
 
       - name: Run ruff linter
         uses: ./actions/py/lint
@@ -52,11 +57,10 @@ jobs:
           path: actions
 
       - name: Run python unit tests
-        uses: ./actions/py/test
+        uses: ./actions/py/pytest
         with:
           python-version: ${{ matrix.python-version }}
           unit-test-directory: tests/py/unit
-          bot-ssh-key: ${{ secrets.BOT_GITHUB_KEY }}
 
   run-js-tests:
     runs-on: ubuntu-latest
@@ -88,52 +92,54 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-  publish-js-package:
-    needs: [run-js-tests]
-    runs-on: ubuntu-latest
-    if: (github.repository != 'Exabyte-io/template-definitions-js-py') && (github.ref_name == 'main')
-
-    steps:
-      - name: Checkout this repository
-        uses: actions/checkout@v3
-
-      - name: Checkout actions repository
-        uses: actions/checkout@v3
-        with:
-          repository: Exabyte-io/actions
-          token: ${{ secrets.BOT_GITHUB_TOKEN }}
-          path: actions
-
-      - name: Publish JS release
-        uses: ./actions/js/publish
-        with:
-          node-version: 14.19.x
-          npm-token: ${{ secrets.NPM_TOKEN }}
-          github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
-
-  publish-py-package:
-    needs: publish-js-package
-    runs-on: ubuntu-latest
-    if: (github.repository != 'Exabyte-io/template-definitions-js-py') && (github.ref_name == 'main')
-
-    steps:
-      -   name: Checkout this repository
-          uses: actions/checkout@v3
-          with:
-            lfs: true
-
-      -   name: Checkout actions repository
-          uses: actions/checkout@v3
-          with:
-            repository: Exabyte-io/actions
-            token: ${{ secrets.BOT_GITHUB_TOKEN }}
-            path: actions
-
-      -   name: Publish python release
-          uses: ./actions/py/publish
-          with:
-            python-version: 3.x
-            github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
-            pypi-username: ${{ secrets.PYPI_USERNAME }}
-            pypi-password: ${{ secrets.PYPI_PASSWORD }}
-            publish-tag: 'false'
+#  publish-js-package:
+#    needs: [run-js-tests]
+#    runs-on: ubuntu-latest
+# yamllint disable-line rule:line-length
+#    if: (github.repository != 'Exabyte-io/template-definitions-js-py') && (github.ref_name == 'main')
+#
+#    steps:
+#      - name: Checkout this repository
+#        uses: actions/checkout@v3
+#
+#      - name: Checkout actions repository
+#        uses: actions/checkout@v3
+#        with:
+#          repository: Exabyte-io/actions
+#          token: ${{ secrets.BOT_GITHUB_TOKEN }}
+#          path: actions
+#
+#      - name: Publish JS release
+#        uses: ./actions/js/publish
+#        with:
+#          node-version: 14.19.x
+#          npm-token: ${{ secrets.NPM_TOKEN }}
+#          github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
+#
+#  publish-py-package:
+#    needs: publish-js-package
+#    runs-on: ubuntu-latest
+# yamllint disable-line rule:line-length
+#    if: (github.repository != 'Exabyte-io/template-definitions-js-py') && (github.ref_name == 'main')
+#
+#    steps:
+#      -   name: Checkout this repository
+#          uses: actions/checkout@v3
+#          with:
+#            lfs: true
+#
+#      -   name: Checkout actions repository
+#          uses: actions/checkout@v3
+#          with:
+#            repository: Exabyte-io/actions
+#            token: ${{ secrets.BOT_GITHUB_TOKEN }}
+#            path: actions
+#
+#      -   name: Publish python release
+#          uses: ./actions/py/publish
+#          with:
+#            python-version: 3.x
+#            github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
+#            pypi-username: ${{ secrets.PYPI_USERNAME }}
+#            pypi-password: ${{ secrets.PYPI_PASSWORD }}
+#            publish-tag: 'false'

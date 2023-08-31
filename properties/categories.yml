@@ -1,0 +1,49 @@
+categories:
+  type:
+    - mechanical
+    - electronic
+    - magnetic
+    - thermal
+    - optical
+    - dynamic
+    - transport
+    - radiological
+    - acoustic
+    - manufacturing
+    - chemical
+    - structural
+    - surface
+  property_class:
+    - meta-property
+    - proto-property
+  value_type:
+    - scalar
+    - vector
+    - matrix
+    - tensor_rank3
+    - tensor_rank4
+    - non-scalar
+  measurement:
+    - angle-resolved-photoemission-spectroscopy
+    - atomic-force-microscopy
+    - x-ray-diffraction
+    - x-ray-fluorescence
+    - transmission-electron-microscopy
+    - scanning-electron-microscopy
+    - thermogravimetric-analysis
+  application:
+    - espresso
+    - vasp
+    - python
+    - shell
+
+entities:
+  - filename: valence_band_offset.json
+    categories:
+      - scalar
+      - electronic
+      - angle-resolved-photoemission-spectroscopy
+  - filename: band_structure.json
+    categories:
+      - matrix
+      - electronic
