@@ -30,7 +30,15 @@ Standata can be installed as a Node.js package via NPM (node package manager).
 npm install @exabyte-io/standata
 ```
 
-## Script
+#### Runtime Data
+
+To avoid file system calls on the client, the entity categories and data structures are made available at runtime via
+the files in `src/js/runtime_data`. These files are generated automatically using the following command:
+```shell
+npm run build:runtime-data
+```
+
+## CLI Script
 
 ### Python
 The Python package adds a command line script `standata-symlinks` that creates a category-based file tree where
@@ -44,4 +52,27 @@ standata-symlinks --help
 
 # creates symbolic links in materials/by_category
 standata-symlinks materials/categories.yml
+
+# creates symbolic links for materials in tmp/by_category
+standata-symlinks materials/categories.yml
+```
+
+### Node
+Analogous to the command line script in Python, the repository also features a script in
+TypeScript (`src/js/cli.ts`) and (after transpiling) in JavaScript (`lib/cli.js`).
+The script takes the entity config file as a mandatory positional argument and the
+alternative location for the directory containing the symbolic links (`--destination`/`-d`).
+```shell
+# creates symbolic links in materials/by_category (node)
+node lib/cli.js materials/categories.yml
+
+# creates symbolic links in materials/by_category (ts-node)
+ts-node src/js/cli.ts materials/categories.yml
+
+# creates symbolic links for materials in tmp/by_category
+ts-node src/js/cli.ts -d tmp materials/categories.yml
+
+# run via npm
+npm run build:categories -- materials/categories.yml
+
 ```

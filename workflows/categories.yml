@@ -24,7 +24,7 @@ entities:
       - espresso
       - single-material
       - total_energy
-  - filename: band_gap
+  - filename: band_gap.json
     categories:
       - espresso
       - vasp

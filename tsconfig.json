@@ -2,11 +2,13 @@
   "compilerOptions": {
     /* Basic Options */
     "target": "es2018",
-    "module": "esNext",
+    "lib": ["ES2019", "dom"],
+    "module": "CommonJS",
     "allowJs": true,
     "jsx": "react",
     "incremental": true,
-    "noEmit": true,
+    "noEmitOnError": false,
+    "outDir": "./lib",
 
     /* Strict Type-Checking Options */
     "strict": true,
@@ -21,7 +23,7 @@
     "noFallthroughCasesInSwitch": false,
 
     /* Module Resolution Options */
-    "baseUrl": "./src/js",
+    "baseUrl": "./",
     "rootDir": "./src/js",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -30,14 +32,19 @@
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "types": []
+    "types": ["mocha", "node"]
   },
   "include": [
-    "./src/js"
+      "./src/js"
   ],
   "exclude": [
-    "node_modules",
-    "dist",
-    "lib"
-  ]
+      "node_modules",
+      "dist",
+      "lib",
+      "build"
+  ],
+  "ts-node": {
+      "files": true,
+      "compilerOptions": {}
+  },
 }
