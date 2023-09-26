@@ -30,6 +30,7 @@ jobs:
         uses: ./actions/yaml/lint
         with:
           python-version: ${{ matrix.python-version }}
+          targets: ./applications ./materials ./properties ./workflows
 
       - name: Run ruff linter
         uses: ./actions/py/lint
