@@ -34,10 +34,8 @@
     "skipLibCheck": true,
     "types": ["mocha", "node"]
   },
-  "hooks": ["copy-files"],
   "include": [
-      "./src/js",
-      "./src/js/runtime_data/*.json"
+      "./src/js"
   ],
   "exclude": [
       "node_modules",
