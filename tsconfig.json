@@ -35,7 +35,8 @@
     "types": ["mocha", "node"]
   },
   "include": [
-      "./src/js"
+      "./src/js",
+      "./src/js/runtime_data/*.json"
   ],
   "exclude": [
       "node_modules",
