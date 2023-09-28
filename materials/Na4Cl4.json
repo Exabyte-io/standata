@@ -150,5 +150,7 @@
             "alat": 1,
             "units": "angstrom"
         }
-    }
+    },
+    "name": "NaCl",
+    "isNonPeriodic": false
 }

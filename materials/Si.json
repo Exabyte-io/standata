@@ -41,5 +41,7 @@
             "length": "angstrom",
             "angle": "degree"
         }
-    }
+    },
+    "name": "Si",
+    "isNonPeriodic": false
 }
