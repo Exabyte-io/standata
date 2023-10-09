@@ -1,85 +1,91 @@
 {
-  "lattice": {
-    "a": 2.50899515,
-    "b": 2.50899515,
-    "c": 7.71,
-    "alpha": 90,
-    "beta": 90,
-    "gamma": 120,
-    "units": {
-      "length": "angstrom",
-      "angle": "degree"
+    "lattice": {
+        "a": 2.50899515,
+        "b": 2.50899515,
+        "c": 7.71,
+        "alpha": 90,
+        "beta": 90,
+        "gamma": 120,
+        "units": {
+            "length": "angstrom",
+            "angle": "degree"
+        },
+        "type": "HEX",
+        "vectors": {
+            "a": [
+                2.467291,
+                0,
+                0
+            ],
+            "b": [
+                -1.233645,
+                2.136737,
+                0
+            ],
+            "c": [
+                0,
+                0,
+                7.71
+            ],
+            "alat": 1,
+            "units": "angstrom"
+        }
     },
-    "type": "HEX",
-    "vectors": {
-      "a": [
-        2.467291,
-        0,
-        0
-      ],
-      "b": [
-        -1.233645,
-        2.136737,
-        0
-      ],
-      "c": [
-        0,
-        0,
-        3.901537
-      ],
-      "alat": 1,
-      "units": "angstrom"
-    }
-  },
-  "basis": {
-    "elements": [
-      {
-        "id": 0,
-        "value": "B"
-      },
-      {
-        "id": 1,
-        "value": "N"
-      }
-    ],
-    "coordinates": [
-      {
-        "id": 0,
-        "value": [
-          0,
-          0,
-          0
-        ]
-      },
-      {
-        "id": 1,
-        "value": [
-          0.333333,
-          0.666667,
-          0
-        ]
-      }
-    ],
-    "units": "crystal",
-    "cell": [
-      [
-        2.467291,
-        0,
-        0
-      ],
-      [
-        -1.2336454999999995,
-        2.136736684528712,
-        0
-      ],
-      [
-        0,
-        0,
-        10
-      ]
-    ],
-    "constraints": []
-  },
-  "name": "h-BN",
-  "isNonPeriodic": false
+    "basis": {
+        "elements": [
+            {
+                "id": 0,
+                "value": "B"
+            },
+            {
+                "id": 1,
+                "value": "N"
+            }
+        ],
+        "coordinates": [
+            {
+                "id": 0,
+                "value": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "id": 1,
+                "value": [
+                    0.333333,
+                    0.666667,
+                    0
+                ]
+            }
+        ],
+        "units": "crystal",
+        "cell": [
+            [
+                2.467291,
+                0,
+                0
+            ],
+            [
+                -1.2336454999999995,
+                2.136736684528712,
+                0
+            ],
+            [
+                0,
+                0,
+                7.71
+            ]
+        ],
+        "constraints": []
+    },
+    "name": "h-BN",
+    "isNonPeriodic": false,
+    "external": {
+        "id": "mp-984",
+        "source": "https://next-gen.materialsproject.org/materials/",
+        "origin": true
+    },
+}
 }

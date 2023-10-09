@@ -43,5 +43,10 @@
         }
     },
     "name": "Si",
-    "isNonPeriodic": false
+    "isNonPeriodic": false,
+    "external": {
+        "id": "mp-149",
+        "source": "https://next-gen.materialsproject.org/materials/",
+        "origin": true
+    }
 }

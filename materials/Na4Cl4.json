@@ -120,9 +120,9 @@
         ]
     },
     "lattice": {
-        "a": 5.691694,
-        "b": 5.691694,
-        "c": 5.691694,
+        "a": 5.58813,
+        "b": 5.58813,
+        "c": 5.58813,
         "alpha": 90,
         "beta": 90,
         "gamma": 90,
@@ -133,24 +133,29 @@
         "type": "CUB",
         "vectors": {
             "a": [
-                5.691694,
+                5.58813,
                 0,
                 0
             ],
             "b": [
                 0,
-                5.691694,
+                5.58813,
                 0
             ],
             "c": [
                 0,
                 0,
-                5.691694
+                5.58813
             ],
             "alat": 1,
             "units": "angstrom"
         }
     },
     "name": "Na4Cl4",
-    "isNonPeriodic": false
+    "isNonPeriodic": false,
+    "external": {
+        "id": "mp-22862",
+        "source": "https://next-gen.materialsproject.org/materials/",
+        "origin": true
+    }
 }
