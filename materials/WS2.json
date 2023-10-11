@@ -96,7 +96,9 @@
     "isNonPeriodic": false,
     "external": {
         "id": "mp-224",
-        "source": "https://next-gen.materialsproject.org/materials/",
+        "source": "materials project",
+        "doi": "10.17188/1197614",
+        "url": "https://next-gen.materialsproject.org/materials/mp-224/",
         "origin": true
     }
 }
