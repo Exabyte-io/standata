@@ -43,6 +43,18 @@ categories:
     - carbide
 
 entities:
+  - filename: Graphene.json
+    categories:
+      - 2D
+      - surface
+      - semi-metal
+      - non-magnetic
+  - filename: h-BN.json
+    categories:
+      - 2D
+      - surface
+      - insulator
+      - non-magnetic
   - filename: Na4Cl4.json
     categories:
       - 3D
@@ -54,3 +66,9 @@ entities:
       - 3D
       - bulk
       - semiconductor
+  - filename: WS2.json
+    categories:
+      - 2D
+      - surface
+      - semiconductor
+      - non-magnetic
