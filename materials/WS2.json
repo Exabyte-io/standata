@@ -92,7 +92,7 @@
         ],
         "constraints": []
     },
-    "name": "WS2",
+    "name": "WS2 (mp-224)",
     "isNonPeriodic": false,
     "external": {
         "id": "mp-224",
