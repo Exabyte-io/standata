@@ -72,3 +72,9 @@ entities:
       - surface
       - semiconductor
       - non-magnetic
+  - filename: Ni.json
+    categories:
+      - 3D
+      - bulk
+      - metal
+      - ferromagnetic
