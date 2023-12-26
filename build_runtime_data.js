@@ -53,23 +53,23 @@ buildAsset({
     assetPath: "./materials/categories.yml",
     targetPath: "./src/py/mat3ra/standata/materials.py",
     contentGenerator: (content) =>
-        `import json\n\nmaterials_data = json.loads(r'''${JSON.stringify(content)}''')`,
+        `import json\n\nmaterials_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
     assetPath: "./properties/categories.yml",
     targetPath: "./src/py/mat3ra/standata/properties.py",
     contentGenerator: (content) =>
-        `import json\n\nproperties_data = json.loads(r'''${JSON.stringify(content)}''')`,
+        `import json\n\nproperties_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
     assetPath: "./applications/categories.yml",
     targetPath: "./src/py/mat3ra/standata/applications.py",
     contentGenerator: (content) =>
-        `import json\n\napplications_data = json.loads(r'''${JSON.stringify(content)}''')`,
+        `import json\n\napplications_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
     assetPath: "./workflows/categories.yml",
     targetPath: "./src/py/mat3ra/standata/workflows.py",
     contentGenerator: (content) =>
-        `import json\n\nworkflows_data = json.loads(r'''${JSON.stringify(content)}''')`,
+        `import json\n\nworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
