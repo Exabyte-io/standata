@@ -1,8 +1,7 @@
 from pathlib import Path
 
 import pytest
-
-from standata import Standata
+from mat3ra.standata import Standata
 
 
 @pytest.fixture
