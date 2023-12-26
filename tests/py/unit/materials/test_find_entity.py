@@ -1,4 +1,4 @@
-from standata import Standata
+from mat3ra.standata import Standata
 
 
 def test_find_entity_tag(materials_standata: Standata):

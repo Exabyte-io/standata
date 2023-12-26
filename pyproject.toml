@@ -1,7 +1,7 @@
 [project]
-name = "standata"
+name = "mat3ra-standata"
 dynamic = ["version"]
-description = "Examples of entities following the Mat3ra data standard."
+description = "Standard data for digital Materials R&D."
 readme = "README.md"
 requires-python = ">=3.8"
 license = {file = "LICENSE.md"}
@@ -27,7 +27,7 @@ tests = ["pytest", "pytest-cov", "pytest-mock"]
 
 # Entrypoint scripts can be defined here, see examples below.
 [project.scripts]
-standata-symlinks = "standata.cli:typer_app"
+create-symlinks = "mat3ra.standata.cli:typer_app"
 
 
 [build-system]
@@ -49,8 +49,10 @@ target-version = ['py38']
 # 'extend-exclude' excludes files or directories in addition to the defaults
 extend-exclude = '''
 (
-    examples\/.*\/.*\.py
-  | other\/.*\/.*\.(py|ipynb)
+    src\/py\/mat3ra\/standata\/materials.py
+  | src\/py\/mat3ra\/standata\/workflows.py
+  | src\/py\/mat3ra\/standata\/applications.py
+  | src\/py\/mat3ra\/standata\/properties.py
 )
 '''
 
@@ -58,6 +60,10 @@ extend-exclude = '''
 # Exclude a variety of commonly ignored directories.
 extend-exclude = [
     "src/js",
+    "src/py/mat3ra/standata/materials.py",
+    "src/py/mat3ra/standata/workflows.py",
+    "src/py/mat3ra/standata/applications.py",
+    "src/py/mat3ra/standata/properties.py",
     "tests/js",
 ]
 line-length = 120

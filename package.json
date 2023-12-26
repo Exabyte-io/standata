@@ -1,9 +1,9 @@
 {
-    "name": "@exabyte-io/standata",
+    "name": "@mat3ra/standata",
     "version": "0.0.0",
     "description": "Examples of entities following the Mat3ra data standard.",
-    "author": "Exabyte Inc.",
-    "license": "ISC",
+    "author": "Mat3ra.com",
+    "license": "Apache-2.0",
     "main": "lib/index.js",
     "files": [
         "/lib",
@@ -59,7 +59,6 @@
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
         "postinstall": "npm run transpile && cp -r src/js/runtime_data lib/",
-        "prepare": "node bootstrap.js",
         "prettier": "prettier --check src/js tests/js",
         "test": "mocha",
         "transpile": "tsc"

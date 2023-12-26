@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from standata import Standata
+from mat3ra.standata import Standata
 
 
 def test_standata_init_path(materials_config_path: Path):

@@ -2,8 +2,7 @@ from pathlib import Path
 from typing import Optional
 
 import typer
-
-from standata import Standata
+from mat3ra.standata import Standata
 
 
 def main(
