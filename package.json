@@ -1,9 +1,9 @@
 {
-    "name": "@exabyte-io/standata",
+    "name": "@mat3ra/standata",
     "version": "0.0.0",
     "description": "Examples of entities following the Mat3ra data standard.",
-    "author": "Exabyte Inc.",
-    "license": "ISC",
+    "author": "Mat3ra.com",
+    "license": "Apache-2.0",
     "main": "lib/index.js",
     "files": [
         "/lib",
