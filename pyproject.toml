@@ -49,7 +49,7 @@ target-version = ['py38']
 # 'extend-exclude' excludes files or directories in addition to the defaults
 extend-exclude = '''
 (
-    examples\/.*\/.*\.py
+    src/py/mat3ra/standata/(materials|applications|properties|workflows).py
   | other\/.*\/.*\.(py|ipynb)
 )
 '''
