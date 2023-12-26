@@ -58,6 +58,10 @@ extend-exclude = '''
 # Exclude a variety of commonly ignored directories.
 extend-exclude = [
     "src/js",
+    "src/py/mat3ra/standata/materials.py",
+    "src/py/mat3ra/standata/workflows.py",
+    "src/py/mat3ra/standata/applications.py",
+    "src/py/mat3ra/standata/properties.py",
     "tests/js",
 ]
 line-length = 120
