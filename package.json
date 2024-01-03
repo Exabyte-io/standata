@@ -58,7 +58,7 @@
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
-        "postinstall": "npm run transpile && cp -r src/js/runtime_data lib/",
+        "postinstall": "npm run transpile",
         "prettier": "prettier --check src/js tests/js",
         "test": "mocha",
         "transpile": "tsc"
