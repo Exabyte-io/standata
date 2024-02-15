@@ -84,3 +84,5 @@ entities:
       - bulk
       - insulator
       - non-magnetic
+      - glass
+      - oxide
