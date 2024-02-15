@@ -78,3 +78,9 @@ entities:
       - bulk
       - metal
       - ferromagnetic
+  - filename: Si3O6.json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - non-magnetic
