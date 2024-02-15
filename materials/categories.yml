@@ -86,3 +86,9 @@ entities:
       - non-magnetic
       - glass
       - oxide
+  - filename: Cu4.json
+    categories:
+      - 3D
+      - bulk
+      - metal
+      - non-magnetic
