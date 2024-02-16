@@ -1,19 +1,4 @@
 {
-    "_id": "DHcuELHJJGC7CJKyS",
-    "name": "Silicene_EL_001",
-    "src": {
-        "extension": "vasp",
-        "filename": "Silicene_EL_001.vasp",
-        "text": "Si2\n1.0\n3.820000 0.000000 0.000000\n-1.910000 3.308217 0.000000\n0.000000 0.000000 23.400000\nSi\n2\ndirect\n0.000000 0.000000 0.102735 Si\n0.333300 0.666700 0.083333 Si",
-        "hash": "c694af60d3e9f3ba84dad970760ef64c"
-    },
-    "tags": [
-        "phase-ii",
-        "category-el",
-        "difficulty-1",
-        "non-polar",
-        null
-    ],
     "lattice": {
         "a": 3.82,
         "b": 3.82,
@@ -102,11 +87,6 @@
             "value": 1
         }
     ],
-    "owner": {
-        "_id": "5b143a4ecd313f405b314224",
-        "slug": "exabyte-io",
-        "cls": "Account"
-    },
     "basis": {
         "elements": [
             {
@@ -156,62 +136,6 @@
         ],
         "constraints": []
     },
-    "formula": "Si",
-    "access": {
-        "organization": [
-            {
-                "_id": "PsFD83F6zwtu7Yqp7",
-                "roles": [
-                    "owner"
-                ]
-            }
-        ]
-    },
-    "exabyteId": "gZphvTrBLPNy3sagk",
-    "hash": "a58dd5cb86405afff131274c569bfdb9",
-    "schemaVersion": "0.2.0",
-    "isDefault": false,
-    "createdAt": "2018-05-18T04:03:14.751Z",
-    "scaledHash": "541171749f9165cbfdc3dadc86f78a88",
-    "creator": {
-        "_id": "W8NM4yBSgHN3ro5YC",
-        "cls": "User",
-        "slug": "exadmin"
-    },
-    "slug": "",
-    "inSet": [
-        {
-            "_id": "5b143a7dacd8211c4898ab23",
-            "cls": "Team",
-            "slug": "owner"
-        },
-        {
-            "_id": "5b143a7dacd8211c4898ab24",
-            "cls": "Team",
-            "slug": "admin"
-        },
-        {
-            "_id": "DBL66pnk4JrrJEQt5",
-            "cls": "Team",
-            "slug": "read-only-team"
-        },
-        {
-            "_id": "f9BGQXpNjhdGJpSQf",
-            "cls": "Team",
-            "slug": "write-access-team"
-        },
-        {
-            "_id": "Wfx2n9vYYBgsC7Nfj",
-            "cls": "Team",
-            "slug": "semiconductor-band-gaps-write"
-        },
-        {
-            "_id": "Wfx2n9vYYBgsC7Nfj",
-            "slug": "semiconductor-band-gaps-write",
-            "cls": "Team"
-        }
-    ],
-    "updatedAt": "2019-04-26T17:08:36.740Z",
-    "isEntitySet": false,
-    "isNonPeriodic": false
+    "name": "Silicene",
+    "isNonPeriodic": false,
 }
