@@ -1,0 +1,92 @@
+{
+    "lattice": {
+        "a": 4.065993,
+        "b": 4.065993,
+        "c": 4.065993,
+        "alpha": 60,
+        "beta": 60,
+        "gamma": 60,
+        "units": {
+            "length": "angstrom",
+            "angle": "degree"
+        },
+        "type": "FCC",
+        "vectors": {
+            "a": [
+                3.521253,
+                0,
+                2.032997
+            ],
+            "b": [
+                1.173751,
+                3.319869,
+                2.032997
+            ],
+            "c": [
+                0,
+                0,
+                4.065993
+            ],
+            "alat": 1,
+            "units": "angstrom"
+        }
+    },
+    "basis": {
+        "elements": [
+            {
+                "id": 0,
+                "value": "Ga"
+            },
+            {
+                "id": 1,
+                "value": "As"
+            }
+        ],
+        "coordinates": [
+            {
+                "id": 0,
+                "value": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "id": 1,
+                "value": [
+                    0.25,
+                    0.25,
+                    0.25
+                ]
+            }
+        ],
+        "units": "crystal",
+        "cell": [
+            [
+                3.5212532296097008,
+                0,
+                2.0329965000000003
+            ],
+            [
+                1.173751076536567,
+                3.3198693825760675,
+                2.0329965000000003
+            ],
+            [
+                0,
+                0,
+                4.065993
+            ]
+        ],
+        "constraints": []
+    },
+    "name": "GaAs (mp-2534)",
+    "isNonPeriodic": false,
+    "external": {
+        "id": "mp-2534",
+        "source": "materials project",
+        "doi": "10.17188/1200591",
+        "url": "https://next-gen.materialsproject.org/materials/mp-2534/",
+        "origin": true
+    }
+}

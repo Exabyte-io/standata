@@ -183,3 +183,9 @@ entities:
       - semiconductor
       - non-magnetic
       - nitride
+  - filename: GaAs.json
+    categories:
+      - 3D
+      - bulk
+      - semiconductor
+      - non-magnetic
