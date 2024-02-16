@@ -1,0 +1,139 @@
+{
+    "lattice": {
+        "a": 3.558711,
+        "b": 3.558711,
+        "c": 15.34665,
+        "alpha": 90,
+        "beta": 90,
+        "gamma": 120,
+        "units": {
+            "length": "angstrom",
+            "angle": "degree"
+        },
+        "type": "HEX",
+        "vectors": {
+            "a": [
+                3.558711,
+                0,
+                0
+            ],
+            "b": [
+                -1.779355,
+                3.081934,
+                0
+            ],
+            "c": [
+                0,
+                0,
+                15.34665
+            ],
+            "alat": 1,
+            "units": "angstrom"
+        }
+    },
+    "basis": {
+        "elements": [
+            {
+                "id": 0,
+                "value": "Te"
+            },
+            {
+                "id": 1,
+                "value": "Te"
+            },
+            {
+                "id": 2,
+                "value": "Te"
+            },
+            {
+                "id": 3,
+                "value": "Te"
+            },
+            {
+                "id": 4,
+                "value": "Mo"
+            },
+            {
+                "id": 5,
+                "value": "Mo"
+            }
+        ],
+        "coordinates": [
+            {
+                "id": 0,
+                "value": [
+                    0.333333,
+                    0.666667,
+                    0.63208
+                ]
+            },
+            {
+                "id": 1,
+                "value": [
+                    0.666667,
+                    0.333333,
+                    0.13208
+                ]
+            },
+            {
+                "id": 2,
+                "value": [
+                    0.666667,
+                    0.333333,
+                    0.36792
+                ]
+            },
+            {
+                "id": 3,
+                "value": [
+                    0.333333,
+                    0.666667,
+                    0.86792
+                ]
+            },
+            {
+                "id": 4,
+                "value": [
+                    0.333333,
+                    0.666667,
+                    0.25
+                ]
+            },
+            {
+                "id": 5,
+                "value": [
+                    0.666667,
+                    0.333333,
+                    0.75
+                ]
+            }
+        ],
+        "units": "crystal",
+        "cell": [
+            [
+                3.558711,
+                0,
+                2.1790820176202383e-16
+            ],
+            [
+                -1.7793554999999996,
+                3.0819341307271237,
+                2.1790820176202383e-16
+            ],
+            [
+                0,
+                0,
+                15.34665
+            ]
+        ],
+        "constraints": []
+    },
+    "name": "MoS2 (mp-602)",
+    "isNonPeriodic": false,
+    "external": {
+        "id": "mp-602",
+        "source": "materials project",
+        "url": "https://next-gen.materialsproject.org/materials/mp-602/",
+        "origin": true
+    }
+}

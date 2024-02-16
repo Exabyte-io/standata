@@ -152,3 +152,15 @@ entities:
       - surface
       - semiconductor
       - non-magnetic
+  - filename: MoTe2.json
+    categories:
+      - 3D
+      - bulk
+      - semiconductor
+      - non-magnetic
+  - filename: MoTe2_001.json
+    categories:
+      - 2D
+      - surface
+      - semiconductor
+      - non-magnetic

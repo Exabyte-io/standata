@@ -1,0 +1,103 @@
+{
+    "lattice": {
+        "a": 3.520742,
+        "b": 3.520742,
+        "c": 41.98534,
+        "alpha": 90,
+        "beta": 90,
+        "gamma": 120,
+        "units": {
+            "length": "angstrom",
+            "angle": "degree"
+        },
+        "type": "HEX",
+        "vectors": {
+            "a": [
+                3.520742,
+                0,
+                0
+            ],
+            "b": [
+                -1.760371,
+                3.049052,
+                0
+            ],
+            "c": [
+                0,
+                0,
+                41.98534
+            ],
+            "alat": 1,
+            "units": "angstrom"
+        }
+    },
+    "basis": {
+        "elements": [
+            {
+                "id": 0,
+                "value": "Te"
+            },
+            {
+                "id": 1,
+                "value": "Te"
+            },
+            {
+                "id": 2,
+                "value": "Mo"
+            }
+        ],
+        "coordinates": [
+            {
+                "id": 0,
+                "value": [
+                    0.666667,
+                    0.333333,
+                    0.040183
+                ]
+            },
+            {
+                "id": 1,
+                "value": [
+                    0.666667,
+                    0.333333,
+                    0.126483
+                ]
+            },
+            {
+                "id": 2,
+                "value": [
+                    0.333333,
+                    0.666667,
+                    0.083333
+                ]
+            }
+        ],
+        "units": "crystal",
+        "cell": [
+            [
+                3.520742,
+                0,
+                2.1558327104618252e-16
+            ],
+            [
+                -1.7603709999999995,
+                3.049052012170832,
+                2.1558327104618252e-16
+            ],
+            [
+                0,
+                0,
+                41.98534
+            ]
+        ],
+        "constraints": []
+    },
+    "name": "MoTe2(001)",
+    "isNonPeriodic": false,
+    "external": {
+        "id": "K9ts7Lz8hLpwQk2JG",
+        "source": "mat3ra",
+        "url": "https://platform.mat3ra.com/bank/materials/K9ts7Lz8hLpwQk2JG",
+        "origin": true
+    }
+}
