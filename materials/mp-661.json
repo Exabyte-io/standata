@@ -1,1 +1,115 @@
-{"_id":"cEPD2NFM4Pp7aEwFZ","tags":["Aluminium nitride - 2H","Aluminum nitride","Aluminium nitride - wurtzite-type","Aluminium nitride"],"name":"mp-661","external":{"id":"mp-661","source":"MaterialsProject","origin":true,"data":{"_id":"fYFkMzSJ6rSNKFkro","energy":-29.77967434,"energy_per_atom":-7.444918585,"volume":42.52728336284192,"formation_energy_per_atom":-1.5946309011899995,"nsites":4,"unit_cell_formula":{"N":2,"Al":2},"pretty_formula":"AlN","is_hubbard":false,"elements":["Al","N"],"nelements":2,"e_above_hull":0,"hubbards":{},"is_compatible":true,"spacegroup":{"symprec":0.1,"source":"spglib","symbol":"P6_3mc","number":186,"point_group":"6mm","crystal_system":"hexagonal","hall":"P 6c -2c"},"task_ids":["mp-661","mp-655355","mp-661522","mp-1049042","mp-1049040","mp-1049037","mp-1064231","mp-1064208","mp-1064211","mp-1064233","mp-1065666","mp-1065656","mp-1065676","mp-1065969","mp-1065977","mp-1065985","mp-1065677","mp-1065983","mp-1065973","mp-1065979","mp-1065982","mp-1065986","mp-1119627"],"band_gap":4.054000000000001,"density":3.200889640442182,"icsd_id":null,"icsd_ids":[608626,608627,602460,190420,44107,54697,161881,82790,602459,191772,183638,185441,42001,34475,44106,608624,41480,163953,31169,181362,34236,41482,67767,41542],"cif":"# generated using pymatgen\ndata_AlN\n_symmetry_space_group_name_H-M   'P 1'\n_cell_length_a   3.12858812\n_cell_length_b   3.12858812\n_cell_length_c   5.01695523\n_cell_angle_alpha   90.00000000\n_cell_angle_beta   90.00000000\n_cell_angle_gamma   120.00000000\n_symmetry_Int_Tables_number   1\n_chemical_formula_structural   AlN\n_chemical_formula_sum   'Al2 N2'\n_cell_volume   42.52728336\n_cell_formula_units_Z   2\nloop_\n _symmetry_equiv_pos_site_id\n _symmetry_equiv_pos_as_xyz\n  1  'x, y, z'\nloop_\n _atom_site_type_symbol\n _atom_site_label\n _atom_site_symmetry_multiplicity\n _atom_site_fract_x\n _atom_site_fract_y\n _atom_site_fract_z\n _atom_site_occupancy\n  N  N0  1  0.666667  0.333333  0.880713  1\n  N  N1  1  0.333333  0.666667  0.380713  1\n  Al  Al2  1  0.666667  0.333333  0.499287  1\n  Al  Al3  1  0.333333  0.666667  0.999287  1\n","total_magnetization":0,"material_id":"mp-661","oxide_type":"None","tags":["Aluminium nitride - 2H","Aluminum nitride","Aluminium nitride - wurtzite-type","Aluminium nitride"],"elasticity":{"G_Reuss":121,"G_VRH":122,"G_Voigt":122,"G_Voigt_Reuss_Hill":122,"K_Reuss":194,"K_VRH":194,"K_Voigt":195,"K_Voigt_Reuss_Hill":194,"elastic_anisotropy":0.03,"elastic_tensor":[[376,129,98,0,0,0],[129,376,98,0,0,0],[98,98,353,0,0,0],[0,0,0,113,0,0],[0,0,0,0,113,0],[0,0,0,0,0,124]],"homogeneous_poisson":0.24,"poisson_ratio":0.24,"universal_anisotropy":0.03,"elastic_tensor_original":[[375.3834543076083,129.07445041260505,96.659917214702,0,0,0.0000047518753349360534],[129.8229831118795,375.8997922349038,96.72050037837602,0,0,0.00006941779734794147],[98.32400693008888,98.32402202859059,353.05242510856976,0,0,0.000018158421673268735],[0.0000160932982850809,0.00007003984746363721,-1.9666623759746298e-7,112.621593271226,0.000020779954745143664,0],[1.166379388301837e-7,-0.000029649989077614814,-0.000016259925669549345,-3.999999573423425e-8,112.56526562018662,0],[-0.07071916517197652,0.006339655851335586,-0.0018896203196513016,0,0,124.34153765891514]],"compliance_tensor":[[3.1,-0.9,-0.6,0,0,0],[-0.9,3.1,-0.6,0,0,0],[-0.6,-0.6,3.2,0,0,0],[0,0,0,8.9,0,0],[0,0,0,0,8.9,0],[0,0,0,0,0,8.1]],"warnings":[],"nsites":4},"piezo":{"eij_max":1.6756785281491275,"piezoelectric_tensor":[[0,0,0,0,-0.28930496722916205,0],[0,0,0,-0.28930503429030036,0,0],[-0.5800599327708139,-0.5800600672292014,1.46115,0,0,0]],"v_max":[0,0,-1]},"diel":{"e_electronic":[[4.468676982078432,7.405645419665743e-18,0],[7.405645419665743e-18,4.4686780179215715,0],[0,0,4.690244]],"e_total":[[8.226583546538057,1.3633122875326495e-17,1.4117215787571672e-22],[1.3633122875326495e-17,8.226585453467147,0],[1.4117215787571672e-22,0,9.742615999999998]],"n":2.1313218902831177,"poly_electronic":4.5425330000000015,"poly_total":8.731928333335068},"full_formula":"Al2N2","searchTextEntries":["AlN"],"createdAt":"2020-05-23T06:33:50.980Z"}},"inSet":[{"_id":"nQtFH6EKKxYJFY98d","slug":"read","cls":"Team"},{"_id":"MD25CzF3keqqiLxkN","slug":"admin","cls":"Team"},{"_id":"ZkQGsu3JDf3J5R7B2","slug":"owner","cls":"Team"},{"_id":"jE7bmx6RjhDKMauYF","slug":"read","cls":"Team"},{"_id":"SQPdL5DGeHyMyB7PS","slug":"comment","cls":"Team"},{"_id":"tBn2vTPuru8g5MAG9","slug":"execute","cls":"Team"},{"_id":"CRBa8s4DxHRFgrKFa","slug":"edit","cls":"Team"}],"hash":"c91a259e08580fa07c3486a7ef64d777","formula":"AlN","unitCellFormula":"Al2 N2","lattice":{"a":3.128588,"b":3.128588,"c":5.016955,"alpha":90,"beta":90,"gamma":120,"units":{"length":"angstrom","angle":"degree"},"type":"HEX","vectors":{"a":[3.128588,0,0],"b":[-1.564294,2.709437,0],"c":[0,0,5.016955],"alat":1,"units":"angstrom"}},"basis":{"elements":[{"id":0,"value":"Al"},{"id":1,"value":"Al"},{"id":2,"value":"N"},{"id":3,"value":"N"}],"coordinates":[{"id":0,"value":[0.6666666666666666,0.3333333333333333,0.499287]},{"id":1,"value":[0.3333333333333333,0.6666666666666666,0]},{"id":2,"value":[0.6666666666666666,0.3333333333333333,0.880713]},{"id":3,"value":[0.3333333333333333,0.6666666666666666,0.380713]}],"units":"crystal","cell":[[3.128588,0,1.9157076400254099e-16],[-1.5642939999999996,2.7094366859751498,1.9157076400254099e-16],[0,0,5.016955]],"constraints":[]},"derivedProperties":[{"name":"volume","units":"angstrom^3","value":42.527283361244045},{"name":"density","units":"g/cm^3","value":3.2008896918371637},{"spaceGroupSymbol":"P6_3mc","tolerance":{"value":0.3,"units":"angstrom"},"name":"symmetry"},{"name":"elemental_ratio","value":0.5,"element":"Al"},{"name":"elemental_ratio","value":0.5,"element":"N"},{"name":"p-norm","value":2,"degree":0},{"name":"p-norm","value":0.7071067811865476,"degree":2},{"name":"p-norm","value":0.6299605249474366,"degree":3},{"name":"p-norm","value":0.5743491774985174,"degree":5},{"name":"p-norm","value":0.5520447568369062,"degree":7},{"name":"p-norm","value":0.5358867312681466,"degree":10}],"creator":{"_id":"3Pxtq8xTmAWxhB4tA","slug":"vsevolodb","cls":"User"},"owner":{"_id":"FXRfdsZZqPneb7zrh","slug":"vsevolodb","cls":"Account"},"schemaVersion":"0.2.0","isNonPeriodic":false,"exabyteId":"2265xnb8eYhYowXyi","isDefault":false,"scaledHash":"f9dcdc9b46cb132a603c5dacf717278d","isEntitySet":false,"createdAt":"2024-02-16T23:17:26.966Z","createdBy":"3Pxtq8xTmAWxhB4tA","updatedAt":"2024-02-16T23:17:27.162Z","updatedBy":"3Pxtq8xTmAWxhB4tA","bestProperties":[{"_id":"5uc2QkadcZ8NGHJ8y","data":{"units":"eV","repetition":0,"name":"total_energy","value":-736.0866202682228},"owner":{"_id":"5b143a4ecd313f405b314211","slug":"gmogni","cls":"Account"},"creator":{"_id":"nB7PHsk45ubA3v7Gw","slug":"gmogni","cls":"User"},"source":{"type":"exabyte","info":{"jobId":"7SZeosBD7HT3RzEkg","unitId":"1c928cbb84508e986e937058"}},"group":"qe:dft:gga:pbe","slug":"total_energy","schemaVersion":"0.2.0","inSet":[{"_id":"5b143a7dacd8211c4898aa9e","slug":"owner","cls":"Team"},{"_id":"5b143a7dacd8211c4898aa9f","slug":"admin","cls":"Team"},{"_id":"5b143a7dacd8211c4898aaa1","slug":"read","cls":"Team"},{"_id":"5b143a7dacd8211c4898aaa2","slug":"comment","cls":"Team"},{"_id":"5b143a7dacd8211c4898aaa3","slug":"execute","cls":"Team"},{"_id":"5b143a7dacd8211c4898aaa4","slug":"edit","cls":"Team"}],"tags":[],"createdAt":"2023-10-13T01:24:52.673Z","systemTags":["isRefined","isBest"],"exabyteId":["2265xnb8eYhYowXyi"],"precision":{"value":864,"metric":"KPPRA"},"isDefault":false,"createdBy":"0"},{"_id":"5tZpyMaa6Fs8X7LqZ","data":{"units":"kbar","repetition":0,"name":"pressure","value":6.03},"owner":{"_id":"5b143a4ecd313f405b314211","slug":"gmogni","cls":"Account"},"creator":{"_id":"nB7PHsk45ubA3v7Gw","slug":"gmogni","cls":"User"},"source":{"type":"exabyte","info":{"jobId":"7SZeosBD7HT3RzEkg","unitId":"1c928cbb84508e986e937058"}},"group":"qe:dft:gga:pbe","slug":"pressure","schemaVersion":"0.2.0","inSet":[{"_id":"5b143a7dacd8211c4898aa9e","slug":"owner","cls":"Team"},{"_id":"5b143a7dacd8211c4898aa9f","slug":"admin","cls":"Team"},{"_id":"5b143a7dacd8211c4898aaa1","slug":"read","cls":"Team"},{"_id":"5b143a7dacd8211c4898aaa2","slug":"comment","cls":"Team"},{"_id":"5b143a7dacd8211c4898aaa3","slug":"execute","cls":"Team"},{"_id":"5b143a7dacd8211c4898aaa4","slug":"edit","cls":"Team"}],"tags":[],"createdAt":"2023-10-13T01:24:52.688Z","systemTags":["isRefined","isBest"],"exabyteId":["2265xnb8eYhYowXyi"],"precision":{"value":864,"metric":"KPPRA"},"isDefault":false,"createdBy":"0"}]}
+{
+    "lattice": {
+        "a": 3.128588,
+        "b": 3.128588,
+        "c": 5.016955,
+        "alpha": 90,
+        "beta": 90,
+        "gamma": 120,
+        "units": {
+            "length": "angstrom",
+            "angle": "degree"
+        },
+        "type": "HEX",
+        "vectors": {
+            "a": [
+                3.128588,
+                0,
+                0
+            ],
+            "b": [
+                -1.564294,
+                2.709437,
+                0
+            ],
+            "c": [
+                0,
+                0,
+                5.016955
+            ],
+            "alat": 1,
+            "units": "angstrom"
+        }
+    },
+    "basis": {
+        "elements": [
+            {
+                "id": 0,
+                "value": "Al"
+            },
+            {
+                "id": 1,
+                "value": "Al"
+            },
+            {
+                "id": 2,
+                "value": "N"
+            },
+            {
+                "id": 3,
+                "value": "N"
+            }
+        ],
+        "coordinates": [
+            {
+                "id": 0,
+                "value": [
+                    0.6666666666666666,
+                    0.3333333333333333,
+                    0.499287
+                ]
+            },
+            {
+                "id": 1,
+                "value": [
+                    0.3333333333333333,
+                    0.6666666666666666,
+                    0
+                ]
+            },
+            {
+                "id": 2,
+                "value": [
+                    0.6666666666666666,
+                    0.3333333333333333,
+                    0.880713
+                ]
+            },
+            {
+                "id": 3,
+                "value": [
+                    0.3333333333333333,
+                    0.6666666666666666,
+                    0.380713
+                ]
+            }
+        ],
+        "units": "crystal",
+        "cell": [
+            [
+                3.128588,
+                0,
+                1.9157076400254099e-16
+            ],
+            [
+                -1.5642939999999996,
+                2.7094366859751498,
+                1.9157076400254099e-16
+            ],
+            [
+                0,
+                0,
+                5.016955
+            ]
+        ],
+        "constraints": []
+    },
+    "name": "AlN (mp-661)",
+    "external": {
+        "id": "mp-661",
+        "source": "materials project",
+        "doi": "10.17188/1268470",
+        "url": "https://next-gen.materialsproject.org/materials/mp-661"
+        "origin": true
+    }
+}

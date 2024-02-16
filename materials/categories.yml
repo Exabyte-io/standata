@@ -189,3 +189,10 @@ entities:
       - bulk
       - semiconductor
       - non-magnetic
+  - filename: AlN.json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - non-magnetic
+      - nitride
