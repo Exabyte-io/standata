@@ -106,3 +106,10 @@ entities:
       - semiconductor
       - non-magnetic
       - oxide
+  - filename: Al2O3.json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - non-magnetic
+      - oxide
