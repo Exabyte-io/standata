@@ -1,0 +1,169 @@
+{
+    "lattice": {
+        "a": 3.18851,
+        "b": 3.18851,
+        "c": 37.20906,
+        "alpha": 90,
+        "beta": 90,
+        "gamma": 120,
+        "units": {
+            "length": "angstrom",
+            "angle": "degree"
+        },
+        "type": "HEX",
+        "vectors": {
+            "a": [
+                3.18851,
+                0,
+                0
+            ],
+            "b": [
+                -1.594255,
+                2.761331,
+                0
+            ],
+            "c": [
+                0,
+                0,
+                37.20906
+            ],
+            "alat": 1,
+            "units": "angstrom"
+        }
+    },
+    "unitCellFormula": "Mo1 S2",
+    "derivedProperties": [
+        {
+            "units": "angstrom^3",
+            "name": "volume",
+            "value": 327.60837632690976
+        },
+        {
+            "units": "g/cm^3",
+            "name": "density",
+            "value": 0.8113421491627683
+        },
+        {
+            "tolerance": {
+                "units": "angstrom",
+                "value": 0.3
+            },
+            "name": "symmetry",
+            "spaceGroupSymbol": "P-6m2"
+        },
+        {
+            "name": "elemental_ratio",
+            "value": 0.6666666666666666,
+            "element": "S"
+        },
+        {
+            "name": "elemental_ratio",
+            "value": 0.3333333333333333,
+            "element": "Mo"
+        },
+        {
+            "degree": 0,
+            "name": "p-norm",
+            "value": 2
+        },
+        {
+            "degree": 2,
+            "name": "p-norm",
+            "value": 0.7453559924999299
+        },
+        {
+            "degree": 3,
+            "name": "p-norm",
+            "value": 0.6933612743506347
+        },
+        {
+            "degree": 5,
+            "name": "p-norm",
+            "value": 0.6707822056951861
+        },
+        {
+            "degree": 7,
+            "name": "p-norm",
+            "value": 0.667408235036379
+        },
+        {
+            "degree": 10,
+            "name": "p-norm",
+            "value": 0.6667317422407864
+        }
+    ],
+    "owner": {
+        "_id": "5b143a4ecd313f405b314224",
+        "slug": "exabyte-io",
+        "cls": "Account"
+    },
+    "basis": {
+        "elements": [
+            {
+                "id": 0,
+                "value": "Mo"
+            },
+            {
+                "id": 1,
+                "value": "S"
+            },
+            {
+                "id": 2,
+                "value": "S"
+            }
+        ],
+        "coordinates": [
+            {
+                "id": 0,
+                "value": [
+                    0.666667,
+                    0.333333,
+                    0.083333
+                ]
+            },
+            {
+                "id": 1,
+                "value": [
+                    0.333333,
+                    0.666667,
+                    0.041466
+                ]
+            },
+            {
+                "id": 2,
+                "value": [
+                    0.333333,
+                    0.666667,
+                    0.125201
+                ]
+            }
+        ],
+        "units": "crystal",
+        "cell": [
+            [
+                3.18851,
+                0,
+                1.9523992827746636e-16
+            ],
+            [
+                -1.5942549999999995,
+                2.761330660220721,
+                1.9523992827746636e-16
+            ],
+            [
+                0,
+                0,
+                37.20906
+            ]
+        ],
+        "constraints": []
+    },
+    "name": "MoS2(001)",
+    "isNonPeriodic": false,
+    "external": {
+        "id": "bsq28woJc7dnZmvCt",
+        "source": "mat3ra",
+        "url": "https://platform.mat3ra.com/bank/materials/bsq28woJc7dnZmvCt",
+        "origin": true
+    }
+}
