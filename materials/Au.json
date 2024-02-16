@@ -1,0 +1,80 @@
+{
+    "lattice": {
+        "a": 2.949546,
+        "b": 2.949546,
+        "c": 2.949546,
+        "alpha": 60,
+        "beta": 60,
+        "gamma": 60,
+        "units": {
+            "length": "angstrom",
+            "angle": "degree"
+        },
+        "type": "FCC",
+        "vectors": {
+            "a": [
+                2.554382,
+                0,
+                1.474773
+            ],
+            "b": [
+                0.8514606,
+                2.408294,
+                1.474773
+            ],
+            "c": [
+                0,
+                0,
+                2.949546
+            ],
+            "alat": 1,
+            "units": "angstrom"
+        }
+    },
+    "basis": {
+        "elements": [
+            {
+                "id": 0,
+                "value": "Au"
+            }
+        ],
+        "coordinates": [
+            {
+                "id": 0,
+                "value": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "units": "crystal",
+        "cell": [
+            [
+                2.5543817656307755,
+                0,
+                1.4747730000000001
+            ],
+            [
+                0.851460588543592,
+                2.40829422428905,
+                1.4747730000000001
+            ],
+            [
+                0,
+                0,
+                2.949546
+            ]
+        ],
+        "constraints": []
+    },
+    "name": "Au (mp-81)",
+    "isNonPeriodic": false,
+    "external": {
+        "id": "mp-81",
+        "source": "materials project",
+        "doi": "10.17188/1307925",
+        "url": "https://next-gen.materialsproject.org/materials/mp-81/",
+        "origin": true
+    }
+}

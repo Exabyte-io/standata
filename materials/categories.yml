@@ -92,3 +92,10 @@ entities:
       - metal
       - non-magnetic
       - metals & alloys
+      - filename: Au.json
+        categories:
+          - 3D
+          - bulk
+          - metal
+          - non-magnetic
+          - metals & alloys
