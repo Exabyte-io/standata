@@ -137,5 +137,11 @@
         "constraints": []
     },
     "name": "Silicene",
-    "isNonPeriodic": false
+    "isNonPeriodic": false,
+    "external": {
+        "id": "gZphvTrBLPNy3sagk",
+        "source": "mat3ra",
+        "url": "https://platform.mat3ra.com/bank/materials/gZphvTrBLPNy3sagk",
+        "origin": true
+    }
 }
