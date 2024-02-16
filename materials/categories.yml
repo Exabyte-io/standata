@@ -100,3 +100,10 @@ entities:
       - ceramic
       - non-magnetic
       - oxide
+  - filename: Ti4O8.json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - non-magnetic
+      - oxide
