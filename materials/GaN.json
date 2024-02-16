@@ -105,6 +105,7 @@
         "constraints": []
     },
     "name": "GaN (mp-804)",
+    "isNonPeriodic": false,
     "external": {
         "id": "mp-804",
         "source": "materials project",
