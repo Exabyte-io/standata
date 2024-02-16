@@ -127,3 +127,10 @@ entities:
       - insulator
       - non-magnetic
       - oxide
+  - filename: HfO2.json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - non-magnetic
+      - oxide
