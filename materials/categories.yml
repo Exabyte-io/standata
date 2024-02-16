@@ -92,3 +92,11 @@ entities:
       - bulk
       - metal
       - non-magnetic
+  - filename: Al12O18.json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - ceramic
+      - non-magnetic
+      - oxide
