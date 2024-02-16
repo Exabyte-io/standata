@@ -68,6 +68,12 @@ entities:
       - semiconductor
   - filename: WS2.json
     categories:
+      - 3D
+      - bulk
+      - semiconductor
+      - non-magnetic
+  - filename: WS2_001.json
+    categories:
       - 2D
       - surface
       - semiconductor

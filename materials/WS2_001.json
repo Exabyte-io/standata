@@ -1,0 +1,104 @@
+{
+    "lattice": {
+        "a": 3.184222,
+        "b": 3.184222,
+        "c": 12.97828,
+        "alpha": 90,
+        "beta": 90,
+        "gamma": 120,
+        "units": {
+            "length": "angstrom",
+            "angle": "degree"
+        },
+        "type": "HEX",
+        "vectors": {
+            "a": [
+                1.5921114461115318,
+                -2.7576179159771317,
+                0.0
+            ],
+            "b": [
+                1.5921114461115318,
+                2.7576179159771317,
+                0.0
+            ],
+            "c": [
+                0.0,
+                0.0,
+                12.97828236
+            ],
+            "alat": 1,
+            "units": "angstrom"
+        }
+    },
+    "basis": {
+        "elements": [
+            {
+                "id": 0,
+                "value": "W"
+            },
+            {
+                "id": 1,
+                "value": "S"
+            },
+            {
+                "id": 2,
+                "value": "S"
+            }
+        ],
+        "coordinates": [
+            {
+                "id": 0,
+                "value": [
+                    0.333333,
+                    0.666667,
+                    0.120195
+                ]
+            },
+            {
+                "id": 1,
+                "value": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "id": 2,
+                "value": [
+                    0.0,
+                    0.0,
+                    0.24039
+                ]
+            }
+        ],
+        "units": "crystal",
+        "cell": [
+            [
+                1.5921114461115318,
+                -2.7576179159771317,
+                0.0
+            ],
+            [
+                1.5921114461115318,
+                2.7576179159771317,
+                0.0
+            ],
+            [
+                0,
+                0,
+                12.97828236
+            ]
+        ],
+        "constraints": []
+    },
+    "name": "WS2 (mp-224)",
+    "isNonPeriodic": false,
+    "external": {
+        "id": "mp-224",
+        "source": "materials project",
+        "doi": "10.17188/1197614",
+        "url": "https://next-gen.materialsproject.org/materials/mp-224/",
+        "origin": true
+    }
+}
