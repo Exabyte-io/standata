@@ -107,3 +107,10 @@ entities:
       - insulator
       - non-magnetic
       - oxide
+  - filename: Y32O48.json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - non-magnetic
+      - oxide
