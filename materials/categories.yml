@@ -78,3 +78,10 @@ entities:
       - bulk
       - metal
       - ferromagnetic
+  - filename: C.json
+    categories:
+      - 3D
+      - bulk
+      - semi-metal
+      - non-magnetic
+      - battery/energy storage
