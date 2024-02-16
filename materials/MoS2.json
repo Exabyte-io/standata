@@ -10,7 +10,7 @@
             "length": "angstrom",
             "angle": "degree"
         },
-        "type": "TRI",
+        "type": "HEX",
         "vectors": {
             "a": [
                 3.192238,
