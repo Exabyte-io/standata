@@ -1,11 +1,11 @@
 import { expect } from "chai";
 
+import WS2 from "../../materials/WS2_001.json";
 import { MaterialStandata } from "../../src/js";
-import Si from "./fixtures/Si.json";
-import Na4Cl4 from "./fixtures/Na4Cl4.json";
 import Graphene from "./fixtures/Graphene.json";
 import h_BN from "./fixtures/h-BN.json";
-import WS2 from "./fixtures/WS2.json";
+import Na4Cl4 from "./fixtures/Na4Cl4.json";
+import Si from "./fixtures/Si.json";
 
 describe("Materials Standata", () => {
     it("can search materials by tags", () => {
