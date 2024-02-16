@@ -164,3 +164,15 @@ entities:
       - surface
       - semiconductor
       - non-magnetic
+  - filename: WSe2.json
+    categories:
+      - 3D
+      - bulk
+      - semiconductor
+      - non-magnetic
+  - filename: WSe2_001.json
+    categories:
+      - 2D
+      - surface
+      - semiconductor
+      - non-magnetic

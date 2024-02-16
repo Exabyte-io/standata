@@ -1,0 +1,103 @@
+{
+    "lattice": {
+        "a": 3.327838,
+        "b": 3.327838,
+        "c": 38.4026,
+        "alpha": 90,
+        "beta": 90,
+        "gamma": 120,
+        "units": {
+            "length": "angstrom",
+            "angle": "degree"
+        },
+        "type": "HEX",
+        "vectors": {
+            "a": [
+                3.327838,
+                0,
+                0
+            ],
+            "b": [
+                -1.663919,
+                2.881992,
+                0
+            ],
+            "c": [
+                0,
+                0,
+                38.4026
+            ],
+            "alat": 1,
+            "units": "angstrom"
+        }
+    },
+    "basis": {
+        "elements": [
+            {
+                "id": 0,
+                "value": "W"
+            },
+            {
+                "id": 1,
+                "value": "Se"
+            },
+            {
+                "id": 2,
+                "value": "Se"
+            }
+        ],
+        "coordinates": [
+            {
+                "id": 0,
+                "value": [
+                    0.666667,
+                    0.333333,
+                    0.083333
+                ]
+            },
+            {
+                "id": 1,
+                "value": [
+                    0.333333,
+                    0.666667,
+                    0.040026
+                ]
+            },
+            {
+                "id": 2,
+                "value": [
+                    0.333333,
+                    0.666667,
+                    0.126641
+                ]
+            }
+        ],
+        "units": "crystal",
+        "cell": [
+            [
+                3.327838,
+                0,
+                2.0377130773904647e-16
+            ],
+            [
+                -1.6639189999999995,
+                2.881992247679199,
+                2.0377130773904647e-16
+            ],
+            [
+                0,
+                0,
+                38.4026
+            ]
+        ],
+        "constraints": []
+    },
+    "name": "WSe2(001)",
+    "isNonPeriodic": false,
+    "external": {
+        "id": "a9GGgaoBdnCHPn9hs",
+        "source": "mat3ra",
+        "url": "https://platform.mat3ra.com/bank/materials/a9GGgaoBdnCHPn9hs",
+        "origin": true
+    }
+}
