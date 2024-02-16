@@ -85,3 +85,10 @@ entities:
       - semi-metal
       - non-magnetic
       - battery/energy storage
+  - filename: Cu.json
+    categories:
+      - 3D
+      - bulk
+      - metal
+      - non-magnetic
+      - metals & alloys
