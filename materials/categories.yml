@@ -154,6 +154,13 @@ entities:
       - semiconductor
       - ferromagnetic
       - oxide
+  - filename: TiO2.json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - non-magnetic
+      - oxide
   - filename: MoS2.json
     categories:
       - 3D
