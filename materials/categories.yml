@@ -147,6 +147,13 @@ entities:
       - insulator
       - non-magnetic
       - oxide
+  - filename: VO2.json
+    categories:
+      - 3D
+      - bulk
+      - semiconductor
+      - ferromagnetic
+      - oxide
   - filename: MoS2.json
     categories:
       - 3D
