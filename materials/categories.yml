@@ -55,7 +55,7 @@ entities:
       - surface
       - insulator
       - non-magnetic
-  - filename: Na4Cl4.json
+  - filename: NaCl-[Sodium_Chloride]-CUB_[Fm-3m]_3D_[Bulk]-[mp-22862].json
     categories:
       - 3D
       - bulk
@@ -162,25 +162,25 @@ entities:
       - insulator
       - non-magnetic
       - oxide
-  - filename: MoS2.json
+  - filename: MoS2-[Molybdenum_Disulfide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-2815].json
     categories:
       - 3D
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: MoS2_001.json
+  - filename: MoS2-[Molybdenum_Disulfide]-HEX_[P6_3%2Fmmc]_2D_[Monolayer]-[m3-bsq28woJc7dnZmvCt].json
     categories:
       - 2D
       - surface
       - semiconductor
       - non-magnetic
-  - filename: MoTe2.json
+  - filename: MoTe2-[Molybdenum_Telluride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-602].json
     categories:
       - 3D
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: MoTe2_001.json
+  - filename: MoTe2-[Molybdenum_Telluride]-HEX_[P6_3%2Fmmc]_2D_[Monolayer]-[mp-602].json
     categories:
       - 2D
       - surface
