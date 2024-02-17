@@ -168,7 +168,7 @@ entities:
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: MoS2-[Molybdenum_Disulfide]-HEX_[P6_3%2Fmmc]_2D_[Monolayer]-[m3-bsq28woJc7dnZmvCt].json
+  - filename: MoS2-[Molybdenum_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[m3-bsq28woJc7dnZmvCt].json
     categories:
       - 2D
       - surface
@@ -180,7 +180,7 @@ entities:
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: MoTe2-[Molybdenum_Telluride]-HEX_[P6_3%2Fmmc]_2D_[Monolayer]-[mp-602].json
+  - filename: MoTe2-[Molybdenum_Telluride]-HEX_[P-6m2]_2D_[Monolayer]-[mp-602].json
     categories:
       - 2D
       - surface
