@@ -7,7 +7,7 @@ describe("Workflow Standata", () => {
     it("can search workflows by tags", () => {
         const std = new WorkflowStandata();
         const tags = ["espresso", "single-material", "total_energy"];
-        const entities = std.find_entities(...tags);
+        const entities = std.findEntitiesByTags(...tags);
         expect(entities).to.deep.include.members([TotalEnergyWorkflow]);
         expect(entities.length).to.be.lessThan(std.entities.length);
     });

@@ -7,7 +7,7 @@ describe("Property Standata", () => {
     it("can search properties by tags", () => {
         const std = new PropertyStandata();
         const tags = ["matrix", "electronic"];
-        const entities = std.find_entities(...tags);
+        const entities = std.findEntitiesByTags(...tags);
         expect(entities).to.deep.include.members([BandStructure]);
         expect(entities.length).to.be.lessThan(std.entities.length);
     });
