@@ -104,7 +104,7 @@
         ],
         "constraints": []
     },
-    "name": "AlN (mp-661)",
+    "name": "AlN, Aluminum Nitride, HEX (P6_3mc) 3D (Bulk), mp-661",
     "external": {
         "id": "mp-661",
         "source": "materials project",

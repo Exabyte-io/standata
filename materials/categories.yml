@@ -98,7 +98,7 @@ entities:
       - metal
       - non-magnetic
       - metals & alloys
-  - filename: Au.json
+  - filename: Au-Gold-FCC_Fm-3m_3D_Bulk-[mp-81].json
     categories:
       - 3D
       - bulk
@@ -112,7 +112,7 @@ entities:
       - semiconductor
       - non-magnetic
       - oxide
-  - filename: Al2O3.json
+  - filename: Al2O3-Sapphire-RHL_R3c_3D_Bulk-[mp-1143].json
     categories:
       - 3D
       - bulk
@@ -126,6 +126,7 @@ entities:
       - insulator
       - non-magnetic
       - oxide
+      - glass
   - filename: ZrO2.json
     categories:
       - 3D
@@ -210,10 +211,11 @@ entities:
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: AlN.json
+  - filename: AlN-Aluminum_Nitride-HEX_P6_3mc_3D_Bulk-[mp-661].json
     categories:
       - 3D
       - bulk
       - insulator
       - non-magnetic
       - nitride
+      - ceramic
