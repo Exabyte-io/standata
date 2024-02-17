@@ -2,17 +2,18 @@
 
 Standard data for digital materials R&D entities in the [ESSE](https://github.com/Exabyte-io/esse) data format.
 
-
 ## 1. Installation
 
 ### 1.1. Python
 
 The package is compatible with Python 3.8+. It can be installed as a Python package either via PyPI:
+
 ```shell
 pip install mat3ra-standata
 ```
 
 Or as an editable local installation in a virtual environment after cloning the repository:
+
 ```shell
 virtualenv .venv
 source .venv/bin/activate
@@ -27,7 +28,6 @@ Standata can be installed as a Node.js package via NPM (node package manager).
 npm install @mat3ra/standata
 ```
 
-
 ## 2. Usage
 
 ### 2.1. Python
@@ -38,7 +38,6 @@ from mat3ra.standata.materials import materials_data
 materialConfigs = materials_data["filesMapByName"].values();
 ```
 
-
 ### 2.2. JavaScript
 
 ```javascript
@@ -48,13 +47,13 @@ import data from "@mat3ra/standata/lib/runtime_data/materials";
 const materialConfigs = Object.values(data.filesMapByName);
 ```
 
-
 ## 3. Conventions
 
 #### 3.1. Runtime Modules
 
 To avoid file system calls on the client, the entity categories and data structures are made available at runtime via
 the files in `src/js/runtime_data`. These files are generated automatically using the following command:
+
 ```shell
 npm run build:runtime-data
 ```
@@ -68,6 +67,7 @@ entity data files are symbolically linked in directories named after the categor
 The resulting file tree will be contained in a directory names `by_category`.
 The script expects the (relative or absolute) path to an entity config file (`categories.yml`). The destination
 of the file tree can be modified by passing the `--destination`/`-d` option.
+
 ```shell
 # consult help page to view all options
 create-symlinks --help
@@ -83,6 +83,7 @@ Analogous to the command line script in Python, the repository also features a s
 TypeScript (`src/js/cli.ts`) and (after transpiling) in JavaScript (`lib/cli.js`).
 The script takes the entity config file as a mandatory positional argument and the
 alternative location for the directory containing the symbolic links (`--destination`/`-d`).
+
 ```shell
 # creates symbolic links in materials/by_category (node)
 node lib/cli.js materials/categories.yml
@@ -94,11 +95,49 @@ ts-node src/js/cli.ts -d tmp materials/categories.yml
 npm run build:categories -- materials/categories.yml
 ```
 
-
 ## 4. Development
 
 See [ESSE](https://github.com/Exabyte-io/esse) for the notes about development and testing.
 
+### 4.1. Materials Naming Conventions
+
+The naming convention for materials in our dataset follows a structured format that combines chemical composition,
+common name, crystal system, space group, dimensionality, specific structure details, and a unique identifier. Each
+component of the name provides critical information about the material.
+
+#### 4.1.1. Name Property Format
+
+{Chemical Formula}, {Common Name}, {Crystal System} ({Space Group}) {Dimensionality} ({Structure Detail}), {Unique
+Identifier}
+
+**Examples**:
+
+- Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23
+- ZrO2, Zirconium Dioxide, MCL (P2_1/c) 3D (Bulk), mp-2858
+- C, Graphite, HEX (P6_3/mmc) 3D (Bulk), mp-48
+- C, Graphene, HEX (P6/mmm) 2D (Monolayer), mp-1040425
+
+#### 4.1.2. Filename Format
+
+For filenames, we employ a slugification process to ensure compatibility with filesystems and ease of access through
+URLs or command-line interfaces. The process transforms material names into a standardized, URL-safe format.
+
+{Chemical_Formula}-[{Common_Name}]-{Crystal_System}_[{Space_Group}]_
+{Dimensionality}_[{Structure_Detail}]-[{Unique_Identifier}]
+
+**Transformation Rules**:
+
+Commas and Spaces: Replace `, ` (comma and space) with `-` (hyphen) and ` ` (space) with `_` (underscore).
+Parentheses: Convert `(` and `)` into `[` and `]` respectively.
+Special Characters: Encode characters such as `/` into URL-safe representations (e.g., `%2F`).
+Brackets: Wrap common name and identifier parts in square brackets `[]`.
+
+**Filename Examples**:
+
+- Ni-[Nickel]-FCC_[Fm-3m]_3D_[Bulk]-[mp-23]
+- ZrO2-[Zirconium_Dioxide]-MCL_[P2_1%2Fc]_3D_[Bulk]-[mp-2858]
+- C-[Graphite]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-48]
+- C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[mp-1040425]
 
 ## 5. Links
 
