@@ -15,7 +15,7 @@ categories:
     - ceramic
   form_factor:
     - bulk
-    - surface
+    - layer
     - interface
   dimensionality:
     - 0D
@@ -46,13 +46,13 @@ entities:
   - filename: C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[mp-1040425].json
     categories:
       - 2D
-      - surface
+      - layer
       - semi-metal
       - non-magnetic
   - filename: BN-[Hexagonal_Boron_Nitride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-984].json
     categories:
       - 2D
-      - surface
+      - layer
       - insulator
       - non-magnetic
   - filename: NaCl-[Sodium_Chloride]-CUB_[Fm-3m]_3D_[Bulk]-[mp-22862].json
@@ -66,6 +66,13 @@ entities:
       - 3D
       - bulk
       - semiconductor
+      - non-magnetic
+  - filename: Si-[Silicene]-HEX_[P-3m1]_2D_[Monolayer]-[m3-gZphvTrBLPNy3sagk].json
+    categories:
+      - 2D
+      - layer
+      - semiconductor
+      - non-magnetic
   - filename: WS2-[Tungsten_Disulfide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-224].json
     categories:
       - 3D
@@ -75,7 +82,7 @@ entities:
   - filename: WS2-[Tungsten_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[m3-7oJTkFFyBgNPRGe6M].json
     categories:
       - 2D
-      - surface
+      - layer
       - semiconductor
       - non-magnetic
   - filename: Ni-[Nickel]-FCC_[Fm-3m]_3D_[Bulk]-[mp-23].json
@@ -171,7 +178,7 @@ entities:
   - filename: MoS2-[Molybdenum_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[m3-bsq28woJc7dnZmvCt].json
     categories:
       - 2D
-      - surface
+      - layer
       - semiconductor
       - non-magnetic
   - filename: MoTe2-[Molybdenum_Telluride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-602].json
@@ -183,7 +190,7 @@ entities:
   - filename: MoTe2-[Molybdenum_Telluride]-HEX_[P-6m2]_2D_[Monolayer]-[mp-602].json
     categories:
       - 2D
-      - surface
+      - layer
       - semiconductor
       - non-magnetic
   - filename: WSe2-[Tungsten_Diselenide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-1821].json
@@ -195,7 +202,7 @@ entities:
   - filename: WSe2-[Tungsten_Diselenide]-HEX_[P-6m2]_2D_[Monolayer]-[m3-a9GGgaoBdnCHPn9hs].json
     categories:
       - 2D
-      - surface
+      - layer
       - semiconductor
       - non-magnetic
   - filename: GaN-[Gallium_Nitride]-HEX_[P6_3mc]_3D_[Bulk]-[mp-804].json
