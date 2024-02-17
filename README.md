@@ -132,6 +132,36 @@ Parentheses: Convert `(` and `)` into `[` and `]` respectively.
 Special Characters: Encode characters such as `/` into URL-safe representations (e.g., `%2F`).
 Brackets: Wrap common name and identifier parts in square brackets `[]`.
 
+A Python function to create a slug:
+
+```python
+def slugify(text):
+    # Split the text into four parts
+    parts = text.split(", ")
+    if len(parts) != 4:
+        raise ValueError("Input does not contain the expected number of parts.")
+    
+    # Apply transformations to each part
+    parts[1] = f"[{parts[1].replace(' ', '_')}]"
+    parts[3] = f"[{parts[3].replace(' ', '_').replace('(', '[').replace(')', ']').replace('/', '%2F')}]"
+    
+    # Rejoin the parts with '-' and apply transformations to the whole text
+    result = '-'.join(parts)
+    
+    # Replace parentheses in the 3rd part and spaces in the 1st and 3rd parts
+    result = result.replace('(', '[').replace(')', ']').replace(' ', '_')
+    
+    return result
+
+# Test the function
+inputs = [
+    "MoTe2, Molybdenum Telluride, HEX (P-6m2) 2D (Monolayer), mp-602"
+]
+
+for text in inputs:
+    print(slugify(text))
+```
+
 **Filename Examples**:
 
 - Ni-[Nickel]-FCC_[Fm-3m]_3D_[Bulk]-[mp-23]
