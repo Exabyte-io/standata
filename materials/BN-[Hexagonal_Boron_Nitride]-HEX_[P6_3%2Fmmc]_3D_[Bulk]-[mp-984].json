@@ -80,7 +80,7 @@
         ],
         "constraints": []
     },
-    "name": "h-BN (mp-984)",
+    "name": "BN, Hexagonal Boron Nitride, HEX (P6_3/mmc) 3D (Bulk), mp-984",
     "isNonPeriodic": false,
     "external": {
         "id": "mp-984",

@@ -1,31 +1,31 @@
 {
     "lattice": {
-        "a": 4.065993,
-        "b": 4.065993,
-        "c": 4.065993,
-        "alpha": 60,
-        "beta": 60,
-        "gamma": 60,
+        "a": 2.467291,
+        "b": 2.467291,
+        "c": 20,
+        "alpha": 90,
+        "beta": 90,
+        "gamma": 120,
         "units": {
             "length": "angstrom",
             "angle": "degree"
         },
-        "type": "FCC",
+        "type": "HEX",
         "vectors": {
             "a": [
-                3.521253,
+                2.467291,
                 0,
-                2.032997
+                0
             ],
             "b": [
-                1.173751,
-                3.319869,
-                2.032997
+                -1.233645,
+                2.136737,
+                0
             ],
             "c": [
                 0,
                 0,
-                4.065993
+                20
             ],
             "alat": 1,
             "units": "angstrom"
@@ -35,11 +35,11 @@
         "elements": [
             {
                 "id": 0,
-                "value": "Ga"
+                "value": "C"
             },
             {
                 "id": 1,
-                "value": "As"
+                "value": "C"
             }
         ],
         "coordinates": [
@@ -54,39 +54,39 @@
             {
                 "id": 1,
                 "value": [
-                    0.25,
-                    0.25,
-                    0.25
+                    0.333333,
+                    0.666667,
+                    0
                 ]
             }
         ],
         "units": "crystal",
         "cell": [
             [
-                3.5212532296097008,
+                2.467291,
                 0,
-                2.0329965000000003
+                0
             ],
             [
-                1.173751076536567,
-                3.3198693825760675,
-                2.0329965000000003
+                -1.2336454999999995,
+                2.136736684528712,
+                0
             ],
             [
                 0,
                 0,
-                4.065993
+                20
             ]
         ],
         "constraints": []
     },
-    "name": "GaAs (mp-2534)",
+    "name": "C, Graphene, HEX (P6/mmm) 2D (Monolayer), mp-1040425",
     "isNonPeriodic": false,
     "external": {
-        "id": "mp-2534",
+        "id": "mp-1040425",
         "source": "materials project",
-        "doi": "10.17188/1200591",
-        "url": "https://next-gen.materialsproject.org/materials/mp-2534/",
+        "doi": "10.17188/1405723",
+        "url": "https://next-gen.materialsproject.org/materials/mp-1040425/",
         "origin": true
     }
 }

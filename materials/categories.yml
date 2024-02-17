@@ -43,13 +43,13 @@ categories:
     - carbide
 
 entities:
-  - filename: Graphene.json
+  - filename: C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[mp-1040425].json
     categories:
       - 2D
       - surface
       - semi-metal
       - non-magnetic
-  - filename: h-BN.json
+  - filename: BN-[Hexagonal_Boron_Nitride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-984].json
     categories:
       - 2D
       - surface
@@ -84,21 +84,21 @@ entities:
       - bulk
       - metal
       - ferromagnetic
-  - filename: C.json
+  - filename: C-[Graphite]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-48].json
     categories:
       - 3D
       - bulk
       - semi-metal
       - non-magnetic
       - battery/energy storage
-  - filename: Cu.json
+  - filename: Cu-[Copper]-FCC_[Fm-3m]_3D_[Bulk]-[mp-30].json
     categories:
       - 3D
       - bulk
       - metal
       - non-magnetic
       - metals & alloys
-  - filename: Au-Gold-FCC_Fm-3m_3D_Bulk-[mp-81].json
+  - filename: Au-[Gold]-FCC_[Fm-3m]_3D_[Bulk]-[mp-81].json
     categories:
       - 3D
       - bulk
@@ -112,7 +112,7 @@ entities:
       - semiconductor
       - non-magnetic
       - oxide
-  - filename: Al2O3-Sapphire-RHL_R3c_3D_Bulk-[mp-1143].json
+  - filename: Al2O3-[Sapphire]-RHL_[R3c]_3D_[Bulk]-[mp-1143].json
     categories:
       - 3D
       - bulk
@@ -134,7 +134,7 @@ entities:
       - insulator
       - non-magnetic
       - oxide
-  - filename: HfO2.json
+  - filename: HfO2-[Hafnium_IV_Oxide]-MCL_[P2_1%2Fc]_3D_[Bulk]-[mp-352].json
     categories:
       - 3D
       - bulk
@@ -198,20 +198,20 @@ entities:
       - surface
       - semiconductor
       - non-magnetic
-  - filename: GaN.json
+  - filename: GaN-[Gallium_Nitride]-HEX_[P6_3mc]_3D_[Bulk]-[mp-804].json
     categories:
       - 3D
       - bulk
       - semiconductor
       - non-magnetic
       - nitride
-  - filename: GaAs.json
+  - filename: GaAs-[Gallium_Arsenide]-FCC_[F-43m]-[mp-2534].json
     categories:
       - 3D
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: AlN-Aluminum_Nitride-HEX_P6_3mc_3D_Bulk-[mp-661].json
+  - filename: AlN-[Aluminum_Nitride]-HEX_[P6_3mc]_3D_[Bulk]-[mp-661].json
     categories:
       - 3D
       - bulk

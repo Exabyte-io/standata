@@ -68,7 +68,7 @@
         ],
         "constraints": []
     },
-    "name": "Cu (mp-30)",
+    "name": "Cu, Copper, FCC (Fm-3m) 3D (Bulk), mp-30",
     "isNonPeriodic": false,
     "external": {
         "id": "mp-30",
