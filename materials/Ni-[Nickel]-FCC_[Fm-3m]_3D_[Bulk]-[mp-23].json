@@ -1,5 +1,4 @@
 {
-    "name": "Ni (mp-23)",
     "basis": {
         "elements": [
             {
@@ -78,11 +77,11 @@
             "units": "angstrom"
         }
     },
+    "name": "Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23",
     "isNonPeriodic": false,
     "external": {
-        "id": "mp-224",
+        "id": "mp-23",
         "source": "materials project",
-        "doi": "10.17188/1199153",
         "url": "https://next-gen.materialsproject.org/materials/mp-23/",
         "origin": true
     }

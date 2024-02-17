@@ -1,0 +1,103 @@
+{
+    "lattice": {
+        "a": 3.184222,
+        "b": 3.184222,
+        "c": 12.97828,
+        "alpha": 90,
+        "beta": 90,
+        "gamma": 120,
+        "units": {
+            "length": "angstrom",
+            "angle": "degree"
+        },
+        "type": "HEX",
+        "vectors": {
+            "a": [
+                1.5921114461115318,
+                -2.7576179159771317,
+                0.0
+            ],
+            "b": [
+                1.5921114461115318,
+                2.7576179159771317,
+                0.0
+            ],
+            "c": [
+                0.0,
+                0.0,
+                12.97828236
+            ],
+            "alat": 1,
+            "units": "angstrom"
+        }
+    },
+    "basis": {
+        "elements": [
+            {
+                "id": 0,
+                "value": "W"
+            },
+            {
+                "id": 1,
+                "value": "S"
+            },
+            {
+                "id": 2,
+                "value": "S"
+            }
+        ],
+        "coordinates": [
+            {
+                "id": 0,
+                "value": [
+                    0.333333,
+                    0.666667,
+                    0.120195
+                ]
+            },
+            {
+                "id": 1,
+                "value": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "id": 2,
+                "value": [
+                    0.0,
+                    0.0,
+                    0.24039
+                ]
+            }
+        ],
+        "units": "crystal",
+        "cell": [
+            [
+                1.5921114461115318,
+                -2.7576179159771317,
+                0.0
+            ],
+            [
+                1.5921114461115318,
+                2.7576179159771317,
+                0.0
+            ],
+            [
+                0,
+                0,
+                12.97828236
+            ]
+        ],
+        "constraints": []
+    },
+    "name": "WS2, Tungsten Disulfide, HEX (P-6m2) 2D (Monolayer), m3-7oJTkFFyBgNPRGe6M",
+    "isNonPeriodic": false,
+    "external": {
+        "id": "7oJTkFFyBgNPRGe6M",
+        "source": "mat3ra",
+        "url": "https://platform.mat3ra.com/bank/materials/7oJTkFFyBgNPRGe6M",
+        "origin": true
+    }
+}

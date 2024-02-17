@@ -61,24 +61,24 @@ entities:
       - bulk
       - insulator
       - non-magnetic
-  - filename: Si.json
+  - filename: Si-[Silicon]-FCC_[Fd-3m]_3D_[Bulk]-[mp-149].json
     categories:
       - 3D
       - bulk
       - semiconductor
-  - filename: WS2.json
+  - filename: WS2-[Tungsten_Disulfide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-224].json
     categories:
       - 3D
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: WS2_001.json
+  - filename: WS2-[Tungsten_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[m3-7oJTkFFyBgNPRGe6M].json
     categories:
       - 2D
       - surface
       - semiconductor
       - non-magnetic
-  - filename: Ni.json
+  - filename: Ni-[Nickel]-FCC_[Fm-3m]_3D_[Bulk]-[mp-23].json
     categories:
       - 3D
       - bulk
@@ -105,7 +105,7 @@ entities:
       - metal
       - non-magnetic
       - metals & alloys
-  - filename: ZnO.json
+  - filename: ZnO-[Zinc_Oxide]-HEX_[P6_3mc]_3D_[Bulk]-[mp-2133].json
     categories:
       - 3D
       - bulk
@@ -119,7 +119,7 @@ entities:
       - insulator
       - non-magnetic
       - oxide
-  - filename: SiO2.json
+  - filename: SiO2-[Quartz]-HEX_[P3_121]_3D_[Bulk]-[mp-7000].json
     categories:
       - 3D
       - bulk
@@ -127,7 +127,7 @@ entities:
       - non-magnetic
       - oxide
       - glass
-  - filename: ZrO2.json
+  - filename: ZrO2-[Zirconium_Dioxide]-MCL_[P2_1%2Fc]_3D_[Bulk]-[mp-2858].json
     categories:
       - 3D
       - bulk
@@ -141,21 +141,21 @@ entities:
       - insulator
       - non-magnetic
       - oxide
-  - filename: Y2O3.json
+  - filename: Y2O3-[Yttrium_III_Oxide]-MCLC_[C2%2Fm]_3D_[Bulk]-[mp-558573].json
     categories:
       - 3D
       - bulk
       - insulator
       - non-magnetic
       - oxide
-  - filename: VO2.json
+  - filename: VO2-[Vanadium_IV_Oxide]-TET_[P4_2%2Fmnm]_3D_[Bulk]-[mp-19094].json
     categories:
       - 3D
       - bulk
       - semiconductor
       - ferromagnetic
       - oxide
-  - filename: TiO2.json
+  - filename: TiO2-[Titanium_Oxide]-TET_[P4_2%2Fmnm]_3D_[Bulk]-[mp-2657].json
     categories:
       - 3D
       - bulk
@@ -186,13 +186,13 @@ entities:
       - surface
       - semiconductor
       - non-magnetic
-  - filename: WSe2.json
+  - filename: WSe2-[Tungsten_Diselenide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-1821].json
     categories:
       - 3D
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: WSe2_001.json
+  - filename: WSe2-[Tungsten_Diselenide]-HEX_[P-6m2]_2D_[Monolayer]-[m3-a9GGgaoBdnCHPn9hs].json
     categories:
       - 2D
       - surface

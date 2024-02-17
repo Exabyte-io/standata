@@ -164,7 +164,7 @@
         ],
         "constraints": []
     },
-    "name": "SiO2 (mp-7000)",
+    "name": "SiO2, Quartz, HEX (P3_121) 3D (Bulk), mp-7000",
     "isNonPeriodic": false,
     "external": {
         "id": "mp-7000",
