@@ -99,12 +99,18 @@ npm run build:categories -- materials/categories.yml
 
 See [ESSE](https://github.com/Exabyte-io/esse) for the notes about development and testing.
 
-### 4.1. Materials Naming Conventions
-Our dataset's naming convention for materials is designed to provide a comprehensive yet concise description of each material, incorporating essential attributes such as chemical composition, common name, crystal structure, and unique identifiers. This standardized naming ensures uniformity across our dataset and facilitates easy identification and categorization of materials.
+### 4.1. Materials Source
 
-### 4.1.1. Name Property Format
+The materials data is sourced from the [Materials Project](https://next-gen.materialsproject.org) for 3D materials and [2dmatpedia](http://www.2dmatpedia.org) for 2D materials. The structural data in POSCAR format is stored in the `materials/sources` directory alongside the `manifest.yml` file that contains the additional description and metadata for each material.
+Python script `create_materials.py` is used to create the materials data files from the source data.
 
-The format for the material name property is a structured representation that includes the chemical formula, common name, crystal system, space group, dimensionality, specific structure details, and a unique identifier. Each element in the name is separated by a comma and space, providing a clear and readable format.
+### 4.2. Materials Naming Conventions
+
+Our dataset's naming convention for materials is designed to provide a comprehensive description of each material, incorporating essential attributes such as chemical composition, common name, crystal structure, and unique identifiers.
+
+### 4.2.1. Name Property Format
+
+The format for the material name property is a structured representation that includes the chemical formula, common name, crystal system, space group, dimensionality, specific structure details, and a unique identifier. Each element in the name is separated by a comma and space.
 
 Format:
 ```
@@ -119,7 +125,7 @@ Format:
 - C, Graphite, HEX (P6_3/mmc) 3D (Bulk), mp-48
 - C, Graphene, HEX (P6/mmm) 2D (Monolayer), mp-1040425
 
-### 4.1.2. Filename Format
+### 4.2.2. Filename Format
 
 Filenames are derived from the name property through a slugification process, ensuring they are filesystem-friendly and easily accessible via URLs or command-line interfaces. This process involves converting the structured name into a standardized, URL-safe format that reflects the material's attributes.
 
@@ -135,36 +141,6 @@ Commas and Spaces: Replace `, ` (comma and space) with `-` (hyphen) and ` ` (spa
 Parentheses: Convert `(` and `)` into `[` and `]` respectively.
 Special Characters: Encode characters such as `/` into URL-safe representations (e.g., `%2F`).
 Brackets: Wrap common name and identifier parts in square brackets `[]`.
-
-A Python function to create a slug:
-
-```python
-def slugify(text):
-    # Split the text into four parts
-    parts = text.split(", ")
-    if len(parts) != 4:
-        raise ValueError("Input does not contain the expected number of parts.")
-
-    # Apply transformations to each part
-    parts[1] = f"[{parts[1].replace(' ', '_')}]"
-    parts[3] = f"[{parts[3].replace(' ', '_').replace('(', '[').replace(')', ']').replace('/', '%2F')}]"
-
-    # Rejoin the parts with '-' and apply transformations to the whole text
-    result = '-'.join(parts)
-
-    # Replace parentheses in the 3rd part and spaces in the 1st and 3rd parts
-    result = result.replace('(', '[').replace(')', ']').replace(' ', '_')
-
-    return result
-
-# Test the function
-inputs = [
-    "MoTe2, Molybdenum Telluride, HEX (P-6m2) 2D (Monolayer), mp-602"
-]
-
-for text in inputs:
-    print(slugify(text))
-```
 
 **Filename Examples**:
 
