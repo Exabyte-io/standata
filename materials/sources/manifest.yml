@@ -186,4 +186,24 @@ sources:
     doi: 10.17188/1199153
     url: https://next-gen.materialsproject.org/materials/mp-23
 
-    
+  - filename: 2dm-5934.poscar
+    common_name: Silicene
+    lattice_type: HEX
+    space_group: P-3m1
+    dimensionality: 2D
+    form_factor: Monolayer
+    source_id: 2dm-5934
+    source: 2dmatpedia
+    doi: 10.1038/s41597-019-0097-3
+    url: http://www.2dmatpedia.org/2dmaterials/doc/2dm-5934
+
+  - filename: mp-149.poscar
+    common_name: Silicon
+    lattice_type: FCC
+    space_group: Fd-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-149
+    source: Materials Project
+    doi: 10.17188/1190959
+    url: https://next-gen.materialsproject.org/materials/mp-149
