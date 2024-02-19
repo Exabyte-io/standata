@@ -125,7 +125,7 @@ entities:
       - semiconductor
       - non-magnetic
       - oxide
-  - filename: Al2O3-[Sapphire]-RHL_[R3c]_3D_[Bulk]-[mp-1143].json
+  - filename: Al2O3-[Sapphire]-RHL_[R-3c]_3D_[Bulk]-[mp-1143].json
     categories:
       - 3D
       - bulk
@@ -218,7 +218,7 @@ entities:
       - semiconductor
       - non-magnetic
       - nitride
-  - filename: GaAs-[Gallium_Arsenide]-FCC_[F-43m]-[mp-2534].json
+  - filename: GaAs-[Gallium_Arsenide]-FCC_[F-43m]_3D_[Bulk]-[mp-2534].json
     categories:
       - 3D
       - bulk
