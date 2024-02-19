@@ -23,6 +23,10 @@ export class Standata {
         filesMapByName: {},
     };
 
+    static getRuntimeDataConfigs(): any[] {
+        return Object.values(this.runtimeData.filesMapByName);
+    }
+
     entities: EntityItem[];
 
     categories: string[];
@@ -87,7 +91,7 @@ export class Standata {
         return filenames;
     }
 
-    find_entities(...tags: string[]): object[] {
+    findEntitiesByTags(...tags: string[]): object[] {
         const categories_ = this.convertTagToCategory(...tags);
         const filenames = this.filterByCategories(...categories_) || [];
         return filenames.map((f) => this.loadEntity(f)).filter((e): e is object => e !== undefined);
