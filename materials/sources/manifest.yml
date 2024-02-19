@@ -287,7 +287,7 @@ sources:
 
   - filename: mp-558573.poscar
     common_name: Yttrium III Oxide
-    lattice_type: MCL
+    lattice_type: MCLC
     space_group: C2/m
     dimensionality: 3D
     form_factor: Bulk
