@@ -73,4 +73,7 @@ def main():
                 json.dump(material_config, file)
             materials.append(material_config)
         print(f'Created {filename}.json')
+    print(f'Total materials created: {len(materials)}')
+
+    
 main()
