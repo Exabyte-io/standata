@@ -54,7 +54,7 @@ def main():
 
             material_config["name"] = name
 
-            # remove all keys except for name, lattice, basis. 
+            # remove all keys except for name, lattice, basis.
             material_config = {k: material_config[k] for k in ('name', 'lattice', 'basis')}
 
             # add "external" property
@@ -75,5 +75,5 @@ def main():
         print(f'Created {filename}.json')
     print(f'Total materials created: {len(materials)}')
 
-    
+
 main()
