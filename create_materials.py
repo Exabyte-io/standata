@@ -5,7 +5,6 @@ from express import ExPrESS
 def read_manifest(manifest_path):
     with open(manifest_path, 'r') as file:
         manifest = yaml.safe_load(file)
-    print(manifest['sources'])
     return manifest['sources']
 
 
@@ -29,17 +28,17 @@ def main():
 
             name = f'{material_config["formula"]}, {source["common_name"]}, {source["lattice_type"]} ({source["space_group"]}) {source["dimensionality"]} ({source["form_factor"]}), {source["source_id"]}'
 
-            # slugify common name
+            # slugify the common name
             common_name = source["common_name"].replace(' ', '_')
             # create slugified filename
             filename = f'{material_config["formula"]}-[{common_name}]-{source["lattice_type"]}_[{source["space_group"]}]_{source["dimensionality"]}_[{source["form_factor"]}]-[{source["source_id"]}]'
 
-            # replace special carachters with URL encoding
+            # replace special characters with URL encoding
             filename = filename.replace('/', '%2F')
 
             material_config["name"] = name
 
-            # remove keys apart from name, lattice, basis. 
+            # remove all keys except for name, lattice, basis. 
             material_config = {k: material_config[k] for k in ('name', 'lattice', 'basis')}
 
             # add "external" property
@@ -53,10 +52,9 @@ def main():
 
             # add "isNonPeriodic" property
             material_config['isNonPeriodic'] = False
-            
-            print(material_config)
+
             with open(f'materials/{filename}.json', 'w') as file:
                 json.dump(material_config, file)
             materials.append(material_config)
-
+        print(f'Created {filename}.json')
 main()
