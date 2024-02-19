@@ -284,3 +284,36 @@ sources:
     source: Materials Project
     doi: 10.17188/1192989
     url: https://next-gen.materialsproject.org/materials/mp-1821
+
+  - filename: mp-558573.poscar
+    common_name: Yttrium III Oxide
+    lattice_type: MCL
+    space_group: C2/m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-558573
+    source: Materials Project
+    doi: 10.17188/1272685
+    url: https://next-gen.materialsproject.org/materials/mp-558573
+
+  - filename: mp-2133.poscar
+    common_name: Zinc Oxide
+    lattice_type: HEX
+    space_group: P6_3mc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-2133
+    source: Materials Project
+    doi: 10.17188/1196748
+    url: https://next-gen.materialsproject.org/materials/mp-2133
+
+  - filename: mp-2858.poscar
+    common_name: Zirconium Dioxide
+    lattice_type: MCL
+    space_group: P2_1/c
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-2858
+    source: Materials Project
+    doi: 10.17188/1202679
+    url: https://next-gen.materialsproject.org/materials/mp-2858

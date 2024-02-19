@@ -62,13 +62,13 @@ entities:
       - layer
       - insulator
       - non-magnetic
-  - filename: BN-[Bornon_Nitride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-7991].json
+  - filename: BN-[Boron_Nitride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-7991].json
     categories:
       - 3D
       - bulk
       - insulator
       - non-magnetic
-  - filename: NaCl-[Sodium_Chloride]-CUB_[Fm-3m]_3D_[Bulk]-[mp-22862].json
+  - filename: NaCl-[Sodium_Chloride]-FCC_[Fm-3m]_3D_[Bulk]-[mp-22862].json
     categories:
       - 3D
       - bulk
@@ -80,7 +80,7 @@ entities:
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: Si-[Silicene]-
+  - filename: Si-[Silicene]-HEX_[P-3m1]_2D_[Monolayer]-[2dm-5934].json
     categories:
       - 2D
       - layer
@@ -92,7 +92,7 @@ entities:
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: WS2-
+  - filename: WS2-[Tungsten_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-3749].json
     categories:
       - 2D
       - layer
