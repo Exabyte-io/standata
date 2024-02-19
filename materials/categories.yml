@@ -43,16 +43,28 @@ categories:
     - carbide
 
 entities:
-  - filename: Graphene.json
+  - filename: C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-3993].json
     categories:
       - 2D
       - surface
       - semi-metal
       - non-magnetic
-  - filename: h-BN.json
+  - filename: C-[Graphite]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-48].json
+    categories:
+      - 3D
+      - bulk
+      - semi-metal
+      - non-magnetic
+  - filename: BN-[Hexagonal_Boron_Nitride]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-4991].json
     categories:
       - 2D
       - surface
+      - insulator
+      - non-magnetic
+  - filename: BN-[Boron_Nitride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-7991].json
+    categories:
+      - 3D
+      - bulk
       - insulator
       - non-magnetic
   - filename: Na4Cl4.json
