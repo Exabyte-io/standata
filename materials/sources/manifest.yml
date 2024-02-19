@@ -207,3 +207,80 @@ sources:
     source: Materials Project
     doi: 10.17188/1190959
     url: https://next-gen.materialsproject.org/materials/mp-149
+
+  - filename: mp-7000.poscar
+    common_name: Quartz
+    lattice_type: HEX
+    space_group: P3_121
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-7000
+    source: Materials Project
+    doi: 10.17188/1272685
+    url: https://next-gen.materialsproject.org/materials/mp-7000
+
+  - filename: mp-2657.poscar
+    common_name: Titanium Oxide
+    lattice_type: TET
+    space_group: P4_2/mnm
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-2657
+    source: Materials Project
+    doi: 
+    url: https://next-gen.materialsproject.org/materials/mp-2657
+
+  - filename: mp-19094.poscar
+    common_name: Vanadium IV Oxide
+    lattice_type: TET
+    space_group: P4_2/mnm
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-19094
+    source: Materials Project
+    doi:
+    url: https://next-gen.materialsproject.org/materials/mp-19094
+
+  - filename: 2dm-3749.poscar
+    common_name: Tungsten Disulfide
+    lattice_type: HEX
+    space_group: P-6m2
+    dimensionality: 2D
+    form_factor: Monolayer
+    source_id: 2dm-3749
+    source: 2dmatpedia
+    doi: 10.1038/s41597-019-0097-3
+    url: http://www.2dmatpedia.org/2dmaterials/doc/2dm-3749
+
+  - filename: mp-224.poscar
+    common_name: Tungsten Disulfide
+    lattice_type: HEX
+    space_group: P6_3/mmc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-224
+    source: Materials Project
+    doi: 10.17188/1197614
+    url: https://next-gen.materialsproject.org/materials/mp-224
+
+  - filename: 2dm-3594.poscar
+    common_name: Tungsten Diselenide
+    lattice_type: HEX
+    space_group: P-6m2
+    dimensionality: 2D
+    form_factor: Monolayer
+    source_id: 2dm-3594
+    source: 2dmatpedia
+    doi: 10.1038/s41597-019-0097-3
+    url: http://www.2dmatpedia.org/2dmaterials/doc/2dm-3594
+
+  - filename: mp-1821.poscar
+    common_name: Tungsten Diselenide
+    lattice_type: HEX
+    space_group: P6_3/mmc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-1821
+    source: Materials Project
+    doi: 10.17188/1192989
+    url: https://next-gen.materialsproject.org/materials/mp-1821
