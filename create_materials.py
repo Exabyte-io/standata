@@ -18,6 +18,30 @@ def convert_to_esse(poscar):
     esse = handler.property("material", **kwargs)
     return esse
 
+def construct_name(material_config, source):
+    name_parts = [
+        material_config["formula"],
+        source["common_name"],
+        f'{source["lattice_type"]} ({source["space_group"]}) {source["dimensionality"]} ({source["form_factor"]})',
+        source["source_id"]
+    ]
+    return ', '.join(name_parts)
+
+def construct_filename(material_config, source):
+    # Slugify the common name
+    common_name = source["common_name"].replace(' ', '_')
+    # Create slugified filename
+    filename_parts = [
+        material_config["formula"],
+        f'[{common_name}]',
+        f'{source["lattice_type"]}_[{source["space_group"]}]_{source["dimensionality"]}_[{source["form_factor"]}]',
+        f'[{source["source_id"]}]'
+    ]
+    filename = '-'.join(filename_parts)
+    # replace special characters with URL encoding
+    filename = filename.replace('/', '%2F')
+
+    return filename
 
 def main():
     materials = []
@@ -25,30 +49,8 @@ def main():
         with open(f"materials/sources/{source['filename']}", 'r') as file:
             poscar = file.read()
             material_config = convert_to_esse(poscar)
-
-            # Construct name
-            name_parts = [
-                material_config["formula"],
-                source["common_name"],
-                f'{source["lattice_type"]} ({source["space_group"]}) {source["dimensionality"]} ({source["form_factor"]})',
-                source["source_id"]
-            ]
-            name = ', '.join(name_parts)
-
-            # Slugify the common name
-            common_name = source["common_name"].replace(' ', '_')
-
-            # Create slugified filename
-            filename_parts = [
-                material_config["formula"],
-                f'[{common_name}]',
-                f'{source["lattice_type"]}_[{source["space_group"]}]_{source["dimensionality"]}_[{source["form_factor"]}]',
-                f'[{source["source_id"]}]'
-            ]
-            filename = '-'.join(filename_parts)
-
-            # replace special characters with URL encoding
-            filename = filename.replace('/', '%2F')
+            name = construct_name(material_config, source)
+            filename = construct_filename(material_config, source)
 
             material_config["name"] = name
 
