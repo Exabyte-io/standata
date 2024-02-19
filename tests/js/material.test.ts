@@ -1,10 +1,10 @@
 import { expect } from "chai";
 
-import h_BN from "../../materials/BN-[Hexagonal_Boron_Nitride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-984].json";
-import Graphene from "../../materials/C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[mp-1040425].json";
-import Na4Cl4 from "../../materials/NaCl-[Sodium_Chloride]-CUB_[Fm-3m]_3D_[Bulk]-[mp-22862].json";
+import h_BN from "../../materials/BN-[Hexagonal_Boron_Nitride]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-4991].json";
+import Graphene from "../../materials/C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-3993].json";
+import Na4Cl4 from "../../materials/NaCl-[Sodium_Chloride]-FCC_[Fm-3m]_3D_[Bulk]-[mp-22862].json";
 import Si from "../../materials/Si-[Silicon]-FCC_[Fd-3m]_3D_[Bulk]-[mp-149].json";
-import WS2 from "../../materials/WS2-[Tungsten_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[m3-7oJTkFFyBgNPRGe6M].json";
+import WS2 from "../../materials/WS2-[Tungsten_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-3749].json";
 import { MaterialStandata } from "../../src/js";
 
 const TOTAL_NUMBER_OF_MATERIALS = 28;
