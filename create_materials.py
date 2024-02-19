@@ -26,12 +26,26 @@ def main():
             poscar = file.read()
             material_config = convert_to_esse(poscar)
 
-            name = f'{material_config["formula"]}, {source["common_name"]}, {source["lattice_type"]} ({source["space_group"]}) {source["dimensionality"]} ({source["form_factor"]}), {source["source_id"]}'
+            # Construct name
+            name_parts = [
+                material_config["formula"],
+                source["common_name"],
+                f'{source["lattice_type"]} ({source["space_group"]}) {source["dimensionality"]} ({source["form_factor"]})',
+                source["source_id"]
+            ]
+            name = ', '.join(name_parts)
 
-            # slugify the common name
+            # Slugify the common name
             common_name = source["common_name"].replace(' ', '_')
-            # create slugified filename
-            filename = f'{material_config["formula"]}-[{common_name}]-{source["lattice_type"]}_[{source["space_group"]}]_{source["dimensionality"]}_[{source["form_factor"]}]-[{source["source_id"]}]'
+
+            # Create slugified filename
+            filename_parts = [
+                material_config["formula"],
+                f'[{common_name}]',
+                f'{source["lattice_type"]}_[{source["space_group"]}]_{source["dimensionality"]}_[{source["form_factor"]}]',
+                f'[{source["source_id"]}]'
+            ]
+            filename = '-'.join(filename_parts)
 
             # replace special characters with URL encoding
             filename = filename.replace('/', '%2F')
