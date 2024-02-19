@@ -175,25 +175,25 @@ entities:
       - insulator
       - non-magnetic
       - oxide
-  - filename: MoS2-[Molybdenum_Disulfide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-2815].json
+  - filename: MoS2-[Molybdenum_Disulfide]-HEX_[P_3%2Fmmc]_3D_[Bulk]-[mp-2815].json
     categories:
       - 3D
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: MoS2-[Molybdenum_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[m3-bsq28woJc7dnZmvCt].json
+  - filename: MoS2-[Molybdenum_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-3150].json
     categories:
       - 2D
       - layer
       - semiconductor
       - non-magnetic
-  - filename: MoTe2-[Molybdenum_Telluride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-602].json
+  - filename: Te2Mo-[Molybdenum_Telluride]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-5370].json
     categories:
       - 3D
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: MoTe2-[Molybdenum_Telluride]-HEX_[P-6m2]_2D_[Monolayer]-[mp-602].json
+  - filename: Te2Mo-[Molybdenum_Telluride]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-5370].json
     categories:
       - 2D
       - layer
@@ -205,7 +205,7 @@ entities:
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: WSe2-
+  - filename: WSe2-[Tungsten_Diselenide]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-3594].json
     categories:
       - 2D
       - layer
