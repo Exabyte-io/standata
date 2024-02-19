@@ -56,10 +56,16 @@ entities:
       - semi-metal
       - non-magnetic
       - battery/energy storage
-  - filename: BN-[Hexagonal_Boron_Nitride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-984].json
+  - filename: BN-[Hexagonal_Boron_Nitride]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-4991].json
     categories:
       - 2D
       - layer
+      - insulator
+      - non-magnetic
+  - filename: BN-[Bornon_Nitride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-7991].json
+    categories:
+      - 3D
+      - bulk
       - insulator
       - non-magnetic
   - filename: NaCl-[Sodium_Chloride]-CUB_[Fm-3m]_3D_[Bulk]-[mp-22862].json
@@ -74,7 +80,7 @@ entities:
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: Si-[Silicene]-HEX_[P-3m1]_2D_[Monolayer]-[m3-gZphvTrBLPNy3sagk].json
+  - filename: Si-[Silicene]-
     categories:
       - 2D
       - layer
@@ -86,7 +92,7 @@ entities:
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: WS2-[Tungsten_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[m3-7oJTkFFyBgNPRGe6M].json
+  - filename: WS2-
     categories:
       - 2D
       - layer
@@ -199,7 +205,7 @@ entities:
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: WSe2-[Tungsten_Diselenide]-HEX_[P-6m2]_2D_[Monolayer]-[m3-a9GGgaoBdnCHPn9hs].json
+  - filename: WSe2-
     categories:
       - 2D
       - layer
