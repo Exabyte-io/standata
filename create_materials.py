@@ -39,18 +39,21 @@ def main():
 
             material_config["name"] = name
 
-            # remove keys apart from name, lattice, basis. isNonPeriodic
+            # remove keys apart from name, lattice, basis. 
             material_config = {k: material_config[k] for k in ('name', 'lattice', 'basis')}
 
             # add "external" property
-            material_config['external'] = {'external': {
+            material_config['external'] = {
                 "id": source["source_id"],
                 "source": source["source"],
                 "doi": source["doi"],
                 "url": source["url"],
                 "origin": True
             }
-                                           }
+
+            # add "isNonPeriodic" property
+            material_config['isNonPeriodic'] = False
+            
             print(material_config)
             with open(f'materials/{filename}.json', 'w') as file:
                 json.dump(material_config, file)
