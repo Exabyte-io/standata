@@ -4,7 +4,7 @@ import { MaterialStandata } from "../../src/js";
 import Si from "./fixtures/Si.json";
 import Na4Cl4 from "./fixtures/Na4Cl4.json";
 import Graphene from "./fixtures/C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-3993].json";
-import h_BN from "./fixtures/BN-[Boron_Nitride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-7991].json";
+import h_BN from "./fixtures/BN-[Hexagonal_Boron_Nitride]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-4991].json";
 import WS2 from "./fixtures/WS2.json";
 
 describe("Materials Standata", () => {
