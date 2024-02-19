@@ -86,3 +86,58 @@ sources:
     source: Materials Project
     doi: 10.17188/1204433
     url: https://next-gen.materialsproject.org/materials/mp-30s
+
+  - filename: mp-2534.poscar
+    common_name: Gallium Arsenide
+    lattice_type: FCC
+    space_group: F-43m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-2534
+    source: Materials Project
+    doi: 10.17188/1200591
+    url: https://next-gen.materialsproject.org/materials/mp-2534
+
+  - filename: mp-804.poscar
+    common_name: Gallium Nitride
+    lattice_type: HEX
+    space_group: P6_3mc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-804
+    source: Materials Project
+    doi: 10.17188/1268467
+    url: https://next-gen.materialsproject.org/materials/mp-804
+
+  - filename: mp-352.poscar
+    common_name: Hafnium IV Oxide
+    lattice_type: MCL
+    space_group: P2_1/c
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-352
+    source: Materials Project
+    doi: 10.17188/1206948
+    url: https://next-gen.materialsproject.org/materials/mp-352
+
+  - filename: 2dm-3150.poscar
+    common_name: Molybdenum Disulfide
+    lattice_type: HEX
+    space_group: P-6m2
+    dimensionality: 2D
+    form_factor: Monolayer
+    source_id: 2dm-3150
+    source: 2dmatpedia
+    doi: 10.1038/s41597-019-0097-3
+    url: http://www.2dmatpedia.org/2dmaterials/doc/2dm-3150
+
+  - filename: mp-2815.poscar
+    common_name: Molybdenum Disulfide
+    lattice_type: HEX
+    space_group: P_3/mmc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-2815
+    source: Materials Project
+    doi: 10.17188/1202268
+    url: https://next-gen.materialsproject.org/materials/mp-2815
