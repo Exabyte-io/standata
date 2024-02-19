@@ -141,3 +141,49 @@ sources:
     source: Materials Project
     doi: 10.17188/1202268
     url: https://next-gen.materialsproject.org/materials/mp-2815
+
+  - filename: 2dm-5370.poscar
+    common_name: Molybdenum Telluride
+    lattice_type: HEX
+    space_group: P-6m2
+    dimensionality: 2D
+    form_factor: Monolayer
+    source_id: 2dm-5370
+    source: 2dmatpedia
+    doi: 10.1038/s41597-019-0097-3
+    url: http://www.2dmatpedia.org/2dmaterials/doc/2dm-5370
+
+  - filename: mp-602.poscar
+    common_name: Molybdenum Telluride
+    lattice_type: HEX
+    space_group: P6_3/mmc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-602
+    source: Materials Project
+    doi: 
+    url: https://next-gen.materialsproject.org/materials/mp-602
+
+  - filename: mp-22862.poscar
+    common_name: Sodium Chloride
+    lattice_type: FCC
+    space_group: Fm-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-22862
+    source: Materials Project
+    doi: 10.17188/1199028
+    url: https://next-gen.materialsproject.org/materials/mp-22862
+
+  - filename: mp-23.poscar
+    common_name: Nickel
+    lattice_type: FCC
+    space_group: Fm-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-23
+    source: Materials Project
+    doi: 10.17188/1199153
+    url: https://next-gen.materialsproject.org/materials/mp-23
+
+    
