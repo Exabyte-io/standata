@@ -1,14 +1,33 @@
 import yaml
 import json
 from express import ExPrESS
+from typing import Dict
 
-def read_manifest(manifest_path):
+def read_manifest(manifest_path: str):
+    """
+    Reads the manifest file and returns the sources list.
+
+    Args:
+        manifest_path (str): Path to the manifest file.
+
+    Returns:
+        list: List of sources.
+    """
     with open(manifest_path, 'r') as file:
         manifest = yaml.safe_load(file)
     return manifest['sources']
 
 
-def convert_to_esse(poscar):
+def convert_to_esse(poscar: str):
+    """
+    Converts a POSCAR structure to ESSE format.
+
+    Args:
+        poscar (str): POSCAR structure.
+
+    Returns:
+        dict: ESSE material configuration.
+    """
     kwargs = {
         "structure_string": poscar,
         "cell_type": "original",
@@ -18,7 +37,19 @@ def convert_to_esse(poscar):
     esse = handler.property("material", **kwargs)
     return esse
 
-def construct_name(material_config, source):
+
+
+def construct_name(material_config: Dict[str, str], source: Dict[str, str]) -> str:
+    """
+    Constructs the name of the material for use as a property in the ESSE material configuration.
+
+    Args:
+        material_config (dict): ESSE material configuration.
+        source (dict): Source information.
+
+    Returns:
+        str: Name of the material.
+    """
     name_parts = [
         material_config["formula"],
         source["common_name"],
@@ -27,7 +58,19 @@ def construct_name(material_config, source):
     ]
     return ', '.join(name_parts)
 
-def construct_filename(material_config, source):
+
+def construct_filename(material_config: Dict[str, str], source: Dict[str, str]) -> str:
+    """
+    Constructs the filename of the JSON file used to store the ESSE material configuration.
+
+    Args:
+        material_config (dict): ESSE material configuration.
+        source (dict): Source information.
+
+    Returns:
+        str: Filename of the JSON file.
+    """
+
     # Slugify the common name
     common_name = source["common_name"].replace(' ', '_')
     # Create slugified filename
@@ -44,6 +87,9 @@ def construct_filename(material_config, source):
     return filename
 
 def main():
+    """
+    Main function to create materials listed in the sources manifest.
+    """
     materials = []
     for source in read_manifest('materials/sources/manifest.yml'):
         with open(f"materials/sources/{source['filename']}", 'r') as file:
