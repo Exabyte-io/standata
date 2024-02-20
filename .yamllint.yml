@@ -4,7 +4,7 @@ extends: default
 
 rules:
   line-length:
-    max: 100
+    max: 120
   empty-lines:
     level: warning
     max-end: 1
