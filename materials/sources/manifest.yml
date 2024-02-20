@@ -161,7 +161,7 @@ sources:
     form_factor: Bulk
     source_id: mp-602
     source: Materials Project
-    doi: 
+    doi:
     url: https://next-gen.materialsproject.org/materials/mp-602
 
   - filename: mp-22862.poscar
@@ -227,7 +227,7 @@ sources:
     form_factor: Bulk
     source_id: mp-2657
     source: Materials Project
-    doi: 
+    doi:
     url: https://next-gen.materialsproject.org/materials/mp-2657
 
   - filename: mp-19094.poscar
