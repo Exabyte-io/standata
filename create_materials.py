@@ -3,6 +3,10 @@ import json
 from express import ExPrESS
 from typing import Dict
 
+MANIFEST_PATH = 'materials/sources/manifest.yml'
+SOURCES_PATH = 'materials/sources'
+DESTINATION_PATH = 'materials'
+
 def read_manifest(manifest_path: str):
     """
     Reads the manifest file and returns the sources list.
@@ -91,8 +95,8 @@ def main():
     Main function to create materials listed in the sources manifest.
     """
     materials = []
-    for source in read_manifest('materials/sources/manifest.yml'):
-        with open(f"materials/sources/{source['filename']}", 'r') as file:
+    for source in read_manifest(MANIFEST_PATH):
+        with open(f"{SOURCES_PATH}/{source['filename']}", 'r') as file:
             poscar = file.read()
             material_config = convert_to_esse(poscar)
             name = construct_name(material_config, source)
@@ -115,7 +119,7 @@ def main():
             # add "isNonPeriodic" property
             material_config['isNonPeriodic'] = False
 
-            with open(f'materials/{filename}.json', 'w') as file:
+            with open(f'{DESTINATION_PATH}/{filename}.json', 'w') as file:
                 json.dump(material_config, file)
             materials.append(material_config)
         print(f'Created {filename}.json')
