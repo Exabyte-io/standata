@@ -22,7 +22,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pre-commit", "black", "ruff", "isort", "mypy", "pip-tools", "express-py", "pyyaml"]
+dev = ["pre-commit", "black", "ruff", "isort", "mypy", "pip-tools", "express-py"]
 tests = ["pytest", "pytest-cov", "pytest-mock"]
 
 # Entrypoint scripts can be defined here, see examples below.
