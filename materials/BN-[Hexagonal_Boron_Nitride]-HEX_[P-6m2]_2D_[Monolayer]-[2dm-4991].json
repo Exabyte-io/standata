@@ -1,8 +1,8 @@
 {
     "lattice": {
-        "a": 2.50899515,
-        "b": 2.50899515,
-        "c": 7.71,
+        "a": 2.508995,
+        "b": 2.508995,
+        "c": 20,
         "alpha": 90,
         "beta": 90,
         "gamma": 120,
@@ -13,19 +13,19 @@
         "type": "HEX",
         "vectors": {
             "a": [
-                2.467291,
+                2.508995,
                 0,
                 0
             ],
             "b": [
-                -1.233645,
-                2.136737,
+                -1.254497,
+                2.172853,
                 0
             ],
             "c": [
                 0,
                 0,
-                7.71
+                20
             ],
             "alat": 1,
             "units": "angstrom"
@@ -48,7 +48,7 @@
                 "value": [
                     0,
                     0,
-                    0
+                    0.5
                 ]
             },
             {
@@ -56,37 +56,37 @@
                 "value": [
                     0.333333,
                     0.666667,
-                    0
+                    0.5
                 ]
             }
         ],
         "units": "crystal",
         "cell": [
             [
-                2.467291,
+                2.508995,
                 0,
                 0
             ],
             [
-                -1.2336454999999995,
-                2.136736684528712,
+                -1.2544974999999998,
+                2.172853407968138,
                 0
             ],
             [
                 0,
                 0,
-                7.71
+                20
             ]
         ],
         "constraints": []
     },
-    "name": "BN, Hexagonal Boron Nitride, HEX (P6_3/mmc) 3D (Bulk), mp-984",
+    "name": "BN, Hexagonal Boron Nitride, HEX (P-6m2) 2D (Monolayer), 2dm-4991",
     "isNonPeriodic": false,
     "external": {
-        "id": "mp-984",
-        "source": "materials project",
-        "doi": "10.17188/1281942",
-        "url": "https://next-gen.materialsproject.org/materials/mp-984/",
+        "id": "2dm-4991",
+        "source": "2dmatpedia",
+        "doi": "10.1038/s41597-019-0097-3",
+        "url": "http://www.2dmatpedia.org/2dmaterials/doc/2dm-4991",
         "origin": true
     }
 }

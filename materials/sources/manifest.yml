@@ -1,0 +1,16 @@
+entities:
+  - source_name: 2dm-4991.poscar
+    # If not provided, to be constructed based on the keys below
+    # destination_name: BN-[Hexagonal_Boron_Nitride]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-4991].json
+    lattice_type: HEX
+    space_group: P-6m2
+    colloquial_name: Hexagonal Boron Nitride
+    dimensionality: 2D
+    form_factor: Monolayer
+    source_id: 2dm-4991
+    source: 2dmatpedia
+    doi: 10.1038/s41597-019-0097-3
+    url: http://www.2dmatpedia.org/2dmaterials/doc/2dm-4991
+
+
+http://www:2dmatpedia:org/2dmaterials/doc/2dm-5934:

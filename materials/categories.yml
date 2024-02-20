@@ -49,7 +49,7 @@ entities:
       - layer
       - semi-metal
       - non-magnetic
-  - filename: BN-[Hexagonal_Boron_Nitride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-984].json
+  - filename: BN-[Hexagonal_Boron_Nitride]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-4991].json
     categories:
       - 2D
       - layer
