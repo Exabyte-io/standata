@@ -19,9 +19,20 @@ function buildAsset({
     obj.standataConfig = yaml.load(fileContent);
 
     obj.filesMapByName = {};
+
+    // Check duplicate filenames for sanity
+    const filenames = obj.standataConfig.entities.map((entity) => entity.filename);
+    const duplicateFilenames = filenames.filter(
+        (filename, index) => filenames.indexOf(filename) !== index,
+    );
+    if (duplicateFilenames.length > 0) {
+        throw new Error(`Duplicate filenames found in ${assetPath}: ${duplicateFilenames}`);
+    }
+    // Create JSON
     obj.standataConfig.entities?.forEach((entity) => {
         const entityPath = path.join(path.dirname(assetPath), entity.filename);
         const content = fs.readFileSync(path.resolve(entityPath), { encoding: "utf-8" });
+        console.log({ content, entityPath });
         obj.filesMapByName[entity.filename] = JSON.parse(content);
     });
     fs.writeFileSync(targetPath, contentGenerator(obj), "utf8");

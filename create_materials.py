@@ -1,7 +1,8 @@
-import yaml
 import json
-from express import ExPrESS
 from typing import Dict
+
+import yaml
+from express import ExPrESS
 
 MANIFEST_PATH = 'materials/sources/manifest.yml'
 SOURCES_PATH = 'materials/sources'
@@ -121,6 +122,8 @@ def main():
 
             with open(f'{DESTINATION_PATH}/{filename}.json', 'w') as file:
                 json.dump(material_config, file)
+                # Add newline at the end of the file
+                file.write('\n')
             materials.append(material_config)
         print(f'Created {filename}.json')
     print(f'Total materials created: {len(materials)}')

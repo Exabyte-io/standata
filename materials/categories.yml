@@ -187,7 +187,7 @@ entities:
       - layer
       - semiconductor
       - non-magnetic
-  - filename: Te2Mo-[Molybdenum_Telluride]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-5370].json
+  - filename: Te2Mo-[Molybdenum_Telluride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-602].json
     categories:
       - 3D
       - bulk

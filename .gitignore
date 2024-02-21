@@ -172,3 +172,5 @@ node_modules/
 
 ########### STANDATA #############
 by_category
+
+.python-version
