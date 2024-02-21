@@ -1,4 +1,21 @@
 repos:
+  - repo: local
+    hooks:
+      - id: recreate-materials
+        name: recreate-materials
+        language: system
+        # TODO: figure out how to make it work in PyCharm, only works in terminal
+        entry: python create_materials.py && exit 0
+        pass_filenames: false
+        verbose: true
+        files: ^materials/sources/|create_materials.py
+      - id: recreate-runtime-date
+        name: recreate-runtime-date
+        language: system
+        entry: npm run build:runtime-data && exit 0
+        pass_filenames: false
+        verbose: true
+        files: ^materials|applications|workflows|properties/
   - repo: https://github.com/Exabyte-io/pre-commit-hooks
     rev: 2023.8.18
     hooks:
@@ -19,17 +36,3 @@ repos:
         entry: npx lint-staged
         verbose: true # to see familiar lint-staged output
         pass_filenames: false # lint-staged has its own glob expression
-      - id: recreate-materials
-        name: recreate-materials
-        language: system
-        entry: python create_materials.py && exit 0
-        pass_filenames: false
-        verbose: true
-        files: ^materials/sources/
-      - id: recreate-runtime-date
-        name: recreate-runtime-date
-        language: system
-        entry: npm run build:runtime-data && exit 0
-        pass_filenames: false
-        verbose: true
-        files: ^materials|applications|workflows|properties/
