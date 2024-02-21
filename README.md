@@ -102,7 +102,7 @@ See [ESSE](https://github.com/Exabyte-io/esse) for the notes about development a
 To develop, first, create a virtual environment and install the dev dependencies:
 
 ```shell
-virtualenv .venv
+python -m venv .venv
 source .venv/bin/activate
 pip install ".[dev]"
 ```
@@ -126,10 +126,10 @@ Our dataset's naming convention for materials is designed to provide a comprehen
 The format for the material name property is a structured representation that includes the chemical formula, common name, crystal system, space group, dimensionality, specific structure details, and a unique identifier. Each element in the name is separated by a comma and space.
 
 Format:
+
 ```
 {Chemical Formula}, {Common Name}, {Crystal System} ({Space Group}) {Dimensionality} ({Structure Detail}), {Unique Identifier}
 ```
-
 
 **Examples**:
 
@@ -143,6 +143,7 @@ Format:
 Filenames are derived from the name property through a slugification process, ensuring they are filesystem-friendly and easily accessible via URLs or command-line interfaces. This process involves converting the structured name into a standardized, URL-safe format that reflects the material's attributes.
 
 Format:
+
 ```
 {Chemical_Formula}-[{Common_Name}]-{Crystal_System}_[{Space_Group}]_
 {Dimensionality}_[{Structure_Detail}]-[{Unique_Identifier}]
