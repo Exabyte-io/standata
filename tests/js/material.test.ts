@@ -7,11 +7,12 @@ import Si from "../../materials/Si-[Silicon]-FCC_[Fd-3m]_3D_[Bulk]-[mp-149].json
 import WS2 from "../../materials/WS2-[Tungsten_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-3749].json";
 import { MaterialStandata } from "../../src/js";
 
-const TOTAL_NUMBER_OF_MATERIALS = 28;
+const TOTAL_NUMBER_OF_MATERIALS = 29;
 
 describe("Materials Standata", () => {
     it("can return the list of all materials", () => {
         const materialConfigs = MaterialStandata.getRuntimeDataConfigs();
+        console.log(`    Number of materials found: ${materialConfigs.length}`);
         expect(materialConfigs.length).to.be.equal(TOTAL_NUMBER_OF_MATERIALS);
     });
 
