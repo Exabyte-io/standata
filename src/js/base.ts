@@ -76,7 +76,7 @@ export class Standata {
 
     protected loadEntity(filename: string): object | undefined {
         const ctor = this.constructor as typeof Standata;
-        return ctor.runtimeData?.filesMapByName?.[filename];
+        return (ctor.runtimeData?.filesMapByName as any)?.[filename];
     }
 
     protected filterByCategories(...categories: string[]): string[] {

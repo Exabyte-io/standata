@@ -27,6 +27,7 @@
     },
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",
+        "@mat3ra/tsconfig": "^2024.3.21-5",
         "@types/chai": "^4.3.5",
         "@types/js-yaml": "^4.0.5",
         "@types/mocha": "^10.0.1",
