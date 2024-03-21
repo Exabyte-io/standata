@@ -4,15 +4,15 @@
     "description": "Examples of entities following the Mat3ra data standard.",
     "author": "Mat3ra.com",
     "license": "Apache-2.0",
-    "main": "lib/index.js",
+    "main": "dist/index.js",
     "files": [
-        "/lib",
+        "/dist",
         "/src/js",
         "tsconfig.json"
     ],
     "dependencies": {
         "@babel/cli": "7.16.0",
-        "@babel/core": "7.16.0",
+        "@babel/core": "7.24.1",
         "@babel/eslint-parser": "7.16.3",
         "@babel/plugin-proposal-class-properties": "7.16.0",
         "@babel/preset-env": "7.16.4",
@@ -48,7 +48,7 @@
         "eslint-plugin-react": "7.30.0",
         "eslint-plugin-simple-import-sort": "7.0.0",
         "lint-staged": "^12.1.2",
-        "mocha": "^9.1.3",
+        "mocha": "10.3.0",
         "nyc": "^15.1.0",
         "prettier": "^2.7.1"
     },
@@ -58,7 +58,7 @@
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
-        "postinstall": "npm run transpile && cp -r src/js/runtime_data lib/",
+        "postinstall": "npm run transpile && cp -r src/js/runtime_data dist/",
         "prettier": "prettier --check src/js tests/js",
         "test": "mocha",
         "transpile": "tsc"
