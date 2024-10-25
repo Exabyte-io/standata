@@ -2,7 +2,7 @@ import re
 from typing import Dict, List, Optional
 
 import pandas as pd
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class StandataEntity(BaseModel):
@@ -29,6 +29,16 @@ class StandataConfig(BaseModel):
         """
         category_groups = [list(map(lambda x: f"{key}{separator}{x}", val)) for key, val in self.categories.items()]
         return [item for sublist in category_groups for item in sublist]
+
+    def get(self, key: str, default=None):
+        """
+        Returns the value for the specified key if key is in the dictionary, else default.
+
+        Args:
+            key: The key to look for in the categories dictionary.
+            default: The value to return if the key is not found.
+        """
+        return self.categories.get(key, default)
 
     def convert_tags_to_categories_list(self, *tags: str):
         """
@@ -96,7 +106,8 @@ class StandataConfig(BaseModel):
         return df
 
 
-class StandataFilesMapByName(Dict[str, dict]):
+class StandataFilesMapByName(BaseModel):
+    dictionary: Dict[str, dict] = Field(default_factory=dict)
 
     def get_objects_by_filenames(self, filenames: List[str]) -> List[dict]:
         """
@@ -106,7 +117,7 @@ class StandataFilesMapByName(Dict[str, dict]):
             filenames: Filenames of the entities.
         """
         matching_objects = []
-        for key, entity in self.items():
+        for key, entity in self.dictionary.items():
             if key in filenames:
                 matching_objects.append(entity)
         return matching_objects
@@ -116,33 +127,37 @@ class StandataData(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    filesMapByName: Optional[StandataFilesMapByName] = StandataFilesMapByName()
-    standataConfig: Optional[StandataConfig] = StandataConfig()
+    filesMapByName: StandataFilesMapByName = StandataFilesMapByName()
+    standataConfig: StandataConfig = StandataConfig()
 
-    def __init__(self, /, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.filesMapByName = StandataFilesMapByName(kwargs.get("filesMapByName", {}))
-        self.standataConfig = StandataConfig(**kwargs.get("standataConfig", {}))
+        self.filesMapByName = StandataFilesMapByName(dictionary=kwargs.get("filesMapByName", {}))
+        self.standataConfig = StandataConfig(
+            categories=kwargs.get("standataConfig", {}).get("categories", {}),
+            entities=[
+                StandataEntity(filename=entity["filename"], categories=entity["categories"])
+                for entity in kwargs.get("standataConfig", {}).get("entities", [])
+            ],
+        )
 
 
 class Standata(BaseModel):
     # Override in children
     data: StandataData = StandataData()
 
-    @classmethod
-    def get_as_list(cls):
-        return list(cls.data.filesMapByName.values())
+    def get_as_list(self) -> List[dict]:
+        return list(self.data.filesMapByName.dictionary.values())
 
-    @classmethod
-    def get_by_name(cls, name: str) -> List[dict]:
+    def get_by_name(self, name: str) -> List[dict]:
         """
         Returns entities by name regex.
 
         Args:
             name: Name of the entity.
         """
-        matching_filenames = cls.data.standataConfig.get_filenames_by_regex(name)
-        return cls.data.filesMapByName.get_objects_by_filenames(matching_filenames)
+        matching_filenames = self.data.standataConfig.get_filenames_by_regex(name)
+        return self.data.filesMapByName.get_objects_by_filenames(matching_filenames)
 
     def get_by_categories(self, *tags: str) -> List[dict]:
         """

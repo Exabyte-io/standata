@@ -1,9 +1,19 @@
-from .base import Standata, StandataData, StandataFilesMapByName
+from typing import Dict
+
+from .base import Standata, StandataConfig, StandataData, StandataEntity, StandataFilesMapByName
 from .data.materials import materials_data
 
 
 class Materials(Standata):
-    data: StandataData = StandataData(
-        filesMapByName=StandataFilesMapByName(materials_data["filesMapByName"]),
-        standataConfig=materials_data.get("standataConfig", {}),
-    )
+    def __init__(self, data: Dict = materials_data):
+        standata_data = StandataData(
+            filesMapByName=StandataFilesMapByName(dictionary=data.get("filesMapByName", {})),
+            standataConfig=StandataConfig(
+                categories=data.get("standataConfig", {}).get("categories", {}),
+                entities=[
+                    StandataEntity(filename=entity["filename"], categories=entity["categories"])
+                    for entity in data.get("standataConfig", {}).get("entities", [])
+                ],
+            ),
+        )
+        super().__init__(data=standata_data)
