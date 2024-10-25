@@ -79,7 +79,7 @@ class StandataConfig(BaseModel):
         """
         filenames = []
         for entity in self.entities:
-            if re.match(regex, entity.filename):
+            if re.search(regex, entity.filename):
                 filenames.append(entity.filename)
         return filenames
 
@@ -130,16 +130,16 @@ class StandataData(BaseModel):
     filesMapByName: StandataFilesMapByName = StandataFilesMapByName()
     standataConfig: StandataConfig = StandataConfig()
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.filesMapByName = StandataFilesMapByName(dictionary=kwargs.get("filesMapByName", {}))
-        self.standataConfig = StandataConfig(
-            categories=kwargs.get("standataConfig", {}).get("categories", {}),
-            entities=[
-                StandataEntity(filename=entity["filename"], categories=entity["categories"])
-                for entity in kwargs.get("standataConfig", {}).get("entities", [])
-            ],
-        )
+    # def __init__(self, **kwargs):
+    #     super().__init__(**kwargs)
+    #     self.filesMapByName = StandataFilesMapByName(dictionary=kwargs.get("filesMapByName", {}))
+    #     self.standataConfig = StandataConfig(
+    #         categories=kwargs.get("standataConfig", {}).get("categories", {}),
+    #         entities=[
+    #             StandataEntity(filename=entity["filename"], categories=entity["categories"])
+    #             for entity in kwargs.get("standataConfig", {}).get("entities", [])
+    #         ],
+    #     )
 
 
 class Standata(BaseModel):
