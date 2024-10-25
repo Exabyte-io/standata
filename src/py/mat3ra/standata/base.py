@@ -1,5 +1,5 @@
 import re
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 import pandas as pd
 from pydantic import BaseModel, Field
@@ -130,16 +130,36 @@ class StandataData(BaseModel):
     filesMapByName: StandataFilesMapByName = StandataFilesMapByName()
     standataConfig: StandataConfig = StandataConfig()
 
-    # def __init__(self, **kwargs):
-    #     super().__init__(**kwargs)
-    #     self.filesMapByName = StandataFilesMapByName(dictionary=kwargs.get("filesMapByName", {}))
-    #     self.standataConfig = StandataConfig(
-    #         categories=kwargs.get("standataConfig", {}).get("categories", {}),
-    #         entities=[
-    #             StandataEntity(filename=entity["filename"], categories=entity["categories"])
-    #             for entity in kwargs.get("standataConfig", {}).get("entities", [])
-    #         ],
-    #     )
+    def __init__(self, data: Dict, **kwargs):
+        """
+        Initializes StandataData from raw data.
+        Args:
+            data: Dictionary with keys for filesMapByName and standataConfig.
+        """
+        super().__init__(
+            filesMapByName=self._initialize_files_map(data), standataConfig=self._initialize_config(data), **kwargs
+        )
+
+    @staticmethod
+    def _initialize_files_map(data: Dict) -> StandataFilesMapByName:
+        """
+        Initialize the StandataFilesMapByName from the input data.
+        """
+        return StandataFilesMapByName(dictionary=data.get("filesMapByName", {}))
+
+    @staticmethod
+    def _initialize_config(data: Dict) -> StandataConfig:
+        """
+        Initialize StandataConfig from the input data.
+        """
+        config_data = data.get("standataConfig", {})
+        return StandataConfig(
+            categories=config_data.get("categories", {}),
+            entities=[
+                StandataEntity(filename=entity["filename"], categories=entity["categories"])
+                for entity in config_data.get("entities", [])
+            ],
+        )
 
 
 class Standata(BaseModel):
@@ -147,30 +167,11 @@ class Standata(BaseModel):
 
     def __init__(self, data_dict: Dict, **kwargs):
         """
-        Initialize common data structures in a Standata class.
+        Initialize the Standata class with StandataData.
         Args:
-            data: Dictionary with the data needed for initialization.
+            data: Dictionary containing the data to initialize StandataData.
         """
-
-        def _initialize_files_map(data_dict: Dict) -> StandataFilesMapByName:
-            return StandataFilesMapByName(dictionary=data_dict.get("filesMapByName", {}))
-
-        def _initialize_config(data_dict: Dict) -> StandataConfig:
-            config_data = data_dict.get("standataConfig", {})
-            return StandataConfig(
-                categories=config_data.get("categories", {}),
-                entities=[
-                    StandataEntity(filename=entity["filename"], categories=entity["categories"])
-                    for entity in config_data.get("entities", [])
-                ],
-            )
-
-        def _initialize_data(data_dict: Dict) -> StandataData:
-            return StandataData(
-                filesMapByName=_initialize_files_map(data_dict), standataConfig=_initialize_config(data_dict)
-            )
-
-        super().__init__(data=_initialize_data(data_dict), **kwargs)
+        super().__init__(data=StandataData(data_dict), **kwargs)
 
     def get_as_list(self) -> List[dict]:
         return list(self.data.filesMapByName.dictionary.values())
