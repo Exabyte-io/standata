@@ -1,10 +1,8 @@
-from pathlib import Path
-
-from mat3ra.standata.build.builder import StandataBuilder
 from mat3ra.standata.materials import Materials
 
 
 def test_standata_materials_init():
+    """Materials class is initialized with data based on materials_data"""
     std_materials = Materials()
     assert std_materials.data.standataConfig.entities is not None
     assert len(std_materials.data.standataConfig.entities) >= 1
