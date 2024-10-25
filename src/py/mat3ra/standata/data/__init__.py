@@ -5,25 +5,22 @@ from .base import Standata
 from .materials import materials_data
 
 
-class Standata:
+class StandataMaterials:
 
-    # Override in children
-    data = {"filesMapByName": []}
-    files_map_by_name = data["filesMapByName"]
+    def __init__(self):
+        self.entities = materials_data
 
-    @classmethod
-    def get_as_list(cls):
-        return cls.files_map_by_name
+    def get_json(self):
+        return self.entities["filesMapByName"]
 
-    @classmethod
-    def get_by_name(cls, name: str) -> List[dict]:
+    def get_by_name(self, name: str) -> List[dict]:
         """Returns entity by name.
 
         Args:
             name: Name of the entity.
         """
         matching_entities = []
-        for key, entity in cls.files_map_by_name.items():
+        for key, entity in self.entities["filesMapByName"].items():
             regex = re.compile(name, re.IGNORECASE)
             if re.match(regex, key):
                 matching_entities.append(entity)
