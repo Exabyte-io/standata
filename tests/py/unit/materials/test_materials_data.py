@@ -1,4 +1,4 @@
-from mat3ra.standata.materials import materials_data
+from mat3ra.standata.data.materials import materials_data
 
 
 def test_get_material_data():
