@@ -2,10 +2,12 @@ from pathlib import Path
 
 from mat3ra.standata.build.builder import StandataBuilder
 
+from mat3ra.standata.materials import Materials
 
-def test_standata_init_path(materials_config_path: Path):
+
+def test_standata_init_path():
     """Constructor extracts categories and entities from config file."""
-    std = StandataBuilder.build_from_file(materials_config_path)
+    std = Materials().data
     assert len(std.entities) >= 1
     assert len(std.categories) >= 1
 
