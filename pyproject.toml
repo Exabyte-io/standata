@@ -22,8 +22,26 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pre-commit", "black", "ruff", "isort", "mypy", "pip-tools", "express-py"]
-tests = ["pytest", "pytest-cov", "pytest-mock"]
+dev = [
+    "pre-commit",
+    "black",
+    "ruff",
+    "isort",
+    "mypy",
+    "pip-tools",
+]
+tests = [
+    "coverage[toml]>=5.3",
+    "pytest",
+    "pytest-cov",
+    # B/c of https://github.com/binary-husky/gpt_academic/issues/1237
+    "gradio",
+    "pydantic",
+]
+all = [
+    "mat3ra-standata[tests]",
+    "mat3ra-standata[dev]",
+]
 
 # Entrypoint scripts can be defined here, see examples below.
 [project.scripts]
