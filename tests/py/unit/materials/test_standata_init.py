@@ -15,3 +15,20 @@ def test_categories_data():
     std_materials = Materials()
     assert std_materials.data.standataConfig.categories is not None
     assert len(std_materials.data.standataConfig.categories) >= 1
+
+
+def test_get_by_name():
+    """Assert correct information if found about a material."""
+    std_materials = Materials()
+    material = std_materials.get_by_name("Graphene")[0]
+    assert type(material) == dict
+    assert material["name"] == "C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993"
+    assert material["isNonPeriodic"] is False
+
+
+def test_get_by_categories():
+    """Assert correct information if found about a material."""
+    std_materials = Materials()
+    material = std_materials.get_by_categories("2D")
+    assert isinstance(material, list)
+    assert material[0]["name"] == "C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993"

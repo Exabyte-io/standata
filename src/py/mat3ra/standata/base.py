@@ -10,16 +10,18 @@ class StandataEntity(BaseModel):
     categories: List[str]
 
 
+CATEGORY_SEPARATOR = "/"
+
+
 class StandataConfig(BaseModel):
     categories: Dict[str, List[str]] = {}
     entities: List[StandataEntity] = []
 
-    def get_categories_as_list(self, separator: str = "/") -> List[str]:
+    def get_categories_as_list(self, separator: str = CATEGORY_SEPARATOR) -> List[str]:
         """
         Flattens categories dictionary to list of categories.
 
         Args:
-            category_map: Dictionary mapping category types to category tags.
             separator: Separation character used to join category type and tag.
 
         Example::
@@ -29,16 +31,6 @@ class StandataConfig(BaseModel):
         """
         category_groups = [list(map(lambda x: f"{key}{separator}{x}", val)) for key, val in self.categories.items()]
         return [item for sublist in category_groups for item in sublist]
-
-    def get(self, key: str, default=None):
-        """
-        Returns the value for the specified key if key is in the dictionary, else default.
-
-        Args:
-            key: The key to look for in the categories dictionary.
-            default: The value to return if the key is not found.
-        """
-        return self.categories.get(key, default)
 
     def convert_tags_to_categories_list(self, *tags: str):
         """
@@ -52,22 +44,56 @@ class StandataConfig(BaseModel):
             'electrical_conductivity' and 'type'. This function returns all occurrences of a tag as
             '<category_type>/<tag>'.
         """
-        return [cf for cf in self.categories if any([cf.split("/")[1] == t for t in tags])]
+        return [
+            cf for cf in self.get_categories_as_list() if any((cf.split(CATEGORY_SEPARATOR)[-1] == t) for t in tags)
+        ]
+
+    def get(self, key: str, default=None):
+        """
+        Returns the value for the specified key if key is in the dictionary, else default.
+
+        Args:
+            key: The key to look for in the categories dictionary.
+            default: The value to return if the key is not found.
+        """
+        return self.categories.get(key, default)
 
     def get_filenames_by_categories(self, *categories: str) -> List[str]:
         """
         Returns filenames that match all given categories.
 
         Args:
-            *categories: Categories for the entity query. Note, that `categories` should be in the same format as the
-            column names in the lookup table.
+            *categories: Categories for the entity query. Categories can be either in
+                        'category/tag' format or just 'tag' format.
+
+        Returns:
+            List of filenames that match ALL given categories.
         """
         if len(categories) == 0:
             return []
+
+        # Convert simple tags to full category format if needed
+        full_categories = []
+        for category in categories:
+            if CATEGORY_SEPARATOR in category:
+                full_categories.append(category)
+            else:
+                # Convert tag to full category format
+                converted = self.convert_tags_to_categories_list(category)
+                full_categories.extend(converted)
+
+        if not full_categories:  # If no valid categories found
+            return []
+
         filenames = []
         for entity in self.entities:
-            if any([category in entity.categories for category in categories]):
+            # Convert entity categories to full format
+            entity_categories = self.convert_tags_to_categories_list(*entity.categories)
+
+            # Check if ALL required categories are present
+            if all(category in entity_categories for category in full_categories):
                 filenames.append(entity.filename)
+
         return filenames
 
     def get_filenames_by_regex(self, regex: str) -> List[str]:
