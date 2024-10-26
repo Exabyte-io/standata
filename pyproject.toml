@@ -30,6 +30,7 @@ dev = [
     "isort",
     "mypy",
     "pip-tools",
+    "express-py"
 ]
 tests = [
     "coverage[toml]>=5.3",
