@@ -156,15 +156,13 @@ class StandataData(BaseModel):
     filesMapByName: StandataFilesMapByName = StandataFilesMapByName()
     standataConfig: StandataConfig = StandataConfig()
 
-    def __init__(self, data: Dict, **kwargs):
+    def __init__(self, data: Dict):
         """
         Initializes StandataData from raw data.
         Args:
             data: Dictionary with keys for filesMapByName and standataConfig.
         """
-        super().__init__(
-            filesMapByName=self._initialize_files_map(data), standataConfig=self._initialize_config(data), **kwargs
-        )
+        super().__init__(filesMapByName=self._initialize_files_map(data), standataConfig=self._initialize_config(data))
 
     @staticmethod
     def _initialize_files_map(data: Dict) -> StandataFilesMapByName:
@@ -188,37 +186,44 @@ class StandataData(BaseModel):
         )
 
 
-class Standata(BaseModel):
-    data: StandataData
+class Standata:
+    data_dict: Dict = {}
+    data: StandataData = StandataData(data_dict)
 
-    def __init__(self, data_dict: Dict, **kwargs):
-        """
-        Initialize the Standata class with StandataData.
-        Args:
-            data: Dictionary containing the data to initialize StandataData.
-        """
-        super().__init__(data=StandataData(data_dict), **kwargs)
+    @classmethod
+    def get_as_list(cls) -> List[dict]:
+        return list(cls.data.filesMapByName.dictionary.values())
 
-    def get_as_list(self) -> List[dict]:
-        return list(self.data.filesMapByName.dictionary.values())
-
-    def get_by_name(self, name: str) -> List[dict]:
+    @classmethod
+    def get_by_name(cls, name: str) -> List[dict]:
         """
         Returns entities by name regex.
 
         Args:
             name: Name of the entity.
         """
-        matching_filenames = self.data.standataConfig.get_filenames_by_regex(name)
-        return self.data.filesMapByName.get_objects_by_filenames(matching_filenames)
+        matching_filenames = cls.data.standataConfig.get_filenames_by_regex(name)
+        return cls.data.filesMapByName.get_objects_by_filenames(matching_filenames)
 
-    def get_by_categories(self, *tags: str) -> List[dict]:
+    @classmethod
+    def get_by_name_first_match(cls, name: str) -> dict:
+        """
+        Returns the first entity that matches the name regex.
+
+        Args:
+            name: Name of the entity.
+        """
+        matching_filenames = cls.data.standataConfig.get_filenames_by_regex(name)
+        return cls.data.filesMapByName.get_objects_by_filenames(matching_filenames)[0]
+
+    @classmethod
+    def get_by_categories(cls, *tags: str) -> List[dict]:
         """
         Finds entities that match all specified category tags.
 
         Args:
             *tags: Category tags for the entity query.
         """
-        categories = self.data.standataConfig.convert_tags_to_categories_list(*tags)
-        matching_filenames = self.data.standataConfig.get_filenames_by_categories(*categories)
-        return self.data.filesMapByName.get_objects_by_filenames(matching_filenames)
+        categories = cls.data.standataConfig.convert_tags_to_categories_list(*tags)
+        matching_filenames = cls.data.standataConfig.get_filenames_by_categories(*categories)
+        return cls.data.filesMapByName.get_objects_by_filenames(matching_filenames)
