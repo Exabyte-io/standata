@@ -232,3 +232,10 @@ entities:
       - non-magnetic
       - nitride
       - ceramic
+  - filename: TiN-[Titanium_Nitride]-FCC_[Fm-3m]_3D_[Bulk]-[mp-492].json
+    categories:
+      - 3D
+      - bulk
+      - metal
+      - non-magnetic
+      - nitride
