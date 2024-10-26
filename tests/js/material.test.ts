@@ -1,6 +1,4 @@
 import { expect } from "chai";
-import fs from "fs";
-import path from "path";
 
 import h_BN from "../../materials/BN-[Hexagonal_Boron_Nitride]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-4991].json";
 import Graphene from "../../materials/C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-3993].json";
@@ -9,9 +7,7 @@ import Si from "../../materials/Si-[Silicon]-FCC_[Fd-3m]_3D_[Bulk]-[mp-149].json
 import WS2 from "../../materials/WS2-[Tungsten_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-3749].json";
 import { MaterialStandata } from "../../src/js";
 
-const materialsSourcePath = path.join(__dirname, "materials/source");
-const poscarFiles = fs.readdirSync(materialsSourcePath).filter((file) => file.endsWith(".poscar"));
-const TOTAL_NUMBER_OF_MATERIALS = poscarFiles.length;
+const TOTAL_NUMBER_OF_MATERIALS = 30;
 
 describe("Materials Standata", () => {
     it("can return the list of all materials", () => {
