@@ -317,3 +317,14 @@ sources:
     source: Materials Project
     doi: 10.17188/1202679
     url: https://next-gen.materialsproject.org/materials/mp-2858
+
+  - filename: mp-492.poscar
+    common_name: Titanium Nitride
+    lattice_type: FCC
+    space_group: Fm-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-492
+    source: Materials Project
+    doi:
+    url: https://next-gen.materialsproject.org/materials/mp-492
