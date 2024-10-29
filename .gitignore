@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
+!src/py/mat3ra/standata/build
 develop-eggs/
 dist/
 downloads/
