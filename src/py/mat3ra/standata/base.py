@@ -4,13 +4,12 @@ from typing import Dict, List
 import pandas as pd
 from pydantic import BaseModel, Field
 
+CATEGORY_SEPARATOR = "/"
+
 
 class StandataEntity(BaseModel):
     filename: str
     categories: List[str]
-
-
-CATEGORY_SEPARATOR = "/"
 
 
 class StandataConfig(BaseModel):
@@ -47,16 +46,6 @@ class StandataConfig(BaseModel):
         return [
             cf for cf in self.get_categories_as_list() if any((cf.split(CATEGORY_SEPARATOR)[-1] == t) for t in tags)
         ]
-
-    def get(self, key: str, default=None):
-        """
-        Returns the value for the specified key if key is in the dictionary, else default.
-
-        Args:
-            key: The key to look for in the categories dictionary.
-            default: The value to return if the key is not found.
-        """
-        return self.categories.get(key, default)
 
     def get_filenames_by_categories(self, *categories: str) -> List[str]:
         """
@@ -109,6 +98,7 @@ class StandataConfig(BaseModel):
                 filenames.append(entity.filename)
         return filenames
 
+    # TODO: This is not used, but left in preparation for the future when the number of entities is large
     @property
     def __lookup_table(self) -> pd.DataFrame:
         """
@@ -169,20 +159,23 @@ class StandataData(BaseModel):
         """
         Initialize the StandataFilesMapByName from the input data.
         """
-        return StandataFilesMapByName(dictionary=data.get("filesMapByName", {}))
+        files_map_dictionary = data.get("filesMapByName", {})
+        return StandataFilesMapByName(dictionary=files_map_dictionary)
 
     @staticmethod
     def _initialize_config(data: Dict) -> StandataConfig:
         """
         Initialize StandataConfig from the input data.
         """
-        config_data = data.get("standataConfig", {})
+        config_data_dict = data.get("standataConfig", {})
+        categories_dict = config_data_dict.get("categories", {})
+        entites_dict = config_data_dict.get("entities", [])
+        entites = [
+            StandataEntity(filename=entity["filename"], categories=entity["categories"]) for entity in entites_dict
+        ]
         return StandataConfig(
-            categories=config_data.get("categories", {}),
-            entities=[
-                StandataEntity(filename=entity["filename"], categories=entity["categories"])
-                for entity in config_data.get("entities", [])
-            ],
+            categories=categories_dict,
+            entities=entites,
         )
 
 
