@@ -38,3 +38,11 @@ def test_get_material_data():
     assert type(material) == dict
     assert material["name"] == "C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993"
     assert material["isNonPeriodic"] is False
+
+
+def test_get_by_name_and_categories():
+    """Assert correct information if found about a material."""
+    material = Materials.get_by_name_and_categories("MoS2", "2D")
+    assert type(material) == dict
+    assert material["name"] == "MoS2, Molybdenum Disulfide, HEX (P-6m2) 2D (Monolayer), 2dm-3150"
+    assert material["isNonPeriodic"] is False
