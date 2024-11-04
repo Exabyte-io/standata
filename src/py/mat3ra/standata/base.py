@@ -220,3 +220,25 @@ class Standata:
         categories = cls.data.standataConfig.convert_tags_to_categories_list(*tags)
         matching_filenames = cls.data.standataConfig.get_filenames_by_categories(*categories)
         return cls.data.filesMapByName.get_objects_by_filenames(matching_filenames)
+
+    @classmethod
+    def get_by_name_and_categories(cls, name: str, *tags: str) -> dict:
+        """
+        Returns the first entity that matches both the name regex and all categories.
+
+        Args:
+            name: Name to match with regex
+            *tags: Category tags to match
+
+        Returns:
+            First matching entity
+        """
+        categories = cls.data.standataConfig.convert_tags_to_categories_list(*tags)
+        category_matches = cls.data.standataConfig.get_filenames_by_categories(*categories)
+        name_matches = cls.data.standataConfig.get_filenames_by_regex(name)
+        matching_filenames = [f for f in name_matches if f in category_matches]
+
+        if not matching_filenames:
+            raise ValueError(f"No matches found for name '{name}' and categories {tags}")
+
+        return cls.data.filesMapByName.get_objects_by_filenames(matching_filenames)[0]
