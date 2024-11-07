@@ -188,6 +188,10 @@ class Standata:
         return list(cls.data.filesMapByName.dictionary.values())
 
     @classmethod
+    def get_names(cls) -> List[str]:
+        return list(cls.data.filesMapByName.dictionary.keys())
+
+    @classmethod
     def get_by_name(cls, name: str) -> List[dict]:
         """
         Returns entities by name regex.
