@@ -240,3 +240,9 @@ entities:
       - non-magnetic
       - nitride
       - ceramic
+  - filename: C-[Diamond]-FCC_[Fd-3m]_3D_[Bulk]-[mp-66].json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - non-magnetic
