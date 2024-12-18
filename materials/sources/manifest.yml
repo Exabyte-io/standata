@@ -339,3 +339,36 @@ sources:
     source: Materials Project
     doi: 10.1063/1.4812323
     url: https://next-gen.materialsproject.org/materials/mp-66
+
+  - filename: mp-126.poscar
+    common_name: Platinum
+    lattice_type: FCC
+    space_group: Fm-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-126
+    source: Materials Project
+    doi: 10.17188/1204433
+    url: https://next-gen.materialsproject.org/materials/mp-126
+
+  - filename: mp-5229.poscar
+    common_name: Strontium Titanate
+    lattice_type: CUB
+    space_group: Pm-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-5229
+    source: Materials Project
+    doi: 10.17188/1263154
+    url: https://next-gen.materialsproject.org/materials/mp-5229
+
+  - filename: mp-546794.poscar
+    common_name: Cristobalite
+    lattice_type: TET
+    space_group: I-42d
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-546794
+    source: Materials Project
+    doi: 10.17188/1267252
+    url: https://next-gen.materialsproject.org/materials/mp-546794
