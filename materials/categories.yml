@@ -271,7 +271,7 @@ entities:
       - non-magnetic
       - oxide
       - glass
-  - filename: Si-[Silicon_(100)_surface_(reconstructed)]-FCC_[P1]_2D_[Surface]-[mavrl-si-100-r].json
+  - filename: Si-[Silicon_(100)_surface_(reconstructed)]-TRI_[P1]_2D_[Surface]-[mavrl-si-100-r].json
     categories:
       - 2D
       - layer
