@@ -375,7 +375,7 @@ sources:
 
   - filename: mavrl-si-100-r.poscar
     common_name: Silicon (100) surface (reconstructed)
-    lattice_type: FCC
+    lattice_type: TRI
     space_group: P1
     dimensionality: 2D
     form_factor: Surface
