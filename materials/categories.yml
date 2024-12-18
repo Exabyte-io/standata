@@ -271,3 +271,9 @@ entities:
       - non-magnetic
       - oxide
       - glass
+  - filename: Si-[Silicon_(100)_surface_(reconstructed)]-FCC_[Fd-3m]_3D_[Bulk]-[mavrl-si-100-r].json
+    categories:
+      - 2D
+      - layer
+      - semiconductor
+      - non-magnetic
