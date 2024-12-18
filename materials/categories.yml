@@ -246,3 +246,28 @@ entities:
       - bulk
       - insulator
       - non-magnetic
+
+  - filename: Pt-[Platinum]-FCC_[Fm-3m]_3D_[Bulk]-[mp-126].json
+    categories:
+      - 3D
+      - bulk
+      - metal
+      - non-magnetic
+      - catalysis
+
+  - filename: SrTiO3-[Strontium_Titanate]-CUB_[Pm-3m]_3D_[Bulk]-[mp-5229].json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - non-magnetic
+      - oxide
+
+  - filename: SiO2-[Cristobalite]-TET_[I-42d]_3D_[Bulk]-[mp-546794].json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - non-magnetic
+      - oxide
+      - glass
