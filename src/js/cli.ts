@@ -1,5 +1,4 @@
-import { command, option, optional, positional, run } from "cmd-ts";
-import { Directory, File } from "cmd-ts/batteries/fs";
+import { command, option, optional, positional, run, string } from "cmd-ts";
 import * as fs from "fs";
 import yaml from "js-yaml";
 import * as path from "path";
@@ -48,12 +47,12 @@ const app = command({
     description: "Sort entity files by category (as symlinks).",
     args: {
         entityConfigPath: positional({
-            type: File,
+            type: string,
             displayName: "CONFIG",
             description: "The entity config file (usually 'categories.yml')",
         }),
         destination: option({
-            type: optional(Directory),
+            type: optional(string),
             long: "destination",
             short: "d",
             description: "Where to place symlink directory.",
