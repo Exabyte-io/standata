@@ -27,7 +27,7 @@
     },
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",
-        "@mat3ra/tsconfig": "^2024.3.21-5",
+        "@mat3ra/tsconfig": "^2024.6.3-0",
         "@types/chai": "^4.3.5",
         "@types/js-yaml": "^4.0.5",
         "@types/mocha": "^10.0.1",
@@ -56,19 +56,19 @@
     "scripts": {
         "build:categories": "ts-node src/js/cli.ts",
         "build:runtime-data": "node build_runtime_data.js",
+        "build:dist": "npm run transpile && npm run build:runtime-data",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
-        "postinstall": "npm run transpile && cp -r src/js/runtime_data dist/",
         "prettier": "prettier --check src/js tests/js",
         "test": "mocha",
         "transpile": "tsc"
     },
     "engines": {
-        "node": ">=12.0.0"
+        "node": ">=20.0.0"
     },
     "lint-staged": {
         "*.{js,ts,tsx}": "eslint --cache --fix",
-        "*.{js,ts,tsx,css}": "prettier --write"
+        "*.{js,ts,tsx,css,!dist/**/*,!*runtime_data*}": "prettier --write"
     }
 }
