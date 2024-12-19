@@ -6,7 +6,7 @@ Standard data for digital materials R&D entities in the [ESSE](https://github.co
 
 ### 1.1. Python
 
-The package is compatible with Python 3.8+. It can be installed as a Python package either via PyPI:
+The package is compatible with Python 3.10+. It can be installed as a Python package either via PyPI:
 
 ```shell
 pip install mat3ra-standata
@@ -164,5 +164,3 @@ Brackets: Wrap common name and identifier parts in square brackets `[]`.
 - C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[mp-1040425]
 
 ## 5. Links
-
-To be added here.
