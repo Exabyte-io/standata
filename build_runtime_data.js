@@ -39,23 +39,24 @@ function buildAsset({
     console.log(`Written entity category map to "${assetPath}" to "${targetPath}"`);
 }
 
+const runtimeDataDir = "./dist/runtime_data";
 // JS Modules
 
 buildAsset({
     assetPath: "./materials/categories.yml",
-    targetPath: "./src/js/runtime_data/materials.json",
+    targetPath: `${runtimeDataDir}/materials.json`,
 });
 buildAsset({
     assetPath: "./properties/categories.yml",
-    targetPath: "./src/js/runtime_data/properties.json",
+    targetPath: `${runtimeDataDir}/properties.json`,
 });
 buildAsset({
     assetPath: "./applications/categories.yml",
-    targetPath: "./src/js/runtime_data/applications.json",
+    targetPath: `${runtimeDataDir}/applications.json`,
 });
 buildAsset({
     assetPath: "./workflows/categories.yml",
-    targetPath: "./src/js/runtime_data/workflows.json",
+    targetPath: `${runtimeDataDir}/workflows.json`,
 });
 
 // Py Modules

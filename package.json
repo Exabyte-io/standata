@@ -56,10 +56,10 @@
     "scripts": {
         "build:categories": "ts-node src/js/cli.ts",
         "build:runtime-data": "node build_runtime_data.js",
+        "build:dist": "npm run transpile && npm run build:runtime-data",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
-        "postinstall": "npm run transpile && cp -r src/js/runtime_data dist/",
         "prettier": "prettier --check src/js tests/js",
         "test": "mocha",
         "transpile": "tsc"
