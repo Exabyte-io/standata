@@ -4,7 +4,7 @@
     "description": "Examples of entities following the Mat3ra data standard.",
     "author": "Mat3ra.com",
     "license": "Apache-2.0",
-    "main": "dist/index.js",
+    "main": "dist/js/index.js",
     "files": [
         "/dist",
         "/src/js",
