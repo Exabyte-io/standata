@@ -1,3 +1,56 @@
 {
-    "extends": "@mat3ra/tsconfig/tsconfig.json"
+    "compilerOptions": {
+
+        /* Basic Options */
+        "target": "es2018",
+        "module": "commonjs",
+        "allowJs": true,
+        "jsx": "react",
+        // "incremental": true,
+        // "noEmit": true,
+        "noEmitOnError": false,
+        "outDir": "../../../dist",
+        "lib": [
+            "ES2019",
+            "dom"
+        ],
+
+        /* Strict Type-Checking Options */
+        "strict": true,
+        // "noImplicitAny": false,
+        "strictNullChecks": true,
+        "experimentalDecorators": true,
+
+        /* Additional Checks */
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": false,
+        "noFallthroughCasesInSwitch": false,
+
+        /* Module Resolution Options */
+        "baseUrl": "../../../",          // Base directory for the parent project
+        "rootDir": "../../../src/js",    // Root directory containing the sources
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "declaration": true,
+        "isolatedModules": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "types": [
+            "mocha",
+            "node"
+        ]
+    },
+    "include": [
+        "../../../src/js"
+    ],
+    "exclude": [
+        "../../../node_modules",
+        "../../../dist"
+    ],
+    "ts-node": {
+        "files": true,
+        "compilerOptions": {}
+    }
 }
