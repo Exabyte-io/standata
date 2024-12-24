@@ -5,7 +5,7 @@ repos:
         name: recreate-materials
         language: system
         # TODO: figure out how to make it work in PyCharm, only works in terminal
-        entry: python create_materials.py && exit 0
+        entry: .venv/bin/python create_materials.py && exit 0
         pass_filenames: false
         verbose: true
         files: ^materials/sources/|create_materials.py
@@ -31,6 +31,7 @@ repos:
   - repo: local
     hooks:
       - id: lint-staged
+        exclude: "^dist/"
         name: lint-staged
         language: node
         entry: npx lint-staged
