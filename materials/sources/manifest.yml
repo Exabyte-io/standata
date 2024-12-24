@@ -383,3 +383,14 @@ sources:
     source: Materials Virtual Lab
     doi: 10.1038/sdata.2016.80
     url: https://crystalium.materialsvirtuallab.org/
+
+  - filename: mavrl-si-100.poscar
+    common_name: Silicon (100) surface
+    lattice_type: TRI
+    space_group: P1
+    dimensionality: 2D
+    form_factor: Surface
+    source_id: mavrl-si-100
+    source: Materials Virtual Lab
+    doi: 10.1038/sdata.2016.80
+    url: https://crystalium.materialsvirtuallab.org/

@@ -246,7 +246,6 @@ entities:
       - bulk
       - insulator
       - non-magnetic
-
   - filename: Pt-[Platinum]-FCC_[Fm-3m]_3D_[Bulk]-[mp-126].json
     categories:
       - 3D
@@ -254,7 +253,6 @@ entities:
       - metal
       - non-magnetic
       - catalysis
-
   - filename: SrTiO3-[Strontium_Titanate]-CUB_[Pm-3m]_3D_[Bulk]-[mp-5229].json
     categories:
       - 3D
@@ -262,7 +260,6 @@ entities:
       - insulator
       - non-magnetic
       - oxide
-
   - filename: SiO2-[Cristobalite]-TET_[I-42d]_3D_[Bulk]-[mp-546794].json
     categories:
       - 3D
@@ -272,6 +269,12 @@ entities:
       - oxide
       - glass
   - filename: Si-[Silicon_(100)_surface_(reconstructed)]-TRI_[P1]_2D_[Surface]-[mavrl-si-100-r].json
+    categories:
+      - 2D
+      - layer
+      - semiconductor
+      - non-magnetic
+  - filename: Si-[Silicon_(100)_surface]-TRI_[P1]_2D_[Surface]-[mavrl-si-100].json
     categories:
       - 2D
       - layer
