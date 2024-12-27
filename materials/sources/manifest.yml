@@ -394,3 +394,47 @@ sources:
     source: Materials Virtual Lab
     doi: 10.1038/sdata.2016.80
     url: https://crystalium.materialsvirtuallab.org/
+
+  - filename: mp-10033.poscar
+    common_name: Niobium Disulfide
+    lattice_type: HEX
+    space_group: P6_3/mmc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-10033
+    source: Materials Project
+    doi: 10.17188/1185067
+    url: https://next-gen.materialsproject.org/materials/mp-10033
+
+  - filename: mp-2207.poscar
+    common_name: Niobium Diselenide
+    lattice_type: HEX
+    space_group: P6_3/mmc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-2207
+    source: Materials Project
+    doi: 10.17188/1197331
+    url: https://next-gen.materialsproject.org/materials/mp-2207
+
+  - filename: mp-741.poscar
+    common_name: Hafnium IV Oxide
+    lattice_type: ORC
+    space_group: Pnma
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-741
+    source: Materials Project
+    doi: 10.17188/1287952
+    url: https://next-gen.materialsproject.org/materials/mp-741
+
+  - filename: mp-550893.poscar
+    common_name: Hafnium IV Oxide
+    lattice_type: FCC
+    space_group: Fm-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-550893
+    source: Materials Project
+    doi: 10.17188/1267443
+    url: https://next-gen.materialsproject.org/materials/mp-550893
