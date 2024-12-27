@@ -280,3 +280,16 @@ entities:
       - layer
       - semiconductor
       - non-magnetic
+  - filename: NbS2-[Niobium_Disulfide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-10033].json
+    categories:
+      - 3D
+      - bulk
+      - semiconductor
+      - ferromagnetic
+
+  - filename: NbSe2-[Niobium_Diselenide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-2207].json
+    categories:
+      - 3D
+      - bulk
+      - semiconductor
+      - ferromagnetic
