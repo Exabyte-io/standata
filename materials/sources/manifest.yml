@@ -416,3 +416,25 @@ sources:
     source: Materials Project
     doi: 10.17188/1197331
     url: https://next-gen.materialsproject.org/materials/mp-2207
+
+  - filename: mp-741.poscar
+    common_name: Hafnium IV Oxide
+    lattice_type: ORC
+    space_group: Pnma
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-741
+    source: Materials Project
+    doi: 10.17188/1287952
+    url: https://next-gen.materialsproject.org/materials/mp-741
+
+  - filename: mp-550893.poscar
+    common_name: Hafnium IV Oxide
+    lattice_type: FCC
+    space_group: Fm-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-550893
+    source: Materials Project
+    doi: 10.17188/1267443
+    url: https://next-gen.materialsproject.org/materials/mp-550893

@@ -286,10 +286,23 @@ entities:
       - bulk
       - semiconductor
       - ferromagnetic
-
   - filename: NbSe2-[Niobium_Diselenide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-2207].json
     categories:
       - 3D
       - bulk
       - semiconductor
       - ferromagnetic
+  - filename: HfO2-[Hafnium_IV_Oxide]-ORC_[Pnma]_3D_[Bulk]-[mp-741].json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - non-magnetic
+      - oxide
+  - filename: HfO2-[Hafnium_IV_Oxide]-FCC_[Fm-3m]_3D_[Bulk]-[mp-550893].json
+    categories:
+      - 3D
+      - bulk
+      - insulator
+      - non-magnetic
+      - oxide
