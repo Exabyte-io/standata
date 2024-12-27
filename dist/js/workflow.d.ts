@@ -183,141 +183,138 @@ export declare class WorkflowStandata extends Standata {
                             slug: string;
                         };
                     };
-                    units: (
-                        | {
-                              type: string;
-                              name: string;
-                              head: boolean;
-                              results: {
-                                  name: string;
-                              }[];
-                              monitors: {
-                                  name: string;
-                              }[];
-                              flowchartId: string;
-                              preProcessors: never[];
-                              postProcessors: never[];
-                              application: {
-                                  _id: string;
-                                  name: string;
-                                  version: string;
-                                  build: string;
-                                  isDefault: boolean;
-                                  summary: string;
-                                  updatedAt: string;
-                                  shortName: string;
-                                  isLicensed: boolean;
-                                  updatedBy: string;
-                              };
-                              executable: {
-                                  isDefault: boolean;
-                                  postProcessors: string[];
-                                  monitors: string[];
-                                  results: string[];
-                                  name: string;
-                              };
-                              flavor: {
-                                  isDefault: boolean;
-                                  input: {
-                                      name: string;
-                                  }[];
-                                  results: string[];
-                                  monitors: string[];
-                                  applicationName: string;
-                                  executableName: string;
-                                  name: string;
-                                  executable: {
-                                      isDefault: boolean;
-                                      postProcessors: string[];
-                                      monitors: string[];
-                                      results: string[];
-                                      name: string;
-                                  };
-                              };
-                              status: string;
-                              statusTrack: never[];
-                              input: {
-                                  content: string;
-                                  name: string;
-                                  contextProviders: {
-                                      name: string;
-                                  }[];
-                                  applicationName: string;
-                                  executableName: string;
-                                  updatedAt: string;
-                                  updatedBy: string;
-                                  rendered: string;
-                              }[];
-                              next: string;
-                          }
-                        | {
-                              type: string;
-                              name: string;
-                              head: boolean;
-                              results: {
-                                  name: string;
-                              }[];
-                              monitors: {
-                                  name: string;
-                              }[];
-                              flowchartId: string;
-                              preProcessors: never[];
-                              postProcessors: never[];
-                              application: {
-                                  _id: string;
-                                  name: string;
-                                  version: string;
-                                  build: string;
-                                  isDefault: boolean;
-                                  summary: string;
-                                  updatedAt: string;
-                                  shortName: string;
-                                  isLicensed: boolean;
-                                  updatedBy: string;
-                              };
-                              executable: {
-                                  isDefault: boolean;
-                                  postProcessors: string[];
-                                  monitors: string[];
-                                  results: string[];
-                                  name: string;
-                              };
-                              flavor: {
-                                  input: {
-                                      name: string;
-                                      templateName: string;
-                                  }[];
-                                  results: string[];
-                                  monitors: string[];
-                                  applicationName: string;
-                                  executableName: string;
-                                  name: string;
-                                  executable: {
-                                      isDefault: boolean;
-                                      postProcessors: string[];
-                                      monitors: string[];
-                                      results: string[];
-                                      name: string;
-                                  };
-                                  isDefault?: undefined;
-                              };
-                              status: string;
-                              statusTrack: never[];
-                              input: {
-                                  content: string;
-                                  name: string;
-                                  contextProviders: {
-                                      name: string;
-                                  }[];
-                                  applicationName: string;
-                                  executableName: string;
-                                  updatedAt: string;
-                                  updatedBy: string;
-                                  rendered: string;
-                              }[];
-                              next?: undefined;
-                          }
-                    )[];
+                    units: ({
+                        type: string;
+                        name: string;
+                        head: boolean;
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        flowchartId: string;
+                        preProcessors: never[];
+                        postProcessors: never[];
+                        application: {
+                            _id: string;
+                            name: string;
+                            version: string;
+                            build: string;
+                            isDefault: boolean;
+                            summary: string;
+                            updatedAt: string;
+                            shortName: string;
+                            isLicensed: boolean;
+                            updatedBy: string;
+                        };
+                        executable: {
+                            isDefault: boolean;
+                            postProcessors: string[];
+                            monitors: string[];
+                            results: string[];
+                            name: string;
+                        };
+                        flavor: {
+                            isDefault: boolean;
+                            input: {
+                                name: string;
+                            }[];
+                            results: string[];
+                            monitors: string[];
+                            applicationName: string;
+                            executableName: string;
+                            name: string;
+                            executable: {
+                                isDefault: boolean;
+                                postProcessors: string[];
+                                monitors: string[];
+                                results: string[];
+                                name: string;
+                            };
+                        };
+                        status: string;
+                        statusTrack: never[];
+                        input: {
+                            content: string;
+                            name: string;
+                            contextProviders: {
+                                name: string;
+                            }[];
+                            applicationName: string;
+                            executableName: string;
+                            updatedAt: string;
+                            updatedBy: string;
+                            rendered: string;
+                        }[];
+                        next: string;
+                    } | {
+                        type: string;
+                        name: string;
+                        head: boolean;
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        flowchartId: string;
+                        preProcessors: never[];
+                        postProcessors: never[];
+                        application: {
+                            _id: string;
+                            name: string;
+                            version: string;
+                            build: string;
+                            isDefault: boolean;
+                            summary: string;
+                            updatedAt: string;
+                            shortName: string;
+                            isLicensed: boolean;
+                            updatedBy: string;
+                        };
+                        executable: {
+                            isDefault: boolean;
+                            postProcessors: string[];
+                            monitors: string[];
+                            results: string[];
+                            name: string;
+                        };
+                        flavor: {
+                            input: {
+                                name: string;
+                                templateName: string;
+                            }[];
+                            results: string[];
+                            monitors: string[];
+                            applicationName: string;
+                            executableName: string;
+                            name: string;
+                            executable: {
+                                isDefault: boolean;
+                                postProcessors: string[];
+                                monitors: string[];
+                                results: string[];
+                                name: string;
+                            };
+                            isDefault?: undefined;
+                        };
+                        status: string;
+                        statusTrack: never[];
+                        input: {
+                            content: string;
+                            name: string;
+                            contextProviders: {
+                                name: string;
+                            }[];
+                            applicationName: string;
+                            executableName: string;
+                            updatedAt: string;
+                            updatedBy: string;
+                            rendered: string;
+                        }[];
+                        next?: undefined;
+                    })[];
                     compute: null;
                     isDraft: boolean;
                 }[];

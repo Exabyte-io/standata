@@ -31,7 +31,8 @@ class Standata {
             for (const category of categories_) {
                 if (category in lookupTable) {
                     lookupTable[category].add(filename);
-                } else {
+                }
+                else {
                     lookupTable[category] = new Set([filename]);
                 }
             }
@@ -41,11 +42,7 @@ class Standata {
     loadEntity(filename) {
         var _a, _b;
         const ctor = this.constructor;
-        return (_b =
-            (_a = ctor.runtimeData) === null || _a === void 0 ? void 0 : _a.filesMapByName) ===
-            null || _b === void 0
-            ? void 0
-            : _b[filename];
+        return (_b = (_a = ctor.runtimeData) === null || _a === void 0 ? void 0 : _a.filesMapByName) === null || _b === void 0 ? void 0 : _b[filename];
     }
     filterByCategories(...categories) {
         if (!categories.length) {
@@ -54,12 +51,7 @@ class Standata {
         let filenames = this.entities.map((e) => e.filename);
         // eslint-disable-next-line no-restricted-syntax
         for (const category of categories) {
-            filenames = filenames.filter((f) => {
-                var _a;
-                return (_a = this.lookupTable[category]) === null || _a === void 0
-                    ? void 0
-                    : _a.has(f);
-            });
+            filenames = filenames.filter((f) => { var _a; return (_a = this.lookupTable[category]) === null || _a === void 0 ? void 0 : _a.has(f); });
         }
         return filenames;
     }
