@@ -1347,6 +1347,76 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
+            "HfO2-[Hafnium_IV_Oxide]-ORC_[Pnma]_3D_[Bulk]-[mp-741].json": {
+                name: string;
+                lattice: {
+                    type: string;
+                    a: number;
+                    b: number;
+                    c: number;
+                    alpha: number;
+                    beta: number;
+                    gamma: number;
+                    units: {
+                        length: string;
+                        angle: string;
+                    };
+                };
+                basis: {
+                    units: string;
+                    elements: {
+                        id: number;
+                        value: string;
+                    }[];
+                    coordinates: {
+                        id: number;
+                        value: number[];
+                    }[];
+                };
+                external: {
+                    id: string;
+                    source: string;
+                    doi: string;
+                    url: string;
+                    origin: boolean;
+                };
+                isNonPeriodic: boolean;
+            };
+            "HfO2-[Hafnium_IV_Oxide]-FCC_[Fm-3m]_3D_[Bulk]-[mp-550893].json": {
+                name: string;
+                lattice: {
+                    type: string;
+                    a: number;
+                    b: number;
+                    c: number;
+                    alpha: number;
+                    beta: number;
+                    gamma: number;
+                    units: {
+                        length: string;
+                        angle: string;
+                    };
+                };
+                basis: {
+                    units: string;
+                    elements: {
+                        id: number;
+                        value: string;
+                    }[];
+                    coordinates: {
+                        id: number;
+                        value: number[];
+                    }[];
+                };
+                external: {
+                    id: string;
+                    source: string;
+                    doi: string;
+                    url: string;
+                    origin: boolean;
+                };
+                isNonPeriodic: boolean;
+            };
         };
     };
 }
