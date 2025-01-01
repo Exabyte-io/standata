@@ -1417,6 +1417,41 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
+            "SnO-[Tin_Oxide]-TET_[P4%2Fnmm]_3D_[Bulk]-[mp-2097].json": {
+                name: string;
+                lattice: {
+                    type: string;
+                    a: number;
+                    b: number;
+                    c: number;
+                    alpha: number;
+                    beta: number;
+                    gamma: number;
+                    units: {
+                        length: string;
+                        angle: string;
+                    };
+                };
+                basis: {
+                    units: string;
+                    elements: {
+                        id: number;
+                        value: string;
+                    }[];
+                    coordinates: {
+                        id: number;
+                        value: number[];
+                    }[];
+                };
+                external: {
+                    id: string;
+                    source: string;
+                    doi: string;
+                    url: string;
+                    origin: boolean;
+                };
+                isNonPeriodic: boolean;
+            };
         };
     };
 }
