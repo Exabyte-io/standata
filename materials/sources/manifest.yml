@@ -438,3 +438,14 @@ sources:
     source: Materials Project
     doi: 10.17188/1267443
     url: https://next-gen.materialsproject.org/materials/mp-550893
+
+  - filename: mp-2097.poscar
+    common_name: Tin Oxide
+    lattice_type: TET
+    space_group: P4/nmm
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-2097
+    source: Materials Project
+    doi: 10.17188/1196204
+    url: https://next-gen.materialsproject.org/materials/mp-2097

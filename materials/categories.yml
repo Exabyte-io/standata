@@ -306,3 +306,10 @@ entities:
       - insulator
       - non-magnetic
       - oxide
+  - filename: SnO-[Tin_Oxide]-TET_[P4%2Fnmm]_3D_[Bulk]-[mp-2097].json
+    categories:
+      - 3D
+      - bulk
+      - semiconductor
+      - non-magnetic
+      - oxide
