@@ -449,3 +449,25 @@ sources:
     source: Materials Project
     doi: 10.17188/1196204
     url: https://next-gen.materialsproject.org/materials/mp-2097
+
+  - filename: 2dm-3941.poscar
+    common_name: Niobium Diselenide
+    lattice_type: HEX
+    space_group: P-6m2
+    dimensionality: 2D
+    form_factor: Monolayer
+    source_id: 2dm-3941
+    source: 2dmatpedia
+    doi: 10.1038/s41597-019-0097-3
+    url: http://www.2dmatpedia.org/twodmaterials/doc/2dm-3941
+
+  - filename: 2dm-3019.poscar
+    common_name: Niobium Disulfide
+    lattice_type: HEX
+    space_group: P-6m2
+    dimensionality: 2D
+    form_factor: Monolayer
+    source_id: 2dm-3019
+    source: 2dmatpedia
+    doi: 10.1038/s41597-019-0097-3
+    url: http://www.2dmatpedia.org/twodmaterials/doc/2dm-3019
