@@ -319,7 +319,7 @@ entities:
       - layer
       - semiconductor
       - ferromagnetic
-  - filename: NbS2-[Niobium_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-10033].json
+  - filename: NbS2-[Niobium_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-3019].json
     categories:
       - 2D
       - layer

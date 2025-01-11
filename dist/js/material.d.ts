@@ -1452,6 +1452,76 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
+            "NbSe2-[Niobium_Diselenide]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-3941].json": {
+                name: string;
+                lattice: {
+                    type: string;
+                    a: number;
+                    b: number;
+                    c: number;
+                    alpha: number;
+                    beta: number;
+                    gamma: number;
+                    units: {
+                        length: string;
+                        angle: string;
+                    };
+                };
+                basis: {
+                    units: string;
+                    elements: {
+                        id: number;
+                        value: string;
+                    }[];
+                    coordinates: {
+                        id: number;
+                        value: number[];
+                    }[];
+                };
+                external: {
+                    id: string;
+                    source: string;
+                    doi: string;
+                    url: string;
+                    origin: boolean;
+                };
+                isNonPeriodic: boolean;
+            };
+            "NbS2-[Niobium_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-3019].json": {
+                name: string;
+                lattice: {
+                    type: string;
+                    a: number;
+                    b: number;
+                    c: number;
+                    alpha: number;
+                    beta: number;
+                    gamma: number;
+                    units: {
+                        length: string;
+                        angle: string;
+                    };
+                };
+                basis: {
+                    units: string;
+                    elements: {
+                        id: number;
+                        value: string;
+                    }[];
+                    coordinates: {
+                        id: number;
+                        value: number[];
+                    }[];
+                };
+                external: {
+                    id: string;
+                    source: string;
+                    doi: string;
+                    url: string;
+                    origin: boolean;
+                };
+                isNonPeriodic: boolean;
+            };
         };
     };
 }
