@@ -325,3 +325,15 @@ entities:
       - layer
       - semiconductor
       - ferromagnetic
+  - filename: C-[Graphene_Zigzag_Nanoribbon]-ORC_[Pmm2]_2D_[Nanoribbon]-[m3-z53HK5wLAvRoWDwr6].json
+    categories:
+      - 2D
+      - layer
+      - semi-metal
+      - non-magnetic
+  - filename: H13C40-[H-passivated_Graphene_Zigzag_Nanoribbon]-ORC_[Pm]_2D_[Nanoribbon]-[m3-PXc7SEqFqNk5GmZT8].json
+    categories:
+      - 2D
+      - layer
+      - semi-metal
+      - non-magnetic

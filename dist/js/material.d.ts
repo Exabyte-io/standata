@@ -1522,6 +1522,76 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
+            "C-[Graphene_Zigzag_Nanoribbon]-ORC_[Pmm2]_2D_[Nanoribbon]-[m3-z53HK5wLAvRoWDwr6].json": {
+                name: string;
+                lattice: {
+                    type: string;
+                    a: number;
+                    b: number;
+                    c: number;
+                    alpha: number;
+                    beta: number;
+                    gamma: number;
+                    units: {
+                        length: string;
+                        angle: string;
+                    };
+                };
+                basis: {
+                    units: string;
+                    elements: {
+                        id: number;
+                        value: string;
+                    }[];
+                    coordinates: {
+                        id: number;
+                        value: number[];
+                    }[];
+                };
+                external: {
+                    id: string;
+                    source: string;
+                    doi: null;
+                    url: string;
+                    origin: boolean;
+                };
+                isNonPeriodic: boolean;
+            };
+            "H13C40-[H-passivated_Graphene_Zigzag_Nanoribbon]-ORC_[Pm]_2D_[Nanoribbon]-[m3-PXc7SEqFqNk5GmZT8].json": {
+                name: string;
+                lattice: {
+                    type: string;
+                    a: number;
+                    b: number;
+                    c: number;
+                    alpha: number;
+                    beta: number;
+                    gamma: number;
+                    units: {
+                        length: string;
+                        angle: string;
+                    };
+                };
+                basis: {
+                    units: string;
+                    elements: {
+                        id: number;
+                        value: string;
+                    }[];
+                    coordinates: {
+                        id: number;
+                        value: number[];
+                    }[];
+                };
+                external: {
+                    id: string;
+                    source: string;
+                    doi: null;
+                    url: string;
+                    origin: boolean;
+                };
+                isNonPeriodic: boolean;
+            };
         };
     };
 }
