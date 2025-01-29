@@ -1522,7 +1522,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "C-[Graphene_Zigzag_Nanoribbon]-ORC_[Pmm2]_2D_[Nanoribbon]-[m3-z53HK5wLAvRoWDwr6].json": {
+            "C-[Graphene_Zigzag_Nanoribbon_(W=4_L=10)]-ORC_[Pmm2]_2D_[Nanoribbon]-[m3-z53HK5wLAvRoWDwr6].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -1551,7 +1551,7 @@ export declare class MaterialStandata extends Standata {
                 external: {
                     id: string;
                     source: string;
-                    doi: null;
+                    doi: string;
                     url: string;
                     origin: boolean;
                 };
