@@ -480,5 +480,16 @@ sources:
     form_factor: Nanoribbon
     source_id: m3-z53HK5wLAvRoWDwr6
     source: Mat3ra
-    doi:
+    doi: https://doi.org/10.48550/arXiv.1902.10838
     url: https://platform.mat3ra.com/bank/materials/z53HK5wLAvRoWDwr6
+
+  - filename: m3-DGZkTWq23Wwu9HETN.poscar
+    common_name: Graphene on Ni(111) Interface
+    lattice_type: HEX
+    space_group: P3m1
+    dimensionality: 2D
+    form_factor: Interface
+    source_id: m3-DGZkTWq23Wwu9HETN
+    source: Mat3ra
+    doi: https://doi.org/10.48550/arXiv.1902.10838
+    url: https://platform.mat3ra.com/bank/materials/DGZkTWq23Wwu9HETN
