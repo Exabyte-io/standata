@@ -471,3 +471,14 @@ sources:
     source: 2dmatpedia
     doi: 10.1038/s41597-019-0097-3
     url: http://www.2dmatpedia.org/twodmaterials/doc/2dm-3019
+
+  - filename: m3-z53HK5wLAvRoWDwr6.poscar
+    common_name: Graphene Zigzag Nanoribbon
+    lattice_type: ORC
+    space_group: Pmm2
+    dimensionality: 2D
+    form_factor: Nanoribbon
+    source_id: m3-z53HK5wLAvRoWDwr6
+    source: Mat3ra
+    doi:
+    url: https://platform.mat3ra.com/bank/materials/z53HK5wLAvRoWDwr6
