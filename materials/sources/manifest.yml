@@ -473,7 +473,7 @@ sources:
     url: http://www.2dmatpedia.org/twodmaterials/doc/2dm-3019
 
   - filename: m3-z53HK5wLAvRoWDwr6.poscar
-    common_name: Graphene Zigzag Nanoribbon
+    common_name: Graphene Zigzag Nanoribbon (W=4 L=10)
     lattice_type: ORC
     space_group: Pmm2
     dimensionality: 2D
