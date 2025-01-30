@@ -331,3 +331,9 @@ entities:
       - layer
       - semi-metal
       - non-magnetic
+  - filename: Ni3C2-[Graphene_on_Ni(111)_Interface]-HEX_[P3m1]_2D_[Interface]-[m3-DGZkTWq23Wwu9HETN].json
+    categories:
+      - 2D
+      - interface
+      - semi-metal
+      - non-magnetic
