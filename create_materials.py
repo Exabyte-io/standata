@@ -91,6 +91,38 @@ def construct_filename(material_config: Dict[str, str], source: Dict[str, str]) 
 
     return filename
 
+def create_material_config(material_config: Dict, source: Dict) -> Dict:
+    """
+    Creates the final material configuration by adding name, external info, and metadata.
+
+    Args:
+        material_config (dict): Base ESSE material configuration.
+        source (dict): Source information including metadata.
+
+    Returns:
+        dict: Complete material configuration.
+    """
+    name = construct_name(material_config, source)
+
+    final_config = {
+        "name": name,
+        "lattice": material_config["lattice"],
+        "basis": material_config["basis"],
+        "external": {
+            "id": source["source_id"],
+            "source": source["source"],
+            "doi": source["doi"],
+            "url": source["url"],
+            "origin": True
+        },
+        "isNonPeriodic": False
+    }
+
+    if "metadata" in source:
+        final_config["metadata"] = source["metadata"]
+
+    return final_config
+
 def main():
     """
     Main function to create materials listed in the sources manifest.
@@ -100,31 +132,13 @@ def main():
         with open(f"{SOURCES_PATH}/{source['filename']}", 'r') as file:
             poscar = file.read()
             material_config = convert_to_esse(poscar)
-            name = construct_name(material_config, source)
+            final_config = create_material_config(material_config, source)
             filename = construct_filename(material_config, source)
 
-            material_config["name"] = name
-
-            # remove all keys except for name, lattice, basis.
-            material_config = {k: material_config[k] for k in ('name', 'lattice', 'basis')}
-
-            # add "external" property
-            material_config['external'] = {
-                "id": source["source_id"],
-                "source": source["source"],
-                "doi": source["doi"],
-                "url": source["url"],
-                "origin": True
-            }
-
-            # add "isNonPeriodic" property
-            material_config['isNonPeriodic'] = False
-
             with open(f'{DESTINATION_PATH}/{filename}.json', 'w') as file:
-                json.dump(material_config, file)
-                # Add newline at the end of the file
+                json.dump(final_config, file)
                 file.write('\n')
-            materials.append(material_config)
+            materials.append(final_config)
         print(f'Created {filename}.json')
     print(f'Total materials created: {len(materials)}')
 

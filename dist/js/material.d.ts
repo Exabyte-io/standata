@@ -1556,6 +1556,19 @@ export declare class MaterialStandata extends Standata {
                     origin: boolean;
                 };
                 isNonPeriodic: boolean;
+                metadata: ({
+                    build: null;
+                    configuration?: undefined;
+                } | {
+                    configuration: {
+                        width: number;
+                        length: number;
+                        vacuum_width: number;
+                        vacuum_length: number;
+                        edge_type: string;
+                    };
+                    build?: undefined;
+                })[];
             };
             "Ni3C2-[Graphene_on_Ni(111)_Interface]-HEX_[P3m1]_2D_[Interface]-[m3-DGZkTWq23Wwu9HETN].json": {
                 name: string;
