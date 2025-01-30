@@ -482,3 +482,11 @@ sources:
     source: Mat3ra
     doi: https://doi.org/10.48550/arXiv.1902.10838
     url: https://platform.mat3ra.com/bank/materials/z53HK5wLAvRoWDwr6
+    metadata:
+    - build:
+    - configuration:
+        width: 4
+        length: 10
+        vacuum_width: 5
+        vacuum_length: 5
+        edge_type: zigzag

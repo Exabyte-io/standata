@@ -1556,6 +1556,19 @@ export declare class MaterialStandata extends Standata {
                     origin: boolean;
                 };
                 isNonPeriodic: boolean;
+                metadata: ({
+                    build: null;
+                    configuration?: undefined;
+                } | {
+                    configuration: {
+                        width: number;
+                        length: number;
+                        vacuum_width: number;
+                        vacuum_length: number;
+                        edge_type: string;
+                    };
+                    build?: undefined;
+                })[];
             };
         };
     };
