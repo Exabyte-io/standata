@@ -493,7 +493,7 @@ sources:
 
   - filename: mp-1219182.poscar
     common_name: Silicon-Germanium
-    lattice_type: CUB
+    lattice_type: FCC
     space_group: F-43m
     dimensionality: 3D
     form_factor: Bulk
@@ -504,7 +504,7 @@ sources:
 
   - filename: mp-32.poscar
     common_name: Germanium
-    lattice_type: FCC
+    lattice_type: CUB
     space_group: Fd-3m
     dimensionality: 3D
     form_factor: Bulk

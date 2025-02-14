@@ -331,13 +331,13 @@ entities:
       - layer
       - semi-metal
       - non-magnetic
-  - filename: SiGe-[Silicon-Germanium]-CUB_[F-43m]_3D_[Bulk]-[mp-1219182].json
+  - filename: SiGe-[Silicon-Germanium]-FCC_[F-43m]_3D_[Bulk]-[mp-1219182].json
     categories:
       - 3D
       - bulk
       - semiconductor
       - non-magnetic
-  - filename: Ge-[Germanium]-FCC_[Fd-3m]_3D_[Bulk]-[mp-32].json
+  - filename: Ge-[Germanium]-CUB_[Fd-3m]_3D_[Bulk]-[mp-32].json
     categories:
       - 3D
       - bulk

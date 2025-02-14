@@ -1570,7 +1570,7 @@ export declare class MaterialStandata extends Standata {
                     build?: undefined;
                 })[];
             };
-            "SiGe-[Silicon-Germanium]-CUB_[F-43m]_3D_[Bulk]-[mp-1219182].json": {
+            "SiGe-[Silicon-Germanium]-FCC_[F-43m]_3D_[Bulk]-[mp-1219182].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -1605,7 +1605,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "Ge-[Germanium]-FCC_[Fd-3m]_3D_[Bulk]-[mp-32].json": {
+            "Ge-[Germanium]-CUB_[Fd-3m]_3D_[Bulk]-[mp-32].json": {
                 name: string;
                 lattice: {
                     type: string;
