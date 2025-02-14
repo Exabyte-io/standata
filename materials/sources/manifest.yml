@@ -490,6 +490,7 @@ sources:
           vacuum_width: 5
           vacuum_length: 5
           edge_type: zigzag
+
   - filename: mp-1219182.poscar
     common_name: Silicon-Germanium
     lattice_type: CUB
@@ -500,3 +501,14 @@ sources:
     source: Materials Project
     doi: 10.1063/1.4812323
     url: https://next-gen.materialsproject.org/materials/mp-1219182
+
+  - filename: mp-32.poscar
+    common_name: Germanium
+    lattice_type: FCC
+    space_group: Fd-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-32
+    source: Materials Project
+    doi: 10.17188/1206032
+    url: https://next-gen.materialsproject.org/materials/mp-32

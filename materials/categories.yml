@@ -337,3 +337,9 @@ entities:
       - bulk
       - semiconductor
       - non-magnetic
+  - filename: Ge-[Germanium]-FCC_[Fd-3m]_3D_[Bulk]-[mp-32].json
+    categories:
+      - 3D
+      - bulk
+      - semi-metal
+      - non-magnetic
