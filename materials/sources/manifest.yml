@@ -504,7 +504,7 @@ sources:
 
   - filename: mp-32.poscar
     common_name: Germanium
-    lattice_type: CUB
+    lattice_type: FCC
     space_group: Fd-3m
     dimensionality: 3D
     form_factor: Bulk

@@ -1605,7 +1605,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "Ge-[Germanium]-CUB_[Fd-3m]_3D_[Bulk]-[mp-32].json": {
+            "Ge-[Germanium]-FCC_[Fd-3m]_3D_[Bulk]-[mp-32].json": {
                 name: string;
                 lattice: {
                     type: string;
