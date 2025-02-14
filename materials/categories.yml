@@ -331,3 +331,9 @@ entities:
       - layer
       - semi-metal
       - non-magnetic
+  - filename: SiGe-[Silicon-Germanium]-CUB_[F-43m]_3D_[Bulk]-[mp-1219182].json
+    categories:
+      - 3D
+      - bulk
+      - semiconductor
+      - non-magnetic

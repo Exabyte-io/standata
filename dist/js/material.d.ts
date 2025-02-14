@@ -1570,6 +1570,41 @@ export declare class MaterialStandata extends Standata {
                     build?: undefined;
                 })[];
             };
+            "SiGe-[Silicon-Germanium]-CUB_[F-43m]_3D_[Bulk]-[mp-1219182].json": {
+                name: string;
+                lattice: {
+                    type: string;
+                    a: number;
+                    b: number;
+                    c: number;
+                    alpha: number;
+                    beta: number;
+                    gamma: number;
+                    units: {
+                        length: string;
+                        angle: string;
+                    };
+                };
+                basis: {
+                    units: string;
+                    elements: {
+                        id: number;
+                        value: string;
+                    }[];
+                    coordinates: {
+                        id: number;
+                        value: number[];
+                    }[];
+                };
+                external: {
+                    id: string;
+                    source: string;
+                    doi: string;
+                    url: string;
+                    origin: boolean;
+                };
+                isNonPeriodic: boolean;
+            };
         };
     };
 }
