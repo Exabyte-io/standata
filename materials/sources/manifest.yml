@@ -8,7 +8,7 @@ sources:
     source_id: 2dm-3993
     source: 2dmatpedia
     doi: 10.1038/s41597-019-0097-3
-    url: http://www.2dmatpedia.org/2dmaterials/doc/2dm-3993
+    url: http://www.2dmatpedia.org/twodmaterials/doc/2dm-3993
 
   - filename: mp-48.poscar
     common_name: Graphite
@@ -30,7 +30,7 @@ sources:
     source_id: 2dm-4991
     source: 2dmatpedia
     doi: 10.1038/s41597-019-0097-3
-    url: http://www.2dmatpedia.org/2dmaterials/doc/2dm-4991
+    url: http://www.2dmatpedia.org/twodmaterials/doc/2dm-4991
 
   - filename: mp-7991.poscar
     common_name: Boron Nitride
@@ -129,7 +129,7 @@ sources:
     source_id: 2dm-3150
     source: 2dmatpedia
     doi: 10.1038/s41597-019-0097-3
-    url: http://www.2dmatpedia.org/2dmaterials/doc/2dm-3150
+    url: http://www.2dmatpedia.org/twodmaterials/doc/2dm-3150
 
   - filename: mp-2815.poscar
     common_name: Molybdenum Disulfide
@@ -151,7 +151,7 @@ sources:
     source_id: 2dm-5370
     source: 2dmatpedia
     doi: 10.1038/s41597-019-0097-3
-    url: http://www.2dmatpedia.org/2dmaterials/doc/2dm-5370
+    url: http://www.2dmatpedia.org/twodmaterials/doc/2dm-5370
 
   - filename: mp-602.poscar
     common_name: Molybdenum Telluride
@@ -195,7 +195,7 @@ sources:
     source_id: 2dm-5934
     source: 2dmatpedia
     doi: 10.1038/s41597-019-0097-3
-    url: http://www.2dmatpedia.org/2dmaterials/doc/2dm-5934
+    url: http://www.2dmatpedia.org/twodmaterials/doc/2dm-5934
 
   - filename: mp-149.poscar
     common_name: Silicon
@@ -250,7 +250,7 @@ sources:
     source_id: 2dm-3749
     source: 2dmatpedia
     doi: 10.1038/s41597-019-0097-3
-    url: http://www.2dmatpedia.org/2dmaterials/doc/2dm-3749
+    url: http://www.2dmatpedia.org/twodmaterials/doc/2dm-3749
 
   - filename: mp-224.poscar
     common_name: Tungsten Disulfide
@@ -272,7 +272,7 @@ sources:
     source_id: 2dm-3594
     source: 2dmatpedia
     doi: 10.1038/s41597-019-0097-3
-    url: http://www.2dmatpedia.org/2dmaterials/doc/2dm-3594
+    url: http://www.2dmatpedia.org/twodmaterials/doc/2dm-3594
 
   - filename: mp-1821.poscar
     common_name: Tungsten Diselenide
