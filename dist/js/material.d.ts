@@ -1556,17 +1556,6 @@ export declare class MaterialStandata extends Standata {
                     origin: boolean;
                 };
                 isNonPeriodic: boolean;
-                metadata: {
-                    build: {
-                        configuration: {
-                            width: number;
-                            length: number;
-                            vacuum_width: number;
-                            vacuum_length: number;
-                            edge_type: string;
-                        };
-                    }[];
-                }[];
             };
             "SiGe-[Silicon-Germanium]-FCC_[F-43m]_3D_[Bulk]-[mp-1219182].json": {
                 name: string;
