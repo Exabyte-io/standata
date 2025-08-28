@@ -8,7 +8,9 @@
     "files": [
         "/dist",
         "/src/js",
-        "tsconfig.json"
+        "tsconfig.json",
+        "build_runtime_data.js",
+        "wode"
     ],
     "dependencies": {
         "@babel/cli": "7.16.0",
@@ -58,7 +60,7 @@
         "build:categories": "ts-node src/js/cli.ts",
         "build:workflows": "node wode/build_workflows.js",
         "build:runtime-data": "node build_runtime_data.js",
-        "build:dist": "npm run transpile && npm run build:workflows && npm run build:runtime-data",
+        "build:dist": "npm run build:runtime-data && npm run transpile && npm run build:workflows",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
