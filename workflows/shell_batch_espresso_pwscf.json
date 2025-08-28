@@ -1,0 +1,9 @@
+{
+  "name": "Shell Batch Job (Espresso PWSCF)",
+  "units": [
+    {
+      "name": "batch_espresso_pwscf",
+      "type": "subworkflow"
+    }
+  ]
+}

@@ -58,7 +58,7 @@ const workflowData = {
             application: allApplications.map(app => app.replace('/', '_')), // Convert nested apps like python/ml to python_ml
             property: [
                 "band_gap",
-                "band_structure", 
+                "band_structure",
                 "dos",
                 "total_energy",
                 "phonon_dispersions",
@@ -81,23 +81,23 @@ Object.keys(allWorkflows.workflows).forEach(appName => {
     Object.keys(allWorkflows.workflows[appName]).forEach(workflowName => {
         const filename = `${appName.replace('/', '_')}_${workflowName}.json`;
         const workflowContent = allWorkflows.workflows[appName][workflowName];
-        
+
         // Ensure the workflows directory exists
         const workflowsDir = path.resolve(__dirname, "..", "workflows");
         if (!fs.existsSync(workflowsDir)) {
             fs.mkdirSync(workflowsDir, { recursive: true });
         }
-        
+
         // Write individual workflow file
         fs.writeFileSync(
             path.resolve(workflowsDir, filename),
-            JSON.stringify(workflowContent, null, 2),
+            JSON.stringify(workflowContent, null, 2) + "\n",
             "utf8"
         );
-        
+
         // Add to filesMapByName
         workflowData.filesMapByName[filename] = workflowContent;
-        
+
         // Create entity entry
         const categories = [appName.replace('/', '_')];
         if (workflowContent.properties && workflowContent.properties.length > 0) {
@@ -109,7 +109,7 @@ Object.keys(allWorkflows.workflows).forEach(appName => {
             });
         }
         categories.push("single-material"); // Default assumption
-        
+
         workflowData.standataConfig.entities.push({
             filename: filename,
             categories: categories
@@ -121,7 +121,7 @@ Object.keys(allWorkflows.workflows).forEach(appName => {
 const categoriesYml = yaml.dump(workflowData.standataConfig);
 fs.writeFileSync(
     path.resolve(__dirname, "..", "workflows", "categories.yml"),
-    categoriesYml,
+    categoriesYml + (categoriesYml.endsWith('\n') ? '' : '\n'),
     "utf8"
 );
 

@@ -1,0 +1,9 @@
+{
+  "name": "Band Structure",
+  "units": [
+    {
+      "name": "band_structure",
+      "type": "subworkflow"
+    }
+  ]
+}

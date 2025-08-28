@@ -1,0 +1,9 @@
+{
+  "name": "Shell Script",
+  "units": [
+    {
+      "name": "hello_world",
+      "type": "subworkflow"
+    }
+  ]
+}

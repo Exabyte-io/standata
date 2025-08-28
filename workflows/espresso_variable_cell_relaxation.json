@@ -1,0 +1,9 @@
+{
+  "name": "Variable-cell Relaxation",
+  "units": [
+    {
+      "name": "variable_cell_relaxation",
+      "type": "subworkflow"
+    }
+  ]
+}

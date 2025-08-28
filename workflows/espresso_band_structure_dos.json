@@ -1,0 +1,9 @@
+{
+  "name": "Band Structure + Density of States",
+  "units": [
+    {
+      "name": "band_structure_dos",
+      "type": "subworkflow"
+    }
+  ]
+}
