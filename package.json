@@ -27,6 +27,7 @@
     },
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",
+        "@exabyte-io/wode.js": "^2025.8.21-0",
         "@mat3ra/tsconfig": "^2024.6.3-0",
         "@types/chai": "^4.3.5",
         "@types/js-yaml": "^4.0.5",
@@ -55,8 +56,9 @@
     },
     "scripts": {
         "build:categories": "ts-node src/js/cli.ts",
+        "build:workflows": "node wode/build_workflows.js",
         "build:runtime-data": "node build_runtime_data.js",
-        "build:dist": "npm run transpile && npm run build:runtime-data",
+        "build:dist": "npm run transpile && npm run build:workflows && npm run build:runtime-data",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
