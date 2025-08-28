@@ -59,6 +59,11 @@ buildAsset({
     targetPath: `${runtimeDataDir}/workflows.json`,
 });
 
+buildAsset({
+    assetPath: "./subworkflows/categories.yml",
+    targetPath: `${runtimeDataDir}/subworkflows.json`,
+});
+
 // Py Modules
 
 buildAsset({
@@ -84,4 +89,11 @@ buildAsset({
     targetPath: "./src/py/mat3ra/standata/data/workflows.py",
     contentGenerator: (content) =>
         `import json\n\nworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
+});
+
+buildAsset({
+    assetPath: "./subworkflows/categories.yml",
+    targetPath: "./src/py/mat3ra/standata/data/subworkflows.py",
+    contentGenerator: (content) =>
+        `import json\n\nsubworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });

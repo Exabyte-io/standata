@@ -8,238 +8,190 @@ categories:
     - shell
     - vasp
     - deepmd
-  property:
-    - band_gap
-    - band_structure
-    - dos
-    - total_energy
-    - phonon_dispersions
-    - phonon_dos
-    - surface_energy
-    - zero_point_energy
-    - dielectric_tensor
-    - neb
-    - hubbard_u_hp
-  material_count:
-    - single-material
-    - multi-material
 entities:
+  - filename: espresso_average_electrostatic_potential_find_minima.json
+    categories:
+      - espresso
+  - filename: espresso_average_electrostatic_potential_via_band_structure.json
+    categories:
+      - espresso
   - filename: espresso_band_gap.json
     categories:
       - espresso
-      - band_gap
-      - single-material
-  - filename: espresso_band_gap_dos_hse.json
+  - filename: espresso_band_gap_hse_dos.json
     categories:
       - espresso
-      - dos
-      - single-material
   - filename: espresso_band_structure.json
     categories:
       - espresso
-      - band_structure
-      - single-material
   - filename: espresso_band_structure_dos.json
     categories:
       - espresso
-      - single-material
   - filename: espresso_band_structure_hse.json
     categories:
       - espresso
-      - single-material
   - filename: espresso_band_structure_magn.json
     categories:
       - espresso
-      - band_structure
-      - single-material
   - filename: espresso_band_structure_soc.json
     categories:
       - espresso
-      - band_structure
-      - single-material
   - filename: espresso_dielectric_tensor.json
     categories:
       - espresso
-      - dielectric_tensor
-      - single-material
   - filename: espresso_dos.json
     categories:
       - espresso
-      - dos
-      - single-material
   - filename: espresso_electronic_density_mesh.json
     categories:
       - espresso
-      - single-material
   - filename: espresso_esm.json
     categories:
       - espresso
-      - single-material
   - filename: espresso_esm_relax.json
     categories:
       - espresso
-      - single-material
+  - filename: espresso_espresso_extract_kpoints.json
+    categories:
+      - espresso
+  - filename: espresso_espresso_xml_get_qpt_irr.json
+    categories:
+      - espresso
   - filename: espresso_fixed_cell_relaxation.json
     categories:
       - espresso
-      - single-material
   - filename: espresso_gw_band_structure_band_gap_full_frequency.json
     categories:
       - espresso
-      - single-material
   - filename: espresso_gw_band_structure_band_gap_plasmon_pole.json
     categories:
       - espresso
-      - single-material
   - filename: espresso_hubbard_u_hp.json
     categories:
       - espresso
-      - hubbard_u_hp
-      - single-material
   - filename: espresso_kpoint_convergence.json
     categories:
       - espresso
-      - single-material
   - filename: espresso_neb.json
     categories:
       - espresso
-      - neb
-      - neb
-      - single-material
+  - filename: espresso_ph_init_qpoints.json
+    categories:
+      - espresso
+  - filename: espresso_ph_single_irr_qpt.json
+    categories:
+      - espresso
   - filename: espresso_phonon_dispersions.json
     categories:
       - espresso
-      - phonon_dispersions
-      - single-material
   - filename: espresso_phonon_dos.json
     categories:
       - espresso
-      - phonon_dos
-      - single-material
   - filename: espresso_phonon_dos_dispersion.json
     categories:
       - espresso
-      - single-material
-  - filename: espresso_phonon_map.json
+  - filename: espresso_phonon_reduce.json
     categories:
       - espresso
-      - single-material
+  - filename: espresso_post_processor.json
+    categories:
+      - espresso
+  - filename: espresso_pre_processor.json
+    categories:
+      - espresso
+  - filename: espresso_pw_scf.json
+    categories:
+      - espresso
   - filename: espresso_recalculate_bands.json
     categories:
       - espresso
-      - single-material
   - filename: espresso_surface_energy.json
     categories:
       - espresso
-      - surface_energy
-      - single-material
   - filename: espresso_total_energy.json
     categories:
       - espresso
-      - total_energy
-      - single-material
-  - filename: espresso_valence_band_offset.json
+  - filename: espresso_valence_band_offset_calc_from_previous_esp_vbm.json
     categories:
       - espresso
-      - single-material
   - filename: espresso_variable_cell_relaxation.json
     categories:
       - espresso
-      - single-material
   - filename: espresso_zero_point_energy.json
     categories:
       - espresso
-      - zero_point_energy
-      - single-material
   - filename: jupyterLab_jupyter_notebook.json
     categories:
       - jupyterLab
-      - single-material
   - filename: nwchem_total_energy.json
     categories:
       - nwchem
-      - total_energy
-      - single-material
   - filename: python_python_script.json
     categories:
       - python
-      - single-material
-  - filename: python_ml_classification_workflow.json
+  - filename: python_ml_classification_tail.json
     categories:
       - python_ml
-      - single-material
-  - filename: python_ml_clustering_workflow.json
+  - filename: python_ml_clustering_tail.json
     categories:
       - python_ml
-      - single-material
-  - filename: python_ml_regression_workflow.json
+  - filename: python_ml_regression_tail.json
     categories:
       - python_ml
-      - single-material
+  - filename: python_ml_train_head.json
+    categories:
+      - python_ml
   - filename: shell_batch_espresso_pwscf.json
     categories:
       - shell
-      - single-material
   - filename: shell_hello_world.json
     categories:
       - shell
-      - single-material
   - filename: vasp_band_gap.json
     categories:
       - vasp
-      - band_gap
-      - single-material
   - filename: vasp_band_structure.json
     categories:
       - vasp
-      - band_structure
-      - single-material
   - filename: vasp_band_structure_dos.json
     categories:
       - vasp
-      - single-material
   - filename: vasp_dos.json
     categories:
       - vasp
-      - dos
-      - single-material
   - filename: vasp_fixed_cell_relaxation.json
     categories:
       - vasp
-      - single-material
+  - filename: vasp_initial_final_total_energies.json
+    categories:
+      - vasp
   - filename: vasp_kpoint_convergence.json
     categories:
       - vasp
-      - single-material
-  - filename: vasp_neb.json
+  - filename: vasp_neb_subworkflow.json
     categories:
       - vasp
-      - neb
-      - single-material
+  - filename: vasp_prepare_images.json
+    categories:
+      - vasp
   - filename: vasp_recalculate_bands.json
     categories:
       - vasp
-      - single-material
   - filename: vasp_surface_energy.json
     categories:
       - vasp
-      - surface_energy
-      - single-material
   - filename: vasp_total_energy.json
     categories:
       - vasp
-      - total_energy
-      - single-material
   - filename: vasp_variable_cell_relaxation.json
     categories:
       - vasp
-      - single-material
   - filename: vasp_zero_point_energy.json
     categories:
       - vasp
-      - zero_point_energy
-      - single-material
-  - filename: deepmd_deepmd_md.json
+  - filename: deepmd_deepmd.json
     categories:
       - deepmd
-      - single-material
+  - filename: deepmd_espresso_cp_md.json
+    categories:
+      - deepmd

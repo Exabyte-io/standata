@@ -76,6 +76,16 @@ const workflowData = {
     filesMapByName: {}
 };
 
+const subworkflowData = {
+    standataConfig: {
+        categories: {
+            application: allApplications.map((app) => app.replace("/", "_")),
+        },
+        entities: [],
+    },
+    filesMapByName: {},
+};
+
 // Convert workflow data to individual JSON files and create entities
 Object.keys(allWorkflows.workflows).forEach(appName => {
     Object.keys(allWorkflows.workflows[appName]).forEach(workflowName => {
@@ -100,14 +110,36 @@ Object.keys(allWorkflows.workflows).forEach(appName => {
 
         // Create entity entry
         const categories = [appName.replace('/', '_')];
+
+        // Add properties from workflow.properties field
         if (workflowContent.properties && workflowContent.properties.length > 0) {
-            // Map properties to our categories
             workflowContent.properties.forEach(prop => {
                 if (workflowData.standataConfig.categories.property.includes(prop)) {
                     categories.push(prop);
                 }
             });
         }
+
+        // Infer properties from workflow name or units if not explicitly defined
+        if (!workflowContent.properties || workflowContent.properties.length === 0) {
+            // Check if workflow name matches any property categories
+            const workflowNameLower = workflowContent.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+            workflowData.standataConfig.categories.property.forEach(prop => {
+                if (workflowNameLower.includes(prop.replace('_', ''))) {
+                    categories.push(prop);
+                }
+            });
+
+            // Also check unit names
+            if (workflowContent.units) {
+                workflowContent.units.forEach(unit => {
+                    if (unit.name && workflowData.standataConfig.categories.property.includes(unit.name)) {
+                        categories.push(unit.name);
+                    }
+                });
+            }
+        }
+
         categories.push("single-material"); // Default assumption
 
         workflowData.standataConfig.entities.push({
@@ -117,7 +149,38 @@ Object.keys(allWorkflows.workflows).forEach(appName => {
     });
 });
 
-// Write the categories.yml file
+// Convert subworkflow data to individual JSON files and create entities
+Object.keys(allWorkflows.subworkflows).forEach((appName) => {
+    Object.keys(allWorkflows.subworkflows[appName]).forEach((subworkflowName) => {
+        const filename = `${appName.replace("/", "_")}_${subworkflowName}.json`;
+        const subworkflowContent = allWorkflows.subworkflows[appName][subworkflowName];
+
+        // Ensure the subworkflows directory exists
+        const subworkflowsDir = path.resolve(__dirname, "..", "subworkflows");
+        if (!fs.existsSync(subworkflowsDir)) {
+            fs.mkdirSync(subworkflowsDir, { recursive: true });
+        }
+
+        // Write individual subworkflow file
+        fs.writeFileSync(
+            path.resolve(subworkflowsDir, filename),
+            JSON.stringify(subworkflowContent, null, 2) + "\n",
+            "utf8",
+        );
+
+        // Add to filesMapByName
+        subworkflowData.filesMapByName[filename] = subworkflowContent;
+
+        // Create entity entry
+        const categories = [appName.replace("/", "_")];
+        subworkflowData.standataConfig.entities.push({
+            filename,
+            categories,
+        });
+    });
+});
+
+// Write the categories.yml file for workflows
 const categoriesYml = yaml.dump(workflowData.standataConfig);
 fs.writeFileSync(
     path.resolve(__dirname, "..", "workflows", "categories.yml"),
@@ -125,4 +188,15 @@ fs.writeFileSync(
     "utf8"
 );
 
+// Write the categories.yml file for subworkflows
+const subcategoriesYml = yaml.dump(subworkflowData.standataConfig);
+fs.writeFileSync(
+    path.resolve(__dirname, "..", "subworkflows", "categories.yml"),
+    subcategoriesYml + (subcategoriesYml.endsWith("\n") ? "" : "\n"),
+    "utf8",
+);
+
 console.log(`Generated ${workflowData.standataConfig.entities.length} workflow files and categories.yml`);
+console.log(
+    `Generated ${subworkflowData.standataConfig.entities.length} subworkflow files and categories.yml`,
+);
