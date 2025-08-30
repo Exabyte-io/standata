@@ -1,8 +1,38 @@
 {
   "name": "Fixed-cell Relaxation",
+  "properties": [],
+  "subworkflows": [
+    {
+      "application": {
+        "name": "vasp",
+        "version": "5.4.4"
+      },
+      "method": {
+        "name": "PseudopotentialMethod"
+      },
+      "model": {
+        "name": "DFTModel"
+      },
+      "name": "Fixed-cell Relaxation",
+      "units": [
+        {
+          "config": {
+            "execName": "vasp",
+            "flavorName": "vasp_relax",
+            "name": "vasp_relax"
+          },
+          "functions": {
+            "head": true
+          },
+          "type": "executionBuilder"
+        }
+      ]
+    }
+  ],
   "units": [
     {
-      "name": "fixed_cell_relaxation",
+      "head": true,
+      "name": "Fixed-cell Relaxation",
       "type": "subworkflow"
     }
   ]

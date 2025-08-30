@@ -1,14 +1,60 @@
 {
   "name": "Bandstructure with SOC - QE",
+  "properties": [],
+  "subworkflows": [
+    {
+      "application": {
+        "name": "espresso",
+        "version": "6.3"
+      },
+      "method": {
+        "config": {
+          "subtype": "nc-fr",
+          "type": "pseudopotential"
+        },
+        "name": "PseudopotentialMethod",
+        "setSearchText": "nc-fr"
+      },
+      "model": {
+        "name": "DFTModel"
+      },
+      "name": "Spin orbit coupling bandstructure",
+      "units": [
+        {
+          "config": {
+            "execName": "pw.x",
+            "flavorName": "pw_scf_soc",
+            "name": "pw_scf_soc"
+          },
+          "functions": {
+            "head": true
+          },
+          "type": "executionBuilder"
+        },
+        {
+          "config": {
+            "execName": "pw.x",
+            "flavorName": "pw_bands_soc",
+            "name": "pw_bands_soc"
+          },
+          "type": "executionBuilder"
+        },
+        {
+          "config": {
+            "execName": "bands.x",
+            "flavorName": "bands",
+            "name": "bands"
+          },
+          "type": "executionBuilder"
+        }
+      ]
+    }
+  ],
   "units": [
     {
-      "name": "band_structure_soc",
-      "type": "subworkflow",
-      "config": {
-        "attributes": {
-          "name": "Bandstructure with SOC"
-        }
-      }
+      "head": true,
+      "name": "Spin orbit coupling bandstructure",
+      "type": "subworkflow"
     }
   ]
 }

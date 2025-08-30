@@ -1,8 +1,35 @@
 {
   "name": "Shell Script",
+  "properties": [],
+  "subworkflows": [
+    {
+      "application": {
+        "name": "shell",
+        "version": "5.1.8"
+      },
+      "method": {
+        "name": "UnknownMethod"
+      },
+      "model": {
+        "name": "UnknownModel"
+      },
+      "name": "Shell Hello World",
+      "units": [
+        {
+          "config": {
+            "execName": "sh",
+            "flavorName": "hello_world",
+            "name": "shell"
+          },
+          "type": "executionBuilder"
+        }
+      ]
+    }
+  ],
   "units": [
     {
-      "name": "hello_world",
+      "head": true,
+      "name": "Shell Hello World",
       "type": "subworkflow"
     }
   ]

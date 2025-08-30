@@ -1,16 +1,112 @@
 {
   "name": "Nudged Elastic Band (NEB)",
+  "properties": [],
+  "subworkflows": [
+    {
+      "application": {
+        "name": "vasp",
+        "version": "5.4.4"
+      },
+      "config": {
+        "functions": {
+          "setDefaultCompute": null
+        },
+        "isMultiMaterial": true
+      },
+      "method": {
+        "name": "PseudopotentialMethod"
+      },
+      "model": {
+        "name": "DFTModel"
+      },
+      "name": "Initial/Final Total Energies",
+      "units": [
+        {
+          "config": {
+            "execName": "vasp",
+            "flavorName": "vasp_neb_initial",
+            "name": "vasp_neb_initial"
+          },
+          "functions": {
+            "head": true
+          },
+          "type": "executionBuilder"
+        },
+        {
+          "config": {
+            "execName": "vasp",
+            "flavorName": "vasp_neb_final",
+            "name": "vasp_neb_final"
+          },
+          "type": "executionBuilder"
+        }
+      ]
+    },
+    {
+      "application": {
+        "name": "shell",
+        "version": "5.1.8"
+      },
+      "config": {
+        "isMultiMaterial": true
+      },
+      "method": {
+        "name": "Method"
+      },
+      "model": {
+        "name": "Model"
+      },
+      "name": "Prepare Directories",
+      "units": [
+        {
+          "config": {
+            "execName": "sh",
+            "flavorName": "bash_vasp_prepare_neb_images",
+            "name": "prepare-neb-images"
+          },
+          "type": "executionBuilder"
+        }
+      ]
+    },
+    {
+      "application": {
+        "name": "vasp",
+        "version": "5.4.4"
+      },
+      "config": {
+        "isMultiMaterial": true
+      },
+      "method": {
+        "name": "PseudopotentialMethod"
+      },
+      "model": {
+        "name": "DFTModel"
+      },
+      "name": "Nudged Elastic Band (NEB)",
+      "units": [
+        {
+          "config": {
+            "execName": "vasp",
+            "flavorName": "vasp_neb",
+            "name": "vasp_neb"
+          },
+          "type": "executionBuilder"
+        }
+      ]
+    }
+  ],
   "units": [
     {
-      "name": "initial_final_total_energies",
+      "head": true,
+      "name": "Initial/Final Total Energies",
       "type": "subworkflow"
     },
     {
-      "name": "prepare_images",
+      "name": "Prepare Directories",
       "type": "subworkflow"
     },
     {
-      "name": "neb_subworkflow",
+      "name": "Nudged Elastic Band (NEB)",
       "type": "subworkflow"
     }
   ]

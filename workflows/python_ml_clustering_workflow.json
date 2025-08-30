@@ -1,17 +1,205 @@
 {
-  "config": {
-    "attributes": {
-      "isUsingDataset": true
-    }
-  },
   "name": "Python ML Train Clustering",
+  "properties": [],
+  "subworkflows": [
+    {
+      "application": {
+        "name": "python",
+        "version": "3.10.13"
+      },
+      "method": {
+        "name": "UnknownMethod"
+      },
+      "model": {
+        "name": "UnknownModel"
+      },
+      "name": "Set Up the Job",
+      "units": [
+        {
+          "config": {
+            "flowchartId": "head-set-predict-status",
+            "name": "Set Workflow Mode",
+            "operand": "IS_WORKFLOW_RUNNING_TO_PREDICT",
+            "tags": [
+              "pyml:workflow-type-setter"
+            ],
+            "value": "False"
+          },
+          "type": "assignment"
+        },
+        {
+          "config": {
+            "enableRender": true,
+            "flowchartId": "head-fetch-training-data",
+            "input": [
+              {
+                "basename": "{{DATASET_BASENAME}}",
+                "objectData": {
+                  "CONTAINER": "",
+                  "NAME": "{{DATASET_FILEPATH}}",
+                  "PROVIDER": "",
+                  "REGION": ""
+                }
+              }
+            ],
+            "name": "Fetch Dataset",
+            "source": "object_storage"
+          },
+          "type": "io"
+        },
+        {
+          "config": {
+            "else": "end-of-ml-train-head",
+            "flowchartId": "head-branch-on-predict-status",
+            "input": [
+              {
+                "name": "IS_WORKFLOW_RUNNING_TO_PREDICT",
+                "scope": "global"
+              }
+            ],
+            "name": "Train or Predict?",
+            "statement": "IS_WORKFLOW_RUNNING_TO_PREDICT",
+            "then": "head-fetch-trained-model"
+          },
+          "type": "condition"
+        },
+        {
+          "config": {
+            "enableRender": true,
+            "flowchartId": "head-fetch-trained-model",
+            "input": [
+              {
+                "basename": "",
+                "objectData": {
+                  "CONTAINER": "",
+                  "NAME": "",
+                  "PROVIDER": "",
+                  "REGION": ""
+                }
+              }
+            ],
+            "name": "Fetch Trained Model as file",
+            "source": "object_storage",
+            "tags": [
+              "set-io-unit-filenames"
+            ]
+          },
+          "type": "io"
+        },
+        {
+          "config": {
+            "flowchartId": "end-of-ml-train-head",
+            "name": "End Setup",
+            "operand": "IS_SETUP_COMPLETE",
+            "value": "True"
+          },
+          "type": "assignment"
+        }
+      ]
+    },
+    {
+      "application": {
+        "name": "python",
+        "version": "3.10.13"
+      },
+      "method": {
+        "name": "UnknownMethod"
+      },
+      "model": {
+        "name": "UnknownModel"
+      },
+      "name": "Machine Learning",
+      "units": [
+        {
+          "attributes": {
+            "enableRender": true
+          },
+          "config": {
+            "execName": "python",
+            "flavorName": "pyml:setup_variables_packages",
+            "name": "Setup Variables and Packages"
+          },
+          "type": "executionBuilder"
+        },
+        {
+          "config": {
+            "execName": "python",
+            "flavorName": "pyml:data_input:read_csv:pandas",
+            "name": "Data Input"
+          },
+          "type": "executionBuilder"
+        },
+        {
+          "config": {
+            "execName": "python",
+            "flavorName": "pyml:data_input:train_test_split:sklearn",
+            "name": "Train Test Split"
+          },
+          "type": "executionBuilder"
+        },
+        {
+          "config": {
+            "execName": "python",
+            "flavorName": "pyml:pre_processing:standardization:sklearn",
+            "name": "Data Standardize"
+          },
+          "type": "executionBuilder"
+        },
+        {
+          "attributes": {
+            "results": [
+              {
+                "name": "workflow:pyml_predict"
+              }
+            ],
+            "tags": [
+              "remove-all-results",
+              "creates-predictions-csv-during-predict-phase"
+            ]
+          },
+          "config": {
+            "execName": "python",
+            "flavorName": "pyml:model:random_forest_classification:sklearn",
+            "name": "Model Train and Predict"
+          },
+          "type": "executionBuilder"
+        },
+        {
+          "attributes": {
+            "postProcessors": [
+              {
+                "name": "remove_virtual_environment"
+              }
+            ],
+            "results": [
+              {
+                "basename": "my_roc_plot.png",
+                "filetype": "image",
+                "name": "file_content"
+              }
+            ],
+            "tags": [
+              "remove-all-results"
+            ]
+          },
+          "config": {
+            "execName": "python",
+            "flavorName": "pyml:post_processing:roc_curve:sklearn",
+            "name": "ROC Curve Plot"
+          },
+          "type": "executionBuilder"
+        }
+      ]
+    }
+  ],
   "units": [
     {
-      "name": "train_head",
+      "head": true,
+      "name": "Set Up the Job",
       "type": "subworkflow"
     },
     {
-      "name": "classification_tail",
+      "name": "Machine Learning",
       "type": "subworkflow"
     }
   ]

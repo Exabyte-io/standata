@@ -1,8 +1,35 @@
 {
   "name": "Effective Screening Medium (ESM)",
+  "properties": [],
+  "subworkflows": [
+    {
+      "application": {
+        "name": "espresso",
+        "version": "6.3"
+      },
+      "method": {
+        "name": "PseudopotentialMethod"
+      },
+      "model": {
+        "name": "DFTModel"
+      },
+      "name": "Effective Screening Medium (ESM)",
+      "units": [
+        {
+          "config": {
+            "execName": "pw.x",
+            "flavorName": "pw_esm",
+            "name": "pw_esm"
+          },
+          "type": "executionBuilder"
+        }
+      ]
+    }
+  ],
   "units": [
     {
-      "name": "esm",
+      "head": true,
+      "name": "Effective Screening Medium (ESM)",
       "type": "subworkflow"
     }
   ]

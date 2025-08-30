@@ -1,8 +1,152 @@
 {
   "name": "K-point Convergence",
+  "properties": [],
+  "subworkflows": [
+    {
+      "application": {
+        "name": "vasp",
+        "version": "5.4.4"
+      },
+      "method": {
+        "config": {
+          "subtype": "paw",
+          "type": "pseudopotential"
+        },
+        "name": "PseudopotentialMethod"
+      },
+      "model": {
+        "name": "DFTModel"
+      },
+      "name": "K-point Convergence",
+      "units": [
+        {
+          "config": {
+            "flowchartId": "init-tolerance",
+            "name": "Init tolerance",
+            "operand": "TOL",
+            "value": 0.00001
+          },
+          "type": "assignment"
+        },
+        {
+          "config": {
+            "flowchartId": "init-increment",
+            "name": "Init increment",
+            "operand": "INC",
+            "value": 1
+          },
+          "type": "assignment"
+        },
+        {
+          "config": {
+            "flowchartId": "init-result",
+            "name": "Init result",
+            "operand": "PREV_RESULT",
+            "value": 0
+          },
+          "type": "assignment"
+        },
+        {
+          "config": {
+            "flowchartId": "init-parameter",
+            "name": "Init parameter",
+            "operand": "PARAMETER",
+            "value": 1
+          },
+          "type": "assignment"
+        },
+        {
+          "config": {
+            "execName": "vasp",
+            "flavorName": "vasp_kpt_conv",
+            "flowchartId": "vasp-kpoint-convergence",
+            "name": "vasp_kpt_conv"
+          },
+          "type": "executionBuilder"
+        },
+        {
+          "config": {
+            "flowchartId": "store-result",
+            "input": [
+              {
+                "name": "total_energy",
+                "scope": "vasp-kpoint-convergence"
+              }
+            ],
+            "name": "store result",
+            "operand": "RESULT",
+            "value": "total_energy"
+          },
+          "type": "assignment"
+        },
+        {
+          "config": {
+            "else": "update-result",
+            "flowchartId": "check-convergence",
+            "maxOccurrences": 50,
+            "name": "check convergence",
+            "statement": "abs((PREV_RESULT-RESULT)/RESULT) < TOL",
+            "then": "convergence-is-reached"
+          },
+          "type": "condition"
+        },
+        {
+          "config": {
+            "flowchartId": "update-result",
+            "input": [
+              {
+                "name": "RESULT",
+                "scope": "global"
+              }
+            ],
+            "name": "update result",
+            "operand": "PREV_RESULT",
+            "value": "RESULT"
+          },
+          "type": "assignment"
+        },
+        {
+          "config": {
+            "flowchartId": "increment-parameter",
+            "input": [
+              {
+                "name": "INC",
+                "scope": "global"
+              },
+              {
+                "name": "PARAMETER",
+                "scope": "global"
+              }
+            ],
+            "name": "increment parameter",
+            "next": "vasp-kpoint-convergence",
+            "operand": "PREV_RESULT",
+            "value": "PARAMETER+INC"
+          },
+          "type": "assignment"
+        },
+        {
+          "config": {
+            "flowchartId": "convergence-is-reached",
+            "input": [
+              {
+                "name": "PARAMETER",
+                "scope": "global"
+              }
+            ],
+            "name": "exit",
+            "operand": "PARAMETER",
+            "value": "PARAMETER"
+          },
+          "type": "assignment"
+        }
+      ]
+    }
+  ],
   "units": [
     {
-      "name": "kpoint_convergence",
+      "head": true,
+      "name": "K-point Convergence",
       "type": "subworkflow"
     }
   ]

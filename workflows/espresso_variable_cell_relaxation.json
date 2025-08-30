@@ -1,8 +1,41 @@
 {
   "name": "Variable-cell Relaxation",
+  "properties": [],
+  "subworkflows": [
+    {
+      "application": {
+        "name": "espresso",
+        "version": "6.3"
+      },
+      "config": {
+        "systemName": "espresso-variable-cell-relaxation"
+      },
+      "method": {
+        "name": "PseudopotentialMethod"
+      },
+      "model": {
+        "name": "DFTModel"
+      },
+      "name": "Variable-cell Relaxation",
+      "units": [
+        {
+          "config": {
+            "execName": "pw.x",
+            "flavorName": "pw_vc-relax",
+            "name": "pw_vc-relax"
+          },
+          "functions": {
+            "head": true
+          },
+          "type": "executionBuilder"
+        }
+      ]
+    }
+  ],
   "units": [
     {
-      "name": "variable_cell_relaxation",
+      "head": true,
+      "name": "Variable-cell Relaxation",
       "type": "subworkflow"
     }
   ]

@@ -1,8 +1,54 @@
 {
   "name": "Band Structure",
+  "properties": [],
+  "subworkflows": [
+    {
+      "application": {
+        "name": "espresso",
+        "version": "6.3"
+      },
+      "method": {
+        "name": "PseudopotentialMethod"
+      },
+      "model": {
+        "name": "DFTModel"
+      },
+      "name": "Band Structure",
+      "units": [
+        {
+          "config": {
+            "execName": "pw.x",
+            "flavorName": "pw_scf",
+            "name": "pw_scf"
+          },
+          "functions": {
+            "head": true
+          },
+          "type": "executionBuilder"
+        },
+        {
+          "config": {
+            "execName": "pw.x",
+            "flavorName": "pw_bands",
+            "name": "pw_bands"
+          },
+          "type": "executionBuilder"
+        },
+        {
+          "config": {
+            "execName": "bands.x",
+            "flavorName": "bands",
+            "name": "bands"
+          },
+          "type": "executionBuilder"
+        }
+      ]
+    }
+  ],
   "units": [
     {
-      "name": "band_structure",
+      "head": true,
+      "name": "Band Structure",
       "type": "subworkflow"
     }
   ]

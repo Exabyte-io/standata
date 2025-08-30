@@ -27,17 +27,14 @@ entities:
   - filename: espresso_band_gap.json
     categories:
       - espresso
-      - band_gap
       - single-material
   - filename: espresso_band_gap_dos_hse.json
     categories:
       - espresso
-      - dos
       - single-material
   - filename: espresso_band_structure.json
     categories:
       - espresso
-      - band_structure
       - single-material
   - filename: espresso_band_structure_dos.json
     categories:
@@ -50,22 +47,18 @@ entities:
   - filename: espresso_band_structure_magn.json
     categories:
       - espresso
-      - band_structure
       - single-material
   - filename: espresso_band_structure_soc.json
     categories:
       - espresso
-      - band_structure
       - single-material
   - filename: espresso_dielectric_tensor.json
     categories:
       - espresso
-      - dielectric_tensor
       - single-material
   - filename: espresso_dos.json
     categories:
       - espresso
-      - dos
       - single-material
   - filename: espresso_electronic_density_mesh.json
     categories:
@@ -94,7 +87,6 @@ entities:
   - filename: espresso_hubbard_u_hp.json
     categories:
       - espresso
-      - hubbard_u_hp
       - single-material
   - filename: espresso_kpoint_convergence.json
     categories:
@@ -103,24 +95,16 @@ entities:
   - filename: espresso_neb.json
     categories:
       - espresso
-      - neb
-      - neb
       - single-material
   - filename: espresso_phonon_dispersions.json
     categories:
       - espresso
-      - phonon_dispersions
       - single-material
   - filename: espresso_phonon_dos.json
     categories:
       - espresso
-      - phonon_dos
       - single-material
   - filename: espresso_phonon_dos_dispersion.json
-    categories:
-      - espresso
-      - single-material
-  - filename: espresso_phonon_map.json
     categories:
       - espresso
       - single-material
@@ -131,12 +115,10 @@ entities:
   - filename: espresso_surface_energy.json
     categories:
       - espresso
-      - surface_energy
       - single-material
   - filename: espresso_total_energy.json
     categories:
       - espresso
-      - total_energy
       - single-material
   - filename: espresso_valence_band_offset.json
     categories:
@@ -149,7 +131,6 @@ entities:
   - filename: espresso_zero_point_energy.json
     categories:
       - espresso
-      - zero_point_energy
       - single-material
   - filename: jupyterLab_jupyter_notebook.json
     categories:
@@ -158,7 +139,6 @@ entities:
   - filename: nwchem_total_energy.json
     categories:
       - nwchem
-      - total_energy
       - single-material
   - filename: python_python_script.json
     categories:
@@ -187,12 +167,10 @@ entities:
   - filename: vasp_band_gap.json
     categories:
       - vasp
-      - band_gap
       - single-material
   - filename: vasp_band_structure.json
     categories:
       - vasp
-      - band_structure
       - single-material
   - filename: vasp_band_structure_dos.json
     categories:
@@ -201,7 +179,6 @@ entities:
   - filename: vasp_dos.json
     categories:
       - vasp
-      - dos
       - single-material
   - filename: vasp_fixed_cell_relaxation.json
     categories:
@@ -214,7 +191,6 @@ entities:
   - filename: vasp_neb.json
     categories:
       - vasp
-      - neb
       - single-material
   - filename: vasp_recalculate_bands.json
     categories:
@@ -223,12 +199,10 @@ entities:
   - filename: vasp_surface_energy.json
     categories:
       - vasp
-      - surface_energy
       - single-material
   - filename: vasp_total_energy.json
     categories:
       - vasp
-      - total_energy
       - single-material
   - filename: vasp_variable_cell_relaxation.json
     categories:
@@ -237,7 +211,6 @@ entities:
   - filename: vasp_zero_point_energy.json
     categories:
       - vasp
-      - zero_point_energy
       - single-material
   - filename: deepmd_deepmd_md.json
     categories:

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Standata = void 0;
 class Standata {
     static getRuntimeDataConfigs() {
-        return Object.values(this.runtimeData.filesMapByName);
+        return Object.entries(this.runtimeData.filesMapByName);
     }
     constructor(config) {
         const ctor = this.constructor;
@@ -59,6 +59,10 @@ class Standata {
         const categories_ = this.convertTagToCategory(...tags);
         const filenames = this.filterByCategories(...categories_) || [];
         return filenames.map((f) => this.loadEntity(f)).filter((e) => e !== undefined);
+    }
+    getTagsByFilename(filename) {
+        const entity = this.entities.find((e) => e.filename === filename);
+        return entity ? entity.categories : [];
     }
 }
 exports.Standata = Standata;
