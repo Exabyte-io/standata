@@ -1,4 +1,0 @@
-name: Phonon Density of States + Dispersions
-units:
-- name: phonon_dos_dispersion
-  type: subworkflow

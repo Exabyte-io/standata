@@ -1,4 +1,0 @@
-name: Fixed-cell Relaxation
-units:
-- name: fixed_cell_relaxation
-  type: subworkflow

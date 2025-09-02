@@ -1,4 +1,0 @@
-name: Density of States
-units:
-- name: dos
-  type: subworkflow

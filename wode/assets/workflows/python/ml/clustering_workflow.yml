@@ -1,9 +1,0 @@
-config:
-  attributes:
-    isUsingDataset: true
-name: Python ML Train Clustering
-units:
-- name: train_head
-  type: subworkflow
-- name: classification_tail
-  type: subworkflow

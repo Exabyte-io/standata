@@ -1,4 +1,0 @@
-name: Effective Screening Medium (ESM) Relax
-units:
-- name: esm_relax
-  type: subworkflow

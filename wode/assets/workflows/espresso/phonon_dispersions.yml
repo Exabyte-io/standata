@@ -1,4 +1,0 @@
-name: Phonon Dispersions
-units:
-- name: phonon_dispersions
-  type: subworkflow

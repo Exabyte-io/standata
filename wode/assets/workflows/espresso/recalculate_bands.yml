@@ -1,4 +1,0 @@
-name: Recalculate Bands
-units:
-- name: recalculate_bands
-  type: subworkflow

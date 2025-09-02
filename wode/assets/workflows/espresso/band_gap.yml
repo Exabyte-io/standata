@@ -1,4 +1,0 @@
-name: Band Gap
-units:
-- name: band_gap
-  type: subworkflow

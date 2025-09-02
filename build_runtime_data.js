@@ -103,10 +103,3 @@ buildAsset({
     contentGenerator: (content) =>
         `import json\n\nworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
-
-buildAsset({
-    assetPath: "./subworkflows/categories.yml",
-    targetPath: "./src/py/mat3ra/standata/data/subworkflows.py",
-    contentGenerator: (content) =>
-        `import json\n\nsubworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
-});

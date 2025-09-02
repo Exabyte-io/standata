@@ -1,4 +1,0 @@
-name: Band Gap + DoS - HSE
-units:
-- name: band_gap_hse_dos
-  type: subworkflow
