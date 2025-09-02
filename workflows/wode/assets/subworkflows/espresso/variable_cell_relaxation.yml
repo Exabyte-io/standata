@@ -1,8 +1,8 @@
 application:
-  name: vasp
-  version: 5.4.4
+  name: espresso
+  version: "6.3"
 config:
-  systemName: vasp-variable-cell-relaxation
+  systemName: espresso-variable-cell-relaxation
 method:
   name: PseudopotentialMethod
 model:
@@ -10,9 +10,9 @@ model:
 name: Variable-cell Relaxation
 units:
   - config:
-      execName: vasp
-      flavorName: vasp_vc_relax
-      name: vasp_vc_relax
+      execName: pw.x
+      flavorName: pw_vc-relax
+      name: pw_vc-relax
     functions:
       head: true
     type: executionBuilder

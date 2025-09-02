@@ -1,34 +1,31 @@
 categories:
   application:
     - espresso
+    - exabyteml
     - jupyterLab
     - nwchem
     - python
-    - python_ml
     - shell
     - vasp
-    - deepmd
   property:
     - band_gap
+    - band_gap_dos
     - band_structure
-    - dos
-    - total_energy
     - phonon_dispersions
-    - phonon_dos
-    - surface_energy
-    - zero_point_energy
-    - dielectric_tensor
-    - neb
-    - hubbard_u_hp
+    - reaction_energy_profile
+    - total_energy
   material_count:
     - single-material
     - multi-material
+
 entities:
-  - filename: vasp_total_energy.json
+  - filename: total_energy.json
     categories:
-      - vasp
+      - espresso
       - single-material
-  - filename: vasp_variable_cell_relaxation.json
+      - total_energy
+  - filename: band_gap.json
     categories:
+      - espresso
       - vasp
-      - single-material
+      - band_gap

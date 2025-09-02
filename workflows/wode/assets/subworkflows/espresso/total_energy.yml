@@ -1,6 +1,6 @@
 application:
-  name: vasp
-  version: 5.4.4
+  name: espresso
+  version: "6.3"
 method:
   name: PseudopotentialMethod
 model:
@@ -8,9 +8,9 @@ model:
 name: Total Energy
 units:
   - config:
-      execName: vasp
-      flavorName: vasp
-      name: vasp
+      execName: pw.x
+      flavorName: pw_scf
+      name: pw_scf
     functions:
       head: true
     type: executionBuilder
