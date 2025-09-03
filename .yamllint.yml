@@ -23,3 +23,7 @@ ignore: |
   node_modules/
   test/
   tests/
+  workflows/categories.yml
+  materials/categories.yml
+  applications/categories.yml
+  properties/categories.yml
