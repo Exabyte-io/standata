@@ -1,2 +1,8 @@
 applications:
+  - deepmd
   - espresso
+  - jupyterlab
+  - nwchem
+  - python
+  - shell
+  - vasp
