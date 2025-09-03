@@ -1,15 +1,15 @@
-"""
-Exposes the public API for the standata package.
-"""
-
+from .applications import Applications
 from .base import Standata
-from .core import ApplicationStandata, MaterialStandata, PropertyStandata, SubworkflowStandata, WorkflowStandata
+from .materials import Materials
+from .properties import Properties
+from .subworkflows import Subworkflows
+from .workflows import Workflows
 
 __all__ = [
     "Standata",
-    "MaterialStandata",
-    "ApplicationStandata",
-    "PropertyStandata",
-    "WorkflowStandata",
-    "SubworkflowStandata",
+    "Materials",
+    "Workflows",
+    "Applications",
+    "Properties",
+    "Subworkflows",
 ]
