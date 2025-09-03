@@ -1,27 +1,11 @@
 #!/usr/bin/env node
 
-/**
- * Complete workflow generation pipeline for standata
- *
- * This script orchestrates the entire workflow generation process by executing
- * a series of build scripts in sequence.
- *
- * Usage:
- *   node workflows/wode/build_all.js [script1] [script2] [script3] ...
- *
- * Default scripts (if no arguments provided):
- *   - workflows/wode/build_workflows.js
- *   - workflows/wode/generate_workflows.js
- *   - workflows/wode/update_categories.js
- *   - build_runtime_data.js
- */
-
 const path = require("path");
 
 const scripts = [
-    "workflows/wode/build_workflows.js",
-    "workflows/wode/generate_workflows.js",
-    "workflows/wode/update_categories.js",
+    "workflows/wode/scripts/build_workflows_data.js",
+    "workflows/wode/scripts/create_workflows.js",
+    "workflows/wode/scripts/update_categories.js",
     "build_runtime_data.js",
 ];
 
@@ -29,7 +13,6 @@ async function executeScript(scriptPath) {
     const fullPath = path.resolve(process.cwd(), scriptPath);
 
     try {
-        // Use require() to execute the script module
         require(fullPath);
 
         console.log(`✅ Completed: ${scriptPath}\n`);

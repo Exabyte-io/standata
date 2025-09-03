@@ -18,7 +18,7 @@ const workflowData = {
 };
 
 // Read existing workflow JSON files to extract categories
-const workflowsDir = path.resolve(__dirname, "..");
+const workflowsDir = path.resolve(__dirname, "..", "..");
 if (fs.existsSync(workflowsDir)) {
     const workflowFiles = fs.readdirSync(workflowsDir).filter((file) => file.endsWith(".json"));
 

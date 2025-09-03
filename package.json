@@ -58,7 +58,7 @@
     },
     "scripts": {
         "build:categories": "ts-node src/js/cli.ts",
-        "build:workflows": "node workflows/wode/build_all.js",
+        "build:workflows": "node workflows/wode/scripts/build_all.js",
         "build:runtime-data": "node build_runtime_data.js",
         "build:dist": "npm run transpile && npm run build:workflows && npm run build:runtime-data",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",

@@ -6,6 +6,7 @@ const applicationDataPath = path.resolve(
     __dirname,
     "..",
     "..",
+    "..",
     "applications",
     "application_flavors",
     "application_data.yaml",
@@ -31,8 +32,8 @@ const loadFile = (name, dir, file, type) => {
 allApplications.forEach((name) => {
     allWorkflows.workflows[name] = {};
     allWorkflows.subworkflows[name] = {};
-    const wfDir = path.resolve(__dirname, "assets", "workflows", name);
-    const swDir = path.resolve(__dirname, "assets", "subworkflows", name);
+    const wfDir = path.resolve(__dirname, "..", "assets", "workflows", name);
+    const swDir = path.resolve(__dirname, "..", "assets", "subworkflows", name);
 
     if (fs.existsSync(wfDir)) {
         const wfFiles = fs.readdirSync(wfDir);
@@ -55,6 +56,6 @@ const workflowDataOutput = {
     workflowData: allWorkflows,
 };
 
-const outputPath = path.resolve(__dirname, "workflows_data.json");
+const outputPath = path.resolve(__dirname, "..", "generated", "workflows_data.json");
 fs.writeFileSync(outputPath, JSON.stringify(workflowDataOutput, null, 2), "utf8");
 console.log(`Workflow data written to: ${outputPath}`);

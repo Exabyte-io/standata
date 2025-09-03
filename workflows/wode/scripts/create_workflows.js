@@ -2,12 +2,12 @@ const fs = require("fs");
 const path = require("path");
 const { createWorkflowConfigs } = require("@exabyte-io/wode.js");
 
-const workflowDataPath = path.resolve(__dirname, "workflows_data.json");
+const workflowDataPath = path.resolve(__dirname, "..", "generated", "workflows_data.json");
 const { workflowData } = JSON.parse(fs.readFileSync(workflowDataPath, "utf8"));
 
 const workflowConfigs = createWorkflowConfigs(null, [], workflowData);
 
-const workflowsDir = path.resolve(__dirname, "..");
+const workflowsDir = path.resolve(__dirname, "..", "..");
 
 const returnConfigWithFixedIds = (config) => {
     const hash = require("crypto")
