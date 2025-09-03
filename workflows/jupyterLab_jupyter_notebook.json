@@ -1,0 +1,127 @@
+{
+  "name": "Jupyter Notebook",
+  "subworkflows": [
+    {
+      "_id": "80212539-0000-0000-0000-000000000000",
+      "name": "Jupyter Notebook",
+      "application": {
+        "name": "jupyterLab",
+        "shortName": "jl",
+        "summary": "JupyterLab",
+        "build": "Default",
+        "version": "4.3.0",
+        "isDefault": true
+      },
+      "properties": [],
+      "model": {
+        "type": "unknown",
+        "subtype": "unknown",
+        "method": {
+          "type": "unknown",
+          "subtype": "unknown",
+          "data": {}
+        }
+      },
+      "units": [
+        {
+          "type": "execution",
+          "name": "notebook",
+          "head": true,
+          "results": [],
+          "monitors": [
+            {
+              "name": "standard_output"
+            },
+            {
+              "name": "jupyter_notebook_endpoint"
+            }
+          ],
+          "flowchartId": "80212539-0000-0000-0000-000000000000",
+          "preProcessors": [
+            {
+              "name": "record_python_environment"
+            }
+          ],
+          "postProcessors": [],
+          "application": {
+            "name": "jupyterLab",
+            "shortName": "jl",
+            "summary": "JupyterLab",
+            "build": "Default",
+            "version": "4.3.0",
+            "isDefault": true
+          },
+          "executable": {
+            "isDefault": true,
+            "monitors": [
+              "standard_output",
+              "jupyter_notebook_endpoint"
+            ],
+            "results": [],
+            "flavors": {
+              "notebook": {
+                "isDefault": true,
+                "input": [
+                  {
+                    "name": "requirements.txt",
+                    "templateName": "requirements.txt"
+                  }
+                ],
+                "monitors": [
+                  "standard_output",
+                  "jupyter_notebook_endpoint"
+                ],
+                "applicationName": "jupyterLab",
+                "executableName": "jupyter"
+              }
+            },
+            "name": "jupyter"
+          },
+          "flavor": {
+            "isDefault": true,
+            "input": [
+              {
+                "name": "requirements.txt",
+                "templateName": "requirements.txt"
+              }
+            ],
+            "monitors": [
+              "standard_output",
+              "jupyter_notebook_endpoint"
+            ],
+            "applicationName": "jupyterLab",
+            "executableName": "jupyter",
+            "name": "notebook"
+          },
+          "status": "idle",
+          "statusTrack": [],
+          "tags": [],
+          "input": [
+            {
+              "content": "# ------------------------------------------------------------------------------- #\n#                                                                                 #\n#  Example JupyterLab requirements                                                #\n#                                                                                 #\n#  Will be used as follows:                                                       #\n#                                                                                 #\n#    1. A runtime directory for this calculation is created                       #\n#    2. A Python virtual environment is created                                   #\n#        - in /scratch/$USER/$JOB_ID   (for build: 'Default')                     #\n#        - in /export/share/python/    (for build: 'with-pre-installed-packages') #\n#    3. This list is used to populate a Python virtual environment                #\n#    4. JupyterLab is started                                                     #\n#                                                                                 #\n#  For more information visit:                                                    #\n#   - https://jupyterlab.readthedocs.io/en/stable/index.html                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install                         #\n#   - https://virtualenv.pypa.io/en/stable/                                       #\n#                                                                                 #\n#  Note: With the JupyterLab build 'with-pre-installed-packages', packages        #\n#  cannot be added during the notebook runtime.                                   #\n#                                                                                 #\n# ------------------------------------------------------------------------------- #\n\njupyterlab==3.0.3\nnotebook>=6.2.0\nexabyte-api-client>=2020.10.19\nnumpy>=1.17.3\npandas>=1.1.4\nurllib3<2\n",
+              "name": "requirements.txt",
+              "contextProviders": [],
+              "applicationName": "jupyterLab",
+              "executableName": "jupyter",
+              "rendered": "# ------------------------------------------------------------------------------- #\n#                                                                                 #\n#  Example JupyterLab requirements                                                #\n#                                                                                 #\n#  Will be used as follows:                                                       #\n#                                                                                 #\n#    1. A runtime directory for this calculation is created                       #\n#    2. A Python virtual environment is created                                   #\n#        - in /scratch/$USER/$JOB_ID   (for build: 'Default')                     #\n#        - in /export/share/python/    (for build: 'with-pre-installed-packages') #\n#    3. This list is used to populate a Python virtual environment                #\n#    4. JupyterLab is started                                                     #\n#                                                                                 #\n#  For more information visit:                                                    #\n#   - https://jupyterlab.readthedocs.io/en/stable/index.html                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install                         #\n#   - https://virtualenv.pypa.io/en/stable/                                       #\n#                                                                                 #\n#  Note: With the JupyterLab build 'with-pre-installed-packages', packages        #\n#  cannot be added during the notebook runtime.                                   #\n#                                                                                 #\n# ------------------------------------------------------------------------------- #\n\njupyterlab==3.0.3\nnotebook>=6.2.0\nexabyte-api-client>=2020.10.19\nnumpy>=1.17.3\npandas>=1.1.4\nurllib3<2\n"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "units": [
+    {
+      "name": "Jupyter Notebook",
+      "type": "subworkflow",
+      "_id": "80212539-0000-0000-0000-000000000000",
+      "status": "idle",
+      "statusTrack": [],
+      "flowchartId": "80212539-0000-0000-0000-000000000000",
+      "tags": [],
+      "head": true
+    }
+  ],
+  "properties": [],
+  "workflows": []
+}

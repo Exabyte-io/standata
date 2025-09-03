@@ -1,0 +1,1165 @@
+{
+  "name": "Recalculate Bands",
+  "subworkflows": [
+    {
+      "_id": "976808e8-0000-0000-0000-000000000000",
+      "name": "Recalculate Bands",
+      "application": {
+        "name": "espresso",
+        "shortName": "qe",
+        "summary": "Quantum Espresso",
+        "build": "Default",
+        "version": "6.3",
+        "isDefault": true,
+        "hasAdvancedComputeOptions": true
+      },
+      "properties": [
+        "band_structure"
+      ],
+      "model": {
+        "type": "dft",
+        "subtype": "gga",
+        "method": {
+          "type": "pseudopotential",
+          "subtype": "us",
+          "data": {}
+        },
+        "functional": {
+          "slug": "pbe"
+        },
+        "refiners": [],
+        "modifiers": []
+      },
+      "units": [
+        {
+          "type": "execution",
+          "name": "pw_bands",
+          "head": true,
+          "results": [
+            {
+              "name": "band_structure"
+            }
+          ],
+          "monitors": [
+            {
+              "name": "standard_output"
+            }
+          ],
+          "flowchartId": "976808e8-0000-0000-0000-000000000000",
+          "preProcessors": [],
+          "postProcessors": [],
+          "application": {
+            "name": "espresso",
+            "shortName": "qe",
+            "summary": "Quantum Espresso",
+            "build": "Default",
+            "version": "6.3",
+            "isDefault": true,
+            "hasAdvancedComputeOptions": true
+          },
+          "executable": {
+            "isDefault": true,
+            "hasAdvancedComputeOptions": true,
+            "postProcessors": [
+              "remove_non_zero_weight_kpoints"
+            ],
+            "monitors": [
+              "standard_output",
+              "convergence_ionic",
+              "convergence_electronic"
+            ],
+            "results": [
+              "atomic_forces",
+              "band_gaps",
+              "charge_density_profile",
+              "density_of_states",
+              "fermi_energy",
+              "final_structure",
+              "magnetic_moments",
+              "potential_profile",
+              "pressure",
+              "reaction_energy_barrier",
+              "reaction_energy_profile",
+              "stress_tensor",
+              "total_energy",
+              "total_energy_contributions",
+              "total_force"
+            ],
+            "flavors": {
+              "pw_scf": {
+                "isDefault": true,
+                "input": [
+                  {
+                    "name": "pw_scf.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_scf_bands_hse": {
+                "input": [
+                  {
+                    "name": "pw_scf_bands_hse.in"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_scf_hse": {
+                "input": [
+                  {
+                    "name": "pw_scf_hse.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_scf_kpt_conv": {
+                "input": [
+                  {
+                    "name": "pw_scf_kpt_conv.in"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "fermi_energy",
+                  "pressure",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_scf_dft_u": {
+                "input": [
+                  {
+                    "name": "pw_scf_dft_u.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_scf_dft_u+v": {
+                "input": [
+                  {
+                    "name": "pw_scf_dft_v.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_scf_dft_u+j": {
+                "input": [
+                  {
+                    "name": "pw_scf_dft_j.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_scf_dft_u_legacy": {
+                "input": [
+                  {
+                    "name": "pw_scf_dft_u_legacy.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "5.2.1",
+                  "5.4.0",
+                  "6.0.0",
+                  "6.3",
+                  "6.4.1",
+                  "6.5.0",
+                  "6.6.0",
+                  "6.7.0",
+                  "6.8.0",
+                  "7.0"
+                ]
+              },
+              "pw_scf_magn": {
+                "input": [
+                  {
+                    "name": "pw_scf_magn.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_scf_soc": {
+                "input": [
+                  {
+                    "name": "pw_scf_soc.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_scf_dft_u_magn": {
+                "input": [
+                  {
+                    "name": "pw_scf_dft_u_magn.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_scf_dft_u_soc": {
+                "input": [
+                  {
+                    "name": "pw_scf_dft_u_soc.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_scf_dft_u+v_magn": {
+                "input": [
+                  {
+                    "name": "pw_scf_dft_v_magn.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_scf_dft_u+j_magn": {
+                "input": [
+                  {
+                    "name": "pw_scf_dft_j_magn.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_scf_dft_u_magn_legacy": {
+                "input": [
+                  {
+                    "name": "pw_scf_dft_u_magn_legacy.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "5.2.1",
+                  "5.4.0",
+                  "6.0.0",
+                  "6.3",
+                  "6.4.1",
+                  "6.5.0",
+                  "6.6.0",
+                  "6.7.0",
+                  "6.8.0",
+                  "7.0"
+                ]
+              },
+              "pw_scf_dft_u_soc_legacy": {
+                "input": [
+                  {
+                    "name": "pw_scf_dft_u_soc_legacy.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "5.2.1",
+                  "5.4.0",
+                  "6.0.0",
+                  "6.3",
+                  "6.4.1",
+                  "6.5.0",
+                  "6.6.0",
+                  "6.7.0",
+                  "6.8.0",
+                  "7.0"
+                ]
+              },
+              "pw_esm": {
+                "input": [
+                  {
+                    "name": "pw_esm.in"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor",
+                  "potential_profile",
+                  "charge_density_profile"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_esm_relax": {
+                "input": [
+                  {
+                    "name": "pw_esm_relax.in"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor",
+                  "potential_profile",
+                  "charge_density_profile"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_nscf": {
+                "input": [
+                  {
+                    "name": "pw_nscf.in"
+                  }
+                ],
+                "results": [
+                  "fermi_energy",
+                  "band_gaps"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_nscf_magn": {
+                "input": [
+                  {
+                    "name": "pw_nscf_magn.in"
+                  }
+                ],
+                "results": [
+                  "fermi_energy",
+                  "band_gaps"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_nscf_soc": {
+                "input": [
+                  {
+                    "name": "pw_nscf_soc.in"
+                  }
+                ],
+                "results": [
+                  "fermi_energy",
+                  "band_gaps"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_nscf_dft_u_magn": {
+                "input": [
+                  {
+                    "name": "pw_nscf_dft_u_magn.in"
+                  }
+                ],
+                "results": [
+                  "fermi_energy",
+                  "band_gaps"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_nscf_dft_u+v_magn": {
+                "input": [
+                  {
+                    "name": "pw_nscf_dft_v_magn.in"
+                  }
+                ],
+                "results": [
+                  "fermi_energy",
+                  "band_gaps"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_nscf_dft_u+j_magn": {
+                "input": [
+                  {
+                    "name": "pw_nscf_dft_j_magn.in"
+                  }
+                ],
+                "results": [
+                  "fermi_energy",
+                  "band_gaps"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_nscf_dft_u_magn_legacy": {
+                "input": [
+                  {
+                    "name": "pw_nscf_dft_u_magn_legacy.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "5.2.1",
+                  "5.4.0",
+                  "6.0.0",
+                  "6.3",
+                  "6.4.1",
+                  "6.5.0",
+                  "6.6.0",
+                  "6.7.0",
+                  "6.8.0",
+                  "7.0"
+                ]
+              },
+              "pw_nscf_dft_u_soc": {
+                "input": [
+                  {
+                    "name": "pw_nscf_dft_u_soc.in"
+                  }
+                ],
+                "results": [
+                  "fermi_energy",
+                  "band_gaps"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_nscf_dft_u_soc_legacy": {
+                "input": [
+                  {
+                    "name": "pw_nscf_dft_u_soc_legacy.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "5.2.1",
+                  "5.4.0",
+                  "6.0.0",
+                  "6.3",
+                  "6.4.1",
+                  "6.5.0",
+                  "6.6.0",
+                  "6.7.0",
+                  "6.8.0",
+                  "7.0"
+                ]
+              },
+              "pw_bands": {
+                "input": [
+                  {
+                    "name": "pw_bands.in"
+                  }
+                ],
+                "results": [
+                  "band_structure"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_bands_magn": {
+                "input": [
+                  {
+                    "name": "pw_bands_magn.in"
+                  }
+                ],
+                "results": [
+                  "band_structure"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_bands_soc": {
+                "input": [
+                  {
+                    "name": "pw_bands_soc.in"
+                  }
+                ],
+                "results": [
+                  "band_structure"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_bands_dft_u_magn": {
+                "input": [
+                  {
+                    "name": "pw_bands_dft_u_magn.in"
+                  }
+                ],
+                "results": [
+                  "band_structure"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_bands_dft_u+v_magn": {
+                "input": [
+                  {
+                    "name": "pw_bands_dft_v_magn.in"
+                  }
+                ],
+                "results": [
+                  "band_structure"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_bands_dft_u+j_magn": {
+                "input": [
+                  {
+                    "name": "pw_bands_dft_j_magn.in"
+                  }
+                ],
+                "results": [
+                  "band_structure"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_bands_dft_u_magn_legacy": {
+                "input": [
+                  {
+                    "name": "pw_bands_dft_u_magn_legacy.in"
+                  }
+                ],
+                "results": [
+                  "band_structure"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "5.2.1",
+                  "5.4.0",
+                  "6.0.0",
+                  "6.3",
+                  "6.4.1",
+                  "6.5.0",
+                  "6.6.0",
+                  "6.7.0",
+                  "6.8.0",
+                  "7.0"
+                ]
+              },
+              "pw_bands_dft_u_soc": {
+                "input": [
+                  {
+                    "name": "pw_bands_dft_u_soc.in"
+                  }
+                ],
+                "results": [
+                  "band_structure"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "7.2",
+                  "7.3"
+                ]
+              },
+              "pw_bands_dft_u_soc_legacy": {
+                "input": [
+                  {
+                    "name": "pw_bands_dft_u_soc_legacy.in"
+                  }
+                ],
+                "results": [
+                  "band_structure"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x",
+                "supportedApplicationVersions": [
+                  "5.2.1",
+                  "5.4.0",
+                  "6.0.0",
+                  "6.3",
+                  "6.4.1",
+                  "6.5.0",
+                  "6.6.0",
+                  "6.7.0",
+                  "6.8.0",
+                  "7.0"
+                ]
+              },
+              "pw_relax": {
+                "input": [
+                  {
+                    "name": "pw_relax.in"
+                  }
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic",
+                  "convergence_ionic"
+                ],
+                "results": [
+                  "total_energy",
+                  "fermi_energy",
+                  "pressure",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor",
+                  "final_structure"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_vc-relax": {
+                "input": [
+                  {
+                    "name": "pw_vc_relax.in"
+                  }
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic",
+                  "convergence_ionic"
+                ],
+                "results": [
+                  "total_energy",
+                  "fermi_energy",
+                  "pressure",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor",
+                  "final_structure"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              },
+              "pw_md": {
+                "input": [
+                  {
+                    "name": "pw_md.in"
+                  }
+                ],
+                "results": [
+                  "atomic_forces",
+                  "band_gaps",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_energy",
+                  "total_energy_contributions",
+                  "total_force"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "espresso",
+                "executableName": "pw.x"
+              }
+            },
+            "name": "pw.x"
+          },
+          "flavor": {
+            "input": [
+              {
+                "name": "pw_bands.in"
+              }
+            ],
+            "results": [
+              "band_structure"
+            ],
+            "monitors": [
+              "standard_output"
+            ],
+            "applicationName": "espresso",
+            "executableName": "pw.x",
+            "name": "pw_bands"
+          },
+          "status": "idle",
+          "statusTrack": [],
+          "tags": [],
+          "input": [
+            {
+              "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
+              "name": "pw_bands.in",
+              "contextProviders": [
+                {
+                  "name": "KPathFormDataManager"
+                },
+                {
+                  "name": "QEPWXInputDataManager"
+                },
+                {
+                  "name": "PlanewaveCutoffDataManager"
+                }
+              ],
+              "applicationName": "espresso",
+              "executableName": "pw.x",
+              "rendered": "&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal_b\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n"
+            }
+          ],
+          "next": "089bd3d1-1ef3-4042-8773-3c79027a5fc8"
+        },
+        {
+          "type": "execution",
+          "name": "bands",
+          "head": false,
+          "results": [],
+          "monitors": [
+            {
+              "name": "standard_output"
+            }
+          ],
+          "flowchartId": "976808e8-0000-0000-0000-000000000000",
+          "preProcessors": [],
+          "postProcessors": [],
+          "application": {
+            "name": "espresso",
+            "shortName": "qe",
+            "summary": "Quantum Espresso",
+            "build": "Default",
+            "version": "6.3",
+            "isDefault": true,
+            "hasAdvancedComputeOptions": true
+          },
+          "executable": {
+            "monitors": [
+              "standard_output"
+            ],
+            "results": [
+              "band_structure"
+            ],
+            "flavors": {
+              "bands": {
+                "input": [
+                  {
+                    "name": "bands.in"
+                  }
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "bands.x"
+              },
+              "bands_spin_up": {
+                "input": [
+                  {
+                    "name": "bands_spin_up.in"
+                  }
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "bands.x"
+              },
+              "bands_spin_dn": {
+                "input": [
+                  {
+                    "name": "bands_spin_dn.in"
+                  }
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "bands.x"
+              }
+            },
+            "name": "bands.x"
+          },
+          "flavor": {
+            "input": [
+              {
+                "name": "bands.in"
+              }
+            ],
+            "monitors": [
+              "standard_output"
+            ],
+            "applicationName": "espresso",
+            "executableName": "bands.x",
+            "name": "bands"
+          },
+          "status": "idle",
+          "statusTrack": [],
+          "tags": [],
+          "input": [
+            {
+              "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n\n",
+              "name": "bands.in",
+              "contextProviders": [],
+              "applicationName": "espresso",
+              "executableName": "bands.x",
+              "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n\n"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "units": [
+    {
+      "name": "Recalculate Bands",
+      "type": "subworkflow",
+      "_id": "976808e8-0000-0000-0000-000000000000",
+      "status": "idle",
+      "statusTrack": [],
+      "flowchartId": "976808e8-0000-0000-0000-000000000000",
+      "tags": [],
+      "head": true
+    }
+  ],
+  "properties": [
+    "band_structure"
+  ],
+  "workflows": []
+}

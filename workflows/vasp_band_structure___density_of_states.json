@@ -1,0 +1,1247 @@
+{
+  "name": "Band Structure + Density of States",
+  "subworkflows": [
+    {
+      "_id": "9920ae0a-0000-0000-0000-000000000000",
+      "name": "Band Structure + Density of States",
+      "application": {
+        "name": "vasp",
+        "shortName": "vasp",
+        "summary": "Vienna Ab-initio Simulation Package",
+        "isLicensed": true,
+        "build": "Default",
+        "version": "5.4.4",
+        "isDefault": true
+      },
+      "properties": [
+        "density_of_states",
+        "total_energy",
+        "total_energy_contributions",
+        "pressure",
+        "fermi_energy",
+        "atomic_forces",
+        "total_force",
+        "stress_tensor",
+        "band_structure"
+      ],
+      "model": {
+        "type": "dft",
+        "subtype": "gga",
+        "method": {
+          "type": "pseudopotential",
+          "subtype": "us",
+          "data": {}
+        },
+        "functional": {
+          "slug": "pbe"
+        },
+        "refiners": [],
+        "modifiers": []
+      },
+      "units": [
+        {
+          "type": "execution",
+          "name": "vasp",
+          "head": true,
+          "results": [
+            {
+              "name": "density_of_states"
+            },
+            {
+              "name": "total_energy"
+            },
+            {
+              "name": "total_energy_contributions"
+            },
+            {
+              "name": "pressure"
+            },
+            {
+              "name": "fermi_energy"
+            },
+            {
+              "name": "atomic_forces"
+            },
+            {
+              "name": "total_force"
+            },
+            {
+              "name": "stress_tensor"
+            }
+          ],
+          "monitors": [
+            {
+              "name": "standard_output"
+            },
+            {
+              "name": "convergence_electronic"
+            }
+          ],
+          "flowchartId": "9920ae0a-0000-0000-0000-000000000000",
+          "preProcessors": [],
+          "postProcessors": [],
+          "application": {
+            "name": "vasp",
+            "shortName": "vasp",
+            "summary": "Vienna Ab-initio Simulation Package",
+            "isLicensed": true,
+            "build": "Default",
+            "version": "5.4.4",
+            "isDefault": true
+          },
+          "executable": {
+            "isDefault": true,
+            "postProcessors": [
+              "error_handler",
+              "prepare_restart",
+              "remove_non_zero_weight_kpoints"
+            ],
+            "monitors": [
+              "standard_output",
+              "convergence_ionic",
+              "convergence_electronic"
+            ],
+            "results": [
+              "atomic_forces",
+              "band_gaps",
+              "band_structure",
+              "density_of_states",
+              "fermi_energy",
+              "pressure",
+              "stress_tensor",
+              "total_energy",
+              "total_energy_contributions",
+              "total_force",
+              "zero_point_energy",
+              "final_structure",
+              "magnetic_moments",
+              "reaction_energy_barrier",
+              "reaction_energy_profile",
+              "potential_profile",
+              "charge_density_profile"
+            ],
+            "flavors": {
+              "vasp": {
+                "isDefault": true,
+                "input": [
+                  {
+                    "name": "INCAR"
+                  },
+                  {
+                    "name": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_symprec": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_SYMPREC"
+                  },
+                  {
+                    "name": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_bands": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_BANDS"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS_BANDS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": ""
+                  }
+                ],
+                "results": [
+                  "band_structure"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_nscf": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_BANDS"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "band_gaps",
+                  "fermi_energy"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_hse": {
+                "isDefault": false,
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_HSE"
+                  },
+                  {
+                    "name": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_bands_hse": {
+                "isDefault": false,
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_BANDS_HSE"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS_BANDS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": ""
+                  }
+                ],
+                "results": [
+                  "band_structure"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_nscf_hse": {
+                "isDefault": false,
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_BANDS_HSE"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "band_gaps",
+                  "fermi_energy"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_relax": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_RELAX"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "atomic_forces",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_force",
+                  "final_structure"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic",
+                  "convergence_ionic"
+                ],
+                "postProcessors": [
+                  "prepare_restart"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_vc_relax": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_VC_RELAX"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "atomic_forces",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_force",
+                  "final_structure"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic",
+                  "convergence_ionic"
+                ],
+                "postProcessors": [
+                  "prepare_restart"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_zpe": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_ZPE"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "fermi_energy",
+                  "pressure",
+                  "atomic_forces",
+                  "stress_tensor",
+                  "total_force",
+                  "zero_point_energy"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic",
+                  "convergence_ionic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_kpt_conv": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS_CONV"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_vc_relax_conv": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_VC_RELAX"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS_CONV"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic",
+                  "convergence_ionic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_neb": {
+                "isMultiMaterial": true,
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_NEB"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS"
+                  }
+                ],
+                "results": [
+                  "reaction_energy_barrier",
+                  "reaction_energy_profile"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_neb_initial": {
+                "isMultiMaterial": true,
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_NEB_INITIAL_FINAL"
+                  },
+                  {
+                    "name": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR_NEB_INITIAL"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_neb_final": {
+                "isMultiMaterial": true,
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_NEB_INITIAL_FINAL"
+                  },
+                  {
+                    "name": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR_NEB_FINAL"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              }
+            },
+            "name": "vasp"
+          },
+          "flavor": {
+            "isDefault": true,
+            "input": [
+              {
+                "name": "INCAR"
+              },
+              {
+                "name": "KPOINTS"
+              },
+              {
+                "name": "POSCAR"
+              }
+            ],
+            "results": [
+              "total_energy",
+              "total_energy_contributions",
+              "pressure",
+              "fermi_energy",
+              "atomic_forces",
+              "total_force",
+              "stress_tensor"
+            ],
+            "monitors": [
+              "standard_output",
+              "convergence_electronic"
+            ],
+            "applicationName": "vasp",
+            "executableName": "vasp",
+            "name": "vasp"
+          },
+          "status": "idle",
+          "statusTrack": [],
+          "tags": [],
+          "input": [
+            {
+              "content": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n",
+              "name": "INCAR",
+              "contextProviders": [
+                {
+                  "name": "VASPInputDataManager"
+                }
+              ],
+              "applicationName": "vasp",
+              "executableName": "vasp",
+              "rendered": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n"
+            },
+            {
+              "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+              "name": "KPOINTS",
+              "contextProviders": [
+                {
+                  "name": "KGridFormDataManager"
+                },
+                {
+                  "name": "VASPInputDataManager"
+                }
+              ],
+              "applicationName": "vasp",
+              "executableName": "vasp",
+              "rendered": "Automatic mesh\n0\nGamma\n  2 2 2 \n  0 0 0 \n"
+            },
+            {
+              "content": "{{ input.POSCAR }}\n",
+              "name": "POSCAR",
+              "contextProviders": [
+                {
+                  "name": "VASPInputDataManager"
+                }
+              ],
+              "applicationName": "vasp",
+              "executableName": "vasp",
+              "rendered": "Silicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\n"
+            }
+          ],
+          "next": "e9dd9c8e-590e-4c72-8c7b-6ef227c830e1"
+        },
+        {
+          "type": "execution",
+          "name": "vasp_bands",
+          "head": false,
+          "results": [
+            {
+              "name": "band_structure"
+            }
+          ],
+          "monitors": [
+            {
+              "name": "standard_output"
+            },
+            {
+              "name": "convergence_electronic"
+            }
+          ],
+          "flowchartId": "9920ae0a-0000-0000-0000-000000000000",
+          "preProcessors": [],
+          "postProcessors": [],
+          "application": {
+            "name": "vasp",
+            "shortName": "vasp",
+            "summary": "Vienna Ab-initio Simulation Package",
+            "isLicensed": true,
+            "build": "Default",
+            "version": "5.4.4",
+            "isDefault": true
+          },
+          "executable": {
+            "isDefault": true,
+            "postProcessors": [
+              "error_handler",
+              "prepare_restart",
+              "remove_non_zero_weight_kpoints"
+            ],
+            "monitors": [
+              "standard_output",
+              "convergence_ionic",
+              "convergence_electronic"
+            ],
+            "results": [
+              "atomic_forces",
+              "band_gaps",
+              "band_structure",
+              "density_of_states",
+              "fermi_energy",
+              "pressure",
+              "stress_tensor",
+              "total_energy",
+              "total_energy_contributions",
+              "total_force",
+              "zero_point_energy",
+              "final_structure",
+              "magnetic_moments",
+              "reaction_energy_barrier",
+              "reaction_energy_profile",
+              "potential_profile",
+              "charge_density_profile"
+            ],
+            "flavors": {
+              "vasp": {
+                "isDefault": true,
+                "input": [
+                  {
+                    "name": "INCAR"
+                  },
+                  {
+                    "name": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_symprec": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_SYMPREC"
+                  },
+                  {
+                    "name": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_bands": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_BANDS"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS_BANDS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": ""
+                  }
+                ],
+                "results": [
+                  "band_structure"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_nscf": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_BANDS"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "band_gaps",
+                  "fermi_energy"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_hse": {
+                "isDefault": false,
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_HSE"
+                  },
+                  {
+                    "name": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_bands_hse": {
+                "isDefault": false,
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_BANDS_HSE"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS_BANDS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": ""
+                  }
+                ],
+                "results": [
+                  "band_structure"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_nscf_hse": {
+                "isDefault": false,
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_BANDS_HSE"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "band_gaps",
+                  "fermi_energy"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_relax": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_RELAX"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "atomic_forces",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_force",
+                  "final_structure"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic",
+                  "convergence_ionic"
+                ],
+                "postProcessors": [
+                  "prepare_restart"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_vc_relax": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_VC_RELAX"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "atomic_forces",
+                  "fermi_energy",
+                  "pressure",
+                  "stress_tensor",
+                  "total_force",
+                  "final_structure"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic",
+                  "convergence_ionic"
+                ],
+                "postProcessors": [
+                  "prepare_restart"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_zpe": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_ZPE"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "fermi_energy",
+                  "pressure",
+                  "atomic_forces",
+                  "stress_tensor",
+                  "total_force",
+                  "zero_point_energy"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic",
+                  "convergence_ionic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_kpt_conv": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS_CONV"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_vc_relax_conv": {
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_VC_RELAX"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS_CONV"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic",
+                  "convergence_ionic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_neb": {
+                "isMultiMaterial": true,
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_NEB"
+                  },
+                  {
+                    "name": "KPOINTS",
+                    "templateName": "KPOINTS"
+                  }
+                ],
+                "results": [
+                  "reaction_energy_barrier",
+                  "reaction_energy_profile"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_neb_initial": {
+                "isMultiMaterial": true,
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_NEB_INITIAL_FINAL"
+                  },
+                  {
+                    "name": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR_NEB_INITIAL"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              },
+              "vasp_neb_final": {
+                "isMultiMaterial": true,
+                "input": [
+                  {
+                    "name": "INCAR",
+                    "templateName": "INCAR_NEB_INITIAL_FINAL"
+                  },
+                  {
+                    "name": "KPOINTS"
+                  },
+                  {
+                    "name": "POSCAR",
+                    "templateName": "POSCAR_NEB_FINAL"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions",
+                  "pressure",
+                  "fermi_energy",
+                  "atomic_forces",
+                  "total_force",
+                  "stress_tensor"
+                ],
+                "monitors": [
+                  "standard_output",
+                  "convergence_electronic"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp"
+              }
+            },
+            "name": "vasp"
+          },
+          "flavor": {
+            "input": [
+              {
+                "name": "INCAR",
+                "templateName": "INCAR_BANDS"
+              },
+              {
+                "name": "KPOINTS",
+                "templateName": "KPOINTS_BANDS"
+              },
+              {
+                "name": "POSCAR",
+                "templateName": ""
+              }
+            ],
+            "results": [
+              "band_structure"
+            ],
+            "monitors": [
+              "standard_output",
+              "convergence_electronic"
+            ],
+            "applicationName": "vasp",
+            "executableName": "vasp",
+            "name": "vasp_bands"
+          },
+          "status": "idle",
+          "statusTrack": [],
+          "tags": [],
+          "input": [
+            {
+              "content": "ISMEAR = 0\nSIGMA = 0.05\nISTART = 1\nICHARG = 11\n",
+              "name": "INCAR",
+              "contextProviders": [
+                {
+                  "name": "VASPInputDataManager"
+                }
+              ],
+              "applicationName": "vasp",
+              "executableName": "vasp",
+              "rendered": "ISMEAR = 0\nSIGMA = 0.05\nISTART = 1\nICHARG = 11\n"
+            },
+            {
+              "content": "kpoints path\n{{kpath.length}}\nreciprocal\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
+              "name": "KPOINTS",
+              "contextProviders": [
+                {
+                  "name": "KPathFormDataManager"
+                },
+                {
+                  "name": "VASPInputDataManager"
+                }
+              ],
+              "applicationName": "vasp",
+              "executableName": "vasp",
+              "rendered": "kpoints path\n11\nreciprocal\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n"
+            },
+            {
+              "content": "{{ input.POSCAR }}\n",
+              "name": "POSCAR",
+              "contextProviders": [
+                {
+                  "name": "VASPInputDataManager"
+                }
+              ],
+              "applicationName": "vasp",
+              "executableName": "vasp",
+              "rendered": "Silicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\n"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "units": [
+    {
+      "name": "Band Structure + Density of States",
+      "type": "subworkflow",
+      "_id": "9920ae0a-0000-0000-0000-000000000000",
+      "status": "idle",
+      "statusTrack": [],
+      "flowchartId": "9920ae0a-0000-0000-0000-000000000000",
+      "tags": [],
+      "head": true
+    }
+  ],
+  "properties": [
+    "density_of_states",
+    "total_energy",
+    "total_energy_contributions",
+    "pressure",
+    "fermi_energy",
+    "atomic_forces",
+    "total_force",
+    "stress_tensor",
+    "band_structure"
+  ],
+  "workflows": []
+}

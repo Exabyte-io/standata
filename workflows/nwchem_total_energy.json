@@ -1,0 +1,152 @@
+{
+  "name": "Total Energy",
+  "subworkflows": [
+    {
+      "_id": "bac05032-0000-0000-0000-000000000000",
+      "name": "Total Energy",
+      "application": {
+        "name": "nwchem",
+        "shortName": "nwchem",
+        "summary": "NWChem",
+        "build": "Default",
+        "version": "7.0.2",
+        "isDefault": true
+      },
+      "properties": [
+        "total_energy",
+        "total_energy_contributions"
+      ],
+      "model": {
+        "type": "dft",
+        "subtype": "gga",
+        "method": {
+          "type": "localorbital",
+          "subtype": "pople",
+          "data": {}
+        },
+        "functional": {
+          "slug": "pbe"
+        },
+        "refiners": [],
+        "modifiers": []
+      },
+      "units": [
+        {
+          "type": "execution",
+          "name": "nwchem_total_energy",
+          "head": true,
+          "results": [
+            {
+              "name": "total_energy"
+            },
+            {
+              "name": "total_energy_contributions"
+            }
+          ],
+          "monitors": [
+            {
+              "name": "standard_output"
+            }
+          ],
+          "flowchartId": "bac05032-0000-0000-0000-000000000000",
+          "preProcessors": [],
+          "postProcessors": [],
+          "application": {
+            "name": "nwchem",
+            "shortName": "nwchem",
+            "summary": "NWChem",
+            "build": "Default",
+            "version": "7.0.2",
+            "isDefault": true
+          },
+          "executable": {
+            "isDefault": true,
+            "hasAdvancedComputeOptions": false,
+            "postProcessors": [
+              "error_handler"
+            ],
+            "monitors": [
+              "standard_output"
+            ],
+            "results": [
+              "total_energy",
+              "total_energy_contributions"
+            ],
+            "flavors": {
+              "nwchem_total_energy": {
+                "isDefault": true,
+                "input": [
+                  {
+                    "name": "nwchem_total_energy.inp"
+                  }
+                ],
+                "results": [
+                  "total_energy",
+                  "total_energy_contributions"
+                ],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "nwchem",
+                "executableName": "nwchem"
+              }
+            },
+            "name": "nwchem"
+          },
+          "flavor": {
+            "isDefault": true,
+            "input": [
+              {
+                "name": "nwchem_total_energy.inp"
+              }
+            ],
+            "results": [
+              "total_energy",
+              "total_energy_contributions"
+            ],
+            "monitors": [
+              "standard_output"
+            ],
+            "applicationName": "nwchem",
+            "executableName": "nwchem",
+            "name": "nwchem_total_energy"
+          },
+          "status": "idle",
+          "statusTrack": [],
+          "tags": [],
+          "input": [
+            {
+              "content": " start nwchem\n title \"Test\"\n charge {{ input.CHARGE }}\n geometry units au noautosym\n {{ input.ATOMIC_POSITIONS }}\n end\n basis\n   * library {{ input.BASIS }}\n end\n dft\n xc {{ input.FUNCTIONAL }}\n mult {{ input.MULT }}\n end\n task dft energy\n",
+              "name": "nwchem_total_energy.inp",
+              "contextProviders": [
+                {
+                  "name": "NWChemInputDataManager"
+                }
+              ],
+              "applicationName": "nwchem",
+              "executableName": "nwchem",
+              "rendered": " start nwchem\n title \"Test\"\n charge 0\n geometry units au noautosym\n Si     0.000000000    0.000000000    0.000000000 \nSi     1.116306745    0.789348070    1.933500000 \n end\n basis\n   * library 6-31G\n end\n dft\n xc B3LYP\n mult 1\n end\n task dft energy\n"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "units": [
+    {
+      "name": "Total Energy",
+      "type": "subworkflow",
+      "_id": "bac05032-0000-0000-0000-000000000000",
+      "status": "idle",
+      "statusTrack": [],
+      "flowchartId": "bac05032-0000-0000-0000-000000000000",
+      "tags": [],
+      "head": true
+    }
+  ],
+  "properties": [
+    "total_energy",
+    "total_energy_contributions"
+  ],
+  "workflows": []
+}

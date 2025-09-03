@@ -1,19 +1,511 @@
 categories:
   application:
     - espresso
+    - jupyterLab
+    - nwchem
+    - python
+    - shell
+    - vasp
   property:
     - atomic_forces
+    - average_potential_profile
+    - band_gaps
+    - band_structure
+    - charge_density_profile
+    - density_of_states
+    - dielectric_tensor
     - fermi_energy
+    - file_content
     - final_structure
+    - hubbard_u
+    - hubbard_v
+    - hubbard_v_nn
+    - magnetic_moments
+    - phonon_dispersions
+    - phonon_dos
+    - potential_profile
     - pressure
+    - reaction_energy_barrier
+    - reaction_energy_profile
     - stress_tensor
+    - surface_energy
     - total_energy
     - total_energy_contributions
     - total_force
+    - workflow:pyml_predict
+    - zero_point_energy
   material_count:
     - single-material
     - multi-material
 entities:
+  - filename: espresso_band_gap.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_band_gap___dos___hse.json
+    categories:
+      - espresso
+      - atomic_forces
+      - band_gaps
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - density_of_states
+      - charge_density_profile
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_band_structure.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_structure
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_band_structure___density_of_states.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_structure
+      - band_gaps
+      - density_of_states
+      - charge_density_profile
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_band_structure___hse.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_bandstructure_with_soc___qe.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_structure
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_bandstructure_with_spin_magnetism___qe.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_structure
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_density_of_states.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_gaps
+      - density_of_states
+      - charge_density_profile
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_dielectric_function.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_gaps
+      - dielectric_tensor
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_effective_screening_medium__esm_.json
+    categories:
+      - espresso
+      - total_energy
+      - total_energy_contributions
+      - pressure
+      - fermi_energy
+      - atomic_forces
+      - total_force
+      - stress_tensor
+      - potential_profile
+      - charge_density_profile
+      - band_gaps
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_effective_screening_medium__esm__relax.json
+    categories:
+      - espresso
+      - total_energy
+      - total_energy_contributions
+      - pressure
+      - fermi_energy
+      - atomic_forces
+      - total_force
+      - stress_tensor
+      - potential_profile
+      - charge_density_profile
+      - band_gaps
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_electronic_density_mesh.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_fixed_cell_relaxation.json
+    categories:
+      - espresso
+      - total_energy
+      - fermi_energy
+      - pressure
+      - atomic_forces
+      - total_force
+      - stress_tensor
+      - final_structure
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - total_energy_contributions
+      - single-material
+  - filename: espresso_full_frequency_gw_band_structure___band_gap.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_structure
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_hubbard_u___hp.json
+    categories:
+      - espresso
+      - atomic_forces
+      - band_gaps
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - hubbard_u
+      - hubbard_v_nn
+      - hubbard_v
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_k_point_convergence.json
+    categories:
+      - espresso
+      - total_energy
+      - fermi_energy
+      - pressure
+      - atomic_forces
+      - total_force
+      - stress_tensor
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - total_energy_contributions
+      - single-material
+  - filename: espresso_molecular_dynamics___deepmd.json
+    categories:
+      - espresso
+      - single-material
+  - filename: espresso_nudged_elastic_band__neb_.json
+    categories:
+      - espresso
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_phonon_density_of_states.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - phonon_dos
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - phonon_dispersions
+      - zero_point_energy
+      - single-material
+  - filename: espresso_phonon_density_of_states___dispersions.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - phonon_dos
+      - phonon_dispersions
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - zero_point_energy
+      - single-material
+  - filename: espresso_phonon_dispersions.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - phonon_dos
+      - phonon_dispersions
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - zero_point_energy
+      - single-material
+  - filename: espresso_phonon_map.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_plasmon_pole_gw_band_structure___band_gap.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_structure
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_recalculate_bands.json
+    categories:
+      - espresso
+      - band_structure
+      - atomic_forces
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - fermi_energy
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - pressure
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - single-material
+  - filename: espresso_surface_energy.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - surface_energy
+      - single-material
   - filename: espresso_total_energy.json
     categories:
       - espresso
@@ -24,6 +516,35 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - single-material
+  - filename: espresso_valence_band_offset__2d_.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - band_gaps
+      - average_potential_profile
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - band_structure
       - single-material
   - filename: espresso_variable_cell_relaxation.json
     categories:
@@ -35,4 +556,349 @@ entities:
       - total_force
       - stress_tensor
       - final_structure
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - total_energy_contributions
+      - single-material
+  - filename: espresso_zero_point_energy.json
+    categories:
+      - espresso
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - zero_point_energy
+      - band_gaps
+      - charge_density_profile
+      - density_of_states
+      - final_structure
+      - magnetic_moments
+      - potential_profile
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - phonon_dos
+      - phonon_dispersions
+      - single-material
+  - filename: jupyterLab_jupyter_notebook.json
+    categories:
+      - jupyterLab
+      - single-material
+  - filename: nwchem_total_energy.json
+    categories:
+      - nwchem
+      - total_energy
+      - total_energy_contributions
+      - single-material
+  - filename: python_python_script.json
+    categories:
+      - python
+      - file_content
+      - workflow:pyml_predict
+      - single-material
+  - filename: shell_shell_batch_job__espresso_pwscf_.json
+    categories:
+      - shell
+      - atomic_forces
+      - band_gaps
+      - band_structure
+      - density_of_states
+      - fermi_energy
+      - phonon_dispersions
+      - phonon_dos
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - zero_point_energy
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
+      - single-material
+  - filename: shell_shell_script.json
+    categories:
+      - shell
+      - atomic_forces
+      - band_gaps
+      - band_structure
+      - density_of_states
+      - fermi_energy
+      - phonon_dispersions
+      - phonon_dos
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - zero_point_energy
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
+      - single-material
+  - filename: vasp_band_gap.json
+    categories:
+      - vasp
+      - total_energy
+      - total_energy_contributions
+      - pressure
+      - fermi_energy
+      - atomic_forces
+      - total_force
+      - stress_tensor
+      - band_gaps
+      - band_structure
+      - density_of_states
+      - zero_point_energy
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
+      - single-material
+  - filename: vasp_band_structure.json
+    categories:
+      - vasp
+      - total_energy
+      - total_energy_contributions
+      - pressure
+      - fermi_energy
+      - atomic_forces
+      - total_force
+      - stress_tensor
+      - band_structure
+      - band_gaps
+      - density_of_states
+      - zero_point_energy
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
+      - single-material
+  - filename: vasp_band_structure___density_of_states.json
+    categories:
+      - vasp
+      - density_of_states
+      - total_energy
+      - total_energy_contributions
+      - pressure
+      - fermi_energy
+      - atomic_forces
+      - total_force
+      - stress_tensor
+      - band_structure
+      - band_gaps
+      - zero_point_energy
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
+      - single-material
+  - filename: vasp_density_of_states.json
+    categories:
+      - vasp
+      - density_of_states
+      - total_energy
+      - total_energy_contributions
+      - pressure
+      - fermi_energy
+      - atomic_forces
+      - total_force
+      - stress_tensor
+      - band_gaps
+      - band_structure
+      - zero_point_energy
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
+      - single-material
+  - filename: vasp_fixed_cell_relaxation.json
+    categories:
+      - vasp
+      - total_energy
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_force
+      - final_structure
+      - band_gaps
+      - band_structure
+      - density_of_states
+      - total_energy_contributions
+      - zero_point_energy
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
+      - single-material
+  - filename: vasp_k_point_convergence.json
+    categories:
+      - vasp
+      - total_energy
+      - total_energy_contributions
+      - pressure
+      - fermi_energy
+      - atomic_forces
+      - total_force
+      - stress_tensor
+      - band_gaps
+      - band_structure
+      - density_of_states
+      - zero_point_energy
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
+      - single-material
+  - filename: vasp_nudged_elastic_band__neb_.json
+    categories:
+      - vasp
+      - total_energy
+      - total_energy_contributions
+      - pressure
+      - fermi_energy
+      - atomic_forces
+      - total_force
+      - stress_tensor
+      - band_gaps
+      - band_structure
+      - density_of_states
+      - zero_point_energy
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
+      - single-material
+  - filename: vasp_recalculate_bands.json
+    categories:
+      - vasp
+      - band_structure
+      - atomic_forces
+      - band_gaps
+      - density_of_states
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - zero_point_energy
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
+      - single-material
+  - filename: vasp_surface_energy.json
+    categories:
+      - vasp
+      - total_energy
+      - total_energy_contributions
+      - pressure
+      - fermi_energy
+      - atomic_forces
+      - total_force
+      - stress_tensor
+      - band_gaps
+      - band_structure
+      - density_of_states
+      - zero_point_energy
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
+      - surface_energy
+      - single-material
+  - filename: vasp_total_energy.json
+    categories:
+      - vasp
+      - total_energy
+      - total_energy_contributions
+      - pressure
+      - fermi_energy
+      - atomic_forces
+      - total_force
+      - stress_tensor
+      - band_gaps
+      - band_structure
+      - density_of_states
+      - zero_point_energy
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
+      - single-material
+  - filename: vasp_variable_cell_relaxation.json
+    categories:
+      - vasp
+      - total_energy
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_force
+      - final_structure
+      - band_gaps
+      - band_structure
+      - density_of_states
+      - total_energy_contributions
+      - zero_point_energy
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
+      - single-material
+  - filename: vasp_zero_point_energy.json
+    categories:
+      - vasp
+      - total_energy
+      - fermi_energy
+      - pressure
+      - atomic_forces
+      - stress_tensor
+      - total_force
+      - zero_point_energy
+      - band_gaps
+      - band_structure
+      - density_of_states
+      - total_energy_contributions
+      - final_structure
+      - magnetic_moments
+      - reaction_energy_barrier
+      - reaction_energy_profile
+      - potential_profile
+      - charge_density_profile
       - single-material

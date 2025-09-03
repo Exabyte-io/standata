@@ -1,0 +1,146 @@
+{
+  "name": "Molecular Dynamics - DeePMD",
+  "subworkflows": [
+    {
+      "_id": "c4932c5f-0000-0000-0000-000000000000",
+      "name": "CP-MD",
+      "application": {
+        "name": "espresso",
+        "shortName": "qe",
+        "summary": "Quantum Espresso",
+        "build": "Default",
+        "version": "7.2",
+        "isDefault": true,
+        "hasAdvancedComputeOptions": true
+      },
+      "properties": [],
+      "model": {
+        "type": "dft",
+        "subtype": "gga",
+        "method": {
+          "type": "pseudopotential",
+          "subtype": "us",
+          "data": {}
+        },
+        "functional": {
+          "slug": "pbe"
+        },
+        "refiners": [],
+        "modifiers": []
+      },
+      "units": [
+        {
+          "type": "execution",
+          "name": "cp",
+          "head": true,
+          "results": [],
+          "monitors": [
+            {
+              "name": "standard_output"
+            }
+          ],
+          "flowchartId": "c4932c5f-0000-0000-0000-000000000000",
+          "preProcessors": [],
+          "postProcessors": [],
+          "application": {
+            "name": "espresso",
+            "shortName": "qe",
+            "summary": "Quantum Espresso",
+            "build": "Default",
+            "version": "7.2",
+            "isDefault": true,
+            "hasAdvancedComputeOptions": true
+          },
+          "executable": {
+            "monitors": [
+              "standard_output"
+            ],
+            "results": [],
+            "flavors": {
+              "cp": {
+                "isDefault": true,
+                "input": [
+                  {
+                    "name": "cp.in"
+                  }
+                ],
+                "results": [],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "cp.x"
+              },
+              "cp_wf": {
+                "input": [
+                  {
+                    "name": "cp_wf.in"
+                  }
+                ],
+                "results": [],
+                "monitors": [
+                  "standard_output"
+                ],
+                "applicationName": "espresso",
+                "executableName": "cp.x"
+              }
+            },
+            "name": "cp.x"
+          },
+          "flavor": {
+            "isDefault": true,
+            "input": [
+              {
+                "name": "cp.in"
+              }
+            ],
+            "results": [],
+            "monitors": [
+              "standard_output"
+            ],
+            "applicationName": "espresso",
+            "executableName": "cp.x",
+            "name": "cp"
+          },
+          "status": "idle",
+          "statusTrack": [],
+          "tags": [],
+          "input": [
+            {
+              "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'cp'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}'{% endraw %}\n    prefix = 'cp'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n    nstep = {{ dynamics.numberOfSteps }}\n    iprint = 1\n    dt = {{ dynamics.timeStep }}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    nr1b = 20\n    nr2b = 20\n    nr3b = 20\n/\n&ELECTRONS\n    electron_dynamics = 'verlet'\n    electron_velocities = 'zero'\n    emass = {{ dynamics.electronMass }}\n!! consider the below parameters if orthogonalization fails\n!   orthogonalization = 'ortho'\n!   ortho_eps = 1d-11\n/\n&IONS\n    ion_dynamics = 'verlet'\n    ion_velocities = 'zero'\n    tempw = {{ dynamics.temperature }}\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\n",
+              "name": "cp.in",
+              "contextProviders": [
+                {
+                  "name": "QEPWXInputDataManager"
+                },
+                {
+                  "name": "PlanewaveCutoffDataManager"
+                },
+                {
+                  "name": "IonDynamicsContextProvider"
+                }
+              ],
+              "applicationName": "espresso",
+              "executableName": "cp.x",
+              "rendered": "&CONTROL\n    calculation = 'cp'\n    restart_mode = 'from_scratch'\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}'\n    prefix = 'cp'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n    nstep = 100\n    iprint = 1\n    dt = 5\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    nr1b = 20\n    nr2b = 20\n    nr3b = 20\n/\n&ELECTRONS\n    electron_dynamics = 'verlet'\n    electron_velocities = 'zero'\n    emass = 100\n!! consider the below parameters if orthogonalization fails\n!   orthogonalization = 'ortho'\n!   ortho_eps = 1d-11\n/\n&IONS\n    ion_dynamics = 'verlet'\n    ion_velocities = 'zero'\n    tempw = 300\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\n"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "units": [
+    {
+      "name": "CP-MD",
+      "type": "subworkflow",
+      "_id": "c4932c5f-0000-0000-0000-000000000000",
+      "status": "idle",
+      "statusTrack": [],
+      "flowchartId": "c4932c5f-0000-0000-0000-000000000000",
+      "tags": [],
+      "head": true
+    }
+  ],
+  "properties": [],
+  "workflows": []
+}
