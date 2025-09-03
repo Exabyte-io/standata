@@ -27,6 +27,7 @@ repos:
       - id: mypy
       - id: check-yaml
       - id: end-of-file-fixer
+        exclude: ^workflows/.*\.json$
       - id: trailing-whitespace
   - repo: local
     hooks:

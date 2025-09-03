@@ -3,7 +3,7 @@
   "subworkflows": [
     {
       "systemName": "espresso-variable-cell-relaxation",
-      "_id": "d533eedf-49a9-4eab-bef7-bb035112108c",
+      "_id": "38ac3b0e-0000-0000-0000-000000000000",
       "name": "Variable-cell Relaxation",
       "application": {
         "name": "espresso",
@@ -76,7 +76,7 @@
               "name": "convergence_ionic"
             }
           ],
-          "flowchartId": "b8cb0ecf-c1d3-4a0d-803f-120c4847487e",
+          "flowchartId": "38ac3b0e-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1092,10 +1092,10 @@
     {
       "name": "Variable-cell Relaxation",
       "type": "subworkflow",
-      "_id": "d533eedf-49a9-4eab-bef7-bb035112108c",
+      "_id": "38ac3b0e-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "776c6d8f-0da8-47eb-bdf1-974d2e3be8c4",
+      "flowchartId": "38ac3b0e-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }
