@@ -5,7 +5,12 @@ const { createWorkflowConfigs } = require("@exabyte-io/wode.js");
 const workflowDataPath = path.resolve(__dirname, "..", "generated", "workflows_data.json");
 const { workflowData } = JSON.parse(fs.readFileSync(workflowDataPath, "utf8"));
 
-const workflowConfigs = createWorkflowConfigs(null, [], workflowData);
+// Inject generated workflowData into wode.js internal workflows store
+const wodeWorkflowsStore = require("@exabyte-io/wode.js/dist/workflows/workflows");
+
+wodeWorkflowsStore.workflowData = workflowData;
+
+const workflowConfigs = createWorkflowConfigs(null, workflowData);
 
 const workflowsDir = path.resolve(__dirname, "..", "..");
 

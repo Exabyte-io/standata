@@ -17,6 +17,25 @@ const workflowData = {
     filesMapByName: {},
 };
 
+function toPropName(item) {
+    if (typeof item === "string") return item;
+    if (item && typeof item === "object" && typeof item.name === "string") return item.name;
+    return null;
+}
+
+function extractPropertiesFromSubworkflow(subworkflow) {
+    const props = new Set(Array.isArray(subworkflow.properties) ? subworkflow.properties.map(toPropName).filter(Boolean) : []);
+    if (Array.isArray(subworkflow.units)) {
+        subworkflow.units.forEach((unit) => {
+            if (Array.isArray(unit.results)) unit.results.map(toPropName).filter(Boolean).forEach((p) => props.add(p));
+            if (unit.executable && Array.isArray(unit.executable.results)) {
+                unit.executable.results.map(toPropName).filter(Boolean).forEach((p) => props.add(p));
+            }
+        });
+    }
+    return Array.from(props);
+}
+
 // Read existing workflow JSON files to extract categories
 const workflowsDir = path.resolve(__dirname, "..", "..");
 if (fs.existsSync(workflowsDir)) {
@@ -28,7 +47,7 @@ if (fs.existsSync(workflowsDir)) {
             const workflowContent = fs.readFileSync(filePath, "utf8");
             const workflow = JSON.parse(workflowContent);
 
-            // Extract application from subworkflows
+            // Extract application and properties from subworkflows
             if (workflow.subworkflows && workflow.subworkflows.length > 0) {
                 workflow.subworkflows.forEach((subworkflow) => {
                     if (subworkflow.application && subworkflow.application.name) {
@@ -36,23 +55,15 @@ if (fs.existsSync(workflowsDir)) {
                             subworkflow.application.name,
                         );
                     }
-                });
-            }
-
-            // Extract properties from subworkflows
-            if (workflow.subworkflows && workflow.subworkflows.length > 0) {
-                workflow.subworkflows.forEach((subworkflow) => {
-                    if (subworkflow.properties && Array.isArray(subworkflow.properties)) {
-                        subworkflow.properties.forEach((prop) => {
-                            workflowData.standataConfig.categories.property.add(prop);
-                        });
-                    }
+                    extractPropertiesFromSubworkflow(subworkflow).forEach((prop) => {
+                        workflowData.standataConfig.categories.property.add(prop);
+                    });
                 });
             }
 
             // Also check top-level properties
             if (workflow.properties && Array.isArray(workflow.properties)) {
-                workflow.properties.forEach((prop) => {
+                workflow.properties.map(toPropName).filter(Boolean).forEach((prop) => {
                     workflowData.standataConfig.categories.property.add(prop);
                 });
             }
@@ -87,22 +98,20 @@ Object.keys(workflowData.filesMapByName).forEach((filename) => {
         });
     }
 
-    // Add property categories
+    // Add property categories (from explicit properties or inferred from units)
     if (workflow.subworkflows && workflow.subworkflows.length > 0) {
         workflow.subworkflows.forEach((subworkflow) => {
-            if (subworkflow.properties && Array.isArray(subworkflow.properties)) {
-                subworkflow.properties.forEach((prop) => {
-                    if (workflowData.standataConfig.categories.property.includes(prop)) {
-                        categories.push(prop);
-                    }
-                });
-            }
+            extractPropertiesFromSubworkflow(subworkflow).forEach((prop) => {
+                if (workflowData.standataConfig.categories.property.includes(prop)) {
+                    categories.push(prop);
+                }
+            });
         });
     }
 
     // Also check top-level properties
     if (workflow.properties && Array.isArray(workflow.properties)) {
-        workflow.properties.forEach((prop) => {
+        workflow.properties.map(toPropName).filter(Boolean).forEach((prop) => {
             if (workflowData.standataConfig.categories.property.includes(prop)) {
                 categories.push(prop);
             }
@@ -112,8 +121,8 @@ Object.keys(workflowData.filesMapByName).forEach((filename) => {
     // Add material count (default to single-material, can be enhanced later)
     categories.push("single-material");
 
-    // Remove duplicates
-    const uniqueCategories = [...new Set(categories)];
+    // Remove duplicates and ensure primitives only
+    const uniqueCategories = [...new Set(categories.filter((c) => typeof c === "string"))];
 
     workflowData.standataConfig.entities.push({
         filename,
