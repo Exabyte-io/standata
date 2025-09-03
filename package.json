@@ -27,7 +27,7 @@
     },
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",
-        "@exabyte-io/wode.js":  "git+https://github.com/Exabyte-io/wode.js.git#116e2d153492b7dfaa7982102e098c41acb4b2d0",
+        "@exabyte-io/wode.js":  "git+https://github.com/Exabyte-io/wode.js.git#7a007db46b434b4017c867e7d2825e00ebb9c34b",
         "@exabyte-io/application-flavors.js": "^2025.8.20-0",
         "@exabyte-io/ade.js": "^2025.8.20-0",
         "@mat3ra/tsconfig": "^2024.6.3-0",
