@@ -37,6 +37,7 @@ if (fs.existsSync(workflowsDir)) {
                         );
                     }
                 });
+            }
 
             // Extract properties from subworkflows
             if (workflow.subworkflows && workflow.subworkflows.length > 0) {
@@ -58,7 +59,6 @@ if (fs.existsSync(workflowsDir)) {
 
             // Add to filesMapByName
             workflowData.filesMapByName[filename] = workflow;
-
         } catch (error) {
             console.error(`Error processing ${filename}:`, error.message);
         }
@@ -128,4 +128,3 @@ fs.writeFileSync(
     categoriesYml + (categoriesYml.endsWith("\n") ? "" : "\n"),
     "utf8",
 );
-

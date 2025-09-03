@@ -1,31 +1,38 @@
 categories:
   application:
     - espresso
-    - exabyteml
-    - jupyterLab
-    - nwchem
-    - python
-    - shell
-    - vasp
   property:
-    - band_gap
-    - band_gap_dos
-    - band_structure
-    - phonon_dispersions
-    - reaction_energy_profile
+    - atomic_forces
+    - fermi_energy
+    - final_structure
+    - pressure
+    - stress_tensor
     - total_energy
+    - total_energy_contributions
+    - total_force
   material_count:
     - single-material
     - multi-material
-
 entities:
-  - filename: total_energy.json
+  - filename: espresso_total_energy.json
     categories:
       - espresso
-      - single-material
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
       - total_energy
-  - filename: band_gap.json
+      - total_energy_contributions
+      - total_force
+      - single-material
+  - filename: espresso_variable_cell_relaxation.json
     categories:
       - espresso
-      - vasp
-      - band_gap
+      - total_energy
+      - fermi_energy
+      - pressure
+      - atomic_forces
+      - total_force
+      - stress_tensor
+      - final_structure
+      - single-material
