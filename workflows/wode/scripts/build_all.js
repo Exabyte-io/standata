@@ -6,7 +6,6 @@ const scripts = [
     "workflows/wode/scripts/build_workflows_data.js",
     "workflows/wode/scripts/create_workflows.js",
     "workflows/wode/scripts/update_categories.js",
-    "build_runtime_data.js",
 ];
 
 async function executeScript(scriptPath) {
