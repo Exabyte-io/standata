@@ -2,7 +2,7 @@
   "name": "Band Structure - HSE",
   "subworkflows": [
     {
-      "_id": "4dc7fc6c-0000-0000-0000-000000000000",
+      "_id": "bb7e98ce-0000-0000-0000-000000000000",
       "name": "Preliminary SCF Calculation",
       "application": {
         "name": "espresso",
@@ -72,7 +72,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "4dc7fc6c-0000-0000-0000-000000000000",
+          "flowchartId": "b88cb6ee-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1088,10 +1088,10 @@
     {
       "name": "Preliminary SCF Calculation",
       "type": "subworkflow",
-      "_id": "4dc7fc6c-0000-0000-0000-000000000000",
+      "_id": "bb7e98ce-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "4dc7fc6c-0000-0000-0000-000000000000",
+      "flowchartId": "1c4d4aa3-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

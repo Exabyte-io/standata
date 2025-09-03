@@ -2,7 +2,7 @@
   "name": "Surface Energy",
   "subworkflows": [
     {
-      "_id": "a814ce59-0000-0000-0000-000000000000",
+      "_id": "65dbbd46-0000-0000-0000-000000000000",
       "name": "Surface Energy",
       "application": {
         "name": "vasp",
@@ -44,7 +44,7 @@
           "head": true,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "230b8ef2-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "source": "api",
@@ -60,7 +60,7 @@
               "name": "DATA"
             }
           ],
-          "next": "403d219b-69a7-472a-9abb-4c60776f0072",
+          "next": "94b43a98-0000-0000-0000-000000000000",
           "application": {
             "name": "vasp",
             "shortName": "vasp",
@@ -82,16 +82,16 @@
           "input": [
             {
               "name": "DATA",
-              "scope": "c591c0f4-ca75-4141-96fc-39bb4beffe0d"
+              "scope": "230b8ef2-0000-0000-0000-000000000000"
             }
           ],
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "94b43a98-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "0db8f532-9b72-4e3f-a4de-e7537eff6690",
+          "next": "3b2068c0-0000-0000-0000-000000000000",
           "application": {
             "name": "vasp",
             "shortName": "vasp",
@@ -112,7 +112,7 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "3b2068c0-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "source": "api",
@@ -128,7 +128,7 @@
               "name": "DATA"
             }
           ],
-          "next": "e8af117a-1192-459e-857d-a183aeda36a3",
+          "next": "64c4cfc4-0000-0000-0000-000000000000",
           "application": {
             "name": "vasp",
             "shortName": "vasp",
@@ -150,16 +150,16 @@
           "input": [
             {
               "name": "DATA",
-              "scope": "0db8f532-9b72-4e3f-a4de-e7537eff6690"
+              "scope": "3b2068c0-0000-0000-0000-000000000000"
             }
           ],
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "64c4cfc4-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "d9cd88ee-cb9f-4d4c-a663-ce3d4bbb26d8",
+          "next": "0edd1354-0000-0000-0000-000000000000",
           "application": {
             "name": "vasp",
             "shortName": "vasp",
@@ -181,10 +181,10 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "0edd1354-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "8ce7a5e7-53ae-4ccb-ba96-848009ea6eb8",
+          "next": "10267446-0000-0000-0000-000000000000",
           "application": {
             "name": "vasp",
             "shortName": "vasp",
@@ -205,7 +205,7 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "10267446-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "source": "api",
@@ -221,7 +221,7 @@
               "name": "DATA"
             }
           ],
-          "next": "b51cf6b9-7ff8-4b1e-a6cd-09641ee09e5a",
+          "next": "a88dcc36-0000-0000-0000-000000000000",
           "application": {
             "name": "vasp",
             "shortName": "vasp",
@@ -243,16 +243,16 @@
           "input": [
             {
               "name": "DATA",
-              "scope": "8ce7a5e7-53ae-4ccb-ba96-848009ea6eb8"
+              "scope": "10267446-0000-0000-0000-000000000000"
             }
           ],
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "a88dcc36-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "5bbb6637-cf77-42de-b085-234bed6cbac0",
+          "next": "486073c4-0000-0000-0000-000000000000",
           "application": {
             "name": "vasp",
             "shortName": "vasp",
@@ -274,10 +274,10 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "486073c4-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "7424910e-f9ef-4db3-bf34-bf63440ceb5d",
+          "next": "8b623ed6-0000-0000-0000-000000000000",
           "application": {
             "name": "vasp",
             "shortName": "vasp",
@@ -300,10 +300,10 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "8b623ed6-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "04ed4682-962c-4def-8f81-1998f6ba0d44",
+          "next": "32967c0e-0000-0000-0000-000000000000",
           "application": {
             "name": "vasp",
             "shortName": "vasp",
@@ -326,10 +326,10 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "32967c0e-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "a350f89b-589f-4c4f-9b49-48f6df64b71c",
+          "next": "5e7ecd2b-0000-0000-0000-000000000000",
           "application": {
             "name": "vasp",
             "shortName": "vasp",
@@ -352,10 +352,10 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "5e7ecd2b-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "daaa9a39-a9b5-4e44-96d3-e77a14478d63",
+          "next": "bc9dc0ed-0000-0000-0000-000000000000",
           "application": {
             "name": "vasp",
             "shortName": "vasp",
@@ -404,7 +404,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "bc9dc0ed-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -966,7 +966,7 @@
               "rendered": "Silicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\n"
             }
           ],
-          "next": "d13d97cb-dab9-45bf-9a0d-ecd7883d6b51"
+          "next": "d7236f0e-0000-0000-0000-000000000000"
         },
         {
           "name": "e-slab",
@@ -976,16 +976,16 @@
           "input": [
             {
               "name": "total_energy",
-              "scope": "daaa9a39-a9b5-4e44-96d3-e77a14478d63"
+              "scope": "bc9dc0ed-0000-0000-0000-000000000000"
             }
           ],
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "d7236f0e-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "007cc941-76bc-4791-ab0d-706898c8b1ce",
+          "next": "4cbd1b9b-0000-0000-0000-000000000000",
           "application": {
             "name": "vasp",
             "shortName": "vasp",
@@ -1012,7 +1012,7 @@
             }
           ],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "4cbd1b9b-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1035,10 +1035,10 @@
     {
       "name": "Surface Energy",
       "type": "subworkflow",
-      "_id": "a814ce59-0000-0000-0000-000000000000",
+      "_id": "65dbbd46-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+      "flowchartId": "901a8c65-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

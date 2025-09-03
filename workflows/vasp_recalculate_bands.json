@@ -2,7 +2,7 @@
   "name": "Recalculate Bands",
   "subworkflows": [
     {
-      "_id": "976808e8-0000-0000-0000-000000000000",
+      "_id": "0eaaf07f-0000-0000-0000-000000000000",
       "name": "Recalculate Bands",
       "application": {
         "name": "vasp",
@@ -48,7 +48,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "976808e8-0000-0000-0000-000000000000",
+          "flowchartId": "103e1190-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -614,10 +614,10 @@
     {
       "name": "Recalculate Bands",
       "type": "subworkflow",
-      "_id": "976808e8-0000-0000-0000-000000000000",
+      "_id": "0eaaf07f-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "976808e8-0000-0000-0000-000000000000",
+      "flowchartId": "39d2889a-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

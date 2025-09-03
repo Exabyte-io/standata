@@ -3,7 +3,7 @@
   "subworkflows": [
     {
       "systemName": "vasp-variable-cell-relaxation",
-      "_id": "38ac3b0e-0000-0000-0000-000000000000",
+      "_id": "98a39702-0000-0000-0000-000000000000",
       "name": "Variable-cell Relaxation",
       "application": {
         "name": "vasp",
@@ -76,7 +76,7 @@
               "name": "convergence_ionic"
             }
           ],
-          "flowchartId": "38ac3b0e-0000-0000-0000-000000000000",
+          "flowchartId": "8ec33a88-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [
             {
@@ -656,10 +656,10 @@
     {
       "name": "Variable-cell Relaxation",
       "type": "subworkflow",
-      "_id": "38ac3b0e-0000-0000-0000-000000000000",
+      "_id": "98a39702-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "38ac3b0e-0000-0000-0000-000000000000",
+      "flowchartId": "e684b439-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

@@ -2,7 +2,7 @@
   "name": "Surface Energy",
   "subworkflows": [
     {
-      "_id": "a814ce59-0000-0000-0000-000000000000",
+      "_id": "65dbbd46-0000-0000-0000-000000000000",
       "name": "Surface Energy",
       "application": {
         "name": "espresso",
@@ -44,7 +44,7 @@
           "head": true,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "230b8ef2-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "source": "api",
@@ -60,7 +60,7 @@
               "name": "DATA"
             }
           ],
-          "next": "e90e94da-8098-4896-a532-32ac821c7a2b",
+          "next": "94b43a98-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -82,16 +82,16 @@
           "input": [
             {
               "name": "DATA",
-              "scope": "561d6934-6097-435a-b87e-37aa72d0b3a6"
+              "scope": "230b8ef2-0000-0000-0000-000000000000"
             }
           ],
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "94b43a98-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "bcddb96c-add8-4f88-bbe7-92ef0a4e516e",
+          "next": "3b2068c0-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -112,7 +112,7 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "3b2068c0-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "source": "api",
@@ -128,7 +128,7 @@
               "name": "DATA"
             }
           ],
-          "next": "24e39c21-74c2-4be9-aedf-0ca9e77dd6fc",
+          "next": "64c4cfc4-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -150,16 +150,16 @@
           "input": [
             {
               "name": "DATA",
-              "scope": "bcddb96c-add8-4f88-bbe7-92ef0a4e516e"
+              "scope": "3b2068c0-0000-0000-0000-000000000000"
             }
           ],
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "64c4cfc4-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "9ab74edd-2fad-405d-aa71-c1b186678faa",
+          "next": "0edd1354-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -181,10 +181,10 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "0edd1354-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "4192dc04-d361-4d57-8422-a89f90de47c1",
+          "next": "10267446-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -205,7 +205,7 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "10267446-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "source": "api",
@@ -221,7 +221,7 @@
               "name": "DATA"
             }
           ],
-          "next": "239a3a66-cd0b-489b-aa9b-96ded913d53b",
+          "next": "a88dcc36-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -243,16 +243,16 @@
           "input": [
             {
               "name": "DATA",
-              "scope": "4192dc04-d361-4d57-8422-a89f90de47c1"
+              "scope": "10267446-0000-0000-0000-000000000000"
             }
           ],
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "a88dcc36-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "3bdbee14-ba32-4d09-918d-365886585f63",
+          "next": "486073c4-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -274,10 +274,10 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "486073c4-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "e1618136-fd30-445b-a90e-c478c15b1f87",
+          "next": "8b623ed6-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -300,10 +300,10 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "8b623ed6-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "728cb124-443e-4b6e-884f-4159b1fee7be",
+          "next": "32967c0e-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -326,10 +326,10 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "32967c0e-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "55d9ac3a-70c5-4552-a8f2-cde22c6eb2ae",
+          "next": "5e7ecd2b-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -352,10 +352,10 @@
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "5e7ecd2b-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "0811fde6-f7f8-4fdc-89b8-2a8700030307",
+          "next": "bc9dc0ed-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -404,7 +404,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "bc9dc0ed-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1412,7 +1412,7 @@
               "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n"
             }
           ],
-          "next": "773e1691-fdf6-4aee-9a6e-04cfca6198bf"
+          "next": "d7236f0e-0000-0000-0000-000000000000"
         },
         {
           "name": "e-slab",
@@ -1422,16 +1422,16 @@
           "input": [
             {
               "name": "total_energy",
-              "scope": "0811fde6-f7f8-4fdc-89b8-2a8700030307"
+              "scope": "bc9dc0ed-0000-0000-0000-000000000000"
             }
           ],
           "head": false,
           "results": [],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "d7236f0e-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
-          "next": "11041c36-9e50-452e-9aa2-94f783d53ce7",
+          "next": "4cbd1b9b-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -1458,7 +1458,7 @@
             }
           ],
           "monitors": [],
-          "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+          "flowchartId": "4cbd1b9b-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1481,10 +1481,10 @@
     {
       "name": "Surface Energy",
       "type": "subworkflow",
-      "_id": "a814ce59-0000-0000-0000-000000000000",
+      "_id": "65dbbd46-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "a814ce59-0000-0000-0000-000000000000",
+      "flowchartId": "901a8c65-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

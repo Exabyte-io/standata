@@ -3,7 +3,7 @@
   "subworkflows": [
     {
       "isMultiMaterial": true,
-      "_id": "a568cec1-0000-0000-0000-000000000000",
+      "_id": "1124a556-0000-0000-0000-000000000000",
       "name": "BS + Avg ESP (Interface)",
       "application": {
         "name": "espresso",
@@ -48,10 +48,10 @@
           "input": [],
           "status": "idle",
           "statusTrack": [],
-          "flowchartId": "a568cec1-0000-0000-0000-000000000000",
+          "flowchartId": "eca1ae7d-0000-0000-0000-000000000000",
           "tags": [],
           "head": true,
-          "next": "11bc6602-480c-43e0-bf5f-e8322ee4fa5a",
+          "next": "43556a1a-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -97,7 +97,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "a568cec1-0000-0000-0000-000000000000",
+          "flowchartId": "43556a1a-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1121,7 +1121,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "a568cec1-0000-0000-0000-000000000000",
+          "flowchartId": "pw-bands-calculate-band-gap",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -2121,7 +2121,7 @@
               "rendered": "&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal_b\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n"
             }
           ],
-          "next": "ff49a51f-b532-4401-b8d0-68045dee08c8"
+          "next": "95f5ba0a-0000-0000-0000-000000000000"
         },
         {
           "name": "Select indirect band gap",
@@ -2136,10 +2136,10 @@
           ],
           "status": "idle",
           "statusTrack": [],
-          "flowchartId": "a568cec1-0000-0000-0000-000000000000",
+          "flowchartId": "95f5ba0a-0000-0000-0000-000000000000",
           "tags": [],
           "head": false,
-          "next": "6c9917be-4dc6-4de7-8ef2-f21c2a02cb24",
+          "next": "122177d0-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -2158,10 +2158,10 @@
           "input": [],
           "status": "idle",
           "statusTrack": [],
-          "flowchartId": "a568cec1-0000-0000-0000-000000000000",
+          "flowchartId": "122177d0-0000-0000-0000-000000000000",
           "tags": [],
           "head": false,
-          "next": "a7e854d1-f3e3-43d9-91c9-3b1b4569b003",
+          "next": "7104289e-0000-0000-0000-000000000000",
           "application": {
             "name": "espresso",
             "shortName": "qe",
@@ -2182,7 +2182,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "a568cec1-0000-0000-0000-000000000000",
+          "flowchartId": "7104289e-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -2267,7 +2267,7 @@
               "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n\n"
             }
           ],
-          "next": "cf4fe05d-d2a0-4825-a161-54aeba582e38"
+          "next": "5db21e19-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -2279,7 +2279,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "a568cec1-0000-0000-0000-000000000000",
+          "flowchartId": "5db21e19-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -2369,7 +2369,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "a568cec1-0000-0000-0000-000000000000",
+          "flowchartId": "average-electrostatic-potential",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -2449,7 +2449,7 @@
               "rendered": "1\npp.dat\n1.0\n3000\n3\n3.0000\n"
             }
           ],
-          "next": "c52b023f-ca4d-49c2-80e9-2df489e94896"
+          "next": "636041aa-0000-0000-0000-000000000000"
         },
         {
           "name": "Set Macroscopically Averaged ESP Data",
@@ -2464,7 +2464,7 @@
           ],
           "status": "idle",
           "statusTrack": [],
-          "flowchartId": "a568cec1-0000-0000-0000-000000000000",
+          "flowchartId": "636041aa-0000-0000-0000-000000000000",
           "tags": [],
           "head": false,
           "application": {
@@ -2484,10 +2484,10 @@
     {
       "name": "BS + Avg ESP (Interface)",
       "type": "subworkflow",
-      "_id": "a568cec1-0000-0000-0000-000000000000",
+      "_id": "1124a556-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "a568cec1-0000-0000-0000-000000000000",
+      "flowchartId": "315f3e3a-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

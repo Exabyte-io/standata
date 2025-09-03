@@ -2,7 +2,7 @@
   "name": "Band Gap",
   "subworkflows": [
     {
-      "_id": "1972916f-0000-0000-0000-000000000000",
+      "_id": "40c64271-0000-0000-0000-000000000000",
       "name": "Band Gap",
       "application": {
         "name": "espresso",
@@ -74,7 +74,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "1972916f-0000-0000-0000-000000000000",
+          "flowchartId": "35eafb40-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1082,7 +1082,7 @@
               "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n"
             }
           ],
-          "next": "9359a57d-016d-4514-80ff-6ad15e7cec0a"
+          "next": "dd2cf0c2-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -1101,7 +1101,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "1972916f-0000-0000-0000-000000000000",
+          "flowchartId": "dd2cf0c2-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -2110,10 +2110,10 @@
     {
       "name": "Band Gap",
       "type": "subworkflow",
-      "_id": "1972916f-0000-0000-0000-000000000000",
+      "_id": "40c64271-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "1972916f-0000-0000-0000-000000000000",
+      "flowchartId": "66c0872f-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

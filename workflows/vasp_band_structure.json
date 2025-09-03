@@ -2,7 +2,7 @@
   "name": "Band Structure",
   "subworkflows": [
     {
-      "_id": "de1669f8-0000-0000-0000-000000000000",
+      "_id": "de066645-0000-0000-0000-000000000000",
       "name": "Band Structure",
       "application": {
         "name": "vasp",
@@ -73,7 +73,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "de1669f8-0000-0000-0000-000000000000",
+          "flowchartId": "723789f3-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -635,7 +635,7 @@
               "rendered": "Silicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\n"
             }
           ],
-          "next": "767c20ed-a2af-4a8a-babe-ec285a3f8d3c"
+          "next": "948bc9bf-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -654,7 +654,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "de1669f8-0000-0000-0000-000000000000",
+          "flowchartId": "948bc9bf-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1220,10 +1220,10 @@
     {
       "name": "Band Structure",
       "type": "subworkflow",
-      "_id": "de1669f8-0000-0000-0000-000000000000",
+      "_id": "de066645-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "de1669f8-0000-0000-0000-000000000000",
+      "flowchartId": "31734488-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

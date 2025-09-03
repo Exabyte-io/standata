@@ -2,7 +2,7 @@
   "name": "Hubbard U - HP",
   "subworkflows": [
     {
-      "_id": "c4d01cdf-0000-0000-0000-000000000000",
+      "_id": "2a7b2737-0000-0000-0000-000000000000",
       "name": "Hubbard U Calculation",
       "application": {
         "name": "espresso",
@@ -79,7 +79,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "c4d01cdf-0000-0000-0000-000000000000",
+          "flowchartId": "06578b29-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1094,7 +1094,7 @@
               "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'fixed'\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \nHUBBARD {ortho-atomic}\nU Si-2p 1\n"
             }
           ],
-          "next": "dffb5312-14d7-4792-b98b-86b9a31e1b8d"
+          "next": "e9f7e0a9-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -1116,7 +1116,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "c4d01cdf-0000-0000-0000-000000000000",
+          "flowchartId": "e9f7e0a9-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1206,10 +1206,10 @@
     {
       "name": "Hubbard U Calculation",
       "type": "subworkflow",
-      "_id": "c4d01cdf-0000-0000-0000-000000000000",
+      "_id": "2a7b2737-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "c4d01cdf-0000-0000-0000-000000000000",
+      "flowchartId": "cc21b8ea-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

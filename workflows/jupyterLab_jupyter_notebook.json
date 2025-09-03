@@ -2,7 +2,7 @@
   "name": "Jupyter Notebook",
   "subworkflows": [
     {
-      "_id": "80212539-0000-0000-0000-000000000000",
+      "_id": "490f8675-0000-0000-0000-000000000000",
       "name": "Jupyter Notebook",
       "application": {
         "name": "jupyterLab",
@@ -36,7 +36,7 @@
               "name": "jupyter_notebook_endpoint"
             }
           ],
-          "flowchartId": "80212539-0000-0000-0000-000000000000",
+          "flowchartId": "7d58d746-0000-0000-0000-000000000000",
           "preProcessors": [
             {
               "name": "record_python_environment"
@@ -114,10 +114,10 @@
     {
       "name": "Jupyter Notebook",
       "type": "subworkflow",
-      "_id": "80212539-0000-0000-0000-000000000000",
+      "_id": "490f8675-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "80212539-0000-0000-0000-000000000000",
+      "flowchartId": "d719b90e-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

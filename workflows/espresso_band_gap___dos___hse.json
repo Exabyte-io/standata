@@ -2,7 +2,7 @@
   "name": "Band Gap + DoS - HSE",
   "subworkflows": [
     {
-      "_id": "b4df8ebc-0000-0000-0000-000000000000",
+      "_id": "c623c21c-0000-0000-0000-000000000000",
       "name": "HSE Band Gap",
       "application": {
         "name": "espresso",
@@ -77,7 +77,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "b4df8ebc-0000-0000-0000-000000000000",
+          "flowchartId": "0e8063e5-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1085,7 +1085,7 @@
               "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    ecutfock = 100\n    occupations = 'smearing'\n    degauss = 0.005\n    input_dft='hse',\n    nqx1 = 1, nqx2 = 1, nqx3 = 1\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n"
             }
           ],
-          "next": "52e4ab81-cab2-4737-a93a-23640078dbdf"
+          "next": "b1c23dff-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -1101,7 +1101,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "b4df8ebc-0000-0000-0000-000000000000",
+          "flowchartId": "b1c23dff-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1176,10 +1176,10 @@
     {
       "name": "HSE Band Gap",
       "type": "subworkflow",
-      "_id": "b4df8ebc-0000-0000-0000-000000000000",
+      "_id": "c623c21c-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "b4df8ebc-0000-0000-0000-000000000000",
+      "flowchartId": "9e5c328d-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

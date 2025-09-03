@@ -2,7 +2,7 @@
   "name": "Shell Batch Job (Espresso PWSCF)",
   "subworkflows": [
     {
-      "_id": "932428d9-0000-0000-0000-000000000000",
+      "_id": "a09e667d-0000-0000-0000-000000000000",
       "name": "Shell Batch Job (Espresso PWSCF)",
       "application": {
         "name": "shell",
@@ -33,7 +33,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "932428d9-0000-0000-0000-000000000000",
+          "flowchartId": "f2e33b39-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -170,10 +170,10 @@
     {
       "name": "Shell Batch Job (Espresso PWSCF)",
       "type": "subworkflow",
-      "_id": "932428d9-0000-0000-0000-000000000000",
+      "_id": "a09e667d-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "932428d9-0000-0000-0000-000000000000",
+      "flowchartId": "3ca8d209-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

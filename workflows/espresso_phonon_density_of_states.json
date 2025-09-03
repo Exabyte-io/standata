@@ -2,7 +2,7 @@
   "name": "Phonon Density of States",
   "subworkflows": [
     {
-      "_id": "0d51d1fb-0000-0000-0000-000000000000",
+      "_id": "c52bd6e5-0000-0000-0000-000000000000",
       "name": "Phonon Density of States",
       "application": {
         "name": "espresso",
@@ -73,7 +73,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "0d51d1fb-0000-0000-0000-000000000000",
+          "flowchartId": "0df517a3-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1081,7 +1081,7 @@
               "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n"
             }
           ],
-          "next": "a206cffb-85cd-42d6-8457-7903d60d29ab"
+          "next": "78fd023e-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -1097,7 +1097,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "0d51d1fb-0000-0000-0000-000000000000",
+          "flowchartId": "78fd023e-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1239,7 +1239,7 @@
               "rendered": "&INPUTPH\n    tr2_ph = 1.0d-12\n    asr = .true.\n    search_sym = .false.\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    fildyn = 'dyn'\n    ldisp = .true.\n    nq1 = 1\n    nq2 = 1\n    nq3 = 1\n    \n/\n"
             }
           ],
-          "next": "d6f9a669-8dae-4291-b8ec-5dd5b95eacc6"
+          "next": "ed370553-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -1251,7 +1251,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "0d51d1fb-0000-0000-0000-000000000000",
+          "flowchartId": "ed370553-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1312,7 +1312,7 @@
               "rendered": "&INPUT\n    fildyn = 'dyn'\n    zasr = 'simple'\n    flfrc = 'force_constants.fc'\n/\n"
             }
           ],
-          "next": "56a249bb-0c39-4332-a544-dd700db932c5"
+          "next": "5d8b2b9d-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -1328,7 +1328,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "0d51d1fb-0000-0000-0000-000000000000",
+          "flowchartId": "5d8b2b9d-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1423,10 +1423,10 @@
     {
       "name": "Phonon Density of States",
       "type": "subworkflow",
-      "_id": "0d51d1fb-0000-0000-0000-000000000000",
+      "_id": "c52bd6e5-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "0d51d1fb-0000-0000-0000-000000000000",
+      "flowchartId": "3cd0828b-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

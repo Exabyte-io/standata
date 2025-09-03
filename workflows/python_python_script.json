@@ -2,7 +2,7 @@
   "name": "Python Script",
   "subworkflows": [
     {
-      "_id": "330a8619-0000-0000-0000-000000000000",
+      "_id": "fdde6f18-0000-0000-0000-000000000000",
       "name": "Python Script",
       "application": {
         "name": "python",
@@ -33,7 +33,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "330a8619-0000-0000-0000-000000000000",
+          "flowchartId": "4e5e25f0-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -639,10 +639,10 @@
     {
       "name": "Python Script",
       "type": "subworkflow",
-      "_id": "330a8619-0000-0000-0000-000000000000",
+      "_id": "fdde6f18-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "330a8619-0000-0000-0000-000000000000",
+      "flowchartId": "2af307ab-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

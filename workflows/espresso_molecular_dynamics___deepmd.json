@@ -2,7 +2,7 @@
   "name": "Molecular Dynamics - DeePMD",
   "subworkflows": [
     {
-      "_id": "c4932c5f-0000-0000-0000-000000000000",
+      "_id": "3849d701-0000-0000-0000-000000000000",
       "name": "CP-MD",
       "application": {
         "name": "espresso",
@@ -39,7 +39,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "c4932c5f-0000-0000-0000-000000000000",
+          "flowchartId": "d40a49fd-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -133,10 +133,10 @@
     {
       "name": "CP-MD",
       "type": "subworkflow",
-      "_id": "c4932c5f-0000-0000-0000-000000000000",
+      "_id": "3849d701-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "c4932c5f-0000-0000-0000-000000000000",
+      "flowchartId": "f7e1dafc-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

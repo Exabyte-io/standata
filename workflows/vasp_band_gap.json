@@ -2,7 +2,7 @@
   "name": "Band Gap",
   "subworkflows": [
     {
-      "_id": "1972916f-0000-0000-0000-000000000000",
+      "_id": "40c64271-0000-0000-0000-000000000000",
       "name": "Band Gap",
       "application": {
         "name": "vasp",
@@ -74,7 +74,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "1972916f-0000-0000-0000-000000000000",
+          "flowchartId": "35eafb40-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -636,7 +636,7 @@
               "rendered": "Silicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\n"
             }
           ],
-          "next": "bc08d367-c330-4bee-a28e-9a02d52254c4"
+          "next": "dd2cf0c2-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -658,7 +658,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "1972916f-0000-0000-0000-000000000000",
+          "flowchartId": "dd2cf0c2-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1225,10 +1225,10 @@
     {
       "name": "Band Gap",
       "type": "subworkflow",
-      "_id": "1972916f-0000-0000-0000-000000000000",
+      "_id": "40c64271-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "1972916f-0000-0000-0000-000000000000",
+      "flowchartId": "66c0872f-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

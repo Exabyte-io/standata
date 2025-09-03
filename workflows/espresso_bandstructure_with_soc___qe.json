@@ -2,7 +2,7 @@
   "name": "Bandstructure with SOC - QE",
   "subworkflows": [
     {
-      "_id": "903d72f7-0000-0000-0000-000000000000",
+      "_id": "b5cb7a4f-0000-0000-0000-000000000000",
       "name": "Bandstructure with SOC",
       "application": {
         "name": "espresso",
@@ -75,7 +75,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "903d72f7-0000-0000-0000-000000000000",
+          "flowchartId": "f296d2b3-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1085,7 +1085,7 @@
               "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n    noncolin = .true.\n    lspinorb = .true.\n    starting_magnetization(1) = 0 \n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n"
             }
           ],
-          "next": "403cd7cc-eb2f-467d-96da-b6746e18b5e9"
+          "next": "26fb0fec-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -1101,7 +1101,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "903d72f7-0000-0000-0000-000000000000",
+          "flowchartId": "26fb0fec-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -2104,7 +2104,7 @@
               "rendered": "&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n    noncolin = .true.\n    lspinorb = .true.\n    starting_magnetization(1) = 0 \n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal_b\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n"
             }
           ],
-          "next": "f00d9647-1004-48df-8d39-2ea7d768e24a"
+          "next": "057f4780-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -2116,7 +2116,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "903d72f7-0000-0000-0000-000000000000",
+          "flowchartId": "057f4780-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -2209,10 +2209,10 @@
     {
       "name": "Bandstructure with SOC",
       "type": "subworkflow",
-      "_id": "903d72f7-0000-0000-0000-000000000000",
+      "_id": "b5cb7a4f-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "903d72f7-0000-0000-0000-000000000000",
+      "flowchartId": "955ea262-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

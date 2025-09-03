@@ -2,7 +2,7 @@
   "name": "Fixed-cell Relaxation",
   "subworkflows": [
     {
-      "_id": "3ad3a454-0000-0000-0000-000000000000",
+      "_id": "cae362f8-0000-0000-0000-000000000000",
       "name": "Fixed-cell Relaxation",
       "application": {
         "name": "vasp",
@@ -75,7 +75,7 @@
               "name": "convergence_ionic"
             }
           ],
-          "flowchartId": "3ad3a454-0000-0000-0000-000000000000",
+          "flowchartId": "74295c55-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [
             {
@@ -655,10 +655,10 @@
     {
       "name": "Fixed-cell Relaxation",
       "type": "subworkflow",
-      "_id": "3ad3a454-0000-0000-0000-000000000000",
+      "_id": "cae362f8-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "3ad3a454-0000-0000-0000-000000000000",
+      "flowchartId": "b503c9b0-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

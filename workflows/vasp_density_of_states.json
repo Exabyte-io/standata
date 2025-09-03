@@ -2,7 +2,7 @@
   "name": "Density of States",
   "subworkflows": [
     {
-      "_id": "a5a06af7-0000-0000-0000-000000000000",
+      "_id": "c11eaaee-0000-0000-0000-000000000000",
       "name": "Density of States",
       "application": {
         "name": "vasp",
@@ -76,7 +76,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "a5a06af7-0000-0000-0000-000000000000",
+          "flowchartId": "e561219e-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -646,10 +646,10 @@
     {
       "name": "Density of States",
       "type": "subworkflow",
-      "_id": "a5a06af7-0000-0000-0000-000000000000",
+      "_id": "c11eaaee-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "a5a06af7-0000-0000-0000-000000000000",
+      "flowchartId": "d8cbd5c8-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

@@ -3,7 +3,7 @@
   "subworkflows": [
     {
       "isMultiMaterial": true,
-      "_id": "89ef0a2b-0000-0000-0000-000000000000",
+      "_id": "17bcfdd5-0000-0000-0000-000000000000",
       "name": "Initial/Final Total Energies",
       "application": {
         "name": "vasp",
@@ -80,7 +80,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "89ef0a2b-0000-0000-0000-000000000000",
+          "flowchartId": "c2b3001a-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -650,7 +650,7 @@
               "rendered": "Silicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\n"
             }
           ],
-          "next": "768fa67b-66c4-4b29-9f3a-31e617d642f3"
+          "next": "85fcb7d3-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -687,7 +687,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "89ef0a2b-0000-0000-0000-000000000000",
+          "flowchartId": "85fcb7d3-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1265,10 +1265,10 @@
     {
       "name": "Initial/Final Total Energies",
       "type": "subworkflow",
-      "_id": "89ef0a2b-0000-0000-0000-000000000000",
+      "_id": "17bcfdd5-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "89ef0a2b-0000-0000-0000-000000000000",
+      "flowchartId": "a5a061e4-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

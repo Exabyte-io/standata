@@ -2,7 +2,7 @@
   "name": "K-point Convergence",
   "subworkflows": [
     {
-      "_id": "e7ef80e6-0000-0000-0000-000000000000",
+      "_id": "73498f39-0000-0000-0000-000000000000",
       "name": "K-point Convergence",
       "application": {
         "name": "vasp",
@@ -43,7 +43,7 @@
           "operand": "TOL",
           "value": 0.00001,
           "input": [],
-          "flowchartId": "e7ef80e6-0000-0000-0000-000000000000",
+          "flowchartId": "init-tolerance",
           "status": "idle",
           "statusTrack": [],
           "tags": [],
@@ -65,7 +65,7 @@
           "operand": "INC",
           "value": 1,
           "input": [],
-          "flowchartId": "e7ef80e6-0000-0000-0000-000000000000",
+          "flowchartId": "init-increment",
           "status": "idle",
           "statusTrack": [],
           "tags": [],
@@ -87,7 +87,7 @@
           "operand": "PREV_RESULT",
           "value": 0,
           "input": [],
-          "flowchartId": "e7ef80e6-0000-0000-0000-000000000000",
+          "flowchartId": "init-result",
           "status": "idle",
           "statusTrack": [],
           "tags": [],
@@ -109,7 +109,7 @@
           "operand": "PARAMETER",
           "value": 1,
           "input": [],
-          "flowchartId": "e7ef80e6-0000-0000-0000-000000000000",
+          "flowchartId": "init-parameter",
           "status": "idle",
           "statusTrack": [],
           "tags": [],
@@ -160,7 +160,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "e7ef80e6-0000-0000-0000-000000000000",
+          "flowchartId": "vasp-kpoint-convergence",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -737,7 +737,7 @@
               "scope": "vasp-kpoint-convergence"
             }
           ],
-          "flowchartId": "e7ef80e6-0000-0000-0000-000000000000",
+          "flowchartId": "store-result",
           "status": "idle",
           "statusTrack": [],
           "tags": [],
@@ -764,7 +764,7 @@
           "else": "update-result",
           "statement": "abs((PREV_RESULT-RESULT)/RESULT) < TOL",
           "maxOccurrences": 50,
-          "flowchartId": "e7ef80e6-0000-0000-0000-000000000000",
+          "flowchartId": "check-convergence",
           "status": "idle",
           "statusTrack": [],
           "tags": [],
@@ -791,7 +791,7 @@
               "scope": "global"
             }
           ],
-          "flowchartId": "e7ef80e6-0000-0000-0000-000000000000",
+          "flowchartId": "update-result",
           "status": "idle",
           "statusTrack": [],
           "tags": [],
@@ -822,7 +822,7 @@
               "scope": "global"
             }
           ],
-          "flowchartId": "e7ef80e6-0000-0000-0000-000000000000",
+          "flowchartId": "increment-parameter",
           "next": "vasp-kpoint-convergence",
           "status": "idle",
           "statusTrack": [],
@@ -849,7 +849,7 @@
               "scope": "global"
             }
           ],
-          "flowchartId": "e7ef80e6-0000-0000-0000-000000000000",
+          "flowchartId": "convergence-is-reached",
           "status": "idle",
           "statusTrack": [],
           "tags": [],
@@ -871,10 +871,10 @@
     {
       "name": "K-point Convergence",
       "type": "subworkflow",
-      "_id": "e7ef80e6-0000-0000-0000-000000000000",
+      "_id": "73498f39-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "e7ef80e6-0000-0000-0000-000000000000",
+      "flowchartId": "ff5d4bff-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

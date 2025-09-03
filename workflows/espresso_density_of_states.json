@@ -2,7 +2,7 @@
   "name": "Density of States",
   "subworkflows": [
     {
-      "_id": "a5a06af7-0000-0000-0000-000000000000",
+      "_id": "c11eaaee-0000-0000-0000-000000000000",
       "name": "Density of States",
       "application": {
         "name": "espresso",
@@ -75,7 +75,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "a5a06af7-0000-0000-0000-000000000000",
+          "flowchartId": "e561219e-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1083,7 +1083,7 @@
               "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n"
             }
           ],
-          "next": "08a28b4d-ec09-4bbc-9eff-a5541d986090"
+          "next": "d8cbd5c8-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -1102,7 +1102,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "a5a06af7-0000-0000-0000-000000000000",
+          "flowchartId": "d8cbd5c8-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -2103,7 +2103,7 @@
               "rendered": "&CONTROL\n    calculation = 'nscf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n"
             }
           ],
-          "next": "bae76950-9640-45f5-9ebe-2f1707a2b1a0"
+          "next": "e5626a49-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -2119,7 +2119,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "a5a06af7-0000-0000-0000-000000000000",
+          "flowchartId": "e5626a49-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -2194,10 +2194,10 @@
     {
       "name": "Density of States",
       "type": "subworkflow",
-      "_id": "a5a06af7-0000-0000-0000-000000000000",
+      "_id": "c11eaaee-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "a5a06af7-0000-0000-0000-000000000000",
+      "flowchartId": "3c01daf6-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

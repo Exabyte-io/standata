@@ -3,7 +3,7 @@
   "subworkflows": [
     {
       "isMultiMaterial": true,
-      "_id": "89ef0a2b-0000-0000-0000-000000000000",
+      "_id": "17bcfdd5-0000-0000-0000-000000000000",
       "name": "Nudged Elastic Band (NEB)",
       "application": {
         "name": "espresso",
@@ -50,7 +50,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "89ef0a2b-0000-0000-0000-000000000000",
+          "flowchartId": "c2b3001a-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -143,10 +143,10 @@
     {
       "name": "Nudged Elastic Band (NEB)",
       "type": "subworkflow",
-      "_id": "89ef0a2b-0000-0000-0000-000000000000",
+      "_id": "17bcfdd5-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "89ef0a2b-0000-0000-0000-000000000000",
+      "flowchartId": "85fcb7d3-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

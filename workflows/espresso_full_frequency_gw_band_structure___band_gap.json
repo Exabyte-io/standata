@@ -2,7 +2,7 @@
   "name": "Full Frequency GW Band Structure + Band Gap",
   "subworkflows": [
     {
-      "_id": "6e7813cf-0000-0000-0000-000000000000",
+      "_id": "3f285373-0000-0000-0000-000000000000",
       "name": "Full Frequency GW Band Structure + Band Gap",
       "application": {
         "name": "espresso",
@@ -77,7 +77,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "6e7813cf-0000-0000-0000-000000000000",
+          "flowchartId": "1cfafcc1-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1085,7 +1085,7 @@
               "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n"
             }
           ],
-          "next": "4343d4d1-e038-423f-89b7-dc8a9f084c7a"
+          "next": "b8c9e23c-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -1107,7 +1107,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "6e7813cf-0000-0000-0000-000000000000",
+          "flowchartId": "b8c9e23c-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1215,10 +1215,10 @@
     {
       "name": "Full Frequency GW Band Structure + Band Gap",
       "type": "subworkflow",
-      "_id": "6e7813cf-0000-0000-0000-000000000000",
+      "_id": "3f285373-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "6e7813cf-0000-0000-0000-000000000000",
+      "flowchartId": "a123739b-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

@@ -2,7 +2,7 @@
   "name": "Band Structure + Density of States",
   "subworkflows": [
     {
-      "_id": "9920ae0a-0000-0000-0000-000000000000",
+      "_id": "9c6086ac-0000-0000-0000-000000000000",
       "name": "Band Structure + Density of States",
       "application": {
         "name": "espresso",
@@ -76,7 +76,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "9920ae0a-0000-0000-0000-000000000000",
+          "flowchartId": "794c7e2b-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1084,7 +1084,7 @@
               "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n"
             }
           ],
-          "next": "36464440-727a-40d4-ba97-5282a1283829"
+          "next": "fa6352a9-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -1100,7 +1100,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "9920ae0a-0000-0000-0000-000000000000",
+          "flowchartId": "fa6352a9-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -2100,7 +2100,7 @@
               "rendered": "&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal_b\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n"
             }
           ],
-          "next": "19052353-8eeb-422f-8427-a0b443a32b19"
+          "next": "dbeaa4e0-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -2112,7 +2112,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "9920ae0a-0000-0000-0000-000000000000",
+          "flowchartId": "dbeaa4e0-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -2197,7 +2197,7 @@
               "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n\n"
             }
           ],
-          "next": "22eb504c-7148-4072-b2bd-4eaffe9ec088"
+          "next": "e079f630-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -2216,7 +2216,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "9920ae0a-0000-0000-0000-000000000000",
+          "flowchartId": "e079f630-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -3217,7 +3217,7 @@
               "rendered": "&CONTROL\n    calculation = 'nscf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n"
             }
           ],
-          "next": "ed9d4f5a-20fc-4b47-8c37-884b5656d6e2"
+          "next": "53367bfd-0000-0000-0000-000000000000"
         },
         {
           "type": "execution",
@@ -3233,7 +3233,7 @@
               "name": "standard_output"
             }
           ],
-          "flowchartId": "9920ae0a-0000-0000-0000-000000000000",
+          "flowchartId": "53367bfd-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -3308,10 +3308,10 @@
     {
       "name": "Band Structure + Density of States",
       "type": "subworkflow",
-      "_id": "9920ae0a-0000-0000-0000-000000000000",
+      "_id": "9c6086ac-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "9920ae0a-0000-0000-0000-000000000000",
+      "flowchartId": "90e0f29c-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }

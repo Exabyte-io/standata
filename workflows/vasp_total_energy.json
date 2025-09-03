@@ -2,7 +2,7 @@
   "name": "Total Energy",
   "subworkflows": [
     {
-      "_id": "bac05032-0000-0000-0000-000000000000",
+      "_id": "958faebd-0000-0000-0000-000000000000",
       "name": "Total Energy",
       "application": {
         "name": "vasp",
@@ -72,7 +72,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "bac05032-0000-0000-0000-000000000000",
+          "flowchartId": "c0aede98-0000-0000-0000-000000000000",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -642,10 +642,10 @@
     {
       "name": "Total Energy",
       "type": "subworkflow",
-      "_id": "bac05032-0000-0000-0000-000000000000",
+      "_id": "958faebd-0000-0000-0000-000000000000",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "bac05032-0000-0000-0000-000000000000",
+      "flowchartId": "9fc7af60-0000-0000-0000-000000000000",
       "tags": [],
       "head": true
     }
