@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 const { createWorkflowConfigs } = require("@exabyte-io/wode.js");
 
 const workflowDataPath = path.resolve(__dirname, "..", "generated", "workflows_data.json");
@@ -15,23 +16,25 @@ const workflowConfigs = createWorkflowConfigs(null, workflowData);
 const workflowsDir = path.resolve(__dirname, "..", "..");
 
 const returnConfigWithFixedIds = (config) => {
-    const hash = require("crypto")
+    const uuidRegex = /\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b/gi;
+    const seed = crypto
         .createHash("md5")
-        .update(config.name)
-        .digest("hex")
-        .substring(0, 8);
-    const baseId = `${hash}-0000-0000-0000-000000000000`;
-
-    const fixIds = (obj) => {
-        if (obj._id) obj._id = baseId;
-        if (obj.flowchartId) obj.flowchartId = baseId;
-        Object.values(obj).forEach((val) => {
-            if (val && typeof val === "object") fixIds(val);
-        });
-    };
-
-    fixIds(config);
-    return config;
+        .update(config.name || "")
+        .digest("hex");
+    const toUuid = (h) => `${h.slice(0, 8)}-0000-0000-0000-000000000000`;
+    const cache = new Map();
+    let i = 0;
+    const json = JSON.stringify(config);
+    const resultString = json.replace(uuidRegex, (match) => {
+        match = match.toLowerCase();
+        if (!cache.has(match))
+            cache.set(
+                match,
+                toUuid(crypto.createHash("md5").update(`${seed}:${i++}`).digest("hex")),
+            );
+        return cache.get(match);
+    });
+    return JSON.parse(resultString);
 };
 
 workflowConfigs.forEach((config) => {
