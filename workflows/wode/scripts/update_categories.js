@@ -39,7 +39,7 @@ if (fs.existsSync(WORKFLOWS_DIR)) {
             const categories = [];
             const workflowProperties = new Set();
 
-            // Extract application from subworkflows
+            let isMultiMaterial = false;
             if (workflow.subworkflows && workflow.subworkflows.length > 0) {
                 workflow.subworkflows.forEach((subworkflow) => {
                     if (subworkflow.application && subworkflow.application.name) {
@@ -47,6 +47,10 @@ if (fs.existsSync(WORKFLOWS_DIR)) {
                             subworkflow.application.name,
                         );
                         categories.push(subworkflow.application.name);
+                    }
+
+                    if (subworkflow.isMultiMaterial) {
+                        isMultiMaterial = true;
                     }
                 });
             }
@@ -67,8 +71,8 @@ if (fs.existsSync(WORKFLOWS_DIR)) {
                 categories.push(prop);
             });
 
-            // Add material count (default to single-material, can be enhanced later)
-            categories.push("single-material");
+            const materialCount = isMultiMaterial ? "multi-material" : "single-material";
+            categories.push(materialCount);
 
             // Remove duplicates and ensure primitives only
             const uniqueCategories = [...new Set(categories.filter((c) => typeof c === "string"))];

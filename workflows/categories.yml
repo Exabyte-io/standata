@@ -242,7 +242,7 @@ entities:
       - espresso
       - reaction_energy_barrier
       - reaction_energy_profile
-      - single-material
+      - multi-material
   - filename: espresso_phonon_density_of_states.json
     categories:
       - espresso
@@ -345,7 +345,7 @@ entities:
       - total_force
       - band_gaps
       - average_potential_profile
-      - single-material
+      - multi-material
   - filename: espresso_variable_cell_relaxation.json
     categories:
       - espresso
@@ -472,7 +472,7 @@ entities:
       - atomic_forces
       - total_force
       - stress_tensor
-      - single-material
+      - multi-material
   - filename: vasp_recalculate_bands.json
     categories:
       - vasp
