@@ -2,6 +2,10 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 
+const WORKFLOWS_DIR = path.resolve(__dirname, "..", "..");
+const CATEGORIES_FILENAME = "categories.yml";
+const CATEGORIES_FILEPATH = path.resolve(WORKFLOWS_DIR, CATEGORIES_FILENAME);
+
 // This script reads the generated workflow JSON files and updates workflows/categories.yml
 
 // Generate workflow data for standata
@@ -23,38 +27,19 @@ function toPropName(item) {
     return null;
 }
 
-function extractPropertiesFromSubworkflow(subworkflow) {
-    const props = new Set(
-        Array.isArray(subworkflow.properties)
-            ? subworkflow.properties.map(toPropName).filter(Boolean)
-            : [],
-    );
-    if (Array.isArray(subworkflow.units)) {
-        subworkflow.units.forEach((unit) => {
-            if (Array.isArray(unit.results))
-                unit.results
-                    .map(toPropName)
-                    .filter(Boolean)
-                    .forEach((p) => props.add(p));
-        });
-    }
-    return Array.from(props);
-}
-
-const workflowsDir = path.resolve(__dirname, "..", "..");
-if (fs.existsSync(workflowsDir)) {
-    const workflowFiles = fs.readdirSync(workflowsDir).filter((file) => file.endsWith(".json"));
+if (fs.existsSync(WORKFLOWS_DIR)) {
+    const workflowFiles = fs.readdirSync(WORKFLOWS_DIR).filter((file) => file.endsWith(".json"));
 
     workflowFiles.forEach((filename) => {
         try {
-            const filePath = path.resolve(workflowsDir, filename);
+            const filePath = path.resolve(WORKFLOWS_DIR, filename);
             const workflowContent = fs.readFileSync(filePath, "utf8");
             const workflow = JSON.parse(workflowContent);
 
             const categories = [];
             const workflowProperties = new Set();
 
-            // Extract application and properties from subworkflows
+            // Extract application from subworkflows
             if (workflow.subworkflows && workflow.subworkflows.length > 0) {
                 workflow.subworkflows.forEach((subworkflow) => {
                     if (subworkflow.application && subworkflow.application.name) {
@@ -63,16 +48,10 @@ if (fs.existsSync(workflowsDir)) {
                         );
                         categories.push(subworkflow.application.name);
                     }
-
-                    const subworkflowProps = extractPropertiesFromSubworkflow(subworkflow);
-                    subworkflowProps.forEach((prop) => {
-                        workflowData.standataConfig.categories.property.add(prop);
-                        workflowProperties.add(prop);
-                    });
                 });
             }
 
-            // Also check top-level properties
+            // Extract properties from top-level properties array
             if (workflow.properties && Array.isArray(workflow.properties)) {
                 workflow.properties
                     .map(toPropName)
@@ -118,7 +97,7 @@ workflowData.standataConfig.categories.property = Array.from(
 // Write the categories.yml file for workflows
 const categoriesYml = yaml.dump(workflowData.standataConfig);
 fs.writeFileSync(
-    path.resolve(workflowsDir, "categories.yml"),
+    CATEGORIES_FILEPATH,
     categoriesYml + (categoriesYml.endsWith("\n") ? "" : "\n"),
     "utf8",
 );
