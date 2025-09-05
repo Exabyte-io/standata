@@ -2,11 +2,7 @@
 
 const path = require("path");
 
-const scripts = [
-    "applications/application_flavors/scripts/build_application_flavors_data.js",
-    "applications/application_flavors/scripts/build_standata_format.js",
-    "applications/application_flavors/scripts/build_js_runtime_data.js",
-];
+const scripts = ["applications/application_flavors/scripts/create_applications.js"];
 
 async function executeScript(scriptPath) {
     const fullPath = path.resolve(process.cwd(), scriptPath);
