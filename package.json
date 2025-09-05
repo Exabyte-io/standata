@@ -59,8 +59,9 @@
     "scripts": {
         "build:categories": "ts-node src/js/cli.ts",
         "build:workflows": "node workflows/wode/scripts/build_all.js",
+        "build:application_flavors": "node applications/application_flavors/scripts/build_all.js",
         "build:runtime-data": "node build_runtime_data.js",
-        "build:dist": "npm run transpile && npm run build:workflows && npm run build:runtime-data",
+        "build:dist": "npm run build:workflows && npm run build:application_flavors && npm run build:runtime-data && npm run transpile",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
