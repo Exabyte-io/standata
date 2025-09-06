@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const utils = require("@mat3ra/code/dist/js/utils");
-const { getApplicationNamesFromSources } = require("../../scripts/applications");
+const { getApplicationNamesFromSources } = require("./get_applications");
 
 const applicationFlavorsPath = path.resolve(
     __dirname,
@@ -15,7 +15,7 @@ const applicationFlavorsPath = path.resolve(
     "application-flavors",
 );
 
-const outputDir = path.resolve(__dirname, "..");
+const outputDir = path.resolve(__dirname, "..", "..");
 
 const loadYamlFile = (filePath) => {
     if (!fs.existsSync(filePath)) {

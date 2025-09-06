@@ -19,5 +19,3 @@ function getApplicationNamesFromSources() {
 }
 
 module.exports = { getApplicationNamesFromSources };
-
-
