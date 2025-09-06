@@ -1,0 +1,3 @@
+applications:
+  - espresso: !include 'applications/espresso.yml'
+
