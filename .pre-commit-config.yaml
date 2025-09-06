@@ -27,8 +27,9 @@ repos:
       - id: isort
       - id: mypy
       - id: check-yaml
+        exclude: ^applications/sources/.*\.ya?ml$
       - id: end-of-file-fixer
-        exclude: ^workflows/.*\.json$
+        exclude: ^(workflows|applications)/.*\.json$
       - id: trailing-whitespace
   - repo: local
     hooks:
