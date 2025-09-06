@@ -1,17 +1,51 @@
 #!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-var-requires */
 
 const path = require("path");
+const { execFile } = require("child_process");
 
 const arg = process.argv[2];
 
 const pipelines = {
     workflows: [
-        "workflows/wode/scripts/build_workflows_data.js",
-        "workflows/wode/scripts/create_workflows.js",
-        "workflows/wode/scripts/update_categories.js",
+        "workflows/scripts/build_workflows_data.js",
+        "workflows/scripts/create_workflows.js",
+        "workflows/scripts/update_categories.js",
     ],
-    applications: ["applications/application_flavors/scripts/build_applications.js"],
+    applications: ["applications/scripts/build_applications.js"],
 };
+
+function executeScript(scriptPath) {
+    const fullPath = path.resolve(process.cwd(), scriptPath);
+    return new Promise((resolve) => {
+        execFile(process.execPath, [fullPath], { stdio: "inherit" }, (error) => {
+            if (error) {
+                console.error(`❌ Error executing ${scriptPath}:`);
+                console.error(error.message);
+                console.error(error.stack);
+                resolve(false);
+            } else {
+                resolve(true);
+            }
+        });
+    });
+}
+
+async function runScripts(scripts) {
+    const runSequentially = scripts.reduce((promiseChain, script, index) => {
+        return promiseChain.then(async (ok) => {
+            if (!ok) return false;
+            const success = await executeScript(script);
+            if (!success) {
+                console.error(`\n❌ Pipeline failed at step ${index + 1}: ${script}`);
+            }
+            return success;
+        });
+    }, Promise.resolve(true));
+
+    const allOk = await runSequentially;
+    if (!allOk) process.exit(1);
+}
 
 async function main() {
     if (!arg || !(arg in pipelines)) {
@@ -27,27 +61,3 @@ main().catch((error) => {
     console.error(error);
     process.exit(1);
 });
-
-async function executeScript(scriptPath) {
-    const fullPath = path.resolve(process.cwd(), scriptPath);
-    try {
-        require(fullPath);
-        return true;
-    } catch (error) {
-        console.error(`❌ Error executing ${scriptPath}:`);
-        console.error(error.message);
-        console.error(error.stack);
-        return false;
-    }
-}
-
-async function runScripts(scripts) {
-    for (let i = 0; i < scripts.length; i++) {
-        const script = scripts[i];
-        const success = await executeScript(script);
-        if (!success) {
-            console.error(`\n❌ Pipeline failed at step ${i + 1}: ${script}`);
-            process.exit(1);
-        }
-    }
-}

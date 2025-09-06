@@ -15,8 +15,8 @@ repos:
         entry: npm run build:dist && exit 0
         pass_filenames: false
         verbose: true
-        files: ^(materials/sources/|applications/|properties/|workflows/wode/(assets|scripts)/)
-        exclude: ^(workflows/(?!wode/)|src/js/runtime_data/|dist/)
+        files: ^(materials/sources/|applications/|properties/|workflows/(assets|scripts)/)
+        exclude: ^(src/js/runtime_data/|dist/)
   - repo: https://github.com/Exabyte-io/pre-commit-hooks
     rev: 2023.8.18
     hooks:

@@ -1,9 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
-const {
-    getApplicationNamesFromSources,
-} = require("../../../applications/application_flavors/scripts/get_applications");
+const { getApplicationNamesFromSources } = require("../../applications/scripts/get_applications");
 
 const applications = getApplicationNamesFromSources();
 console.log("Applications found:", applications);
