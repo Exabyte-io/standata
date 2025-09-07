@@ -1,2 +1,2 @@
 applications:
-  - espresso: !include 'applications/espresso.yml'
+  - espresso: !include './espresso.yml'

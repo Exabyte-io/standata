@@ -12,8 +12,10 @@ categories:
     - command_line_interface
     - interactive_computing_environment
     - programming_language
-
 entities:
+  - filename: espresso.json
+    categories:
+      - quantum-mechanical
   - filename: espresso_gnu_540.json
     categories:
       - quantum-mechanical
