@@ -1,59 +1,63 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
-const utils = require("@mat3ra/code/dist/js/utils");
 const { getApplicationNamesFromSources } = require("./get_applications");
 
-const applicationFlavorsPath = path.resolve(
-    __dirname,
-    "..",
-    "..",
-    "..",
-    "..",
-    "stack",
-    "lib",
-    "application-flavors",
-);
+const SOURCES_DIR = path.resolve(__dirname, "..", "sources");
+const OUTPUT_DIR = path.resolve(__dirname, "..");
 
-const outputDir = path.resolve(__dirname, "..", "..");
-
-const loadYamlFile = (filePath) => {
+function loadYamlFile(filePath) {
     if (!fs.existsSync(filePath)) {
         console.log(`File not found: ${filePath}`);
         return null;
     }
     const content = fs.readFileSync(filePath, "utf8");
-    return yaml.load(content, { schema: utils.JsYamlAllSchemas });
-};
+    return yaml.load(content);
+}
 
-// Load applications data and create individual JSON files
-const allowedApplications = new Set(getApplicationNamesFromSources());
-const applicationsDir = path.resolve(applicationFlavorsPath, "applications");
-if (fs.existsSync(applicationsDir)) {
-    const appFiles = fs
-        .readdirSync(applicationsDir)
-        .filter((file) => file.endsWith(".yml") || file.endsWith(".yaml"));
-    const filtered = appFiles.filter((file) =>
-        allowedApplications.has(file.replace(/\.(yml|yaml)$/, "")),
-    );
-    console.log(`Creating individual JSON files for ${filtered.length} applications`);
+function processApplicationFile(filename) {
+    try {
+        const filePath = path.resolve(SOURCES_DIR, filename);
+        const appData = loadYamlFile(filePath);
 
-    filtered.forEach((file) => {
-        const appName = file.replace(/\.(yml|yaml)$/, "");
-        const appData = loadYamlFile(path.resolve(applicationsDir, file));
-        if (appData) {
-            const jsonContent = {
-                name: appData.name,
-                shortName: appData.shortName,
-                summary: appData.summary,
-                defaultVersion: appData.defaultVersion,
-                isLicensed: appData.isLicensed || false,
-                versions: appData.versions || [],
-            };
-
-            const jsonFilePath = path.resolve(outputDir, `${appName}.json`);
-            fs.writeFileSync(jsonFilePath, JSON.stringify(jsonContent, null, 2), "utf8");
-            console.log(`Created ${jsonFilePath}`);
+        if (!appData) {
+            console.log(`No data found in ${filename}`);
+            return;
         }
-    });
+
+        const appName = filename.replace(/\.(yml|yaml)$/, "");
+        const jsonContent = {
+            name: appData.name,
+            shortName: appData.shortName,
+            summary: appData.summary,
+            version: appData.version,
+            build: appData.build,
+            hasAdvancedComputeOptions: appData.hasAdvancedComputeOptions || false,
+            isLicensed: appData.isLicensed || false,
+        };
+
+        const jsonFilePath = path.resolve(OUTPUT_DIR, `${appName}.json`);
+        fs.writeFileSync(jsonFilePath, JSON.stringify(jsonContent, null, 2), "utf8");
+        console.log(`Generated: ${path.basename(jsonFilePath)}`);
+    } catch (error) {
+        console.error(`Error processing ${filename}:`, error.message);
+    }
+}
+
+const allowedApplications = new Set(getApplicationNamesFromSources());
+console.log(`Found ${allowedApplications.size} applications to process:`, Array.from(allowedApplications));
+
+if (fs.existsSync(SOURCES_DIR)) {
+    const yamlFiles = fs
+        .readdirSync(SOURCES_DIR)
+        .filter((file) => file.endsWith(".yml") || file.endsWith(".yaml"))
+        .filter((file) => {
+            const appName = file.replace(/\.(yml|yaml)$/, "");
+            return allowedApplications.has(appName);
+        });
+
+    console.log(`Processing ${yamlFiles.length} application files`);
+    yamlFiles.forEach(processApplicationFile);
+} else {
+    console.log(`Sources directory not found: ${SOURCES_DIR}`);
 }

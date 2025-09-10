@@ -17,19 +17,8 @@ export declare class ApplicationStandata extends Standata {
                 name: string;
                 shortName: string;
                 summary: string;
-                defaultVersion: string;
+                hasAdvancedComputeOptions: boolean;
                 isLicensed: boolean;
-                versions: ({
-                    version: string;
-                    isDefault: boolean;
-                    hasAdvancedComputeOptions: boolean;
-                    build?: undefined;
-                } | {
-                    version: string;
-                    isDefault: boolean;
-                    build: string;
-                    hasAdvancedComputeOptions: boolean;
-                })[];
             };
             "espresso_gnu_540.json": {
                 name: string;
