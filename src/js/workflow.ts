@@ -1,6 +1,6 @@
 import { Standata } from "./base";
-import WORKFLOWS from "./runtime_data/workflows.json";
 import SUBWORKFLOWS from "./runtime_data/subworkflows.json";
+import WORKFLOWS from "./runtime_data/workflows.json";
 
 export class WorkflowStandata extends Standata {
     static runtimeData = WORKFLOWS;
@@ -23,16 +23,3 @@ export class WorkflowStandata extends Standata {
 export class SubworkflowStandata extends Standata {
     static runtimeData = SUBWORKFLOWS;
 }
-
-export const workflows = {
-    get_all: () => new WorkflowStandata().getAll(),
-    get_by_application: (appName: string) => {
-        const sd = new WorkflowStandata();
-        const list = sd.findByApplication(appName);
-        return {
-            get_all: () => list,
-            get_by_name: (displayName: string) =>
-                list.find((w: any) => w?.name === displayName),
-        };
-    },
-};

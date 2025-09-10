@@ -38,20 +38,6 @@ function buildAsset({
     fs.writeFileSync(targetPath, contentGenerator(obj), "utf8");
     console.log(`Written entity category map to "${assetPath}" to "${targetPath}"`);
 }
-
-function loadStandataAssetDir(assetDir) {
-    const assetPath = path.resolve(assetDir, "categories.yml");
-    const fileContent = fs.readFileSync(assetPath, { encoding: "utf-8" });
-    const standataConfig = yaml.load(fileContent);
-    const filesMapByName = {};
-    (standataConfig.entities || []).forEach((entity) => {
-        const entityPath = path.resolve(assetDir, entity.filename);
-        const content = fs.readFileSync(entityPath, { encoding: "utf-8" });
-        filesMapByName[entity.filename] = JSON.parse(content);
-    });
-    return { standataConfig, filesMapByName };
-}
-
 const runtimeDataDir = "./dist/js/runtime_data";
 // JS Modules
 
@@ -67,15 +53,10 @@ buildAsset({
     assetPath: "./applications/categories.yml",
     targetPath: `${runtimeDataDir}/applications.json`,
 });
-
-function buildCompiledWorkflowsRuntime() {
-    const workflowsDir = path.resolve("./workflows");
-    const { standataConfig, filesMapByName } = loadStandataAssetDir(workflowsDir);
-    const out = { standataConfig, filesMapByName };
-    fs.writeFileSync(`${runtimeDataDir}/workflows.json`, `${JSON.stringify(out)}\n`, "utf8");
-    console.log(`Written compiled workflows runtime to "${runtimeDataDir}/workflows.json"`);
-}
-buildCompiledWorkflowsRuntime();
+buildAsset({
+    assetPath: "./workflows/categories.yml",
+    targetPath: `${runtimeDataDir}/workflows.json`,
+});
 
 // Py Modules
 

@@ -3055,10 +3055,3 @@ export declare class SubworkflowStandata extends Standata {
         };
     };
 }
-export declare const workflows: {
-    get_all: () => object[];
-    get_by_application: (appName: string) => {
-        get_all: () => object[];
-        get_by_name: (displayName: string) => object | undefined;
-    };
-};

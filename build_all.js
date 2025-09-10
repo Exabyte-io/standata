@@ -10,7 +10,6 @@ const pipelines = {
     workflows: [
         "workflows/scripts/build_workflows_data.js",
         "workflows/scripts/create_workflows.js",
-        "workflows/scripts/update_categories.js",
     ],
     applications: ["applications/scripts/build_applications.js"],
 };
@@ -48,10 +47,6 @@ async function runScripts(scripts) {
 }
 
 async function main() {
-    if (!arg || !(arg in pipelines)) {
-        console.error("Usage: node scripts/build_all.js <workflows|applications>");
-        process.exit(1);
-    }
     await runScripts(pipelines[arg]);
     console.log(`✅ Completed ${arg} generation pipeline`);
 }
