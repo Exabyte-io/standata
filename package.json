@@ -58,7 +58,7 @@
     },
     "scripts": {
         "build:categories": "ts-node src/js/cli.ts",
-        "build:workflows": "node build_all.js workflows",
+        "build:workflows": "node workflows/scripts/create_workflows.js",
         "build:applications": "node build_all.js applications",
         "build:runtime-data": "node build_runtime_data.js",
         "build:dist": "npm run transpile && npm run build:workflows && npm run build:applications && npm run build:runtime-data",

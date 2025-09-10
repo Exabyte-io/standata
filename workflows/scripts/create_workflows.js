@@ -1,13 +1,57 @@
 const fs = require("fs");
 const path = require("path");
+const yaml = require("js-yaml");
 const { createWorkflowConfigs } = require("@exabyte-io/wode.js");
+const wodeWorkflowsStore = require("@exabyte-io/wode.js/dist/workflows/workflows");
+const { getApplicationNamesFromSources } = require("../../applications/scripts/get_applications");
 
-const workflowDataPath = path.resolve(__dirname, "..", "generated", "workflows_data.json");
-const { workflowData } = JSON.parse(fs.readFileSync(workflowDataPath, "utf8"));
+const applications = getApplicationNamesFromSources();
+console.log("Applications found:", applications);
 
-const workflowConfigs = createWorkflowConfigs(null, [], workflowData);
+const allWorkflows = { workflows: {}, subworkflows: {} };
 
-const workflowsDir = path.resolve(__dirname, "..", "..");
+function loadYamlIntoCollection(applicationName, directoryPath, filename, collectionKey) {
+    const entryPath = path.resolve(directoryPath, filename);
+    if (!fs.existsSync(entryPath) || !fs.statSync(entryPath).isFile()) return;
+    if (!/\.(yml|yaml)$/i.test(filename)) return;
+    const content = fs.readFileSync(entryPath, "utf8");
+    const key = filename.replace(/\.(yml|yaml)$/i, "");
+    allWorkflows[collectionKey][applicationName][key] = yaml.load(content);
+}
+
+applications.forEach((name) => {
+    allWorkflows.workflows[name] = {};
+    allWorkflows.subworkflows[name] = {};
+
+    const sourcesRoot = path.resolve(process.cwd(), "workflows", "sources");
+    const wfDir = path.resolve(sourcesRoot, "workflows", name);
+    const swDir = path.resolve(sourcesRoot, "subworkflows", name);
+
+    if (fs.existsSync(wfDir)) {
+        const wfFiles = fs.readdirSync(wfDir);
+        console.log(`Building ${name}: ${wfFiles.length} workflow(s)`);
+        wfFiles.forEach((file) => loadYamlIntoCollection(name, wfDir, file, "workflows"));
+    } else {
+        console.log(`Workflow directory not found for ${name}: ${wfDir}`);
+    }
+
+    if (fs.existsSync(swDir)) {
+        const swFiles = fs.readdirSync(swDir);
+        console.log(`Building ${name}: ${swFiles.length} subworkflow(s)`);
+        swFiles.forEach((file) => loadYamlIntoCollection(name, swDir, file, "subworkflows"));
+    } else {
+        console.log(`Subworkflow directory not found for ${name}: ${swDir}`);
+    }
+});
+
+const workflowData = allWorkflows;
+
+// Inject workflowData into wode.js internal module
+wodeWorkflowsStore.workflowData = workflowData;
+
+const workflowConfigs = createWorkflowConfigs(null, workflowData);
+
+const workflowsDir = path.resolve(__dirname, "..");
 
 const returnConfigWithFixedIds = (config) => {
     const hash = require("crypto")
