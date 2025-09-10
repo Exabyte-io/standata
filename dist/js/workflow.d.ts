@@ -6,6 +6,7 @@ export declare class WorkflowStandata extends Standata {
                 application: string[];
                 property: string[];
                 material_count: string[];
+                workflow_type: string[];
             };
             entities: {
                 filename: string;

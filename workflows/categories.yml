@@ -13,6 +13,8 @@ categories:
   material_count:
     - single-material
     - multi-material
+  workflow_type:
+    - relaxation
 entities:
   - filename: espresso_total_energy.json
     categories:
@@ -36,3 +38,4 @@ entities:
       - stress_tensor
       - final_structure
       - single-material
+      - relaxation
