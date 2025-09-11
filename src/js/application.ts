@@ -4,3 +4,5 @@ import APPLICATIONS from "./runtime_data/applications.json";
 export class ApplicationStandata extends Standata {
     static runtimeData = APPLICATIONS;
 }
+
+export const applications: ApplicationStandata = new ApplicationStandata();

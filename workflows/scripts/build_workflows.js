@@ -3,10 +3,8 @@ const path = require("path");
 const yaml = require("js-yaml");
 const { createWorkflowConfigs } = require("@exabyte-io/wode.js");
 const wodeWorkflowsStore = require("@exabyte-io/wode.js/dist/workflows/workflows");
-const { getApplicationNamesFromSources } = require("../../applications/scripts/get_applications");
 
-const applications = getApplicationNamesFromSources();
-console.log("Applications found:", applications);
+const applications = ["espresso"];
 
 const allWorkflows = { workflows: {}, subworkflows: {} };
 

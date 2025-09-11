@@ -13,13 +13,6 @@ export declare class ApplicationStandata extends Standata {
             }[];
         };
         filesMapByName: {
-            "espresso.json": {
-                name: string;
-                shortName: string;
-                summary: string;
-                hasAdvancedComputeOptions: boolean;
-                isLicensed: boolean;
-            };
             "espresso_gnu_540.json": {
                 name: string;
                 shortName: string;
@@ -41,3 +34,4 @@ export declare class ApplicationStandata extends Standata {
         };
     };
 }
+export declare const applications: ApplicationStandata;

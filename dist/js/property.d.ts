@@ -37,3 +37,4 @@ export declare class PropertyStandata extends Standata {
         };
     };
 }
+export declare const properties: PropertyStandata;
