@@ -15,7 +15,7 @@ interface RuntimeData {
 }
 export declare class Standata {
     static runtimeData: RuntimeData;
-    static getRuntimeDataConfigs(): [string, any][];
+    static getRuntimeDataConfigs(): any[];
     entities: EntityItem[];
     categories: string[];
     protected categoryMap: EntityCategories;
