@@ -1630,4 +1630,3 @@ export declare class MaterialStandata extends Standata {
         };
     };
 }
-export declare const materials: MaterialStandata;

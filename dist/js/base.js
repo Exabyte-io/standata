@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Standata = void 0;
 class Standata {
     static getRuntimeDataConfigs() {
-        return Object.values(this.runtimeData.filesMapByName);
+        return Object.entries(this.runtimeData.filesMapByName);
     }
     constructor(config) {
         const ctor = this.constructor;

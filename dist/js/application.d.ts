@@ -34,4 +34,3 @@ export declare class ApplicationStandata extends Standata {
         };
     };
 }
-export declare const applications: ApplicationStandata;

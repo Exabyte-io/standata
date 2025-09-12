@@ -2,7 +2,7 @@
   "name": "Total Energy",
   "subworkflows": [
     {
-      "_id": "bac05032-0000-0000-0000-000000000000",
+      "_id": "439c83ac-8fc1-5328-ad2a-564c463e4077",
       "name": "Total Energy",
       "application": {
         "name": "espresso",
@@ -72,7 +72,7 @@
               "name": "convergence_electronic"
             }
           ],
-          "flowchartId": "bac05032-0000-0000-0000-000000000000",
+          "flowchartId": "439c83ac-8fc1-5328-ad2a-564c463e4077",
           "preProcessors": [],
           "postProcessors": [],
           "application": {
@@ -1088,10 +1088,10 @@
     {
       "name": "Total Energy",
       "type": "subworkflow",
-      "_id": "bac05032-0000-0000-0000-000000000000",
+      "_id": "439c83ac-8fc1-5328-ad2a-564c463e4077",
       "status": "idle",
       "statusTrack": [],
-      "flowchartId": "bac05032-0000-0000-0000-000000000000",
+      "flowchartId": "439c83ac-8fc1-5328-ad2a-564c463e4077",
       "tags": [],
       "head": true
     }

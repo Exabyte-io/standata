@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
+const { v5: uuidv5 } = require("uuid");
 const { createWorkflowConfigs } = require("@exabyte-io/wode.js");
 const wodeWorkflowsStore = require("@exabyte-io/wode.js/dist/workflows/workflows");
 
@@ -51,24 +52,40 @@ const workflowConfigs = createWorkflowConfigs(null, workflowData);
 
 const workflowsDir = path.resolve(__dirname, "..");
 
+const WORKFLOW_NAMESPACE = "12345678-1234-4000-8000-000000000000";
+const generateDeterministicUUID = (seed) => {
+    return uuidv5(seed, WORKFLOW_NAMESPACE);
+};
+
 const returnConfigWithFixedIds = (config) => {
-    const hash = require("crypto")
-        .createHash("md5")
-        .update(config.name)
-        .digest("hex")
-        .substring(0, 8);
-    const baseId = `${hash}-0000-0000-0000-000000000000`;
+    const workflowSeed = `${config.name}_${
+        config.subworkflows?.[0]?.application?.name || "unknown"
+    }`;
+    const baseId = generateDeterministicUUID(workflowSeed);
+
+    const uuidPattern =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
     const fixIds = (obj) => {
-        if (obj._id) obj._id = baseId;
-        if (obj.flowchartId) obj.flowchartId = baseId;
-        Object.values(obj).forEach((val) => {
-            if (val && typeof val === "object") fixIds(val);
-        });
+        if (typeof obj === "string" && uuidPattern.test(obj)) {
+            return baseId;
+        }
+
+        if (obj && typeof obj === "object") {
+            if (Array.isArray(obj)) {
+                return obj.map((item) => fixIds(item));
+            }
+            const result = {};
+            for (const [key, value] of Object.entries(obj)) {
+                result[key] = fixIds(value);
+            }
+            return result;
+        }
+
+        return obj;
     };
 
-    fixIds(config);
-    return config;
+    return fixIds(config);
 };
 
 workflowConfigs.forEach((config) => {
