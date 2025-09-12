@@ -23,8 +23,8 @@ export class Standata {
         filesMapByName: {},
     };
 
-    static getRuntimeDataConfigs(): any[] {
-        return Object.values(this.runtimeData.filesMapByName);
+    static getRuntimeDataConfigs() {
+        return Object.entries(this.runtimeData.filesMapByName);
     }
 
     entities: EntityItem[];

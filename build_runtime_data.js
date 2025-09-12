@@ -38,6 +38,7 @@ function buildAsset({
     fs.writeFileSync(targetPath, contentGenerator(obj), "utf8");
     console.log(`Written entity category map to "${assetPath}" to "${targetPath}"`);
 }
+
 const runtimeDataDir = "./dist/js/runtime_data";
 // JS Modules
 
