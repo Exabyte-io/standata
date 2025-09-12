@@ -3056,5 +3056,3 @@ export declare class SubworkflowStandata extends Standata {
         };
     };
 }
-export declare const workflows: WorkflowStandata;
-export declare const subworkflows: SubworkflowStandata;

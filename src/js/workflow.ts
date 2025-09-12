@@ -23,7 +23,3 @@ export class WorkflowStandata extends Standata {
 export class SubworkflowStandata extends Standata {
     static runtimeData = SUBWORKFLOWS;
 }
-
-// Named exports for easier importing
-export const workflows: WorkflowStandata = new WorkflowStandata();
-export const subworkflows: SubworkflowStandata = new SubworkflowStandata();
