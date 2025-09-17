@@ -967,6 +967,8 @@ export declare class WorkflowStandata extends Standata {
     getAll(): object[];
     findByApplication(appName: string): object[];
     findByApplicationAndName(appName: string, displayName: string): object | undefined;
+    findRelaxationWorkflowByApplicationName(appName: string): object;
+    findDefault(): object;
 }
 export declare class SubworkflowStandata extends Standata {
     static runtimeData: {

@@ -19,6 +19,16 @@ class WorkflowStandata extends base_1.Standata {
     findByApplicationAndName(appName, displayName) {
         return this.findByApplication(appName).find((w) => (w === null || w === void 0 ? void 0 : w.name) === displayName);
     }
+    findRelaxationWorkflowByApplicationName(appName) {
+        return this.findEntitiesByTags("relaxation", appName)[0];
+    }
+    findDefault() {
+        const defaults = this.findEntitiesByTags("default");
+        if (defaults.length > 1) {
+            console.warn("More than one default workflow found!");
+        }
+        return defaults[0];
+    }
 }
 exports.WorkflowStandata = WorkflowStandata;
 WorkflowStandata.runtimeData = workflows_json_1.default;
