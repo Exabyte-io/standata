@@ -5,12 +5,6 @@ import WORKFLOWS from "./runtime_data/workflows.json";
 export class WorkflowStandata extends Standata {
     static runtimeData = WORKFLOWS;
 
-    getAll() {
-        return this.entities
-            .map((e) => this.loadEntity(e.filename))
-            .filter((e): e is object => e !== undefined);
-    }
-
     findByApplication(appName: string) {
         return this.findEntitiesByTags(appName);
     }
@@ -20,7 +14,11 @@ export class WorkflowStandata extends Standata {
     }
 
     getRelaxationWorkflowByApplication(appName: string) {
-        return this.findEntitiesByTags("relaxation", appName)[0];
+        const workflows = this.findEntitiesByTags("relaxation", appName);
+        if (workflows.length === 0) {
+            return undefined;
+        }
+        return workflows[0];
     }
 
     getDefault() {
