@@ -1,9 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
-const { v5: uuidv5 } = require("uuid");
 const { createWorkflowConfigs } = require("@exabyte-io/wode.js");
 const wodeWorkflowsStore = require("@exabyte-io/wode.js/dist/workflows/workflows");
+const { sharedUtils } = require("@mat3ra/utils");
+
+const { getUUIDFromNamespace } = sharedUtils.uuid;
 
 const applications = ["espresso"];
 
@@ -48,45 +50,32 @@ const workflowData = allWorkflows;
 // Inject workflowData into wode.js internal module
 wodeWorkflowsStore.workflowData = workflowData;
 
-const workflowConfigs = createWorkflowConfigs(null, workflowData);
+const workflowConfigs = createWorkflowConfigs(null, applications, workflowData);
 
 const workflowsDir = path.resolve(__dirname, "..");
 
-const WORKFLOW_NAMESPACE = "12345678-1234-4000-8000-000000000000";
-const generateDeterministicUUID = (seed) => {
-    return uuidv5(seed, WORKFLOW_NAMESPACE);
-};
-
-const returnConfigWithFixedIds = (config) => {
-    const workflowSeed = `${config.name}_${
-        config.subworkflows?.[0]?.application?.name || "unknown"
-    }`;
-    const baseId = generateDeterministicUUID(workflowSeed);
-
+// Recursively traverse an object and replace UUIDs with a new common UUID
+function setUUIDsInObject(obj, newUUID) {
     const uuidPattern =
         /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    if (typeof obj === "string" && uuidPattern.test(obj)) {
+        return newUUID;
+    }
+    if (Array.isArray(obj)) {
+        return obj.map((item) => setUUIDsInObject(item, newUUID));
+    }
+    if (obj && typeof obj === "object") {
+        return Object.fromEntries(
+            Object.entries(obj).map(([key, value]) => [key, setUUIDsInObject(value, newUUID)]),
+        );
+    }
+    return obj;
+}
 
-    const fixIds = (obj) => {
-        if (typeof obj === "string" && uuidPattern.test(obj)) {
-            return baseId;
-        }
-
-        if (obj && typeof obj === "object") {
-            if (Array.isArray(obj)) {
-                return obj.map((item) => fixIds(item));
-            }
-            const result = {};
-            for (const [key, value] of Object.entries(obj)) {
-                result[key] = fixIds(value);
-            }
-            return result;
-        }
-
-        return obj;
-    };
-
-    return fixIds(config);
-};
+function returnConfigWithFixedIds(config) {
+    const newUUID = getUUIDFromNamespace(config.name);
+    return setUUIDsInObject(config, newUUID);
+}
 
 workflowConfigs.forEach((config) => {
     const deterministicConfig = returnConfigWithFixedIds(config);
