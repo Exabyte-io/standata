@@ -27,6 +27,7 @@ export declare class WorkflowStandata extends Standata {
                         version: string;
                         isDefault: boolean;
                         hasAdvancedComputeOptions: boolean;
+                        schemaVersion: string;
                     };
                     properties: string[];
                     model: {
@@ -64,6 +65,7 @@ export declare class WorkflowStandata extends Standata {
                             version: string;
                             isDefault: boolean;
                             hasAdvancedComputeOptions: boolean;
+                            schemaVersion: string;
                         };
                         executable: {
                             isDefault: boolean;
@@ -71,383 +73,8 @@ export declare class WorkflowStandata extends Standata {
                             postProcessors: string[];
                             monitors: string[];
                             results: string[];
-                            flavors: {
-                                pw_scf: {
-                                    isDefault: boolean;
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_scf_bands_hse: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_scf_hse: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_scf_kpt_conv: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_scf_dft_u: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_scf_dft_u+v": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_scf_dft_u+j": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_scf_dft_u_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_scf_magn: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_scf_soc: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_scf_dft_u_magn: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_scf_dft_u_soc: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_scf_dft_u+v_magn": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_scf_dft_u+j_magn": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_scf_dft_u_magn_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_scf_dft_u_soc_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_esm: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_esm_relax: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_nscf: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_nscf_magn: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_nscf_soc: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_nscf_dft_u_magn: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_nscf_dft_u+v_magn": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_nscf_dft_u+j_magn": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_nscf_dft_u_magn_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_nscf_dft_u_soc: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_nscf_dft_u_soc_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_bands: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_bands_magn: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_bands_soc: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_bands_dft_u_magn: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_bands_dft_u+v_magn": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_bands_dft_u+j_magn": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_bands_dft_u_magn_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_bands_dft_u_soc: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_bands_dft_u_soc_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_relax: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    monitors: string[];
-                                    results: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                "pw_vc-relax": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    monitors: string[];
-                                    results: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_md: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                            };
                             name: string;
+                            schemaVersion: string;
                         };
                         flavor: {
                             isDefault: boolean;
@@ -459,6 +86,7 @@ export declare class WorkflowStandata extends Standata {
                             applicationName: string;
                             executableName: string;
                             name: string;
+                            schemaVersion: string;
                         };
                         status: string;
                         statusTrack: never[];
@@ -471,7 +99,7 @@ export declare class WorkflowStandata extends Standata {
                             }[];
                             applicationName: string;
                             executableName: string;
-                            rendered: string;
+                            schemaVersion: string;
                         }[];
                     }[];
                 }[];
@@ -487,6 +115,8 @@ export declare class WorkflowStandata extends Standata {
                 }[];
                 properties: string[];
                 workflows: never[];
+                schemaVersion: string;
+                isDefault: boolean;
             };
             "espresso_variable_cell_relaxation.json": {
                 name: string;
@@ -502,6 +132,7 @@ export declare class WorkflowStandata extends Standata {
                         version: string;
                         isDefault: boolean;
                         hasAdvancedComputeOptions: boolean;
+                        schemaVersion: string;
                     };
                     properties: string[];
                     model: {
@@ -539,6 +170,7 @@ export declare class WorkflowStandata extends Standata {
                             version: string;
                             isDefault: boolean;
                             hasAdvancedComputeOptions: boolean;
+                            schemaVersion: string;
                         };
                         executable: {
                             isDefault: boolean;
@@ -546,383 +178,8 @@ export declare class WorkflowStandata extends Standata {
                             postProcessors: string[];
                             monitors: string[];
                             results: string[];
-                            flavors: {
-                                pw_scf: {
-                                    isDefault: boolean;
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_scf_bands_hse: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_scf_hse: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_scf_kpt_conv: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_scf_dft_u: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_scf_dft_u+v": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_scf_dft_u+j": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_scf_dft_u_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_scf_magn: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_scf_soc: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_scf_dft_u_magn: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_scf_dft_u_soc: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_scf_dft_u+v_magn": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_scf_dft_u+j_magn": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_scf_dft_u_magn_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_scf_dft_u_soc_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_esm: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_esm_relax: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_nscf: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_nscf_magn: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_nscf_soc: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_nscf_dft_u_magn: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_nscf_dft_u+v_magn": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_nscf_dft_u+j_magn": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_nscf_dft_u_magn_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_nscf_dft_u_soc: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_nscf_dft_u_soc_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_bands: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_bands_magn: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_bands_soc: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_bands_dft_u_magn: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_bands_dft_u+v_magn": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                "pw_bands_dft_u+j_magn": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_bands_dft_u_magn_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_bands_dft_u_soc: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_bands_dft_u_soc_legacy: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                    supportedApplicationVersions: string[];
-                                };
-                                pw_relax: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    monitors: string[];
-                                    results: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                "pw_vc-relax": {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    monitors: string[];
-                                    results: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                                pw_md: {
-                                    input: {
-                                        name: string;
-                                    }[];
-                                    results: string[];
-                                    monitors: string[];
-                                    applicationName: string;
-                                    executableName: string;
-                                };
-                            };
                             name: string;
+                            schemaVersion: string;
                         };
                         flavor: {
                             input: {
@@ -933,6 +190,8 @@ export declare class WorkflowStandata extends Standata {
                             applicationName: string;
                             executableName: string;
                             name: string;
+                            schemaVersion: string;
+                            isDefault: boolean;
                         };
                         status: string;
                         statusTrack: never[];
@@ -945,7 +204,7 @@ export declare class WorkflowStandata extends Standata {
                             }[];
                             applicationName: string;
                             executableName: string;
-                            rendered: string;
+                            schemaVersion: string;
                         }[];
                     }[];
                 }[];
@@ -961,13 +220,15 @@ export declare class WorkflowStandata extends Standata {
                 }[];
                 properties: string[];
                 workflows: never[];
+                schemaVersion: string;
+                isDefault: boolean;
             };
         };
     };
     findByApplication(appName: string): object[];
     findByApplicationAndName(appName: string, displayName: string): object | undefined;
     getRelaxationWorkflowByApplication(appName: string): object | undefined;
-    getDefault(): object | undefined;
+    getDefault(): object;
 }
 export declare class SubworkflowStandata extends Standata {
     static runtimeData: {
