@@ -8,24 +8,28 @@ const base_1 = require("./base");
 const subworkflows_json_1 = __importDefault(require("./runtime_data/subworkflows.json"));
 const workflows_json_1 = __importDefault(require("./runtime_data/workflows.json"));
 class WorkflowStandata extends base_1.Standata {
-    getAll() {
-        return this.entities
-            .map((e) => this.loadEntity(e.filename))
-            .filter((e) => e !== undefined);
-    }
     findByApplication(appName) {
         return this.findEntitiesByTags(appName);
     }
     findByApplicationAndName(appName, displayName) {
         return this.findByApplication(appName).find((w) => (w === null || w === void 0 ? void 0 : w.name) === displayName);
     }
-    findRelaxationWorkflowByApplicationName(appName) {
-        return this.findEntitiesByTags("relaxation", appName)[0];
+    getRelaxationWorkflowByApplication(appName) {
+        const workflows = this.findEntitiesByTags("relaxation", appName);
+        if (workflows.length === 0) {
+            return undefined;
+        }
+        return workflows[0];
     }
-    findDefault() {
+    getDefault() {
         const defaults = this.findEntitiesByTags("default");
+        if (defaults.length === 0) {
+            console.error("No default workflow found!");
+            return undefined;
+        }
         if (defaults.length > 1) {
-            console.warn("More than one default workflow found!");
+            console.error("More than one default workflow found!");
+            return defaults[0];
         }
         return defaults[0];
     }

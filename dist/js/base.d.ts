@@ -31,5 +31,6 @@ export declare class Standata {
     protected loadEntity(filename: string): object | undefined;
     protected filterByCategories(...categories: string[]): string[];
     findEntitiesByTags(...tags: string[]): object[];
+    getAll(): object[];
 }
 export {};
