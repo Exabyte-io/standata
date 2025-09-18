@@ -51,7 +51,7 @@ const workflowData = allWorkflows;
 // Inject workflowData into wode.js internal module
 wodeWorkflowsStore.workflowData = workflowData;
 
-const workflowConfigs = createWorkflowConfigs(null, applications, workflowData);
+const workflowConfigs = createWorkflowConfigs(applications, workflowData);
 
 const workflowsDir = path.resolve(__dirname, "..");
 
@@ -79,8 +79,8 @@ function returnConfigWithFixedIds(config) {
 }
 
 workflowConfigs.forEach((config) => {
-    const deterministicConfig = returnConfigWithFixedIds(config);
-    const appName = config.subworkflows?.[0]?.application?.name || "unknown";
+    const deterministicConfig = returnConfigWithFixedIds(config.config);
+    const appName = config.application;
     const workflowName = config.name.toLowerCase().replace(/[^a-z0-9]/g, "_");
     const filename = `${appName}_${workflowName}.json`;
     const filePath = path.resolve(workflowsDir, filename);
