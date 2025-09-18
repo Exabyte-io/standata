@@ -6,6 +6,7 @@ const wodeWorkflowsStore = require("@exabyte-io/wode.js/dist/workflows/workflows
 const { sharedUtils } = require("@mat3ra/utils");
 
 const { getUUIDFromNamespace } = sharedUtils.uuid;
+const NAMESPACE_UUID = "00000000-0000-4000-8000-000000000000";
 
 const applications = ["espresso"];
 
@@ -73,7 +74,7 @@ function setUUIDsInObject(obj, newUUID) {
 }
 
 function returnConfigWithFixedIds(config) {
-    const newUUID = getUUIDFromNamespace(config.name);
+    const newUUID = getUUIDFromNamespace(config.name, NAMESPACE_UUID);
     return setUUIDsInObject(config, newUUID);
 }
 
