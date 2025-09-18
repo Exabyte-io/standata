@@ -23,4 +23,23 @@ describe("Workflow Standata", () => {
             expect(entity.properties).to.include("total_energy");
         });
     });
+
+    it("can get default workflow", () => {
+        const std = new WorkflowStandata();
+        const defaultWorkflow = std.getDefault() as any;
+        expect(defaultWorkflow.name).to.equal("Total Energy");
+
+        const entity = std.entities.find((e: any) => e.filename.includes("total_energy"));
+        expect(entity!.categories).to.include("default");
+    });
+
+    it("can get relaxation workflow by application", () => {
+        const std = new WorkflowStandata();
+        const relaxationWorkflow = std.getRelaxationWorkflowByApplication("espresso") as any;
+        expect(relaxationWorkflow.name).to.equal("Variable-cell Relaxation");
+
+        const entity = std.entities.find((e: any) => e.filename.includes("variable_cell_relaxation"));
+        expect(entity!.categories).to.include("relaxation");
+        expect(entity!.categories).to.include("espresso");
+    });
 });

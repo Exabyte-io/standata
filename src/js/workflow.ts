@@ -23,14 +23,6 @@ export class WorkflowStandata extends Standata {
 
     getDefault() {
         const defaults = this.findEntitiesByTags("default");
-        if (defaults.length === 0) {
-            console.error("No default workflow found!");
-            return undefined;
-        }
-        if (defaults.length > 1) {
-            console.error("More than one default workflow found!");
-            return defaults[0];
-        }
         return defaults[0];
     }
 }
