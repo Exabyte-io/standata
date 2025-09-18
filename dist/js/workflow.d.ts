@@ -99,6 +99,7 @@ export declare class WorkflowStandata extends Standata {
                             }[];
                             applicationName: string;
                             executableName: string;
+                            rendered: string;
                             schemaVersion: string;
                         }[];
                     }[];
@@ -204,6 +205,7 @@ export declare class WorkflowStandata extends Standata {
                             }[];
                             applicationName: string;
                             executableName: string;
+                            rendered: string;
                             schemaVersion: string;
                         }[];
                     }[];
