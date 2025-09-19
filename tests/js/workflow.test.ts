@@ -15,11 +15,11 @@ describe("Workflow Standata", () => {
         // Check that all found entities are espresso workflows with total_energy property
         entities.forEach((entity: any) => {
             // Check that it's an espresso workflow
-            expect(entity.subworkflows).to.be.an('array');
+            expect(entity.subworkflows).to.be.an("array");
             expect(entity.subworkflows[0].application.name).to.equal("espresso");
 
             // Check that it has total_energy property
-            expect(entity.properties).to.be.an('array');
+            expect(entity.properties).to.be.an("array");
             expect(entity.properties).to.include("total_energy");
         });
     });
@@ -38,8 +38,10 @@ describe("Workflow Standata", () => {
         const relaxationWorkflow = std.getRelaxationWorkflowByApplication("espresso") as any;
         expect(relaxationWorkflow.name).to.equal("Variable-cell Relaxation");
 
-        const entity = std.entities.find((e: any) => e.filename.includes("variable_cell_relaxation"));
-        expect(entity!.categories).to.include("relaxation");
+        const entity = std.entities.find((e: any) =>
+            e.filename.includes("variable_cell_relaxation"),
+        );
+        expect(entity!.categories).to.include("variable_cell_relaxation");
         expect(entity!.categories).to.include("espresso");
     });
 });
