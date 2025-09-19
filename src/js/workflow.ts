@@ -29,11 +29,6 @@ type StandataRuntimeData = {
 abstract class TaggedStandata<T extends { name?: string }> extends Standata {
     static runtimeData: StandataRuntimeData;
 
-    protected firstByTags(...tags: string[]): T | undefined {
-        const list = this.findEntitiesByTags(...tags) as T[];
-        return list[0];
-    }
-
     findByApplication(appName: string): T[] {
         return this.findEntitiesByTags(appName) as T[];
     }
@@ -43,11 +38,15 @@ abstract class TaggedStandata<T extends { name?: string }> extends Standata {
     }
 
     getRelaxationByApplication(appName: string): T | undefined {
-        return this.firstByTags(TAGS.RELAXATION, appName);
+        const list = this.findEntitiesByTags(TAGS.RELAXATION, appName) as T[];
+        return list[0];
     }
 
-    getDefault(): T | undefined {
-        return this.firstByTags(TAGS.DEFAULT);
+    getDefault(): T {
+        const list = this.findEntitiesByTags(TAGS.DEFAULT) as T[];
+        if (list.length > 1) console.error("Multiple default workflows found");
+        if (list.length === 0) console.error("No default workflow found");
+        return list[0];
     }
 }
 
