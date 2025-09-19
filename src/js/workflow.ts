@@ -1,6 +1,7 @@
 import { Standata } from "./base";
 import SUBWORKFLOWS from "./runtime_data/subworkflows.json";
 import WORKFLOWS from "./runtime_data/workflows.json";
+import workflowSubforkflowMapByApplication from "./runtime_data/workflowSubforkflowMapByApplication.json";
 
 export class WorkflowStandata extends Standata {
     static runtimeData = WORKFLOWS;
@@ -30,3 +31,5 @@ export class WorkflowStandata extends Standata {
 export class SubworkflowStandata extends Standata {
     static runtimeData = SUBWORKFLOWS;
 }
+
+export { workflowSubforkflowMapByApplication };
