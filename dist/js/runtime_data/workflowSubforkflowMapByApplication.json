@@ -1,0 +1,83 @@
+{
+  "workflows": {
+    "espresso": {
+      "total_energy": {
+        "name": "Total Energy",
+        "units": [
+          {
+            "name": "total_energy",
+            "type": "subworkflow"
+          }
+        ]
+      },
+      "variable_cell_relaxation": {
+        "name": "Variable-cell Relaxation",
+        "units": [
+          {
+            "name": "variable_cell_relaxation",
+            "type": "subworkflow"
+          }
+        ]
+      }
+    }
+  },
+  "subworkflows": {
+    "espresso": {
+      "total_energy": {
+        "application": {
+          "name": "espresso",
+          "version": "6.3"
+        },
+        "method": {
+          "name": "PseudopotentialMethod"
+        },
+        "model": {
+          "name": "DFTModel"
+        },
+        "name": "Total Energy",
+        "units": [
+          {
+            "config": {
+              "execName": "pw.x",
+              "flavorName": "pw_scf",
+              "name": "pw_scf"
+            },
+            "functions": {
+              "head": true
+            },
+            "type": "executionBuilder"
+          }
+        ]
+      },
+      "variable_cell_relaxation": {
+        "application": {
+          "name": "espresso",
+          "version": "6.3"
+        },
+        "config": {
+          "systemName": "espresso-variable-cell-relaxation"
+        },
+        "method": {
+          "name": "PseudopotentialMethod"
+        },
+        "model": {
+          "name": "DFTModel"
+        },
+        "name": "Variable-cell Relaxation",
+        "units": [
+          {
+            "config": {
+              "execName": "pw.x",
+              "flavorName": "pw_vc-relax",
+              "name": "pw_vc-relax"
+            },
+            "functions": {
+              "head": true
+            },
+            "type": "executionBuilder"
+          }
+        ]
+      }
+    }
+  }
+}
