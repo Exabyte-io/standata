@@ -39,7 +39,7 @@ describe("Workflow Standata", () => {
         expect(relaxationWorkflow.name).to.equal("Variable-cell Relaxation");
 
         const entity = std.entities.find((e: any) =>
-            e.filename.includes("variable-cell_relaxation"),
+            e.filename.includes("variable_cell_relaxation"),
         );
         expect(entity!.categories).to.include("variable-cell_relaxation");
         expect(entity!.categories).to.include("espresso");

@@ -1,7 +1,11 @@
 import { Standata } from "./base";
 import workflowSubforkflowMapByApplication from "./runtime_data/workflowSubforkflowMapByApplication.json";
+export declare enum TAGS {
+    RELAXATION = "variable-cell_relaxation",
+    DEFAULT = "default"
+}
 /**
- * Generic, reusable standata with all the shared queries.
+ * Generic, reusable Standata with all the shared queries.
  * Only `runtimeData` differs between concrete types.
  */
 type StandataEntity = {
@@ -9,34 +13,28 @@ type StandataEntity = {
     categories: string[];
     name?: string;
 };
-type StandataRuntimeData = {
+type WorkflowStandataRuntimeData = {
     standataConfig: {
-        categories: {
-            application: string[];
-            property: string[];
-            material_count: string[];
-            workflow_type: string[];
-        };
+        categories: Record<string, string[]>;
         entities: StandataEntity[];
     };
     filesMapByName: Record<string, unknown>;
 };
-declare abstract class TaggedStandata<T extends {
+declare abstract class BaseWorkflowStandata<T extends {
     name?: string;
 }> extends Standata {
-    static runtimeData: StandataRuntimeData;
-    protected firstByTags(...tags: string[]): T | undefined;
+    static runtimeData: WorkflowStandataRuntimeData;
     findByApplication(appName: string): T[];
     findByApplicationAndName(appName: string, displayName: string): T | undefined;
     getRelaxationByApplication(appName: string): T | undefined;
-    getDefault(): T | undefined;
+    getDefault(): T;
 }
-export declare class WorkflowStandata extends TaggedStandata<StandataEntity> {
-    static runtimeData: StandataRuntimeData;
+export declare class WorkflowStandata extends BaseWorkflowStandata<StandataEntity> {
+    static runtimeData: WorkflowStandataRuntimeData;
     getRelaxationWorkflowByApplication(appName: string): StandataEntity | undefined;
 }
-export declare class SubworkflowStandata extends TaggedStandata<StandataEntity> {
-    static runtimeData: StandataRuntimeData;
+export declare class SubworkflowStandata extends BaseWorkflowStandata<StandataEntity> {
+    static runtimeData: WorkflowStandataRuntimeData;
     getRelaxationSubworkflowByApplication(appName: string): StandataEntity | undefined;
 }
 export { workflowSubforkflowMapByApplication };

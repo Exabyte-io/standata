@@ -13,21 +13,16 @@ export enum TAGS {
  * Only `runtimeData` differs between concrete types.
  */
 type StandataEntity = { filename: string; categories: string[]; name?: string };
-type StandataRuntimeData = {
+type WorkflowStandataRuntimeData = {
     standataConfig: {
-        categories: {
-            application: string[];
-            property: string[];
-            material_count: string[];
-            workflow_type: string[];
-        };
+        categories: Record<string, string[]>;
         entities: StandataEntity[];
     };
     filesMapByName: Record<string, unknown>;
 };
 
-abstract class TaggedStandata<T extends { name?: string }> extends Standata {
-    static runtimeData: StandataRuntimeData;
+abstract class BaseWorkflowStandata<T extends { name?: string }> extends Standata {
+    static runtimeData: WorkflowStandataRuntimeData;
 
     findByApplication(appName: string): T[] {
         return this.findEntitiesByTags(appName) as T[];
@@ -50,16 +45,16 @@ abstract class TaggedStandata<T extends { name?: string }> extends Standata {
     }
 }
 
-export class WorkflowStandata extends TaggedStandata<StandataEntity> {
-    static override runtimeData: StandataRuntimeData = WORKFLOWS;
+export class WorkflowStandata extends BaseWorkflowStandata<StandataEntity> {
+    static override runtimeData: WorkflowStandataRuntimeData = WORKFLOWS;
 
     getRelaxationWorkflowByApplication(appName: string) {
         return this.getRelaxationByApplication(appName);
     }
 }
 
-export class SubworkflowStandata extends TaggedStandata<StandataEntity> {
-    static override runtimeData: StandataRuntimeData = SUBWORKFLOWS;
+export class SubworkflowStandata extends BaseWorkflowStandata<StandataEntity> {
+    static override runtimeData: WorkflowStandataRuntimeData = SUBWORKFLOWS;
 
     getRelaxationSubworkflowByApplication(appName: string) {
         return this.getRelaxationByApplication(appName);
