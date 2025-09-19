@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
-const { createWorkflowConfigs } = require("@exabyte-io/wode.js");
+const { createWorkflowConfigs, createSubworkflowByName } = require("@exabyte-io/wode.js");
 const { sharedUtils } = require("@mat3ra/utils");
 
 const { getUUIDFromNamespace } = sharedUtils.uuid;
@@ -39,7 +39,7 @@ function setUUIDsInObject(obj, newUUID) {
     return obj;
 }
 
-function returnConfigWithFixedIds(config) {
+function returnConfigWithPredefinedIds(config) {
     const newUUID = getUUIDFromNamespace(config.name, NAMESPACE_UUID);
     return setUUIDsInObject(config, newUUID);
 }
@@ -70,21 +70,43 @@ applications.forEach((name) => {
     }
 });
 
-const workflowsDir = path.resolve(__dirname, "..");
+const workflowsDir = path.resolve(__dirname, "..", "workflows");
+const subworkflowsDir = path.resolve(__dirname, "..", "subworkflows");
 
 // Save the workflow and subworkflow map for usage in Wode or elsewhere
-const assetPath = path.resolve(workflowsDir, "workflowSubforkflowMapByApplication.json");
+const assetPath = path.resolve(__dirname, "..", "workflowSubforkflowMapByApplication.json");
 fs.writeFileSync(assetPath, JSON.stringify(workflowSubforkflowMapByApplication, null, 2), "utf8");
 
 const workflowConfigs = createWorkflowConfigs(applications, workflowSubforkflowMapByApplication);
 
 workflowConfigs.forEach((config) => {
-    const deterministicConfig = returnConfigWithFixedIds(config.config);
+    const predefinedConfig = returnConfigWithPredefinedIds(config.config);
     const appName = config.application;
     const workflowName = config.name.toLowerCase().replace(/[^a-z0-9]/g, "_");
     const filename = `${appName}_${workflowName}.json`;
     const filePath = path.resolve(workflowsDir, filename);
-    fs.writeFileSync(filePath, JSON.stringify(deterministicConfig, null, 2), "utf8");
+    fs.writeFileSync(filePath, JSON.stringify(predefinedConfig, null, 2), "utf8");
 
-    console.log(`Generated: ${filename}`);
+    console.log(`Generated workflow: ${filename}`);
+});
+
+applications.forEach((appName) => {
+    const subworkflows = workflowSubforkflowMapByApplication.subworkflows[appName];
+    if (!subworkflows) return;
+
+    Object.keys(subworkflows).forEach((subworkflowName) => {
+        const subworkflow = createSubworkflowByName({
+            appName,
+            swfName: subworkflowName,
+            workflowsData: workflowSubforkflowMapByApplication,
+        });
+
+        const subworkflowJson = subworkflow.toJSON();
+        const predefinedConfig = returnConfigWithPredefinedIds(subworkflowJson);
+        const filename = `${appName}_${subworkflowName}.json`;
+        const filePath = path.resolve(subworkflowsDir, filename);
+        fs.writeFileSync(filePath, JSON.stringify(predefinedConfig, null, 2), "utf8");
+
+        console.log(`Generated subworkflow: ${filename}`);
+    });
 });
