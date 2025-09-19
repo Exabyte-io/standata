@@ -3,10 +3,10 @@ import SUBWORKFLOWS from "./runtime_data/subworkflows.json";
 import WORKFLOWS from "./runtime_data/workflows.json";
 import workflowSubforkflowMapByApplication from "./runtime_data/workflowSubforkflowMapByApplication.json";
 
-export const TAGS = {
-    RELAXATION: "variable_cell_relaxation",
-    DEFAULT: "default",
-};
+export enum TAGS {
+    RELAXATION = "variable-cell_relaxation",
+    DEFAULT = "default",
+}
 
 /**
  * Generic, reusable Standata with all the shared queries.
