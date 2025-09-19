@@ -55,8 +55,12 @@ buildAsset({
     targetPath: `${runtimeDataDir}/applications.json`,
 });
 buildAsset({
-    assetPath: "./workflows/categories.yml",
+    assetPath: "./workflows/workflows/categories.yml",
     targetPath: `${runtimeDataDir}/workflows.json`,
+});
+buildAsset({
+    assetPath: "./workflows/subworkflows/categories.yml",
+    targetPath: `${runtimeDataDir}/subworkflows.json`,
 });
 
 // Copy workflowSubforkflowMapByApplication.json to runtime_data
@@ -93,8 +97,14 @@ buildAsset({
         `import json\n\napplications_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: "./workflows/categories.yml",
+    assetPath: "./workflows/workflows/categories.yml",
     targetPath: "./src/py/mat3ra/standata/data/workflows.py",
     contentGenerator: (content) =>
         `import json\n\nworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
+});
+buildAsset({
+    assetPath: "./workflows/subworkflows/categories.yml",
+    targetPath: "./src/py/mat3ra/standata/data/subworkflows.py",
+    contentGenerator: (content) =>
+        `import json\n\nsubworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
