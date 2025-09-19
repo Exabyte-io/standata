@@ -3,33 +3,68 @@ import SUBWORKFLOWS from "./runtime_data/subworkflows.json";
 import WORKFLOWS from "./runtime_data/workflows.json";
 import workflowSubforkflowMapByApplication from "./runtime_data/workflowSubforkflowMapByApplication.json";
 
-export class WorkflowStandata extends Standata {
-    static runtimeData = WORKFLOWS;
+export const TAGS = {
+    RELAXATION: "variable_cell_relaxation",
+    DEFAULT: "default",
+};
 
-    findByApplication(appName: string) {
-        return this.findEntitiesByTags(appName);
+/**
+ * Generic, reusable Standata with all the shared queries.
+ * Only `runtimeData` differs between concrete types.
+ */
+type StandataEntity = { filename: string; categories: string[]; name?: string };
+type StandataRuntimeData = {
+    standataConfig: {
+        categories: {
+            application: string[];
+            property: string[];
+            material_count: string[];
+            workflow_type: string[];
+        };
+        entities: StandataEntity[];
+    };
+    filesMapByName: Record<string, unknown>;
+};
+
+abstract class TaggedStandata<T extends { name?: string }> extends Standata {
+    static runtimeData: StandataRuntimeData;
+
+    protected firstByTags(...tags: string[]): T | undefined {
+        const list = this.findEntitiesByTags(...tags) as T[];
+        return list[0];
     }
 
-    findByApplicationAndName(appName: string, displayName: string) {
-        return this.findByApplication(appName).find((w: any) => w?.name === displayName);
+    findByApplication(appName: string): T[] {
+        return this.findEntitiesByTags(appName) as T[];
     }
 
-    getRelaxationWorkflowByApplication(appName: string) {
-        const workflows = this.findEntitiesByTags("relaxation", appName);
-        if (workflows.length === 0) {
-            return undefined;
-        }
-        return workflows[0];
+    findByApplicationAndName(appName: string, displayName: string): T | undefined {
+        return this.findByApplication(appName).find((e) => e?.name === displayName);
     }
 
-    getDefault() {
-        const defaults = this.findEntitiesByTags("default");
-        return defaults[0];
+    getRelaxationByApplication(appName: string): T | undefined {
+        return this.firstByTags(TAGS.RELAXATION, appName);
+    }
+
+    getDefault(): T | undefined {
+        return this.firstByTags(TAGS.DEFAULT);
     }
 }
 
-export class SubworkflowStandata extends Standata {
-    static runtimeData = SUBWORKFLOWS;
+export class WorkflowStandata extends TaggedStandata<StandataEntity> {
+    static override runtimeData: StandataRuntimeData = WORKFLOWS;
+
+    getRelaxationWorkflowByApplication(appName: string) {
+        return this.getRelaxationByApplication(appName);
+    }
+}
+
+export class SubworkflowStandata extends TaggedStandata<StandataEntity> {
+    static override runtimeData: StandataRuntimeData = SUBWORKFLOWS;
+
+    getRelaxationSubworkflowByApplication(appName: string) {
+        return this.getRelaxationByApplication(appName);
+    }
 }
 
 export { workflowSubforkflowMapByApplication };

@@ -42,6 +42,29 @@ class WorkflowStandata(Standata):
 
     _runtime_data = workflows_data
 
+    @classmethod
+    def find_by_application(cls, app_name: str):
+        """Find workflows by application name."""
+        return cls.get_by_categories(app_name)
+
+    @classmethod
+    def find_by_application_and_name(cls, app_name: str, display_name: str):
+        """Find workflow by application name and display name."""
+        workflows = cls.find_by_application(app_name)
+        return next((w for w in workflows if w.get("name") == display_name), None)
+
+    @classmethod
+    def get_relaxation_workflow_by_application(cls, app_name: str):
+        """Get relaxation workflow for a specific application."""
+        workflows = cls.get_by_categories("relaxation", app_name)
+        return workflows[0] if workflows else None
+
+    @classmethod
+    def get_default(cls):
+        """Get the default workflow."""
+        defaults = cls.get_by_categories("default")
+        return defaults[0] if defaults else None
+
 
 class SubworkflowStandata(Standata):
     """
@@ -49,3 +72,26 @@ class SubworkflowStandata(Standata):
     """
 
     _runtime_data = subworkflows_data
+
+    @classmethod
+    def find_by_application(cls, app_name: str):
+        """Find subworkflows by application name."""
+        return cls.get_by_categories(app_name)
+
+    @classmethod
+    def find_by_application_and_name(cls, app_name: str, display_name: str):
+        """Find subworkflow by application name and display name."""
+        subworkflows = cls.find_by_application(app_name)
+        return next((sw for sw in subworkflows if sw.get("name") == display_name), None)
+
+    @classmethod
+    def get_relaxation_subworkflow_by_application(cls, app_name: str):
+        """Get relaxation subworkflow for a specific application."""
+        subworkflows = cls.get_by_categories("relaxation", app_name)
+        return subworkflows[0] if subworkflows else None
+
+    @classmethod
+    def get_default(cls):
+        """Get the default subworkflow."""
+        defaults = cls.get_by_categories("default")
+        return defaults[0] if defaults else None
