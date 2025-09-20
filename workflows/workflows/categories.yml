@@ -17,7 +17,7 @@ categories:
     - variable-cell_relaxation
     - default
 entities:
-  - filename: espresso_total_energy.json
+  - filename: espresso/total_energy.json
     categories:
       - espresso
       - atomic_forces
@@ -29,7 +29,7 @@ entities:
       - total_force
       - single-material
       - default
-  - filename: espresso_variable_cell_relaxation.json
+  - filename: espresso/variable_cell_relaxation.json
     categories:
       - espresso
       - total_energy
