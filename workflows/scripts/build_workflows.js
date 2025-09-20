@@ -25,6 +25,17 @@ function loadYamlIntoCollection(applicationName, directoryPath, filename, collec
     workflowSubforkflowMapByApplication[collectionKey][applicationName][key] = yaml.load(content);
 }
 
+/**
+ * Generates configuration JSON files for workflows or subworkflows.
+ *
+ * @param {Array} items - Array of objects containing appName, name, and config properties
+ * @param {string} type - Type of configuration files to generate ("workflow" or "subworkflow")
+ *
+ * Each item in the items array should have:
+ * - appName: The application name (used for directory structure)
+ * - name: The configuration name (used for filename)
+ * - config: The configuration object to be written as JSON
+ */
 function generateConfigFiles(items, type) {
     const outputBaseDir = path.resolve(__dirname, BASE_PATH, `${type}s`);
 
