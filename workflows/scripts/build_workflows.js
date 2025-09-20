@@ -50,7 +50,7 @@ applications.forEach((name) => {
     workflowSubforkflowMapByApplication.workflows[name] = {};
     workflowSubforkflowMapByApplication.subworkflows[name] = {};
 
-    const sourcesRoot = path.resolve(process.cwd(), "workflows", "sources");
+    const sourcesRoot = path.resolve(__dirname, BASE_PATH, "sources");
     const wfDir = path.resolve(sourcesRoot, "workflows", name);
     const swDir = path.resolve(sourcesRoot, "subworkflows", name);
 
@@ -79,6 +79,7 @@ builders.AssertionUnitConfigBuilder.usePredefinedIds = true;
 builders.ExecutionUnitConfigBuilder.usePredefinedIds = true;
 builders.IOUnitConfigBuilder.usePredefinedIds = true;
 
+UnitFactory.BaseUnit.usePredefinedIds = true;
 UnitFactory.AssignmentUnit.usePredefinedIds = true;
 UnitFactory.AssertionUnit.usePredefinedIds = true;
 UnitFactory.ExecutionUnit.usePredefinedIds = true;

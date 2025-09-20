@@ -27,9 +27,9 @@
     },
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",
-        "@exabyte-io/wode.js":   "git+https://github.com/Exabyte-io/wode.js.git#4ad9221d2705ba9a1cdcf67dac23022678d5f302",
+        "@exabyte-io/wode.js":   "git+https://github.com/Exabyte-io/wode.js.git#d1d09378d54e8933443c078044614c09f994c931",
         "@exabyte-io/application-flavors.js": "^2025.8.20-0",
-        "@mat3ra/utils": "git+https://github.com/Exabyte-io/utils.git#d1de822357ea8c2368d871ced57fdf390e2273d7",
+        "@mat3ra/utils": "2025.9.20-0",
         "@exabyte-io/ade.js": "^2025.8.20-0",
         "@mat3ra/tsconfig": "^2024.6.3-0",
         "@types/chai": "^4.3.5",
