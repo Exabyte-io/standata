@@ -6,7 +6,9 @@
         "units": [
           {
             "name": "total_energy",
-            "type": "subworkflow"
+            "type": "subworkflow",
+            "_id": "a27b9ca8-5618-528e-8f40-37c27883984f",
+            "flowchartId": "6559b2b5-61fb-4118-8663-d852ad041281"
           }
         ]
       },
@@ -15,7 +17,9 @@
         "units": [
           {
             "name": "variable_cell_relaxation",
-            "type": "subworkflow"
+            "type": "subworkflow",
+            "_id": "c8246dea-d0be-50f0-af61-2bd60eaa0f72",
+            "flowchartId": "63b2ecf3-15d5-4815-9183-3e3a600abd0b"
           }
         ]
       }
@@ -45,7 +49,8 @@
             "functions": {
               "head": true
             },
-            "type": "executionBuilder"
+            "type": "executionBuilder",
+            "flowchartId": "9fc7a088-5533-5f70-bb33-f676ec65f565"
           }
         ]
       },
@@ -74,7 +79,8 @@
             "functions": {
               "head": true
             },
-            "type": "executionBuilder"
+            "type": "executionBuilder",
+            "flowchartId": "e1bd0870-6245-5fc2-a50d-48cabc356ac8"
           }
         ]
       }
