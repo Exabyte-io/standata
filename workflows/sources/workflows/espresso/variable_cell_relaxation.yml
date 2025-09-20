@@ -2,5 +2,3 @@ name: Variable-cell Relaxation
 units:
 - name: variable_cell_relaxation
   type: subworkflow
-  _id: "c8246dea-d0be-50f0-af61-2bd60eaa0f72"
-  flowchartId: "63b2ecf3-15d5-4815-9183-3e3a600abd0b"

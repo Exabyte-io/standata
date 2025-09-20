@@ -2,5 +2,3 @@ name: Total Energy
 units:
 - name: total_energy
   type: subworkflow
-  _id: "a27b9ca8-5618-528e-8f40-37c27883984f"
-  flowchartId: "6559b2b5-61fb-4118-8663-d852ad041281"
