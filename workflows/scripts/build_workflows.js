@@ -2,12 +2,9 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const { createWorkflowConfigs, createSubworkflowByName } = require("@exabyte-io/wode.js");
-const { sharedUtils } = require("@mat3ra/utils");
-
-const { getUUIDFromNamespace } = sharedUtils.uuid;
-const NAMESPACE_UUID = "00000000-0000-4000-8000-000000000000";
 
 const applications = ["espresso"];
+const BASE_PATH = "..";
 
 const workflowSubforkflowMapByApplication = { workflows: {}, subworkflows: {} };
 
@@ -21,27 +18,24 @@ function loadYamlIntoCollection(applicationName, directoryPath, filename, collec
     workflowSubforkflowMapByApplication[collectionKey][applicationName][key] = yaml.load(content);
 }
 
-// Recursively traverse an object and replace UUIDs with a new common UUID
-function setUUIDsInObject(obj, newUUID) {
-    const uuidPattern =
-        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-    if (typeof obj === "string" && uuidPattern.test(obj)) {
-        return newUUID;
-    }
-    if (Array.isArray(obj)) {
-        return obj.map((item) => setUUIDsInObject(item, newUUID));
-    }
-    if (obj && typeof obj === "object") {
-        return Object.fromEntries(
-            Object.entries(obj).map(([key, value]) => [key, setUUIDsInObject(value, newUUID)]),
-        );
-    }
-    return obj;
-}
+function generateConfigFiles(items, type) {
+    const outputBaseDir = path.resolve(__dirname, BASE_PATH, `${type}s`);
 
-function returnConfigWithPredefinedIds(config) {
-    const newUUID = getUUIDFromNamespace(config.name, NAMESPACE_UUID);
-    return setUUIDsInObject(config, newUUID);
+    items.forEach((item) => {
+        const { appName } = item;
+        const { name } = item;
+        const { config } = item;
+
+        const appDir = path.resolve(outputBaseDir, appName);
+        if (!fs.existsSync(appDir)) {
+            fs.mkdirSync(appDir, { recursive: true });
+        }
+        const filename = `${name}.json`;
+        const filePath = path.resolve(appDir, filename);
+
+        fs.writeFileSync(filePath, JSON.stringify(config, null, 2), "utf8");
+        console.log(`Generated ${type}: ${appName}/${filename}`);
+    });
 }
 
 // Main script logic
@@ -53,43 +47,31 @@ applications.forEach((name) => {
     const wfDir = path.resolve(sourcesRoot, "workflows", name);
     const swDir = path.resolve(sourcesRoot, "subworkflows", name);
 
-    if (fs.existsSync(wfDir)) {
-        const wfFiles = fs.readdirSync(wfDir);
-        console.log(`Building ${name}: ${wfFiles.length} workflow(s)`);
-        wfFiles.forEach((file) => loadYamlIntoCollection(name, wfDir, file, "workflows"));
-    } else {
-        console.log(`Workflow directory not found for ${name}: ${wfDir}`);
-    }
+    const wfFiles = fs.readdirSync(wfDir);
+    console.log(`Building ${name}: ${wfFiles.length} workflow(s)`);
+    wfFiles.forEach((file) => loadYamlIntoCollection(name, wfDir, file, "workflows"));
 
-    if (fs.existsSync(swDir)) {
-        const swFiles = fs.readdirSync(swDir);
-        console.log(`Building ${name}: ${swFiles.length} subworkflow(s)`);
-        swFiles.forEach((file) => loadYamlIntoCollection(name, swDir, file, "subworkflows"));
-    } else {
-        console.log(`Subworkflow directory not found for ${name}: ${swDir}`);
-    }
+    const swFiles = fs.readdirSync(swDir);
+    console.log(`Building ${name}: ${swFiles.length} subworkflow(s)`);
+    swFiles.forEach((file) => loadYamlIntoCollection(name, swDir, file, "subworkflows"));
 });
-
-const workflowsDir = path.resolve(__dirname, "..", "workflows");
-const subworkflowsDir = path.resolve(__dirname, "..", "subworkflows");
 
 // Save the workflow and subworkflow map for usage in Wode or elsewhere
-const assetPath = path.resolve(__dirname, "..", "workflowSubforkflowMapByApplication.json");
+const assetPath = path.resolve(__dirname, BASE_PATH, "workflowSubforkflowMapByApplication.json");
 fs.writeFileSync(assetPath, JSON.stringify(workflowSubforkflowMapByApplication, null, 2), "utf8");
 
+// Generate workflows
 const workflowConfigs = createWorkflowConfigs(applications, workflowSubforkflowMapByApplication);
+const workflowItems = workflowConfigs.map((config) => ({
+    appName: config.application,
+    name: config.name.toLowerCase().replace(/[^a-z0-9]/g, "_"),
+    config: config.config,
+}));
 
-workflowConfigs.forEach((config) => {
-    const predefinedConfig = returnConfigWithPredefinedIds(config.config);
-    const appName = config.application;
-    const workflowName = config.name.toLowerCase().replace(/[^a-z0-9]/g, "_");
-    const filename = `${appName}_${workflowName}.json`;
-    const filePath = path.resolve(workflowsDir, filename);
-    fs.writeFileSync(filePath, JSON.stringify(predefinedConfig, null, 2), "utf8");
+generateConfigFiles(workflowItems, "workflow");
 
-    console.log(`Generated workflow: ${filename}`);
-});
-
+// Generate subworkflows
+const subworkflowItems = [];
 applications.forEach((appName) => {
     const subworkflows = workflowSubforkflowMapByApplication.subworkflows[appName];
     if (!subworkflows) return;
@@ -101,12 +83,12 @@ applications.forEach((appName) => {
             workflowsData: workflowSubforkflowMapByApplication,
         });
 
-        const subworkflowJson = subworkflow.toJSON();
-        const predefinedConfig = returnConfigWithPredefinedIds(subworkflowJson);
-        const filename = `${appName}_${subworkflowName}.json`;
-        const filePath = path.resolve(subworkflowsDir, filename);
-        fs.writeFileSync(filePath, JSON.stringify(predefinedConfig, null, 2), "utf8");
-
-        console.log(`Generated subworkflow: ${filename}`);
+        subworkflowItems.push({
+            appName,
+            name: subworkflowName,
+            config: subworkflow.toJSON(),
+        });
     });
 });
+
+generateConfigFiles(subworkflowItems, "subworkflow");
