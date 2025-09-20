@@ -1,7 +1,14 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
-const { createWorkflowConfigs, createSubworkflowByName } = require("@exabyte-io/wode.js");
+const {
+    createWorkflowConfigs,
+    createSubworkflowByName,
+    Workflow,
+    Subworkflow,
+    builders,
+    UnitFactory,
+} = require("@exabyte-io/wode.js");
 
 const applications = ["espresso"];
 const BASE_PATH = "..";
@@ -60,8 +67,39 @@ applications.forEach((name) => {
 const assetPath = path.resolve(__dirname, BASE_PATH, "workflowSubforkflowMapByApplication.json");
 fs.writeFileSync(assetPath, JSON.stringify(workflowSubforkflowMapByApplication, null, 2), "utf8");
 
+const WorkflowCls = Workflow;
+WorkflowCls.usePredefinedIds = true;
+
+const SubworkflowCls = Subworkflow;
+SubworkflowCls.usePredefinedIds = true;
+
+builders.UnitConfigBuilder.usePredefinedIds = true;
+builders.AssignmentUnitConfigBuilder.usePredefinedIds = true;
+builders.AssertionUnitConfigBuilder.usePredefinedIds = true;
+builders.ExecutionUnitConfigBuilder.usePredefinedIds = true;
+builders.IOUnitConfigBuilder.usePredefinedIds = true;
+
+UnitFactory.AssignmentUnit.usePredefinedIds = true;
+UnitFactory.AssertionUnit.usePredefinedIds = true;
+UnitFactory.ExecutionUnit.usePredefinedIds = true;
+UnitFactory.IOUnit.usePredefinedIds = true;
+UnitFactory.SubworkflowUnit.usePredefinedIds = true;
+UnitFactory.ConditionUnit.usePredefinedIds = true;
+UnitFactory.MapUnit.usePredefinedIds = true;
+UnitFactory.ProcessingUnit.usePredefinedIds = true;
+
 // Generate workflows
-const workflowConfigs = createWorkflowConfigs(applications, workflowSubforkflowMapByApplication);
+const workflowConfigs = createWorkflowConfigs({
+    applications,
+    WorkflowCls,
+    workflowSubforkflowMapByApplication,
+    SubworkflowCls,
+    UnitFactoryCls: UnitFactory,
+    unitBuilders: {
+        ...builders,
+        Workflow: WorkflowCls,
+    },
+});
 const workflowItems = workflowConfigs.map((config) => ({
     appName: config.application,
     name: config.name.toLowerCase().replace(/[^a-z0-9]/g, "_"),
