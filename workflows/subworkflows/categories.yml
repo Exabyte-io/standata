@@ -14,7 +14,7 @@ categories:
     - single-material
     - multi-material
   workflow_type:
-    - calculation
+    - default
     - variable-cell_relaxation
 entities:
   - filename: espresso/total_energy.json
@@ -28,7 +28,7 @@ entities:
       - total_energy_contributions
       - total_force
       - single-material
-      - calculation
+      - default
   - filename: espresso/variable_cell_relaxation.json
     categories:
       - espresso
