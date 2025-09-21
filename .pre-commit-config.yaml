@@ -15,7 +15,8 @@ repos:
         entry: npm run build:dist && exit 0
         pass_filenames: false
         verbose: true
-        files: ^materials|applications|workflows|properties/
+        files: ^(materials/sources/|applications/|properties/|workflows/wode/(sources|scripts)/)
+        exclude: ^(workflows/(?!wode/)|src/js/runtime_data/|dist/)
   - repo: https://github.com/Exabyte-io/pre-commit-hooks
     rev: 2023.8.18
     hooks:
@@ -26,7 +27,9 @@ repos:
       - id: isort
       - id: mypy
       - id: check-yaml
+        exclude: ^applications/sources/.*\.ya?ml$
       - id: end-of-file-fixer
+        exclude: ^(workflows|applications)/.*\.json$
       - id: trailing-whitespace
   - repo: local
     hooks:

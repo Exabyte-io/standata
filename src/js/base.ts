@@ -96,4 +96,10 @@ export class Standata {
         const filenames = this.filterByCategories(...categories_) || [];
         return filenames.map((f) => this.loadEntity(f)).filter((e): e is object => e !== undefined);
     }
+
+    getAll(): object[] {
+        return this.entities
+            .map((e) => this.loadEntity(e.filename))
+            .filter((e): e is object => e !== undefined);
+    }
 }
