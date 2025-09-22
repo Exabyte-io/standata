@@ -1,140 +1,100 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
+const lodash = require("lodash");
+const utils = require("@mat3ra/code/dist/js/utils");
 
-const applications = ["espresso"];
-const BASE_PATH = "..";
+const APPLICATION_ASSET_PATH = path.resolve(__dirname, "../sources/applications");
+const MODEL_ASSET_PATH = path.resolve(__dirname, "../sources/models");
+const METHOD_ASSET_PATH = path.resolve(__dirname, "../sources/methods");
 
-const applicationDataByApplication = { applications: {}, methods: {}, models: {} };
+const APPLICATION_DATA = {};
+const MODEL_FILTER_TREE = {};
+const METHOD_FILTER_TREE = {};
 
-// Helper functions
-function loadYamlIntoCollection(applicationName, directoryPath, filename, collectionKey) {
-    const entryPath = path.resolve(directoryPath, filename);
-    if (!fs.existsSync(entryPath) || !fs.statSync(entryPath).isFile()) return;
-    if (!/\.(yml|yaml)$/i.test(filename)) return;
-    const content = fs.readFileSync(entryPath, "utf8");
-    const key = filename.replace(/\.(yml|yaml)$/i, "");
-    applicationDataByApplication[collectionKey][applicationName][key] = yaml.load(content);
+/**
+ * Reads asset file and stores asset data in target object under object path which reflects the file system.
+ * @param {Object} targetObject - Object in which asset data should be stored
+ * @param {string} assetPath - Absolute path to asset file.
+ * @param {string} assetRoot - Path to asset root directory to construct relative path.
+ */
+function loadAndInsertAssetData(targetObject, assetPath, assetRoot) {
+    const fileContent = fs.readFileSync(assetPath, "utf8");
+    const data = yaml.load(fileContent, { schema: utils.JsYamlAllSchemas });
+    const objectPath = utils.createObjectPathFromFilePath(assetPath, assetRoot);
+    lodash.set(targetObject, objectPath, data);
 }
 
 /**
- * Generates configuration JSON files for applications, methods, or models.
- *
- * @param {Array} items - Array of objects containing appName, name, and config properties
- * @param {string} type - Type of configuration files to generate ("application", "method", or "model")
- *
- * Each item in the items array should have:
- * - appName: The application name (used for directory structure)
- * - name: The configuration name (used for filename)
- * - config: The configuration object to be written as JSON
+ * Traverse asset folder recursively and load asset files.
+ * @param currPath {string} - path to asset directory
+ * @param {Object} targetObj - Object in which assets are assigned
+ * @param {string} assetRoot - Path to asset root directory to construct relative path.
  */
-function generateConfigFiles(items, type) {
-    const outputBaseDir = path.resolve(__dirname, BASE_PATH, `${type}s`);
+const getAssetData = (currPath, targetObj, assetRoot) => {
+    const branches = utils.getDirectories(currPath);
+    const assetFiles = utils.getFilesInDirectory(currPath, [".yml", ".yaml"], false);
 
-    items.forEach((item) => {
-        const { appName } = item;
-        const { name } = item;
-        const { config } = item;
-
-        const appDir = path.resolve(outputBaseDir, appName);
-        if (!fs.existsSync(appDir)) {
-            fs.mkdirSync(appDir, { recursive: true });
+    assetFiles.forEach((asset) => {
+        try {
+            loadAndInsertAssetData(targetObj, path.join(currPath, asset), assetRoot);
+        } catch (e) {
+            console.log(e);
         }
-        const filename = `${name}.json`;
-        const filePath = path.resolve(appDir, filename);
-
-        fs.writeFileSync(filePath, JSON.stringify(config, null, 2), "utf8");
-        console.log(`Generated ${type}: ${appName}/${filename}`);
     });
-}
+    branches.forEach((b) => {
+        getAssetData(path.resolve(currPath, b), targetObj, assetRoot);
+    });
+};
 
-// Main script logic
-applications.forEach((name) => {
-    applicationDataByApplication.applications[name] = {};
-    applicationDataByApplication.methods[name] = {};
-    applicationDataByApplication.models[name] = {};
+getAssetData(APPLICATION_ASSET_PATH, APPLICATION_DATA, APPLICATION_ASSET_PATH);
+getAssetData(MODEL_ASSET_PATH, MODEL_FILTER_TREE, MODEL_ASSET_PATH);
+getAssetData(METHOD_ASSET_PATH, METHOD_FILTER_TREE, METHOD_ASSET_PATH);
 
-    const sourcesRoot = path.resolve(__dirname, BASE_PATH, "sources");
-    const appDir = path.resolve(sourcesRoot, "applications");
-    const methodDir = path.resolve(sourcesRoot, "methods", name);
-    const modelDir = path.resolve(sourcesRoot, "models", name);
+// Extract clean application data
+const cleanApplicationData = {};
 
-    // Load applications
-    if (fs.existsSync(appDir)) {
-        const appFiles = fs.readdirSync(appDir);
-        console.log(`Building ${name}: ${appFiles.length} application file(s)`);
-        appFiles.forEach((file) => loadYamlIntoCollection(name, appDir, file, "applications"));
-    }
-
-    // Load methods
-    if (fs.existsSync(methodDir)) {
-        const methodFiles = fs.readdirSync(methodDir);
-        console.log(`Building ${name}: ${methodFiles.length} method file(s)`);
-        methodFiles.forEach((file) => loadYamlIntoCollection(name, methodDir, file, "methods"));
-    }
-
-    // Load models
-    if (fs.existsSync(modelDir)) {
-        const modelFiles = fs.readdirSync(modelDir);
-        console.log(`Building ${name}: ${modelFiles.length} model file(s)`);
-        modelFiles.forEach((file) => loadYamlIntoCollection(name, modelDir, file, "models"));
+// Handle the nested structure created by utility functions
+Object.values(APPLICATION_DATA).forEach((levelData) => {
+    if (levelData && typeof levelData === "object") {
+        Object.values(levelData).forEach((appData) => {
+            if (appData && typeof appData === "object" && appData.name) {
+                cleanApplicationData[appData.name] = appData;
+            }
+        });
     }
 });
 
-// Save the application data map for usage elsewhere
-const assetPath = path.resolve(__dirname, BASE_PATH, "applicationDataByApplication.json");
-fs.writeFileSync(assetPath, JSON.stringify(applicationDataByApplication, null, 2), "utf8");
-
-// Generate application configuration files
-const applicationItems = [];
-applications.forEach((appName) => {
-    const apps = applicationDataByApplication.applications[appName];
-    if (!apps) return;
-
-    Object.keys(apps).forEach((applicationName) => {
-        const config = apps[applicationName];
-        applicationItems.push({
-            appName,
-            name: applicationName,
-            config,
-        });
-    });
+// Generate individual application files
+Object.keys(cleanApplicationData).forEach((appName) => {
+    const config = cleanApplicationData[appName];
+    const appDir = path.resolve(__dirname, "..", "applications", appName);
+    if (!fs.existsSync(appDir)) {
+        fs.mkdirSync(appDir, { recursive: true });
+    }
+    const filePath = path.resolve(appDir, `${appName}.json`);
+    fs.writeFileSync(filePath, JSON.stringify(config, null, 2), "utf8");
+    console.log(`Generated application: ${appName}/${appName}.json`);
 });
 
-generateConfigFiles(applicationItems, "application");
+// Save consolidated files
+const applicationDataByApplication = cleanApplicationData;
 
-// Generate method configuration files
-const methodItems = [];
-applications.forEach((appName) => {
-    const methods = applicationDataByApplication.methods[appName];
-    if (!methods) return;
+const modelMethodMapByApplication = {
+    models: MODEL_FILTER_TREE,
+    methods: METHOD_FILTER_TREE,
+};
 
-    Object.keys(methods).forEach((methodName) => {
-        const config = methods[methodName];
-        methodItems.push({
-            appName,
-            name: methodName,
-            config,
-        });
-    });
-});
+fs.writeFileSync(
+    path.resolve(__dirname, "..", "applicationDataByApplication.json"),
+    JSON.stringify(applicationDataByApplication, null, 2),
+    "utf8",
+);
 
-generateConfigFiles(methodItems, "method");
+fs.writeFileSync(
+    path.resolve(__dirname, "..", "modelMethodMapByApplication.json"),
+    JSON.stringify(modelMethodMapByApplication, null, 2),
+    "utf8",
+);
 
-// Generate model configuration files
-const modelItems = [];
-applications.forEach((appName) => {
-    const models = applicationDataByApplication.models[appName];
-    if (!models) return;
-
-    Object.keys(models).forEach((modelName) => {
-        const config = models[modelName];
-        modelItems.push({
-            appName,
-            name: modelName,
-            config,
-        });
-    });
-});
-
-generateConfigFiles(modelItems, "model");
+console.log("Generated consolidated model and method mapping: modelMethodMapByApplication.json");
