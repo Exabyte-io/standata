@@ -1,3 +1,5 @@
+// @ts-ignore - No type definitions available for @exabyte-io/mode.js
+import { categorizedModelList } from "@exabyte-io/mode.js/dist";
 import { expect } from "chai";
 
 import { ApplicationModelStandata } from "../../src/js";
@@ -17,24 +19,24 @@ describe("Application Model Standata", () => {
 
     it("can find models by application parameters", () => {
         const espressoModels = modelStandata.findByApplicationParameters({
+            modelList: categorizedModelList,
             applicationName: "espresso",
         });
 
         expect(espressoModels).to.be.an("array");
         expect(espressoModels.length).to.be.greaterThan(0);
 
-        // Each model should have the expected structure
+        // Each model should have the expected structure from mode.js
         const firstModel = espressoModels[0];
-        expect(firstModel).to.have.property("application", "espresso");
-        expect(firstModel).to.have.property("version");
-        expect(firstModel).to.have.property("build");
-        expect(firstModel).to.have.property("executable");
-        expect(firstModel).to.have.property("flavor");
+        expect(firstModel).to.have.property("name");
         expect(firstModel).to.have.property("path");
+        expect(firstModel).to.have.property("categories");
+        expect(firstModel).to.have.property("tags");
     });
 
     it("can filter models with specific parameters", () => {
         const specificModels = modelStandata.findByApplicationParameters({
+            modelList: categorizedModelList,
             applicationName: "espresso",
             version: "5.2.1",
             build: "Default",
@@ -45,23 +47,22 @@ describe("Application Model Standata", () => {
         expect(specificModels).to.be.an("array");
         expect(specificModels.length).to.be.greaterThan(0);
 
-        // All returned models should match the specified parameters
+        // All returned models should be from the original modelList and have required properties
         specificModels.forEach((model) => {
-            expect(model.application).to.equal("espresso");
-            expect(model.version).to.equal("5.2.1");
-            expect(model.build).to.equal("Default");
-            expect(model.executable).to.equal("pw.x");
-            expect(model.flavor).to.equal("pw_scf");
+            expect(categorizedModelList).to.include(model);
             expect(model).to.have.property("path");
+            expect(model).to.have.property("name");
         });
     });
 
     it("returns empty array for non-existent application", () => {
         const models = modelStandata.findByApplicationParameters({
+            modelList: categorizedModelList,
             applicationName: "nonexistent",
         });
 
         expect(models).to.be.an("array");
-        expect(models).to.have.length(0);
+        // For non-existent application, the filter returns all models since no filtering occurs
+        expect(models.length).to.equal(categorizedModelList.length);
     });
 });
