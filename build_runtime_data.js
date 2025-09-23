@@ -76,6 +76,19 @@ if (fs.existsSync(workflowMapSourcePath)) {
     );
 }
 
+// Copy modelMethodMapByApplication.json to runtime_data
+const modelMethodMapSourcePath = "./applications/modelMethodMapByApplication.json";
+const modelMethodMapTargetPath = `${runtimeDataDir}/modelMethodMapByApplication.json`;
+if (fs.existsSync(modelMethodMapSourcePath)) {
+    const modelMethodMapContent = fs.readFileSync(modelMethodMapSourcePath, "utf8");
+    fs.writeFileSync(modelMethodMapTargetPath, modelMethodMapContent, "utf8");
+    console.log(`Copied modelMethodMapByApplication.json to "${modelMethodMapTargetPath}"`);
+} else {
+    console.warn(
+        `Warning: ${modelMethodMapSourcePath} not found. Run 'npm run build:applications' first.`,
+    );
+}
+
 // Py Modules
 
 buildAsset({
