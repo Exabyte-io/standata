@@ -1,4 +1,5 @@
 import { ApplicationFilterStandata } from "./application";
+import MODEL_METHOD_DATA from "./runtime_data/modelMethodMapByApplication.json";
 
 export interface ApplicationMethodParametersInterface {
     methodList: any[];
@@ -11,7 +12,8 @@ export interface ApplicationMethodParametersInterface {
 
 export class ApplicationMethodStandata extends ApplicationFilterStandata {
     constructor() {
-        super("methods");
+        const data = MODEL_METHOD_DATA as any;
+        super(data?.methods);
     }
 
     findByApplicationParameters({

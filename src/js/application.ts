@@ -1,6 +1,5 @@
 import { Standata } from "./base";
 import APPLICATIONS from "./runtime_data/applications.json";
-import MODEL_METHOD_DATA from "./runtime_data/modelMethodMapByApplication.json";
 
 export class ApplicationStandata extends Standata {
     static runtimeData = APPLICATIONS;
@@ -127,9 +126,8 @@ function filterEntityList({
 export abstract class ApplicationFilterStandata {
     protected filterTree: any;
 
-    constructor(treeType: "models" | "methods") {
-        const data = MODEL_METHOD_DATA as any;
-        this.filterTree = data?.[treeType] || {};
+    constructor(filterTree: any) {
+        this.filterTree = filterTree || {};
     }
 
     protected filterByApplicationParameters(
