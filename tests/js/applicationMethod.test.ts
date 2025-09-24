@@ -1,5 +1,7 @@
 // @ts-ignore - No type definitions available for @exabyte-io/mode.js
-import { categorizedMethodList } from "@exabyte-io/mode.js/dist";
+import { categorizedMethodList, categorizedModelList } from "@exabyte-io/mode.js/dist";
+// @ts-ignore - No type definitions available for @exabyte-io/mode.js
+import { filterMethodsByModel } from "@exabyte-io/mode.js/dist/tree";
 import { expect } from "chai";
 
 import { ApplicationMethodStandata } from "../../src/js";
@@ -52,6 +54,35 @@ describe("Application Method Standata", () => {
         // All returned methods should be from the original methodList and have required properties
         specificMethods.forEach((method) => {
             expect(categorizedMethodList).to.include(method);
+            expect(method).to.have.property("path");
+            expect(method).to.have.property("name");
+        });
+    });
+
+    it("can filter methods using realistic two-step process like webapp", () => {
+        // Use a sample model from the categorized model list
+        const sampleModel = categorizedModelList[0];
+
+        // Step 1: Filter methods by model (like in webapp)
+        const filteredMethods = filterMethodsByModel({
+            methodList: categorizedMethodList,
+            model: sampleModel,
+        });
+
+        expect(filteredMethods).to.be.an("array");
+
+        // Step 2: Further filter by application parameters (like in webapp)
+        const finalMethods = methodStandata.findByApplicationParameters({
+            methodList: filteredMethods,
+            applicationName: "espresso",
+            version: "5.2.1",
+            build: "Default",
+        });
+
+        expect(finalMethods).to.be.an("array");
+        // All returned methods should be from the filtered list
+        finalMethods.forEach((method) => {
+            expect(filteredMethods).to.include(method);
             expect(method).to.have.property("path");
             expect(method).to.have.property("name");
         });
