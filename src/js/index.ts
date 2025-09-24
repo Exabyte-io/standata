@@ -1,6 +1,6 @@
 export { Standata } from "./base";
 export { MaterialStandata } from "./material";
-export { ApplicationStandata, ApplicationFilterStandata } from "./application";
+export { ApplicationStandata } from "./application";
 export { PropertyStandata } from "./property";
 export {
     WorkflowStandata,

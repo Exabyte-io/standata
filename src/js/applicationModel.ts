@@ -1,4 +1,4 @@
-import { ApplicationFilterStandata } from "./application";
+import { ApplicationFilterStandata } from "./utils/applicationFilter";
 import MODEL_METHOD_DATA from "./runtime_data/modelMethodMapByApplication.json";
 
 export interface ApplicationModelParametersInterface {
