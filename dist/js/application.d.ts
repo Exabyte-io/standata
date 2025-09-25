@@ -1,4 +1,5 @@
 import { Standata } from "./base";
+import type { ApplicationData, ApplicationExecutableTree, ApplicationName, Template } from "./types";
 export declare class ApplicationStandata extends Standata {
     static runtimeData: {
         standataConfig: {
@@ -33,4 +34,12 @@ export declare class ApplicationStandata extends Standata {
             };
         };
     };
+    static getAppData(appName: ApplicationName): ApplicationData;
+    static getAppTree(appName: ApplicationName): ApplicationExecutableTree;
+    static getAllAppData(): any;
+    static getAllAppTemplates(): Template[];
+    static getAllAppTree(): any;
+    static getAllApplicationNames(): ApplicationName[];
+    static getTemplatesByName(appName: ApplicationName, execName: string, templateName?: string): Template[];
+    getByApplicationName(appName: string): any[];
 }
