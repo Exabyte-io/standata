@@ -6,7 +6,7 @@
 const BUILD_CONFIG = {
     applications: {
         templatesMapByApplication: "templatesMapByApplication.json",
-        applicationDataByApplication: "applicationDataByApplication.json",
+        applicationDataMapByApplication: "applicationDataMapByApplication.json",
         executableFlavorMapByApplication: "executableFlavorMapByApplication.json",
         modelMethodMapByApplication: "modelMethodMapByApplication.json",
     },

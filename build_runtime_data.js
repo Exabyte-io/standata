@@ -92,8 +92,8 @@ copyJsonAsset({
 });
 
 copyJsonAsset({
-    sourcePath: `./applications/${BUILD_CONFIG.applications.applicationDataByApplication}`,
-    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.applicationDataByApplication}`,
+    sourcePath: `./applications/${BUILD_CONFIG.applications.applicationDataMapByApplication}`,
+    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.applicationDataMapByApplication}`,
 });
 
 copyJsonAsset({

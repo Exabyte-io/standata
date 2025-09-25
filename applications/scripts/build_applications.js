@@ -3,6 +3,7 @@ const path = require("path");
 const yaml = require("js-yaml");
 const lodash = require("lodash");
 const utils = require("@mat3ra/code/dist/js/utils");
+const BUILD_CONFIG = require("../../build-config");
 
 function buildAsset({ assetPath, targetPath, workingDir = null }) {
     const originalCwd = process.cwd();
@@ -51,20 +52,20 @@ function getAssetData(currPath, targetObj, assetRoot) {
 }
 
 buildAsset({
-    assetPath: "templates/templates.yml",
-    targetPath: "./applications/templatesByApplication.json",
+    assetPath: BUILD_CONFIG.sources.templates,
+    targetPath: `./applications/${BUILD_CONFIG.applications.templatesMapByApplication}`,
     workingDir: "./applications/sources",
 });
 
 buildAsset({
-    assetPath: "applications/application_data.yml",
-    targetPath: "./applications/applicationDataByApplication.json",
+    assetPath: BUILD_CONFIG.sources.applicationData,
+    targetPath: `./applications/${BUILD_CONFIG.applications.applicationDataMapByApplication}`,
     workingDir: "./applications/sources",
 });
 
 buildAsset({
-    assetPath: "executables/tree.yml",
-    targetPath: "./applications/executableFlavorByApplication.json",
+    assetPath: BUILD_CONFIG.sources.executableTree,
+    targetPath: `./applications/${BUILD_CONFIG.applications.executableFlavorMapByApplication}`,
     workingDir: "./applications/sources",
 });
 
@@ -111,13 +112,13 @@ const modelMethodMapByApplication = {
 };
 
 fs.writeFileSync(
-    path.resolve(__dirname, "..", "applicationDataByApplication.json"),
+    path.resolve(__dirname, "..", BUILD_CONFIG.applications.applicationDataMapByApplication),
     JSON.stringify(applicationDataByApplication, null, 2),
     "utf8",
 );
 
 fs.writeFileSync(
-    path.resolve(__dirname, "..", "modelMethodMapByApplication.json"),
+    path.resolve(__dirname, "..", BUILD_CONFIG.applications.modelMethodMapByApplication),
     JSON.stringify(modelMethodMapByApplication, null, 2),
     "utf8",
 );
