@@ -50,7 +50,7 @@ buildAsset({
 // Build application tree JSON
 buildAsset({
     assetPath: "executables/tree.yml",
-    targetPath: "./applications/applicationTreeByApplication.json",
+    targetPath: "./applications/executableFlavorByApplication.json",
     workingDir: "./applications/sources",
 });
 
