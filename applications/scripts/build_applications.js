@@ -4,13 +4,28 @@ const yaml = require("js-yaml");
 const lodash = require("lodash");
 const utils = require("@mat3ra/code/dist/js/utils");
 
-const APPLICATION_ASSET_PATH = path.resolve(__dirname, "../sources/applications");
-const MODEL_ASSET_PATH = path.resolve(__dirname, "../sources/models");
-const METHOD_ASSET_PATH = path.resolve(__dirname, "../sources/methods");
+function buildAsset({ assetPath, targetPath, workingDir = null }) {
+    const originalCwd = process.cwd();
 
-const APPLICATION_DATA = {};
-const MODEL_FILTER_TREE = {};
-const METHOD_FILTER_TREE = {};
+    try {
+        if (workingDir) {
+            process.chdir(path.resolve(originalCwd, workingDir));
+        }
+
+        const fileContent = fs.readFileSync(assetPath);
+        const obj = yaml.load(fileContent, { schema: utils.JsYamlAllSchemas });
+
+        fs.writeFileSync(
+            path.resolve(originalCwd, targetPath),
+            JSON.stringify(obj, null, 2),
+            "utf8",
+        );
+        console.log(`Written asset "${assetPath}" to "${targetPath}"`);
+        return obj;
+    } finally {
+        process.chdir(originalCwd);
+    }
+}
 
 /**
  * Reads asset file and stores asset data in target object under object path which reflects the file system.
@@ -47,14 +62,39 @@ const getAssetData = (currPath, targetObj, assetRoot) => {
     });
 };
 
+
+buildAsset({
+    assetPath: "templates/templates.yml",
+    targetPath: "./applications/templatesByApplication.json",
+    workingDir: "./applications/sources",
+});
+
+buildAsset({
+    assetPath: "applications/application_data.yml",
+    targetPath: "./applications/applicationDataByApplication.json",
+    workingDir: "./applications/sources",
+});
+
+buildAsset({
+    assetPath: "executables/tree.yml",
+    targetPath: "./applications/executableFlavorByApplication.json",
+    workingDir: "./applications/sources",
+});
+
+const APPLICATION_ASSET_PATH = path.resolve(__dirname, "../sources/applications");
+const MODEL_ASSET_PATH = path.resolve(__dirname, "../sources/models");
+const METHOD_ASSET_PATH = path.resolve(__dirname, "../sources/methods");
+
+const APPLICATION_DATA = {};
+const MODEL_FILTER_TREE = {};
+const METHOD_FILTER_TREE = {};
+
 getAssetData(APPLICATION_ASSET_PATH, APPLICATION_DATA, APPLICATION_ASSET_PATH);
 getAssetData(MODEL_ASSET_PATH, MODEL_FILTER_TREE, MODEL_ASSET_PATH);
 getAssetData(METHOD_ASSET_PATH, METHOD_FILTER_TREE, METHOD_ASSET_PATH);
 
-// Extract clean application data
 const cleanApplicationData = {};
 
-// Handle the nested structure created by utility functions
 Object.values(APPLICATION_DATA).forEach((levelData) => {
     if (levelData && typeof levelData === "object") {
         Object.values(levelData).forEach((appData) => {
@@ -65,7 +105,6 @@ Object.values(APPLICATION_DATA).forEach((levelData) => {
     }
 });
 
-// Generate individual application files
 Object.keys(cleanApplicationData).forEach((appName) => {
     const config = cleanApplicationData[appName];
     const appDir = path.resolve(__dirname, "..", "applications", appName);
@@ -77,7 +116,7 @@ Object.keys(cleanApplicationData).forEach((appName) => {
     console.log(`Generated application: ${appName}/${appName}.json`);
 });
 
-// Save consolidated files
+
 const applicationDataByApplication = cleanApplicationData;
 
 const modelMethodMapByApplication = {
