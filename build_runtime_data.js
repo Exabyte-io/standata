@@ -51,7 +51,7 @@ buildAsset({
     targetPath: `${runtimeDataDir}/properties.json`,
 });
 buildAsset({
-    assetPath: "./applications/categories.yml",
+    assetPath: "./applications/applications/categories.yml",
     targetPath: `${runtimeDataDir}/applications.json`,
 });
 buildAsset({
@@ -69,9 +69,7 @@ function copyJsonAsset({ sourcePath, targetPath, buildCommand }) {
         fs.writeFileSync(targetPath, content, "utf8");
         console.log(`Copied ${path.basename(sourcePath)} to "${targetPath}"`);
     } else {
-        console.warn(
-            `Warning: ${sourcePath} not found. Run '${buildCommand}' first.`,
-        );
+        console.warn(`Warning: ${sourcePath} not found. Run '${buildCommand}' first.`);
     }
 }
 
@@ -79,25 +77,25 @@ function copyJsonAsset({ sourcePath, targetPath, buildCommand }) {
 copyJsonAsset({
     sourcePath: "./workflows/workflowSubforkflowMapByApplication.json",
     targetPath: `${runtimeDataDir}/workflowSubforkflowMapByApplication.json`,
-    buildCommand: "npm run build:workflows"
+    buildCommand: "npm run build:workflows",
 });
 
 copyJsonAsset({
     sourcePath: "./applications/modelMethodMapByApplication.json",
     targetPath: `${runtimeDataDir}/modelMethodMapByApplication.json`,
-    buildCommand: "npm run build:applications"
+    buildCommand: "npm run build:applications",
 });
 
 copyJsonAsset({
     sourcePath: "./applications/applicationTreeByApplication.json",
     targetPath: `${runtimeDataDir}/applicationTreeByApplication.json`,
-    buildCommand: "npm run build:templates"
+    buildCommand: "npm run build:templates",
 });
 
 copyJsonAsset({
     sourcePath: "./applications/templatesByApplication.json",
     targetPath: `${runtimeDataDir}/templatesByApplication.json`,
-    buildCommand: "npm run build:templates"
+    buildCommand: "npm run build:templates",
 });
 
 // Py Modules
@@ -115,7 +113,7 @@ buildAsset({
         `import json\n\nproperties_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: "./applications/categories.yml",
+    assetPath: "./applications/applications/categories.yml",
     targetPath: "./src/py/mat3ra/standata/data/applications.py",
     contentGenerator: (content) =>
         `import json\n\napplications_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
