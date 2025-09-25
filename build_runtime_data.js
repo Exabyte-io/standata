@@ -63,31 +63,42 @@ buildAsset({
     targetPath: `${runtimeDataDir}/subworkflows.json`,
 });
 
-// Copy workflowSubforkflowMapByApplication.json to runtime_data
-const workflowMapSourcePath = "./workflows/workflowSubforkflowMapByApplication.json";
-const workflowMapTargetPath = `${runtimeDataDir}/workflowSubforkflowMapByApplication.json`;
-if (fs.existsSync(workflowMapSourcePath)) {
-    const workflowMapContent = fs.readFileSync(workflowMapSourcePath, "utf8");
-    fs.writeFileSync(workflowMapTargetPath, workflowMapContent, "utf8");
-    console.log(`Copied workflowSubforkflowMapByApplication.json to "${workflowMapTargetPath}"`);
-} else {
-    console.warn(
-        `Warning: ${workflowMapSourcePath} not found. Run 'npm run build:workflows' first.`,
-    );
+function copyJsonAsset({ sourcePath, targetPath, buildCommand }) {
+    if (fs.existsSync(sourcePath)) {
+        const content = fs.readFileSync(sourcePath, "utf8");
+        fs.writeFileSync(targetPath, content, "utf8");
+        console.log(`Copied ${path.basename(sourcePath)} to "${targetPath}"`);
+    } else {
+        console.warn(
+            `Warning: ${sourcePath} not found. Run '${buildCommand}' first.`,
+        );
+    }
 }
 
-// Copy modelMethodMapByApplication.json to runtime_data
-const modelMethodMapSourcePath = "./applications/modelMethodMapByApplication.json";
-const modelMethodMapTargetPath = `${runtimeDataDir}/modelMethodMapByApplication.json`;
-if (fs.existsSync(modelMethodMapSourcePath)) {
-    const modelMethodMapContent = fs.readFileSync(modelMethodMapSourcePath, "utf8");
-    fs.writeFileSync(modelMethodMapTargetPath, modelMethodMapContent, "utf8");
-    console.log(`Copied modelMethodMapByApplication.json to "${modelMethodMapTargetPath}"`);
-} else {
-    console.warn(
-        `Warning: ${modelMethodMapSourcePath} not found. Run 'npm run build:applications' first.`,
-    );
-}
+// Copy JSON assets to runtime_data
+copyJsonAsset({
+    sourcePath: "./workflows/workflowSubforkflowMapByApplication.json",
+    targetPath: `${runtimeDataDir}/workflowSubforkflowMapByApplication.json`,
+    buildCommand: "npm run build:workflows"
+});
+
+copyJsonAsset({
+    sourcePath: "./applications/modelMethodMapByApplication.json",
+    targetPath: `${runtimeDataDir}/modelMethodMapByApplication.json`,
+    buildCommand: "npm run build:applications"
+});
+
+copyJsonAsset({
+    sourcePath: "./applications/applicationTreeByApplication.json",
+    targetPath: `${runtimeDataDir}/applicationTreeByApplication.json`,
+    buildCommand: "npm run build:templates"
+});
+
+copyJsonAsset({
+    sourcePath: "./applications/templatesByApplication.json",
+    targetPath: `${runtimeDataDir}/templatesByApplication.json`,
+    buildCommand: "npm run build:templates"
+});
 
 // Py Modules
 
