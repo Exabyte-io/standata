@@ -27,12 +27,6 @@ function buildAsset({ assetPath, targetPath, workingDir = null }) {
     }
 }
 
-/**
- * Reads asset file and stores asset data in target object under object path which reflects the file system.
- * @param {Object} targetObject - Object in which asset data should be stored
- * @param {string} assetPath - Absolute path to asset file.
- * @param {string} assetRoot - Path to asset root directory to construct relative path.
- */
 function loadAndInsertAssetData(targetObject, assetPath, assetRoot) {
     const fileContent = fs.readFileSync(assetPath, "utf8");
     const data = yaml.load(fileContent, { schema: utils.JsYamlAllSchemas });
@@ -40,13 +34,7 @@ function loadAndInsertAssetData(targetObject, assetPath, assetRoot) {
     lodash.set(targetObject, objectPath, data);
 }
 
-/**
- * Traverse asset folder recursively and load asset files.
- * @param currPath {string} - path to asset directory
- * @param {Object} targetObj - Object in which assets are assigned
- * @param {string} assetRoot - Path to asset root directory to construct relative path.
- */
-const getAssetData = (currPath, targetObj, assetRoot) => {
+function getAssetData(currPath, targetObj, assetRoot) {
     const branches = utils.getDirectories(currPath);
     const assetFiles = utils.getFilesInDirectory(currPath, [".yml", ".yaml"], false);
 
@@ -60,8 +48,7 @@ const getAssetData = (currPath, targetObj, assetRoot) => {
     branches.forEach((b) => {
         getAssetData(path.resolve(currPath, b), targetObj, assetRoot);
     });
-};
-
+}
 
 buildAsset({
     assetPath: "templates/templates.yml",
@@ -116,7 +103,6 @@ Object.keys(cleanApplicationData).forEach((appName) => {
     console.log(`Generated application: ${appName}/${appName}.json`);
 });
 
-
 const applicationDataByApplication = cleanApplicationData;
 
 const modelMethodMapByApplication = {
@@ -136,4 +122,4 @@ fs.writeFileSync(
     "utf8",
 );
 
-console.log("Generated consolidated model and method mapping: modelMethodMapByApplication.json");
+console.log("✅ All application assets built successfully!");
