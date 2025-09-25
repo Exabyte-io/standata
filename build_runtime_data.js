@@ -8,6 +8,7 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
+const BUILD_CONFIG = require("./build-config");
 
 function buildAsset({
     assetPath,
@@ -39,93 +40,95 @@ function buildAsset({
     console.log(`Written entity category map to "${assetPath}" to "${targetPath}"`);
 }
 
-const runtimeDataDir = "./dist/js/runtime_data";
+const { runtimeDataDir } = BUILD_CONFIG;
+
 // JS Modules
 
 buildAsset({
-    assetPath: "./materials/categories.yml",
+    assetPath: BUILD_CONFIG.categories.materials,
     targetPath: `${runtimeDataDir}/materials.json`,
 });
 buildAsset({
-    assetPath: "./properties/categories.yml",
+    assetPath: BUILD_CONFIG.categories.properties,
     targetPath: `${runtimeDataDir}/properties.json`,
 });
 buildAsset({
-    assetPath: "./applications/applications/categories.yml",
+    assetPath: BUILD_CONFIG.categories.applications,
     targetPath: `${runtimeDataDir}/applications.json`,
 });
 buildAsset({
-    assetPath: "./workflows/workflows/categories.yml",
+    assetPath: BUILD_CONFIG.categories.workflows,
     targetPath: `${runtimeDataDir}/workflows.json`,
 });
 buildAsset({
-    assetPath: "./workflows/subworkflows/categories.yml",
+    assetPath: BUILD_CONFIG.categories.subworkflows,
     targetPath: `${runtimeDataDir}/subworkflows.json`,
 });
 
-function copyJsonAsset({ sourcePath, targetPath, buildCommand }) {
+function copyJsonAsset({ sourcePath, targetPath }) {
     if (fs.existsSync(sourcePath)) {
         const content = fs.readFileSync(sourcePath, "utf8");
         fs.writeFileSync(targetPath, content, "utf8");
         console.log(`Copied ${path.basename(sourcePath)} to "${targetPath}"`);
     } else {
-        console.warn(`Warning: ${sourcePath} not found. Run '${buildCommand}' first.`);
+        console.warn(`Warning: ${sourcePath} not found.`);
     }
 }
 
 // Copy JSON assets to runtime_data
 copyJsonAsset({
-    sourcePath: "./workflows/workflowSubforkflowMapByApplication.json",
-    targetPath: `${runtimeDataDir}/workflowSubforkflowMapByApplication.json`,
-    buildCommand: "npm run build:workflows",
+    sourcePath: `./workflows/${BUILD_CONFIG.workflows.workflowSubforkflowMapByApplication}`,
+    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.workflows.workflowSubforkflowMapByApplication}`,
 });
 
 copyJsonAsset({
-    sourcePath: "./applications/modelMethodMapByApplication.json",
-    targetPath: `${runtimeDataDir}/modelMethodMapByApplication.json`,
-    buildCommand: "npm run build:applications",
+    sourcePath: `./applications/${BUILD_CONFIG.applications.modelMethodMapByApplication}`,
+    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.modelMethodMapByApplication}`,
 });
 
 copyJsonAsset({
-    sourcePath: "./applications/applicationTreeByApplication.json",
-    targetPath: `${runtimeDataDir}/applicationTreeByApplication.json`,
-    buildCommand: "npm run build:templates",
+    sourcePath: `./applications/${BUILD_CONFIG.applications.templatesMapByApplication}`,
+    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.templatesMapByApplication}`,
 });
 
 copyJsonAsset({
-    sourcePath: "./applications/templatesByApplication.json",
-    targetPath: `${runtimeDataDir}/templatesByApplication.json`,
-    buildCommand: "npm run build:templates",
+    sourcePath: `./applications/${BUILD_CONFIG.applications.applicationDataByApplication}`,
+    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.applicationDataByApplication}`,
+});
+
+copyJsonAsset({
+    sourcePath: `./applications/${BUILD_CONFIG.applications.executableFlavorMapByApplication}`,
+    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.executableFlavorMapByApplication}`,
 });
 
 // Py Modules
 
 buildAsset({
-    assetPath: "./materials/categories.yml",
+    assetPath: BUILD_CONFIG.categories.materials,
     targetPath: "./src/py/mat3ra/standata/data/materials.py",
     contentGenerator: (content) =>
         `import json\n\nmaterials_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: "./properties/categories.yml",
+    assetPath: BUILD_CONFIG.categories.properties,
     targetPath: "./src/py/mat3ra/standata/data/properties.py",
     contentGenerator: (content) =>
         `import json\n\nproperties_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: "./applications/applications/categories.yml",
+    assetPath: BUILD_CONFIG.categories.applications,
     targetPath: "./src/py/mat3ra/standata/data/applications.py",
     contentGenerator: (content) =>
         `import json\n\napplications_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: "./workflows/workflows/categories.yml",
+    assetPath: BUILD_CONFIG.categories.workflows,
     targetPath: "./src/py/mat3ra/standata/data/workflows.py",
     contentGenerator: (content) =>
         `import json\n\nworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: "./workflows/subworkflows/categories.yml",
+    assetPath: BUILD_CONFIG.categories.subworkflows,
     targetPath: "./src/py/mat3ra/standata/data/subworkflows.py",
     contentGenerator: (content) =>
         `import json\n\nsubworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
