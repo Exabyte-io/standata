@@ -10,7 +10,7 @@ export class ApplicationStandata extends Standata {
     getAppDataForApplication(appName: string): ApplicationData {
         const appEntities = this.findEntitiesByTags(appName);
         if (appEntities.length === 0) {
-            throw new Error(`${appName} is not a known application with data.`);
+            throw new Error(`Application ${appName} not found`);
         }
         return appEntities[0] as ApplicationData;
     }

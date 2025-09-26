@@ -12,7 +12,7 @@ class ApplicationStandata extends base_1.Standata {
     getAppDataForApplication(appName) {
         const appEntities = this.findEntitiesByTags(appName);
         if (appEntities.length === 0) {
-            throw new Error(`${appName} is not a known application with data.`);
+            throw new Error(`Application ${appName} not found`);
         }
         return appEntities[0];
     }
