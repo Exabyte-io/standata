@@ -9,8 +9,7 @@ categories:
     - scripting
     - compiled
   purpose:
-    - command_line_interface
-    - interactive_computing_environment
+    - modeling
     - programming_language
 
 entities:
@@ -21,3 +20,12 @@ entities:
     categories:
       - scripting
       - programming_language
+  - filename: espresso/espresso_63.json
+    categories:
+      - quantum-mechanical
+  - filename: espresso/espresso_gnu_63.json
+    categories:
+      - quantum-mechanical
+  - filename: espresso/espresso_intel_63.json
+    categories:
+      - quantum-mechanical

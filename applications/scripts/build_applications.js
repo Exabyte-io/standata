@@ -16,11 +16,7 @@ function buildAsset({ assetPath, targetPath, workingDir = null }) {
         const fileContent = fs.readFileSync(assetPath);
         const obj = yaml.load(fileContent, { schema: utils.JsYamlAllSchemas });
 
-        fs.writeFileSync(
-            path.resolve(originalCwd, targetPath),
-            JSON.stringify(obj),
-            "utf8",
-        );
+        fs.writeFileSync(path.resolve(originalCwd, targetPath), JSON.stringify(obj), "utf8");
         console.log(`Written asset "${assetPath}" to "${targetPath}"`);
         return obj;
     } finally {
@@ -58,12 +54,6 @@ buildAsset({
 });
 
 buildAsset({
-    assetPath: BUILD_CONFIG.sources.applicationData,
-    targetPath: `./applications/${BUILD_CONFIG.applications.applicationDataMapByApplication}`,
-    workingDir: "./applications/sources",
-});
-
-buildAsset({
     assetPath: BUILD_CONFIG.sources.executableTree,
     targetPath: `./applications/${BUILD_CONFIG.applications.executableFlavorMapByApplication}`,
     workingDir: "./applications/sources",
@@ -93,29 +83,48 @@ Object.values(APPLICATION_DATA).forEach((levelData) => {
     }
 });
 
+// Generate individual JSON files for each application version
+function createVersionConfig(appConfig, version) {
+    return {
+        name: appConfig.name,
+        shortName: appConfig.shortName,
+        summary: appConfig.summary,
+        version: version.version,
+        build: version.build || "Default",
+        isDefault: version.isDefault || false,
+        hasAdvancedComputeOptions: version.hasAdvancedComputeOptions || false,
+        isLicensed: false,
+    };
+}
+
+function generateVersionFileName(appName, version) {
+    const buildSuffix = version.build ? `_${version.build.toLowerCase()}` : "";
+    const versionSuffix = version.version.replace(/\./g, "");
+    return `${appName}${buildSuffix}_${versionSuffix}.json`;
+}
+
 Object.keys(cleanApplicationData).forEach((appName) => {
-    const config = cleanApplicationData[appName];
+    const appConfig = cleanApplicationData[appName];
     const appDir = path.resolve(__dirname, "..", "data", appName);
+
     if (!fs.existsSync(appDir)) {
         fs.mkdirSync(appDir, { recursive: true });
     }
-    const filePath = path.resolve(appDir, `${appName}.json`);
-    fs.writeFileSync(filePath, JSON.stringify(config), "utf8");
-    console.log(`Generated application: ${appName}/${appName}.json`);
-});
 
-const applicationDataByApplication = cleanApplicationData;
+    appConfig.versions.forEach((version) => {
+        const versionConfig = createVersionConfig(appConfig, version);
+        const fileName = generateVersionFileName(appName, version);
+        const filePath = path.resolve(appDir, fileName);
+
+        fs.writeFileSync(filePath, JSON.stringify(versionConfig), "utf8");
+        console.log(`Generated application version: ${appName}/${fileName}`);
+    });
+});
 
 const modelMethodMapByApplication = {
     models: MODEL_FILTER_TREE,
     methods: METHOD_FILTER_TREE,
 };
-
-fs.writeFileSync(
-    path.resolve(__dirname, "..", BUILD_CONFIG.applications.applicationDataMapByApplication),
-    JSON.stringify(applicationDataByApplication),
-    "utf8",
-);
 
 fs.writeFileSync(
     path.resolve(__dirname, "..", BUILD_CONFIG.applications.modelMethodMapByApplication),
