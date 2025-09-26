@@ -26,7 +26,7 @@ const BUILD_CONFIG = {
     categories: {
         materials: "./materials/categories.yml",
         properties: "./properties/categories.yml",
-        applications: "./applications/applications/categories.yml",
+        applications: "./applications/data/categories.yml",
         workflows: "./workflows/workflows/categories.yml",
         subworkflows: "./workflows/subworkflows/categories.yml",
     },

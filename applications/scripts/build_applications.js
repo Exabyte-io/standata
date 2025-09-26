@@ -95,7 +95,7 @@ Object.values(APPLICATION_DATA).forEach((levelData) => {
 
 Object.keys(cleanApplicationData).forEach((appName) => {
     const config = cleanApplicationData[appName];
-    const appDir = path.resolve(__dirname, "..", "applications", appName);
+    const appDir = path.resolve(__dirname, "..", "data", appName);
     if (!fs.existsSync(appDir)) {
         fs.mkdirSync(appDir, { recursive: true });
     }
