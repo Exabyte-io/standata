@@ -32,14 +32,44 @@ export declare class ApplicationStandata extends Standata {
                 hasAdvancedComputeOptions: boolean;
                 isLicensed: boolean;
             };
+            "espresso/espresso_63.json": {
+                name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+                build: string;
+                isDefault: boolean;
+                hasAdvancedComputeOptions: boolean;
+                isLicensed: boolean;
+            };
+            "espresso/espresso_gnu_63.json": {
+                name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+                build: string;
+                isDefault: boolean;
+                hasAdvancedComputeOptions: boolean;
+                isLicensed: boolean;
+            };
+            "espresso/espresso_intel_63.json": {
+                name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+                build: string;
+                isDefault: boolean;
+                hasAdvancedComputeOptions: boolean;
+                isLicensed: boolean;
+            };
         };
     };
-    static getAppDataForApplication(appName: string): ApplicationData;
+    getAppDataForApplication(appName: string): ApplicationData;
     static getAppTreeForApplication(appName: string): ApplicationExecutableTree;
-    static getAllAppData(): any;
     static getAllAppTemplates(): Template[];
     static getAllAppTree(): any;
-    static getAllApplicationNames(): string[];
+    getAllApplicationNames(): string[];
+    getAllAppData(): any;
     static getTemplatesByName(appName: string, execName: string, templateName?: string): Template[];
     getByApplicationName(appName: string): any[];
 }

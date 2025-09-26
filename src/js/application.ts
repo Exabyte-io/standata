@@ -1,5 +1,4 @@
 import { Standata } from "./base";
-import APPLICATION_DATA_MAP from "./runtime_data/applicationDataMapByApplication.json";
 import APPLICATIONS from "./runtime_data/applications.json";
 import EXECUTABLE_FLAVOR_MAP from "./runtime_data/executableFlavorMapByApplication.json";
 import TEMPLATES_LIST from "./runtime_data/templatesList.json";
@@ -8,12 +7,12 @@ import type { ApplicationData, ApplicationExecutableTree, Template } from "./typ
 export class ApplicationStandata extends Standata {
     static runtimeData = APPLICATIONS;
 
-    static getAppDataForApplication(appName: string): ApplicationData {
-        const appData = APPLICATION_DATA_MAP as any;
-        if (!(appName in appData)) {
+    getAppDataForApplication(appName: string): ApplicationData {
+        const appEntities = this.findEntitiesByTags(appName);
+        if (appEntities.length === 0) {
             throw new Error(`${appName} is not a known application with data.`);
         }
-        return appData[appName];
+        return appEntities[0] as ApplicationData;
     }
 
     static getAppTreeForApplication(appName: string): ApplicationExecutableTree {
@@ -24,10 +23,6 @@ export class ApplicationStandata extends Standata {
         return executableData[appName] as ApplicationExecutableTree;
     }
 
-    static getAllAppData(): any {
-        return APPLICATION_DATA_MAP;
-    }
-
     static getAllAppTemplates(): Template[] {
         return TEMPLATES_LIST as Template[];
     }
@@ -36,8 +31,14 @@ export class ApplicationStandata extends Standata {
         return EXECUTABLE_FLAVOR_MAP;
     }
 
-    static getAllApplicationNames(): string[] {
-        return Object.keys(APPLICATION_DATA_MAP);
+    getAllApplicationNames(): string[] {
+        const allApps = this.getAll();
+        const uniqueNames = new Set(allApps.map((app: any) => app.name));
+        return Array.from(uniqueNames);
+    }
+
+    getAllAppData(): any {
+        return this.getAll();
     }
 
     static getTemplatesByName(
