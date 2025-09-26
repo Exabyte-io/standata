@@ -1,5 +1,6 @@
+import type { TemplateSchema } from "@mat3ra/esse/dist/js/types";
 import { Standata } from "./base";
-import type { ApplicationData, ApplicationExecutableTree, Template } from "./types/application";
+import type { ApplicationData, ApplicationExecutableTree } from "./types/application";
 export declare class ApplicationStandata extends Standata<ApplicationData> {
     static runtimeData: {
         standataConfig: {
@@ -18,17 +19,19 @@ export declare class ApplicationStandata extends Standata<ApplicationData> {
                 name: string;
                 shortName: string;
                 summary: string;
-                version: string;
-                build: string;
-                isDefault: boolean;
-                hasAdvancedComputeOptions: boolean;
-                isLicensed: boolean;
+                defaultVersion: string;
+                versions: {
+                    version: string;
+                    isDefault: boolean;
+                    build: string;
+                    hasAdvancedComputeOptions: boolean;
+                }[];
             };
         };
     };
     getAppDataForApplication(appName: string): ApplicationData;
     getAppTreeForApplication(appName: string): ApplicationExecutableTree;
-    getAllAppTemplates(): Template[];
+    getAllAppTemplates(): TemplateSchema[];
     getAllAppTree(): {
         espresso: {
             "pw.x": {
@@ -63,6 +66,6 @@ export declare class ApplicationStandata extends Standata<ApplicationData> {
     };
     getAllApplicationNames(): string[];
     getAllAppData(): ApplicationData[];
-    getTemplatesByName(appName: string, execName: string, templateName?: string): Template[];
+    getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[];
     getByApplicationName(appName: string): ApplicationData[];
 }

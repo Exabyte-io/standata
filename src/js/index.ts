@@ -14,7 +14,6 @@ export type {
     ApplicationData,
     ApplicationVersionInfo,
     ApplicationTreeItem,
-    Template,
     ExecutableTreeItem,
     ApplicationExecutableTree,
 } from "./types/application";

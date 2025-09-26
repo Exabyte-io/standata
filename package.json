@@ -62,7 +62,7 @@
     "scripts": {
         "build:categories": "ts-node src/js/cli.ts",
         "build:workflows": "node workflows/scripts/build_workflows.js",
-        "build:applications": "node applications/scripts/build_applications.js",
+        "build:applications": "ts-node applications/scripts/build_applications.ts",
         "build:runtime-data": "node build_runtime_data.js",
         "build": "npm run transpile && npm run build:workflows && npm run build:applications && npm run build:runtime-data",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",

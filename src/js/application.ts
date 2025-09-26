@@ -1,8 +1,10 @@
+import type { TemplateSchema } from "@mat3ra/esse/dist/js/types";
+
 import { Standata } from "./base";
 import APPLICATIONS from "./runtime_data/applications.json";
 import EXECUTABLE_FLAVOR_MAP from "./runtime_data/executableFlavorMapByApplication.json";
 import TEMPLATES_LIST from "./runtime_data/templatesList.json";
-import type { ApplicationData, ApplicationExecutableTree, Template } from "./types/application";
+import type { ApplicationData, ApplicationExecutableTree } from "./types/application";
 
 export class ApplicationStandata extends Standata<ApplicationData> {
     static runtimeData = APPLICATIONS;
@@ -27,9 +29,9 @@ export class ApplicationStandata extends Standata<ApplicationData> {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    getAllAppTemplates(): Template[] {
+    getAllAppTemplates(): TemplateSchema[] {
         // TODO: Convert to use this.getAll() when template data is in Standata format
-        return TEMPLATES_LIST as Template[];
+        return TEMPLATES_LIST as TemplateSchema[];
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -49,9 +51,9 @@ export class ApplicationStandata extends Standata<ApplicationData> {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    getTemplatesByName(appName: string, execName: string, templateName?: string): Template[] {
+    getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[] {
         // TODO: Convert to use this.findEntitiesByTags() when template data is in Standata format
-        const templates = TEMPLATES_LIST as Template[];
+        const templates = TEMPLATES_LIST;
         const filtered = templates.filter((template) => {
             const matchesApp = template.applicationName === appName;
             const matchesExec = template.executableName === execName;

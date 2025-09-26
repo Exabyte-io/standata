@@ -1,11 +1,23 @@
-const fs = require("fs");
-const path = require("path");
-const yaml = require("js-yaml");
-const lodash = require("lodash");
-const utils = require("@mat3ra/code/dist/js/utils");
-const BUILD_CONFIG = require("../../build-config");
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Application } from "@exabyte-io/ade.js";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import * as utils from "@mat3ra/code/dist/js/utils";
+import fs from "fs";
+import yaml from "js-yaml";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import lodash from "lodash";
+import path from "path";
 
-function buildAsset({ assetPath, targetPath, workingDir = null }) {
+import BUILD_CONFIG from "../../build-config";
+import { ApplicationData, ApplicationVersionInfo } from "../../src/js/types/application";
+
+interface BuildAssetParams {
+    assetPath: string;
+    targetPath: string;
+    workingDir?: string | null;
+}
+
+function buildAsset({ assetPath, targetPath, workingDir = null }: BuildAssetParams) {
     const originalCwd = process.cwd();
 
     try {
@@ -13,7 +25,7 @@ function buildAsset({ assetPath, targetPath, workingDir = null }) {
             process.chdir(path.resolve(originalCwd, workingDir));
         }
 
-        const fileContent = fs.readFileSync(assetPath);
+        const fileContent = fs.readFileSync(assetPath) as unknown as string;
         const obj = yaml.load(fileContent, { schema: utils.JsYamlAllSchemas });
 
         fs.writeFileSync(path.resolve(originalCwd, targetPath), JSON.stringify(obj), "utf8");
@@ -24,14 +36,14 @@ function buildAsset({ assetPath, targetPath, workingDir = null }) {
     }
 }
 
-function loadAndInsertAssetData(targetObject, assetPath, assetRoot) {
+function loadAndInsertAssetData(targetObject: object, assetPath: string, assetRoot: string) {
     const fileContent = fs.readFileSync(assetPath, "utf8");
     const data = yaml.load(fileContent, { schema: utils.JsYamlAllSchemas });
     const objectPath = utils.createObjectPathFromFilePath(assetPath, assetRoot);
     lodash.set(targetObject, objectPath, data);
 }
 
-function getAssetData(currPath, targetObj, assetRoot) {
+function getAssetData(currPath: string, targetObj: object, assetRoot: string) {
     const branches = utils.getDirectories(currPath);
     const assetFiles = utils.getFilesInDirectory(currPath, [".yml", ".yaml"], false);
 
@@ -42,7 +54,7 @@ function getAssetData(currPath, targetObj, assetRoot) {
             console.log(e);
         }
     });
-    branches.forEach((b) => {
+    branches.forEach((b: string) => {
         getAssetData(path.resolve(currPath, b), targetObj, assetRoot);
     });
 }
@@ -71,11 +83,13 @@ getAssetData(APPLICATION_ASSET_PATH, APPLICATION_DATA, APPLICATION_ASSET_PATH);
 getAssetData(MODEL_ASSET_PATH, MODEL_FILTER_TREE, MODEL_ASSET_PATH);
 getAssetData(METHOD_ASSET_PATH, METHOD_FILTER_TREE, METHOD_ASSET_PATH);
 
-const cleanApplicationData = {};
+const cleanApplicationData = {} as {
+    [key: string]: ApplicationData;
+};
 
 Object.values(APPLICATION_DATA).forEach((levelData) => {
     if (levelData && typeof levelData === "object") {
-        Object.values(levelData).forEach((appData) => {
+        Object.values(levelData).forEach((appData: ApplicationData) => {
             if (appData && typeof appData === "object" && appData.name) {
                 cleanApplicationData[appData.name] = appData;
             }
@@ -83,21 +97,7 @@ Object.values(APPLICATION_DATA).forEach((levelData) => {
     }
 });
 
-// Generate individual JSON files for each application version
-function createVersionConfig(appConfig, version) {
-    return {
-        name: appConfig.name,
-        shortName: appConfig.shortName,
-        summary: appConfig.summary,
-        version: version.version,
-        build: version.build || "Default",
-        isDefault: version.isDefault || false,
-        hasAdvancedComputeOptions: version.hasAdvancedComputeOptions || false,
-        isLicensed: false,
-    };
-}
-
-function generateVersionFileName(appName, version) {
+function generateVersionFileName(appName: string, version: ApplicationVersionInfo) {
     const buildSuffix = version.build ? `_${version.build.toLowerCase()}` : "";
     const versionSuffix = version.version.replace(/\./g, "");
     return `${appName}${buildSuffix}_${versionSuffix}.json`;
@@ -112,7 +112,7 @@ Object.keys(cleanApplicationData).forEach((appName) => {
     }
 
     appConfig.versions.forEach((version) => {
-        const versionConfig = createVersionConfig(appConfig, version);
+        const versionConfig = new Application(appConfig).toJSON();
         const fileName = generateVersionFileName(appName, version);
         const filePath = path.resolve(appDir, fileName);
 
