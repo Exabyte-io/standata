@@ -1,12 +1,3 @@
-export type ApplicationName =
-    | "deepmd"
-    | "espresso"
-    | "jupyterLab"
-    | "nwchem"
-    | "python"
-    | "shell"
-    | "vasp";
-
 export interface ApplicationVersionInfo {
     version: string;
     isDefault?: boolean;

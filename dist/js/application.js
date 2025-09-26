@@ -10,14 +10,14 @@ const applications_json_1 = __importDefault(require("./runtime_data/applications
 const executableFlavorMapByApplication_json_1 = __importDefault(require("./runtime_data/executableFlavorMapByApplication.json"));
 const templatesMapByApplication_json_1 = __importDefault(require("./runtime_data/templatesMapByApplication.json"));
 class ApplicationStandata extends base_1.Standata {
-    static getAppData(appName) {
+    static getAppDataForApplication(appName) {
         const appData = applicationDataMapByApplication_json_1.default;
         if (!(appName in appData)) {
             throw new Error(`${appName} is not a known application with data.`);
         }
         return appData[appName];
     }
-    static getAppTree(appName) {
+    static getAppTreeForApplication(appName) {
         const executableData = executableFlavorMapByApplication_json_1.default;
         if (!(appName in executableData)) {
             throw new Error(`${appName} is not a known application with executable tree.`);
