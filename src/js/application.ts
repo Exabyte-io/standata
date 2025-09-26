@@ -15,7 +15,9 @@ export class ApplicationStandata extends Standata {
         return appEntities[0] as ApplicationData;
     }
 
-    static getAppTreeForApplication(appName: string): ApplicationExecutableTree {
+    // eslint-disable-next-line class-methods-use-this
+    getAppTreeForApplication(appName: string): ApplicationExecutableTree {
+        // TODO: Convert to use this.findEntitiesByTags() when tree data is in Standata format
         const executableData = EXECUTABLE_FLAVOR_MAP as any;
         if (!(appName in executableData)) {
             throw new Error(`${appName} is not a known application with executable tree.`);
@@ -23,11 +25,15 @@ export class ApplicationStandata extends Standata {
         return executableData[appName] as ApplicationExecutableTree;
     }
 
-    static getAllAppTemplates(): Template[] {
+    // eslint-disable-next-line class-methods-use-this
+    getAllAppTemplates(): Template[] {
+        // TODO: Convert to use this.getAll() when template data is in Standata format
         return TEMPLATES_LIST as Template[];
     }
 
-    static getAllAppTree(): any {
+    // eslint-disable-next-line class-methods-use-this
+    getAllAppTree(): any {
+        // TODO: Convert to use this.getAll() when tree data is in Standata format
         return EXECUTABLE_FLAVOR_MAP;
     }
 
@@ -41,11 +47,9 @@ export class ApplicationStandata extends Standata {
         return this.getAll();
     }
 
-    static getTemplatesByName(
-        appName: string,
-        execName: string,
-        templateName?: string,
-    ): Template[] {
+    // eslint-disable-next-line class-methods-use-this
+    getTemplatesByName(appName: string, execName: string, templateName?: string): Template[] {
+        // TODO: Convert to use this.findEntitiesByTags() when template data is in Standata format
         const templates = TEMPLATES_LIST as Template[];
         const filtered = templates.filter((template) => {
             const matchesApp = template.applicationName === appName;

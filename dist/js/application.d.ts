@@ -65,11 +65,11 @@ export declare class ApplicationStandata extends Standata {
         };
     };
     getAppDataForApplication(appName: string): ApplicationData;
-    static getAppTreeForApplication(appName: string): ApplicationExecutableTree;
-    static getAllAppTemplates(): Template[];
-    static getAllAppTree(): any;
+    getAppTreeForApplication(appName: string): ApplicationExecutableTree;
+    getAllAppTemplates(): Template[];
+    getAllAppTree(): any;
     getAllApplicationNames(): string[];
     getAllAppData(): any;
-    static getTemplatesByName(appName: string, execName: string, templateName?: string): Template[];
+    getTemplatesByName(appName: string, execName: string, templateName?: string): Template[];
     getByApplicationName(appName: string): any[];
 }
