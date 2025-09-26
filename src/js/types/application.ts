@@ -9,8 +9,10 @@ export type ApplicationVersionInfo = Pick<
 
 export type ApplicationData = Pick<
     ApplicationSchemaBase,
-    "shortName" | "summary" | "defaultVersion" | "isLicensed"
+    "shortName" | "summary" | "isLicensed"
 > & {
+    // TODO: defaultVersion should come from ESSE
+    defaultVersion: string;
     versions: ApplicationVersionInfo[];
     name: Required<ApplicationSchemaBase>["name"];
 };
