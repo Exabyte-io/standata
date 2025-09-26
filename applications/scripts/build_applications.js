@@ -53,7 +53,7 @@ function getAssetData(currPath, targetObj, assetRoot) {
 
 buildAsset({
     assetPath: BUILD_CONFIG.sources.templates,
-    targetPath: `./applications/${BUILD_CONFIG.applications.templatesMapByApplication}`,
+    targetPath: `./applications/${BUILD_CONFIG.applications.templatesList}`,
     workingDir: "./applications/sources",
 });
 

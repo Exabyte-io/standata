@@ -2,7 +2,7 @@ import { Standata } from "./base";
 import APPLICATION_DATA_MAP from "./runtime_data/applicationDataMapByApplication.json";
 import APPLICATIONS from "./runtime_data/applications.json";
 import EXECUTABLE_FLAVOR_MAP from "./runtime_data/executableFlavorMapByApplication.json";
-import TEMPLATES_MAP from "./runtime_data/templatesMapByApplication.json";
+import TEMPLATES_LIST from "./runtime_data/templatesList.json";
 import type { ApplicationData, ApplicationExecutableTree, Template } from "./types/application";
 
 export class ApplicationStandata extends Standata {
@@ -29,7 +29,7 @@ export class ApplicationStandata extends Standata {
     }
 
     static getAllAppTemplates(): Template[] {
-        return TEMPLATES_MAP as Template[];
+        return TEMPLATES_LIST as Template[];
     }
 
     static getAllAppTree(): any {
@@ -45,7 +45,7 @@ export class ApplicationStandata extends Standata {
         execName: string,
         templateName?: string,
     ): Template[] {
-        const templates = TEMPLATES_MAP as Template[];
+        const templates = TEMPLATES_LIST as Template[];
         const filtered = templates.filter((template) => {
             const matchesApp = template.applicationName === appName;
             const matchesExec = template.executableName === execName;

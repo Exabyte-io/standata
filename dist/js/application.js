@@ -8,7 +8,7 @@ const base_1 = require("./base");
 const applicationDataMapByApplication_json_1 = __importDefault(require("./runtime_data/applicationDataMapByApplication.json"));
 const applications_json_1 = __importDefault(require("./runtime_data/applications.json"));
 const executableFlavorMapByApplication_json_1 = __importDefault(require("./runtime_data/executableFlavorMapByApplication.json"));
-const templatesMapByApplication_json_1 = __importDefault(require("./runtime_data/templatesMapByApplication.json"));
+const templatesList_json_1 = __importDefault(require("./runtime_data/templatesList.json"));
 class ApplicationStandata extends base_1.Standata {
     static getAppDataForApplication(appName) {
         const appData = applicationDataMapByApplication_json_1.default;
@@ -28,7 +28,7 @@ class ApplicationStandata extends base_1.Standata {
         return applicationDataMapByApplication_json_1.default;
     }
     static getAllAppTemplates() {
-        return templatesMapByApplication_json_1.default;
+        return templatesList_json_1.default;
     }
     static getAllAppTree() {
         return executableFlavorMapByApplication_json_1.default;
@@ -37,7 +37,7 @@ class ApplicationStandata extends base_1.Standata {
         return Object.keys(applicationDataMapByApplication_json_1.default);
     }
     static getTemplatesByName(appName, execName, templateName) {
-        const templates = templatesMapByApplication_json_1.default;
+        const templates = templatesList_json_1.default;
         const filtered = templates.filter((template) => {
             const matchesApp = template.applicationName === appName;
             const matchesExec = template.executableName === execName;
