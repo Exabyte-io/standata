@@ -29,8 +29,9 @@ repos:
       - id: check-yaml
         exclude: ^applications/sources/.*\.ya?ml$
       - id: end-of-file-fixer
-        exclude: ^(workflows|applications)/.*\.json$
+        exclude: ^(workflows|applications)/.*\.json$|^dist/
       - id: trailing-whitespace
+        exclude: ^dist/
   - repo: local
     hooks:
       - id: lint-staged
