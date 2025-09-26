@@ -2,7 +2,8 @@ import { ApplicationSchemaBase } from "@mat3ra/esse/dist/js/types";
 export type ApplicationVersionInfo = Pick<ApplicationSchemaBase, "isDefault" | "build" | "hasAdvancedComputeOptions"> & {
     version: Required<ApplicationSchemaBase>["version"];
 };
-export type ApplicationData = Pick<ApplicationSchemaBase, "shortName" | "summary" | "defaultVersion" | "isLicensed"> & {
+export type ApplicationData = Pick<ApplicationSchemaBase, "shortName" | "summary" | "isLicensed"> & {
+    defaultVersion: string;
     versions: ApplicationVersionInfo[];
     name: Required<ApplicationSchemaBase>["name"];
 };
