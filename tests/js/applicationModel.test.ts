@@ -14,7 +14,7 @@ describe("Application Model Standata", () => {
     it("can get available models for an application", () => {
         const availableModels = modelStandata.getAvailableModels("espresso");
         expect(availableModels).to.be.an("object");
-        expect(Object.keys(availableModels)).to.include("5.2.1");
+        expect(Object.keys(availableModels)).to.include("6.3");
     });
 
     it("can find models by application parameters", () => {
@@ -38,7 +38,7 @@ describe("Application Model Standata", () => {
         const specificModels = modelStandata.findByApplicationParameters({
             modelList: categorizedModelList,
             applicationName: "espresso",
-            version: "5.2.1",
+            version: "6.3",
             build: "Default",
             executable: "pw.x",
             flavor: "pw_scf",

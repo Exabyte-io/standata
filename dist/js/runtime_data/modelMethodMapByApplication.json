@@ -1,7 +1,7 @@
 {
   "models": {
     "espresso": {
-      "5.2.1": {
+      "6.3": {
         "Default": {
           "pw.x": {
             "pw_scf": [
@@ -33,7 +33,7 @@
   },
   "methods": {
     "espresso": {
-      "5.2.1": {
+      "6.3": {
         "Default": {
           "pw.x": {
             "pw_scf": [

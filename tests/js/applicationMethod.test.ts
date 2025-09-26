@@ -16,7 +16,7 @@ describe("Application Method Standata", () => {
     it("can get available methods for an application", () => {
         const availableMethods = methodStandata.getAvailableMethods("espresso");
         expect(availableMethods).to.be.an("object");
-        expect(Object.keys(availableMethods)).to.include("5.2.1");
+        expect(Object.keys(availableMethods)).to.include("6.3");
     });
 
     it("can find methods by application parameters", () => {
@@ -42,7 +42,7 @@ describe("Application Method Standata", () => {
         const specificMethods = methodStandata.findByApplicationParameters({
             methodList: categorizedMethodList,
             applicationName: "espresso",
-            version: "5.2.1",
+            version: "6.3",
             build: "Default",
             executable: "pw.x",
             flavor: "pw_scf",
@@ -75,7 +75,7 @@ describe("Application Method Standata", () => {
         const finalMethods = methodStandata.findByApplicationParameters({
             methodList: filteredMethods,
             applicationName: "espresso",
-            version: "5.2.1",
+            version: "6.3",
             build: "Default",
         });
 
