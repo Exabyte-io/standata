@@ -4,11 +4,12 @@ import EXECUTABLE_FLAVOR_MAP from "./runtime_data/executableFlavorMapByApplicati
 import TEMPLATES_LIST from "./runtime_data/templatesList.json";
 import type { ApplicationData, ApplicationExecutableTree, Template } from "./types/application";
 
-export class ApplicationStandata extends Standata {
+export class ApplicationStandata extends Standata<ApplicationData> {
     static runtimeData = APPLICATIONS;
 
     getAppDataForApplication(appName: string): ApplicationData {
-        const appEntities = this.findEntitiesByTags(appName);
+        const allEntities = this.getAll();
+        const appEntities = allEntities.filter((entity: any) => entity.name === appName);
         if (appEntities.length === 0) {
             throw new Error(`Application ${appName} not found`);
         }
@@ -32,18 +33,18 @@ export class ApplicationStandata extends Standata {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    getAllAppTree(): any {
+    getAllAppTree() {
         // TODO: Convert to use this.getAll() when tree data is in Standata format
         return EXECUTABLE_FLAVOR_MAP;
     }
 
-    getAllApplicationNames(): string[] {
+    getAllApplicationNames() {
         const allApps = this.getAll();
-        const uniqueNames = new Set(allApps.map((app: any) => app.name));
+        const uniqueNames = new Set(allApps.map((app) => app.name));
         return Array.from(uniqueNames);
     }
 
-    getAllAppData(): any {
+    getAllAppData() {
         return this.getAll();
     }
 
@@ -64,7 +65,8 @@ export class ApplicationStandata extends Standata {
         return filtered.filter((template) => template.name === templateName);
     }
 
-    getByApplicationName(appName: string): any[] {
-        return this.findEntitiesByTags(appName);
+    getByApplicationName(appName: string) {
+        const allEntities = this.getAll();
+        return allEntities.filter((entity) => entity.name === appName);
     }
 }

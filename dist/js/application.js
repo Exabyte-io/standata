@@ -10,7 +10,8 @@ const executableFlavorMapByApplication_json_1 = __importDefault(require("./runti
 const templatesList_json_1 = __importDefault(require("./runtime_data/templatesList.json"));
 class ApplicationStandata extends base_1.Standata {
     getAppDataForApplication(appName) {
-        const appEntities = this.findEntitiesByTags(appName);
+        const allEntities = this.getAll();
+        const appEntities = allEntities.filter((entity) => entity.name === appName);
         if (appEntities.length === 0) {
             throw new Error(`Application ${appName} not found`);
         }
@@ -58,7 +59,8 @@ class ApplicationStandata extends base_1.Standata {
         return filtered.filter((template) => template.name === templateName);
     }
     getByApplicationName(appName) {
-        return this.findEntitiesByTags(appName);
+        const allEntities = this.getAll();
+        return allEntities.filter((entity) => entity.name === appName);
     }
 }
 exports.ApplicationStandata = ApplicationStandata;

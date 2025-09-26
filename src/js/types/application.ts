@@ -1,18 +1,17 @@
-export interface ApplicationVersionInfo {
-    version: string;
-    isDefault?: boolean;
-    build?: string;
-    hasAdvancedComputeOptions?: boolean;
-}
+import { ApplicationSchemaBase } from "@mat3ra/esse/dist/js/types";
 
-export interface ApplicationData {
-    name: string;
-    shortName: string;
-    summary: string;
-    defaultVersion: string;
-    isLicensed?: boolean;
+export type ApplicationVersionInfo = Pick<
+    ApplicationSchemaBase,
+    "version" | "isDefault" | "build" | "hasAdvancedComputeOptions"
+>;
+
+export type ApplicationData = Pick<
+    ApplicationSchemaBase,
+    "shortName" | "summary" | "defaultVersion" | "isLicensed"
+> & {
     versions: ApplicationVersionInfo[];
-}
+    name: Required<ApplicationSchemaBase>["name"];
+};
 
 export interface ApplicationTreeItem {
     supportedApplicationVersions?: string[];

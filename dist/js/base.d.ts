@@ -13,7 +13,7 @@ interface RuntimeData {
     standataConfig: StandataConfig;
     filesMapByName: object;
 }
-export declare class Standata {
+export declare class Standata<EntityType extends object = object> {
     static runtimeData: RuntimeData;
     static getRuntimeDataConfigs(): any[];
     entities: EntityItem[];
@@ -31,6 +31,6 @@ export declare class Standata {
     protected loadEntity(filename: string): object | undefined;
     protected filterByCategories(...categories: string[]): string[];
     findEntitiesByTags(...tags: string[]): object[];
-    getAll(): object[];
+    getAll(): EntityType[];
 }
 export {};

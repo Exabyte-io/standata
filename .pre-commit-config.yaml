@@ -12,7 +12,7 @@ repos:
       - id: recreate-dist
         name: recreate-dist
         language: system
-        entry: npm run build:dist && exit 0
+        entry: npm run build && exit 0
         pass_filenames: false
         verbose: true
         files: ^(materials/sources/|applications/(sources|scripts)|properties/|workflows/(sources|scripts)/)
