@@ -17,7 +17,7 @@ class ModelStandata extends base_1.Standata {
     getModelsByCategory(category) {
         const allModels = this.getAllModels();
         return allModels.filter((model) => {
-            const categoryPath = `${model.categories.tier1 || 'none'}/${model.categories.tier2 || 'none'}/${model.categories.tier3 || 'none'}/${model.categories.type || 'none'}/${model.categories.subtype || 'none'}`;
+            const categoryPath = `${model.categories.tier1 || "none"}/${model.categories.tier2 || "none"}/${model.categories.tier3 || "none"}/${model.categories.type || "none"}/${model.categories.subtype || "none"}`;
             return categoryPath.includes(category);
         });
     }

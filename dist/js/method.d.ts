@@ -1,22 +1,5 @@
 import { Standata } from "./base";
-export interface MethodUnit {
-    name: string;
-    path: string;
-    categories: {
-        tier1?: string;
-        tier2?: string;
-        tier3?: string;
-        type: string;
-        subtype?: string;
-    };
-    parameters?: Record<string, any>;
-    tags: string[];
-}
-export interface MethodConfig {
-    name: string;
-    path: string;
-    units: MethodUnit[];
-}
+import { MethodConfig, MethodUnit } from "./types/method";
 export declare class MethodStandata extends Standata<MethodConfig> {
     static runtimeData: {
         standataConfig: {
@@ -28,73 +11,9 @@ export declare class MethodStandata extends Standata<MethodConfig> {
                 subtype: string[];
                 tags: string[];
             };
-            entities: {
-                filename: string;
-                categories: string[];
-            }[];
+            entities: never[];
         };
-        filesMapByName: {
-            "psp/ultrasoft_pseudopotential.json": {
-                name: string;
-                path: string;
-                categories: {
-                    subtype: string;
-                    tier1: string;
-                    tier2: string;
-                    type: string;
-                };
-                tags: string[];
-                units: {
-                    name: string;
-                    path: string;
-                    categories: {
-                        subtype: string;
-                        tier1: string;
-                        tier2: string;
-                        type: string;
-                    };
-                    tags: string[];
-                }[];
-            };
-            "pw/plane_wave.json": {
-                name: string;
-                path: string;
-                categories: {
-                    tier1: string;
-                    tier2: string;
-                    type: string;
-                };
-                tags: string[];
-                units: {
-                    name: string;
-                    path: string;
-                    categories: {
-                        tier1: string;
-                        tier2: string;
-                        type: string;
-                    };
-                    tags: string[];
-                }[];
-            };
-            "linear/least_squares_regression.json": {
-                name: string;
-                path: string;
-                categories: {
-                    subtype: string;
-                    type: string;
-                };
-                tags: string[];
-                units: {
-                    name: string;
-                    path: string;
-                    categories: {
-                        subtype: string;
-                        type: string;
-                    };
-                    tags: string[];
-                }[];
-            };
-        };
+        filesMapByName: {};
     };
     getAllMethods(): MethodConfig[];
     getMethodByName(name: string): MethodConfig | undefined;

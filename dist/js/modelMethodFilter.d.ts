@@ -1,5 +1,5 @@
-import type { MethodConfig } from "./method";
-import type { ModelConfig } from "./model";
+import type { MethodConfig } from "./types/method";
+import type { ModelConfig } from "./types/model";
 export interface FilterRule {
     path?: string;
     regex?: string;
