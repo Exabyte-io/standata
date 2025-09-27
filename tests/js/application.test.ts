@@ -1,7 +1,7 @@
 import { expect } from "chai";
 
 import { ApplicationStandata } from "../../src/js";
-import EspressoGnu63 from "./fixtures/espresso_gnu_63.json";
+import EspressoGnu63 from "./fixtures/espresso_gnu_6.3.json";
 
 describe("Application Standata", () => {
     let standata: ApplicationStandata;
@@ -40,7 +40,7 @@ describe("Application Standata", () => {
             expect(appData).to.have.property("versions").that.is.an("array");
             expect(appData.versions).to.have.length.greaterThan(0);
 
-            const defaultVersionConfig = appData.versions.find(v => v.isDefault);
+            const defaultVersionConfig = appData.versions.find((v) => v.isDefault);
             expect(defaultVersionConfig).to.exist;
             expect(defaultVersionConfig).to.have.property("version", appData.defaultVersion);
             expect(defaultVersionConfig).to.have.property("build", "GNU");

@@ -99,7 +99,7 @@ Object.values(APPLICATION_DATA).forEach((levelData) => {
 
 function generateVersionFileName(appName: string, version: ApplicationVersionInfo) {
     const buildSuffix = version.build ? `_${version.build.toLowerCase()}` : "";
-    const versionSuffix = version.version.replace(/\./g, "");
+    const versionSuffix = version.version;
     return `${appName}${buildSuffix}_${versionSuffix}.json`;
 }
 

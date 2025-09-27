@@ -15,7 +15,7 @@ export declare class ApplicationStandata extends Standata<ApplicationData> {
             }[];
         };
         filesMapByName: {
-            "espresso/espresso_gnu_63.json": {
+            "espresso/espresso_gnu_6.3.json": {
                 name: string;
                 shortName: string;
                 summary: string;
