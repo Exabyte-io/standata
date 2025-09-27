@@ -32,38 +32,45 @@ function mergeTerminalNodes(obj) {
 function extractUniqueBy(filterObjects, name) {
     const seen = new Set();
     return filterObjects.filter((obj) => {
-        if (!obj || !obj[name] || seen.has(obj[name])) {
+        let value;
+        if (name === "path" && "path" in obj) {
+            value = obj.path;
+        }
+        else if (name === "regex" && "regex" in obj) {
+            value = obj.regex;
+        }
+        if (!obj || !value || seen.has(value)) {
             return false;
         }
-        seen.add(obj[name]);
+        seen.add(value);
         return true;
     });
 }
-function getFilterObjects({ filterTree, applicationName = "", version = "", build = "", executable = "", flavor = "", }) {
+function getFilterObjects({ filterTree, name = "", version = "", build = "", executable = "", flavor = "", }) {
     let filterList;
     // Use Default build when the filterTree does not contain the build specified
-    const build_ = !safelyGet(filterTree, applicationName, version, build) &&
-        safelyGet(filterTree, applicationName, version, "Default")
+    const build_ = !safelyGet(filterTree, name, version, build) &&
+        safelyGet(filterTree, name, version, "Default")
         ? "Default"
         : build;
-    if (!applicationName) {
+    if (!name) {
         filterList = mergeTerminalNodes(filterTree);
     }
     else if (!version) {
-        filterList = mergeTerminalNodes(safelyGet(filterTree, applicationName));
+        filterList = mergeTerminalNodes(safelyGet(filterTree, name));
     }
     else if (!build_) {
-        filterList = mergeTerminalNodes(safelyGet(filterTree, applicationName, version));
+        filterList = mergeTerminalNodes(safelyGet(filterTree, name, version));
     }
     else if (!executable) {
-        filterList = mergeTerminalNodes(safelyGet(filterTree, applicationName, version, build_));
+        filterList = mergeTerminalNodes(safelyGet(filterTree, name, version, build_));
     }
     else if (!flavor) {
-        filterList = mergeTerminalNodes(safelyGet(filterTree, applicationName, version, build_, executable));
+        filterList = mergeTerminalNodes(safelyGet(filterTree, name, version, build_, executable));
     }
     else {
         filterList =
-            safelyGet(filterTree, applicationName, version, build_, executable, flavor) || [];
+            safelyGet(filterTree, name, version, build_, executable, flavor) || [];
     }
     return [...extractUniqueBy(filterList, "path"), ...extractUniqueBy(filterList, "regex")];
 }
@@ -76,10 +83,10 @@ function filterEntityList({ entitiesOrPaths, filterObjects, }) {
         if (!entityPath)
             return false;
         return filterObjects.some((filter) => {
-            if (filter.path) {
+            if ("path" in filter) {
                 return entityPath === filter.path || entityPath.includes(filter.path);
             }
-            if (filter.regex) {
+            if ("regex" in filter) {
                 try {
                     const regex = new RegExp(filter.regex);
                     return regex.test(entityPath);
@@ -96,10 +103,10 @@ class ApplicationFilterStandata {
     constructor(filterTree) {
         this.filterTree = filterTree || {};
     }
-    filterByApplicationParameters(entityList, applicationName, version, build, executable, flavor) {
+    filterByApplicationParameters(entityList, name, version, build, executable, flavor) {
         const filterObjects = getFilterObjects({
             filterTree: this.filterTree,
-            applicationName,
+            name,
             version,
             build,
             executable,
@@ -110,8 +117,8 @@ class ApplicationFilterStandata {
             filterObjects,
         });
     }
-    getAvailableEntities(applicationName) {
-        return this.filterTree[applicationName] || {};
+    getAvailableEntities(name) {
+        return this.filterTree[name] || {};
     }
 }
 exports.ApplicationFilterStandata = ApplicationFilterStandata;

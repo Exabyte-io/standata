@@ -1,12 +1,21 @@
+import {
+    FilterableEntity,
+    FilterEntityListParams,
+    FilterObject,
+    FilterObjectsParams,
+    FilterTree,
+} from "../types/applicationFilter";
+
 function safelyGet(obj: any, ...args: string[]): any {
     let current = obj;
-    for (const arg of args) {
+    args.forEach((arg) => {
         if (current && typeof current === "object" && arg in current) {
             current = current[arg];
         } else {
             return undefined;
         }
-    }
+    });
+
     return current;
 }
 
@@ -29,56 +38,53 @@ function mergeTerminalNodes(obj: any): any[] {
     return results;
 }
 
-function extractUniqueBy(filterObjects: any[], name: string): any[] {
+function extractUniqueBy(filterObjects: FilterObject[], name: string): FilterObject[] {
     const seen = new Set();
     return filterObjects.filter((obj) => {
-        if (!obj || !obj[name] || seen.has(obj[name])) {
+        let value: string | undefined;
+        if (name === "path" && "path" in obj) {
+            value = obj.path;
+        } else if (name === "regex" && "regex" in obj) {
+            value = obj.regex;
+        }
+
+        if (!obj || !value || seen.has(value)) {
             return false;
         }
-        seen.add(obj[name]);
+        seen.add(value);
         return true;
     });
 }
 
 function getFilterObjects({
     filterTree,
-    applicationName = "",
+    name = "",
     version = "",
     build = "",
     executable = "",
     flavor = "",
-}: {
-    filterTree: any;
-    applicationName?: string;
-    version?: string;
-    build?: string;
-    executable?: string;
-    flavor?: string;
-}) {
-    let filterList: any[];
+}: FilterObjectsParams): FilterObject[] {
+    let filterList: FilterObject[];
 
     // Use Default build when the filterTree does not contain the build specified
     const build_ =
-        !safelyGet(filterTree, applicationName, version, build) &&
-        safelyGet(filterTree, applicationName, version, "Default")
+        !safelyGet(filterTree, name, version, build) &&
+        safelyGet(filterTree, name, version, "Default")
             ? "Default"
             : build;
 
-    if (!applicationName) {
+    if (!name) {
         filterList = mergeTerminalNodes(filterTree);
     } else if (!version) {
-        filterList = mergeTerminalNodes(safelyGet(filterTree, applicationName));
+        filterList = mergeTerminalNodes(safelyGet(filterTree, name));
     } else if (!build_) {
-        filterList = mergeTerminalNodes(safelyGet(filterTree, applicationName, version));
+        filterList = mergeTerminalNodes(safelyGet(filterTree, name, version));
     } else if (!executable) {
-        filterList = mergeTerminalNodes(safelyGet(filterTree, applicationName, version, build_));
+        filterList = mergeTerminalNodes(safelyGet(filterTree, name, version, build_));
     } else if (!flavor) {
-        filterList = mergeTerminalNodes(
-            safelyGet(filterTree, applicationName, version, build_, executable),
-        );
+        filterList = mergeTerminalNodes(safelyGet(filterTree, name, version, build_, executable));
     } else {
-        filterList =
-            safelyGet(filterTree, applicationName, version, build_, executable, flavor) || [];
+        filterList = safelyGet(filterTree, name, version, build_, executable, flavor) || [];
     }
 
     return [...extractUniqueBy(filterList, "path"), ...extractUniqueBy(filterList, "regex")];
@@ -87,10 +93,7 @@ function getFilterObjects({
 function filterEntityList({
     entitiesOrPaths,
     filterObjects,
-}: {
-    entitiesOrPaths: any[];
-    filterObjects: any[];
-}): any[] {
+}: FilterEntityListParams): (string | FilterableEntity)[] {
     if (!filterObjects || filterObjects.length === 0) {
         return entitiesOrPaths;
     }
@@ -100,10 +103,10 @@ function filterEntityList({
         if (!entityPath) return false;
 
         return filterObjects.some((filter) => {
-            if (filter.path) {
+            if ("path" in filter) {
                 return entityPath === filter.path || entityPath.includes(filter.path);
             }
-            if (filter.regex) {
+            if ("regex" in filter) {
                 try {
                     const regex = new RegExp(filter.regex);
                     return regex.test(entityPath);
@@ -117,15 +120,15 @@ function filterEntityList({
 }
 
 export abstract class ApplicationFilterStandata {
-    protected filterTree: any;
+    protected filterTree: FilterTree;
 
-    constructor(filterTree: any) {
+    constructor(filterTree: FilterTree) {
         this.filterTree = filterTree || {};
     }
 
     protected filterByApplicationParameters(
         entityList: any[],
-        applicationName: string,
+        name: string,
         version?: string,
         build?: string,
         executable?: string,
@@ -133,7 +136,7 @@ export abstract class ApplicationFilterStandata {
     ): any[] {
         const filterObjects = getFilterObjects({
             filterTree: this.filterTree,
-            applicationName,
+            name,
             version,
             build,
             executable,
@@ -146,7 +149,7 @@ export abstract class ApplicationFilterStandata {
         });
     }
 
-    getAvailableEntities(applicationName: string): any {
-        return this.filterTree[applicationName] || {};
+    getAvailableEntities(name: string): any {
+        return this.filterTree[name] || {};
     }
 }

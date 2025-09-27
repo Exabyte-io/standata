@@ -11,11 +11,11 @@ class ApplicationMethodStandata extends applicationFilter_1.ApplicationFilterSta
         const data = modelMethodMapByApplication_json_1.default;
         super(data === null || data === void 0 ? void 0 : data.methods);
     }
-    findByApplicationParameters({ methodList, applicationName, version, build, executable, flavor, }) {
-        return this.filterByApplicationParameters(methodList, applicationName, version, build, executable, flavor);
+    findByApplicationParameters({ methodList, name, version, build, executable, flavor, }) {
+        return this.filterByApplicationParameters(methodList, name, version, build, executable, flavor);
     }
-    getAvailableMethods(applicationName) {
-        return this.getAvailableEntities(applicationName);
+    getAvailableMethods(name) {
+        return this.getAvailableEntities(name);
     }
 }
 exports.ApplicationMethodStandata = ApplicationMethodStandata;

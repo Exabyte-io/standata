@@ -1,14 +1,7 @@
 import { ApplicationFilterStandata } from "./utils/applicationFilter";
-export interface ApplicationMethodParametersInterface {
-    methodList: any[];
-    applicationName: string;
-    version?: string;
-    build?: string;
-    executable?: string;
-    flavor?: string;
-}
+import { ApplicationMethodParametersInterface } from "./types/applicationFilter";
 export declare class ApplicationMethodStandata extends ApplicationFilterStandata {
     constructor();
-    findByApplicationParameters({ methodList, applicationName, version, build, executable, flavor, }: ApplicationMethodParametersInterface): any[];
-    getAvailableMethods(applicationName: string): any;
+    findByApplicationParameters({ methodList, name, version, build, executable, flavor, }: ApplicationMethodParametersInterface): any[];
+    getAvailableMethods(name: string): any;
 }

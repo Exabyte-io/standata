@@ -22,7 +22,7 @@ describe("Application Method Standata", () => {
     it("can find methods by application parameters", () => {
         const espressoMethods = methodStandata.findByApplicationParameters({
             methodList: categorizedMethodList,
-            applicationName: "espresso",
+            name: "espresso",
         });
 
         expect(espressoMethods).to.be.an("array");
@@ -41,7 +41,7 @@ describe("Application Method Standata", () => {
     it("can filter methods with specific parameters", () => {
         const specificMethods = methodStandata.findByApplicationParameters({
             methodList: categorizedMethodList,
-            applicationName: "espresso",
+            name: "espresso",
             version: "6.3",
             build: "Default",
             executable: "pw.x",
@@ -74,7 +74,7 @@ describe("Application Method Standata", () => {
         // Step 2: Further filter by application parameters (like in webapp)
         const finalMethods = methodStandata.findByApplicationParameters({
             methodList: filteredMethods,
-            applicationName: "espresso",
+            name: "espresso",
             version: "6.3",
             build: "Default",
         });
@@ -91,7 +91,7 @@ describe("Application Method Standata", () => {
     it("returns empty array for non-existent application", () => {
         const methods = methodStandata.findByApplicationParameters({
             methodList: categorizedMethodList,
-            applicationName: "nonexistent",
+            name: "nonexistent",
         });
 
         expect(methods).to.be.an("array");
@@ -102,7 +102,7 @@ describe("Application Method Standata", () => {
     it("returns empty array for non-existent version", () => {
         const methods = methodStandata.findByApplicationParameters({
             methodList: categorizedMethodList,
-            applicationName: "espresso",
+            name: "espresso",
             version: "999.0.0",
         });
 

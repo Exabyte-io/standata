@@ -20,7 +20,7 @@ describe("Application Model Standata", () => {
     it("can find models by application parameters", () => {
         const espressoModels = modelStandata.findByApplicationParameters({
             modelList: categorizedModelList,
-            applicationName: "espresso",
+            name: "espresso",
         });
 
         expect(espressoModels).to.be.an("array");
@@ -37,7 +37,7 @@ describe("Application Model Standata", () => {
     it("can filter models with specific parameters", () => {
         const specificModels = modelStandata.findByApplicationParameters({
             modelList: categorizedModelList,
-            applicationName: "espresso",
+            name: "espresso",
             version: "6.3",
             build: "Default",
             executable: "pw.x",
@@ -58,7 +58,7 @@ describe("Application Model Standata", () => {
     it("returns empty array for non-existent application", () => {
         const models = modelStandata.findByApplicationParameters({
             modelList: categorizedModelList,
-            applicationName: "nonexistent",
+            name: "nonexistent",
         });
 
         expect(models).to.be.an("array");

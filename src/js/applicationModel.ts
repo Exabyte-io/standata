@@ -1,14 +1,6 @@
 import { ApplicationFilterStandata } from "./utils/applicationFilter";
 import MODEL_METHOD_DATA from "./runtime_data/modelMethodMapByApplication.json";
-
-export interface ApplicationModelParametersInterface {
-    modelList: any[];
-    applicationName: string;
-    version?: string;
-    build?: string;
-    executable?: string;
-    flavor?: string;
-}
+import { ApplicationModelParametersInterface } from "./types/applicationFilter";
 
 export class ApplicationModelStandata extends ApplicationFilterStandata {
     constructor() {
@@ -18,7 +10,7 @@ export class ApplicationModelStandata extends ApplicationFilterStandata {
 
     findByApplicationParameters({
         modelList,
-        applicationName,
+        name,
         version,
         build,
         executable,
@@ -26,7 +18,7 @@ export class ApplicationModelStandata extends ApplicationFilterStandata {
     }: ApplicationModelParametersInterface): any[] {
         return this.filterByApplicationParameters(
             modelList,
-            applicationName,
+            name,
             version,
             build,
             executable,
@@ -34,7 +26,7 @@ export class ApplicationModelStandata extends ApplicationFilterStandata {
         );
     }
 
-    getAvailableModels(applicationName: string): any {
-        return this.getAvailableEntities(applicationName);
+    getAvailableModels(name: string): any {
+        return this.getAvailableEntities(name);
     }
 }

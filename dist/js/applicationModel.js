@@ -11,11 +11,11 @@ class ApplicationModelStandata extends applicationFilter_1.ApplicationFilterStan
         const data = modelMethodMapByApplication_json_1.default;
         super(data === null || data === void 0 ? void 0 : data.models);
     }
-    findByApplicationParameters({ modelList, applicationName, version, build, executable, flavor, }) {
-        return this.filterByApplicationParameters(modelList, applicationName, version, build, executable, flavor);
+    findByApplicationParameters({ modelList, name, version, build, executable, flavor, }) {
+        return this.filterByApplicationParameters(modelList, name, version, build, executable, flavor);
     }
-    getAvailableModels(applicationName) {
-        return this.getAvailableEntities(applicationName);
+    getAvailableModels(name) {
+        return this.getAvailableEntities(name);
     }
 }
 exports.ApplicationModelStandata = ApplicationModelStandata;

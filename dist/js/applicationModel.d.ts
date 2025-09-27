@@ -1,14 +1,7 @@
 import { ApplicationFilterStandata } from "./utils/applicationFilter";
-export interface ApplicationModelParametersInterface {
-    modelList: any[];
-    applicationName: string;
-    version?: string;
-    build?: string;
-    executable?: string;
-    flavor?: string;
-}
+import { ApplicationModelParametersInterface } from "./types/applicationFilter";
 export declare class ApplicationModelStandata extends ApplicationFilterStandata {
     constructor();
-    findByApplicationParameters({ modelList, applicationName, version, build, executable, flavor, }: ApplicationModelParametersInterface): any[];
-    getAvailableModels(applicationName: string): any;
+    findByApplicationParameters({ modelList, name, version, build, executable, flavor, }: ApplicationModelParametersInterface): any[];
+    getAvailableModels(name: string): any;
 }

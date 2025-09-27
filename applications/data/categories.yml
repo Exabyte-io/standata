@@ -16,3 +16,5 @@ entities:
   - filename: espresso/espresso_gnu_6.3.json
     categories:
       - quantum-mechanical
+      - modeling
+      - compiled
