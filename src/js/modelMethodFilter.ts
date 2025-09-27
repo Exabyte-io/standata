@@ -1,5 +1,5 @@
-import type { MethodConfig, MethodUnit } from "./method";
-import type { ModelConfig } from "./model";
+import type { MethodConfig, MethodUnit } from "./types/method";
+import type { ModelConfig } from "./types/model";
 // TODO: Create proper model-method compatibility mapping
 const MODEL_METHOD_MAP = {};
 
@@ -84,7 +84,7 @@ export class ModelMethodFilter {
 
     private isMethodCompatible(method: MethodConfig, filterRules: FilterRule[]): boolean {
         // Check if any unit in the method matches any filter rule
-        return method.units.some((unit) =>
+        return method.units.some((unit: MethodUnit) =>
             filterRules.some((rule) => this.isUnitMatchingRule(unit, rule)),
         );
     }
