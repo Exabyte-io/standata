@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplicationFilterStandata = void 0;
 function safelyGet(obj, ...args) {
     let current = obj;
+    // We use for instead of forEach to allow early return on undefined
+    // eslint-disable-next-line no-restricted-syntax
     for (const arg of args) {
         if (current && typeof current === "object" && arg in current) {
             current = current[arg];
@@ -69,8 +71,7 @@ function getFilterObjects({ filterTree, name = "", version = "", build = "", exe
         filterList = mergeTerminalNodes(safelyGet(filterTree, name, version, build_, executable));
     }
     else {
-        filterList =
-            safelyGet(filterTree, name, version, build_, executable, flavor) || [];
+        filterList = safelyGet(filterTree, name, version, build_, executable, flavor) || [];
     }
     return [...extractUniqueBy(filterList, "path"), ...extractUniqueBy(filterList, "regex")];
 }

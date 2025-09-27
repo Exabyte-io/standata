@@ -25,6 +25,11 @@ export interface ApplicationModelParametersInterface extends Omit<FilterObjectsP
     modelList: any[];
     name: Required<ApplicationSchemaBase>["name"];
 }
+export type ModelMethodFilterTree = Record<Required<ApplicationSchemaBase>["name"], Record<Required<ApplicationSchemaBase>["version"], Record<Required<ApplicationSchemaBase>["build"], Record<ExecutableSchema["name"], Record<string, FilterObject[]>>>>>;
+export interface ModelMethodMapByApplication {
+    models: ModelMethodFilterTree;
+    methods: ModelMethodFilterTree;
+}
 export interface ApplicationMethodParametersInterface extends Omit<FilterObjectsParams, "filterTree"> {
     methodList: any[];
     name: Required<ApplicationSchemaBase>["name"];

@@ -9,7 +9,7 @@ const modelMethodMapByApplication_json_1 = __importDefault(require("./runtime_da
 class ApplicationMethodStandata extends applicationFilter_1.ApplicationFilterStandata {
     constructor() {
         const data = modelMethodMapByApplication_json_1.default;
-        super(data === null || data === void 0 ? void 0 : data.methods);
+        super(data === null || data === void 0 ? void 0 : data.methods); // Cast to any for FilterTree compatibility
     }
     findByApplicationParameters({ methodList, name, version, build, executable, flavor, }) {
         return this.filterByApplicationParameters(methodList, name, version, build, executable, flavor);
