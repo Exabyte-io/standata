@@ -8,14 +8,15 @@ import {
 
 function safelyGet(obj: any, ...args: string[]): any {
     let current = obj;
-    args.forEach((arg) => {
+    // We use for instead of forEach to allow early return on undefined
+    // eslint-disable-next-line no-restricted-syntax
+    for (const arg of args) {
         if (current && typeof current === "object" && arg in current) {
             current = current[arg];
         } else {
             return undefined;
         }
-    });
-
+    }
     return current;
 }
 
