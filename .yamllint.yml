@@ -27,3 +27,4 @@ ignore:
   materials/categories.yml
   applications/categories.yml
   properties/categories.yml
+  applications/sources/applications/

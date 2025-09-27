@@ -17,7 +17,7 @@ interface RuntimeData {
     filesMapByName: object;
 }
 
-export class Standata {
+export class Standata<EntityType extends object = object> {
     static runtimeData: RuntimeData = {
         standataConfig: { entities: [], categories: {} },
         filesMapByName: {},
@@ -97,9 +97,9 @@ export class Standata {
         return filenames.map((f) => this.loadEntity(f)).filter((e): e is object => e !== undefined);
     }
 
-    getAll(): object[] {
+    getAll(): EntityType[] {
         return this.entities
             .map((e) => this.loadEntity(e.filename))
-            .filter((e): e is object => e !== undefined);
+            .filter((e): e is EntityType => e !== undefined);
     }
 }

@@ -12,10 +12,10 @@ repos:
       - id: recreate-dist
         name: recreate-dist
         language: system
-        entry: npm run build:dist && exit 0
+        entry: npm run build && exit 0
         pass_filenames: false
         verbose: true
-        files: ^(materials/sources/|applications/|properties/|workflows/wode/(sources|scripts)/)
+        files: ^(materials/sources/|applications/(sources|scripts)|properties/|workflows/(sources|scripts)/)
         exclude: ^(workflows/(?!wode/)|src/js/runtime_data/|dist/)
   - repo: https://github.com/Exabyte-io/pre-commit-hooks
     rev: 2023.8.18
@@ -29,8 +29,9 @@ repos:
       - id: check-yaml
         exclude: ^applications/sources/.*\.ya?ml$
       - id: end-of-file-fixer
-        exclude: ^(workflows|applications)/.*\.json$
+        exclude: ^(workflows|applications)/.*\.json$|^dist/
       - id: trailing-whitespace
+        exclude: ^dist/
   - repo: local
     hooks:
       - id: lint-staged
