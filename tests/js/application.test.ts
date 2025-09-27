@@ -34,6 +34,19 @@ describe("Application Standata", () => {
             expect(appData).to.have.property("shortName", "qe");
         });
 
+        it("getAppDataForApplication - should return application config with default version", () => {
+            const appData = standata.getAppDataForApplication("espresso");
+            expect(appData).to.have.property("defaultVersion", "6.3");
+            expect(appData).to.have.property("versions").that.is.an("array");
+            expect(appData.versions).to.have.length.greaterThan(0);
+
+            const defaultVersionConfig = appData.versions.find(v => v.isDefault);
+            expect(defaultVersionConfig).to.exist;
+            expect(defaultVersionConfig).to.have.property("version", appData.defaultVersion);
+            expect(defaultVersionConfig).to.have.property("build", "GNU");
+            expect(defaultVersionConfig).to.have.property("hasAdvancedComputeOptions", true);
+        });
+
         it("getAppDataForApplication - should throw error for invalid app", () => {
             expect(() => {
                 standata.getAppDataForApplication("nonexistent");
