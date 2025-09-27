@@ -1,9 +1,9 @@
-import { buildEntities, BuildConfig } from "../../methods/buildUtils";
+import { BuildConfig, buildEntities } from "../../methods/buildUtils";
 
 const buildConfig: BuildConfig = {
     sourcesPath: "models/sources",
     dataPath: "models/data",
-    entityType: "models"
+    entityType: "models",
 };
 
 buildEntities(buildConfig);

@@ -1,8 +1,8 @@
+import { getFilesInDirectory, JsYamlAllSchemas } from "@mat3ra/code/dist/js/utils";
 import * as fs from "fs";
-import * as path from "path";
 import * as yaml from "js-yaml";
 import * as lodash from "lodash";
-import { getFilesInDirectory, JsYamlAllSchemas } from "@mat3ra/code/dist/js/utils";
+import * as path from "path";
 
 export interface BuildConfig {
     sourcesPath: string;
@@ -10,7 +10,6 @@ export interface BuildConfig {
     entityType: "models" | "methods";
     pathSeparator?: string;
 }
-
 
 /**
  * Generates URL path based on entity categories and parameters.
@@ -52,21 +51,25 @@ export function createSafeFilename(name: string): string {
 export function getEntitySubdirectory(config: any, entityType: "models" | "methods"): string {
     if (entityType === "models") {
         return config.categories?.subtype || "unknown";
-    } else {
-        // Methods: use primary unit type or method type
-        if (config.units && config.units.length > 0) {
-            return config.units[0].categories?.type || "unknown";
-        } else if (config.categories?.type) {
-            return config.categories.type;
-        }
-        return "unknown";
     }
+    // Methods: use primary unit type or method type
+    if (config.units && config.units.length > 0) {
+        return config.units[0].categories?.type || "unknown";
+    }
+    if (config.categories?.type) {
+        return config.categories.type;
+    }
+    return "unknown";
 }
 
 /**
- * Processes entity path based on type
+ * Processes entity path based on type to output a URL-encoded path
  */
-export function processEntityPath(config: any, entityType: "models" | "methods", pathSeparator = "::"): void {
+export function setEntityPathAsURL(
+    config: any,
+    entityType: "models" | "methods",
+    pathSeparator = "::",
+): void {
     if (entityType === "methods" && config.units) {
         config.units.forEach((unit: any) => {
             unit.path = encodeDataAsURLPath(unit);
@@ -98,9 +101,12 @@ export function processEntityFile(filePath: string, buildConfig: BuildConfig): v
     let configs: any[];
     if (buildConfig.entityType === "models") {
         // Models: handle both single configs and objects with multiple configs
-        configs = lodash.isPlainObject(parsed) && !parsed.name
-            ? Object.values(parsed).flat()
-            : Array.isArray(parsed) ? parsed : [parsed];
+        configs =
+            lodash.isPlainObject(parsed) && !parsed.name
+                ? Object.values(parsed).flat()
+                : Array.isArray(parsed)
+                ? parsed
+                : [parsed];
     } else {
         // Methods: typically arrays of method configs
         configs = Array.isArray(parsed) ? parsed : [parsed];
@@ -114,7 +120,7 @@ export function processEntityFile(filePath: string, buildConfig: BuildConfig): v
         }
 
         // Process path based on entity type
-        processEntityPath(config, buildConfig.entityType, buildConfig.pathSeparator);
+        setEntityPathAsURL(config, buildConfig.entityType, buildConfig.pathSeparator);
 
         // Remove schema if present
         delete config.schema;
@@ -138,18 +144,14 @@ export function processEntityFile(filePath: string, buildConfig: BuildConfig): v
     });
 }
 
-
-
-
-
 /**
- * Clears existing data directory (except categories.yml)
+ * Clears existing data directory (except excludeFile)
  */
-export function clearDataDirectory(dataPath: string): void {
+export function clearDataDirectory(dataPath: string, excludeFile = "categories.yml"): void {
     if (fs.existsSync(dataPath)) {
         const items = fs.readdirSync(dataPath);
         items.forEach((item) => {
-            if (item !== "categories.yml") {
+            if (item !== excludeFile) {
                 const itemPath = path.join(dataPath, item);
                 if (fs.statSync(itemPath).isDirectory()) {
                     fs.rmSync(itemPath, { recursive: true });
@@ -162,25 +164,6 @@ export function clearDataDirectory(dataPath: string): void {
 }
 
 /**
- * Counts JSON files in a directory recursively
- */
-export function countJsonFiles(dir: string): number {
-    let count = 0;
-    if (fs.existsSync(dir)) {
-        const items = fs.readdirSync(dir);
-        items.forEach((item) => {
-            const fullPath = path.join(dir, item);
-            if (fs.statSync(fullPath).isDirectory()) {
-                count += countJsonFiles(fullPath);
-            } else if (item.endsWith(".json")) {
-                count++;
-            }
-        });
-    }
-    return count;
-}
-
-/**
  * Main build function that processes all YAML files and generates JSON files
  */
 export function buildEntities(buildConfig: BuildConfig): void {
@@ -188,21 +171,13 @@ export function buildEntities(buildConfig: BuildConfig): void {
         // Clear existing data directory (except categories.yml)
         clearDataDirectory(buildConfig.dataPath);
 
-        // Process all YAML files
         const yamlFiles = getFilesInDirectory(buildConfig.sourcesPath, [".yml", ".yaml"], true);
 
         yamlFiles.forEach((filePath) => {
             processEntityFile(filePath, buildConfig);
         });
 
-        // Categories.yml files are maintained manually
-
-        // Count total generated files
-        const totalFiles = countJsonFiles(buildConfig.dataPath);
-        console.log(
-            `\nGenerated ${totalFiles} ${buildConfig.entityType} JSON files from ${yamlFiles.length} YAML sources`,
-        );
-
+        console.log(`\nGenerated JSON files from ${yamlFiles.length} YAML sources`);
     } catch (error) {
         console.error(`Error building ${buildConfig.entityType}:`, error);
         process.exit(1);
