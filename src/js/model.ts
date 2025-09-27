@@ -1,19 +1,6 @@
 import { Standata } from "./base";
 import MODELS from "./runtime_data/models.json";
-
-export interface ModelConfig {
-    name: string;
-    path: string;
-    categories: {
-        tier1?: string;
-        tier2?: string;
-        tier3?: string;
-        type?: string;
-        subtype?: string;
-    };
-    parameters?: Record<string, any>;
-    tags?: string[];
-}
+import { ModelConfig } from "./types/model";
 
 export class ModelStandata extends Standata<ModelConfig> {
     static runtimeData = MODELS;
@@ -30,7 +17,11 @@ export class ModelStandata extends Standata<ModelConfig> {
     getModelsByCategory(category: string): ModelConfig[] {
         const allModels = this.getAllModels();
         return allModels.filter((model) => {
-            const categoryPath = `${model.categories.tier1 || 'none'}/${model.categories.tier2 || 'none'}/${model.categories.tier3 || 'none'}/${model.categories.type || 'none'}/${model.categories.subtype || 'none'}`;
+            const categoryPath = `${model.categories.tier1 || "none"}/${
+                model.categories.tier2 || "none"
+            }/${model.categories.tier3 || "none"}/${model.categories.type || "none"}/${
+                model.categories.subtype || "none"
+            }`;
             return categoryPath.includes(category);
         });
     }
@@ -42,8 +33,8 @@ export class ModelStandata extends Standata<ModelConfig> {
 
     getModelsByTags(...tags: string[]): ModelConfig[] {
         const allModels = this.getAllModels();
-        return allModels.filter((model) =>
-            model.tags && tags.some((tag) => model.tags!.includes(tag))
+        return allModels.filter(
+            (model) => model.tags && tags.some((tag) => model.tags!.includes(tag)),
         );
     }
 
@@ -56,8 +47,8 @@ export class ModelStandata extends Standata<ModelConfig> {
         const allModels = this.getAllModels();
         return allModels.filter((model) => {
             if (!model.parameters) return false;
-            return Object.entries(parameters).every(([key, value]) =>
-                model.parameters![key] === value
+            return Object.entries(parameters).every(
+                ([key, value]) => model.parameters![key] === value,
             );
         });
     }
@@ -77,7 +68,7 @@ export class ModelStandata extends Standata<ModelConfig> {
         const subtypes = new Set(
             allModels
                 .map((model) => model.categories.subtype)
-                .filter((subtype): subtype is string => subtype !== undefined)
+                .filter((subtype): subtype is string => subtype !== undefined),
         );
         return Array.from(subtypes);
     }

@@ -1,25 +1,6 @@
 import { Standata } from "./base";
 import METHODS from "./runtime_data/methods.json";
-
-export interface MethodUnit {
-    name: string;
-    path: string;
-    categories: {
-        tier1?: string;
-        tier2?: string;
-        tier3?: string;
-        type: string;
-        subtype?: string;
-    };
-    parameters?: Record<string, any>;
-    tags: string[];
-}
-
-export interface MethodConfig {
-    name: string;
-    path: string;
-    units: MethodUnit[];
-}
+import { MethodConfig, MethodUnit } from "./types/method";
 
 export class MethodStandata extends Standata<MethodConfig> {
     static runtimeData = METHODS;
@@ -36,23 +17,21 @@ export class MethodStandata extends Standata<MethodConfig> {
     getMethodsByUnitType(unitType: string): MethodConfig[] {
         const allMethods = this.getAllMethods();
         return allMethods.filter((method) =>
-            method.units.some((unit) => unit.categories.type === unitType)
+            method.units.some((unit) => unit.categories.type === unitType),
         );
     }
 
     getMethodsByUnitSubtype(unitSubtype: string): MethodConfig[] {
         const allMethods = this.getAllMethods();
         return allMethods.filter((method) =>
-            method.units.some((unit) => unit.categories.subtype === unitSubtype)
+            method.units.some((unit) => unit.categories.subtype === unitSubtype),
         );
     }
 
     getMethodsByUnitTags(...tags: string[]): MethodConfig[] {
         const allMethods = this.getAllMethods();
         return allMethods.filter((method) =>
-            method.units.some((unit) =>
-                tags.some((tag) => unit.tags.includes(tag))
-            )
+            method.units.some((unit) => tags.some((tag) => unit.tags.includes(tag))),
         );
     }
 
@@ -66,10 +45,10 @@ export class MethodStandata extends Standata<MethodConfig> {
         return allMethods.filter((method) =>
             method.units.some((unit) => {
                 if (!unit.parameters) return false;
-                return Object.entries(parameters).every(([key, value]) =>
-                    unit.parameters![key] === value
+                return Object.entries(parameters).every(
+                    ([key, value]) => unit.parameters![key] === value,
                 );
-            })
+            }),
         );
     }
 
@@ -99,12 +78,15 @@ export class MethodStandata extends Standata<MethodConfig> {
         const subtypes = new Set(
             allUnits
                 .map((unit) => unit.categories.subtype)
-                .filter((subtype): subtype is string => subtype !== undefined)
+                .filter((subtype): subtype is string => subtype !== undefined),
         );
         return Array.from(subtypes);
     }
 
-    getMethodsCompatibleWithModel(modelPath: string, filterMap: Record<string, any>): MethodConfig[] {
+    getMethodsCompatibleWithModel(
+        modelPath: string,
+        filterMap: Record<string, any>,
+    ): MethodConfig[] {
         // This would use the model-method filter map to find compatible methods
         // Implementation depends on the filter map structure
         const allMethods = this.getAllMethods();
