@@ -1,0 +1,40 @@
+categories:
+  tier1:
+    - qm    # quantum mechanical
+    - opt   # optimization
+    - linalg # linear algebra
+  tier2:
+    - wf    # wave function
+    - diff  # differential
+    - diag  # diagonalization
+  tier3:
+    - ordern # order-n
+  type:
+    - psp        # pseudopotential
+    - pw         # plane wave
+    - ao         # atomic orbital
+    - smearing   # smearing
+    - tetrahedron # tetrahedron
+    - cg         # conjugate gradient
+    - davidson   # davidson
+    - linear     # linear regression
+    - kernel_ridge # kernel ridge regression
+  subtype:
+    - us      # ultra-soft
+    - nc      # norm-conserving
+    - nc-fr   # norm-conserving fully-relativistic
+    - paw     # projector-augmented wave
+    - pople   # pople basis set
+    - gaussian # gaussian smearing
+    - methfessel-paxton # methfessel-paxton smearing
+    - least_squares # least squares
+    - ridge   # ridge regression
+  tags:
+    - pseudopotential
+    - plane-wave
+    - atomic-orbital
+    - occupation-number
+    - diagonalization
+    - machine-learning
+
+entities: []
