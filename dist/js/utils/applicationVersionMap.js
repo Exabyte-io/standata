@@ -1,22 +1,8 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { ApplicationSchemaBase } from "@mat3ra/esse/dist/js/types";
-
-import { ApplicationVersionInfo, ApplicationVersionsMapType } from "../types/application";
-
-export class ApplicationVersionsMap implements ApplicationVersionsMapType {
-    shortName?: string | undefined;
-
-    summary?: string | undefined;
-
-    isLicensed?: boolean | undefined;
-
-    defaultVersion: string;
-
-    versions: ApplicationVersionInfo[];
-
-    map: ApplicationVersionsMapType;
-
-    constructor(config: ApplicationVersionsMapType) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ApplicationVersionsMap = void 0;
+class ApplicationVersionsMap {
+    constructor(config) {
         this.map = config;
         this.defaultVersion = config.defaultVersion;
         this.versions = config.versions;
@@ -24,21 +10,17 @@ export class ApplicationVersionsMap implements ApplicationVersionsMapType {
         this.summary = config.summary;
         this.isLicensed = config.isLicensed;
     }
-
     get name() {
         return this.map.name;
     }
-
     get nonVersionProperties() {
         const { versions, defaultVersion, ...rest } = this.map;
         return rest;
     }
-
     get versionConfigs() {
         return this.map.versions;
     }
-
-    get versionConfigsFull(): ApplicationSchemaBase[] {
+    get versionConfigsFull() {
         return this.versionConfigs.map((versionConfig) => {
             return {
                 ...this.nonVersionProperties,
@@ -46,8 +28,7 @@ export class ApplicationVersionsMap implements ApplicationVersionsMapType {
             };
         });
     }
-
-    getSlugForVersionConfig(versionConfigFull: ApplicationSchemaBase) {
+    getSlugForVersionConfig(versionConfigFull) {
         const buildSuffix = versionConfigFull.build
             ? `_${versionConfigFull.build.toLowerCase()}`
             : "";
@@ -55,3 +36,4 @@ export class ApplicationVersionsMap implements ApplicationVersionsMapType {
         return `${this.name}${buildSuffix}_${versionSuffix}.json`;
     }
 }
+exports.ApplicationVersionsMap = ApplicationVersionsMap;

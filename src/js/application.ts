@@ -4,18 +4,18 @@ import { Standata } from "./base";
 import APPLICATIONS from "./runtime_data/applications.json";
 import EXECUTABLE_FLAVOR_MAP from "./runtime_data/executableFlavorMapByApplication.json";
 import TEMPLATES_LIST from "./runtime_data/templatesList.json";
-import type { ApplicationData, ApplicationExecutableTree } from "./types/application";
+import type { ApplicationExecutableTree, ApplicationVersionsMapType } from "./types/application";
 
-export class ApplicationStandata extends Standata<ApplicationData> {
+export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
     static runtimeData = APPLICATIONS;
 
-    getAppDataForApplication(appName: string): ApplicationData {
+    getAppDataForApplication(appName: string): ApplicationVersionsMapType {
         const allEntities = this.getAll();
         const appEntities = allEntities.filter((entity: any) => entity.name === appName);
         if (appEntities.length === 0) {
             throw new Error(`Application ${appName} not found`);
         }
-        return appEntities[0] as ApplicationData;
+        return appEntities[0] as ApplicationVersionsMapType;
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -40,12 +40,14 @@ export class ApplicationStandata extends Standata<ApplicationData> {
         return EXECUTABLE_FLAVOR_MAP;
     }
 
+    // TODO: move to parent class Standata
     getAllApplicationNames() {
         const allApps = this.getAll();
         const uniqueNames = new Set(allApps.map((app) => app.name));
         return Array.from(uniqueNames);
     }
 
+    // TODO: move to parent class Standata
     getAllAppData() {
         return this.getAll();
     }
@@ -67,6 +69,7 @@ export class ApplicationStandata extends Standata<ApplicationData> {
         return filtered.filter((template) => template.name === templateName);
     }
 
+    // TODO: move to parent class Standata
     getByApplicationName(appName: string) {
         const allEntities = this.getAll();
         return allEntities.filter((entity) => entity.name === appName);

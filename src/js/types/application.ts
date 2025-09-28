@@ -7,7 +7,7 @@ export type ApplicationVersionInfo = Pick<
     version: Required<ApplicationSchemaBase>["version"];
 };
 
-export type ApplicationData = Pick<
+export type ApplicationVersionsMapType = Pick<
     ApplicationSchemaBase,
     "shortName" | "summary" | "isLicensed"
 > & {

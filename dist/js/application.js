@@ -36,11 +36,13 @@ class ApplicationStandata extends base_1.Standata {
         // TODO: Convert to use this.getAll() when tree data is in Standata format
         return executableFlavorMapByApplication_json_1.default;
     }
+    // TODO: move to parent class Standata
     getAllApplicationNames() {
         const allApps = this.getAll();
         const uniqueNames = new Set(allApps.map((app) => app.name));
         return Array.from(uniqueNames);
     }
+    // TODO: move to parent class Standata
     getAllAppData() {
         return this.getAll();
     }
@@ -58,6 +60,7 @@ class ApplicationStandata extends base_1.Standata {
         }
         return filtered.filter((template) => template.name === templateName);
     }
+    // TODO: move to parent class Standata
     getByApplicationName(appName) {
         const allEntities = this.getAll();
         return allEntities.filter((entity) => entity.name === appName);

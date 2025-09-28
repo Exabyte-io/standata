@@ -1,7 +1,26 @@
 import { expect } from "chai";
 
 import { ApplicationStandata } from "../../src/js";
+import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
+import applicationVersionsMapByApplication from "./fixtures/applicationVersionsMapByApplication.json";
 import EspressoGnu63 from "./fixtures/espresso_gnu_6.3.json";
+
+describe("ApplicationVersionsMap", () => {
+    it("should correctly instantiate from JSON data", () => {
+        const espressoVersionsMap = new ApplicationVersionsMap(
+            applicationVersionsMapByApplication.espresso,
+        );
+        expect(espressoVersionsMap).to.be.an.instanceof(ApplicationVersionsMap);
+        expect(espressoVersionsMap.versions).to.be.an("array");
+        expect(espressoVersionsMap.getSlugForVersionConfig(EspressoGnu63)).to.equal(
+            "espresso_gnu_6.3.json",
+        );
+        expect(espressoVersionsMap.defaultVersion).to.equal("6.3");
+        expect(espressoVersionsMap.name).to.equal("espresso");
+        expect(espressoVersionsMap.shortName).to.equal("qe");
+        expect(espressoVersionsMap.versionConfigsFull.length).to.not.equal(0);
+    });
+});
 
 describe("Application Standata", () => {
     let standata: ApplicationStandata;
@@ -32,19 +51,6 @@ describe("Application Standata", () => {
             expect(appData).to.be.an("object");
             expect(appData).to.have.property("name", "espresso");
             expect(appData).to.have.property("shortName", "qe");
-        });
-
-        it("getAppDataForApplication - should return application config with default version", () => {
-            const appData = standata.getAppDataForApplication("espresso");
-            expect(appData).to.have.property("defaultVersion", "6.3");
-            expect(appData).to.have.property("versions").that.is.an("array");
-            expect(appData.versions).to.have.length.greaterThan(0);
-
-            const defaultVersionConfig = appData.versions.find((v) => v.isDefault);
-            expect(defaultVersionConfig).to.exist;
-            expect(defaultVersionConfig).to.have.property("version", appData.defaultVersion);
-            expect(defaultVersionConfig).to.have.property("build", "GNU");
-            expect(defaultVersionConfig).to.have.property("hasAdvancedComputeOptions", true);
         });
 
         it("getAppDataForApplication - should throw error for invalid app", () => {
