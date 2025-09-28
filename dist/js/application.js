@@ -17,12 +17,11 @@ var TAGS;
 })(TAGS = exports.TAGS || (exports.TAGS = {}));
 class ApplicationStandata extends base_1.Standata {
     getAppDataForApplication(appName) {
-        const allEntities = this.getAll();
-        const appEntities = allEntities.filter((entity) => entity.name === appName);
-        if (appEntities.length === 0) {
+        const applicationVersionsMap = applicationVersionsMapByApplication_json_1.default[appName];
+        if (!applicationVersionsMap) {
             throw new Error(`Application ${appName} not found`);
         }
-        return appEntities[0];
+        return applicationVersionsMap;
     }
     // eslint-disable-next-line class-methods-use-this
     getAppTreeForApplication(appName) {
@@ -75,6 +74,17 @@ class ApplicationStandata extends base_1.Standata {
     static getDefaultVersionForApplication(appName) {
         const applicationVersionsMap = new applicationVersionMap_1.ApplicationVersionsMap(applicationVersionsMapByApplication_json_1.default[appName]);
         return applicationVersionsMap.defaultVersion;
+    }
+    static getDefaultBuildForApplicationAndVersion(appName, version) {
+        const applicationVersionsMap = new applicationVersionMap_1.ApplicationVersionsMap(applicationVersionsMapByApplication_json_1.default[appName]);
+        const versionConfig = applicationVersionsMap.versionConfigs.find((config) => config.version === version && config.isDefault);
+        if (!versionConfig) {
+            throw new Error(`No default build found for ${appName} with version ${version}`);
+        }
+        if (!versionConfig.build) {
+            throw new Error(`No build specified for default config of ${appName} with version ${version}`);
+        }
+        return versionConfig.build;
     }
     // TODO: move to parent class Standata, name and generic parameters
     getDefaultConfigByNameAndVersion(appName, version) {

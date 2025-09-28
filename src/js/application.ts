@@ -21,12 +21,13 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
     static runtimeData = APPLICATIONS;
 
     getAppDataForApplication(appName: string): ApplicationVersionsMapType {
-        const allEntities = this.getAll();
-        const appEntities = allEntities.filter((entity: any) => entity.name === appName);
-        if (appEntities.length === 0) {
+        const applicationVersionsMap = (
+            APPLICATION_VERSIONS_MAP as ApplicationVersionsMapByApplicationType
+        )[appName];
+        if (!applicationVersionsMap) {
             throw new Error(`Application ${appName} not found`);
         }
-        return appEntities[0] as ApplicationVersionsMapType;
+        return applicationVersionsMap;
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -93,8 +94,29 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
         return applicationVersionsMap.defaultVersion;
     }
 
+    static getDefaultBuildForApplicationAndVersion(appName: string, version: string): string {
+        const applicationVersionsMap = new ApplicationVersionsMap(
+            (APPLICATION_VERSIONS_MAP as ApplicationVersionsMapByApplicationType)[appName],
+        );
+        const versionConfig = applicationVersionsMap.versionConfigs.find(
+            (config) => config.version === version && config.isDefault,
+        );
+        if (!versionConfig) {
+            throw new Error(`No default build found for ${appName} with version ${version}`);
+        }
+        if (!versionConfig.build) {
+            throw new Error(
+                `No build specified for default config of ${appName} with version ${version}`,
+            );
+        }
+        return versionConfig.build;
+    }
+
     // TODO: move to parent class Standata, name and generic parameters
-    getDefaultConfigByNameAndVersion(appName: string, version?: string) {
+    getDefaultConfigByNameAndVersion(
+        appName: string,
+        version?: string,
+    ): ApplicationVersionsMapType {
         const tags = [TAGS.DEFAULT_BUILD];
         let versionToUse = version;
         if (!versionToUse) {

@@ -7,9 +7,9 @@ export type ApplicationVersionsMapType = Pick<ApplicationSchemaBase, "shortName"
     versions: ApplicationVersionInfo[];
     name: Required<ApplicationSchemaBase>["name"];
 };
-export interface ApplicationTreeItem extends Pick<ApplicationSchemaBase, "name" | "isDefault"> {
-    supportedApplicationVersions?: ApplicationSchemaBase["version"][];
-}
+export type ApplicationVersionsMapByApplicationType = {
+    [key: string]: ApplicationVersionsMapType;
+};
 export interface ExecutableTreeItem extends Pick<ExecutableSchema, "name" | "hasAdvancedComputeOptions"> {
     isDefault?: ApplicationSchemaBase["isDefault"];
     supportedApplicationVersions?: ApplicationSchemaBase["version"][];

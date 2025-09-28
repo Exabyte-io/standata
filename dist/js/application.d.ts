@@ -1,6 +1,6 @@
 import type { TemplateSchema } from "@mat3ra/esse/dist/js/types";
 import { Standata } from "./base";
-import type { ApplicationExecutableTree, ApplicationVersionsMapType } from "./types/application";
+import { ApplicationExecutableTree, ApplicationVersionsMapType } from "./types/application";
 export declare enum TAGS {
     DEFAULT_VERSION = "default_version",
     DEFAULT_BUILD = "default_build"
@@ -89,5 +89,6 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
     getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[];
     getByApplicationName(appName: string): ApplicationVersionsMapType[];
     static getDefaultVersionForApplication(appName: string): string;
+    static getDefaultBuildForApplicationAndVersion(appName: string, version: string): string;
     getDefaultConfigByNameAndVersion(appName: string, version?: string): ApplicationVersionsMapType;
 }
