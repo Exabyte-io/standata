@@ -5,7 +5,11 @@ import APPLICATIONS from "./runtime_data/applications.json";
 import APPLICATION_VERSIONS_MAP from "./runtime_data/applicationVersionsMapByApplication.json";
 import EXECUTABLE_FLAVOR_MAP from "./runtime_data/executableFlavorMapByApplication.json";
 import TEMPLATES_LIST from "./runtime_data/templatesList.json";
-import type { ApplicationExecutableTree, ApplicationVersionsMapType } from "./types/application";
+import {
+    ApplicationExecutableTree,
+    ApplicationVersionsMapByApplicationType,
+    ApplicationVersionsMapType,
+} from "./types/application";
 import { ApplicationVersionsMap } from "./utils/applicationVersionMap";
 
 export enum TAGS {
@@ -84,7 +88,7 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
 
     static getDefaultVersionForApplication(appName: string) {
         const applicationVersionsMap = new ApplicationVersionsMap(
-            APPLICATION_VERSIONS_MAP[appName],
+            (APPLICATION_VERSIONS_MAP as ApplicationVersionsMapByApplicationType)[appName],
         );
         return applicationVersionsMap.defaultVersion;
     }
