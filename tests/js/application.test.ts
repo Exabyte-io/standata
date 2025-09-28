@@ -141,11 +141,11 @@ describe("Application Standata", () => {
         it("returns default build config when version specified", () => {
             const defaultBuildConfig = standata.getDefaultConfigByNameAndVersion(
                 "espresso",
-                "7.4.",
+                "7.4",
             );
             expect(defaultBuildConfig).to.be.an("object");
             expect(defaultBuildConfig).to.have.property("name", "espresso");
-            expect(defaultBuildConfig).to.have.property("version", "7.4.");
+            expect(defaultBuildConfig).to.have.property("version", "7.4");
         });
     });
 });
