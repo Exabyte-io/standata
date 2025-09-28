@@ -2,9 +2,16 @@ import type { TemplateSchema } from "@mat3ra/esse/dist/js/types";
 
 import { Standata } from "./base";
 import APPLICATIONS from "./runtime_data/applications.json";
+import APPLICATION_VERSIONS_MAP from "./runtime_data/applicationVersionsMapByApplication.json";
 import EXECUTABLE_FLAVOR_MAP from "./runtime_data/executableFlavorMapByApplication.json";
 import TEMPLATES_LIST from "./runtime_data/templatesList.json";
 import type { ApplicationExecutableTree, ApplicationVersionsMapType } from "./types/application";
+import { ApplicationVersionsMap } from "./utils/applicationVersionMap";
+
+export enum TAGS {
+    DEFAULT_VERSION = "default_version",
+    DEFAULT_BUILD = "default_build",
+}
 
 export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
     static runtimeData = APPLICATIONS;
@@ -73,5 +80,36 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
     getByApplicationName(appName: string) {
         const allEntities = this.getAll();
         return allEntities.filter((entity) => entity.name === appName);
+    }
+
+    static getDefaultVersionForApplication(appName: string) {
+        const applicationVersionsMap = new ApplicationVersionsMap(
+            APPLICATION_VERSIONS_MAP[appName],
+        );
+        return applicationVersionsMap.defaultVersion;
+    }
+
+    // TODO: move to parent class Standata, name and generic parameters
+    getDefaultConfigByNameAndVersion(appName: string, version?: string) {
+        const tags = [TAGS.DEFAULT_BUILD];
+        let versionToUse = version;
+        if (!versionToUse) {
+            tags.push(TAGS.DEFAULT_VERSION);
+            versionToUse = ApplicationStandata.getDefaultVersionForApplication(appName);
+        }
+        const allEntriesWithTags = this.findEntitiesByTags(...tags);
+        const allEntriesWithTagsForNameAndVersion = allEntriesWithTags.filter((entity: any) => {
+            return entity.name === appName && entity.version === versionToUse;
+        });
+        if (allEntriesWithTagsForNameAndVersion.length > 1) {
+            throw new Error(
+                `Multiple default version entries found for ${appName} with version ${versionToUse}`,
+            );
+        } else if (allEntriesWithTagsForNameAndVersion.length === 0) {
+            throw new Error(
+                `No default version entry found for ${appName} with version ${versionToUse}`,
+            );
+        }
+        return allEntriesWithTagsForNameAndVersion[0];
     }
 }

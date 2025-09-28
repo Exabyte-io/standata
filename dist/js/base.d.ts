@@ -30,7 +30,7 @@ export declare class Standata<EntityType extends object = object> {
     };
     protected loadEntity(filename: string): object | undefined;
     protected filterByCategories(...categories: string[]): string[];
-    findEntitiesByTags(...tags: string[]): object[];
+    findEntitiesByTags(...tags: string[]): EntityType[];
     getAll(): EntityType[];
 }
 export {};

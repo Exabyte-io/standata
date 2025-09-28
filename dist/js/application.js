@@ -3,11 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ApplicationStandata = void 0;
+exports.ApplicationStandata = exports.TAGS = void 0;
 const base_1 = require("./base");
 const applications_json_1 = __importDefault(require("./runtime_data/applications.json"));
+const applicationVersionsMapByApplication_json_1 = __importDefault(require("./runtime_data/applicationVersionsMapByApplication.json"));
 const executableFlavorMapByApplication_json_1 = __importDefault(require("./runtime_data/executableFlavorMapByApplication.json"));
 const templatesList_json_1 = __importDefault(require("./runtime_data/templatesList.json"));
+const applicationVersionMap_1 = require("./utils/applicationVersionMap");
+var TAGS;
+(function (TAGS) {
+    TAGS["DEFAULT_VERSION"] = "default_version";
+    TAGS["DEFAULT_BUILD"] = "default_build";
+})(TAGS = exports.TAGS || (exports.TAGS = {}));
 class ApplicationStandata extends base_1.Standata {
     getAppDataForApplication(appName) {
         const allEntities = this.getAll();
@@ -64,6 +71,30 @@ class ApplicationStandata extends base_1.Standata {
     getByApplicationName(appName) {
         const allEntities = this.getAll();
         return allEntities.filter((entity) => entity.name === appName);
+    }
+    static getDefaultVersionForApplication(appName) {
+        const applicationVersionsMap = new applicationVersionMap_1.ApplicationVersionsMap(applicationVersionsMapByApplication_json_1.default[appName]);
+        return applicationVersionsMap.defaultVersion;
+    }
+    // TODO: move to parent class Standata, name and generic parameters
+    getDefaultConfigByNameAndVersion(appName, version) {
+        const tags = [TAGS.DEFAULT_BUILD];
+        let versionToUse = version;
+        if (!versionToUse) {
+            tags.push(TAGS.DEFAULT_VERSION);
+            versionToUse = ApplicationStandata.getDefaultVersionForApplication(appName);
+        }
+        const allEntriesWithTags = this.findEntitiesByTags(...tags);
+        const allEntriesWithTagsForNameAndVersion = allEntriesWithTags.filter((entity) => {
+            return entity.name === appName && entity.version === versionToUse;
+        });
+        if (allEntriesWithTagsForNameAndVersion.length > 1) {
+            throw new Error(`Multiple default version entries found for ${appName} with version ${versionToUse}`);
+        }
+        else if (allEntriesWithTagsForNameAndVersion.length === 0) {
+            throw new Error(`No default version entry found for ${appName} with version ${versionToUse}`);
+        }
+        return allEntriesWithTagsForNameAndVersion[0];
     }
 }
 exports.ApplicationStandata = ApplicationStandata;

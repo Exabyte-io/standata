@@ -130,5 +130,22 @@ describe("Application Standata", () => {
                 expect(entity).to.have.property("name", "espresso");
             });
         });
+
+        it("returns default version config when no version specified", () => {
+            const defaultVersionConfig = standata.getDefaultConfigByNameAndVersion("espresso");
+            expect(defaultVersionConfig).to.be.an("object");
+            expect(defaultVersionConfig).to.have.property("name", "espresso");
+            expect(defaultVersionConfig).to.have.property("version", "6.3");
+        });
+
+        it("returns default build config when version specified", () => {
+            const defaultBuildConfig = standata.getDefaultConfigByNameAndVersion(
+                "espresso",
+                "7.4.",
+            );
+            expect(defaultBuildConfig).to.be.an("object");
+            expect(defaultBuildConfig).to.have.property("name", "espresso");
+            expect(defaultBuildConfig).to.have.property("version", "7.4.");
+        });
     });
 });
