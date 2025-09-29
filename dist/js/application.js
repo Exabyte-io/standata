@@ -16,6 +16,7 @@ var TAGS;
     TAGS["DEFAULT_BUILD"] = "default_build";
 })(TAGS = exports.TAGS || (exports.TAGS = {}));
 class ApplicationStandata extends base_1.Standata {
+    // eslint-disable-next-line class-methods-use-this
     getAppDataForApplication(appName) {
         const applicationVersionsMap = applicationVersionsMapByApplication_json_1.default[appName];
         if (!applicationVersionsMap) {
@@ -107,7 +108,9 @@ class ApplicationStandata extends base_1.Standata {
         return allEntriesWithTagsForNameAndVersion[0];
     }
     getDefaultConfig() {
-        return this.getDefaultConfigByNameAndVersion("espresso", "6.3");
+        const fullConfig = this.getDefaultConfigByNameAndVersion("espresso", "6.3");
+        const { name, shortName, version, summary, build } = fullConfig;
+        return { name, shortName, version, summary, build };
     }
 }
 exports.ApplicationStandata = ApplicationStandata;
