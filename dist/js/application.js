@@ -106,6 +106,9 @@ class ApplicationStandata extends base_1.Standata {
         }
         return allEntriesWithTagsForNameAndVersion[0];
     }
+    getDefaultConfig() {
+        return this.getDefaultConfigByNameAndVersion("espresso", "6.3");
+    }
 }
 exports.ApplicationStandata = ApplicationStandata;
 ApplicationStandata.runtimeData = applications_json_1.default;

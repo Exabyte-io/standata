@@ -1,4 +1,4 @@
-import type { TemplateSchema } from "@mat3ra/esse/dist/js/types";
+import type { ApplicationSchemaBase, TemplateSchema } from "@mat3ra/esse/dist/js/types";
 
 import { Standata } from "./base";
 import APPLICATIONS from "./runtime_data/applications.json";
@@ -137,5 +137,9 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
             );
         }
         return allEntriesWithTagsForNameAndVersion[0];
+    }
+
+    getDefaultConfig(): ApplicationSchemaBase {
+        return this.getDefaultConfigByNameAndVersion("espresso", "6.3");
     }
 }

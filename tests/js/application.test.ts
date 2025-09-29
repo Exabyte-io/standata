@@ -139,13 +139,20 @@ describe("Application Standata", () => {
         });
 
         it("returns default build config when version specified", () => {
-            const defaultBuildConfig = standata.getDefaultConfigByNameAndVersion(
-                "espresso",
-                "7.4",
-            );
+            const defaultBuildConfig = standata.getDefaultConfigByNameAndVersion("espresso", "7.4");
             expect(defaultBuildConfig).to.be.an("object");
             expect(defaultBuildConfig).to.have.property("name", "espresso");
             expect(defaultBuildConfig).to.have.property("version", "7.4");
+        });
+
+        it("returns default config", () => {
+            const defaultConfig = standata.getDefaultConfig();
+            expect(defaultConfig).to.be.an("object");
+            expect(defaultConfig).to.have.property("name", "espresso");
+            expect(defaultConfig).to.have.property("shortName", "qe");
+            expect(defaultConfig).to.have.property("summary", "Quantum ESPRESSO");
+            expect(defaultConfig).to.have.property("version", "6.3");
+            expect(defaultConfig).to.have.property("build", "GNU");
         });
     });
 });
