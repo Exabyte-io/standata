@@ -153,6 +153,9 @@ describe("Application Standata", () => {
             expect(defaultConfig).to.have.property("summary", "Quantum ESPRESSO");
             expect(defaultConfig).to.have.property("version", "6.3");
             expect(defaultConfig).to.have.property("build", "GNU");
+
+            expect(defaultConfig).to.not.have.property("isDefault");
+            expect(defaultConfig).to.not.have.property("hasAdvancedComputeOptions");
         });
     });
 });
