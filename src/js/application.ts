@@ -9,6 +9,7 @@ import {
     ApplicationExecutableTree,
     ApplicationVersionsMapByApplicationType,
     ApplicationVersionsMapType,
+    DefaultApplicationConfig,
 } from "./types/application";
 import { ApplicationVersionsMap } from "./utils/applicationVersionMap";
 
@@ -20,6 +21,7 @@ export enum TAGS {
 export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
     static runtimeData = APPLICATIONS;
 
+    // eslint-disable-next-line class-methods-use-this
     getAppDataForApplication(appName: string): ApplicationVersionsMapType {
         const applicationVersionsMap = (
             APPLICATION_VERSIONS_MAP as ApplicationVersionsMapByApplicationType
@@ -139,7 +141,9 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
         return allEntriesWithTagsForNameAndVersion[0];
     }
 
-    getDefaultConfig(): ApplicationSchemaBase {
-        return this.getDefaultConfigByNameAndVersion("espresso", "6.3");
+    getDefaultConfig(): DefaultApplicationConfig {
+        const fullConfig = this.getDefaultConfigByNameAndVersion("espresso", "6.3");
+        const { name, shortName, version, summary, build } = fullConfig as ApplicationSchemaBase;
+        return { name, shortName, version, summary, build };
     }
 }
