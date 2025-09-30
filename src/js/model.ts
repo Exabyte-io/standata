@@ -5,17 +5,13 @@ import { ModelConfig } from "./types/model";
 export class ModelStandata extends Standata<ModelConfig> {
     static runtimeData = MODELS;
 
-    getAllModels(): ModelConfig[] {
-        return this.getAll();
-    }
-
-    getModelByName(name: string): ModelConfig | undefined {
-        const allModels = this.getAllModels();
+    getByName(name: string): ModelConfig | undefined {
+        const allModels = this.getAll();
         return allModels.find((model) => model.name === name);
     }
 
-    getModelsByCategory(category: string): ModelConfig[] {
-        const allModels = this.getAllModels();
+    getByCategory(category: string): ModelConfig[] {
+        const allModels = this.getAll();
         return allModels.filter((model) => {
             const categoryPath = `${model.categories.tier1 || "none"}/${
                 model.categories.tier2 || "none"
@@ -26,25 +22,25 @@ export class ModelStandata extends Standata<ModelConfig> {
         });
     }
 
-    getModelsBySubtype(subtype: string): ModelConfig[] {
-        const allModels = this.getAllModels();
+    getBySubtype(subtype: string): ModelConfig[] {
+        const allModels = this.getAll();
         return allModels.filter((model) => model.categories.subtype === subtype);
     }
 
-    getModelsByTags(...tags: string[]): ModelConfig[] {
-        const allModels = this.getAllModels();
+    getByTags(...tags: string[]): ModelConfig[] {
+        const allModels = this.getAll();
         return allModels.filter(
             (model) => model.tags && tags.some((tag) => model.tags!.includes(tag)),
         );
     }
 
-    getModelsByPath(path: string): ModelConfig[] {
-        const allModels = this.getAllModels();
+    getByPath(path: string): ModelConfig[] {
+        const allModels = this.getAll();
         return allModels.filter((model) => model.path === path);
     }
 
-    getModelsByParameters(parameters: Record<string, any>): ModelConfig[] {
-        const allModels = this.getAllModels();
+    getByParameters(parameters: Record<string, any>): ModelConfig[] {
+        const allModels = this.getAll();
         return allModels.filter((model) => {
             if (!model.parameters) return false;
             return Object.entries(parameters).every(
@@ -54,17 +50,17 @@ export class ModelStandata extends Standata<ModelConfig> {
     }
 
     getAllModelNames(): string[] {
-        const allModels = this.getAllModels();
+        const allModels = this.getAll();
         return allModels.map((model) => model.name);
     }
 
     getAllModelPaths(): string[] {
-        const allModels = this.getAllModels();
+        const allModels = this.getAll();
         return allModels.map((model) => model.path);
     }
 
     getUniqueSubtypes(): string[] {
-        const allModels = this.getAllModels();
+        const allModels = this.getAll();
         const subtypes = new Set(
             allModels
                 .map((model) => model.categories.subtype)
