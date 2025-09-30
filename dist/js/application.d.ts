@@ -1,13 +1,19 @@
 import type { TemplateSchema } from "@mat3ra/esse/dist/js/types";
 import { Standata } from "./base";
-import type { ApplicationData, ApplicationExecutableTree } from "./types/application";
-export declare class ApplicationStandata extends Standata<ApplicationData> {
+import { ApplicationExecutableTree, ApplicationVersionsMapType, DefaultApplicationConfig } from "./types/application";
+export declare enum TAGS {
+    DEFAULT = "default",
+    DEFAULT_VERSION = "default_version",
+    DEFAULT_BUILD = "default_build"
+}
+export declare class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
     static runtimeData: {
         standataConfig: {
             categories: {
                 model: string[];
                 language_type: string[];
                 purpose: string[];
+                defaults: string[];
             };
             entities: {
                 filename: string;
@@ -19,17 +25,32 @@ export declare class ApplicationStandata extends Standata<ApplicationData> {
                 name: string;
                 shortName: string;
                 summary: string;
-                defaultVersion: string;
-                versions: {
-                    version: string;
-                    isDefault: boolean;
-                    build: string;
-                    hasAdvancedComputeOptions: boolean;
-                }[];
+                version: string;
+                isDefault: boolean;
+                build: string;
+                hasAdvancedComputeOptions: boolean;
+            };
+            "espresso/espresso_intel_6.3.json": {
+                name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+                isDefault: boolean;
+                build: string;
+                hasAdvancedComputeOptions: boolean;
+            };
+            "espresso/espresso_gnu_7.4.json": {
+                name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+                isDefault: boolean;
+                build: string;
+                hasAdvancedComputeOptions: boolean;
             };
         };
     };
-    getAppDataForApplication(appName: string): ApplicationData;
+    getAppDataForApplication(appName: string): ApplicationVersionsMapType;
     getAppTreeForApplication(appName: string): ApplicationExecutableTree;
     getAllAppTemplates(): TemplateSchema[];
     getAllAppTree(): {
@@ -65,7 +86,11 @@ export declare class ApplicationStandata extends Standata<ApplicationData> {
         };
     };
     getAllApplicationNames(): string[];
-    getAllAppData(): ApplicationData[];
+    getAllAppData(): ApplicationVersionsMapType[];
     getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[];
-    getByApplicationName(appName: string): ApplicationData[];
+    getByApplicationName(appName: string): ApplicationVersionsMapType[];
+    static getDefaultVersionForApplication(appName: string): string;
+    static getDefaultBuildForApplicationAndVersion(appName: string, version: string): string;
+    getDefaultConfigByNameAndVersion(appName: string, version?: string): ApplicationVersionsMapType;
+    getDefaultConfig(): DefaultApplicationConfig;
 }

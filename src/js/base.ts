@@ -91,10 +91,12 @@ export class Standata<EntityType extends object = object> {
         return filenames;
     }
 
-    findEntitiesByTags(...tags: string[]): object[] {
+    findEntitiesByTags(...tags: string[]): EntityType[] {
         const categories_ = this.convertTagToCategory(...tags);
         const filenames = this.filterByCategories(...categories_) || [];
-        return filenames.map((f) => this.loadEntity(f)).filter((e): e is object => e !== undefined);
+        return filenames
+            .map((f) => this.loadEntity(f))
+            .filter((e): e is EntityType => e !== undefined);
     }
 
     getAll(): EntityType[] {

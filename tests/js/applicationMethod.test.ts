@@ -43,7 +43,7 @@ describe("Application Method Standata", () => {
             methodList: categorizedMethodList,
             name: "espresso",
             version: "6.3",
-            build: "Default",
+            build: "GNU",
             executable: "pw.x",
             flavor: "pw_scf",
         });
@@ -76,7 +76,7 @@ describe("Application Method Standata", () => {
             methodList: filteredMethods,
             name: "espresso",
             version: "6.3",
-            build: "Default",
+            build: "GNU",
         });
 
         expect(finalMethods).to.be.an("array");

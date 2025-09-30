@@ -39,7 +39,7 @@ describe("Application Model Standata", () => {
             modelList: categorizedModelList,
             name: "espresso",
             version: "6.3",
-            build: "Default",
+            build: "GNU",
             executable: "pw.x",
             flavor: "pw_scf",
         });
