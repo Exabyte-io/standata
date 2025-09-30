@@ -11,17 +11,21 @@ name:
     paw: Projector-augmented Wave
     us: Ultra-soft
 forEach:
-  - key: units
+  - !parameter
+    key: units
     action: push
-    values: !include assets/methods/units/pw.yml
-  - key: units
+    ref: methods/sources/units/occupations.yml
+  - !parameter
+    key: units
     action: push
-    values: !include assets/methods/units/psp.yml
-  - key: units
+    ref: methods/sources/units/diagonalization.yml
+  - !parameter
+    key: units
     action: push
-    values: !include assets/methods/units/diagonalization.yml
-  - key: units
+    ref: methods/sources/units/psp.yml
+  - !parameter
+    key: units
     action: push
-    values: !include assets/methods/units/occupations.yml
+    ref: methods/sources/units/pw.yml
 config:
   schema: !esse method/categorized-method
