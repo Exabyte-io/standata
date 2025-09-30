@@ -1,19 +1,18 @@
-export interface MethodUnit {
-    name: string;
-    path: string;
-    categories: {
-        tier1?: string;
-        tier2?: string;
-        tier3?: string;
-        type: string;
-        subtype?: string;
+import { CategorizedUnitMethod } from "@mat3ra/esse/dist/js/types";
+
+// TODO: maybe change ESSE Schema. We expect these properties to be defined in UnitMethod
+export interface UnitMethod extends CategorizedUnitMethod {
+    categories: Required<CategorizedUnitMethod>["categories"] & {
+        type: Required<CategorizedUnitMethod>["categories"]["type"];
+        subtype: Required<CategorizedUnitMethod>["categories"]["subtype"];
     };
-    parameters?: Record<string, any>;
-    tags: string[];
+    parameters: Record<string, any>;
+    tags: Required<CategorizedUnitMethod>["tags"];
+    path: Required<CategorizedUnitMethod>["path"];
 }
 
 export interface MethodConfig {
     name: string;
     path: string;
-    units: MethodUnit[];
+    units: UnitMethod[];
 }
