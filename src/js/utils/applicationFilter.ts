@@ -67,25 +67,18 @@ function getFilterObjects({
 }: FilterObjectsParams): FilterObject[] {
     let filterList: FilterObject[];
 
-    // Use Default build when the filterTree does not contain the build specified
-    const build_ =
-        !safelyGet(filterTree, name, version, build) &&
-        safelyGet(filterTree, name, version, "Default")
-            ? "Default"
-            : build;
-
     if (!name) {
         filterList = mergeTerminalNodes(filterTree);
     } else if (!version) {
         filterList = mergeTerminalNodes(safelyGet(filterTree, name));
-    } else if (!build_) {
+    } else if (!build) {
         filterList = mergeTerminalNodes(safelyGet(filterTree, name, version));
     } else if (!executable) {
-        filterList = mergeTerminalNodes(safelyGet(filterTree, name, version, build_));
+        filterList = mergeTerminalNodes(safelyGet(filterTree, name, version, build));
     } else if (!flavor) {
-        filterList = mergeTerminalNodes(safelyGet(filterTree, name, version, build_, executable));
+        filterList = mergeTerminalNodes(safelyGet(filterTree, name, version, build, executable));
     } else {
-        filterList = safelyGet(filterTree, name, version, build_, executable, flavor) || [];
+        filterList = safelyGet(filterTree, name, version, build, executable, flavor) || [];
     }
 
     return [...extractUniqueBy(filterList, "path"), ...extractUniqueBy(filterList, "regex")];

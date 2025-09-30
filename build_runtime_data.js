@@ -104,6 +104,11 @@ copyJsonAsset({
     targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.executableFlavorMapByApplication}`,
 });
 
+copyJsonAsset({
+    sourcePath: `./applications/${BUILD_CONFIG.applications.applicationVersionsMapByApplication}`,
+    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.applicationVersionsMapByApplication}`,
+});
+
 // Py Modules
 
 buildAsset({

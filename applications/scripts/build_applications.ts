@@ -1,6 +1,4 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Application } from "@exabyte-io/ade.js";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import * as utils from "@mat3ra/code/dist/js/utils";
 import fs from "fs";
 import yaml from "js-yaml";
@@ -9,7 +7,8 @@ import lodash from "lodash";
 import path from "path";
 
 import BUILD_CONFIG from "../../build-config";
-import { ApplicationData, ApplicationVersionInfo } from "../../src/js/types/application";
+import { ApplicationVersionsMapType } from "../../src/js/types/application";
+import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
 
 interface BuildAssetParams {
     assetPath: string;
@@ -84,12 +83,12 @@ getAssetData(MODEL_ASSET_PATH, MODEL_FILTER_TREE, MODEL_ASSET_PATH);
 getAssetData(METHOD_ASSET_PATH, METHOD_FILTER_TREE, METHOD_ASSET_PATH);
 
 const cleanApplicationData = {} as {
-    [key: string]: ApplicationData;
+    [key: string]: ApplicationVersionsMapType;
 };
 
 Object.values(APPLICATION_DATA).forEach((levelData) => {
     if (levelData && typeof levelData === "object") {
-        Object.values(levelData).forEach((appData: ApplicationData) => {
+        Object.values(levelData).forEach((appData: ApplicationVersionsMapType) => {
             if (appData && typeof appData === "object" && appData.name) {
                 cleanApplicationData[appData.name] = appData;
             }
@@ -97,26 +96,20 @@ Object.values(APPLICATION_DATA).forEach((levelData) => {
     }
 });
 
-function generateVersionFileName(appName: string, version: ApplicationVersionInfo) {
-    const buildSuffix = version.build ? `_${version.build.toLowerCase()}` : "";
-    const versionSuffix = version.version;
-    return `${appName}${buildSuffix}_${versionSuffix}.json`;
-}
-
 Object.keys(cleanApplicationData).forEach((appName) => {
-    const appConfig = cleanApplicationData[appName];
-    const appDir = path.resolve(__dirname, "..", "data", appName);
+    const applicationDataForVersions = cleanApplicationData[appName];
+    const appVersionsMap = new ApplicationVersionsMap(applicationDataForVersions);
+    const { versionConfigsFull } = appVersionsMap;
 
+    const appDir = path.resolve(__dirname, "..", "data", appName);
     if (!fs.existsSync(appDir)) {
         fs.mkdirSync(appDir, { recursive: true });
     }
 
-    appConfig.versions.forEach((version) => {
-        const versionConfig = new Application(appConfig).toJSON();
-        const fileName = generateVersionFileName(appName, version);
+    versionConfigsFull.forEach((versionConfigFull) => {
+        const fileName = appVersionsMap.getSlugForVersionConfig(versionConfigFull);
         const filePath = path.resolve(appDir, fileName);
-
-        fs.writeFileSync(filePath, JSON.stringify(versionConfig), "utf8");
+        fs.writeFileSync(filePath, JSON.stringify(versionConfigFull), "utf8");
         console.log(`Generated application version: ${appName}/${fileName}`);
     });
 });
@@ -125,6 +118,12 @@ const modelMethodMapByApplication = {
     models: MODEL_FILTER_TREE,
     methods: METHOD_FILTER_TREE,
 };
+
+fs.writeFileSync(
+    path.resolve(__dirname, "..", BUILD_CONFIG.applications.applicationVersionsMapByApplication),
+    JSON.stringify(cleanApplicationData),
+    "utf8",
+);
 
 fs.writeFileSync(
     path.resolve(__dirname, "..", BUILD_CONFIG.applications.modelMethodMapByApplication),
