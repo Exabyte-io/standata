@@ -1,6 +1,8 @@
 import { Standata } from "./base";
 import METHODS from "./runtime_data/methods.json";
 import { MethodConfig, UnitMethod } from "./types/method";
+import { ModelMethodFilter } from "./modelMethodFilter";
+import { ModelConfig } from "./types/model";
 
 function getCategoryValue(
     category: string | { name: string; slug: string } | undefined,
@@ -90,13 +92,9 @@ export class MethodStandata extends Standata<MethodConfig> {
         return Array.from(subtypes);
     }
 
-    getCompatibleWithModel(modelPath: string, filterMap: Record<string, any>): MethodConfig[] {
-        // This would use the model-method filter map to find compatible methods
-        // Implementation depends on the filter map structure
+    getCompatibleWithModel(model: ModelConfig): MethodConfig[] {
+        const filter = new ModelMethodFilter();
         const allMethods = this.getAll();
-        // TODO: Implement filtering logic based on model-method compatibility map
-        // For now, return all methods (placeholder implementation)
-        console.log(`Finding methods compatible with model path: ${modelPath}`, filterMap);
-        return allMethods;
+        return filter.getCompatibleMethods(model, allMethods);
     }
 }
