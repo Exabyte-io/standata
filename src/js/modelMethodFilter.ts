@@ -8,25 +8,20 @@ export interface FilterRule {
     regex?: string;
 }
 
-export interface ModelMethodFilterMap {
-    [tier1: string]:
-        | {
-              [tier2: string]:
-                  | {
-                        [tier3: string]:
-                            | {
-                                  [type: string]:
-                                      | {
-                                            [subtype: string]: FilterRule[];
-                                        }
-                                      | FilterRule[];
-                              }
-                            | FilterRule[];
-                    }
-                  | FilterRule[];
-          }
-        | FilterRule[];
+export interface ModelCategories {
+    tier1?: string;
+    tier2?: string;
+    tier3?: string;
+    type?: string;
+    subtype?: string;
 }
+
+export interface ModelMethodFilterEntry {
+    modelCategories: ModelCategories;
+    filterRules: FilterRule[];
+}
+
+export type ModelMethodFilterMap = ModelMethodFilterEntry[];
 
 export class ModelMethodFilter {
     private filterMap: ModelMethodFilterMap;
@@ -37,49 +32,36 @@ export class ModelMethodFilter {
 
     getCompatibleMethods(model: ModelConfig, allMethods: MethodConfig[]): MethodConfig[] {
         const filterRules = this.getFilterRulesForModel(model);
-        if (!filterRules) {
+        if (!filterRules.length) {
             return [];
         }
 
         return allMethods.filter((method) => this.isMethodCompatible(method, filterRules));
     }
 
-    private getFilterRulesForModel(model: ModelConfig): FilterRule[] | null {
-        const { tier1, tier2, tier3, type, subtype } = model.categories;
+    private getFilterRulesForModel(model: ModelConfig): FilterRule[] {
+        const modelCategories = model.categories;
 
-        // Return null if any required category is missing
-        if (!tier1 || !tier2 || !tier3 || !type || !subtype) {
-            return null;
-        }
+        // Find matching filter entries
+        const matchingEntries = this.filterMap.filter((entry) =>
+            this.categoriesMatch(modelCategories, entry.modelCategories),
+        );
 
-        try {
-            let current: any = this.filterMap;
+        // Combine all filter rules from matching entries
+        return matchingEntries.flatMap((entry) => entry.filterRules);
+    }
 
-            // Navigate through the nested structure
-            current = current[tier1];
-            if (!current) return null;
-
-            if (Array.isArray(current)) return current;
-            current = current[tier2];
-            if (!current) return null;
-
-            if (Array.isArray(current)) return current;
-            current = current[tier3];
-            if (!current) return null;
-
-            if (Array.isArray(current)) return current;
-            current = current[type];
-            if (!current) return null;
-
-            if (Array.isArray(current)) return current;
-            current = current[subtype];
-            if (!current) return null;
-
-            return Array.isArray(current) ? current : null;
-        } catch (error) {
-            console.warn(`Failed to get filter rules for model ${model.name}:`, error);
-            return null;
-        }
+    // eslint-disable-next-line class-methods-use-this
+    private categoriesMatch(modelCategories: any, filterCategories: ModelCategories): boolean {
+        // Check if model categories match the filter criteria
+        // Undefined filter categories act as wildcards (match anything)
+        return (
+            (!filterCategories.tier1 || modelCategories.tier1 === filterCategories.tier1) &&
+            (!filterCategories.tier2 || modelCategories.tier2 === filterCategories.tier2) &&
+            (!filterCategories.tier3 || modelCategories.tier3 === filterCategories.tier3) &&
+            (!filterCategories.type || modelCategories.type === filterCategories.type) &&
+            (!filterCategories.subtype || modelCategories.subtype === filterCategories.subtype)
+        );
     }
 
     private isMethodCompatible(method: MethodConfig, filterRules: FilterRule[]): boolean {
@@ -89,6 +71,7 @@ export class ModelMethodFilter {
         );
     }
 
+    // eslint-disable-next-line class-methods-use-this
     private isUnitMatchingRule(unit: UnitMethod, rule: FilterRule): boolean {
         if (rule.path) {
             return unit.path === rule.path;
@@ -112,18 +95,7 @@ export class ModelMethodFilter {
     }
 
     getAllFilterRules(): FilterRule[] {
-        const rules: FilterRule[] = [];
-
-        const extractRules = (obj: any) => {
-            if (Array.isArray(obj)) {
-                rules.push(...obj);
-            } else if (typeof obj === "object" && obj !== null) {
-                Object.values(obj).forEach(extractRules);
-            }
-        };
-
-        extractRules(this.filterMap);
-        return rules;
+        return this.filterMap.flatMap((entry) => entry.filterRules);
     }
 
     getUniqueFilterPaths(): string[] {
