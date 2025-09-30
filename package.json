@@ -20,7 +20,6 @@
         "@babel/preset-typescript": "^7.22.5",
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
-        "ajv": "^8.12.0",
         "cmd-ts": "^0.13.0",
         "js-yaml": "^4.1.0",
         "lodash": "^4.17.21",
