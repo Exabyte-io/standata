@@ -1,4 +1,4 @@
-import { BuildConfig, buildEntities } from "../../methods/buildUtils";
+import { BuildConfig, buildEntities } from "../../methods/scripts/buildUtils";
 
 const buildConfig: BuildConfig = {
     sourcesPath: "models/sources",
