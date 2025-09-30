@@ -37,4 +37,6 @@ categories:
     - diagonalization
     - machine-learning
 
-entities: []
+entities:
+  - filename: "pw/gaussian_pseudopotential_conjugate_gradient_diagonalization_smearing.json"
+    categories: ["qm", "wf", "psp", "pw", "gaussian", "opt", "diff", "ordern", "cg", "linalg", "diag", "davidson"]

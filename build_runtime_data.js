@@ -109,6 +109,11 @@ copyJsonAsset({
     targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.applicationVersionsMapByApplication}`,
 });
 
+copyJsonAsset({
+    sourcePath: "./models/data/modelMethodMap.json",
+    targetPath: `${runtimeDataDir}/modelMethodMap.json`,
+});
+
 // Py Modules
 
 buildAsset({

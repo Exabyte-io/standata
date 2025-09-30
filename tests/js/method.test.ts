@@ -133,8 +133,8 @@ describe("MethodStandata", () => {
                     tier2: "qm",
                     tier3: "dft",
                     type: "ksdft",
-                    subtype: "gga"
-                }
+                    subtype: "gga",
+                },
             };
 
             // Should not throw and return an array

@@ -1,7 +1,6 @@
+import MODEL_METHOD_MAP from "./runtime_data/modelMethodMap.json";
 import type { MethodConfig, UnitMethod } from "./types/method";
 import type { ModelConfig } from "./types/model";
-// TODO: Create proper model-method compatibility mapping
-const MODEL_METHOD_MAP = {};
 
 export interface FilterRule {
     path?: string;

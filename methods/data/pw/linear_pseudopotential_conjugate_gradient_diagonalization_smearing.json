@@ -1,0 +1,44 @@
+{
+  "units": [
+    {
+      "categories": {
+        "tier1": "qm",
+        "tier2": "wf",
+        "type": "pw"
+      },
+      "tags": [
+        "plane wave"
+      ],
+      "name": "Wave function: Plane wave",
+      "path": "/qm/wf/none/pw/none"
+    },
+    {
+      "categories": {
+        "tier1": "opt",
+        "tier2": "diff",
+        "tier3": "ordern",
+        "type": "cg"
+      },
+      "tags": [
+        "diagonalization"
+      ],
+      "name": "Conjugate Gradient Diagonalization",
+      "path": "/opt/diff/ordern/cg/none"
+    },
+    {
+      "categories": {
+        "subtype": "linear",
+        "tier1": "qm",
+        "tier2": "wf",
+        "type": "tetrahedron"
+      },
+      "tags": [
+        "occupation number"
+      ],
+      "name": "Linear Tetrahedron Method",
+      "path": "/qm/wf/none/tetrahedron/linear"
+    }
+  ],
+  "name": " linear Pseudopotential (Conjugate Gradient Diagonalization,  Smearing)",
+  "path": "/qm/wf/none/pw/none::/opt/diff/ordern/cg/none::/qm/wf/none/tetrahedron/linear"
+}

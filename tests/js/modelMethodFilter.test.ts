@@ -1,10 +1,6 @@
 import { expect } from "chai";
 
-import {
-    FilterRule,
-    ModelMethodFilter,
-    ModelMethodFilterEntry,
-} from "../../src/js/modelMethodFilter";
+import { ModelMethodFilter, ModelMethodFilterEntry } from "../../src/js/modelMethodFilter";
 import { MethodConfig } from "../../src/js/types/method";
 import { ModelConfig } from "../../src/js/types/model";
 
