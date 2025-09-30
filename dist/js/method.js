@@ -6,33 +6,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MethodStandata = void 0;
 const base_1 = require("./base");
 const methods_json_1 = __importDefault(require("./runtime_data/methods.json"));
+const modelMethodFilter_1 = require("./modelMethodFilter");
 function getCategoryValue(category) {
     if (!category)
         return undefined;
     return typeof category === "string" ? category : category.slug;
 }
 class MethodStandata extends base_1.Standata {
-    getMethodByName(name) {
+    getByName(name) {
         const allMethods = this.getAll();
         return allMethods.find((method) => method.name === name);
     }
-    getMethodsByUnitType(unitType) {
+    getByUnitType(unitType) {
         const allMethods = this.getAll();
         return allMethods.filter((method) => method.units.some((unit) => getCategoryValue(unit.categories.type) === unitType));
     }
-    getMethodsByUnitSubtype(unitSubtype) {
+    getByUnitSubtype(unitSubtype) {
         const allMethods = this.getAll();
         return allMethods.filter((method) => method.units.some((unit) => getCategoryValue(unit.categories.subtype) === unitSubtype));
     }
-    getMethodsByUnitTags(...tags) {
+    getByUnitTags(...tags) {
         const allMethods = this.getAll();
         return allMethods.filter((method) => method.units.some((unit) => tags.some((tag) => unit.tags.includes(tag))));
     }
-    getMethodsByPath(path) {
+    getByPath(path) {
         const allMethods = this.getAll();
         return allMethods.filter((method) => method.path === path);
     }
-    getMethodsByUnitParameters(parameters) {
+    getByUnitParameters(parameters) {
         const allMethods = this.getAll();
         return allMethods.filter((method) => method.units.some((unit) => {
             if (!unit.parameters)
@@ -66,14 +67,10 @@ class MethodStandata extends base_1.Standata {
             .filter((subtype) => subtype !== undefined));
         return Array.from(subtypes);
     }
-    getMethodsCompatibleWithModel(modelPath, filterMap) {
-        // This would use the model-method filter map to find compatible methods
-        // Implementation depends on the filter map structure
+    getCompatibleWithModel(model) {
+        const filter = new modelMethodFilter_1.ModelMethodFilter();
         const allMethods = this.getAll();
-        // TODO: Implement filtering logic based on model-method compatibility map
-        // For now, return all methods (placeholder implementation)
-        console.log(`Finding methods compatible with model path: ${modelPath}`, filterMap);
-        return allMethods;
+        return filter.getCompatibleMethods(model, allMethods);
     }
 }
 exports.MethodStandata = MethodStandata;

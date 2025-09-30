@@ -9,54 +9,33 @@ class ModelMethodFilter {
     }
     getCompatibleMethods(model, allMethods) {
         const filterRules = this.getFilterRulesForModel(model);
-        if (!filterRules) {
+        if (!filterRules.length) {
             return [];
         }
         return allMethods.filter((method) => this.isMethodCompatible(method, filterRules));
     }
     getFilterRulesForModel(model) {
-        const { tier1, tier2, tier3, type, subtype } = model.categories;
-        // Return null if any required category is missing
-        if (!tier1 || !tier2 || !tier3 || !type || !subtype) {
-            return null;
-        }
-        try {
-            let current = this.filterMap;
-            // Navigate through the nested structure
-            current = current[tier1];
-            if (!current)
-                return null;
-            if (Array.isArray(current))
-                return current;
-            current = current[tier2];
-            if (!current)
-                return null;
-            if (Array.isArray(current))
-                return current;
-            current = current[tier3];
-            if (!current)
-                return null;
-            if (Array.isArray(current))
-                return current;
-            current = current[type];
-            if (!current)
-                return null;
-            if (Array.isArray(current))
-                return current;
-            current = current[subtype];
-            if (!current)
-                return null;
-            return Array.isArray(current) ? current : null;
-        }
-        catch (error) {
-            console.warn(`Failed to get filter rules for model ${model.name}:`, error);
-            return null;
-        }
+        const modelCategories = model.categories;
+        // Find matching filter entries
+        const matchingEntries = this.filterMap.filter((entry) => this.categoriesMatch(modelCategories, entry.modelCategories));
+        // Combine all filter rules from matching entries
+        return matchingEntries.flatMap((entry) => entry.filterRules);
+    }
+    // eslint-disable-next-line class-methods-use-this
+    categoriesMatch(modelCategories, filterCategories) {
+        // Check if model categories match the filter criteria
+        // Undefined filter categories act as wildcards (match anything)
+        return ((!filterCategories.tier1 || modelCategories.tier1 === filterCategories.tier1) &&
+            (!filterCategories.tier2 || modelCategories.tier2 === filterCategories.tier2) &&
+            (!filterCategories.tier3 || modelCategories.tier3 === filterCategories.tier3) &&
+            (!filterCategories.type || modelCategories.type === filterCategories.type) &&
+            (!filterCategories.subtype || modelCategories.subtype === filterCategories.subtype));
     }
     isMethodCompatible(method, filterRules) {
         // Check if any unit in the method matches any filter rule
         return method.units.some((unit) => filterRules.some((rule) => this.isUnitMatchingRule(unit, rule)));
     }
+    // eslint-disable-next-line class-methods-use-this
     isUnitMatchingRule(unit, rule) {
         if (rule.path) {
             return unit.path === rule.path;
@@ -77,17 +56,7 @@ class ModelMethodFilter {
         return this.filterMap;
     }
     getAllFilterRules() {
-        const rules = [];
-        const extractRules = (obj) => {
-            if (Array.isArray(obj)) {
-                rules.push(...obj);
-            }
-            else if (typeof obj === "object" && obj !== null) {
-                Object.values(obj).forEach(extractRules);
-            }
-        };
-        extractRules(this.filterMap);
-        return rules;
+        return this.filterMap.flatMap((entry) => entry.filterRules);
     }
     getUniqueFilterPaths() {
         const rules = this.getAllFilterRules();
