@@ -1,5 +1,5 @@
 import { Standata } from "./base";
-import { MethodConfig, MethodUnit } from "./types/method";
+import { MethodConfig, UnitMethod } from "./types/method";
 export declare class MethodStandata extends Standata<MethodConfig> {
     static runtimeData: {
         standataConfig: {
@@ -15,7 +15,6 @@ export declare class MethodStandata extends Standata<MethodConfig> {
         };
         filesMapByName: {};
     };
-    getAllMethods(): MethodConfig[];
     getMethodByName(name: string): MethodConfig | undefined;
     getMethodsByUnitType(unitType: string): MethodConfig[];
     getMethodsByUnitSubtype(unitSubtype: string): MethodConfig[];
@@ -24,7 +23,7 @@ export declare class MethodStandata extends Standata<MethodConfig> {
     getMethodsByUnitParameters(parameters: Record<string, any>): MethodConfig[];
     getAllMethodNames(): string[];
     getAllMethodPaths(): string[];
-    getAllUnits(): MethodUnit[];
+    getAllUnits(): UnitMethod[];
     getUniqueUnitTypes(): string[];
     getUniqueUnitSubtypes(): string[];
     getMethodsCompatibleWithModel(modelPath: string, filterMap: Record<string, any>): MethodConfig[];
