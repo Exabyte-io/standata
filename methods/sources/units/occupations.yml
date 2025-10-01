@@ -9,8 +9,9 @@ name:
 forEach:
   - !parameter
     key: categories.subtype
-    values: !esse 'methods-category/physical/qm/wf/enum-options#/smearingSubtypes/enum'
-    exclude: '^(marzari|fermi)'
+    # TODO: Add more
+    values:
+      - gaussian
 config:
   categories:
     tier1: qm
@@ -25,8 +26,9 @@ extraConfigs: !combine
   forEach:
     - !parameter
       key: categories.subtype
-      values: !esse 'methods-category/physical/qm/wf/enum-options#/tetrahedronSubtypes/enum'
-      exclude: '^(bloechl|optimized)'
+      # TODO: add more
+      values:
+        - linear
   config:
     categories:
       tier1: qm

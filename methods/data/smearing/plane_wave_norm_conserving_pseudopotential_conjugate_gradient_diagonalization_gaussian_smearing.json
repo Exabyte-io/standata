@@ -2,16 +2,16 @@
   "units": [
     {
       "categories": {
-        "subtype": "linear",
+        "subtype": "gaussian",
         "tier1": "qm",
         "tier2": "wf",
-        "type": "tetrahedron"
+        "type": "smearing"
       },
       "tags": [
         "occupation number"
       ],
-      "name": "Linear Tetrahedron Method",
-      "path": "/qm/wf/none/tetrahedron/linear"
+      "name": "Gaussian Smearing",
+      "path": "/qm/wf/none/smearing/gaussian"
     },
     {
       "categories": {
@@ -28,6 +28,19 @@
     },
     {
       "categories": {
+        "subtype": "nc",
+        "tier1": "qm",
+        "tier2": "wf",
+        "type": "psp"
+      },
+      "tags": [
+        "pseudopotential"
+      ],
+      "name": "Norm-conserving Pseudopotential",
+      "path": "/qm/wf/none/psp/nc"
+    },
+    {
+      "categories": {
         "tier1": "qm",
         "tier2": "wf",
         "type": "pw"
@@ -39,6 +52,6 @@
       "path": "/qm/wf/none/pw/none"
     }
   ],
-  "name": " undefined Pseudopotential (Conjugate Gradient Diagonalization, Linear Tetrahedron Method)",
-  "path": "/qm/wf/none/tetrahedron/linear::/opt/diff/ordern/cg/none::/qm/wf/none/pw/none"
+  "name": "Plane-wave Norm-conserving Pseudopotential (Conjugate Gradient Diagonalization, Gaussian Smearing)",
+  "path": "/qm/wf/none/smearing/gaussian::/opt/diff/ordern/cg/none::/qm/wf/none/psp/nc::/qm/wf/none/pw/none"
 }

@@ -12,23 +12,13 @@ categories:
   type:
     - psp        # pseudopotential
     - pw         # plane wave
-    - ao         # atomic orbital
     - smearing   # smearing
     - tetrahedron # tetrahedron
     - cg         # conjugate gradient
-    - davidson   # davidson
-    - linear     # linear regression
-    - kernel_ridge # kernel ridge regression
   subtype:
-    - us      # ultra-soft
     - nc      # norm-conserving
-    - nc-fr   # norm-conserving fully-relativistic
-    - paw     # projector-augmented wave
-    - pople   # pople basis set
     - gaussian # gaussian smearing
-    - methfessel-paxton # methfessel-paxton smearing
-    - least_squares # least squares
-    - ridge   # ridge regression
+    - linear  # linear
   tags:
     - pseudopotential
     - plane-wave
@@ -38,15 +28,7 @@ categories:
     - machine-learning
 
 entities:
-  - filename: "pw/wave_function_plane_wave_conjugate_gradient_diagonalization_gaussian_smearing.json"
-    categories: ["qm", "wf", "pw", "gaussian", "smearing", "opt", "diff", "ordern", "cg"]
-  - filename: "pw/wave_function_plane_wave_davidson_diagonalization_gaussian_smearing.json"
-    categories: ["qm", "wf", "pw", "gaussian", "smearing", "linalg", "diag", "davidson"]
-  - filename: "pw/wave_function_plane_wave_conjugate_gradient_diagonalization_linear_tetrahedron_method.json"
-    categories: ["qm", "wf", "pw", "linear", "tetrahedron", "opt", "diff", "ordern", "cg"]
-  - filename: "pw/wave_function_plane_wave_davidson_diagonalization_linear_tetrahedron_method.json"
-    categories: ["qm", "wf", "pw", "linear", "tetrahedron", "linalg", "diag", "davidson"]
-  - filename: "pw/wave_function_plane_wave_conjugate_gradient_diagonalization_methfessel_paxton_smearing.json"
-    categories: ["qm", "wf", "pw", "methfessel-paxton", "smearing", "opt", "diff", "ordern", "cg"]
-  - filename: "pw/wave_function_plane_wave_davidson_diagonalization_methfessel_paxton_smearing.json"
-    categories: ["qm", "wf", "pw", "methfessel-paxton", "smearing", "linalg", "diag", "davidson"]
+  - filename: "pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json"
+    categories: ["qm", "wf", "psp", "pw", "nc", "gaussian", "smearing", "opt", "diff", "ordern", "cg"]
+  - filename: "pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json"
+    categories: ["qm", "wf", "psp", "pw", "nc", "linear", "tetrahedron", "opt", "diff", "ordern", "cg"]
