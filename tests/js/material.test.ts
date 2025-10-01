@@ -2,8 +2,8 @@ import { expect } from "chai";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
 
-import h_BN from "../../materials/BN-[Hexagonal_Boron_Nitride]-HEX_[P6_mmm]_2D_[Monolayer]-[2dm-4991].json";
-import Graphene from "../../materials/C-[Graphene]-HEX_[P6_mmm]_2D_[Monolayer]-[2dm-3993].json";
+import h_BN from "../../materials/BN-[Hexagonal_Boron_Nitride]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-4991].json";
+import Graphene from "../../materials/C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-3993].json";
 import Na4Cl4 from "../../materials/NaCl-[Sodium_Chloride]-FCC_[Fm-3m]_3D_[Bulk]-[mp-22862].json";
 import Si from "../../materials/Si-[Silicon]-FCC_[Fd-3m]_3D_[Bulk]-[mp-149].json";
 import WS2 from "../../materials/WS2-[Tungsten_Disulfide]-HEX_[P-6m2]_2D_[Monolayer]-[2dm-3749].json";
