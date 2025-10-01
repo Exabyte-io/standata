@@ -2,6 +2,7 @@ import type { TemplateSchema } from "@mat3ra/esse/dist/js/types";
 import { Standata } from "./base";
 import { ApplicationExecutableTree, ApplicationVersionsMapType, DefaultApplicationConfig } from "./types/application";
 export declare enum TAGS {
+    DEFAULT = "default",
     DEFAULT_VERSION = "default_version",
     DEFAULT_BUILD = "default_build"
 }

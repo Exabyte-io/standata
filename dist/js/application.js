@@ -12,6 +12,7 @@ const templatesList_json_1 = __importDefault(require("./runtime_data/templatesLi
 const applicationVersionMap_1 = require("./utils/applicationVersionMap");
 var TAGS;
 (function (TAGS) {
+    TAGS["DEFAULT"] = "default";
     TAGS["DEFAULT_VERSION"] = "default_version";
     TAGS["DEFAULT_BUILD"] = "default_build";
 })(TAGS = exports.TAGS || (exports.TAGS = {}));
@@ -108,7 +109,7 @@ class ApplicationStandata extends base_1.Standata {
         return allEntriesWithTagsForNameAndVersion[0];
     }
     getDefaultConfig() {
-        const fullConfig = this.getDefaultConfigByNameAndVersion("espresso", "6.3");
+        const fullConfig = this.findEntitiesByTags(TAGS.DEFAULT)[0];
         const { name, shortName, version, summary, build } = fullConfig;
         return { name, shortName, version, summary, build };
     }

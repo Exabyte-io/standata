@@ -14,6 +14,7 @@ import {
 import { ApplicationVersionsMap } from "./utils/applicationVersionMap";
 
 export enum TAGS {
+    DEFAULT = "default",
     DEFAULT_VERSION = "default_version",
     DEFAULT_BUILD = "default_build",
 }
@@ -142,7 +143,7 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
     }
 
     getDefaultConfig(): DefaultApplicationConfig {
-        const fullConfig = this.getDefaultConfigByNameAndVersion("espresso", "6.3");
+        const fullConfig = this.findEntitiesByTags(TAGS.DEFAULT)[0];
         const { name, shortName, version, summary, build } = fullConfig as ApplicationSchemaBase;
         return { name, shortName, version, summary, build };
     }
