@@ -64,8 +64,7 @@ export class ModelMethodFilter {
     }
 
     private isMethodCompatible(method: MethodConfig, filterRules: FilterRule[]): boolean {
-        // Check if any unit in the method matches any filter rule
-        return method.units.some((unit: UnitMethod) =>
+        return method.units.every((unit: UnitMethod) =>
             filterRules.some((rule) => this.isUnitMatchingRule(unit, rule)),
         );
     }
