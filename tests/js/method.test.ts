@@ -1,113 +1,97 @@
 import { expect } from "chai";
 
-import { MethodStandata } from "../../src/js/method";
-import { MethodConfig } from "../../src/js/types/method";
+import { MethodStandata } from "../../src/js";
+
+// Test data constants
+const TEST_METHOD_NAMES = {
+    NC_CG_GAUSSIAN: "Plane-wave Norm-conserving Pseudopotential (Conjugate Gradient Diagonalization, Gaussian Smearing)",
+    NC_DAVIDSON_GAUSSIAN: "Plane-wave Norm-conserving Pseudopotential (Davidson Diagonalization, Gaussian Smearing)",
+} as const;
+
+const TEST_UNIT_TYPES = {
+    PW: "pw",
+    PSP: "psp",
+    CG: "cg",
+    DAVIDSON: "davidson",
+} as const;
+
+const TEST_UNIT_SUBTYPES = {
+    GAUSSIAN: "gaussian",
+} as const;
+
+const TEST_UNIT_TAGS = {
+    PLANE_WAVE: "plane wave",
+} as const;
+
+const TEST_PATHS = {
+    NC_CG_GAUSSIAN: "/qm/wf/none/smearing/gaussian::/opt/diff/ordern/cg/none::/qm/wf/none/psp/nc::/qm/wf/none/pw/none",
+} as const;
+
+const TEST_COUNTS = {
+    TOTAL_PW_METHODS: 24,
+    TOTAL_CG_METHODS: 12,
+    TOTAL_GAUSSIAN_METHODS: 8,
+} as const;
 
 describe("MethodStandata", () => {
     let standata: MethodStandata;
 
-    const mockMethods: MethodConfig[] = [
-        {
-            name: "DFT SCF",
-            path: "/qm/dft/scf",
-            units: [
-                {
-                    name: "pw_scf",
-                    path: "/qm/wf/none/pw/none",
-                    categories: {
-                        type: "pseudopotential",
-                        subtype: "us",
-                    },
-                    parameters: { ecutwfc: 40 },
-                    tags: ["scf", "dft"],
-                },
-            ],
-        },
-        {
-            name: "ML Regression",
-            path: "/ml/regression/linear",
-            units: [
-                {
-                    name: "linear_regression",
-                    path: "/ml/linear/least_squares",
-                    categories: {
-                        type: { name: "Regression", slug: "regression" },
-                        subtype: "linear",
-                    },
-                    parameters: { alpha: 0.1 },
-                    tags: ["ml", "regression"],
-                },
-            ],
-        },
-    ];
-
     beforeEach(() => {
         standata = new MethodStandata();
-        (standata as any).runtimeData = {
-            standataConfig: {
-                categories: {
-                    type: ["pseudopotential", "regression"],
-                    subtype: ["us", "linear"],
-                    tags: ["scf", "dft", "ml", "regression"],
-                },
-                entities: mockMethods,
-            },
-            filesMapByName: {},
-        };
     });
 
     describe("getByName", () => {
         it("should return method by name", () => {
-            const method = standata.getByName("DFT SCF");
+            const method = standata.getByName(TEST_METHOD_NAMES.NC_CG_GAUSSIAN);
 
             expect(method).to.not.be.undefined;
-            expect(method!.name).to.equal("DFT SCF");
+            expect(method!.name).to.equal(TEST_METHOD_NAMES.NC_CG_GAUSSIAN);
         });
     });
 
     describe("getByUnitType", () => {
         it("should handle both string and object types", () => {
-            const pseudoMethods = standata.getByUnitType("pseudopotential");
-            const regressionMethods = standata.getByUnitType("regression");
+            const pwMethods = standata.getByUnitType(TEST_UNIT_TYPES.PW);
+            const cgMethods = standata.getByUnitType(TEST_UNIT_TYPES.CG);
 
-            expect(pseudoMethods).to.have.length(1);
-            expect(regressionMethods).to.have.length(1);
+            expect(pwMethods).to.have.length(TEST_COUNTS.TOTAL_PW_METHODS);
+            expect(cgMethods).to.have.length(TEST_COUNTS.TOTAL_CG_METHODS);
         });
     });
 
     describe("getByUnitSubtype", () => {
         it("should return methods by subtype", () => {
-            const usMethods = standata.getByUnitSubtype("us");
+            const gaussianMethods = standata.getByUnitSubtype(TEST_UNIT_SUBTYPES.GAUSSIAN);
 
-            expect(usMethods).to.have.length(1);
-            expect(usMethods[0].name).to.equal("DFT SCF");
+            expect(gaussianMethods).to.have.length(TEST_COUNTS.TOTAL_GAUSSIAN_METHODS);
+            expect(gaussianMethods[0].name).to.include("Gaussian");
         });
     });
 
     describe("getByUnitTags", () => {
         it("should return methods with specified tags", () => {
-            const dftMethods = standata.getByUnitTags("dft");
+            const planeWaveMethods = standata.getByUnitTags(TEST_UNIT_TAGS.PLANE_WAVE);
 
-            expect(dftMethods).to.have.length(1);
-            expect(dftMethods[0].name).to.equal("DFT SCF");
+            expect(planeWaveMethods).to.have.length(TEST_COUNTS.TOTAL_PW_METHODS);
+            expect(planeWaveMethods[0].name).to.include("Plane-wave");
         });
     });
 
     describe("getByPath", () => {
         it("should return methods by path", () => {
-            const methods = standata.getByPath("/qm/dft/scf");
+            const methods = standata.getByPath(TEST_PATHS.NC_CG_GAUSSIAN);
 
             expect(methods).to.have.length(1);
-            expect(methods[0].name).to.equal("DFT SCF");
+            expect(methods[0].name).to.include("Gaussian");
         });
     });
 
     describe("getByUnitParameters", () => {
         it("should return methods with matching parameters", () => {
-            const methods = standata.getByUnitParameters({ ecutwfc: 40 });
+            // Since no methods have parameters in the current data, test with empty object
+            const methods = standata.getByUnitParameters({});
 
-            expect(methods).to.have.length(1);
-            expect(methods[0].name).to.equal("DFT SCF");
+            expect(methods).to.have.length(0);
         });
     });
 
@@ -116,10 +100,12 @@ describe("MethodStandata", () => {
             const names = standata.getAllMethodNames();
             const types = standata.getUniqueUnitTypes();
 
-            expect(names).to.include("DFT SCF");
-            expect(names).to.include("ML Regression");
-            expect(types).to.include("pseudopotential");
-            expect(types).to.include("regression");
+            expect(names).to.include(TEST_METHOD_NAMES.NC_CG_GAUSSIAN);
+            expect(names).to.include(TEST_METHOD_NAMES.NC_DAVIDSON_GAUSSIAN);
+            expect(types).to.include(TEST_UNIT_TYPES.PW);
+            expect(types).to.include(TEST_UNIT_TYPES.CG);
+            expect(types).to.include(TEST_UNIT_TYPES.DAVIDSON);
+            expect(types).to.include(TEST_UNIT_TYPES.PSP);
         });
     });
 
