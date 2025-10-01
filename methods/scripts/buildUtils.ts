@@ -46,20 +46,26 @@ export function createSafeFilename(name: string): string {
 }
 
 /**
- * Determines the subdirectory for an entity based on its type and configuration
+ * Determines the subdirectory for an entity based on source filename and type
+ * For methods: extracts from filename (e.g., "pw_methods.yml" → "pw")
+ * For models: uses categories.subtype
  */
-export function getEntitySubdirectory(config: any, entityType: "models" | "methods"): string {
+export function getEntitySubdirectory(
+    sourceFilePath: string,
+    config: any,
+    entityType: "models" | "methods",
+): string {
     if (entityType === "models") {
         return config.categories?.subtype || "unknown";
     }
-    // Methods: use primary unit type or method type
-    if (config.units && config.units.length > 0) {
-        return config.units[0].categories?.type || "unknown";
-    }
-    if (config.categories?.type) {
-        return config.categories.type;
-    }
-    return "unknown";
+
+    // Methods: extract subdirectory from source filename
+    const basename = path.basename(sourceFilePath, path.extname(sourceFilePath));
+
+    // Remove common suffixes: _methods, _method, etc.
+    const subdirectory = basename.replace(/_methods?$/, "").replace(/^(.+)$/, "$1");
+
+    return subdirectory || "unknown";
 }
 
 /**
@@ -126,7 +132,7 @@ export function processEntityFile(filePath: string, buildConfig: BuildConfig): v
         delete config.schema;
 
         // Determine subdirectory
-        const subtype = getEntitySubdirectory(config, buildConfig.entityType);
+        const subtype = getEntitySubdirectory(filePath, config, buildConfig.entityType);
         const targetDir = path.join(buildConfig.dataPath, subtype);
 
         // Create directory if it doesn't exist

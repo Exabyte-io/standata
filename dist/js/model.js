@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModelStandata = void 0;
 const base_1 = require("./base");
 const models_json_1 = __importDefault(require("./runtime_data/models.json"));
+const category_1 = require("./utils/category");
 class ModelStandata extends base_1.Standata {
     getByName(name) {
         const allModels = this.getAll();
@@ -23,8 +24,12 @@ class ModelStandata extends base_1.Standata {
         return allModels.filter((model) => model.categories.subtype === subtype);
     }
     getByTags(...tags) {
+        const tagSet = new Set(tags);
         const allModels = this.getAll();
-        return allModels.filter((model) => model.tags && tags.some((tag) => model.tags.includes(tag)));
+        return allModels.filter((model) => {
+            const values = (0, category_1.getModelCategoryTags)(model);
+            return values.some((v) => tagSet.has(v));
+        });
     }
     getByPath(path) {
         const allModels = this.getAll();

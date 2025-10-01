@@ -10,6 +10,7 @@ export interface UnitMethod extends CategorizedUnitMethod {
 }
 export interface MethodConfig {
     name: string;
+    shortName?: string;
     path: string;
     units: UnitMethod[];
 }

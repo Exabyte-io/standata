@@ -18,47 +18,7 @@ export declare class MethodStandata extends Standata<MethodConfig> {
             }[];
         };
         filesMapByName: {
-            "any_plane_wave_pseudopotential_method.json": {
-                name: string;
-                path: string;
-                units: ({
-                    categories: {
-                        subtype: string;
-                        tier1: string;
-                        tier2: string;
-                        type: string;
-                    };
-                    tags: string[];
-                    name: string;
-                    path: string;
-                } | {
-                    categories: {
-                        tier1: string;
-                        tier2: string;
-                        type: string;
-                        subtype?: undefined;
-                    };
-                    tags: string[];
-                    name: string;
-                    path: string;
-                })[];
-            };
-            "linear_least_squares_regression.json": {
-                name: string;
-                path: string;
-                units: {
-                    categories: {
-                        subtype: string;
-                        type: string;
-                    };
-                    tags: string[];
-                    name: string;
-                    path: string;
-                }[];
-            };
-            "pw_us_cg_gaussian.json": {
-                name: string;
-                path: string;
+            "pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json": {
                 units: ({
                     categories: {
                         subtype: string;
@@ -93,6 +53,46 @@ export declare class MethodStandata extends Standata<MethodConfig> {
                     name: string;
                     path: string;
                 })[];
+                name: string;
+                path: string;
+            };
+            "pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json": {
+                units: ({
+                    categories: {
+                        subtype: string;
+                        tier1: string;
+                        tier2: string;
+                        type: string;
+                        tier3?: undefined;
+                    };
+                    tags: string[];
+                    name: string;
+                    path: string;
+                } | {
+                    categories: {
+                        tier1: string;
+                        tier2: string;
+                        tier3: string;
+                        type: string;
+                        subtype?: undefined;
+                    };
+                    tags: string[];
+                    name: string;
+                    path: string;
+                } | {
+                    categories: {
+                        tier1: string;
+                        tier2: string;
+                        type: string;
+                        subtype?: undefined;
+                        tier3?: undefined;
+                    };
+                    tags: string[];
+                    name: string;
+                    path: string;
+                })[];
+                name: string;
+                path: string;
             };
         };
     };

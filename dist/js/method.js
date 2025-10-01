@@ -7,11 +7,7 @@ exports.MethodStandata = void 0;
 const base_1 = require("./base");
 const methods_json_1 = __importDefault(require("./runtime_data/methods.json"));
 const modelMethodFilter_1 = require("./modelMethodFilter");
-function getCategoryValue(category) {
-    if (!category)
-        return undefined;
-    return typeof category === "string" ? category : category.slug;
-}
+const category_1 = require("./utils/category");
 class MethodStandata extends base_1.Standata {
     getByName(name) {
         const allMethods = this.getAll();
@@ -19,11 +15,11 @@ class MethodStandata extends base_1.Standata {
     }
     getByUnitType(unitType) {
         const allMethods = this.getAll();
-        return allMethods.filter((method) => method.units.some((unit) => getCategoryValue(unit.categories.type) === unitType));
+        return allMethods.filter((method) => method.units.some((unit) => (0, category_1.getCategoryValue)(unit.categories.type) === unitType));
     }
     getByUnitSubtype(unitSubtype) {
         const allMethods = this.getAll();
-        return allMethods.filter((method) => method.units.some((unit) => getCategoryValue(unit.categories.subtype) === unitSubtype));
+        return allMethods.filter((method) => method.units.some((unit) => (0, category_1.getCategoryValue)(unit.categories.subtype) === unitSubtype));
     }
     getByUnitTags(...tags) {
         const allMethods = this.getAll();
@@ -56,14 +52,14 @@ class MethodStandata extends base_1.Standata {
     getUniqueUnitTypes() {
         const allUnits = this.getAllUnits();
         const types = new Set(allUnits
-            .map((unit) => getCategoryValue(unit.categories.type))
+            .map((unit) => (0, category_1.getCategoryValue)(unit.categories.type))
             .filter((type) => type !== undefined));
         return Array.from(types);
     }
     getUniqueUnitSubtypes() {
         const allUnits = this.getAllUnits();
         const subtypes = new Set(allUnits
-            .map((unit) => getCategoryValue(unit.categories.subtype))
+            .map((unit) => (0, category_1.getCategoryValue)(unit.categories.subtype))
             .filter((subtype) => subtype !== undefined));
         return Array.from(subtypes);
     }

@@ -5,18 +5,18 @@ import { MethodStandata } from "../../src/js";
 // Test data constants
 const TEST_METHOD_NAMES = {
     NC_CG_GAUSSIAN: "Plane-wave Norm-conserving Pseudopotential (Conjugate Gradient Diagonalization, Gaussian Smearing)",
-    NC_DAVIDSON_GAUSSIAN: "Plane-wave Norm-conserving Pseudopotential (Davidson Diagonalization, Gaussian Smearing)",
+    NC_CG_LINEAR_TETRAHEDRON: "Plane-wave Norm-conserving Pseudopotential (Conjugate Gradient Diagonalization, Linear Tetrahedron Method)",
 } as const;
 
 const TEST_UNIT_TYPES = {
     PW: "pw",
     PSP: "psp",
     CG: "cg",
-    DAVIDSON: "davidson",
 } as const;
 
 const TEST_UNIT_SUBTYPES = {
     GAUSSIAN: "gaussian",
+    LINEAR: "linear",
 } as const;
 
 const TEST_UNIT_TAGS = {
@@ -25,12 +25,14 @@ const TEST_UNIT_TAGS = {
 
 const TEST_PATHS = {
     NC_CG_GAUSSIAN: "/qm/wf/none/smearing/gaussian::/opt/diff/ordern/cg/none::/qm/wf/none/psp/nc::/qm/wf/none/pw/none",
+    NC_CG_LINEAR_TETRAHEDRON: "/qm/wf/none/tetrahedron/linear::/opt/diff/ordern/cg/none::/qm/wf/none/psp/nc::/qm/wf/none/pw/none",
 } as const;
 
 const TEST_COUNTS = {
-    TOTAL_PW_METHODS: 24,
-    TOTAL_CG_METHODS: 12,
-    TOTAL_GAUSSIAN_METHODS: 8,
+    TOTAL_PW_METHODS: 2,
+    TOTAL_CG_METHODS: 2,
+    TOTAL_GAUSSIAN_METHODS: 1,
+    TOTAL_LINEAR_METHODS: 1,
 } as const;
 
 describe("MethodStandata", () => {
@@ -101,10 +103,9 @@ describe("MethodStandata", () => {
             const types = standata.getUniqueUnitTypes();
 
             expect(names).to.include(TEST_METHOD_NAMES.NC_CG_GAUSSIAN);
-            expect(names).to.include(TEST_METHOD_NAMES.NC_DAVIDSON_GAUSSIAN);
+            expect(names).to.include(TEST_METHOD_NAMES.NC_CG_LINEAR_TETRAHEDRON);
             expect(types).to.include(TEST_UNIT_TYPES.PW);
             expect(types).to.include(TEST_UNIT_TYPES.CG);
-            expect(types).to.include(TEST_UNIT_TYPES.DAVIDSON);
             expect(types).to.include(TEST_UNIT_TYPES.PSP);
         });
     });
