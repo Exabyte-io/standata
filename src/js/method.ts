@@ -3,13 +3,7 @@ import METHODS from "./runtime_data/methods.json";
 import { MethodConfig, UnitMethod } from "./types/method";
 import { ModelMethodFilter } from "./modelMethodFilter";
 import { ModelConfig } from "./types/model";
-
-function getCategoryValue(
-    category: string | { name: string; slug: string } | undefined,
-): string | undefined {
-    if (!category) return undefined;
-    return typeof category === "string" ? category : category.slug;
-}
+import { getCategoryValue } from "./utils/category";
 
 export class MethodStandata extends Standata<MethodConfig> {
     static runtimeData = METHODS;

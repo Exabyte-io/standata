@@ -1,6 +1,7 @@
 import { Standata } from "./base";
 import MODELS from "./runtime_data/models.json";
 import { ModelConfig } from "./types/model";
+import { getModelCategoryTags } from "./utils/category";
 
 export class ModelStandata extends Standata<ModelConfig> {
     static runtimeData = MODELS;
@@ -28,10 +29,12 @@ export class ModelStandata extends Standata<ModelConfig> {
     }
 
     getByTags(...tags: string[]): ModelConfig[] {
+        const tagSet = new Set<string>(tags);
         const allModels = this.getAll();
-        return allModels.filter(
-            (model) => model.tags && tags.some((tag) => model.tags!.includes(tag)),
-        );
+        return allModels.filter((model) => {
+            const values = getModelCategoryTags(model);
+            return values.some((v) => tagSet.has(v));
+        });
     }
 
     getByPath(path: string): ModelConfig[] {
