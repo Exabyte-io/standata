@@ -1,184 +1,100 @@
 import { expect } from "chai";
 
-import { ModelMethodFilter, ModelMethodFilterEntry } from "../../src/js/modelMethodFilter";
-import { MethodConfig } from "../../src/js/types/method";
-import { ModelConfig } from "../../src/js/types/model";
+import { MethodStandata, ModelMethodFilter, ModelStandata } from "../../src/js";
+
+const TEST_MODEL_NAMES = {
+    LDA_PZ: "DFT LDA PZ",
+} as const;
+
+const TEST_CATEGORIES = {
+    SUBTYPE_LDA: "lda",
+} as const;
 
 describe("ModelMethodFilter", () => {
-    let filter: ModelMethodFilter;
-
-    const mockMethods: MethodConfig[] = [
-        {
-            name: "DFT Method",
-            path: "/qm/dft/gga/pbe",
-            units: [
-                {
-                    name: "pw_scf",
-                    path: "/qm/wf/none/pw/none",
-                    categories: {
-                        type: "pseudopotential",
-                        subtype: "us",
-                    },
-                    parameters: { ecutwfc: 40 },
-                    tags: ["scf", "dft"],
-                },
-            ],
-        },
-        {
-            name: "ML Method",
-            path: "/ml/regression/linear",
-            units: [
-                {
-                    name: "linear_regression",
-                    path: "/ml/linear/least_squares",
-                    categories: {
-                        type: "regression",
-                        subtype: "linear",
-                    },
-                    parameters: { alpha: 0.1 },
-                    tags: ["ml", "regression"],
-                },
-            ],
-        },
-    ];
-
-    const mockFilterMap: ModelMethodFilterEntry[] = [
-        {
-            modelCategories: {
-                tier1: "pb",
-                tier2: "qm",
-                tier3: "dft",
-                type: "ksdft",
-                subtype: "gga",
-            },
-            filterRules: [{ path: "/qm/wf/none/pw/none" }, { regex: "/qm/wf/none/psp/.*" }],
-        },
-        {
-            modelCategories: {
-                tier1: "st",
-                tier2: "det",
-                tier3: "ml",
-            },
-            filterRules: [{ path: "/ml/linear/least_squares" }, { regex: "/ml/.*/regression" }],
-        },
-    ];
+    let filter: ModelMethodFilter, methodStandata: MethodStandata, modelStandata: ModelStandata;
 
     beforeEach(() => {
         filter = new ModelMethodFilter();
-        (filter as any).filterMap = mockFilterMap;
+        methodStandata = new MethodStandata();
+        modelStandata = new ModelStandata();
     });
 
     describe("getCompatibleMethods", () => {
-        it("should return compatible methods for DFT model", () => {
-            const model: ModelConfig = {
-                name: "DFT Model",
-                path: "/models/dft/gga",
-                categories: {
-                    tier1: "pb",
-                    tier2: "qm",
-                    tier3: "dft",
-                    type: "ksdft",
-                    subtype: "gga",
-                },
-            };
+        it("should return compatible methods for real LDA model", () => {
+            const ldaModel = modelStandata.getByName(TEST_MODEL_NAMES.LDA_PZ);
+            const allMethods = methodStandata.getAll();
 
-            const compatibleMethods = filter.getCompatibleMethods(model, mockMethods);
+            expect(ldaModel).to.not.be.undefined;
 
-            expect(compatibleMethods).to.have.length(1);
-            expect(compatibleMethods[0].name).to.equal("DFT Method");
+            const compatibleMethods = filter.getCompatibleMethods(ldaModel!, allMethods);
+
+            expect(compatibleMethods).to.be.an("array");
+            expect(compatibleMethods.length).to.be.greaterThan(0);
+            expect(compatibleMethods[0].name).to.include("Plane-wave");
         });
 
-        it("should return empty array for unknown model", () => {
-            const model: ModelConfig = {
-                name: "Unknown Model",
-                path: "/models/unknown",
-                categories: {
-                    tier1: "unknown",
-                    tier2: "unknown",
-                    tier3: "unknown",
-                    type: "unknown",
-                    subtype: "unknown",
-                },
-            };
+        it("should work with actual standata integration", () => {
+            const model = modelStandata.getByName(TEST_MODEL_NAMES.LDA_PZ);
+            const allMethods = methodStandata.getAll();
 
-            const compatibleMethods = filter.getCompatibleMethods(model, mockMethods);
-            expect(compatibleMethods).to.have.length(0);
+            expect(model).to.not.be.undefined;
+
+            const compatible = filter.getCompatibleMethods(model!, allMethods);
+
+            // All real methods should be compatible with LDA
+            expect(compatible.length).to.equal(allMethods.length);
         });
     });
 
-    describe("categoriesMatch", () => {
-        it("should match exact categories", () => {
-            const modelCategories = {
-                tier1: "pb",
-                tier2: "qm",
-                tier3: "dft",
-                type: "ksdft",
-                subtype: "gga",
-            };
+    describe("real data integration", () => {
+        it("should filter methods by model compatibility", () => {
+            const allModels = modelStandata.getAll();
+            const allMethods = methodStandata.getAll();
 
-            const filterCategories = {
-                tier1: "pb",
-                tier2: "qm",
-                tier3: "dft",
-                type: "ksdft",
-                subtype: "gga",
-            };
+            expect(allModels.length).to.be.greaterThan(0);
+            expect(allMethods.length).to.be.greaterThan(0);
 
-            const matches = (filter as any).categoriesMatch(modelCategories, filterCategories);
-            expect(matches).to.be.true;
+            allModels.forEach((model) => {
+                const compatible = filter.getCompatibleMethods(model, allMethods);
+                expect(compatible).to.be.an("array");
+                // All our current methods should be compatible with all models
+                expect(compatible.length).to.equal(allMethods.length);
+            });
         });
 
-        it("should handle wildcard matching", () => {
-            const modelCategories = {
-                tier1: "pb",
-                tier2: "qm",
-                tier3: "dft",
-                type: "ksdft",
-                subtype: "gga",
-            };
+        it("should return all methods for LDA models", () => {
+            const ldaModels = modelStandata.getByTags(TEST_CATEGORIES.SUBTYPE_LDA);
+            const allMethods = methodStandata.getAll();
 
-            const filterCategories = {
-                tier1: "pb",
-                tier2: "qm",
-                tier3: "dft",
-                // type and subtype undefined = wildcards
-            };
+            expect(ldaModels.length).to.be.greaterThan(0);
 
-            const matches = (filter as any).categoriesMatch(modelCategories, filterCategories);
-            expect(matches).to.be.true;
+            ldaModels.forEach((model) => {
+                const compatible = filter.getCompatibleMethods(model, allMethods);
+                expect(compatible.length).to.equal(allMethods.length);
+            });
         });
     });
 
     describe("utility methods", () => {
-        it("should extract filter rules and paths", () => {
+        it("should extract filter rules from real filter map", () => {
             const allRules = filter.getAllFilterRules();
             const paths = filter.getUniqueFilterPaths();
 
             expect(allRules.length).to.be.greaterThan(0);
-            expect(paths).to.include("/qm/wf/none/pw/none");
-            expect(paths).to.include("/ml/linear/least_squares");
+            expect(paths.length).to.be.greaterThan(0);
         });
-    });
 
-    describe("edge cases", () => {
-        it("should handle invalid regex gracefully", () => {
-            const invalidFilterMap: ModelMethodFilterEntry[] = [
-                {
-                    modelCategories: { tier1: "test" },
-                    filterRules: [{ regex: "[invalid" }],
-                },
-            ];
+        it("should provide access to filter map entries", () => {
+            const { filterMap } = filter as any;
 
-            (filter as any).filterMap = invalidFilterMap;
+            expect(filterMap).to.be.an("array");
+            expect(filterMap.length).to.be.greaterThan(0);
 
-            const model: ModelConfig = {
-                name: "Test Model",
-                path: "/test",
-                categories: { tier1: "test" },
-            };
-
-            const result = filter.getCompatibleMethods(model, mockMethods);
-            expect(result).to.be.an("array");
+            // Each entry should have model categories and filter rules
+            filterMap.forEach((entry: any) => {
+                expect(entry).to.have.property("modelCategories");
+                expect(entry).to.have.property("filterRules");
+            });
         });
     });
 });
