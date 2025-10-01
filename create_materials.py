@@ -87,7 +87,7 @@ def construct_filename(material_config: Dict[str, str], source: Dict[str, str]) 
     ]
     filename = '-'.join(filename_parts)
     # replace special characters with URL encoding
-    filename = filename.replace('/', '_')
+    filename = filename.replace('/', '%2F')
 
     return filename
 
