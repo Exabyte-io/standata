@@ -153,14 +153,14 @@ Format:
 
 Commas and Spaces: Replace `, ` (comma and space) with `-` (hyphen) and ` ` (space) with `_` (underscore).
 Parentheses: Convert `(` and `)` into `[` and `]` respectively.
-Special Characters: Encode characters such as `/` into URL-safe representations (e.g., `%2F`).
+Special Characters: Encode characters such as `/` into URL-safe representations (e.g., `%5C`).
 Brackets: Wrap common name and identifier parts in square brackets `[]`.
 
 **Filename Examples**:
 
 - Ni-[Nickel]-FCC_[Fm-3m]_3D_[Bulk]-[mp-23]
-- ZrO2-[Zirconium_Dioxide]-MCL_[P2_1%2Fc]_3D_[Bulk]-[mp-2858]
-- C-[Graphite]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-48]
-- C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[mp-1040425]
+- ZrO2-[Zirconium_Dioxide]-MCL_[P2_1%5Cc]_3D_[Bulk]-[mp-2858]
+- C-[Graphite]-HEX_[P6_3%5Cmmc]_3D_[Bulk]-[mp-48]
+- C-[Graphene]-HEX_[P6%5Cmmm]_2D_[Monolayer]-[mp-1040425]
 
 ## 5. Links

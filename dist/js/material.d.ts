@@ -17,7 +17,7 @@ export declare class MaterialStandata extends Standata {
             }[];
         };
         filesMapByName: {
-            "C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-3993].json": {
+            "C-[Graphene]-HEX_[P6%5Cmmm]_2D_[Monolayer]-[2dm-3993].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -52,7 +52,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "C-[Graphite]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-48].json": {
+            "C-[Graphite]-HEX_[P6_3%5Cmmc]_3D_[Bulk]-[mp-48].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -87,7 +87,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "BN-[Hexagonal_Boron_Nitride]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-4991].json": {
+            "BN-[Hexagonal_Boron_Nitride]-HEX_[P6%5Cmmm]_2D_[Monolayer]-[2dm-4991].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -122,7 +122,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "BN-[Boron_Nitride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-7991].json": {
+            "BN-[Boron_Nitride]-HEX_[P6_3%5Cmmc]_3D_[Bulk]-[mp-7991].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -262,7 +262,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "WS2-[Tungsten_Disulfide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-224].json": {
+            "WS2-[Tungsten_Disulfide]-HEX_[P6_3%5Cmmc]_3D_[Bulk]-[mp-224].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -542,7 +542,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "ZrO2-[Zirconium_Dioxide]-MCL_[P2_1%2Fc]_3D_[Bulk]-[mp-2858].json": {
+            "ZrO2-[Zirconium_Dioxide]-MCL_[P2_1%5Cc]_3D_[Bulk]-[mp-2858].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -577,7 +577,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "HfO2-[Hafnium_IV_Oxide]-MCL_[P2_1%2Fc]_3D_[Bulk]-[mp-352].json": {
+            "HfO2-[Hafnium_IV_Oxide]-MCL_[P2_1%5Cc]_3D_[Bulk]-[mp-352].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -612,7 +612,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "Y2O3-[Yttrium_III_Oxide]-MCLC_[C2%2Fm]_3D_[Bulk]-[mp-558573].json": {
+            "Y2O3-[Yttrium_III_Oxide]-MCLC_[C2%5Cm]_3D_[Bulk]-[mp-558573].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -647,7 +647,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "VO2-[Vanadium_IV_Oxide]-TET_[P4_2%2Fmnm]_3D_[Bulk]-[mp-19094].json": {
+            "VO2-[Vanadium_IV_Oxide]-TET_[P4_2%5Cmnm]_3D_[Bulk]-[mp-19094].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -682,7 +682,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "TiO2-[Titanium_Oxide]-TET_[P4_2%2Fmnm]_3D_[Bulk]-[mp-2657].json": {
+            "TiO2-[Titanium_Oxide]-TET_[P4_2%5Cmnm]_3D_[Bulk]-[mp-2657].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -717,7 +717,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "MoS2-[Molybdenum_Disulfide]-HEX_[P_3%2Fmmc]_3D_[Bulk]-[mp-2815].json": {
+            "MoS2-[Molybdenum_Disulfide]-HEX_[P_3%5Cmmc]_3D_[Bulk]-[mp-2815].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -787,7 +787,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "Te2Mo-[Molybdenum_Telluride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-602].json": {
+            "Te2Mo-[Molybdenum_Telluride]-HEX_[P6_3%5Cmmc]_3D_[Bulk]-[mp-602].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -857,7 +857,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "WSe2-[Tungsten_Diselenide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-1821].json": {
+            "WSe2-[Tungsten_Diselenide]-HEX_[P6_3%5Cmmc]_3D_[Bulk]-[mp-1821].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -1277,7 +1277,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "NbS2-[Niobium_Disulfide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-10033].json": {
+            "NbS2-[Niobium_Disulfide]-HEX_[P6_3%5Cmmc]_3D_[Bulk]-[mp-10033].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -1312,7 +1312,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "NbSe2-[Niobium_Diselenide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-2207].json": {
+            "NbSe2-[Niobium_Diselenide]-HEX_[P6_3%5Cmmc]_3D_[Bulk]-[mp-2207].json": {
                 name: string;
                 lattice: {
                     type: string;
@@ -1417,7 +1417,7 @@ export declare class MaterialStandata extends Standata {
                 };
                 isNonPeriodic: boolean;
             };
-            "SnO-[Tin_Oxide]-TET_[P4%2Fnmm]_3D_[Bulk]-[mp-2097].json": {
+            "SnO-[Tin_Oxide]-TET_[P4%5Cnmm]_3D_[Bulk]-[mp-2097].json": {
                 name: string;
                 lattice: {
                     type: string;
