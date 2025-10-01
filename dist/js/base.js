@@ -58,7 +58,14 @@ class Standata {
     findEntitiesByTags(...tags) {
         const categories_ = this.convertTagToCategory(...tags);
         const filenames = this.filterByCategories(...categories_) || [];
-        return filenames.map((f) => this.loadEntity(f)).filter((e) => e !== undefined);
+        return filenames
+            .map((f) => this.loadEntity(f))
+            .filter((e) => e !== undefined);
+    }
+    getAll() {
+        return this.entities
+            .map((e) => this.loadEntity(e.filename))
+            .filter((e) => e !== undefined);
     }
 }
 exports.Standata = Standata;

@@ -1,0 +1,39 @@
+categories:
+  model:
+    - atomistic
+    - macroscopic
+    - mesoscopic
+    - quantum-mechanical
+    - statistical
+  language_type:
+    - scripting
+    - compiled
+  purpose:
+    - modeling
+    - programming_language
+  defaults:
+    - default_version
+    - default_build
+    - default
+
+entities:
+  - filename: espresso/espresso_gnu_6.3.json
+    categories:
+      - quantum-mechanical
+      - modeling
+      - compiled
+      - default_version
+      - default_build
+      - default
+  - filename: espresso/espresso_intel_6.3.json
+    categories:
+      - quantum-mechanical
+      - modeling
+      - compiled
+      - default_version
+  - filename: espresso/espresso_gnu_7.4.json
+    categories:
+      - quantum-mechanical
+      - modeling
+      - compiled
+      - default_build

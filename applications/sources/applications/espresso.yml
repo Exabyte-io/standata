@@ -1,0 +1,20 @@
+name: espresso
+shortName: qe
+summary: Quantum ESPRESSO
+defaultVersion: '6.3'
+versions:
+  #### version 6.3 ####
+  - version: '6.3'
+    # This sets the default build for each version
+    isDefault: true
+    build: GNU
+    hasAdvancedComputeOptions: true
+  - version: '6.3'
+    isDefault: false
+    build: Intel
+    hasAdvancedComputeOptions: true
+  #### version 7.4 ####
+  - version: '7.4'
+    isDefault: true
+    build: GNU
+    hasAdvancedComputeOptions: true

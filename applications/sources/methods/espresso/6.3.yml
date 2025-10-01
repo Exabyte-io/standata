@@ -1,0 +1,12 @@
+# Conjugate gradient, tetrahedron method and other smearing types cannot be rendered
+# to the input file yet and are hence deactivated
+Default:
+  pw.x:
+    pw_scf:
+      - path: /qm/wf/none/pw/none
+      - path: /qm/wf/none/smearing/gaussian
+      - regex: \/qm\/wf\/none\/psp\/(nc|nc-fr|us|paw)
+      - path: /linalg/diag/none/davidson/none
+#      - regex: \/qm\/wf\/none\/tetrahedron\/.*
+#      - path: /opt/diff/ordern/cg/none
+# Some are omitted. TODO: add all methods

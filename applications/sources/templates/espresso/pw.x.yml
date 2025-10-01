@@ -1,0 +1,17 @@
+- content: !readFile 'assets/espresso/pw_scf.j2.in'
+  name: pw_scf.in
+  contextProviders:
+    - name: KGridFormDataManager
+    - name: QEPWXInputDataManager
+    - name: PlanewaveCutoffDataManager
+  applicationName: espresso
+  executableName: pw.x
+# Some are omitted. TODO: add all templates
+- content: !readFile 'assets/espresso/pw_vc_relax.j2.in'
+  name: pw_vc_relax.in
+  contextProviders:
+    - name: KGridFormDataManager
+    - name: QEPWXInputDataManager
+    - name: PlanewaveCutoffDataManager
+  applicationName: espresso
+  executableName: pw.x
