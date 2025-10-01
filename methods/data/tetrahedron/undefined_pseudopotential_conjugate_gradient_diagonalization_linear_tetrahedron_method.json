@@ -2,15 +2,16 @@
   "units": [
     {
       "categories": {
+        "subtype": "linear",
         "tier1": "qm",
         "tier2": "wf",
-        "type": "pw"
+        "type": "tetrahedron"
       },
       "tags": [
-        "plane wave"
+        "occupation number"
       ],
-      "name": "Wave function: Plane wave",
-      "path": "/qm/wf/none/pw/none"
+      "name": "Linear Tetrahedron Method",
+      "path": "/qm/wf/none/tetrahedron/linear"
     },
     {
       "categories": {
@@ -27,18 +28,17 @@
     },
     {
       "categories": {
-        "subtype": "linear",
         "tier1": "qm",
         "tier2": "wf",
-        "type": "tetrahedron"
+        "type": "pw"
       },
       "tags": [
-        "occupation number"
+        "plane wave"
       ],
-      "name": "Linear Tetrahedron Method",
-      "path": "/qm/wf/none/tetrahedron/linear"
+      "name": "Wave function: Plane wave",
+      "path": "/qm/wf/none/pw/none"
     }
   ],
-  "name": " linear Pseudopotential (Conjugate Gradient Diagonalization,  Smearing)",
-  "path": "/qm/wf/none/pw/none::/opt/diff/ordern/cg/none::/qm/wf/none/tetrahedron/linear"
+  "name": " undefined Pseudopotential (Conjugate Gradient Diagonalization, Linear Tetrahedron Method)",
+  "path": "/qm/wf/none/tetrahedron/linear::/opt/diff/ordern/cg/none::/qm/wf/none/pw/none"
 }

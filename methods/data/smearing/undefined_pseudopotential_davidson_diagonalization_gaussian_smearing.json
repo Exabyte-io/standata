@@ -2,15 +2,16 @@
   "units": [
     {
       "categories": {
+        "subtype": "gaussian",
         "tier1": "qm",
         "tier2": "wf",
-        "type": "pw"
+        "type": "smearing"
       },
       "tags": [
-        "plane wave"
+        "occupation number"
       ],
-      "name": "Wave function: Plane wave",
-      "path": "/qm/wf/none/pw/none"
+      "name": "Gaussian Smearing",
+      "path": "/qm/wf/none/smearing/gaussian"
     },
     {
       "categories": {
@@ -26,18 +27,17 @@
     },
     {
       "categories": {
-        "subtype": "methfessel-paxton",
         "tier1": "qm",
         "tier2": "wf",
-        "type": "smearing"
+        "type": "pw"
       },
       "tags": [
-        "occupation number"
+        "plane wave"
       ],
-      "name": "Methfessel-Paxton Smearing",
-      "path": "/qm/wf/none/smearing/methfessel-paxton"
+      "name": "Wave function: Plane wave",
+      "path": "/qm/wf/none/pw/none"
     }
   ],
-  "name": " methfessel-paxton Pseudopotential (Davidson Diagonalization,  Smearing)",
-  "path": "/qm/wf/none/pw/none::/linalg/diag/none/davidson/none::/qm/wf/none/smearing/methfessel-paxton"
+  "name": " undefined Pseudopotential (Davidson Diagonalization, Gaussian Smearing)",
+  "path": "/qm/wf/none/smearing/gaussian::/linalg/diag/none/davidson/none::/qm/wf/none/pw/none"
 }
