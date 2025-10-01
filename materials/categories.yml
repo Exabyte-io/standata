@@ -43,26 +43,26 @@ categories:
     - carbide
 
 entities:
-  - filename: C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-3993].json
+  - filename: C-[Graphene]-HEX_[P6_mmm]_2D_[Monolayer]-[2dm-3993].json
     categories:
       - 2D
       - layer
       - semi-metal
       - non-magnetic
-  - filename: C-[Graphite]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-48].json
+  - filename: C-[Graphite]-HEX_[P6_3_mmc]_3D_[Bulk]-[mp-48].json
     categories:
       - 3D
       - bulk
       - semi-metal
       - non-magnetic
       - battery/energy storage
-  - filename: BN-[Hexagonal_Boron_Nitride]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-4991].json
+  - filename: BN-[Hexagonal_Boron_Nitride]-HEX_[P6_mmm]_2D_[Monolayer]-[2dm-4991].json
     categories:
       - 2D
       - layer
       - insulator
       - non-magnetic
-  - filename: BN-[Boron_Nitride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-7991].json
+  - filename: BN-[Boron_Nitride]-HEX_[P6_3_mmc]_3D_[Bulk]-[mp-7991].json
     categories:
       - 3D
       - bulk
@@ -86,7 +86,7 @@ entities:
       - layer
       - semiconductor
       - non-magnetic
-  - filename: WS2-[Tungsten_Disulfide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-224].json
+  - filename: WS2-[Tungsten_Disulfide]-HEX_[P6_3_mmc]_3D_[Bulk]-[mp-224].json
     categories:
       - 3D
       - bulk
@@ -140,42 +140,42 @@ entities:
       - non-magnetic
       - oxide
       - glass
-  - filename: ZrO2-[Zirconium_Dioxide]-MCL_[P2_1%2Fc]_3D_[Bulk]-[mp-2858].json
+  - filename: ZrO2-[Zirconium_Dioxide]-MCL_[P2_1_c]_3D_[Bulk]-[mp-2858].json
     categories:
       - 3D
       - bulk
       - insulator
       - non-magnetic
       - oxide
-  - filename: HfO2-[Hafnium_IV_Oxide]-MCL_[P2_1%2Fc]_3D_[Bulk]-[mp-352].json
+  - filename: HfO2-[Hafnium_IV_Oxide]-MCL_[P2_1_c]_3D_[Bulk]-[mp-352].json
     categories:
       - 3D
       - bulk
       - insulator
       - non-magnetic
       - oxide
-  - filename: Y2O3-[Yttrium_III_Oxide]-MCLC_[C2%2Fm]_3D_[Bulk]-[mp-558573].json
+  - filename: Y2O3-[Yttrium_III_Oxide]-MCLC_[C2_m]_3D_[Bulk]-[mp-558573].json
     categories:
       - 3D
       - bulk
       - insulator
       - non-magnetic
       - oxide
-  - filename: VO2-[Vanadium_IV_Oxide]-TET_[P4_2%2Fmnm]_3D_[Bulk]-[mp-19094].json
+  - filename: VO2-[Vanadium_IV_Oxide]-TET_[P4_2_mnm]_3D_[Bulk]-[mp-19094].json
     categories:
       - 3D
       - bulk
       - semiconductor
       - ferromagnetic
       - oxide
-  - filename: TiO2-[Titanium_Oxide]-TET_[P4_2%2Fmnm]_3D_[Bulk]-[mp-2657].json
+  - filename: TiO2-[Titanium_Oxide]-TET_[P4_2_mnm]_3D_[Bulk]-[mp-2657].json
     categories:
       - 3D
       - bulk
       - insulator
       - non-magnetic
       - oxide
-  - filename: MoS2-[Molybdenum_Disulfide]-HEX_[P_3%2Fmmc]_3D_[Bulk]-[mp-2815].json
+  - filename: MoS2-[Molybdenum_Disulfide]-HEX_[P_3_mmc]_3D_[Bulk]-[mp-2815].json
     categories:
       - 3D
       - bulk
@@ -187,7 +187,7 @@ entities:
       - layer
       - semiconductor
       - non-magnetic
-  - filename: Te2Mo-[Molybdenum_Telluride]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-602].json
+  - filename: Te2Mo-[Molybdenum_Telluride]-HEX_[P6_3_mmc]_3D_[Bulk]-[mp-602].json
     categories:
       - 3D
       - bulk
@@ -199,7 +199,7 @@ entities:
       - layer
       - semiconductor
       - non-magnetic
-  - filename: WSe2-[Tungsten_Diselenide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-1821].json
+  - filename: WSe2-[Tungsten_Diselenide]-HEX_[P6_3_mmc]_3D_[Bulk]-[mp-1821].json
     categories:
       - 3D
       - bulk
@@ -280,13 +280,13 @@ entities:
       - layer
       - semiconductor
       - non-magnetic
-  - filename: NbS2-[Niobium_Disulfide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-10033].json
+  - filename: NbS2-[Niobium_Disulfide]-HEX_[P6_3_mmc]_3D_[Bulk]-[mp-10033].json
     categories:
       - 3D
       - bulk
       - semiconductor
       - ferromagnetic
-  - filename: NbSe2-[Niobium_Diselenide]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-2207].json
+  - filename: NbSe2-[Niobium_Diselenide]-HEX_[P6_3_mmc]_3D_[Bulk]-[mp-2207].json
     categories:
       - 3D
       - bulk
@@ -306,7 +306,7 @@ entities:
       - insulator
       - non-magnetic
       - oxide
-  - filename: SnO-[Tin_Oxide]-TET_[P4%2Fnmm]_3D_[Bulk]-[mp-2097].json
+  - filename: SnO-[Tin_Oxide]-TET_[P4_nmm]_3D_[Bulk]-[mp-2097].json
     categories:
       - 3D
       - bulk
