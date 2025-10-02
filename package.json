@@ -28,10 +28,8 @@
     },
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",
-        "@exabyte-io/wode.js": "git+https://github.com/Exabyte-io/wode.js.git#1cfd43741aac0188df1874699db0ec44142bc0d2",
-        "@exabyte-io/mode.js":  "git+https://github.com/Exabyte-io/mode.js.git#e8137cefc3651b102f71fbae2bda1dbefce1209e",
+        "@mat3ra/wode" : "2025.10.1-0",
         "@mat3ra/utils": "2025.9.20-0",
-        "@mat3ra/ade": "^2025.10.2-1",
         "@mat3ra/code": "^2025.8.7-0",
         "@mat3ra/tsconfig": "^2024.6.3-0",
         "@mat3ra/esse": "^2025.8.20-0",
