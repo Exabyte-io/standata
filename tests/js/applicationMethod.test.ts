@@ -64,10 +64,15 @@ describe("Application Method Standata", () => {
         const sampleModel = categorizedModelList[0];
 
         // Step 1: Filter methods by model (like in webapp)
-        const filteredMethods = filterMethodsByModel({
+        const filteredMethods = methodStandata.findByApplicationParameters({
             methodList: categorizedMethodList,
-            model: sampleModel,
+            name: sampleModel.name,
+            version: sampleModel.version,
+            build: sampleModel.build,
+            executable: sampleModel.executable,
+            flavor: sampleModel.flavor,
         });
+
 
         expect(filteredMethods).to.be.an("array");
 
