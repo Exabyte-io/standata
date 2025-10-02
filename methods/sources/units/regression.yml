@@ -1,0 +1,38 @@
+#
+# Regression Unit
+# (ExabyteML legacy)
+#
+!combine
+name:
+  template: '{{ categories.type | title }} {{ categories.subtype }} regression'
+  substitutions:
+    kernel_ridge: kernel ridge
+    least_squares: least squares
+forEach:
+  - !parameter
+    key: categories.subtype
+    values: [least_squares, ridge]
+config:
+  categories:
+    type: linear
+  tags:
+    - exabyteML
+  # need to use base schema here as regression schema requires data and
+  # precision properties (not available here)
+  schema: !esse 'method/unit-method'
+extraConfigs: !combine
+  name:
+    template: '{{ categories.type | title }} {{ categories.subtype }} regression'
+    substitutions:
+      kernel_ridge: kernel ridge
+      least_squares: least squares
+  config:
+    categories:
+      type: kernel_ridge
+      subtype: least_squares
+    tags:
+      - exabyteML
+    # need to use base schema here as regression schema requires data and
+    # precision properties (not available here)
+    schema: !esse 'method/unit-method'
+
