@@ -1,0 +1,39 @@
+!combine
+name:
+  template: '{{ categories.subtype }} Smearing'
+  substitutions:
+    gaussian: Gaussian
+    marzari-vanderbilt: Marzari-Vanderbilt
+    methfessel-paxton: Methfessel-Paxton
+    fermi-dirac: Fermi-Dirac
+forEach:
+  - !parameter
+    key: categories.subtype
+    # TODO: Add more
+    values:
+      - gaussian
+config:
+  categories:
+    tier1: qm
+    tier2: wf
+    type: smearing
+  tags:
+    - occupation number
+  schema: !esse 'methods-directory/physical/smearing'
+extraConfigs: !combine
+  name:
+    template: '{{ categories.subtype | title }} Tetrahedron Method'
+  forEach:
+    - !parameter
+      key: categories.subtype
+      # TODO: add more
+      values:
+        - linear
+  config:
+    categories:
+      tier1: qm
+      tier2: wf
+      type: tetrahedron
+    tags:
+      - occupation number
+    schema: !esse 'methods-directory/physical/tetrahedron'

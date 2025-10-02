@@ -8,7 +8,7 @@ const {
     Subworkflow,
     builders,
     UnitFactory,
-} = require("@exabyte-io/wode.js");
+} = require("@mat3ra/wode");
 
 const applications = ["espresso"];
 const BASE_PATH = "..";

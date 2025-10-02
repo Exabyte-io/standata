@@ -1,16 +1,16 @@
-// @ts-ignore - No type definitions available for @exabyte-io/mode.js
-import { categorizedMethodList, categorizedModelList } from "@exabyte-io/mode.js/dist";
-// @ts-ignore - No type definitions available for @exabyte-io/mode.js
-import { filterMethodsByModel } from "@exabyte-io/mode.js/dist/tree";
 import { expect } from "chai";
 
-import { ApplicationMethodStandata } from "../../src/js";
+import { ApplicationMethodStandata, MethodStandata, ModelStandata } from "../../src/js";
 
 describe("Application Method Standata", () => {
     let methodStandata: ApplicationMethodStandata;
+    let categorizedMethodList: any[];
+    let categorizedModelList: any[]
 
     beforeEach(() => {
         methodStandata = new ApplicationMethodStandata();
+        categorizedMethodList = new MethodStandata().getAll();
+        categorizedModelList = new ModelStandata().getAll();
     });
 
     it("can get available methods for an application", () => {
@@ -64,10 +64,15 @@ describe("Application Method Standata", () => {
         const sampleModel = categorizedModelList[0];
 
         // Step 1: Filter methods by model (like in webapp)
-        const filteredMethods = filterMethodsByModel({
+        const filteredMethods = methodStandata.findByApplicationParameters({
             methodList: categorizedMethodList,
-            model: sampleModel,
+            name: sampleModel.name,
+            version: sampleModel.version,
+            build: sampleModel.build,
+            executable: sampleModel.executable,
+            flavor: sampleModel.flavor,
         });
+
 
         expect(filteredMethods).to.be.an("array");
 
