@@ -226,4 +226,3 @@ class MethodsCategoriesBuilder {
 
 const builder = new MethodsCategoriesBuilder(CONFIG);
 builder.build();
-

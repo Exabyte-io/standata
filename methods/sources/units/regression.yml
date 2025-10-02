@@ -35,4 +35,3 @@ extraConfigs: !combine
     # need to use base schema here as regression schema requires data and
     # precision properties (not available here)
     schema: !esse 'method/unit-method'
-
