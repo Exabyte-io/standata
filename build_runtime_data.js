@@ -57,6 +57,14 @@ buildAsset({
     targetPath: `${runtimeDataDir}/applications.json`,
 });
 buildAsset({
+    assetPath: BUILD_CONFIG.categories.models,
+    targetPath: `${runtimeDataDir}/models.json`,
+});
+buildAsset({
+    assetPath: BUILD_CONFIG.categories.methods,
+    targetPath: `${runtimeDataDir}/methods.json`,
+});
+buildAsset({
     assetPath: BUILD_CONFIG.categories.workflows,
     targetPath: `${runtimeDataDir}/workflows.json`,
 });
@@ -101,6 +109,11 @@ copyJsonAsset({
     targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.applicationVersionsMapByApplication}`,
 });
 
+copyJsonAsset({
+    sourcePath: "./models/data/modelMethodMap.json",
+    targetPath: `${runtimeDataDir}/modelMethodMap.json`,
+});
+
 // Py Modules
 
 buildAsset({
@@ -120,6 +133,18 @@ buildAsset({
     targetPath: "./src/py/mat3ra/standata/data/applications.py",
     contentGenerator: (content) =>
         `import json\n\napplications_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
+});
+buildAsset({
+    assetPath: BUILD_CONFIG.categories.models,
+    targetPath: "./src/py/mat3ra/standata/data/models.py",
+    contentGenerator: (content) =>
+        `import json\n\nmodels_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
+});
+buildAsset({
+    assetPath: BUILD_CONFIG.categories.methods,
+    targetPath: "./src/py/mat3ra/standata/data/methods.py",
+    contentGenerator: (content) =>
+        `import json\n\nmethods_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
     assetPath: BUILD_CONFIG.categories.workflows,

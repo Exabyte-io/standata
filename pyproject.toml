@@ -85,6 +85,8 @@ extend-exclude = [
     "src/py/mat3ra/standata/data/subworkflows.py",
     "src/py/mat3ra/standata/data/applications.py",
     "src/py/mat3ra/standata/data/properties.py",
+    "src/py/mat3ra/standata/data/models.py",
+    "src/py/mat3ra/standata/data/methods.py",
     "tests/js",
 ]
 line-length = 120

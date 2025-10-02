@@ -1,0 +1,169 @@
+[
+  {
+    "modelCategories": {
+      "tier1": "pb",
+      "tier2": "qm",
+      "tier3": "dft",
+      "type": "ksdft",
+      "subtype": "lda"
+    },
+    "filterRules": [
+      {
+        "path": "/qm/wf/none/pw/none"
+      },
+      {
+        "regex": "/qm/wf/none/psp/.*"
+      },
+      {
+        "regex": "/qm/wf/none/smearing/.*"
+      },
+      {
+        "regex": "/qm/wf/none/tetrahedron/.*"
+      },
+      {
+        "path": "/opt/diff/ordern/cg/none"
+      },
+      {
+        "path": "/linalg/diag/none/davidson/none"
+      }
+    ]
+  },
+  {
+    "modelCategories": {
+      "tier1": "pb",
+      "tier2": "qm",
+      "tier3": "dft",
+      "type": "ksdft",
+      "subtype": "gga"
+    },
+    "filterRules": [
+      {
+        "path": "/qm/wf/none/pw/none"
+      },
+      {
+        "regex": "/qm/wf/none/psp/.*"
+      },
+      {
+        "regex": "/qm/wf/none/smearing/.*"
+      },
+      {
+        "regex": "/qm/wf/none/tetrahedron/.*"
+      },
+      {
+        "path": "/opt/diff/ordern/cg/none"
+      },
+      {
+        "path": "/linalg/diag/none/davidson/none"
+      }
+    ]
+  },
+  {
+    "modelCategories": {
+      "tier1": "pb",
+      "tier2": "qm",
+      "tier3": "dft",
+      "type": "ksdft",
+      "subtype": "hybrid"
+    },
+    "filterRules": [
+      {
+        "path": "/qm/wf/none/pw/none"
+      },
+      {
+        "regex": "/qm/wf/none/psp/.*"
+      },
+      {
+        "regex": "/qm/wf/none/smearing/.*"
+      },
+      {
+        "regex": "/qm/wf/none/tetrahedron/.*"
+      },
+      {
+        "path": "/opt/diff/ordern/cg/none"
+      },
+      {
+        "path": "/linalg/diag/none/davidson/none"
+      },
+      {
+        "regex": "/qm/wf/none/ao/pople.*"
+      }
+    ]
+  },
+  {
+    "modelCategories": {
+      "tier1": "pb",
+      "tier2": "qm",
+      "tier3": "abin",
+      "type": "gw"
+    },
+    "filterRules": [
+      {
+        "path": "/qm/wf/none/pw/none"
+      },
+      {
+        "regex": "/qm/wf/none/psp/.*"
+      },
+      {
+        "regex": "/qm/wf/none/smearing/.*"
+      },
+      {
+        "regex": "/qm/wf/none/tetrahedron/.*"
+      },
+      {
+        "path": "/opt/diff/ordern/cg/none"
+      },
+      {
+        "path": "/linalg/diag/none/davidson/none"
+      }
+    ]
+  },
+  {
+    "modelCategories": {
+      "tier1": "st",
+      "tier2": "det",
+      "tier3": "ml",
+      "type": "re"
+    },
+    "filterRules": [
+      {
+        "path": "/none/none/none/linear/least_squares"
+      },
+      {
+        "path": "/none/none/none/linear/ridge"
+      },
+      {
+        "path": "/none/none/none/kernel_ridge/least_squares"
+      }
+    ]
+  },
+  {
+    "modelCategories": {
+      "tier1": "pb",
+      "tier2": "qm",
+      "tier3": "dft"
+    },
+    "filterRules": [
+      {
+        "path": "/qm/wf/none/pw/none"
+      },
+      {
+        "regex": "/qm/wf/none/psp/.*"
+      }
+    ]
+  },
+  {
+    "modelCategories": {
+      "tier1": "st",
+      "tier2": "det",
+      "tier3": "ml"
+    },
+    "filterRules": [
+      {
+        "regex": "/.*/.*/.*/linear/.*"
+      },
+      {
+        "regex": "/.*/.*/.*/kernel.*/.*"
+      }
+    ]
+  }
+]
