@@ -1,3 +1,16 @@
+# WARNING: This file is partially auto-generated
+#
+# Auto-extracted categories (regenerated): application, property, material_count
+# Manual categories (preserved): workflow_type
+#
+# To regenerate auto-extracted categories, run:
+#   npm run build:workflows:categories
+#
+# Manual categories and per-entity manual categories will be preserved.
+# To add new manual category types, mark them with !manually_added tag in YAML:
+#   workflow_type: !manually_added
+#     - value1
+#     - value2
 categories:
   application:
     - espresso
@@ -12,32 +25,31 @@ categories:
     - total_force
   material_count:
     - single-material
-    - multi-material
-  workflow_type:
+  workflow_type: !manually_added
     - variable-cell_relaxation
     - default
 entities:
   - filename: espresso/total_energy.json
     categories:
-      - espresso
       - atomic_forces
+      - default
+      - espresso
       - fermi_energy
       - pressure
+      - single-material
       - stress_tensor
       - total_energy
       - total_energy_contributions
       - total_force
-      - single-material
-      - default
   - filename: espresso/variable_cell_relaxation.json
     categories:
-      - espresso
-      - total_energy
-      - fermi_energy
-      - pressure
       - atomic_forces
-      - total_force
-      - stress_tensor
+      - espresso
+      - fermi_energy
       - final_structure
+      - pressure
       - single-material
+      - stress_tensor
+      - total_energy
+      - total_force
       - variable-cell_relaxation
