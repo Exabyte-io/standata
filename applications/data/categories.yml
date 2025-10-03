@@ -1,26 +1,23 @@
-# WARNING: This file is partially auto-generated
+# WARNING: This file is managed manually
 #
-# Auto-extracted categories (regenerated): model, language_type, purpose, defaults
-# Manual categories (preserved): defaults
-#
-# To regenerate auto-extracted categories, run:
+# To regenerate the entities list, run:
 #   npm run build:applications:categories
 #
-# Manual categories will be preserved if marked with !manually_added tag in YAML:
-#   my_category: !manually_added
-#     - value1
-#     - value2
+# All categories that need to be added manually should be marked with !manually_added tag:
+#   model: !manually_added
+#     - quantum-mechanical
+#     - atomistic
 categories:
-  model:
+  model: !manually_added
     - atomistic
     - macroscopic
     - mesoscopic
     - quantum-mechanical
     - statistical
-  language_type:
+  language_type: !manually_added
     - scripting
     - compiled
-  purpose:
+  purpose: !manually_added
     - modeling
     - programming_language
   defaults: !manually_added
