@@ -1,17 +1,26 @@
+# WARNING: This file is managed manually
+#
+# To regenerate the entities list, run:
+#   npm run build:applications:categories
+#
+# All categories that need to be added manually should be marked with !manually_added tag:
+#   model: !manually_added
+#     - quantum-mechanical
+#     - atomistic
 categories:
-  model:
+  model: !manually_added
     - atomistic
     - macroscopic
     - mesoscopic
     - quantum-mechanical
     - statistical
-  language_type:
+  language_type: !manually_added
     - scripting
     - compiled
-  purpose:
+  purpose: !manually_added
     - modeling
     - programming_language
-  defaults:
+  defaults: !manually_added
     - default_version
     - default_build
     - default
