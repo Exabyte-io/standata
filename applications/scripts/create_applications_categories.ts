@@ -46,29 +46,7 @@ class ApplicationCategoriesBuilder {
         this.manualCategoryKeys = new Set();
     }
 
-    private extractCategoriesFromApp(): string[] {
-        // No auto-extraction for now
-        // All categories are manually added to categories.yml
-        return [];
-    }
-
-    private processJsonFile(filePath: string, relativePath: string): void {
-        try {
-            const content = fs.readFileSync(filePath, "utf-8");
-            JSON.parse(content); // Validate JSON
-
-            const categories = this.extractCategoriesFromApp();
-
-            this.entities.push({
-                filename: relativePath,
-                categories,
-            });
-        } catch (error: any) {
-            console.warn(`Warning: Could not process ${relativePath}: ${error.message}`);
-        }
-    }
-
-    private scanJsonFiles(): void {
+    private scanJsonFiles(existingEntities: Map<string, string[]>): void {
         const walk = (dir: string) => {
             const files = fs.readdirSync(dir);
             files.forEach((file) => {
@@ -77,7 +55,12 @@ class ApplicationCategoriesBuilder {
                     walk(fullPath);
                 } else if (file.endsWith(".json")) {
                     const relativePath = path.relative(CONFIG.dataPath, fullPath);
-                    this.processJsonFile(fullPath, relativePath);
+                    // Preserve existing categories if they exist
+                    const existingCategories = existingEntities.get(relativePath) || [];
+                    this.entities.push({
+                        filename: relativePath,
+                        categories: existingCategories,
+                    });
                 }
             });
         };
@@ -176,9 +159,17 @@ class ApplicationCategoriesBuilder {
     public build(): void {
         console.log("\nBuilding application categories...\n");
 
-        this.scanJsonFiles();
-
         const existingYaml = this.readExistingCategories();
+
+        // Create a map of existing entity categories
+        const existingEntities = new Map<string, string[]>();
+        if (existingYaml && existingYaml.entities) {
+            existingYaml.entities.forEach((entity: EntityData) => {
+                existingEntities.set(entity.filename, entity.categories);
+            });
+        }
+
+        this.scanJsonFiles(existingEntities);
 
         const generatedYaml = {
             categories: {},

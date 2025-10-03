@@ -1,31 +1,53 @@
 # WARNING: This file is managed manually
 #
+# All categories are manually added and preserved
+# Manual categories: model, language_type, purpose, defaults
+#
 # To regenerate the entities list, run:
 #   npm run build:applications:categories
 #
-# All categories that need to be added manually should be marked with !manually_added tag:
+# All categories should be marked with !manually_added tag:
 #   model: !manually_added
 #     - quantum-mechanical
 #     - atomistic
 categories:
-  model: !manually_added
+  model: !manually_added 
     - atomistic
     - macroscopic
     - mesoscopic
     - quantum-mechanical
     - statistical
-  language_type: !manually_added
+  language_type: !manually_added 
     - scripting
     - compiled
-  purpose: !manually_added
+  purpose: !manually_added 
     - modeling
     - programming_language
-  defaults: !manually_added
+  defaults: !manually_added 
     - default_version
     - default_build
     - default
-
 entities:
+  - filename: deepmd/deepmd_2.0.2.json
+    categories: []
+  - filename: deepmd/deepmd_default_2.0.2.json
+    categories: []
+  - filename: espresso/espresso_6.4.1.json
+    categories: []
+  - filename: espresso/espresso_6.5.0.json
+    categories: []
+  - filename: espresso/espresso_6.6.0.json
+    categories: []
+  - filename: espresso/espresso_6.7.0.json
+    categories: []
+  - filename: espresso/espresso_6.8.0.json
+    categories: []
+  - filename: espresso/espresso_7.0.json
+    categories: []
+  - filename: espresso/espresso_7.2.json
+    categories: []
+  - filename: espresso/espresso_7.3.json
+    categories: []
   - filename: espresso/espresso_gnu_6.3.json
     categories:
       - quantum-mechanical
@@ -34,15 +56,119 @@ entities:
       - default_version
       - default_build
       - default
-  - filename: espresso/espresso_intel_6.3.json
-    categories:
-      - quantum-mechanical
-      - modeling
-      - compiled
-      - default_version
+  - filename: espresso/espresso_gnu_6.4.1.json
+    categories: []
+  - filename: espresso/espresso_gnu_6.5.0.json
+    categories: []
+  - filename: espresso/espresso_gnu_6.6.0.json
+    categories: []
+  - filename: espresso/espresso_gnu_6.7.0.json
+    categories: []
+  - filename: espresso/espresso_gnu_6.8.0.json
+    categories: []
+  - filename: espresso/espresso_gnu_7.0.json
+    categories: []
+  - filename: espresso/espresso_gnu_7.2.json
+    categories: []
+  - filename: espresso/espresso_gnu_7.3.json
+    categories: []
   - filename: espresso/espresso_gnu_7.4.json
     categories:
       - quantum-mechanical
       - modeling
       - compiled
       - default_build
+  - filename: espresso/espresso_intel_6.3.json
+    categories:
+      - quantum-mechanical
+      - modeling
+      - compiled
+      - default_version
+  - filename: espresso/espresso_intel_6.4.1.json
+    categories: []
+  - filename: espresso/espresso_intel_6.5.0.json
+    categories: []
+  - filename: espresso/espresso_intel_6.6.0.json
+    categories: []
+  - filename: espresso/espresso_intel_6.7.0.json
+    categories: []
+  - filename: espresso/espresso_intel_6.8.0.json
+    categories: []
+  - filename: espresso/espresso_intel_7.0.json
+    categories: []
+  - filename: espresso/espresso_intel_7.2.json
+    categories: []
+  - filename: espresso/espresso_intel_7.3.json
+    categories: []
+  - filename: jupyterLab/jupyterLab_3.0.3.json
+    categories: []
+  - filename: jupyterLab/jupyterLab_4.3.0.json
+    categories: []
+  - filename: jupyterLab/jupyterLab_default_3.0.3.json
+    categories: []
+  - filename: jupyterLab/jupyterLab_default_4.3.0.json
+    categories: []
+  - filename: jupyterLab/jupyterLab_with-pre-installed-packages_3.0.3.json
+    categories: []
+  - filename: nwchem/nwchem_6.6.json
+    categories: []
+  - filename: nwchem/nwchem_7.0.2.json
+    categories: []
+  - filename: nwchem/nwchem_default_6.6.json
+    categories: []
+  - filename: nwchem/nwchem_default_7.0.2.json
+    categories: []
+  - filename: python/python_3.10.13.json
+    categories: []
+  - filename: python/python_3.11.10.json
+    categories: []
+  - filename: python/python_3.12.7.json
+    categories: []
+  - filename: python/python_3.8.6.json
+    categories: []
+  - filename: python/python_3.9.1.json
+    categories: []
+  - filename: python/python_anaconda3-2024.10.1.json
+    categories: []
+  - filename: python/python_default_3.10.13.json
+    categories: []
+  - filename: python/python_default_3.11.10.json
+    categories: []
+  - filename: python/python_default_3.12.7.json
+    categories: []
+  - filename: python/python_default_3.8.6.json
+    categories: []
+  - filename: python/python_default_3.9.1.json
+    categories: []
+  - filename: python/python_default_anaconda3-2024.10.1.json
+    categories: []
+  - filename: python/python_default_miniconda3-3.10-24.11.1-0.json
+    categories: []
+  - filename: python/python_miniconda3-3.10-24.11.1-0.json
+    categories: []
+  - filename: shell/shell_5.1.8.json
+    categories: []
+  - filename: shell/shell_default_5.1.8.json
+    categories: []
+  - filename: vasp/vasp_5.3.5.json
+    categories: []
+  - filename: vasp/vasp_5.4.4.json
+    categories: []
+  - filename: vasp/vasp_default_5.3.5.json
+    categories: []
+  - filename: vasp/vasp_default_5.4.4.json
+    categories: []
+  - filename: vasp/vasp_gamma_5.4.4.json
+    categories: []
+  - filename: vasp/vasp_non-collinear_5.3.5.json
+    categories: []
+  - filename: vasp/vasp_non-collinear_5.4.4.json
+    categories: []
+  - filename: vasp/vasp_vtst_5.3.5.json
+    categories: []
+  - filename: vasp/vasp_vtst_5.4.4.json
+    categories: []
+  - filename: vasp/vasp_vtst-gamma_5.4.4.json
+    categories: []
+  - filename: vasp/vasp_vtst-non-collinear_5.4.4.json
+    categories: []
