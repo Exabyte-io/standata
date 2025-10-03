@@ -4,7 +4,7 @@ import { ApplicationMethodParametersInterface, ModelMethodMapByApplication } fro
 
 export class ApplicationMethodStandata extends ApplicationFilterStandata {
     constructor() {
-        const data = MODEL_METHOD_DATA as ModelMethodMapByApplication;
+        const data = MODEL_METHOD_DATA as unknown as ModelMethodMapByApplication;
         super(data?.methods as any); // Cast to any for FilterTree compatibility
     }
 

@@ -1,0 +1,10 @@
+name: jupyterLab
+shortName: jl
+summary: JupyterLab
+defaultVersion: '4.3.0'
+versions:
+  - version: '4.3.0'
+    isDefault: true
+  - version: '3.0.3'
+  - version: '3.0.3'
+    build: with-pre-installed-packages
