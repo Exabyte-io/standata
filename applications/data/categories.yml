@@ -1,3 +1,15 @@
+# WARNING: This file is partially auto-generated
+#
+# Auto-extracted categories (regenerated): model, language_type, purpose, defaults
+# Manual categories (preserved): defaults
+#
+# To regenerate auto-extracted categories, run:
+#   npm run build:applications:categories
+#
+# Manual categories will be preserved if marked with !manually_added tag in YAML:
+#   my_category: !manually_added
+#     - value1
+#     - value2
 categories:
   model:
     - atomistic
@@ -11,7 +23,7 @@ categories:
   purpose:
     - modeling
     - programming_language
-  defaults:
+  defaults: !manually_added
     - default_version
     - default_build
     - default
