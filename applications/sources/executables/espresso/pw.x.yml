@@ -173,9 +173,9 @@ flavors:
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
-      - '5.2.1'
-      - '5.4.0'
-      - '6.0.0'
+#      - '5.2.1'
+#      - '5.4.0'
+#      - '6.0.0'
       - '6.3'
       - '6.4.1'
       - '6.5.0'
@@ -320,9 +320,9 @@ flavors:
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
-      - '5.2.1'
-      - '5.4.0'
-      - '6.0.0'
+#      - '5.2.1'
+#      - '5.4.0'
+#      - '6.0.0'
       - '6.3'
       - '6.4.1'
       - '6.5.0'
@@ -349,9 +349,9 @@ flavors:
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
-      - '5.2.1'
-      - '5.4.0'
-      - '6.0.0'
+#      - '5.2.1'
+#      - '5.4.0'
+#      - '6.0.0'
       - '6.3'
       - '6.4.1'
       - '6.5.0'
@@ -491,9 +491,9 @@ flavors:
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
-      - '5.2.1'
-      - '5.4.0'
-      - '6.0.0'
+#      - '5.2.1'
+#      - '5.4.0'
+#      - '6.0.0'
       - '6.3'
       - '6.4.1'
       - '6.5.0'
@@ -534,9 +534,9 @@ flavors:
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
-      - '5.2.1'
-      - '5.4.0'
-      - '6.0.0'
+#      - '5.2.1'
+#      - '5.4.0'
+#      - '6.0.0'
       - '6.3'
       - '6.4.1'
       - '6.5.0'
@@ -624,9 +624,9 @@ flavors:
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
-      - '5.2.1'
-      - '5.4.0'
-      - '6.0.0'
+#      - '5.2.1'
+#      - '5.4.0'
+#      - '6.0.0'
       - '6.3'
       - '6.4.1'
       - '6.5.0'
@@ -658,9 +658,9 @@ flavors:
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
-      - '5.2.1'
-      - '5.4.0'
-      - '6.0.0'
+#      - '5.2.1'
+#      - '5.4.0'
+#      - '6.0.0'
       - '6.3'
       - '6.4.1'
       - '6.5.0'
