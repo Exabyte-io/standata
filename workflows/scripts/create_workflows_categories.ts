@@ -10,6 +10,7 @@
  * Types are imported from src/js/types/categoryConfig.ts
  */
 
+import { JsYamlAllSchemas } from "@mat3ra/code/dist/js/utils";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
 import * as path from "path";
@@ -33,7 +34,7 @@ const ManualYamlType = new yaml.Type("!manually_added", {
     represent: (data: any) => (data as ManualType).value,
 });
 
-const MANUAL_SCHEMA = yaml.DEFAULT_SCHEMA.extend([ManualYamlType]);
+const MANUAL_SCHEMA = JsYamlAllSchemas.extend([ManualYamlType]);
 
 class WorkflowCategoriesBuilder {
     private config: CategoryConfig;
