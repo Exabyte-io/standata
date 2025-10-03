@@ -73,7 +73,7 @@ export function buildModelMethodMap(): void {
         fs.mkdirSync(targetDir, { recursive: true });
     }
 
-    fs.writeFileSync(targetFile, JSON.stringify(filterEntries, null, 2), "utf8");
+    fs.writeFileSync(targetFile, JSON.stringify(filterEntries), "utf8");
     console.log(`Generated: ${targetFile}`);
     console.log(`Model-method map built successfully with ${filterEntries.length} entries`);
 }
