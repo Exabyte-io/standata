@@ -235,12 +235,16 @@ npm run build:methods
 The model-method compatibility map is defined in `models/sources/modelMethodMap.yml`. To add compatibility rules:
 
 1. Edit `models/sources/modelMethodMap.yml`
-2. Define filter rules for model categories:
+2. Define filter rules for model categories using nested structure:
 
 ```yaml
-pb.qm.dft.ksdft.lda:
-  - path: /qm/wf/none/pw/none
-  - regex: /qm/wf/none/psp/.*
+pb:
+  qm:
+    dft:
+      ksdft:
+        lda:
+          - path: /qm/wf/none/pw/none
+          - regex: /qm/wf/none/psp/.*
 ```
 
 3. Run the build command:
