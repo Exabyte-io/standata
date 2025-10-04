@@ -1,0 +1,108 @@
+categories:
+  tier1:
+    - pb  # physics-based
+    - st  # statistical
+  tier2:
+    - qm  # quantum mechanical
+    - det # deterministic
+  tier3:
+    - dft   # density functional theory
+    - abin  # ab initio
+    - ml    # machine learning
+  type:
+    - ksdft # Kohn-Sham DFT
+    - gw    # GW approximation
+    - re    # regression
+  subtype:
+    - lda     # Local Density Approximation
+    - gga     # Generalized Gradient Approximation
+    - hybrid  # Hybrid functionals
+    - g0w0    # G0W0
+    - evgw0   # evGW0
+    - evgw    # evGW
+  functional:
+    - pz      # Perdew-Zunger
+    - pbe     # Perdew-Burke-Ernzerhof
+    - pbesol  # PBE for solids
+    - hse06   # Heyd-Scuseria-Ernzerhof
+    - b3lyp   # Becke 3-parameter Lee-Yang-Parr
+  tags:
+    - density-functional-theory
+    - quantum-mechanics
+    - electronic-structure
+    - many-body-theory
+    - machine-learning
+
+entities:
+  - filename: lda/dft_lda_pz.json
+    categories:
+      - pb
+      - qm
+      - dft
+      - ksdft
+      - lda
+      - density-functional-theory
+  - filename: lda/dft_lda_pz_collinear.json
+    categories:
+      - pb
+      - qm
+      - dft
+      - ksdft
+      - lda
+      - density-functional-theory
+  - filename: lda/dft_lda_pz_d3.json
+    categories:
+      - pb
+      - qm
+      - dft
+      - ksdft
+      - lda
+      - density-functional-theory
+  - filename: lda/dft_lda_pz_d3_collinear.json
+    categories:
+      - pb
+      - qm
+      - dft
+      - ksdft
+      - lda
+      - density-functional-theory
+  - filename: lda/dft_lda_pz_d3_soc.json
+    categories:
+      - pb
+      - qm
+      - dft
+      - ksdft
+      - lda
+      - density-functional-theory
+  - filename: lda/dft_lda_pz_soc.json
+    categories:
+      - pb
+      - qm
+      - dft
+      - ksdft
+      - lda
+      - density-functional-theory
+  - filename: lda/dft_lda_pz_u.json
+    categories:
+      - pb
+      - qm
+      - dft
+      - ksdft
+      - lda
+      - density-functional-theory
+  - filename: lda/dft_lda_pz_u_collinear.json
+    categories:
+      - pb
+      - qm
+      - dft
+      - ksdft
+      - lda
+      - density-functional-theory
+  - filename: lda/dft_lda_pz_u_soc.json
+    categories:
+      - pb
+      - qm
+      - dft
+      - ksdft
+      - lda
+      - density-functional-theory
