@@ -7,7 +7,7 @@ import { ApplicationFilterStandata } from "./utils/applicationFilter";
 
 export class ApplicationModelStandata extends ApplicationFilterStandata {
     constructor() {
-        const data = MODEL_METHOD_DATA as ModelMethodMapByApplication;
+        const data = MODEL_METHOD_DATA as unknown as ModelMethodMapByApplication;
         super(data?.models as any);
     }
 

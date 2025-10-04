@@ -70,7 +70,7 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
     // eslint-disable-next-line class-methods-use-this
     getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[] {
         // TODO: Convert to use this.findEntitiesByTags() when template data is in Standata format
-        const templates = TEMPLATES_LIST;
+        const templates = TEMPLATES_LIST as TemplateSchema[];
         const filtered = templates.filter((template) => {
             const matchesApp = template.applicationName === appName;
             const matchesExec = template.executableName === execName;
