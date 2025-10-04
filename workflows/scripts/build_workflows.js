@@ -10,8 +10,19 @@ const {
     UnitFactory,
 } = require("@mat3ra/wode");
 
-const applications = ["espresso"];
 const BASE_PATH = "..";
+
+// Read applications dynamically from application_data.yml
+const appDataPath = path.resolve(
+    __dirname,
+    "../..",
+    "applications/sources/applications/application_data.yml",
+);
+const applications = fs
+    .readFileSync(appDataPath, "utf8")
+    .split("\n")
+    .map((line) => line.split(":")[0].trim())
+    .filter((name) => name && !name.startsWith("#"));
 
 const workflowSubforkflowMapByApplication = { workflows: {}, subworkflows: {} };
 
@@ -65,13 +76,15 @@ applications.forEach((name) => {
     const wfDir = path.resolve(sourcesRoot, "workflows", name);
     const swDir = path.resolve(sourcesRoot, "subworkflows", name);
 
-    const wfFiles = fs.readdirSync(wfDir);
-    console.log(`Building ${name}: ${wfFiles.length} workflow(s)`);
-    wfFiles.forEach((file) => loadYamlIntoCollection(name, wfDir, file, "workflows"));
+    if (fs.existsSync(wfDir)) {
+        const wfFiles = fs.readdirSync(wfDir);
+        wfFiles.forEach((file) => loadYamlIntoCollection(name, wfDir, file, "workflows"));
+    }
 
-    const swFiles = fs.readdirSync(swDir);
-    console.log(`Building ${name}: ${swFiles.length} subworkflow(s)`);
-    swFiles.forEach((file) => loadYamlIntoCollection(name, swDir, file, "subworkflows"));
+    if (fs.existsSync(swDir)) {
+        const swFiles = fs.readdirSync(swDir);
+        swFiles.forEach((file) => loadYamlIntoCollection(name, swDir, file, "subworkflows"));
+    }
 });
 
 // Save the workflow and subworkflow map for usage in Wode or elsewhere
@@ -100,44 +113,53 @@ UnitFactory.ConditionUnit.usePredefinedIds = true;
 UnitFactory.MapUnit.usePredefinedIds = true;
 UnitFactory.ProcessingUnit.usePredefinedIds = true;
 
-// Generate workflows
-const workflowConfigs = createWorkflowConfigs({
-    applications,
-    WorkflowCls,
-    workflowSubforkflowMapByApplication,
-    SubworkflowCls,
-    UnitFactoryCls: UnitFactory,
-    unitBuilders: {
-        ...builders,
-        Workflow: WorkflowCls,
-    },
+// Generate workflows with error handling per application
+const workflowItems = [];
+applications.forEach((appName) => {
+    try {
+        const workflowConfigs = createWorkflowConfigs({
+            applications: [appName],
+            WorkflowCls,
+            workflowSubforkflowMapByApplication,
+            SubworkflowCls,
+            UnitFactoryCls: UnitFactory,
+            unitBuilders: { ...builders, Workflow: WorkflowCls },
+        });
+        workflowItems.push(
+            ...workflowConfigs.map((config) => ({
+                appName: config.application,
+                name: config.name.toLowerCase().replace(/[^a-z0-9]/g, "_"),
+                config: config.config,
+            })),
+        );
+    } catch (error) {
+        console.error(`\n✗ ERROR: Failed to generate workflows for ${appName}:`, error.message);
+    }
 });
-const workflowItems = workflowConfigs.map((config) => ({
-    appName: config.application,
-    name: config.name.toLowerCase().replace(/[^a-z0-9]/g, "_"),
-    config: config.config,
-}));
 
 generateConfigFiles(workflowItems, "workflow");
 
-// Generate subworkflows
+// Generate subworkflows with error handling per subworkflow
 const subworkflowItems = [];
 applications.forEach((appName) => {
     const subworkflows = workflowSubforkflowMapByApplication.subworkflows[appName];
-    if (!subworkflows) return;
+    if (!subworkflows || Object.keys(subworkflows).length === 0) return;
 
     Object.keys(subworkflows).forEach((subworkflowName) => {
-        const subworkflow = createSubworkflowByName({
-            appName,
-            swfName: subworkflowName,
-            workflowsData: workflowSubforkflowMapByApplication,
-        });
-
-        subworkflowItems.push({
-            appName,
-            name: subworkflowName,
-            config: subworkflow.toJSON(),
-        });
+        try {
+            const subworkflow = createSubworkflowByName({
+                appName,
+                swfName: subworkflowName,
+                workflowSubworkflowMapByApplication: workflowSubforkflowMapByApplication,
+            });
+            subworkflowItems.push({
+                appName,
+                name: subworkflowName,
+                config: subworkflow.toJSON(),
+            });
+        } catch (error) {
+            console.error(`\n❌ ERROR: Failed ${appName}/${subworkflowName}:`, error.message);
+        }
     });
 });
 

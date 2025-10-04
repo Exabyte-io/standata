@@ -9,6 +9,7 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const BUILD_CONFIG = require("./build-config");
+const { StandataYamlSchema } = require("./dist/js/utils/yamlSchemas");
 
 function buildAsset({
     assetPath,
@@ -17,7 +18,7 @@ function buildAsset({
 }) {
     const fileContent = fs.readFileSync(assetPath, { encoding: "utf-8" });
     const obj = {};
-    obj.standataConfig = yaml.load(fileContent);
+    obj.standataConfig = yaml.load(fileContent, { schema: StandataYamlSchema });
 
     obj.filesMapByName = {};
 
