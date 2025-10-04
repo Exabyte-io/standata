@@ -1,1 +1,1 @@
-{"name":"espresso","shortName":"qe","summary":"Quantum Espresso","version":"7.4.1","isDefault":true,"build":"Intel","hasAdvancedComputeOptions":true}
+{"name":"espresso","shortName":"qe","summary":"Quantum ESPRESSO","version":"7.4.1","isDefault":true,"build":"Intel","hasAdvancedComputeOptions":true}
