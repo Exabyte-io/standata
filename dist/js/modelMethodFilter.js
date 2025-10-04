@@ -34,7 +34,6 @@ class ModelMethodFilter {
             (!filterCategories.subtype || modelCategories.subtype === filterCategories.subtype));
     }
     isMethodCompatible(method, filterRules) {
-        // Check if ALL units in the method match SOME filter rule
         return method.units.every((unit) => filterRules.some((rule) => this.isUnitMatchingRule(unit, rule)));
     }
     // eslint-disable-next-line class-methods-use-this

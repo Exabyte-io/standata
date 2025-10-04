@@ -163,4 +163,139 @@ Brackets: Wrap common name and identifier parts in square brackets `[]`.
 - C-[Graphite]-HEX_[P6_3%2Fmmc]_3D_[Bulk]-[mp-48]
 - C-[Graphene]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[mp-1040425]
 
+### 4.3. Adding New Entities (Models, Methods, Applications, Workflows)
+
+Entity definitions (models, methods, applications, workflows) are compiled from YAML source files using custom YAML types such as `!combine` to generate multiple entity configurations from a single definition.
+Source files are located in `{entity-type}/sources/` directories, and build scripts generate JSON files in corresponding `{entity-type}/data/` directories.
+
+#### 4.3.1. Models
+
+Models are defined in `models/sources/` directory. To add a new model:
+
+1. Create or edit a YAML file in `models/sources/` (e.g., `models/sources/lda.yml`)
+2. Use the `!combine` type to generate model configurations:
+
+```yaml
+modelConfigs: !combine
+  name:
+    template: 'DFT {{ categories.subtype | upper }} {{ parameters.functional }}'
+  forEach:
+    - !parameter
+      key: parameters.functional
+      values: ["pz", "pw", "vwn"]
+  config:
+    tags:
+      - dft
+      - lda
+    categories:
+      tier1: pb
+      tier2: qm
+      tier3: dft
+      type: ksdft
+      subtype: lda
+```
+
+3. Run the build command:
+
+```shell
+npm run build:models
+```
+
+#### 4.3.2. Methods
+
+Methods are defined in `methods/sources/` directory with support for unit composition. To add a new method:
+
+1. Create or edit a YAML file in `methods/sources/` (e.g., `methods/sources/pw_methods.yml`)
+2. Define method units in `methods/sources/units/` if needed
+3. Use `!combine` with `!parameter` to compose methods from units:
+
+```yaml
+!combine
+name:
+  template: '{{ units[0]["name"] }} Method'
+forEach:
+  - !parameter
+    key: units
+    action: push
+    ref: methods/sources/units/pw.yml
+config:
+  categories:
+    tier1: qm
+    tier2: wf
+```
+
+4. Run the build command:
+
+```shell
+npm run build:methods
+```
+
+#### 4.3.3. Model-Method Compatibility
+
+The model-method compatibility map is defined in `models/sources/modelMethodMap.yml`. To add compatibility rules:
+
+1. Edit `models/sources/modelMethodMap.yml`
+2. Define filter rules for model categories using nested structure:
+
+```yaml
+pb:
+  qm:
+    dft:
+      ksdft:
+        lda:
+          - path: /qm/wf/none/pw/none
+          - regex: /qm/wf/none/psp/.*
+```
+
+3. Run the build command:
+
+```shell
+npm run build:model-method-map
+```
+
+#### 4.3.4. Applications
+
+Applications are defined in `applications/sources/` directory. To add a new application:
+
+1. Add application configuration to `applications/sources/applications/application_data.yml`
+2. Define templates in `applications/sources/templates/`
+3. Run the build command:
+
+```shell
+npm run build:applications
+```
+
+#### 4.3.5. Workflows
+
+Workflows and subworkflows are defined in `workflows/sources/` directory. To add new workflows:
+
+1. Create YAML files in `workflows/sources/workflows/{application}/` for workflows
+2. Create YAML files in `workflows/sources/subworkflows/{application}/` for subworkflows
+3. Run the build command:
+
+```shell
+npm run build:workflows
+```
+
+#### 4.3.6. Custom YAML Types
+
+The following custom YAML types are available for entity definitions:
+
+- `!combine`: Creates multiple entity configurations from parameter combinations
+- `!parameter`: Defines a parameter to iterate over with optional exclusions
+- `!esse`: References ESSE schema definitions for validation and enum values
+- `isOptional: true`: Makes a parameter optional, creating entities with and without it
+
+For complete examples, see the source files in each entity's `sources/` directory.
+
+For definitions of custom directives go to [code.js](https://github.com/Exabyte-io/code.js).
+
+#### 4.3.7. Building All Entities
+
+To rebuild all entities at once:
+
+```shell
+npm run build
+```
+
 ## 5. Links

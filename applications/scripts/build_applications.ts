@@ -27,6 +27,11 @@ function buildAsset({ assetPath, targetPath, workingDir = null }: BuildAssetPara
         const fileContent = fs.readFileSync(assetPath) as unknown as string;
         const obj = yaml.load(fileContent, { schema: utils.JsYamlAllSchemas });
 
+        const targetBasename = path.resolve(__dirname, targetPath, "..");
+        if (!fs.existsSync(targetBasename)) {
+            fs.mkdirSync(targetBasename, { recursive: true });
+        }
+
         fs.writeFileSync(path.resolve(originalCwd, targetPath), JSON.stringify(obj), "utf8");
         console.log(`Written asset "${assetPath}" to "${targetPath}"`);
         return obj;
@@ -60,13 +65,13 @@ function getAssetData(currPath: string, targetObj: object, assetRoot: string) {
 
 buildAsset({
     assetPath: BUILD_CONFIG.sources.templates,
-    targetPath: `./applications/${BUILD_CONFIG.applications.templatesList}`,
+    targetPath: `./applications/build/${BUILD_CONFIG.applications.templatesList}`,
     workingDir: "./applications/sources",
 });
 
 buildAsset({
     assetPath: BUILD_CONFIG.sources.executableTree,
-    targetPath: `./applications/${BUILD_CONFIG.applications.executableFlavorMapByApplication}`,
+    targetPath: `./applications/build/${BUILD_CONFIG.applications.executableFlavorMapByApplication}`,
     workingDir: "./applications/sources",
 });
 
@@ -120,13 +125,17 @@ const modelMethodMapByApplication = {
 };
 
 fs.writeFileSync(
-    path.resolve(__dirname, "..", BUILD_CONFIG.applications.applicationVersionsMapByApplication),
+    path.resolve(
+        __dirname,
+        "../build/",
+        BUILD_CONFIG.applications.applicationVersionsMapByApplication,
+    ),
     JSON.stringify(cleanApplicationData),
     "utf8",
 );
 
 fs.writeFileSync(
-    path.resolve(__dirname, "..", BUILD_CONFIG.applications.modelMethodMapByApplication),
+    path.resolve(__dirname, "../build/", BUILD_CONFIG.applications.modelMethodMapByApplication),
     JSON.stringify(modelMethodMapByApplication),
     "utf8",
 );

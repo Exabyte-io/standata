@@ -4,6 +4,15 @@
  */
 
 const BUILD_CONFIG = {
+    models: {
+        sources: {
+            modelMethodMap: "modelMethodMap.yml",
+        },
+        build: {
+            modelMethodMap: "modelMethodMap.json",
+        },
+    },
+
     applications: {
         templatesList: "templatesList.json",
         applicationVersionsMapByApplication: "applicationVersionsMapByApplication.json",

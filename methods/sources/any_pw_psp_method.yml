@@ -1,0 +1,10 @@
+!combine
+name:
+  template: 'Any {{ units[4]["categories"]["type"] }} Pseudopotential Method'
+  substitutions:
+    pw: Plane-wave
+config:
+  units: !flatten
+    - !include methods/sources/units/psp.yml
+    - !include methods/sources/units/pw.yml
+  schema: !esse method/categorized-method

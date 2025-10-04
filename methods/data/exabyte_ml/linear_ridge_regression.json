@@ -1,0 +1,17 @@
+{
+  "units": [
+    {
+      "categories": {
+        "subtype": "ridge",
+        "type": "linear"
+      },
+      "tags": [
+        "exabyteML"
+      ],
+      "name": "Linear ridge regression",
+      "path": "/none/none/none/linear/ridge"
+    }
+  ],
+  "name": "Linear ridge regression",
+  "path": "/none/none/none/linear/ridge"
+}

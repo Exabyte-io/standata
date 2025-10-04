@@ -12,14 +12,14 @@ config:
   tags:
     - diagonalization
   schema: !esse 'methods-directory/mathematical/cg'
-#extraConfigs: !combine
-#  name:
-#    template: '{{ categories.type | title }} Diagonalization'
-#  config:
-#    categories:
-#      tier1: linalg
-#      tier2: diag
-#      type: davidson
-#    tags:
-#      - diagonalization
-#    schema: !esse 'methods-directory/mathematical/davidson'
+extraConfigs: !combine
+  name:
+    template: '{{ categories.type | title }} Diagonalization'
+  config:
+    categories:
+      tier1: linalg
+      tier2: diag
+      type: davidson
+    tags:
+      - diagonalization
+    schema: !esse 'methods-directory/mathematical/davidson'

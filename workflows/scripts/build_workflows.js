@@ -76,7 +76,7 @@ applications.forEach((name) => {
 
 // Save the workflow and subworkflow map for usage in Wode or elsewhere
 const assetPath = path.resolve(__dirname, BASE_PATH, "workflowSubforkflowMapByApplication.json");
-fs.writeFileSync(assetPath, JSON.stringify(workflowSubforkflowMapByApplication, null, 2), "utf8");
+fs.writeFileSync(assetPath, JSON.stringify(workflowSubforkflowMapByApplication), "utf8");
 
 const WorkflowCls = Workflow;
 WorkflowCls.usePredefinedIds = true;
