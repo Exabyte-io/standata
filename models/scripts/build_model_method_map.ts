@@ -9,6 +9,8 @@ import * as fs from "fs";
 import * as yaml from "js-yaml";
 import * as path from "path";
 
+import BUILD_CONFIG from "../../build-config";
+
 interface FilterRule {
     path?: string;
     regex?: string;
@@ -58,8 +60,8 @@ function traverseNestedCategories(
 }
 
 export function buildModelMethodMap(): void {
-    const sourceFile = "./models/sources/modelMethodMap.yml";
-    const targetFile = "./models/data/modelMethodMap.json";
+    const sourceFile = `./models/sources/${BUILD_CONFIG.models.sources.modelMethodMap}`;
+    const targetFile = `./models/build/${BUILD_CONFIG.models.build.modelMethodMap}`;
 
     console.log(`Building model-method map from ${sourceFile}...`);
 
