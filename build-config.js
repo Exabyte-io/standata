@@ -95,12 +95,30 @@ const BUILD_CONFIG = {
         },
     },
 
-    runtimeDataDir: "./dist/js/runtime_data",
-
-    categories: {
-        materials: "./materials/categories.yml",
-        properties: "./properties/categories.yml",
+    // TODO: adapt materials and properties to follow the same structure convention
+    materials: {
+        sources: {
+            path: "materials/sources",
+            manifest: "materials/sources/manifest.yml",
+        },
+        data: {
+            path: "materials", // JSON files directly in materials/ directory
+        },
+        categories: {
+            path: "materials/categories.yml",
+        },
     },
+
+    properties: {
+        data: {
+            path: "properties", // JSON files directly in properties/ directory
+        },
+        categories: {
+            path: "properties/categories.yml",
+        },
+    },
+
+    runtimeDataDir: "./dist/js/runtime_data",
 };
 
 module.exports = BUILD_CONFIG;

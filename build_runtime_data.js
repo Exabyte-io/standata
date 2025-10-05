@@ -45,11 +45,11 @@ const { runtimeDataDir } = BUILD_CONFIG;
 // JS Modules
 
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.materials,
+    assetPath: BUILD_CONFIG.materials.categories.path,
     targetPath: `${runtimeDataDir}/materials.json`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.properties,
+    assetPath: BUILD_CONFIG.properties.categories.path,
     targetPath: `${runtimeDataDir}/properties.json`,
 });
 buildAsset({
@@ -130,13 +130,13 @@ copyJsonAsset({
 // Py Modules
 
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.materials,
+    assetPath: BUILD_CONFIG.materials.categories.path,
     targetPath: "./src/py/mat3ra/standata/data/materials.py",
     contentGenerator: (content) =>
         `import json\n\nmaterials_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.properties,
+    assetPath: BUILD_CONFIG.properties.categories.path,
     targetPath: "./src/py/mat3ra/standata/data/properties.py",
     contentGenerator: (content) =>
         `import json\n\nproperties_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
