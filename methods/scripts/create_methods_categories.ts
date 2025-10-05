@@ -18,6 +18,8 @@ import * as fs from "fs";
 import * as yaml from "js-yaml";
 import * as path from "path";
 
+import BUILD_CONFIG from "../../build-config";
+
 interface CategoryConfig {
     categoriesPath: string;
     dataPath: string;
@@ -41,8 +43,8 @@ interface EntityData {
 }
 
 const CONFIG: CategoryConfig = {
-    categoriesPath: "methods/data/categories.yml",
-    dataPath: "methods/data",
+    categoriesPath: BUILD_CONFIG.methods.categories.path,
+    dataPath: BUILD_CONFIG.methods.data.path,
     categoryKeys: ["tier1", "tier2", "tier3", "type", "subtype"],
     extractFromUnits: true,
     extractTags: true,
@@ -50,7 +52,9 @@ const CONFIG: CategoryConfig = {
 
 class MethodsCategoriesBuilder {
     private config: CategoryConfig;
+
     private categoryData: CategoryData;
+
     private entities: EntityData[];
 
     constructor(config: CategoryConfig) {

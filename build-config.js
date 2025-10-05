@@ -6,13 +6,33 @@
 const BUILD_CONFIG = {
     models: {
         sources: {
+            path: "models/sources",
             modelMethodMap: "modelMethodMap.yml",
         },
+        data: {
+            path: "models/data",
+        },
         build: {
+            path: "models/build",
             modelMethodMap: "modelMethodMap.json",
         },
         categories: {
-            models: "./models/data/categories.yml",
+            path: "models/data/categories.yml",
+        },
+    },
+
+    methods: {
+        sources: {
+            path: "methods/sources",
+        },
+        data: {
+            path: "methods/data",
+        },
+        build: {
+            path: "methods/build",
+        },
+        categories: {
+            path: "methods/data/categories.yml",
         },
     },
 
@@ -39,7 +59,6 @@ const BUILD_CONFIG = {
         materials: "./materials/categories.yml",
         properties: "./properties/categories.yml",
         applications: "./applications/data/categories.yml",
-        methods: "./methods/data/categories.yml",
         workflows: "./workflows/workflows/categories.yml",
         subworkflows: "./workflows/subworkflows/categories.yml",
     },

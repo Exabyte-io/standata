@@ -57,11 +57,11 @@ buildAsset({
     targetPath: `${runtimeDataDir}/applications.json`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.models.categories.models,
+    assetPath: BUILD_CONFIG.models.categories.path,
     targetPath: `${runtimeDataDir}/models.json`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.methods,
+    assetPath: BUILD_CONFIG.methods.categories.path,
     targetPath: `${runtimeDataDir}/methods.json`,
 });
 buildAsset({
@@ -148,13 +148,13 @@ buildAsset({
         `import json\n\napplications_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.models,
+    assetPath: BUILD_CONFIG.models.categories.path,
     targetPath: "./src/py/mat3ra/standata/data/models.py",
     contentGenerator: (content) =>
         `import json\n\nmodels_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.methods,
+    assetPath: BUILD_CONFIG.methods.categories.path,
     targetPath: "./src/py/mat3ra/standata/data/methods.py",
     contentGenerator: (content) =>
         `import json\n\nmethods_data = json.loads(r'''${JSON.stringify(content)}''')\n`,

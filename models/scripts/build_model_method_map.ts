@@ -60,8 +60,8 @@ function traverseNestedCategories(
 }
 
 export function buildModelMethodMap(): void {
-    const sourceFile = `./models/sources/${BUILD_CONFIG.models.sources.modelMethodMap}`;
-    const targetFile = `./models/build/${BUILD_CONFIG.models.build.modelMethodMap}`;
+    const sourceFile = `./${BUILD_CONFIG.models.sources.path}/${BUILD_CONFIG.models.sources.modelMethodMap}`;
+    const targetFile = `./${BUILD_CONFIG.models.build.path}/${BUILD_CONFIG.models.build.modelMethodMap}`;
 
     console.log(`Building model-method map from ${sourceFile}...`);
 
