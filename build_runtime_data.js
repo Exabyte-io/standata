@@ -57,7 +57,7 @@ buildAsset({
     targetPath: `${runtimeDataDir}/applications.json`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.models,
+    assetPath: BUILD_CONFIG.models.categories.models,
     targetPath: `${runtimeDataDir}/models.json`,
 });
 buildAsset({

@@ -11,6 +11,9 @@ const BUILD_CONFIG = {
         build: {
             modelMethodMap: "modelMethodMap.json",
         },
+        categories: {
+            models: "./models/data/categories.yml",
+        },
     },
 
     applications: {
@@ -36,7 +39,6 @@ const BUILD_CONFIG = {
         materials: "./materials/categories.yml",
         properties: "./properties/categories.yml",
         applications: "./applications/data/categories.yml",
-        models: "./models/data/categories.yml",
         methods: "./methods/data/categories.yml",
         workflows: "./workflows/workflows/categories.yml",
         subworkflows: "./workflows/subworkflows/categories.yml",
