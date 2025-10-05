@@ -42,6 +42,11 @@ function buildAsset({
 
 const { runtimeDataDir } = BUILD_CONFIG;
 
+// Ensure runtime_data directory exists
+if (!fs.existsSync(runtimeDataDir)) {
+    fs.mkdirSync(runtimeDataDir, { recursive: true });
+}
+
 // JS Modules
 
 buildAsset({

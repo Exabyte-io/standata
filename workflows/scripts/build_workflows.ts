@@ -1,50 +1,64 @@
-const fs = require("fs");
-const path = require("path");
-const yaml = require("js-yaml");
-const {
-    createWorkflowConfigs,
-    createSubworkflowByName,
-    Workflow,
-    Subworkflow,
-    builders,
-    UnitFactory,
-} = require("@mat3ra/wode");
+// eslint-disable-next-line import/no-extraneous-dependencies
 
-const BUILD_CONFIG = require("../../build-config");
+import {
+    builders,
+    createSubworkflowByName,
+    createWorkflowConfigs,
+    Subworkflow,
+    UnitFactory,
+    Workflow, // @ts-ignore
+} from "@mat3ra/wode";
+import fs from "fs";
+import yaml from "js-yaml";
+import path from "path";
+
+// @ts-ignore - build-config is a .js file
+import BUILD_CONFIG from "../../build-config";
 
 const applications = ["espresso"];
 const BASE_PATH = "../..";
 
-const workflowSubforkflowMapByApplication = { workflows: {}, subworkflows: {} };
+interface WorkflowSubforkflowMap {
+    workflows: Record<string, Record<string, any>>;
+    subworkflows: Record<string, Record<string, any>>;
+}
 
-// Helper functions
-function loadYamlIntoCollection(applicationName, directoryPath, filename, collectionKey) {
+const workflowSubforkflowMapByApplication: WorkflowSubforkflowMap = {
+    workflows: {},
+    subworkflows: {},
+};
+
+function loadYamlIntoCollection(
+    applicationName: string,
+    directoryPath: string,
+    filename: string,
+    collectionKey: "workflows" | "subworkflows",
+): void {
     const entryPath = path.resolve(directoryPath, filename);
     if (!fs.existsSync(entryPath) || !fs.statSync(entryPath).isFile()) return;
     if (!/\.(yml|yaml)$/i.test(filename)) return;
     const content = fs.readFileSync(entryPath, "utf8");
     const key = filename.replace(/\.(yml|yaml)$/i, "");
-    workflowSubforkflowMapByApplication[collectionKey][applicationName][key] = yaml.load(content);
+    workflowSubforkflowMapByApplication[collectionKey][applicationName][key] = yaml.load(
+        content,
+    ) as any;
 }
 
-/**
- * Generates configuration JSON files for workflows or subworkflows.
- *
- * @param {Array} items - Array of objects containing appName, name, and config properties
- * @param {string} type - Type of configuration files to generate ("workflow" or "subworkflow")
- *
- * Each item in the items array should have:
- * - appName: The application name (used for directory structure)
- * - name: The configuration name (used for filename)
- * - config: The configuration object to be written as JSON
- */
-function generateConfigFiles(items, type) {
-    const outputBaseDir = path.resolve(__dirname, BASE_PATH, BUILD_CONFIG.workflows.data[`${type}s`]);
+interface ConfigItem {
+    appName: string;
+    name: string;
+    config: any;
+}
+
+function generateConfigFiles(items: ConfigItem[], type: "workflow" | "subworkflow"): void {
+    const outputBaseDir = path.resolve(
+        __dirname,
+        BASE_PATH,
+        BUILD_CONFIG.workflows.data[`${type}s`],
+    );
 
     items.forEach((item) => {
-        const { appName } = item;
-        const { name } = item;
-        const { config } = item;
+        const { appName, name, config } = item;
 
         const appDir = path.resolve(outputBaseDir, appName);
         if (!fs.existsSync(appDir)) {
@@ -58,7 +72,6 @@ function generateConfigFiles(items, type) {
     });
 }
 
-// Main script logic
 applications.forEach((name) => {
     workflowSubforkflowMapByApplication.workflows[name] = {};
     workflowSubforkflowMapByApplication.subworkflows[name] = {};
@@ -76,37 +89,38 @@ applications.forEach((name) => {
     swFiles.forEach((file) => loadYamlIntoCollection(name, swDir, file, "subworkflows"));
 });
 
-// Save the workflow and subworkflow map for usage in Wode or elsewhere
 const buildDir = path.resolve(__dirname, BASE_PATH, BUILD_CONFIG.workflows.build.path);
 if (!fs.existsSync(buildDir)) {
     fs.mkdirSync(buildDir, { recursive: true });
 }
-const assetPath = path.resolve(buildDir, BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication);
+const assetPath = path.resolve(
+    buildDir,
+    BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication,
+);
 fs.writeFileSync(assetPath, JSON.stringify(workflowSubforkflowMapByApplication), "utf8");
 
-const WorkflowCls = Workflow;
+const WorkflowCls = Workflow as any;
 WorkflowCls.usePredefinedIds = true;
 
-const SubworkflowCls = Subworkflow;
+const SubworkflowCls = Subworkflow as any;
 SubworkflowCls.usePredefinedIds = true;
 
-builders.UnitConfigBuilder.usePredefinedIds = true;
-builders.AssignmentUnitConfigBuilder.usePredefinedIds = true;
-builders.AssertionUnitConfigBuilder.usePredefinedIds = true;
-builders.ExecutionUnitConfigBuilder.usePredefinedIds = true;
-builders.IOUnitConfigBuilder.usePredefinedIds = true;
+(builders as any).UnitConfigBuilder.usePredefinedIds = true;
+(builders as any).AssignmentUnitConfigBuilder.usePredefinedIds = true;
+(builders as any).AssertionUnitConfigBuilder.usePredefinedIds = true;
+(builders as any).ExecutionUnitConfigBuilder.usePredefinedIds = true;
+(builders as any).IOUnitConfigBuilder.usePredefinedIds = true;
 
-UnitFactory.BaseUnit.usePredefinedIds = true;
-UnitFactory.AssignmentUnit.usePredefinedIds = true;
-UnitFactory.AssertionUnit.usePredefinedIds = true;
-UnitFactory.ExecutionUnit.usePredefinedIds = true;
-UnitFactory.IOUnit.usePredefinedIds = true;
-UnitFactory.SubworkflowUnit.usePredefinedIds = true;
-UnitFactory.ConditionUnit.usePredefinedIds = true;
-UnitFactory.MapUnit.usePredefinedIds = true;
-UnitFactory.ProcessingUnit.usePredefinedIds = true;
+(UnitFactory as any).BaseUnit.usePredefinedIds = true;
+(UnitFactory as any).AssignmentUnit.usePredefinedIds = true;
+(UnitFactory as any).AssertionUnit.usePredefinedIds = true;
+(UnitFactory as any).ExecutionUnit.usePredefinedIds = true;
+(UnitFactory as any).IOUnit.usePredefinedIds = true;
+(UnitFactory as any).SubworkflowUnit.usePredefinedIds = true;
+(UnitFactory as any).ConditionUnit.usePredefinedIds = true;
+(UnitFactory as any).MapUnit.usePredefinedIds = true;
+(UnitFactory as any).ProcessingUnit.usePredefinedIds = true;
 
-// Generate workflows
 const workflowConfigs = createWorkflowConfigs({
     applications,
     WorkflowCls,
@@ -117,8 +131,8 @@ const workflowConfigs = createWorkflowConfigs({
         ...builders,
         Workflow: WorkflowCls,
     },
-});
-const workflowItems = workflowConfigs.map((config) => ({
+}) as any[];
+const workflowItems = workflowConfigs.map((config: any) => ({
     appName: config.application,
     name: config.name.toLowerCase().replace(/[^a-z0-9]/g, "_"),
     config: config.config,
@@ -126,8 +140,7 @@ const workflowItems = workflowConfigs.map((config) => ({
 
 generateConfigFiles(workflowItems, "workflow");
 
-// Generate subworkflows
-const subworkflowItems = [];
+const subworkflowItems: ConfigItem[] = [];
 applications.forEach((appName) => {
     const subworkflows = workflowSubforkflowMapByApplication.subworkflows[appName];
     if (!subworkflows) return;
