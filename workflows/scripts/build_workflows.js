@@ -10,8 +10,10 @@ const {
     UnitFactory,
 } = require("@mat3ra/wode");
 
+const BUILD_CONFIG = require("../../build-config");
+
 const applications = ["espresso"];
-const BASE_PATH = "..";
+const BASE_PATH = "../..";
 
 const workflowSubforkflowMapByApplication = { workflows: {}, subworkflows: {} };
 
@@ -37,7 +39,7 @@ function loadYamlIntoCollection(applicationName, directoryPath, filename, collec
  * - config: The configuration object to be written as JSON
  */
 function generateConfigFiles(items, type) {
-    const outputBaseDir = path.resolve(__dirname, BASE_PATH, `${type}s`);
+    const outputBaseDir = path.resolve(__dirname, BASE_PATH, BUILD_CONFIG.workflows.data[`${type}s`]);
 
     items.forEach((item) => {
         const { appName } = item;
@@ -61,7 +63,7 @@ applications.forEach((name) => {
     workflowSubforkflowMapByApplication.workflows[name] = {};
     workflowSubforkflowMapByApplication.subworkflows[name] = {};
 
-    const sourcesRoot = path.resolve(__dirname, BASE_PATH, "sources");
+    const sourcesRoot = path.resolve(__dirname, BASE_PATH, BUILD_CONFIG.workflows.sources.path);
     const wfDir = path.resolve(sourcesRoot, "workflows", name);
     const swDir = path.resolve(sourcesRoot, "subworkflows", name);
 
@@ -75,7 +77,11 @@ applications.forEach((name) => {
 });
 
 // Save the workflow and subworkflow map for usage in Wode or elsewhere
-const assetPath = path.resolve(__dirname, BASE_PATH, "workflowSubforkflowMapByApplication.json");
+const buildDir = path.resolve(__dirname, BASE_PATH, BUILD_CONFIG.workflows.build.path);
+if (!fs.existsSync(buildDir)) {
+    fs.mkdirSync(buildDir, { recursive: true });
+}
+const assetPath = path.resolve(buildDir, BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication);
 fs.writeFileSync(assetPath, JSON.stringify(workflowSubforkflowMapByApplication), "utf8");
 
 const WorkflowCls = Workflow;

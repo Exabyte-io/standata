@@ -65,11 +65,11 @@ buildAsset({
     targetPath: `${runtimeDataDir}/methods.json`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.workflows,
+    assetPath: BUILD_CONFIG.workflows.categories.workflows,
     targetPath: `${runtimeDataDir}/workflows.json`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.subworkflows,
+    assetPath: BUILD_CONFIG.workflows.categories.subworkflows,
     targetPath: `${runtimeDataDir}/subworkflows.json`,
 });
 
@@ -98,8 +98,8 @@ function linkJsonAsset({ sourcePath, targetPath }) {
 
 // Copy JSON assets to runtime_data
 copyJsonAsset({
-    sourcePath: `./workflows/build/${BUILD_CONFIG.workflows.workflowSubforkflowMapByApplication}`,
-    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.workflows.workflowSubforkflowMapByApplication}`,
+    sourcePath: `./${BUILD_CONFIG.workflows.build.path}/${BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication}`,
+    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication}`,
 });
 
 copyJsonAsset({
@@ -160,13 +160,13 @@ buildAsset({
         `import json\n\nmethods_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.workflows,
+    assetPath: BUILD_CONFIG.workflows.categories.workflows,
     targetPath: "./src/py/mat3ra/standata/data/workflows.py",
     contentGenerator: (content) =>
         `import json\n\nworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.subworkflows,
+    assetPath: BUILD_CONFIG.workflows.categories.subworkflows,
     targetPath: "./src/py/mat3ra/standata/data/subworkflows.py",
     contentGenerator: (content) =>
         `import json\n\nsubworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
