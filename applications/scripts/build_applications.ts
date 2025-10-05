@@ -64,20 +64,20 @@ function getAssetData(currPath: string, targetObj: object, assetRoot: string) {
 }
 
 buildAsset({
-    assetPath: BUILD_CONFIG.sources.templates,
-    targetPath: `./applications/build/${BUILD_CONFIG.applications.templatesList}`,
-    workingDir: "./applications/sources",
+    assetPath: BUILD_CONFIG.applications.sources.templates,
+    targetPath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.templatesList}`,
+    workingDir: `./${BUILD_CONFIG.applications.sources.path}`,
 });
 
 buildAsset({
-    assetPath: BUILD_CONFIG.sources.executableTree,
-    targetPath: `./applications/build/${BUILD_CONFIG.applications.executableFlavorMapByApplication}`,
-    workingDir: "./applications/sources",
+    assetPath: BUILD_CONFIG.applications.sources.executableTree,
+    targetPath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
+    workingDir: `./${BUILD_CONFIG.applications.sources.path}`,
 });
 
-const APPLICATION_ASSET_PATH = path.resolve(__dirname, "../sources/applications");
-const MODEL_ASSET_PATH = path.resolve(__dirname, "../sources/models");
-const METHOD_ASSET_PATH = path.resolve(__dirname, "../sources/methods");
+const APPLICATION_ASSET_PATH = path.resolve(__dirname, `../../${BUILD_CONFIG.applications.sources.applications}`);
+const MODEL_ASSET_PATH = path.resolve(__dirname, `../../${BUILD_CONFIG.applications.sources.models}`);
+const METHOD_ASSET_PATH = path.resolve(__dirname, `../../${BUILD_CONFIG.applications.sources.methods}`);
 
 const APPLICATION_DATA = {};
 const MODEL_FILTER_TREE = {};
@@ -106,7 +106,7 @@ Object.keys(cleanApplicationData).forEach((appName) => {
     const appVersionsMap = new ApplicationVersionsMap(applicationDataForVersions);
     const { versionConfigsFull } = appVersionsMap;
 
-    const appDir = path.resolve(__dirname, "..", "data", appName);
+    const appDir = path.resolve(__dirname, `../../${BUILD_CONFIG.applications.data.path}`, appName);
     if (!fs.existsSync(appDir)) {
         fs.mkdirSync(appDir, { recursive: true });
     }
@@ -127,15 +127,19 @@ const modelMethodMapByApplication = {
 fs.writeFileSync(
     path.resolve(
         __dirname,
-        "../build/",
-        BUILD_CONFIG.applications.applicationVersionsMapByApplication,
+        `../../${BUILD_CONFIG.applications.build.path}`,
+        BUILD_CONFIG.applications.build.applicationVersionsMapByApplication,
     ),
     JSON.stringify(cleanApplicationData),
     "utf8",
 );
 
 fs.writeFileSync(
-    path.resolve(__dirname, "../build/", BUILD_CONFIG.applications.modelMethodMapByApplication),
+    path.resolve(
+        __dirname,
+        `../../${BUILD_CONFIG.applications.build.path}`,
+        BUILD_CONFIG.applications.build.modelMethodMapByApplication,
+    ),
     JSON.stringify(modelMethodMapByApplication),
     "utf8",
 );

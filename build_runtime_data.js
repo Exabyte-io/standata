@@ -53,7 +53,7 @@ buildAsset({
     targetPath: `${runtimeDataDir}/properties.json`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.applications,
+    assetPath: BUILD_CONFIG.applications.categories.path,
     targetPath: `${runtimeDataDir}/applications.json`,
 });
 buildAsset({
@@ -103,23 +103,23 @@ copyJsonAsset({
 });
 
 copyJsonAsset({
-    sourcePath: `./applications/build/${BUILD_CONFIG.applications.modelMethodMapByApplication}`,
-    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.modelMethodMapByApplication}`,
+    sourcePath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.modelMethodMapByApplication}`,
+    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.build.modelMethodMapByApplication}`,
 });
 
 copyJsonAsset({
-    sourcePath: `./applications/build/${BUILD_CONFIG.applications.templatesList}`,
-    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.templatesList}`,
+    sourcePath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.templatesList}`,
+    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.build.templatesList}`,
 });
 
 copyJsonAsset({
-    sourcePath: `./applications/build/${BUILD_CONFIG.applications.executableFlavorMapByApplication}`,
-    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.executableFlavorMapByApplication}`,
+    sourcePath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
+    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
 });
 
 copyJsonAsset({
-    sourcePath: `./applications/build/${BUILD_CONFIG.applications.applicationVersionsMapByApplication}`,
-    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.applicationVersionsMapByApplication}`,
+    sourcePath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.applicationVersionsMapByApplication}`,
+    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.build.applicationVersionsMapByApplication}`,
 });
 
 copyJsonAsset({
@@ -142,7 +142,7 @@ buildAsset({
         `import json\n\nproperties_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.categories.applications,
+    assetPath: BUILD_CONFIG.applications.categories.path,
     targetPath: "./src/py/mat3ra/standata/data/applications.py",
     contentGenerator: (content) =>
         `import json\n\napplications_data = json.loads(r'''${JSON.stringify(content)}''')\n`,

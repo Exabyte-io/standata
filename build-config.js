@@ -37,10 +37,28 @@ const BUILD_CONFIG = {
     },
 
     applications: {
-        templatesList: "templatesList.json",
-        applicationVersionsMapByApplication: "applicationVersionsMapByApplication.json",
-        executableFlavorMapByApplication: "executableFlavorMapByApplication.json",
-        modelMethodMapByApplication: "modelMethodMapByApplication.json",
+        sources: {
+            path: "applications/sources",
+            templates: "templates/templates.yml",
+            applicationData: "applications/application_data.yml",
+            executableTree: "executables/tree.yml",
+            applications: "applications/sources/applications",
+            models: "applications/sources/models",
+            methods: "applications/sources/methods",
+        },
+        data: {
+            path: "applications/data",
+        },
+        build: {
+            path: "applications/build",
+            templatesList: "templatesList.json",
+            applicationVersionsMapByApplication: "applicationVersionsMapByApplication.json",
+            executableFlavorMapByApplication: "executableFlavorMapByApplication.json",
+            modelMethodMapByApplication: "modelMethodMapByApplication.json",
+        },
+        categories: {
+            path: "applications/data/categories.yml",
+        },
     },
 
     workflows: {
@@ -49,16 +67,9 @@ const BUILD_CONFIG = {
 
     runtimeDataDir: "./dist/js/runtime_data",
 
-    sources: {
-        templates: "templates/templates.yml",
-        applicationData: "applications/application_data.yml",
-        executableTree: "executables/tree.yml",
-    },
-
     categories: {
         materials: "./materials/categories.yml",
         properties: "./properties/categories.yml",
-        applications: "./applications/data/categories.yml",
         workflows: "./workflows/workflows/categories.yml",
         subworkflows: "./workflows/subworkflows/categories.yml",
     },
