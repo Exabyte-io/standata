@@ -12,9 +12,9 @@ config:
   tags:
     - diagonalization
   schema: !esse 'methods-directory/mathematical/cg'
-#extraConfigs: !combine
-#  name:
-#    template: '{{ categories.type | title }} Diagonalization'
+# extraConfigs: !combine
+#   name:
+#     template: '{{ categories.type | title }} Diagonalization'
 #  config:
 #    categories:
 #      tier1: linalg

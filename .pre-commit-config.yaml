@@ -27,7 +27,7 @@ repos:
       - id: isort
       - id: mypy
       - id: check-yaml
-        exclude: .*/sources/.*\.ya?ml$
+        exclude: ^sources/.*\.ya?ml$
       - id: end-of-file-fixer
         exclude: ^data/.*\.json$|^build/.*\.json$|^dist/|src/py/mat3ra/standata/data/
       - id: trailing-whitespace
