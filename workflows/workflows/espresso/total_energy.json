@@ -7,7 +7,7 @@
       "application": {
         "name": "espresso",
         "shortName": "qe",
-        "summary": "Quantum Espresso",
+        "summary": "Quantum ESPRESSO",
         "build": "GNU",
         "version": "6.3",
         "isDefault": true,
@@ -79,7 +79,7 @@
           "application": {
             "name": "espresso",
             "shortName": "qe",
-            "summary": "Quantum Espresso",
+            "summary": "Quantum ESPRESSO",
             "build": "GNU",
             "version": "6.3",
             "isDefault": true,

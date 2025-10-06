@@ -41,8 +41,9 @@ describe("ModelMethodFilter", () => {
 
             const compatible = filter.getCompatibleMethods(model!, allMethods);
 
-            // All real methods should be compatible with LDA
-            expect(compatible.length).to.equal(allMethods.length);
+            // LDA models are compatible with plane-wave pseudopotential methods (25/29)
+            // exabyte_ml (3) and local_orbital (1) methods are not compatible with LDA
+            expect(compatible.length).to.equal(25);
         });
     });
 
@@ -57,8 +58,9 @@ describe("ModelMethodFilter", () => {
             allModels.forEach((model) => {
                 const compatible = filter.getCompatibleMethods(model, allMethods);
                 expect(compatible).to.be.an("array");
-                // All our current methods should be compatible with all models
-                expect(compatible.length).to.equal(allMethods.length);
+                // DFT models (LDA/GGA/hybrid) are compatible with 25 plane-wave methods
+                // Models should have some compatible methods, but not necessarily all
+                expect(compatible.length).to.be.greaterThan(0);
             });
         });
 
@@ -70,7 +72,8 @@ describe("ModelMethodFilter", () => {
 
             ldaModels.forEach((model) => {
                 const compatible = filter.getCompatibleMethods(model, allMethods);
-                expect(compatible.length).to.equal(allMethods.length);
+                // LDA models are compatible with 25 plane-wave pseudopotential methods
+                expect(compatible.length).to.equal(25);
             });
         });
     });

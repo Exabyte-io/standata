@@ -4,9 +4,10 @@ from typing import Dict
 import yaml
 from express import ExPrESS
 
-MANIFEST_PATH = 'materials/sources/manifest.yml'
-SOURCES_PATH = 'materials/sources'
-DESTINATION_PATH = 'materials'
+# Paths configured in build-config.js: BUILD_CONFIG.materials.*
+MANIFEST_PATH = 'materials/sources/manifest.yml'  # BUILD_CONFIG.materials.sources.manifest
+SOURCES_PATH = 'materials/sources'                 # BUILD_CONFIG.materials.sources.path
+DESTINATION_PATH = 'materials'                     # BUILD_CONFIG.materials.data.path
 
 def read_manifest(manifest_path: str):
     """

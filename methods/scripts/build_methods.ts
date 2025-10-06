@@ -1,8 +1,9 @@
+import BUILD_CONFIG from "../../build-config";
 import { BuildConfig, buildEntities } from "./buildUtils";
 
 const buildConfig: BuildConfig = {
-    sourcesPath: "methods/sources",
-    dataPath: "methods/data",
+    sourcesPath: BUILD_CONFIG.methods.sources.path,
+    dataPath: BUILD_CONFIG.methods.data.path,
     entityType: "methods",
     pathSeparator: "::",
 };

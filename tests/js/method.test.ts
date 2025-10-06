@@ -4,8 +4,10 @@ import { MethodStandata } from "../../src/js";
 
 // Test data constants
 const TEST_METHOD_NAMES = {
-    NC_CG_GAUSSIAN: "Plane-wave Norm-conserving Pseudopotential (Conjugate Gradient Diagonalization, Gaussian Smearing)",
-    NC_CG_LINEAR_TETRAHEDRON: "Plane-wave Norm-conserving Pseudopotential (Conjugate Gradient Diagonalization, Linear Tetrahedron Method)",
+    NC_CG_GAUSSIAN:
+        "Plane-wave Norm-conserving Pseudopotential (Conjugate Gradient Diagonalization, Gaussian Smearing)",
+    NC_CG_LINEAR_TETRAHEDRON:
+        "Plane-wave Norm-conserving Pseudopotential (Conjugate Gradient Diagonalization, Linear Tetrahedron Method)",
 } as const;
 
 const TEST_UNIT_TYPES = {
@@ -24,15 +26,17 @@ const TEST_UNIT_TAGS = {
 } as const;
 
 const TEST_PATHS = {
-    NC_CG_GAUSSIAN: "/qm/wf/none/smearing/gaussian::/opt/diff/ordern/cg/none::/qm/wf/none/psp/nc::/qm/wf/none/pw/none",
-    NC_CG_LINEAR_TETRAHEDRON: "/qm/wf/none/tetrahedron/linear::/opt/diff/ordern/cg/none::/qm/wf/none/psp/nc::/qm/wf/none/pw/none",
+    NC_CG_GAUSSIAN:
+        "/qm/wf/none/smearing/gaussian::/opt/diff/ordern/cg/none::/qm/wf/none/psp/nc::/qm/wf/none/pw/none",
+    NC_CG_LINEAR_TETRAHEDRON:
+        "/qm/wf/none/tetrahedron/linear::/opt/diff/ordern/cg/none::/qm/wf/none/psp/nc::/qm/wf/none/pw/none",
 } as const;
 
 const TEST_COUNTS = {
-    TOTAL_PW_METHODS: 2,
-    TOTAL_CG_METHODS: 2,
-    TOTAL_GAUSSIAN_METHODS: 1,
-    TOTAL_LINEAR_METHODS: 1,
+    TOTAL_PW_METHODS: 25,
+    TOTAL_CG_METHODS: 12,
+    TOTAL_GAUSSIAN_METHODS: 8,
+    TOTAL_LINEAR_METHODS: 8,
 } as const;
 
 describe("MethodStandata", () => {
@@ -90,10 +94,15 @@ describe("MethodStandata", () => {
 
     describe("getByUnitParameters", () => {
         it("should return methods with matching parameters", () => {
-            // Since no methods have parameters in the current data, test with empty object
-            const methods = standata.getByUnitParameters({});
+            // Empty object {} matches any method that has parameters
+            // Currently only local_orbital method has parameters
+            const methodsWithParams = standata.getByUnitParameters({});
+            expect(methodsWithParams).to.have.length(1);
 
-            expect(methods).to.have.length(0);
+            // Test specific parameter matching
+            const popleMethods = standata.getByUnitParameters({ basisSlug: "6-31G" });
+            expect(popleMethods).to.have.length(1);
+            expect(popleMethods[0].name).to.include("Pople");
         });
     });
 

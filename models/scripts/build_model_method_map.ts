@@ -9,6 +9,8 @@ import * as fs from "fs";
 import * as yaml from "js-yaml";
 import * as path from "path";
 
+import BUILD_CONFIG from "../../build-config";
+
 interface FilterRule {
     path?: string;
     regex?: string;
@@ -27,45 +29,49 @@ interface ModelMethodFilterEntry {
     filterRules: FilterRule[];
 }
 
-function parseModelCategories(categoryKey: string): ModelCategories {
-    const parts = categoryKey.split(".");
+function parseModelCategories(categoryPath: string[]): ModelCategories {
     const categories: ModelCategories = {};
 
-    if (parts[0]) categories.tier1 = parts[0];
-    if (parts[1]) categories.tier2 = parts[1];
-    if (parts[2]) categories.tier3 = parts[2];
-    if (parts[3]) categories.type = parts[3];
-    if (parts[4]) categories.subtype = parts[4];
+    if (categoryPath[0]) categories.tier1 = categoryPath[0];
+    if (categoryPath[1]) categories.tier2 = categoryPath[1];
+    if (categoryPath[2]) categories.tier3 = categoryPath[2];
+    if (categoryPath[3]) categories.type = categoryPath[3];
+    if (categoryPath[4]) categories.subtype = categoryPath[4];
 
     return categories;
 }
 
+function traverseNestedCategories(
+    obj: any,
+    currentPath: string[],
+    filterEntries: ModelMethodFilterEntry[],
+): void {
+    for (const [key, value] of Object.entries(obj)) {
+        if (Array.isArray(value)) {
+            const modelCategories = parseModelCategories([...currentPath, key]);
+            filterEntries.push({
+                modelCategories,
+                filterRules: value as FilterRule[],
+            });
+        } else if (typeof value === "object" && value !== null) {
+            traverseNestedCategories(value, [...currentPath, key], filterEntries);
+        }
+    }
+}
+
 export function buildModelMethodMap(): void {
-    const sourceFile = "./models/sources/modelMethodMap.yml";
-    const targetFile = "./models/data/modelMethodMap.json";
+    const sourceFile = `./${BUILD_CONFIG.models.sources.path}/${BUILD_CONFIG.models.sources.modelMethodMap}`;
+    const targetFile = `./${BUILD_CONFIG.models.build.path}/${BUILD_CONFIG.models.build.modelMethodMap}`;
 
     console.log(`Building model-method map from ${sourceFile}...`);
 
     // Read and parse YAML
     const yamlContent = fs.readFileSync(sourceFile, "utf8");
-    const yamlData = yaml.load(yamlContent) as Record<string, FilterRule[]>;
+    const yamlData = yaml.load(yamlContent) as Record<string, any>;
 
-    // Convert to flat ModelMethodFilterEntry array
+    // Convert nested structure to flat ModelMethodFilterEntry array
     const filterEntries: ModelMethodFilterEntry[] = [];
-
-    for (const [categoryKey, filterRules] of Object.entries(yamlData)) {
-        // Skip comments and non-data entries
-        if (typeof filterRules !== "object" || !Array.isArray(filterRules)) {
-            continue;
-        }
-
-        const modelCategories = parseModelCategories(categoryKey);
-
-        filterEntries.push({
-            modelCategories,
-            filterRules,
-        });
-    }
+    traverseNestedCategories(yamlData, [], filterEntries);
 
     // Write JSON file to data directory
     const targetDir = path.dirname(targetFile);
@@ -73,7 +79,7 @@ export function buildModelMethodMap(): void {
         fs.mkdirSync(targetDir, { recursive: true });
     }
 
-    fs.writeFileSync(targetFile, JSON.stringify(filterEntries, null, 2), "utf8");
+    fs.writeFileSync(targetFile, JSON.stringify(filterEntries), "utf8");
     console.log(`Generated: ${targetFile}`);
     console.log(`Model-method map built successfully with ${filterEntries.length} entries`);
 }
