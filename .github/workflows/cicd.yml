@@ -30,13 +30,13 @@ jobs:
         uses: ./actions/yaml/lint
         with:
           python-version: ${{ matrix.python-version }}
-          targets: ./applications ./materials ./properties ./workflows
+          targets: ./sources
 
       - name: Run JSON linter
         uses: ./actions/json/lint
         with:
           python-version: 3.10.X
-          targets: ./applications ./materials ./properties ./workflows
+          targets: ./data
 
       - name: Run ruff linter
         uses: ./actions/py/lint
