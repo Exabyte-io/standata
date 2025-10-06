@@ -1,7 +1,7 @@
 #
 # Pseudopotential method units
 #
-  !combine
+!combine
 name:
   template: '{{ categories.subtype }} Pseudopotential'
   substitutions:

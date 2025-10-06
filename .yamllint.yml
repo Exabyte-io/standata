@@ -23,8 +23,14 @@ ignore:
   node_modules/
   test/
   tests/
-  workflows/categories.yml
-  materials/categories.yml
-  applications/categories.yml
-  properties/categories.yml
-  applications/sources/applications/
+  data/
+  build/
+  dist/
+  sources/workflows/workflows/categories.yml
+  sources/workflows/subworkflows/categories.yml
+  sources/materials/categories.yml
+  sources/applications/categories.yml
+  sources/properties/categories.yml
+  sources/methods/categories.yml
+  sources/models/categories.yml
+  sources/applications/applications/

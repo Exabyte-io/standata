@@ -1,7 +1,7 @@
 #
 # Planewave method unit
 #
-  !combine
+!combine
 name: 'Wave function: Plane wave'
 config:
   categories:
