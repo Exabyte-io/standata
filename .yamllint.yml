@@ -19,12 +19,15 @@ rules:
     min-spaces-from-content: 1
   comments-indentation: disable
 
-ignore:
+ignore: |
   node_modules/
   test/
   tests/
-  workflows/categories.yml
-  materials/categories.yml
-  applications/categories.yml
-  properties/categories.yml
-  applications/sources/applications/
+  data/
+  build/
+  dist/
+  sources/**/categories.yml
+  sources/applications/applications/
+  sources/applications/templates/
+  sources/applications/assets/
+  sources/methods/pw_methods.yml

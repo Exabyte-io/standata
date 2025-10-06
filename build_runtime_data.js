@@ -13,6 +13,7 @@ const BUILD_CONFIG = require("./build-config");
 function buildAsset({
     assetPath,
     targetPath,
+    dataPath,
     contentGenerator = (content) => `${JSON.stringify(content)}\n`,
 }) {
     const fileContent = fs.readFileSync(assetPath, { encoding: "utf-8" });
@@ -31,7 +32,7 @@ function buildAsset({
     }
     // Create JSON
     obj.standataConfig.entities?.forEach((entity) => {
-        const entityPath = path.join(path.dirname(assetPath), entity.filename);
+        const entityPath = path.join(dataPath, entity.filename);
         const content = fs.readFileSync(path.resolve(entityPath), { encoding: "utf-8" });
         console.log({ content, entityPath });
         obj.filesMapByName[entity.filename] = JSON.parse(content);
@@ -50,31 +51,38 @@ if (!fs.existsSync(runtimeDataDir)) {
 // JS Modules
 
 buildAsset({
-    assetPath: BUILD_CONFIG.materials.categories.path,
+    assetPath: `${BUILD_CONFIG.materials.sources.path}/${BUILD_CONFIG.materials.sources.categories}`,
+    dataPath: BUILD_CONFIG.materials.data.path,
     targetPath: `${runtimeDataDir}/materials.json`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.properties.categories.path,
+    assetPath: `${BUILD_CONFIG.properties.sources.path}/${BUILD_CONFIG.properties.sources.categories}`,
+    dataPath: BUILD_CONFIG.properties.data.path,
     targetPath: `${runtimeDataDir}/properties.json`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.applications.categories.path,
+    assetPath: `${BUILD_CONFIG.applications.sources.path}/${BUILD_CONFIG.applications.sources.categories}`,
+    dataPath: BUILD_CONFIG.applications.data.path,
     targetPath: `${runtimeDataDir}/applications.json`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.models.categories.path,
+    assetPath: `${BUILD_CONFIG.models.sources.path}/${BUILD_CONFIG.models.sources.categories}`,
+    dataPath: BUILD_CONFIG.models.data.path,
     targetPath: `${runtimeDataDir}/models.json`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.methods.categories.path,
+    assetPath: `${BUILD_CONFIG.methods.sources.path}/${BUILD_CONFIG.methods.sources.categories}`,
+    dataPath: BUILD_CONFIG.methods.data.path,
     targetPath: `${runtimeDataDir}/methods.json`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.workflows.categories.workflows,
+    assetPath: `${BUILD_CONFIG.workflows.sources.path}/${BUILD_CONFIG.workflows.sources.workflowsCategories}`,
+    dataPath: `${BUILD_CONFIG.workflows.data.path}/${BUILD_CONFIG.workflows.data.workflows}`,
     targetPath: `${runtimeDataDir}/workflows.json`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.workflows.categories.subworkflows,
+    assetPath: `${BUILD_CONFIG.workflows.sources.path}/${BUILD_CONFIG.workflows.sources.subworkflowsCategories}`,
+    dataPath: `${BUILD_CONFIG.workflows.data.path}/${BUILD_CONFIG.workflows.data.subworkflows}`,
     targetPath: `${runtimeDataDir}/subworkflows.json`,
 });
 
@@ -128,50 +136,57 @@ copyJsonAsset({
 });
 
 copyJsonAsset({
-    sourcePath: `./models/build/${BUILD_CONFIG.models.build.modelMethodMap}`,
+    sourcePath: `./${BUILD_CONFIG.models.build.path}/${BUILD_CONFIG.models.build.modelMethodMap}`,
     targetPath: `${runtimeDataDir}/modelMethodMap.json`,
 });
 
 // Py Modules
 
 buildAsset({
-    assetPath: BUILD_CONFIG.materials.categories.path,
+    assetPath: `${BUILD_CONFIG.materials.sources.path}/${BUILD_CONFIG.materials.sources.categories}`,
+    dataPath: BUILD_CONFIG.materials.data.path,
     targetPath: "./src/py/mat3ra/standata/data/materials.py",
     contentGenerator: (content) =>
         `import json\n\nmaterials_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.properties.categories.path,
+    assetPath: `${BUILD_CONFIG.properties.sources.path}/${BUILD_CONFIG.properties.sources.categories}`,
+    dataPath: BUILD_CONFIG.properties.data.path,
     targetPath: "./src/py/mat3ra/standata/data/properties.py",
     contentGenerator: (content) =>
         `import json\n\nproperties_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.applications.categories.path,
+    assetPath: `${BUILD_CONFIG.applications.sources.path}/${BUILD_CONFIG.applications.sources.categories}`,
+    dataPath: BUILD_CONFIG.applications.data.path,
     targetPath: "./src/py/mat3ra/standata/data/applications.py",
     contentGenerator: (content) =>
         `import json\n\napplications_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.models.categories.path,
+    assetPath: `${BUILD_CONFIG.models.sources.path}/${BUILD_CONFIG.models.sources.categories}`,
+    dataPath: BUILD_CONFIG.models.data.path,
     targetPath: "./src/py/mat3ra/standata/data/models.py",
     contentGenerator: (content) =>
         `import json\n\nmodels_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.methods.categories.path,
+    assetPath: `${BUILD_CONFIG.methods.sources.path}/${BUILD_CONFIG.methods.sources.categories}`,
+    dataPath: BUILD_CONFIG.methods.data.path,
     targetPath: "./src/py/mat3ra/standata/data/methods.py",
     contentGenerator: (content) =>
         `import json\n\nmethods_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.workflows.categories.workflows,
+    assetPath: `${BUILD_CONFIG.workflows.sources.path}/${BUILD_CONFIG.workflows.sources.workflowsCategories}`,
+    dataPath: `${BUILD_CONFIG.workflows.data.path}/${BUILD_CONFIG.workflows.data.workflows}`,
     targetPath: "./src/py/mat3ra/standata/data/workflows.py",
     contentGenerator: (content) =>
         `import json\n\nworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: BUILD_CONFIG.workflows.categories.subworkflows,
+    assetPath: `${BUILD_CONFIG.workflows.sources.path}/${BUILD_CONFIG.workflows.sources.subworkflowsCategories}`,
+    dataPath: `${BUILD_CONFIG.workflows.data.path}/${BUILD_CONFIG.workflows.data.subworkflows}`,
     targetPath: "./src/py/mat3ra/standata/data/subworkflows.py",
     contentGenerator: (content) =>
         `import json\n\nsubworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,

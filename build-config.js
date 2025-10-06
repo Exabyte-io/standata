@@ -4,118 +4,117 @@
  *
  * Structure Convention:
  * --------------------
- * Each entity type (models, methods, applications, workflows) follows this pattern:
+ * Top-level folders organize by purpose:
+ * - sources/     YAML source files that define entities (human-editable, version-controlled)
+ * - scripts/     Build scripts for generating entities
+ * - data/        Individual JSON files generated from sources (one file per entity)
+ * - build/standata/  Aggregated JSON maps and build artifacts (git-ignored, for runtime consumption)
  *
- * - sources:     YAML source files that define entities (human-editable, version-controlled)
- * - data:        Individual JSON files generated from sources (one file per entity)
- * - build:       Aggregated JSON maps and build artifacts (for runtime consumption)
- * - categories:  YAML files mapping entities to their category taxonomies
+ * Each entity type (models, methods, applications, workflows, materials, properties) has subdirectories within these top-level folders.
  *
  * Example flow:
- *   sources/*.yml  →  [build script]  →  data/*.json  →  [copied to]  →  dist/js/runtime_data/
- *                                     →  build/*.json  →  [copied to]  →  dist/js/runtime_data/
+ *   sources/models/*.yml  →  [scripts/models/build_*.ts]  →  data/models/*.json  →  [copied to]  →  dist/js/runtime_data/
+ *                                                          →  build/standata/models/*.json  →  [copied to]  →  dist/js/runtime_data/
  */
 
 const BUILD_CONFIG = {
     models: {
         sources: {
-            path: "models/sources",
+            path: "sources/models",
             modelMethodMap: "modelMethodMap.yml",
+            categories: "categories.yml",
         },
         data: {
-            path: "models/data",
+            path: "data/models",
         },
         build: {
-            path: "models/build",
+            path: "build/standata/models",
             modelMethodMap: "modelMethodMap.json",
-        },
-        categories: {
-            path: "models/data/categories.yml",
         },
     },
 
     methods: {
         sources: {
-            path: "methods/sources",
+            path: "sources/methods",
+            categories: "categories.yml",
         },
         data: {
-            path: "methods/data",
+            path: "data/methods",
         },
         build: {
-            path: "methods/build",
-        },
-        categories: {
-            path: "methods/data/categories.yml",
+            path: "build/standata/methods",
         },
     },
 
     applications: {
         sources: {
-            path: "applications/sources",
+            path: "sources/applications",
             templates: "templates/templates.yml",
             applicationData: "applications/application_data.yml",
             executableTree: "executables/tree.yml",
-            applications: "applications/sources/applications",
-            models: "applications/sources/models",
-            methods: "applications/sources/methods",
+            applications: "applications",
+            models: "models",
+            methods: "methods",
+            assets: "assets",
+            categories: "categories.yml",
         },
         data: {
-            path: "applications/data",
+            path: "data/applications",
         },
         build: {
-            path: "applications/build",
+            path: "build/standata/applications",
             templatesList: "templatesList.json",
             applicationVersionsMapByApplication: "applicationVersionsMapByApplication.json",
             executableFlavorMapByApplication: "executableFlavorMapByApplication.json",
             modelMethodMapByApplication: "modelMethodMapByApplication.json",
         },
-        categories: {
-            path: "applications/data/categories.yml",
-        },
     },
 
     workflows: {
         sources: {
-            path: "workflows/sources",
-            workflows: "workflows/sources/workflows",
-            subworkflows: "workflows/sources/subworkflows",
+            path: "sources/workflows",
+            workflows: "workflows",
+            subworkflows: "subworkflows",
+            workflowsCategories: "workflows/categories.yml",
+            subworkflowsCategories: "subworkflows/categories.yml",
         },
         data: {
-            path: "workflows",
-            workflows: "workflows/workflows",
-            subworkflows: "workflows/subworkflows",
+            path: "data/workflows",
+            workflows: "workflows",
+            subworkflows: "subworkflows",
         },
         build: {
-            path: "workflows/build",
+            path: "build/standata/workflows",
             workflowSubforkflowMapByApplication: "workflowSubforkflowMapByApplication.json",
-        },
-        categories: {
-            workflows: "workflows/workflows/categories.yml",
-            subworkflows: "workflows/subworkflows/categories.yml",
         },
     },
 
-    // TODO: adapt materials and properties to follow the same structure convention
     materials: {
         sources: {
-            path: "materials/sources",
-            manifest: "materials/sources/manifest.yml",
+            path: "sources/materials",
+            manifest: "manifest.yml",
+            categories: "categories.yml",
         },
         data: {
-            path: "materials", // JSON files directly in materials/ directory
-        },
-        categories: {
-            path: "materials/categories.yml",
+            path: "data/materials",
         },
     },
 
     properties: {
+        sources: {
+            path: "sources/properties",
+            categories: "categories.yml",
+        },
         data: {
-            path: "properties", // JSON files directly in properties/ directory
+            path: "data/properties",
         },
-        categories: {
-            path: "properties/categories.yml",
-        },
+    },
+
+    scripts: {
+        models: "scripts/models",
+        methods: "scripts/methods",
+        applications: "scripts/applications",
+        workflows: "scripts/workflows",
     },
 
     runtimeDataDir: "./dist/js/runtime_data",
