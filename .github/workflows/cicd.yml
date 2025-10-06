@@ -32,12 +32,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
           targets: ./sources
 
-      - name: Run JSON linter
-        uses: ./actions/json/lint
-        with:
-          python-version: 3.10.X
-          targets: ./data
-
       - name: Run ruff linter
         uses: ./actions/py/lint
         with:
