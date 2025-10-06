@@ -33,10 +33,10 @@ const TEST_PATHS = {
 } as const;
 
 const TEST_COUNTS = {
-    TOTAL_PW_METHODS: 25,
-    TOTAL_CG_METHODS: 12,
-    TOTAL_GAUSSIAN_METHODS: 8,
-    TOTAL_LINEAR_METHODS: 8,
+    TOTAL_PW_METHODS: 2,  // Minimal config: nc with gaussian and linear
+    TOTAL_CG_METHODS: 2,  // Only CG diagonalization in minimal config
+    TOTAL_GAUSSIAN_METHODS: 1,  // Only nc + cg + gaussian
+    TOTAL_LINEAR_METHODS: 1,  // Only nc + cg + linear
 } as const;
 
 describe("MethodStandata", () => {
@@ -95,14 +95,13 @@ describe("MethodStandata", () => {
     describe("getByUnitParameters", () => {
         it("should return methods with matching parameters", () => {
             // Empty object {} matches any method that has parameters
-            // Currently only local_orbital method has parameters
+            // Minimal config has no methods with parameters (local_orbital removed)
             const methodsWithParams = standata.getByUnitParameters({});
-            expect(methodsWithParams).to.have.length(1);
+            expect(methodsWithParams).to.have.length(0);
 
-            // Test specific parameter matching
+            // Test specific parameter matching - no Pople methods in minimal config
             const popleMethods = standata.getByUnitParameters({ basisSlug: "6-31G" });
-            expect(popleMethods).to.have.length(1);
-            expect(popleMethods[0].name).to.include("Pople");
+            expect(popleMethods).to.have.length(0);
         });
     });
 
