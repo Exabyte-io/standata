@@ -1,0 +1,54 @@
+categories:
+  tier1:
+    - linalg
+    - qm
+  tier2:
+    - diag
+    - wf
+  type:
+    - cg
+    - psp
+    - pw
+    - smearing
+  subtype:
+    - gaussian
+    - nc
+    - us
+  tags:
+    - diagonalization
+    - occupation number
+    - plane wave
+    - pseudopotential
+entities:
+  - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
+    categories:
+      - cg
+      - diag
+      - diagonalization
+      - gaussian
+      - linalg
+      - nc
+      - occupation number
+      - plane wave
+      - pseudopotential
+      - psp
+      - pw
+      - qm
+      - smearing
+      - wf
+  - filename: pw/plane_wave_ultra_soft_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
+    categories:
+      - cg
+      - diag
+      - diagonalization
+      - gaussian
+      - linalg
+      - occupation number
+      - plane wave
+      - pseudopotential
+      - psp
+      - pw
+      - qm
+      - smearing
+      - us
+      - wf
