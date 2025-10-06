@@ -31,15 +31,11 @@ entities:
   - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
     categories:
       - cg
-      - diagonalization
       - diff
       - gaussian
       - nc
-      - occupation number
       - opt
       - ordern
-      - plane wave
-      - pseudopotential
       - psp
       - pw
       - qm
@@ -48,15 +44,11 @@ entities:
   - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
     categories:
       - cg
-      - diagonalization
       - diff
       - linear
       - nc
-      - occupation number
       - opt
       - ordern
-      - plane wave
-      - pseudopotential
       - psp
       - pw
       - qm

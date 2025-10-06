@@ -15,15 +15,16 @@
     },
     {
       "categories": {
-        "tier1": "linalg",
-        "tier2": "diag",
+        "tier1": "opt",
+        "tier2": "diff",
+        "tier3": "ordern",
         "type": "cg"
       },
       "tags": [
         "diagonalization"
       ],
       "name": "Conjugate Gradient Diagonalization",
-      "path": "/linalg/diag/none/cg/none"
+      "path": "/opt/diff/ordern/cg/none"
     },
     {
       "categories": {
@@ -52,5 +53,5 @@
     }
   ],
   "name": "Plane-wave Norm-conserving Pseudopotential (Conjugate Gradient Diagonalization, Gaussian Smearing)",
-  "path": "/qm/wf/none/smearing/gaussian::/linalg/diag/none/cg/none::/qm/wf/none/psp/nc::/qm/wf/none/pw/none"
+  "path": "/qm/wf/none/smearing/gaussian::/opt/diff/ordern/cg/none::/qm/wf/none/psp/nc::/qm/wf/none/pw/none"
 }

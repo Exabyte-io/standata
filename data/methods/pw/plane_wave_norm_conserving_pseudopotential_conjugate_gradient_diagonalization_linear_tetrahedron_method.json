@@ -2,32 +2,33 @@
   "units": [
     {
       "categories": {
-        "subtype": "gaussian",
+        "subtype": "linear",
         "tier1": "qm",
         "tier2": "wf",
-        "type": "smearing"
+        "type": "tetrahedron"
       },
       "tags": [
         "occupation number"
       ],
-      "name": "Gaussian Smearing",
-      "path": "/qm/wf/none/smearing/gaussian"
+      "name": "Linear Tetrahedron Method",
+      "path": "/qm/wf/none/tetrahedron/linear"
     },
     {
       "categories": {
-        "tier1": "linalg",
-        "tier2": "diag",
+        "tier1": "opt",
+        "tier2": "diff",
+        "tier3": "ordern",
         "type": "cg"
       },
       "tags": [
         "diagonalization"
       ],
       "name": "Conjugate Gradient Diagonalization",
-      "path": "/linalg/diag/none/cg/none"
+      "path": "/opt/diff/ordern/cg/none"
     },
     {
       "categories": {
-        "subtype": "us",
+        "subtype": "nc",
         "tier1": "qm",
         "tier2": "wf",
         "type": "psp"
@@ -35,8 +36,8 @@
       "tags": [
         "pseudopotential"
       ],
-      "name": "Ultra-soft Pseudopotential",
-      "path": "/qm/wf/none/psp/us"
+      "name": "Norm-conserving Pseudopotential",
+      "path": "/qm/wf/none/psp/nc"
     },
     {
       "categories": {
@@ -51,6 +52,6 @@
       "path": "/qm/wf/none/pw/none"
     }
   ],
-  "name": "Plane-wave Ultra-soft Pseudopotential (Conjugate Gradient Diagonalization, Gaussian Smearing)",
-  "path": "/qm/wf/none/smearing/gaussian::/linalg/diag/none/cg/none::/qm/wf/none/psp/us::/qm/wf/none/pw/none"
+  "name": "Plane-wave Norm-conserving Pseudopotential (Conjugate Gradient Diagonalization, Linear Tetrahedron Method)",
+  "path": "/qm/wf/none/tetrahedron/linear::/opt/diff/ordern/cg/none::/qm/wf/none/psp/nc::/qm/wf/none/pw/none"
 }

@@ -15,6 +15,7 @@ import path from "path";
 // @ts-ignore - build-config is a .js file
 import BUILD_CONFIG from "../../build-config";
 
+// TODO: get from sources/applications directory
 const applications = ["espresso"];
 const BASE_PATH = "../..";
 
@@ -54,6 +55,7 @@ function generateConfigFiles(items: ConfigItem[], type: "workflow" | "subworkflo
     const outputBaseDir = path.resolve(
         __dirname,
         BASE_PATH,
+        BUILD_CONFIG.workflows.data.path,
         BUILD_CONFIG.workflows.data[`${type}s`],
     );
 
