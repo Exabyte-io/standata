@@ -5,9 +5,9 @@
     "a": 2.464955,
     "b": 2.464956,
     "c": 19.996729,
-    "alpha": 90,
-    "beta": 90,
-    "gamma": 120,
+    "alpha": 90.0,
+    "beta": 90.0,
+    "gamma": 120.0,
     "units": {
       "length": "angstrom",
       "angle": "degree"

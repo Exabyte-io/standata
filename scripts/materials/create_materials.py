@@ -1,4 +1,5 @@
 import json
+import re
 from typing import Dict
 
 import yaml
@@ -8,6 +9,20 @@ from express import ExPrESS
 MANIFEST_PATH = 'assets/materials/manifest.yml'  # BUILD_CONFIG.materials.assets.path + manifest
 SOURCES_PATH = 'assets/materials'                 # BUILD_CONFIG.materials.assets.path
 DESTINATION_PATH = 'data/materials'                # BUILD_CONFIG.materials.data.path
+
+def read_build_config():
+    """
+    Read formatting settings from build-config.js
+    """
+    with open('build-config.js', 'r') as f:
+        content = f.read()
+        # Extract jsonFormat.spaces value
+        match = re.search(r'jsonFormat:\s*{\s*spaces:\s*(\d+)', content)
+        if match:
+            return int(match.group(1))
+    return 2  # Default fallback
+
+JSON_INDENT = read_build_config()
 
 def read_manifest(manifest_path: str):
     """
@@ -127,7 +142,6 @@ def create_material_config(material_config: Dict, source: Dict) -> Dict:
 def main():
     """
     Main function to create materials listed in the sources manifest.
-    Outputs JSON array to stdout for consumption by TypeScript wrapper.
     """
     materials = []
     for source in read_manifest(MANIFEST_PATH):
@@ -137,13 +151,13 @@ def main():
             final_config = create_material_config(material_config, source)
             filename = construct_filename(material_config, source)
 
-            materials.append({
-                'filename': filename,
-                'data': final_config
-            })
-
-    # Output as JSON to stdout for TypeScript to consume
-    print(json.dumps(materials))
+            # Write JSON file with formatting from build-config.js
+            with open(f'{DESTINATION_PATH}/{filename}.json', 'w') as file:
+                json.dump(final_config, file, indent=JSON_INDENT)
+                file.write('\n')
+            materials.append(final_config)
+        print(f'Created {filename}.json')
+    print(f'Total materials created: {len(materials)}')
 
 
 main()

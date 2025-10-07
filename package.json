@@ -61,7 +61,7 @@
     },
     "scripts": {
         "build:categories": "ts-node src/js/cli.ts",
-        "build:materials": "ts-node scripts/materials/build_materials.ts",
+        "build:materials": ".venv/bin/python scripts/materials/create_materials.py",
         "build:workflows": "ts-node scripts/workflows/build_workflows.ts",
         "build:applications": "ts-node scripts/applications/build_applications.ts",
         "build:models": "ts-node scripts/models/build_models.ts",
