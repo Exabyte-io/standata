@@ -4,11 +4,10 @@ repos:
       - id: recreate-materials
         name: recreate-materials
         language: system
-        # TODO: figure out how to make it work in PyCharm, only works in terminal
-        entry: .venv/bin/python scripts/materials/create_materials.py && exit 0
+        entry: npm run build:materials && exit 0
         pass_filenames: false
         verbose: true
-        files: ^assets/materials/|scripts/materials/create_materials.py
+        files: ^assets/materials/|scripts/materials/
       - id: recreate-dist
         name: recreate-dist
         language: system

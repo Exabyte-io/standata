@@ -127,6 +127,7 @@ def create_material_config(material_config: Dict, source: Dict) -> Dict:
 def main():
     """
     Main function to create materials listed in the sources manifest.
+    Outputs JSON array to stdout for consumption by TypeScript wrapper.
     """
     materials = []
     for source in read_manifest(MANIFEST_PATH):
@@ -136,12 +137,13 @@ def main():
             final_config = create_material_config(material_config, source)
             filename = construct_filename(material_config, source)
 
-            with open(f'{DESTINATION_PATH}/{filename}.json', 'w') as file:
-                json.dump(final_config, file)
-                file.write('\n')
-            materials.append(final_config)
-        print(f'Created {filename}.json')
-    print(f'Total materials created: {len(materials)}')
+            materials.append({
+                'filename': filename,
+                'data': final_config
+            })
+
+    # Output as JSON to stdout for TypeScript to consume
+    print(json.dumps(materials))
 
 
 main()

@@ -118,6 +118,10 @@ const BUILD_CONFIG = {
     },
 
     runtimeDataDir: "./dist/js/runtime_data",
+
+    jsonFormat: {
+        spaces: 2,
+    },
 };
 
 module.exports = BUILD_CONFIG;
