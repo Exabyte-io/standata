@@ -30,4 +30,5 @@ ignore: |
   assets/applications/applications/
   assets/applications/templates/
   assets/applications/assets/
+  # This file has templates that exceed line length
   assets/methods/pw_methods.yml
