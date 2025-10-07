@@ -30,7 +30,7 @@ jobs:
         uses: ./actions/yaml/lint
         with:
           python-version: ${{ matrix.python-version }}
-          targets: ./sources
+          targets: ./assets
 
       - name: Run ruff linter
         uses: ./actions/py/lint

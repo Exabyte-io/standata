@@ -5,22 +5,22 @@
  * Structure Convention:
  * --------------------
  * Top-level folders organize by purpose:
- * - sources/     YAML source files that define entities (human-editable, version-controlled)
+ * - assets/      YAML source files that define entities (human-editable, version-controlled)
  * - scripts/     Build scripts for generating entities
- * - data/        Individual JSON files generated from sources (one file per entity)
+ * - data/        Individual JSON files generated from assets (one file per entity)
  * - build/standata/  Aggregated JSON maps and build artifacts (git-ignored, for runtime consumption)
  *
  * Each entity type (models, methods, applications, workflows, materials, properties) has subdirectories within these top-level folders.
  *
  * Example flow:
- *   sources/models/*.yml  →  [scripts/models/build_*.ts]  →  data/models/*.json  →  [copied to]  →  dist/js/runtime_data/
- *                                                          →  build/standata/models/*.json  →  [copied to]  →  dist/js/runtime_data/
+ *   assets/models/*.yml  →  [scripts/models/build_*.ts]  →  data/models/*.json  →  [copied to]  →  dist/js/runtime_data/
+ *                                                         →  build/standata/models/*.json  →  [copied to]  →  dist/js/runtime_data/
  */
 
 const BUILD_CONFIG = {
     models: {
-        sources: {
-            path: "sources/models",
+        assets: {
+            path: "assets/models",
             modelMethodMap: "modelMethodMap.yml",
             categories: "categories.yml",
         },
@@ -34,8 +34,8 @@ const BUILD_CONFIG = {
     },
 
     methods: {
-        sources: {
-            path: "sources/methods",
+        assets: {
+            path: "assets/methods",
             categories: "categories.yml",
         },
         data: {
@@ -47,15 +47,15 @@ const BUILD_CONFIG = {
     },
 
     applications: {
-        sources: {
-            path: "sources/applications",
+        assets: {
+            path: "assets/applications",
             templates: "templates/templates.yml",
             applicationData: "applications/application_data.yml",
             executableTree: "executables/tree.yml",
             applications: "applications",
             models: "models",
             methods: "methods",
-            assets: "assets",
+            assetsDir: "assets",
             categories: "categories.yml",
         },
         data: {
@@ -71,8 +71,8 @@ const BUILD_CONFIG = {
     },
 
     workflows: {
-        sources: {
-            path: "sources/workflows",
+        assets: {
+            path: "assets/workflows",
             workflows: "workflows",
             subworkflows: "subworkflows",
             workflowsCategories: "workflows/categories.yml",
@@ -90,8 +90,8 @@ const BUILD_CONFIG = {
     },
 
     materials: {
-        sources: {
-            path: "sources/materials",
+        assets: {
+            path: "assets/materials",
             manifest: "manifest.yml",
             categories: "categories.yml",
         },
@@ -101,8 +101,8 @@ const BUILD_CONFIG = {
     },
 
     properties: {
-        sources: {
-            path: "sources/properties",
+        assets: {
+            path: "assets/properties",
             categories: "categories.yml",
         },
         data: {

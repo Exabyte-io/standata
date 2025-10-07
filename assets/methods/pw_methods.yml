@@ -14,18 +14,18 @@ forEach:
   - !parameter
     key: units
     action: push
-    ref: sources/methods/units/pw.yml
+    ref: assets/methods/units/pw.yml
   - !parameter
     key: units
     action: push
-    ref: sources/methods/units/psp.yml
+    ref: assets/methods/units/psp.yml
   - !parameter
     key: units
     action: push
-    ref: sources/methods/units/diagonalization.yml
+    ref: assets/methods/units/diagonalization.yml
   - !parameter
     key: units
     action: push
-    ref: sources/methods/units/occupations.yml
+    ref: assets/methods/units/occupations.yml
 config:
   schema: !esse method/categorized-method

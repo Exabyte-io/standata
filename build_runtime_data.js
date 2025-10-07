@@ -51,37 +51,37 @@ if (!fs.existsSync(runtimeDataDir)) {
 // JS Modules
 
 buildAsset({
-    assetPath: `${BUILD_CONFIG.materials.sources.path}/${BUILD_CONFIG.materials.sources.categories}`,
+    assetPath: `${BUILD_CONFIG.materials.assets.path}/${BUILD_CONFIG.materials.assets.categories}`,
     dataPath: BUILD_CONFIG.materials.data.path,
     targetPath: `${runtimeDataDir}/materials.json`,
 });
 buildAsset({
-    assetPath: `${BUILD_CONFIG.properties.sources.path}/${BUILD_CONFIG.properties.sources.categories}`,
+    assetPath: `${BUILD_CONFIG.properties.assets.path}/${BUILD_CONFIG.properties.assets.categories}`,
     dataPath: BUILD_CONFIG.properties.data.path,
     targetPath: `${runtimeDataDir}/properties.json`,
 });
 buildAsset({
-    assetPath: `${BUILD_CONFIG.applications.sources.path}/${BUILD_CONFIG.applications.sources.categories}`,
+    assetPath: `${BUILD_CONFIG.applications.assets.path}/${BUILD_CONFIG.applications.assets.categories}`,
     dataPath: BUILD_CONFIG.applications.data.path,
     targetPath: `${runtimeDataDir}/applications.json`,
 });
 buildAsset({
-    assetPath: `${BUILD_CONFIG.models.sources.path}/${BUILD_CONFIG.models.sources.categories}`,
+    assetPath: `${BUILD_CONFIG.models.assets.path}/${BUILD_CONFIG.models.assets.categories}`,
     dataPath: BUILD_CONFIG.models.data.path,
     targetPath: `${runtimeDataDir}/models.json`,
 });
 buildAsset({
-    assetPath: `${BUILD_CONFIG.methods.sources.path}/${BUILD_CONFIG.methods.sources.categories}`,
+    assetPath: `${BUILD_CONFIG.methods.assets.path}/${BUILD_CONFIG.methods.assets.categories}`,
     dataPath: BUILD_CONFIG.methods.data.path,
     targetPath: `${runtimeDataDir}/methods.json`,
 });
 buildAsset({
-    assetPath: `${BUILD_CONFIG.workflows.sources.path}/${BUILD_CONFIG.workflows.sources.workflowsCategories}`,
+    assetPath: `${BUILD_CONFIG.workflows.assets.path}/${BUILD_CONFIG.workflows.assets.workflowsCategories}`,
     dataPath: `${BUILD_CONFIG.workflows.data.path}/${BUILD_CONFIG.workflows.data.workflows}`,
     targetPath: `${runtimeDataDir}/workflows.json`,
 });
 buildAsset({
-    assetPath: `${BUILD_CONFIG.workflows.sources.path}/${BUILD_CONFIG.workflows.sources.subworkflowsCategories}`,
+    assetPath: `${BUILD_CONFIG.workflows.assets.path}/${BUILD_CONFIG.workflows.assets.subworkflowsCategories}`,
     dataPath: `${BUILD_CONFIG.workflows.data.path}/${BUILD_CONFIG.workflows.data.subworkflows}`,
     targetPath: `${runtimeDataDir}/subworkflows.json`,
 });
@@ -143,49 +143,49 @@ copyJsonAsset({
 // Py Modules
 
 buildAsset({
-    assetPath: `${BUILD_CONFIG.materials.sources.path}/${BUILD_CONFIG.materials.sources.categories}`,
+    assetPath: `${BUILD_CONFIG.materials.assets.path}/${BUILD_CONFIG.materials.assets.categories}`,
     dataPath: BUILD_CONFIG.materials.data.path,
     targetPath: "./src/py/mat3ra/standata/data/materials.py",
     contentGenerator: (content) =>
         `import json\n\nmaterials_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: `${BUILD_CONFIG.properties.sources.path}/${BUILD_CONFIG.properties.sources.categories}`,
+    assetPath: `${BUILD_CONFIG.properties.assets.path}/${BUILD_CONFIG.properties.assets.categories}`,
     dataPath: BUILD_CONFIG.properties.data.path,
     targetPath: "./src/py/mat3ra/standata/data/properties.py",
     contentGenerator: (content) =>
         `import json\n\nproperties_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: `${BUILD_CONFIG.applications.sources.path}/${BUILD_CONFIG.applications.sources.categories}`,
+    assetPath: `${BUILD_CONFIG.applications.assets.path}/${BUILD_CONFIG.applications.assets.categories}`,
     dataPath: BUILD_CONFIG.applications.data.path,
     targetPath: "./src/py/mat3ra/standata/data/applications.py",
     contentGenerator: (content) =>
         `import json\n\napplications_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: `${BUILD_CONFIG.models.sources.path}/${BUILD_CONFIG.models.sources.categories}`,
+    assetPath: `${BUILD_CONFIG.models.assets.path}/${BUILD_CONFIG.models.assets.categories}`,
     dataPath: BUILD_CONFIG.models.data.path,
     targetPath: "./src/py/mat3ra/standata/data/models.py",
     contentGenerator: (content) =>
         `import json\n\nmodels_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: `${BUILD_CONFIG.methods.sources.path}/${BUILD_CONFIG.methods.sources.categories}`,
+    assetPath: `${BUILD_CONFIG.methods.assets.path}/${BUILD_CONFIG.methods.assets.categories}`,
     dataPath: BUILD_CONFIG.methods.data.path,
     targetPath: "./src/py/mat3ra/standata/data/methods.py",
     contentGenerator: (content) =>
         `import json\n\nmethods_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: `${BUILD_CONFIG.workflows.sources.path}/${BUILD_CONFIG.workflows.sources.workflowsCategories}`,
+    assetPath: `${BUILD_CONFIG.workflows.assets.path}/${BUILD_CONFIG.workflows.assets.workflowsCategories}`,
     dataPath: `${BUILD_CONFIG.workflows.data.path}/${BUILD_CONFIG.workflows.data.workflows}`,
     targetPath: "./src/py/mat3ra/standata/data/workflows.py",
     contentGenerator: (content) =>
         `import json\n\nworkflows_data = json.loads(r'''${JSON.stringify(content)}''')\n`,
 });
 buildAsset({
-    assetPath: `${BUILD_CONFIG.workflows.sources.path}/${BUILD_CONFIG.workflows.sources.subworkflowsCategories}`,
+    assetPath: `${BUILD_CONFIG.workflows.assets.path}/${BUILD_CONFIG.workflows.assets.subworkflowsCategories}`,
     dataPath: `${BUILD_CONFIG.workflows.data.path}/${BUILD_CONFIG.workflows.data.subworkflows}`,
     targetPath: "./src/py/mat3ra/standata/data/subworkflows.py",
     contentGenerator: (content) =>

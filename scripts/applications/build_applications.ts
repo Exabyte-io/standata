@@ -64,20 +64,20 @@ function getAssetData(currPath: string, targetObj: object, assetRoot: string) {
 }
 
 buildAsset({
-    assetPath: BUILD_CONFIG.applications.sources.templates,
+    assetPath: BUILD_CONFIG.applications.assets.templates,
     targetPath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.templatesList}`,
-    workingDir: `./${BUILD_CONFIG.applications.sources.path}`,
+    workingDir: `./${BUILD_CONFIG.applications.assets.path}`,
 });
 
 buildAsset({
-    assetPath: BUILD_CONFIG.applications.sources.executableTree,
+    assetPath: BUILD_CONFIG.applications.assets.executableTree,
     targetPath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
-    workingDir: `./${BUILD_CONFIG.applications.sources.path}`,
+    workingDir: `./${BUILD_CONFIG.applications.assets.path}`,
 });
 
-const APPLICATION_ASSET_PATH = path.resolve(__dirname, `../../${BUILD_CONFIG.applications.sources.path}`, BUILD_CONFIG.applications.sources.applications);
-const MODEL_ASSET_PATH = path.resolve(__dirname, `../../${BUILD_CONFIG.applications.sources.path}`, BUILD_CONFIG.applications.sources.models);
-const METHOD_ASSET_PATH = path.resolve(__dirname, `../../${BUILD_CONFIG.applications.sources.path}`, BUILD_CONFIG.applications.sources.methods);
+const APPLICATION_ASSET_PATH = path.resolve(__dirname, `../../${BUILD_CONFIG.applications.assets.path}`, BUILD_CONFIG.applications.assets.applications);
+const MODEL_ASSET_PATH = path.resolve(__dirname, `../../${BUILD_CONFIG.applications.assets.path}`, BUILD_CONFIG.applications.assets.models);
+const METHOD_ASSET_PATH = path.resolve(__dirname, `../../${BUILD_CONFIG.applications.assets.path}`, BUILD_CONFIG.applications.assets.methods);
 
 const APPLICATION_DATA = {};
 const MODEL_FILTER_TREE = {};

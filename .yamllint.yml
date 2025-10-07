@@ -26,8 +26,8 @@ ignore: |
   data/
   build/
   dist/
-  sources/**/categories.yml
-  sources/applications/applications/
-  sources/applications/templates/
-  sources/applications/assets/
-  sources/methods/pw_methods.yml
+  assets/**/categories.yml
+  assets/applications/applications/
+  assets/applications/templates/
+  assets/applications/assets/
+  assets/methods/pw_methods.yml

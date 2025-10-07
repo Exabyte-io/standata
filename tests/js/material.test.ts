@@ -22,7 +22,7 @@ function countEntitiesInYAML(filePath: string, entityKey: string): number {
     }
 }
 
-const materialsCategoriesFilePath = "sources/materials/categories.yml";
+const materialsCategoriesFilePath = "assets/materials/categories.yml";
 const TOTAL_NUMBER_OF_MATERIALS = countEntitiesInYAML(materialsCategoriesFilePath, "entities");
 console.log(`Total number of materials: ${TOTAL_NUMBER_OF_MATERIALS}`);
 

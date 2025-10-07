@@ -43,7 +43,7 @@ interface EntityData {
 }
 
 const CONFIG: CategoryConfig = {
-    categoriesPath: `${BUILD_CONFIG.methods.sources.path}/${BUILD_CONFIG.methods.sources.categories}`,
+    categoriesPath: `${BUILD_CONFIG.methods.assets.path}/${BUILD_CONFIG.methods.assets.categories}`,
     dataPath: BUILD_CONFIG.methods.data.path,
     categoryKeys: ["tier1", "tier2", "tier3", "type", "subtype"],
     extractFromUnits: true,

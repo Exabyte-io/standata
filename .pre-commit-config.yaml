@@ -8,14 +8,14 @@ repos:
         entry: .venv/bin/python scripts/materials/create_materials.py && exit 0
         pass_filenames: false
         verbose: true
-        files: ^sources/materials/|scripts/materials/create_materials.py
+        files: ^assets/materials/|scripts/materials/create_materials.py
       - id: recreate-dist
         name: recreate-dist
         language: system
         entry: npm run build && exit 0
         pass_filenames: false
         verbose: true
-        files: ^(sources/(materials|methods|models|applications|workflows|properties)/|scripts/(materials|methods|models|applications|workflows)/)
+        files: ^(assets/(materials|methods|models|applications|workflows|properties)/|scripts/(materials|methods|models|applications|workflows)/)
         exclude: ^(src/js/runtime_data/|dist/|data/|build/)
   - repo: https://github.com/Exabyte-io/pre-commit-hooks
     rev: 2023.8.18
@@ -27,7 +27,7 @@ repos:
       - id: isort
       - id: mypy
       - id: check-yaml
-        exclude: ^sources/.*\.ya?ml$
+        exclude: ^assets/.*\.ya?ml$
       - id: end-of-file-fixer
         exclude: ^data/.*\.json$|^build/.*\.json$|^dist/|src/py/mat3ra/standata/data/
       - id: trailing-whitespace

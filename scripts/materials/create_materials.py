@@ -5,8 +5,8 @@ import yaml
 from express import ExPrESS
 
 # Paths configured in build-config.js: BUILD_CONFIG.materials.*
-MANIFEST_PATH = 'sources/materials/manifest.yml'  # BUILD_CONFIG.materials.sources.path + manifest
-SOURCES_PATH = 'sources/materials'                 # BUILD_CONFIG.materials.sources.path
+MANIFEST_PATH = 'assets/materials/manifest.yml'  # BUILD_CONFIG.materials.assets.path + manifest
+SOURCES_PATH = 'assets/materials'                 # BUILD_CONFIG.materials.assets.path
 DESTINATION_PATH = 'data/materials'                # BUILD_CONFIG.materials.data.path
 
 def read_manifest(manifest_path: str):

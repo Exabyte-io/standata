@@ -78,9 +78,9 @@ applications.forEach((name) => {
     workflowSubforkflowMapByApplication.workflows[name] = {};
     workflowSubforkflowMapByApplication.subworkflows[name] = {};
 
-    const sourcesRoot = path.resolve(__dirname, BASE_PATH, BUILD_CONFIG.workflows.sources.path);
-    const wfDir = path.resolve(sourcesRoot, BUILD_CONFIG.workflows.sources.workflows, name);
-    const swDir = path.resolve(sourcesRoot, BUILD_CONFIG.workflows.sources.subworkflows, name);
+    const sourcesRoot = path.resolve(__dirname, BASE_PATH, BUILD_CONFIG.workflows.assets.path);
+    const wfDir = path.resolve(sourcesRoot, BUILD_CONFIG.workflows.assets.workflows, name);
+    const swDir = path.resolve(sourcesRoot, BUILD_CONFIG.workflows.assets.subworkflows, name);
 
     const wfFiles = fs.readdirSync(wfDir);
     console.log(`Building ${name}: ${wfFiles.length} workflow(s)`);
