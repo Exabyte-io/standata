@@ -100,7 +100,7 @@ const assetPath = path.resolve(
     buildDir,
     BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication,
 );
-writeJSONFile(assetPath, workflowSubforkflowMapByApplication);
+writeJSONFile(assetPath, workflowSubforkflowMapByApplication, 0);
 
 const WorkflowCls = Workflow as any;
 WorkflowCls.usePredefinedIds = true;

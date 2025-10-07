@@ -6,10 +6,10 @@ import yaml from "js-yaml";
 import lodash from "lodash";
 import path from "path";
 
-import { writeJSONFile } from "../utils";
 import BUILD_CONFIG from "../../build-config";
 import { ApplicationVersionsMapType } from "../../src/js/types/application";
 import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
+import { writeJSONFile } from "../utils";
 
 interface BuildAssetParams {
     assetPath: string;
@@ -33,7 +33,7 @@ function buildAsset({ assetPath, targetPath, workingDir = null }: BuildAssetPara
             fs.mkdirSync(targetBasename, { recursive: true });
         }
 
-        writeJSONFile(path.resolve(originalCwd, targetPath), obj);
+        writeJSONFile(path.resolve(originalCwd, targetPath), obj, 0);
         console.log(`Written asset "${assetPath}" to "${targetPath}"`);
         return obj;
     } finally {
@@ -76,9 +76,21 @@ buildAsset({
     workingDir: `./${BUILD_CONFIG.applications.assets.path}`,
 });
 
-const APPLICATION_ASSET_PATH = path.resolve(__dirname, `../../${BUILD_CONFIG.applications.assets.path}`, BUILD_CONFIG.applications.assets.applications);
-const MODEL_ASSET_PATH = path.resolve(__dirname, `../../${BUILD_CONFIG.applications.assets.path}`, BUILD_CONFIG.applications.assets.models);
-const METHOD_ASSET_PATH = path.resolve(__dirname, `../../${BUILD_CONFIG.applications.assets.path}`, BUILD_CONFIG.applications.assets.methods);
+const APPLICATION_ASSET_PATH = path.resolve(
+    __dirname,
+    `../../${BUILD_CONFIG.applications.assets.path}`,
+    BUILD_CONFIG.applications.assets.applications,
+);
+const MODEL_ASSET_PATH = path.resolve(
+    __dirname,
+    `../../${BUILD_CONFIG.applications.assets.path}`,
+    BUILD_CONFIG.applications.assets.models,
+);
+const METHOD_ASSET_PATH = path.resolve(
+    __dirname,
+    `../../${BUILD_CONFIG.applications.assets.path}`,
+    BUILD_CONFIG.applications.assets.methods,
+);
 
 const APPLICATION_DATA = {};
 const MODEL_FILTER_TREE = {};
@@ -125,24 +137,24 @@ const modelMethodMapByApplication = {
     methods: METHOD_FILTER_TREE,
 };
 
-fs.writeFileSync(
+writeJSONFile(
     path.resolve(
         __dirname,
         `../../${BUILD_CONFIG.applications.build.path}`,
         BUILD_CONFIG.applications.build.applicationVersionsMapByApplication,
     ),
-    JSON.stringify(cleanApplicationData),
-    "utf8",
+    cleanApplicationData,
+    0,
 );
 
-fs.writeFileSync(
+writeJSONFile(
     path.resolve(
         __dirname,
         `../../${BUILD_CONFIG.applications.build.path}`,
         BUILD_CONFIG.applications.build.modelMethodMapByApplication,
     ),
-    JSON.stringify(modelMethodMapByApplication),
-    "utf8",
+    modelMethodMapByApplication,
+    0,
 );
 
 console.log("✅ All application assets built successfully!");

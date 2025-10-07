@@ -9,8 +9,8 @@ import * as fs from "fs";
 import * as yaml from "js-yaml";
 import * as path from "path";
 
-import { writeJSONFile } from "../utils";
 import BUILD_CONFIG from "../../build-config";
+import { writeJSONFile } from "../utils";
 
 interface FilterRule {
     path?: string;
@@ -80,7 +80,7 @@ export function buildModelMethodMap(): void {
         fs.mkdirSync(targetDir, { recursive: true });
     }
 
-    writeJSONFile(targetFile, filterEntries);
+    writeJSONFile(targetFile, filterEntries, 0);
     console.log(`Generated: ${targetFile}`);
     console.log(`Model-method map built successfully with ${filterEntries.length} entries`);
 }
