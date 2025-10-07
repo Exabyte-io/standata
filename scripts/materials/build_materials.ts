@@ -1,5 +1,4 @@
 import { execSync } from "child_process";
-import * as fs from "fs";
 import * as path from "path";
 
 import BUILD_CONFIG from "../../build-config";
