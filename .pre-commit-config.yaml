@@ -5,18 +5,18 @@ repos:
         name: recreate-materials
         language: system
         # TODO: figure out how to make it work in PyCharm, only works in terminal
-        entry: .venv/bin/python create_materials.py && exit 0
+        entry: .venv/bin/python scripts/materials/create_materials.py && exit 0
         pass_filenames: false
         verbose: true
-        files: ^materials/sources/|create_materials.py
+        files: ^assets/materials/|scripts/materials/create_materials.py
       - id: recreate-dist
         name: recreate-dist
         language: system
         entry: npm run build && exit 0
         pass_filenames: false
         verbose: true
-        files: ^(materials/sources/|applications/(sources|scripts)|properties/|workflows/(sources|scripts)/)
-        exclude: ^(workflows/(?!wode/)|src/js/runtime_data/|dist/)
+        files: ^(assets/(materials|methods|models|applications|workflows|properties)/|scripts/(materials|methods|models|applications|workflows)/)
+        exclude: ^(src/js/runtime_data/|dist/|data/|build/)
   - repo: https://github.com/Exabyte-io/pre-commit-hooks
     rev: 2023.8.18
     hooks:
@@ -27,9 +27,9 @@ repos:
       - id: isort
       - id: mypy
       - id: check-yaml
-        exclude: ^applications/sources/.*\.ya?ml$
+        exclude: ^assets/.*\.ya?ml$
       - id: end-of-file-fixer
-        exclude: ^(workflows|applications)/.*\.json$|^dist/
+        exclude: ^data/.*\.json$|^build/.*\.json$|^dist/|src/py/mat3ra/standata/data/
       - id: trailing-whitespace
         exclude: ^dist/
   - repo: local
