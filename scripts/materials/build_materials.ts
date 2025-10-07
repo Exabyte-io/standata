@@ -1,4 +1,5 @@
 import { execSync } from "child_process";
+import * as fs from "fs";
 import * as path from "path";
 
 import BUILD_CONFIG from "../../build-config";
@@ -13,10 +14,7 @@ interface MaterialOutput {
  * Build materials by running Python script and writing output using standard formatting
  */
 function buildMaterials() {
-    // Run the Python script using venv interpreter and capture JSON output
-    const pythonCmd = process.platform === "win32"
-        ? ".venv\\Scripts\\python.exe"
-        : ".venv/bin/python";
+    const pythonCmd = ".venv/bin/python";
 
     let output: string;
     try {
