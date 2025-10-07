@@ -12,9 +12,8 @@ name:
 forEach:
   - !parameter
     key: categories.subtype
-    # TODO: add more
-    values:
-      - nc
+    values: !esse 'methods-category/physical/qm/wf/enum-options#/pseudoSubtypes/enum'
+    exclude: '^coulomb'
 config:
   categories:
     tier1: qm
