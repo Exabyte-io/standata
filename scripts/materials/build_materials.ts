@@ -13,10 +13,21 @@ interface MaterialOutput {
  * Build materials by running Python script and writing output using standard formatting
  */
 function buildMaterials() {
-    // Run the Python script and capture JSON output
-    const output = execSync("python scripts/materials/create_materials.py", {
-        encoding: "utf8",
-    });
+    // Run the Python script using venv interpreter and capture JSON output
+    const pythonCmd = process.platform === "win32"
+        ? ".venv\\Scripts\\python.exe"
+        : ".venv/bin/python";
+
+    let output: string;
+    try {
+        output = execSync(`${pythonCmd} scripts/materials/create_materials.py`, {
+            encoding: "utf8",
+        });
+    } catch (error: any) {
+        console.error("Error running Python script:");
+        console.error(error.stderr || error.message);
+        throw error;
+    }
 
     const materials: MaterialOutput[] = JSON.parse(output);
 
