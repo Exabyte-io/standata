@@ -10,6 +10,20 @@ const path = require("path");
 const yaml = require("js-yaml");
 const BUILD_CONFIG = require("./build-config");
 
+/**
+ * Write file and create directory if it doesn't exist
+ * @param {string} filePath - Path to the file
+ * @param {string} content - Content to write
+ * @param {string} encoding - File encoding (default: utf8)
+ */
+function writeFile(filePath, content, encoding = "utf8") {
+    const dir = path.dirname(filePath);
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+    fs.writeFileSync(filePath, content, encoding);
+}
+
 function buildAsset({
     assetPath,
     targetPath,
@@ -37,15 +51,19 @@ function buildAsset({
         console.log({ content, entityPath });
         obj.filesMapByName[entity.filename] = JSON.parse(content);
     });
-    fs.writeFileSync(targetPath, contentGenerator(obj), "utf8");
+    writeFile(targetPath, contentGenerator(obj), "utf8");
     console.log(`Written entity category map to "${assetPath}" to "${targetPath}"`);
 }
 
 const { runtimeDataDir } = BUILD_CONFIG;
 
-// Ensure runtime_data directory exists
-if (!fs.existsSync(runtimeDataDir)) {
-    fs.mkdirSync(runtimeDataDir, { recursive: true });
+// Create symlink from src/js/runtime_data to dist/js/runtime_data
+const symlinkSource = path.resolve(__dirname, "dist/js/runtime_data");
+const symlinkTarget = path.resolve(__dirname, "src/js/runtime_data");
+if (!fs.existsSync(symlinkTarget)) {
+    const relativeSource = path.relative(path.dirname(symlinkTarget), symlinkSource);
+    fs.symlinkSync(relativeSource, symlinkTarget, "dir");
+    console.log(`Created symlink: ${symlinkTarget} -> ${relativeSource}`);
 }
 
 // JS Modules
@@ -89,7 +107,7 @@ buildAsset({
 function copyJsonAsset({ sourcePath, targetPath }) {
     if (fs.existsSync(sourcePath)) {
         const content = fs.readFileSync(sourcePath, "utf8");
-        fs.writeFileSync(targetPath, content, "utf8");
+        writeFile(targetPath, content, "utf8");
         console.log(`Copied ${path.basename(sourcePath)} to "${targetPath}"`);
     } else {
         console.warn(`Warning: ${sourcePath} not found.`);

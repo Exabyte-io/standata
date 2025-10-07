@@ -6,6 +6,7 @@ import yaml from "js-yaml";
 import lodash from "lodash";
 import path from "path";
 
+import { writeJSONFile } from "../utils";
 import BUILD_CONFIG from "../../build-config";
 import { ApplicationVersionsMapType } from "../../src/js/types/application";
 import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
@@ -32,7 +33,7 @@ function buildAsset({ assetPath, targetPath, workingDir = null }: BuildAssetPara
             fs.mkdirSync(targetBasename, { recursive: true });
         }
 
-        fs.writeFileSync(path.resolve(originalCwd, targetPath), JSON.stringify(obj), "utf8");
+        writeJSONFile(path.resolve(originalCwd, targetPath), obj);
         console.log(`Written asset "${assetPath}" to "${targetPath}"`);
         return obj;
     } finally {
@@ -114,7 +115,7 @@ Object.keys(cleanApplicationData).forEach((appName) => {
     versionConfigsFull.forEach((versionConfigFull) => {
         const fileName = appVersionsMap.getSlugForVersionConfig(versionConfigFull);
         const filePath = path.resolve(appDir, fileName);
-        fs.writeFileSync(filePath, JSON.stringify(versionConfigFull), "utf8");
+        writeJSONFile(filePath, versionConfigFull);
         console.log(`Generated application version: ${appName}/${fileName}`);
     });
 });

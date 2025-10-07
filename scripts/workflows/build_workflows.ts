@@ -14,6 +14,7 @@ import path from "path";
 
 // @ts-ignore - build-config is a .js file
 import BUILD_CONFIG from "../../build-config";
+import { writeJSONFile } from "../utils";
 
 // TODO: get from sources/applications directory
 const applications = ["espresso"];
@@ -69,7 +70,7 @@ function generateConfigFiles(items: ConfigItem[], type: "workflow" | "subworkflo
         const filename = `${name}.json`;
         const filePath = path.resolve(appDir, filename);
 
-        fs.writeFileSync(filePath, JSON.stringify(config, null, 2), "utf8");
+        writeJSONFile(filePath, config);
         console.log(`Generated ${type}: ${appName}/${filename}`);
     });
 }
@@ -99,7 +100,7 @@ const assetPath = path.resolve(
     buildDir,
     BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication,
 );
-fs.writeFileSync(assetPath, JSON.stringify(workflowSubforkflowMapByApplication), "utf8");
+writeJSONFile(assetPath, workflowSubforkflowMapByApplication);
 
 const WorkflowCls = Workflow as any;
 WorkflowCls.usePredefinedIds = true;

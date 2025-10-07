@@ -4,6 +4,8 @@ import * as yaml from "js-yaml";
 import * as lodash from "lodash";
 import * as path from "path";
 
+import { writeJSONFile } from "../utils";
+
 export interface BuildConfig {
     sourcesPath: string;
     dataPath: string;
@@ -145,7 +147,7 @@ export function processEntityFile(filePath: string, buildConfig: BuildConfig): v
         const targetPath = path.join(targetDir, filename);
 
         // Write JSON file
-        fs.writeFileSync(targetPath, JSON.stringify(config, null, 2), "utf8");
+        writeJSONFile(targetPath, config);
         console.log(`  Created: ${targetPath}`);
     });
 }
