@@ -1,0 +1,13 @@
+{
+    "categories": {
+        "tier1": "opt",
+        "tier2": "diff",
+        "tier3": "ordern",
+        "type": "cg"
+    },
+    "tags": [
+        "diagonalization"
+    ],
+    "name": "Conjugate Gradient Diagonalization",
+    "path": "/opt/diff/ordern/cg/none"
+}
