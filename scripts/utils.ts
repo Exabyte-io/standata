@@ -181,7 +181,10 @@ export function encodeDataAsURLPath(
  * Normalizes data to an array format for consistent processing.
  */
 export function normalizeToArray(data: any): any[] {
-    if (Array.isArray(data)) return data;
+    if (Array.isArray(data)) {
+        // Flatten nested arrays (e.g., from multiple !combine blocks)
+        return data.flat();
+    }
     if (lodash.isPlainObject(data) && !data.name) {
         return Object.values(data).flat();
     }
