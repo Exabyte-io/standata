@@ -16,21 +16,21 @@ export class MethodStandata extends Standata<MethodConfig> {
     getByUnitType(unitType: string): MethodConfig[] {
         const allMethods = this.getAll();
         return allMethods.filter((method) =>
-            method.units.some((unit) => getCategoryValue(unit.categories.type) === unitType),
+            method.units?.some((unit) => getCategoryValue(unit.categories.type) === unitType),
         );
     }
 
     getByUnitSubtype(unitSubtype: string): MethodConfig[] {
         const allMethods = this.getAll();
         return allMethods.filter((method) =>
-            method.units.some((unit) => getCategoryValue(unit.categories.subtype) === unitSubtype),
+            method.units?.some((unit) => getCategoryValue(unit.categories.subtype) === unitSubtype),
         );
     }
 
     getByUnitTags(...tags: string[]): MethodConfig[] {
         const allMethods = this.getAll();
         return allMethods.filter((method) =>
-            method.units.some((unit) => tags.some((tag) => unit.tags.includes(tag))),
+            method.units?.some((unit) => tags.some((tag) => unit.tags.includes(tag))),
         );
     }
 
@@ -42,7 +42,7 @@ export class MethodStandata extends Standata<MethodConfig> {
     getByUnitParameters(parameters: Record<string, any>): MethodConfig[] {
         const allMethods = this.getAll();
         return allMethods.filter((method) =>
-            method.units.some((unit) => {
+            method.units?.some((unit) => {
                 if (!unit.parameters) return false;
                 return Object.entries(parameters).every(
                     ([key, value]) => unit.parameters[key] === value,
@@ -63,7 +63,7 @@ export class MethodStandata extends Standata<MethodConfig> {
 
     getAllUnits(): UnitMethod[] {
         const allMethods = this.getAll();
-        return allMethods.flatMap((method) => method.units);
+        return allMethods.flatMap((method) => method.units || []);
     }
 
     getUniqueUnitTypes(): string[] {

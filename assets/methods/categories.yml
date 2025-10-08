@@ -1,56 +1,284 @@
 categories:
   tier1:
-    - qm    # quantum mechanical
-    - opt   # optimization
-    - linalg # linear algebra
+    - linear algebra
+    - optimization
+    - quantum mechanics
   tier2:
-    - wf    # wave function
-    - diff  # differential
-    - diag  # diagonalization
-  tier3:
-    - ordern # order-n
-  type:
-    - psp        # pseudopotential
-    - pw         # plane wave
-    - smearing   # smearing
-    - tetrahedron # tetrahedron
-    - cg         # conjugate gradient
-  subtype:
-    - nc      # norm-conserving
-    - gaussian # gaussian smearing
-    - linear  # linear
-  tags:
-    - pseudopotential
-    - plane-wave
-    - atomic-orbital
-    - occupation-number
     - diagonalization
-    - machine-learning
-
+    - differential
+    - wave function
+  tier3:
+    - order-n
+  type:
+    - ao
+    - conjugate gradient
+    - davidson
+    - kernel_ridge
+    - linear
+    - plane wave
+    - pseudopotential
+    - smearing
+    - tetrahedron
+  subtype:
+    - gaussian smearing
+    - least_squares
+    - linear
+    - methfessel-paxton
+    - nc-fr
+    - norm conserving
+    - pople
+    - projector augmented wave
+    - ridge
+    - ultrasoft
+  tags:
+    - atomic orbital
+    - diagonalization
+    - exabyteML
+    - occupation number
+    - plane wave
+    - pseudopotential
 entities:
+  - filename: any_pw_psp/any_plane_wave_pseudopotential_method.json
+    categories:
+      - plane wave
+      - pseudopotential
+  - filename: ao_pople/wave_function_lcao_pople_basis_set_6_31g.json
+    categories:
+      - ao
+      - atomic orbital
+      - pople
+      - quantum mechanics
+      - wave function
+  - filename: diagonalization/conjugate_gradient_diagonalization.json
+    categories:
+      - conjugate gradient
+      - diagonalization
+      - differential
+      - optimization
+      - order-n
+  - filename: diagonalization/davidson_diagonalization.json
+    categories:
+      - davidson
+      - diagonalization
+      - linear algebra
+  - filename: exabyte_ml/kernel_ridge_least_squares_regression.json
+    categories:
+      - exabyteML
+  - filename: exabyte_ml/linear_least_squares_regression.json
+    categories:
+      - exabyteML
+  - filename: exabyte_ml/linear_ridge_regression.json
+    categories:
+      - exabyteML
+  - filename: local_orbital/wave_function_lcao_pople_basis_set_6_31g.json
+    categories:
+      - atomic orbital
+  - filename: occupations/gaussian_smearing.json
+    categories:
+      - gaussian smearing
+      - occupation number
+      - quantum mechanics
+      - smearing
+      - wave function
+  - filename: occupations/linear_tetrahedron_method.json
+    categories:
+      - linear
+      - occupation number
+      - quantum mechanics
+      - tetrahedron
+      - wave function
+  - filename: occupations/methfessel_paxton_smearing.json
+    categories:
+      - methfessel-paxton
+      - occupation number
+      - quantum mechanics
+      - smearing
+      - wave function
+  - filename: psp/norm_conserving_fully_relativistic_pseudopotential.json
+    categories:
+      - nc-fr
+      - pseudopotential
+      - quantum mechanics
+      - wave function
+  - filename: psp/norm_conserving_pseudopotential.json
+    categories:
+      - norm conserving
+      - pseudopotential
+      - quantum mechanics
+      - wave function
+  - filename: psp/projector_augmented_wave_pseudopotential.json
+    categories:
+      - projector augmented wave
+      - pseudopotential
+      - quantum mechanics
+      - wave function
+  - filename: psp/ultra_soft_pseudopotential.json
+    categories:
+      - pseudopotential
+      - quantum mechanics
+      - ultrasoft
+      - wave function
+  - filename: pw/plane_wave_norm_conserving_fully_relativistic_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_norm_conserving_fully_relativistic_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_norm_conserving_fully_relativistic_pseudopotential_conjugate_gradient_diagonalization_methfessel_paxton_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_norm_conserving_fully_relativistic_pseudopotential_davidson_diagonalization_gaussian_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_norm_conserving_fully_relativistic_pseudopotential_davidson_diagonalization_linear_tetrahedron_method.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_norm_conserving_fully_relativistic_pseudopotential_davidson_diagonalization_methfessel_paxton_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
   - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
     categories:
-      - cg
-      - diff
-      - gaussian
-      - nc
-      - opt
-      - ordern
-      - psp
-      - pw
-      - qm
-      - smearing
-      - wf
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
   - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
     categories:
-      - cg
-      - diff
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_methfessel_paxton_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_norm_conserving_pseudopotential_davidson_diagonalization_gaussian_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_norm_conserving_pseudopotential_davidson_diagonalization_linear_tetrahedron_method.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_norm_conserving_pseudopotential_davidson_diagonalization_methfessel_paxton_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_projector_augmented_wave_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_projector_augmented_wave_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_projector_augmented_wave_pseudopotential_conjugate_gradient_diagonalization_methfessel_paxton_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_projector_augmented_wave_pseudopotential_davidson_diagonalization_gaussian_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_projector_augmented_wave_pseudopotential_davidson_diagonalization_linear_tetrahedron_method.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_projector_augmented_wave_pseudopotential_davidson_diagonalization_methfessel_paxton_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_ultra_soft_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_ultra_soft_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_ultra_soft_pseudopotential_conjugate_gradient_diagonalization_methfessel_paxton_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_ultra_soft_pseudopotential_davidson_diagonalization_gaussian_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_ultra_soft_pseudopotential_davidson_diagonalization_linear_tetrahedron_method.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/plane_wave_ultra_soft_pseudopotential_davidson_diagonalization_methfessel_paxton_smearing.json
+    categories:
+      - diagonalization
+      - occupation number
+      - plane wave
+      - pseudopotential
+  - filename: pw/wave_function_plane_wave.json
+    categories:
+      - plane wave
+      - quantum mechanics
+      - wave function
+  - filename: regression/kernel_ridge_least_squares_regression.json
+    categories:
+      - exabyteML
+      - kernel_ridge
+      - least_squares
+  - filename: regression/linear_least_squares_regression.json
+    categories:
+      - exabyteML
+      - least_squares
       - linear
-      - nc
-      - opt
-      - ordern
-      - psp
-      - pw
-      - qm
-      - tetrahedron
-      - wf
+  - filename: regression/linear_ridge_regression.json
+    categories:
+      - exabyteML
+      - linear
+      - ridge

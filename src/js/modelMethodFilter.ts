@@ -1,24 +1,7 @@
 import MODEL_METHOD_MAP from "./runtime_data/modelMethodMap.json";
 import type { MethodConfig, UnitMethod } from "./types/method";
 import type { ModelConfig } from "./types/model";
-
-export interface FilterRule {
-    path?: string;
-    regex?: string;
-}
-
-export interface ModelCategories {
-    tier1?: string;
-    tier2?: string;
-    tier3?: string;
-    type?: string;
-    subtype?: string;
-}
-
-export interface ModelMethodFilterEntry {
-    modelCategories: ModelCategories;
-    filterRules: FilterRule[];
-}
+import { FilterRule, ModelCategories, ModelMethodFilterEntry } from "./types/modelMethodFilter";
 
 export type ModelMethodFilterMap = ModelMethodFilterEntry[];
 
@@ -64,6 +47,9 @@ export class ModelMethodFilter {
     }
 
     private isMethodCompatible(method: MethodConfig, filterRules: FilterRule[]): boolean {
+        if (!method.units || !Array.isArray(method.units)) {
+            return false;
+        }
         return method.units.every((unit: UnitMethod) =>
             filterRules.some((rule) => this.isUnitMatchingRule(unit, rule)),
         );

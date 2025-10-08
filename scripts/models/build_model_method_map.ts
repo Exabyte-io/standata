@@ -1,34 +1,10 @@
-/**
- * Build script for model-method compatibility map
- *
- * Converts YAML source to JSON format for runtime consumption
- * Following standata's build pattern but specialized for model-method mapping
- */
-
-import * as fs from "fs";
-import * as yaml from "js-yaml";
-import * as path from "path";
-
 import BUILD_CONFIG from "../../build-config";
-import { writeJSONFile } from "../utils";
-
-interface FilterRule {
-    path?: string;
-    regex?: string;
-}
-
-interface ModelCategories {
-    tier1?: string;
-    tier2?: string;
-    tier3?: string;
-    type?: string;
-    subtype?: string;
-}
-
-interface ModelMethodFilterEntry {
-    modelCategories: ModelCategories;
-    filterRules: FilterRule[];
-}
+import {
+    FilterRule,
+    ModelCategories,
+    ModelMethodFilterEntry,
+} from "../../src/js/types/modelMethodFilter";
+import { readYamlFile, writeJsonFile } from "../utils";
 
 function parseModelCategories(categoryPath: string[]): ModelCategories {
     const categories: ModelCategories = {};
@@ -66,21 +42,12 @@ export function buildModelMethodMap(): void {
 
     console.log(`Building model-method map from ${sourceFile}...`);
 
-    // Read and parse YAML
-    const yamlContent = fs.readFileSync(sourceFile, "utf8");
-    const yamlData = yaml.load(yamlContent) as Record<string, any>;
+    const yamlData = readYamlFile(sourceFile) as Record<string, any>;
 
-    // Convert nested structure to flat ModelMethodFilterEntry array
     const filterEntries: ModelMethodFilterEntry[] = [];
     traverseNestedCategories(yamlData, [], filterEntries);
 
-    // Write JSON file to data directory
-    const targetDir = path.dirname(targetFile);
-    if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir, { recursive: true });
-    }
-
-    writeJSONFile(targetFile, filterEntries, 0);
+    writeJsonFile(targetFile, filterEntries, 0);
     console.log(`Generated: ${targetFile}`);
     console.log(`Model-method map built successfully with ${filterEntries.length} entries`);
 }

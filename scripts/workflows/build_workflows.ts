@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-
 import {
     builders,
     createSubworkflowByName,
@@ -8,13 +7,10 @@ import {
     UnitFactory,
     Workflow, // @ts-ignore
 } from "@mat3ra/wode";
-import fs from "fs";
-import yaml from "js-yaml";
 import path from "path";
 
-// @ts-ignore - build-config is a .js file
 import BUILD_CONFIG from "../../build-config";
-import { writeJSONFile } from "../utils";
+import { ensureDirectory, findFiles, readYamlFile, writeJsonFile } from "../utils";
 
 // TODO: get from sources/applications directory
 const applications = ["espresso"];
@@ -30,20 +26,19 @@ const workflowSubforkflowMapByApplication: WorkflowSubforkflowMap = {
     subworkflows: {},
 };
 
-function loadYamlIntoCollection(
+function loadYamlDirectory(
+    dirPath: string,
     applicationName: string,
-    directoryPath: string,
-    filename: string,
     collectionKey: "workflows" | "subworkflows",
 ): void {
-    const entryPath = path.resolve(directoryPath, filename);
-    if (!fs.existsSync(entryPath) || !fs.statSync(entryPath).isFile()) return;
-    if (!/\.(yml|yaml)$/i.test(filename)) return;
-    const content = fs.readFileSync(entryPath, "utf8");
-    const key = filename.replace(/\.(yml|yaml)$/i, "");
-    workflowSubforkflowMapByApplication[collectionKey][applicationName][key] = yaml.load(
-        content,
-    ) as any;
+    const yamlFiles = findFiles(dirPath, [".yml", ".yaml"]);
+
+    yamlFiles.forEach((filePath) => {
+        const filename = path.basename(filePath);
+        const key = filename.replace(/\.(yml|yaml)$/i, "");
+        workflowSubforkflowMapByApplication[collectionKey][applicationName][key] =
+            readYamlFile(filePath);
+    });
 }
 
 interface ConfigItem {
@@ -64,13 +59,12 @@ function generateConfigFiles(items: ConfigItem[], type: "workflow" | "subworkflo
         const { appName, name, config } = item;
 
         const appDir = path.resolve(outputBaseDir, appName);
-        if (!fs.existsSync(appDir)) {
-            fs.mkdirSync(appDir, { recursive: true });
-        }
+        ensureDirectory(appDir);
+
         const filename = `${name}.json`;
         const filePath = path.resolve(appDir, filename);
 
-        writeJSONFile(filePath, config);
+        writeJsonFile(filePath, config);
         console.log(`Generated ${type}: ${appName}/${filename}`);
     });
 }
@@ -83,24 +77,23 @@ applications.forEach((name) => {
     const wfDir = path.resolve(sourcesRoot, BUILD_CONFIG.workflows.assets.workflows, name);
     const swDir = path.resolve(sourcesRoot, BUILD_CONFIG.workflows.assets.subworkflows, name);
 
-    const wfFiles = fs.readdirSync(wfDir);
-    console.log(`Building ${name}: ${wfFiles.length} workflow(s)`);
-    wfFiles.forEach((file) => loadYamlIntoCollection(name, wfDir, file, "workflows"));
+    loadYamlDirectory(wfDir, name, "workflows");
+    const wfCount = Object.keys(workflowSubforkflowMapByApplication.workflows[name]).length;
+    console.log(`Building ${name}: ${wfCount} workflow(s)`);
 
-    const swFiles = fs.readdirSync(swDir);
-    console.log(`Building ${name}: ${swFiles.length} subworkflow(s)`);
-    swFiles.forEach((file) => loadYamlIntoCollection(name, swDir, file, "subworkflows"));
+    loadYamlDirectory(swDir, name, "subworkflows");
+    const swCount = Object.keys(workflowSubforkflowMapByApplication.subworkflows[name]).length;
+    console.log(`Building ${name}: ${swCount} subworkflow(s)`);
 });
 
 const buildDir = path.resolve(__dirname, BASE_PATH, BUILD_CONFIG.workflows.build.path);
-if (!fs.existsSync(buildDir)) {
-    fs.mkdirSync(buildDir, { recursive: true });
-}
+ensureDirectory(buildDir);
+
 const assetPath = path.resolve(
     buildDir,
     BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication,
 );
-writeJSONFile(assetPath, workflowSubforkflowMapByApplication, 0);
+writeJsonFile(assetPath, workflowSubforkflowMapByApplication, 0);
 
 const WorkflowCls = Workflow as any;
 WorkflowCls.usePredefinedIds = true;
@@ -134,7 +127,7 @@ const workflowConfigs = createWorkflowConfigs({
         ...builders,
         Workflow: WorkflowCls,
     },
-}) as any[];
+} as any) as any[];
 const workflowItems = workflowConfigs.map((config: any) => ({
     appName: config.application,
     name: config.name.toLowerCase().replace(/[^a-z0-9]/g, "_"),

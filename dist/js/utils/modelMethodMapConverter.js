@@ -14,16 +14,16 @@ function convertNestedMapToFlat(nestedMap) {
                     if (Array.isArray(value)) {
                         flatEntries.push({
                             modelCategories: { tier1, tier2, tier3, type },
-                            filterRules: value
+                            filterRules: value,
                         });
                     }
                     // If value is an object with subtypes
-                    else if (typeof value === 'object') {
+                    else if (typeof value === "object") {
                         for (const [subtype, filterRules] of Object.entries(value)) {
                             if (Array.isArray(filterRules)) {
                                 flatEntries.push({
                                     modelCategories: { tier1, tier2, tier3, type, subtype },
-                                    filterRules: filterRules
+                                    filterRules,
                                 });
                             }
                         }

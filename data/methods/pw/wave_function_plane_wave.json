@@ -1,0 +1,12 @@
+{
+  "categories": {
+    "tier1": "qm",
+    "tier2": "wf",
+    "type": "pw"
+  },
+  "tags": [
+    "plane wave"
+  ],
+  "name": "Wave function: Plane wave",
+  "path": "/qm/wf/none/pw/none"
+}
