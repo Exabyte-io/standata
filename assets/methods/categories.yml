@@ -23,6 +23,33 @@ categories:
     - plane wave
     - pseudopotential
 entities:
+  - filename: diagonalization/conjugate_gradient_diagonalization.json
+    categories:
+      - conjugate gradient
+      - diagonalization
+      - differential
+      - optimization
+      - order-n
+  - filename: occupations/gaussian_smearing.json
+    categories:
+      - gaussian smearing
+      - occupation number
+      - quantum mechanics
+      - smearing
+      - wave function
+  - filename: occupations/linear_tetrahedron_method.json
+    categories:
+      - linear
+      - occupation number
+      - quantum mechanics
+      - tetrahedron
+      - wave function
+  - filename: psp/norm_conserving_pseudopotential.json
+    categories:
+      - norm conserving
+      - pseudopotential
+      - quantum mechanics
+      - wave function
   - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
     categories:
       - diagonalization
@@ -35,3 +62,8 @@ entities:
       - occupation number
       - plane wave
       - pseudopotential
+  - filename: pw/wave_function_plane_wave.json
+    categories:
+      - plane wave
+      - quantum mechanics
+      - wave function
