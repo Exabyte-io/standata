@@ -37,6 +37,10 @@ export function writeJsonFile(
     fs.writeFileSync(filePath, JSON.stringify(data, null, spaces), "utf-8");
 }
 
+export function resolveFromRoot(scriptDirname: string, ...pathSegments: string[]): string {
+    return path.resolve(scriptDirname, "../..", ...pathSegments);
+}
+
 export function findFiles(dir: string, extensions: string[]): string[] {
     const files: string[] = [];
     const items = fs.readdirSync(dir);
@@ -223,4 +227,65 @@ export function buildEntities(config: EntityProcessorConfig): void {
     const yamlFiles = findFiles(config.sourcesPath, [".yml", ".yaml"]);
 
     yamlFiles.forEach((file) => processFile(file, config.processEntity));
+}
+
+/**
+ * Processes and saves an entity with standard operations:
+ * encodes path, deletes schema, determines subdirectory, and saves.
+ */
+export function processAndSaveEntity(
+    entity: any,
+    sourceFile: string,
+    dataPath: string,
+    categoryKeys: string[],
+    getSubdirectory: (entity: any, sourceFile: string) => string,
+): void {
+    if (!entity.name) return;
+
+    if (!entity.path) {
+        entity.path = encodeDataAsURLPath(entity, categoryKeys);
+    }
+    delete entity.schema;
+
+    const subdirectory = getSubdirectory(entity, sourceFile);
+    saveEntity(entity, subdirectory, dataPath);
+}
+
+/**
+ * Flattens nested object structure to single-level object.
+ * Useful for extracting entities from deeply nested configurations.
+ */
+export function flattenNestedObjects<T>(
+    nestedData: Record<string, Record<string, T>>,
+    filterFn?: (item: T) => boolean,
+): Record<string, T> {
+    const flattened: Record<string, T> = {};
+
+    Object.values(nestedData).forEach((levelData) => {
+        Object.values(levelData).forEach((item) => {
+            if (item && typeof item === "object" && (item as any).name) {
+                if (!filterFn || filterFn(item)) {
+                    flattened[(item as any).name] = item;
+                }
+            }
+        });
+    });
+
+    return flattened;
+}
+
+/**
+ * Loads YAML files from a directory and stores them in a map keyed by filename (without extension).
+ */
+export function loadYamlFilesAsMap(dirPath: string): Record<string, any> {
+    const map: Record<string, any> = {};
+    const yamlFiles = findFiles(dirPath, [".yml", ".yaml"]);
+
+    yamlFiles.forEach((filePath) => {
+        const filename = path.basename(filePath);
+        const key = filename.replace(/\.(yml|yaml)$/i, "");
+        map[key] = readYamlFile(filePath);
+    });
+
+    return map;
 }

@@ -1,5 +1,5 @@
 import BUILD_CONFIG from "../../build-config";
-import { buildEntities, encodeDataAsURLPath, saveEntity } from "../utils";
+import { buildEntities, processAndSaveEntity } from "../utils";
 
 const categoriesKeys = ["tier1", "tier2", "tier3", "type", "subtype"];
 
@@ -20,13 +20,13 @@ function getSubdirectory(entity: any, _sourceFile: string): string {
 }
 
 function processEntity(entity: any, sourceFile: string): void {
-    if (!entity.name) return;
-
-    entity.path = encodeDataAsURLPath(entity, categoriesKeys);
-    delete entity.schema;
-
-    const subdirectory = getSubdirectory(entity, sourceFile);
-    saveEntity(entity, subdirectory, BUILD_CONFIG.models.data.path);
+    processAndSaveEntity(
+        entity,
+        sourceFile,
+        BUILD_CONFIG.models.data.path,
+        categoriesKeys,
+        getSubdirectory,
+    );
 }
 
 buildEntities({
