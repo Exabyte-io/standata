@@ -1,10 +1,11 @@
 import BUILD_CONFIG from "../../build-config";
-import { generateCategoriesFile, METHOD_MODEL_VALUE_MAP } from "../categoriesUtils";
+import { generateCategoriesFile } from "../categoriesUtils";
+import { METHOD_MODEL_VALUE_MAP } from "../valueMaps";
 
 generateCategoriesFile({
-    categoriesPath: `${BUILD_CONFIG.models.assets.path}/${BUILD_CONFIG.models.assets.categories}`,
+    categoriesYamlFilePath: `${BUILD_CONFIG.models.assets.path}/${BUILD_CONFIG.models.assets.categories}`,
     dataPath: BUILD_CONFIG.models.data.path,
-    categoryPaths: [
+    categoryPathsInEntity: [
         "categories.tier1",
         "categories.tier2",
         "categories.tier3",
@@ -12,5 +13,5 @@ generateCategoriesFile({
         "categories.subtype",
         "tags",
     ],
-    valueMap: METHOD_MODEL_VALUE_MAP,
+    shortToHumanReadableValueMap: METHOD_MODEL_VALUE_MAP,
 });
