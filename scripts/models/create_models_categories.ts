@@ -1,7 +1,7 @@
 import BUILD_CONFIG from "../../build-config";
-import { MethodModelCategorizer } from "../MethodModelCategorizer";
+import { generateCategoriesFile, METHOD_MODEL_VALUE_MAP } from "../categoriesUtils";
 
-const categorizer = new MethodModelCategorizer({
+generateCategoriesFile({
     categoriesPath: `${BUILD_CONFIG.models.assets.path}/${BUILD_CONFIG.models.assets.categories}`,
     dataPath: BUILD_CONFIG.models.data.path,
     categoryPaths: [
@@ -12,6 +12,5 @@ const categorizer = new MethodModelCategorizer({
         "categories.subtype",
         "tags",
     ],
+    valueMap: METHOD_MODEL_VALUE_MAP,
 });
-
-categorizer.build();
