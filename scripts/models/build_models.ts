@@ -1,5 +1,5 @@
 import BUILD_CONFIG from "../../build-config";
-import { buildEntities, encodeDataAsURLPath, saveEntity } from "../buildUtils";
+import { buildEntities, encodeDataAsURLPath, saveEntity } from "../utils";
 
 const categoriesKeys = ["tier1", "tier2", "tier3", "type", "subtype"];
 
