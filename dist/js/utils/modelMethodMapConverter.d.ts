@@ -1,4 +1,4 @@
-import { ModelMethodFilterEntry, FilterRule } from "../modelMethodFilter";
+import { FilterRule, ModelMethodFilterEntry } from "../types/modelMethodFilter";
 /**
  * Utility to convert Mode.js nested model-method map to our flat structure
  */
