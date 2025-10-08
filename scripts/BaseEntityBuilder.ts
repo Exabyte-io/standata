@@ -29,7 +29,7 @@ export interface BuilderConfig {
  * - processEntity(): Entity-specific processing logic
  * - getSubdirectory(): Output subdirectory determination
  */
-export abstract class BaseBuilder {
+export abstract class BaseEntityBuilder {
     protected config: BuilderConfig;
 
     constructor(config: BuilderConfig) {
@@ -56,11 +56,6 @@ export abstract class BaseBuilder {
     }
 
     protected saveEntity(entity: any, subdirectory: string): void {
-        if (!entity.name) {
-            console.log("  Skipping entity without name");
-            return;
-        }
-
         const targetDir = path.join(this.config.dataPath, subdirectory);
         const filename = `${createSafeFilename(entity.name)}.json`;
         const targetPath = path.join(targetDir, filename);
