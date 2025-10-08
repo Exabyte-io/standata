@@ -9,7 +9,11 @@ const builder = new ModelMethodEntityBuilder({
     categoryKeys: ["tier1", "tier2", "tier3", "type", "subtype"],
     pathPlaceholder: "none",
     hasUnits: false,
-    subdirectoryResolver: ({ entity }) => entity.categories?.subtype || "unknown",
+    subdirectoryResolver: ({ entity }) =>
+        entity.categories?.subtype ||
+        entity.categories?.type ||
+        entity.categories?.tier3 ||
+        "unknown",
 });
 
 builder.build();

@@ -48,7 +48,10 @@ export abstract class BaseEntityBuilder {
     }
 
     protected normalizeToArray(data: any): any[] {
-        if (Array.isArray(data)) return data;
+        if (Array.isArray(data)) {
+            // Flatten nested arrays (e.g., from multiple !combine blocks)
+            return data.flat();
+        }
         if (lodash.isPlainObject(data) && !data.name) {
             return Object.values(data).flat();
         }
