@@ -1,4 +1,4 @@
-- !combine
+hybridConfigs: !combine
   name:
     # yamllint disable-line rule:line-length
     template: 'DFT {{ categories.subtype | capitalize }} {{ parameters.functional }}{{ "-" + parameters.dispersionCorrection if parameters.dispersionCorrection }}{{ " (SOC)" if parameters.spinOrbitCoupling }}{{ " (" + parameters.spinPolarization + ")" if parameters.spinPolarization }}'

@@ -1,4 +1,4 @@
-- !combine
+mlConfigs: !combine
   name: 'Regression'
   config:
     categories:
