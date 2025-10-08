@@ -8,10 +8,137 @@ categories:
   type:
     - Kohn-Sham DFT
   subtype:
+    - generalized gradient approximation
     - local density approximation
   tags:
     - density functional theory
 entities:
+  - filename: gga/dft_gga_pbe_collinear.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbe_d3_collinear.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbe_d3_soc.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbe_d3.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbe_soc.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbe_u_collinear.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbe_u_soc.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbe_u.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbe.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbesol_collinear.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbesol_d3_collinear.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbesol_d3_soc.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbesol_d3.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbesol_soc.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbesol_u_collinear.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbesol_u_soc.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbesol_u.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
+  - filename: gga/dft_gga_pbesol.json
+    categories:
+      - Kohn-Sham DFT
+      - density functional theory
+      - generalized gradient approximation
+      - physics-based
+      - quantum mechanics
   - filename: lda/dft_lda_pz_collinear.json
     categories:
       - Kohn-Sham DFT
