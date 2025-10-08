@@ -17,6 +17,300 @@ export declare class ModelStandata extends Standata<ModelConfig> {
             }[];
         };
         filesMapByName: {
+            "gga/dft_gga_pbe_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbe_d3_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbe_d3_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbe_d3.json": {
+                parameters: {
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbe_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbe_u_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    hubbardType: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbe_u_soc.json": {
+                parameters: {
+                    hubbardType: string;
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbe_u.json": {
+                parameters: {
+                    hubbardType: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbe.json": {
+                parameters: {
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbesol_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbesol_d3_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbesol_d3_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbesol_d3.json": {
+                parameters: {
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbesol_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbesol_u_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    hubbardType: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbesol_u_soc.json": {
+                parameters: {
+                    hubbardType: string;
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbesol_u.json": {
+                parameters: {
+                    hubbardType: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "gga/dft_gga_pbesol.json": {
+                parameters: {
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
             "lda/dft_lda_pz_collinear.json": {
                 parameters: {
                     spinPolarization: string;

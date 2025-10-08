@@ -9,6 +9,7 @@ export declare class ModelMethodFilter {
     private getFilterRulesForModel;
     private categoriesMatch;
     private isMethodCompatible;
+    private isPathMatchingRule;
     private isUnitMatchingRule;
     getFilterMap(): ModelMethodFilterMap;
     getAllFilterRules(): FilterRule[];
