@@ -1,0 +1,13 @@
+{
+    "categories": {
+        "subtype": "methfessel-paxton",
+        "tier1": "qm",
+        "tier2": "wf",
+        "type": "smearing"
+    },
+    "tags": [
+        "occupation number"
+    ],
+    "name": "Methfessel-Paxton Smearing",
+    "path": "/qm/wf/none/smearing/methfessel-paxton"
+}

@@ -1,0 +1,13 @@
+{
+    "categories": {
+        "subtype": "us",
+        "tier1": "qm",
+        "tier2": "wf",
+        "type": "psp"
+    },
+    "tags": [
+        "pseudopotential"
+    ],
+    "name": "Ultra-soft Pseudopotential",
+    "path": "/qm/wf/none/psp/us"
+}
