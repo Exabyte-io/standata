@@ -4,13 +4,9 @@ import { buildEntities, processAndSaveEntity } from "../utils";
 const categoriesKeys = ["tier1", "tier2", "tier3", "type", "subtype"];
 
 function getSubdirectory(entity: any, _sourceFile: string): string {
-    if (!entity.categories) {
-        throw new Error(`Entity "${entity.name}" is missing categories`);
-    }
-
-    return (
-        entity.categories.subtype || entity.categories.type || entity.categories.tier3 || "unknown"
-    );
+    const fullPathAsURL = entity.path;
+    const finalPath = fullPathAsURL.split("?")[0]; // Remove query parameters if any
+    return finalPath;
 }
 
 function processEntity(entity: any, sourceFile: string): void {
