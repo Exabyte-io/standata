@@ -34,7 +34,7 @@ export const METHOD_MODEL_VALUE_MAP: Record<string, string> = {
     re: "regression",
 
     // Subtypes - Pseudopotentials
-    nc: "norm conserving",
+    nc: "norm-conserving",
     us: "ultrasoft",
     paw: "projector augmented wave",
     gaussian: "gaussian smearing",

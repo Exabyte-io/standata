@@ -16,7 +16,7 @@ categories:
   subtype:
     - gaussian smearing
     - linear
-    - norm conserving
+    - norm-conserving
   tags:
     - diagonalization
     - occupation number
@@ -29,7 +29,7 @@ entities:
       - diagonalization
       - differential
       - gaussian smearing
-      - norm conserving
+      - norm-conserving
       - occupation number
       - optimization
       - order-n
@@ -44,7 +44,7 @@ entities:
       - diagonalization
       - differential
       - linear
-      - norm conserving
+      - norm-conserving
       - occupation number
       - optimization
       - order-n
