@@ -34,9 +34,6 @@ class ModelMethodFilter {
             (!filterCategories.subtype || modelCategories.subtype === filterCategories.subtype));
     }
     isMethodCompatible(method, filterRules) {
-        if (!method.units || !Array.isArray(method.units)) {
-            return false;
-        }
         return method.units.every((unit) => filterRules.some((rule) => this.isUnitMatchingRule(unit, rule)));
     }
     // eslint-disable-next-line class-methods-use-this

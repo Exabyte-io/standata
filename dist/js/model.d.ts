@@ -9,6 +9,7 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                 tier3: string[];
                 type: string[];
                 subtype: string[];
+                functional: string[];
                 tags: string[];
             };
             entities: {
@@ -17,9 +18,40 @@ export declare class ModelStandata extends Standata<ModelConfig> {
             }[];
         };
         filesMapByName: {
+            "lda/dft_lda_pz.json": {
+                parameters: {
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
             "lda/dft_lda_pz_collinear.json": {
                 parameters: {
                     spinPolarization: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "lda/dft_lda_pz_d3.json": {
+                parameters: {
+                    dispersionCorrection: string;
                     functional: string;
                 };
                 categories: {
@@ -67,9 +99,9 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                 name: string;
                 path: string;
             };
-            "lda/dft_lda_pz_d3.json": {
+            "lda/dft_lda_pz_soc.json": {
                 parameters: {
-                    dispersionCorrection: string;
+                    spinOrbitCoupling: boolean;
                     functional: string;
                 };
                 categories: {
@@ -83,9 +115,9 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                 name: string;
                 path: string;
             };
-            "lda/dft_lda_pz_soc.json": {
+            "lda/dft_lda_pz_u.json": {
                 parameters: {
-                    spinOrbitCoupling: boolean;
+                    hubbardType: string;
                     functional: string;
                 };
                 categories: {
@@ -120,37 +152,6 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                 parameters: {
                     hubbardType: string;
                     spinOrbitCoupling: boolean;
-                    functional: string;
-                };
-                categories: {
-                    tier1: string;
-                    tier2: string;
-                    tier3: string;
-                    type: string;
-                    subtype: string;
-                };
-                tags: string[];
-                name: string;
-                path: string;
-            };
-            "lda/dft_lda_pz_u.json": {
-                parameters: {
-                    hubbardType: string;
-                    functional: string;
-                };
-                categories: {
-                    tier1: string;
-                    tier2: string;
-                    tier3: string;
-                    type: string;
-                    subtype: string;
-                };
-                tags: string[];
-                name: string;
-                path: string;
-            };
-            "lda/dft_lda_pz.json": {
-                parameters: {
                     functional: string;
                 };
                 categories: {

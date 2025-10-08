@@ -18,50 +18,6 @@ export declare class MethodStandata extends Standata<MethodConfig> {
             }[];
         };
         filesMapByName: {
-            "diagonalization/conjugate_gradient_diagonalization.json": {
-                categories: {
-                    tier1: string;
-                    tier2: string;
-                    tier3: string;
-                    type: string;
-                };
-                tags: string[];
-                name: string;
-                path: string;
-            };
-            "occupations/gaussian_smearing.json": {
-                categories: {
-                    subtype: string;
-                    tier1: string;
-                    tier2: string;
-                    type: string;
-                };
-                tags: string[];
-                name: string;
-                path: string;
-            };
-            "occupations/linear_tetrahedron_method.json": {
-                categories: {
-                    subtype: string;
-                    tier1: string;
-                    tier2: string;
-                    type: string;
-                };
-                tags: string[];
-                name: string;
-                path: string;
-            };
-            "psp/norm_conserving_pseudopotential.json": {
-                categories: {
-                    subtype: string;
-                    tier1: string;
-                    tier2: string;
-                    type: string;
-                };
-                tags: string[];
-                name: string;
-                path: string;
-            };
             "pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json": {
                 units: ({
                     categories: {
@@ -135,16 +91,6 @@ export declare class MethodStandata extends Standata<MethodConfig> {
                     name: string;
                     path: string;
                 })[];
-                name: string;
-                path: string;
-            };
-            "pw/wave_function_plane_wave.json": {
-                categories: {
-                    tier1: string;
-                    tier2: string;
-                    type: string;
-                };
-                tags: string[];
                 name: string;
                 path: string;
             };
