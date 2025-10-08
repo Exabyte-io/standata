@@ -6,18 +6,107 @@ categories:
     - deterministic
     - quantum mechanics
   tier3:
+    - ab initio
     - density functional theory
     - machine learning
   type:
+    - GW approximation
     - Kohn-Sham DFT
     - regression
   subtype:
+    - G0W0
+    - evGW
+    - evGW0
     - generalized gradient approximation
     - hybrid functionals
     - local density approximation
   tags:
     - density functional theory
 entities:
+  - filename: evgw/evgw_pbe_soc.json
+    categories:
+      - GW approximation
+      - ab initio
+      - evGW
+      - physics-based
+      - quantum mechanics
+  - filename: evgw/evgw_pbe.json
+    categories:
+      - GW approximation
+      - ab initio
+      - evGW
+      - physics-based
+      - quantum mechanics
+  - filename: evgw/evgw_pbesol_soc.json
+    categories:
+      - GW approximation
+      - ab initio
+      - evGW
+      - physics-based
+      - quantum mechanics
+  - filename: evgw/evgw_pbesol.json
+    categories:
+      - GW approximation
+      - ab initio
+      - evGW
+      - physics-based
+      - quantum mechanics
+  - filename: evgw0/evgw0_pbe_soc.json
+    categories:
+      - GW approximation
+      - ab initio
+      - evGW0
+      - physics-based
+      - quantum mechanics
+  - filename: evgw0/evgw0_pbe.json
+    categories:
+      - GW approximation
+      - ab initio
+      - evGW0
+      - physics-based
+      - quantum mechanics
+  - filename: evgw0/evgw0_pbesol_soc.json
+    categories:
+      - GW approximation
+      - ab initio
+      - evGW0
+      - physics-based
+      - quantum mechanics
+  - filename: evgw0/evgw0_pbesol.json
+    categories:
+      - GW approximation
+      - ab initio
+      - evGW0
+      - physics-based
+      - quantum mechanics
+  - filename: g0w0/g0w0_pbe_soc.json
+    categories:
+      - G0W0
+      - GW approximation
+      - ab initio
+      - physics-based
+      - quantum mechanics
+  - filename: g0w0/g0w0_pbe.json
+    categories:
+      - G0W0
+      - GW approximation
+      - ab initio
+      - physics-based
+      - quantum mechanics
+  - filename: g0w0/g0w0_pbesol_soc.json
+    categories:
+      - G0W0
+      - GW approximation
+      - ab initio
+      - physics-based
+      - quantum mechanics
+  - filename: g0w0/g0w0_pbesol.json
+    categories:
+      - G0W0
+      - GW approximation
+      - ab initio
+      - physics-based
+      - quantum mechanics
   - filename: gga/dft_gga_pbe_collinear.json
     categories:
       - Kohn-Sham DFT
@@ -291,7 +380,7 @@ entities:
       - local density approximation
       - physics-based
       - quantum mechanics
-  - filename: unknown/regression.json
+  - filename: re/regression.json
     categories:
       - deterministic
       - machine learning
