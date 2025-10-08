@@ -17,6 +17,192 @@ export declare class ModelStandata extends Standata<ModelConfig> {
             }[];
         };
         filesMapByName: {
+            "evgw/evgw_pbe_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "evgw/evgw_pbe.json": {
+                parameters: {
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "evgw/evgw_pbesol_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "evgw/evgw_pbesol.json": {
+                parameters: {
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "evgw0/evgw0_pbe_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "evgw0/evgw0_pbe.json": {
+                parameters: {
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "evgw0/evgw0_pbesol_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "evgw0/evgw0_pbesol.json": {
+                parameters: {
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "g0w0/g0w0_pbe_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "g0w0/g0w0_pbe.json": {
+                parameters: {
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "g0w0/g0w0_pbesol_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "g0w0/g0w0_pbesol.json": {
+                parameters: {
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
             "gga/dft_gga_pbe_collinear.json": {
                 parameters: {
                     spinPolarization: string;
@@ -652,7 +838,7 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                 name: string;
                 path: string;
             };
-            "unknown/regression.json": {
+            "re/regression.json": {
                 categories: {
                     tier1: string;
                     tier2: string;
