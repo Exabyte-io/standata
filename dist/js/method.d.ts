@@ -939,33 +939,6 @@ export declare class MethodStandata extends Standata<MethodConfig> {
                 name: string;
                 path: string;
             };
-            "regression/kernel_ridge_least_squares_regression.json": {
-                categories: {
-                    type: string;
-                    subtype: string;
-                };
-                tags: string[];
-                name: string;
-                path: string;
-            };
-            "regression/linear_least_squares_regression.json": {
-                categories: {
-                    subtype: string;
-                    type: string;
-                };
-                tags: string[];
-                name: string;
-                path: string;
-            };
-            "regression/linear_ridge_regression.json": {
-                categories: {
-                    subtype: string;
-                    type: string;
-                };
-                tags: string[];
-                name: string;
-                path: string;
-            };
         };
     };
     getByName(name: string): MethodConfig | undefined;
