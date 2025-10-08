@@ -48,11 +48,30 @@ export class ModelMethodFilter {
 
     private isMethodCompatible(method: MethodConfig, filterRules: FilterRule[]): boolean {
         if (!method.units || !Array.isArray(method.units)) {
-            return false;
+            return filterRules.some((rule) => this.isPathMatchingRule(method.path, rule));
         }
         return method.units.every((unit: UnitMethod) =>
             filterRules.some((rule) => this.isUnitMatchingRule(unit, rule)),
         );
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    private isPathMatchingRule(path: string, rule: FilterRule): boolean {
+        if (rule.path) {
+            return path === rule.path;
+        }
+
+        if (rule.regex) {
+            try {
+                const regex = new RegExp(rule.regex);
+                return regex.test(path);
+            } catch (error) {
+                console.warn(`Invalid regex pattern: ${rule.regex}`, error);
+                return false;
+            }
+        }
+
+        return false;
     }
 
     // eslint-disable-next-line class-methods-use-this
