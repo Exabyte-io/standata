@@ -122,6 +122,12 @@ const BUILD_CONFIG = {
     jsonFormat: {
         spaces: 2,
     },
+
+    yamlFormat: {
+        indent: 2,
+        lineWidth: -1,
+        sortKeys: false,
+    },
 };
 
 module.exports = BUILD_CONFIG;

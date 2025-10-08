@@ -1,11 +1,11 @@
 import BUILD_CONFIG from "../../build-config";
-import { BuildConfig, buildEntities } from "./buildUtils";
+import { EntityBuilder } from "../EntityBuilder";
 
-const buildConfig: BuildConfig = {
+const builder = new EntityBuilder({
     sourcesPath: BUILD_CONFIG.methods.assets.path,
     dataPath: BUILD_CONFIG.methods.data.path,
     entityType: "methods",
     pathSeparator: "::",
-};
+});
 
-buildEntities(buildConfig);
+builder.build();
