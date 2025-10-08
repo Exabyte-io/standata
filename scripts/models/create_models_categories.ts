@@ -2,8 +2,8 @@ import BUILD_CONFIG from "../../build-config";
 import { MethodModelCategorizer } from "../MethodModelCategorizer";
 
 const categorizer = new MethodModelCategorizer({
-    categoriesPath: `${BUILD_CONFIG.methods.assets.path}/${BUILD_CONFIG.methods.assets.categories}`,
-    dataPath: BUILD_CONFIG.methods.data.path,
+    categoriesPath: `${BUILD_CONFIG.models.assets.path}/${BUILD_CONFIG.models.assets.categories}`,
+    dataPath: BUILD_CONFIG.models.data.path,
     categoryPaths: [
         "categories.tier1",
         "categories.tier2",
