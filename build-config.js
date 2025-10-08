@@ -120,11 +120,12 @@ const BUILD_CONFIG = {
     runtimeDataDir: "./dist/js/runtime_data",
 
     jsonFormat: {
-        spaces: 2,
+        spaces: 4,
     },
 
     yamlFormat: {
         indent: 2,
+        // no line width limit
         lineWidth: -1,
         sortKeys: false,
     },

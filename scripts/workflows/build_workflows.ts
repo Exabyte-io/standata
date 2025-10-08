@@ -10,11 +10,10 @@ import {
 import path from "path";
 
 import BUILD_CONFIG from "../../build-config";
-import { ensureDirectory, findFiles, readYamlFile, writeJsonFile } from "../utils";
+import { ensureDirectory, loadYamlFilesAsMap, resolveFromRoot, writeJsonFile } from "../utils";
 
 // TODO: get from sources/applications directory
 const applications = ["espresso"];
-const BASE_PATH = "../..";
 
 interface WorkflowSubforkflowMap {
     workflows: Record<string, Record<string, any>>;
@@ -26,21 +25,6 @@ const workflowSubforkflowMapByApplication: WorkflowSubforkflowMap = {
     subworkflows: {},
 };
 
-function loadYamlDirectory(
-    dirPath: string,
-    applicationName: string,
-    collectionKey: "workflows" | "subworkflows",
-): void {
-    const yamlFiles = findFiles(dirPath, [".yml", ".yaml"]);
-
-    yamlFiles.forEach((filePath) => {
-        const filename = path.basename(filePath);
-        const key = filename.replace(/\.(yml|yaml)$/i, "");
-        workflowSubforkflowMapByApplication[collectionKey][applicationName][key] =
-            readYamlFile(filePath);
-    });
-}
-
 interface ConfigItem {
     appName: string;
     name: string;
@@ -48,9 +32,8 @@ interface ConfigItem {
 }
 
 function generateConfigFiles(items: ConfigItem[], type: "workflow" | "subworkflow"): void {
-    const outputBaseDir = path.resolve(
+    const outputBaseDir = resolveFromRoot(
         __dirname,
-        BASE_PATH,
         BUILD_CONFIG.workflows.data.path,
         BUILD_CONFIG.workflows.data[`${type}s`],
     );
@@ -73,27 +56,27 @@ applications.forEach((name) => {
     workflowSubforkflowMapByApplication.workflows[name] = {};
     workflowSubforkflowMapByApplication.subworkflows[name] = {};
 
-    const sourcesRoot = path.resolve(__dirname, BASE_PATH, BUILD_CONFIG.workflows.assets.path);
+    const sourcesRoot = resolveFromRoot(__dirname, BUILD_CONFIG.workflows.assets.path);
     const wfDir = path.resolve(sourcesRoot, BUILD_CONFIG.workflows.assets.workflows, name);
     const swDir = path.resolve(sourcesRoot, BUILD_CONFIG.workflows.assets.subworkflows, name);
 
-    loadYamlDirectory(wfDir, name, "workflows");
+    workflowSubforkflowMapByApplication.workflows[name] = loadYamlFilesAsMap(wfDir);
     const wfCount = Object.keys(workflowSubforkflowMapByApplication.workflows[name]).length;
     console.log(`Building ${name}: ${wfCount} workflow(s)`);
 
-    loadYamlDirectory(swDir, name, "subworkflows");
+    workflowSubforkflowMapByApplication.subworkflows[name] = loadYamlFilesAsMap(swDir);
     const swCount = Object.keys(workflowSubforkflowMapByApplication.subworkflows[name]).length;
     console.log(`Building ${name}: ${swCount} subworkflow(s)`);
 });
 
-const buildDir = path.resolve(__dirname, BASE_PATH, BUILD_CONFIG.workflows.build.path);
+const buildDir = resolveFromRoot(__dirname, BUILD_CONFIG.workflows.build.path);
 ensureDirectory(buildDir);
 
-const assetPath = path.resolve(
-    buildDir,
-    BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication,
+writeJsonFile(
+    path.resolve(buildDir, BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication),
+    workflowSubforkflowMapByApplication,
+    0,
 );
-writeJsonFile(assetPath, workflowSubforkflowMapByApplication, 0);
 
 const WorkflowCls = Workflow as any;
 WorkflowCls.usePredefinedIds = true;

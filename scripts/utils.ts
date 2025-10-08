@@ -37,6 +37,10 @@ export function writeJsonFile(
     fs.writeFileSync(filePath, JSON.stringify(data, null, spaces), "utf-8");
 }
 
+export function resolveFromRoot(scriptDirname: string, ...pathSegments: string[]): string {
+    return path.resolve(scriptDirname, "../..", ...pathSegments);
+}
+
 export function findFiles(dir: string, extensions: string[]): string[] {
     const files: string[] = [];
     const items = fs.readdirSync(dir);
@@ -140,4 +144,148 @@ export function loadYamlTree(
 
     traverse(rootPath);
     return tree;
+}
+
+// Functions for processing entities from YAML files to JSON files when some processing inside the files is needed
+
+export interface EntityProcessorConfig {
+    sourcesPath: string;
+    dataPath: string;
+    processEntity: (entity: any, sourceFile: string) => void;
+    getSubdirectory: (entity: any, sourceFile: string) => string;
+    categoriesFile: string;
+}
+
+/**
+ * Encodes entity data as a URL path with categories and parameters.
+ */
+export function encodeDataAsURLPath(
+    data: any,
+    categoryKeys: string[] = [],
+    placeholder = "none",
+): string {
+    const pathSegments = categoryKeys.map((key) => data.categories?.[key] || placeholder).join("/");
+
+    const params = new URLSearchParams();
+    if (data.parameters) {
+        Object.entries(data.parameters).forEach(([key, value]) => {
+            const stringValue = typeof value === "object" ? JSON.stringify(value) : String(value);
+            params.append(key, stringValue);
+        });
+    }
+
+    return params.toString() ? `/${pathSegments}?${params.toString()}` : `/${pathSegments}`;
+}
+
+/**
+ * Normalizes data to an array format for consistent processing.
+ */
+export function normalizeToArray(data: any): any[] {
+    if (Array.isArray(data)) return data;
+    if (lodash.isPlainObject(data) && !data.name) {
+        return Object.values(data).flat();
+    }
+    return [data];
+}
+
+/**
+ * Saves an entity as a JSON file in the specified subdirectory.
+ */
+export function saveEntity(entity: any, subdirectory: string, dataPath: string): void {
+    const targetDir = path.join(dataPath, subdirectory);
+    const filename = `${createSafeFilename(entity.name)}.json`;
+    const targetPath = path.join(targetDir, filename);
+
+    writeJsonFile(targetPath, entity);
+    console.log(`  Created: ${targetPath}`);
+}
+
+/**
+ * Processes a single YAML file and extracts entities.
+ */
+export function processFile(
+    filePath: string,
+    processEntity: (entity: any, sourceFile: string) => void,
+): void {
+    console.log(`Processing: ${filePath}`);
+    try {
+        const parsedFile = readYamlFile(filePath);
+        const entities = normalizeToArray(parsedFile);
+        entities.forEach((entity) => processEntity(entity, filePath));
+    } catch (error: any) {
+        console.error(`  Error: ${error.message}`);
+    }
+}
+
+/**
+ * Builds entity JSON files from YAML sources when some processing is needed.
+ */
+export function buildEntities(config: EntityProcessorConfig): void {
+    const { categoriesFile } = config;
+    clearDirectory(config.dataPath, categoriesFile);
+
+    const yamlFiles = findFiles(config.sourcesPath, [".yml", ".yaml"]);
+
+    yamlFiles.forEach((file) => processFile(file, config.processEntity));
+}
+
+/**
+ * Processes and saves an entity with standard operations:
+ * encodes path, deletes schema, determines subdirectory, and saves.
+ */
+export function processAndSaveEntity(
+    entity: any,
+    sourceFile: string,
+    dataPath: string,
+    categoryKeys: string[],
+    getSubdirectory: (entity: any, sourceFile: string) => string,
+): void {
+    if (!entity.name) return;
+
+    if (!entity.path) {
+        entity.path = encodeDataAsURLPath(entity, categoryKeys);
+    }
+    delete entity.schema;
+
+    const subdirectory = getSubdirectory(entity, sourceFile);
+    saveEntity(entity, subdirectory, dataPath);
+}
+
+/**
+ * Flattens nested object structure to single-level object.
+ * Useful for extracting entities from deeply nested configurations.
+ */
+export function flattenNestedObjects<T>(
+    nestedData: Record<string, Record<string, T>>,
+    filterFn?: (item: T) => boolean,
+): Record<string, T> {
+    const flattened: Record<string, T> = {};
+
+    Object.values(nestedData).forEach((levelData) => {
+        Object.values(levelData).forEach((item) => {
+            if (item && typeof item === "object" && (item as any).name) {
+                if (!filterFn || filterFn(item)) {
+                    flattened[(item as any).name] = item;
+                }
+            }
+        });
+    });
+
+    return flattened;
+}
+
+/**
+ * Loads YAML files from a directory and stores them in a map keyed by filename (without extension).
+ */
+export function loadYamlFilesAsMap(dirPath: string): Record<string, any> {
+    const map: Record<string, any> = {};
+    const yamlFiles = findFiles(dirPath, [".yml", ".yaml"]);
+
+    yamlFiles.forEach((filePath) => {
+        const filename = path.basename(filePath);
+        const key = filename.replace(/\.(yml|yaml)$/i, "");
+        map[key] = readYamlFile(filePath);
+    });
+
+    return map;
 }

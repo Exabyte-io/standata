@@ -1,12 +1,12 @@
 {
-  "categories": {
-    "tier1": "linalg",
-    "tier2": "diag",
-    "type": "davidson"
-  },
-  "tags": [
-    "diagonalization"
-  ],
-  "name": "Davidson Diagonalization",
-  "path": "/linalg/diag/none/davidson/none"
+    "categories": {
+        "tier1": "linalg",
+        "tier2": "diag",
+        "type": "davidson"
+    },
+    "tags": [
+        "diagonalization"
+    ],
+    "name": "Davidson Diagonalization",
+    "path": "/linalg/diag/none/davidson/none"
 }

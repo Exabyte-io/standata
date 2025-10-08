@@ -25,7 +25,7 @@ categories:
     - linear
     - methfessel-paxton
     - nc-fr
-    - norm conserving
+    - norm-conserving
     - pople
     - projector augmented wave
     - ridge
@@ -40,8 +40,14 @@ categories:
 entities:
   - filename: any_pw_psp/any_plane_wave_pseudopotential_method.json
     categories:
+      - nc-fr
+      - norm-conserving
       - plane wave
+      - projector augmented wave
       - pseudopotential
+      - quantum mechanics
+      - ultrasoft
+      - wave function
   - filename: ao_pople/wave_function_lcao_pople_basis_set_6_31g.json
     categories:
       - ao
@@ -63,7 +69,11 @@ entities:
       - linear algebra
   - filename: local_orbital/wave_function_lcao_pople_basis_set_6_31g.json
     categories:
+      - ao
       - atomic orbital
+      - pople
+      - quantum mechanics
+      - wave function
   - filename: occupations/gaussian_smearing.json
     categories:
       - gaussian smearing
@@ -93,7 +103,7 @@ entities:
       - wave function
   - filename: psp/norm_conserving_pseudopotential.json
     categories:
-      - norm conserving
+      - norm-conserving
       - pseudopotential
       - quantum mechanics
       - wave function
@@ -111,148 +121,340 @@ entities:
       - wave function
   - filename: pw/plane_wave_norm_conserving_fully_relativistic_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
     categories:
+      - conjugate gradient
       - diagonalization
+      - differential
+      - gaussian smearing
+      - nc-fr
       - occupation number
+      - optimization
+      - order-n
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - wave function
   - filename: pw/plane_wave_norm_conserving_fully_relativistic_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
     categories:
+      - conjugate gradient
       - diagonalization
+      - differential
+      - linear
+      - nc-fr
       - occupation number
+      - optimization
+      - order-n
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - tetrahedron
+      - wave function
   - filename: pw/plane_wave_norm_conserving_fully_relativistic_pseudopotential_conjugate_gradient_diagonalization_methfessel_paxton_smearing.json
     categories:
+      - conjugate gradient
       - diagonalization
+      - differential
+      - methfessel-paxton
+      - nc-fr
       - occupation number
+      - optimization
+      - order-n
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - wave function
   - filename: pw/plane_wave_norm_conserving_fully_relativistic_pseudopotential_davidson_diagonalization_gaussian_smearing.json
     categories:
+      - davidson
       - diagonalization
+      - gaussian smearing
+      - linear algebra
+      - nc-fr
       - occupation number
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - wave function
   - filename: pw/plane_wave_norm_conserving_fully_relativistic_pseudopotential_davidson_diagonalization_linear_tetrahedron_method.json
     categories:
+      - davidson
       - diagonalization
+      - linear
+      - linear algebra
+      - nc-fr
       - occupation number
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - tetrahedron
+      - wave function
   - filename: pw/plane_wave_norm_conserving_fully_relativistic_pseudopotential_davidson_diagonalization_methfessel_paxton_smearing.json
     categories:
+      - davidson
       - diagonalization
+      - linear algebra
+      - methfessel-paxton
+      - nc-fr
       - occupation number
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - wave function
   - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
     categories:
+      - conjugate gradient
       - diagonalization
+      - differential
+      - gaussian smearing
+      - norm-conserving
       - occupation number
+      - optimization
+      - order-n
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - wave function
   - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
     categories:
+      - conjugate gradient
       - diagonalization
+      - differential
+      - linear
+      - norm-conserving
       - occupation number
+      - optimization
+      - order-n
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - tetrahedron
+      - wave function
   - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_methfessel_paxton_smearing.json
     categories:
+      - conjugate gradient
       - diagonalization
+      - differential
+      - methfessel-paxton
+      - norm-conserving
       - occupation number
+      - optimization
+      - order-n
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - wave function
   - filename: pw/plane_wave_norm_conserving_pseudopotential_davidson_diagonalization_gaussian_smearing.json
     categories:
+      - davidson
       - diagonalization
+      - gaussian smearing
+      - linear algebra
+      - norm-conserving
       - occupation number
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - wave function
   - filename: pw/plane_wave_norm_conserving_pseudopotential_davidson_diagonalization_linear_tetrahedron_method.json
     categories:
+      - davidson
       - diagonalization
+      - linear
+      - linear algebra
+      - norm-conserving
       - occupation number
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - tetrahedron
+      - wave function
   - filename: pw/plane_wave_norm_conserving_pseudopotential_davidson_diagonalization_methfessel_paxton_smearing.json
     categories:
+      - davidson
       - diagonalization
+      - linear algebra
+      - methfessel-paxton
+      - norm-conserving
       - occupation number
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - wave function
   - filename: pw/plane_wave_projector_augmented_wave_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
     categories:
+      - conjugate gradient
       - diagonalization
+      - differential
+      - gaussian smearing
       - occupation number
+      - optimization
+      - order-n
       - plane wave
+      - projector augmented wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - wave function
   - filename: pw/plane_wave_projector_augmented_wave_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
     categories:
+      - conjugate gradient
       - diagonalization
+      - differential
+      - linear
       - occupation number
+      - optimization
+      - order-n
       - plane wave
+      - projector augmented wave
       - pseudopotential
+      - quantum mechanics
+      - tetrahedron
+      - wave function
   - filename: pw/plane_wave_projector_augmented_wave_pseudopotential_conjugate_gradient_diagonalization_methfessel_paxton_smearing.json
     categories:
+      - conjugate gradient
       - diagonalization
+      - differential
+      - methfessel-paxton
       - occupation number
+      - optimization
+      - order-n
       - plane wave
+      - projector augmented wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - wave function
   - filename: pw/plane_wave_projector_augmented_wave_pseudopotential_davidson_diagonalization_gaussian_smearing.json
     categories:
+      - davidson
       - diagonalization
+      - gaussian smearing
+      - linear algebra
       - occupation number
       - plane wave
+      - projector augmented wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - wave function
   - filename: pw/plane_wave_projector_augmented_wave_pseudopotential_davidson_diagonalization_linear_tetrahedron_method.json
     categories:
+      - davidson
       - diagonalization
+      - linear
+      - linear algebra
       - occupation number
       - plane wave
+      - projector augmented wave
       - pseudopotential
+      - quantum mechanics
+      - tetrahedron
+      - wave function
   - filename: pw/plane_wave_projector_augmented_wave_pseudopotential_davidson_diagonalization_methfessel_paxton_smearing.json
     categories:
+      - davidson
       - diagonalization
+      - linear algebra
+      - methfessel-paxton
       - occupation number
       - plane wave
+      - projector augmented wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - wave function
   - filename: pw/plane_wave_ultra_soft_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
     categories:
+      - conjugate gradient
       - diagonalization
+      - differential
+      - gaussian smearing
       - occupation number
+      - optimization
+      - order-n
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - ultrasoft
+      - wave function
   - filename: pw/plane_wave_ultra_soft_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
     categories:
+      - conjugate gradient
       - diagonalization
+      - differential
+      - linear
       - occupation number
+      - optimization
+      - order-n
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - tetrahedron
+      - ultrasoft
+      - wave function
   - filename: pw/plane_wave_ultra_soft_pseudopotential_conjugate_gradient_diagonalization_methfessel_paxton_smearing.json
     categories:
+      - conjugate gradient
       - diagonalization
+      - differential
+      - methfessel-paxton
       - occupation number
+      - optimization
+      - order-n
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - ultrasoft
+      - wave function
   - filename: pw/plane_wave_ultra_soft_pseudopotential_davidson_diagonalization_gaussian_smearing.json
     categories:
+      - davidson
       - diagonalization
+      - gaussian smearing
+      - linear algebra
       - occupation number
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - ultrasoft
+      - wave function
   - filename: pw/plane_wave_ultra_soft_pseudopotential_davidson_diagonalization_linear_tetrahedron_method.json
     categories:
+      - davidson
       - diagonalization
+      - linear
+      - linear algebra
       - occupation number
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - tetrahedron
+      - ultrasoft
+      - wave function
   - filename: pw/plane_wave_ultra_soft_pseudopotential_davidson_diagonalization_methfessel_paxton_smearing.json
     categories:
+      - davidson
       - diagonalization
+      - linear algebra
+      - methfessel-paxton
       - occupation number
       - plane wave
       - pseudopotential
+      - quantum mechanics
+      - smearing
+      - ultrasoft
+      - wave function
   - filename: pw/wave_function_plane_wave.json
     categories:
       - plane wave

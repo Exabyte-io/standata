@@ -1,13 +1,13 @@
 {
-  "categories": {
-    "subtype": "linear",
-    "tier1": "qm",
-    "tier2": "wf",
-    "type": "tetrahedron"
-  },
-  "tags": [
-    "occupation number"
-  ],
-  "name": "Linear Tetrahedron Method",
-  "path": "/qm/wf/none/tetrahedron/linear"
+    "categories": {
+        "subtype": "linear",
+        "tier1": "qm",
+        "tier2": "wf",
+        "type": "tetrahedron"
+    },
+    "tags": [
+        "occupation number"
+    ],
+    "name": "Linear Tetrahedron Method",
+    "path": "/qm/wf/none/tetrahedron/linear"
 }

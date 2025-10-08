@@ -1,13 +1,13 @@
 {
-  "categories": {
-    "subtype": "paw",
-    "tier1": "qm",
-    "tier2": "wf",
-    "type": "psp"
-  },
-  "tags": [
-    "pseudopotential"
-  ],
-  "name": "Projector-augmented wave Pseudopotential",
-  "path": "/qm/wf/none/psp/paw"
+    "categories": {
+        "subtype": "paw",
+        "tier1": "qm",
+        "tier2": "wf",
+        "type": "psp"
+    },
+    "tags": [
+        "pseudopotential"
+    ],
+    "name": "Projector-augmented wave Pseudopotential",
+    "path": "/qm/wf/none/psp/paw"
 }

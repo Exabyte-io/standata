@@ -1,13 +1,13 @@
 {
-  "categories": {
-    "subtype": "nc-fr",
-    "tier1": "qm",
-    "tier2": "wf",
-    "type": "psp"
-  },
-  "tags": [
-    "pseudopotential"
-  ],
-  "name": "Norm-conserving Fully-relativistic Pseudopotential",
-  "path": "/qm/wf/none/psp/nc-fr"
+    "categories": {
+        "subtype": "nc-fr",
+        "tier1": "qm",
+        "tier2": "wf",
+        "type": "psp"
+    },
+    "tags": [
+        "pseudopotential"
+    ],
+    "name": "Norm-conserving Fully-relativistic Pseudopotential",
+    "path": "/qm/wf/none/psp/nc-fr"
 }

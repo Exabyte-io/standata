@@ -1,11 +1,11 @@
 {
-  "categories": {
-    "type": "kernel_ridge",
-    "subtype": "least_squares"
-  },
-  "tags": [
-    "exabyteML"
-  ],
-  "name": "Kernel Ridge least squares regression",
-  "path": "/none/none/none/kernel_ridge/least_squares"
+    "categories": {
+        "type": "kernel_ridge",
+        "subtype": "least_squares"
+    },
+    "tags": [
+        "exabyteML"
+    ],
+    "name": "Kernel Ridge least squares regression",
+    "path": "/none/none/none/kernel_ridge/least_squares"
 }
