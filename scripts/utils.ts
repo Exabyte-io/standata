@@ -20,16 +20,6 @@ export function resolveFromRoot(scriptDirname: string, ...pathSegments: string[]
 }
 
 /**
- * Creates a filesystem-safe filename from a given name.
- */
-export function createSafeFilename(name: string): string {
-    return name
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "_")
-        .replace(/^_+|_+$/g, "");
-}
-
-/**
  * Converts YAML file to JSON, optionally resolving relative includes from a working directory
  */
 export function buildJSONFromYAMLInDir({
@@ -168,7 +158,7 @@ export function processAndSaveEntity(
 
     const subdirectory = getSubdirectory(entity, sourceFile);
     const targetDir = path.join(dataPath, subdirectory);
-    const filename = `${createSafeFilename(entity.name)}.json`;
+    const filename = `${Utils.str.createSafeFilename(entity.name)}.json`;
     const targetPath = path.join(targetDir, filename);
 
     serverUtils.json.writeJSONFileSync(targetPath, entity, { spaces });

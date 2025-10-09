@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { Utils } from "@mat3ra/utils";
 import serverUtils from "@mat3ra/utils/server";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {
@@ -12,7 +13,7 @@ import {
 import path from "path";
 
 import BUILD_CONFIG from "../../build-config";
-import { createSafeFilename, loadYAMLFilesAsMap, resolveFromRoot } from "../utils";
+import { loadYAMLFilesAsMap, resolveFromRoot } from "../utils";
 
 // TODO: get from sources/applications directory
 const applications = ["espresso"];
@@ -116,7 +117,7 @@ const workflowConfigs = createWorkflowConfigs({
 } as any) as any[];
 const workflowItems = workflowConfigs.map((config: any) => ({
     appName: config.application,
-    name: createSafeFilename(config.name),
+    name: Utils.str.createSafeFilename(config.name),
     config: config.config,
 }));
 
