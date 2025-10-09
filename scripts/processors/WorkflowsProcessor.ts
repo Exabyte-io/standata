@@ -11,8 +11,6 @@ import {
     UnitFactory,
     Workflow, // @ts-ignore
 } from "@mat3ra/wode";
-import * as fs from "fs";
-import * as yaml from "js-yaml";
 import * as path from "path";
 
 import BUILD_CONFIG from "../../build-config";
@@ -28,7 +26,6 @@ export class WorkflowsProcessor extends EntityProcessor {
             dataDir: BUILD_CONFIG.workflows.data.path,
             buildDir: BUILD_CONFIG.workflows.build.path,
             distRuntimeDir: BUILD_CONFIG.runtimeDataDir,
-            isCategoriesGenerationEnabled: false,
             excludedAssetFiles: [
                 BUILD_CONFIG.workflows.assets.workflowsCategories,
                 BUILD_CONFIG.workflows.assets.subworkflowsCategories,
@@ -182,58 +179,5 @@ export class WorkflowsProcessor extends EntityProcessor {
             });
         });
         generateConfigFiles(subworkflowItems, "subworkflow");
-    }
-
-    public updateCategoriesFile(): void {
-        const categoriesPathWf = path.resolve(
-            resolveFromRoot(this.options.rootDir, BUILD_CONFIG.workflows.assets.path),
-            BUILD_CONFIG.workflows.assets.workflowsCategories,
-        );
-        const categoriesPathSw = path.resolve(
-            resolveFromRoot(this.options.rootDir, BUILD_CONFIG.workflows.assets.path),
-            BUILD_CONFIG.workflows.assets.subworkflowsCategories,
-        );
-
-        const collect = (baseDir: string) => {
-            const sets: Record<string, Set<string>> = {
-                names: new Set<string>(),
-                applications: new Set<string>(),
-            };
-            const files = this.findJsonFilesRecursively(baseDir);
-            files.forEach((fp) => {
-                const rel = path.relative(baseDir, fp);
-                const [appName, fileName] = rel.split(path.sep);
-                if (appName) sets.applications.add(appName);
-                const nameNoExt = fileName?.replace(/\.json$/i, "");
-                if (nameNoExt) sets.names.add(nameNoExt);
-            });
-            return sets;
-        };
-
-        const wfDir = path.resolve(this.resolved.dataDir, BUILD_CONFIG.workflows.data.workflows);
-        const swDir = path.resolve(this.resolved.dataDir, BUILD_CONFIG.workflows.data.subworkflows);
-
-        const wfSets = collect(wfDir);
-        const swSets = collect(swDir);
-
-        const dump = (targetPath: string, sets: Record<string, Set<string>>) => {
-            const payload = {
-                categories: {
-                    applications: Array.from(sets.applications).sort(),
-                    names: Array.from(sets.names).sort(),
-                },
-            };
-            const yamlContent = yaml.dump(payload, {
-                indent: BUILD_CONFIG.yamlFormat.indent,
-                lineWidth: BUILD_CONFIG.yamlFormat.lineWidth,
-                sortKeys: BUILD_CONFIG.yamlFormat.sortKeys as boolean,
-            });
-            serverUtils.file.createDirIfNotExistsSync(path.dirname(targetPath));
-            fs.writeFileSync(targetPath, yamlContent, "utf-8");
-            console.log(`Categories file written to: ${targetPath}`);
-        };
-
-        dump(categoriesPathWf, wfSets);
-        dump(categoriesPathSw, swSets);
     }
 }

@@ -14,7 +14,6 @@ export class ModelsProcessor extends BaseModelMethodProcessor {
             distRuntimeDir: BUILD_CONFIG.runtimeDataDir,
             categoriesRelativePath: BUILD_CONFIG.models.assets.categories,
             categoryKeys: ModelsProcessor.defaultCategoryKeys,
-            isCategoriesGenerationEnabled: true,
             excludedAssetFiles: [BUILD_CONFIG.models.assets.modelMethodMap],
             categoryCollectOptions: {
                 includeUnits: false,
@@ -22,11 +21,5 @@ export class ModelsProcessor extends BaseModelMethodProcessor {
                 includeEntitiesMap: true,
             },
         });
-    }
-
-    protected getDataSubdirectory(entity: any): string {
-        const fullPathAsURL = entity.path || "";
-        const finalPath = fullPathAsURL.split("?")[0];
-        return finalPath;
     }
 }

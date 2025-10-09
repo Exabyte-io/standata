@@ -1,5 +1,3 @@
-import * as path from "path";
-
 import BUILD_CONFIG from "../../build-config";
 import { encodeDataAsURLPath } from "../utils";
 import { BaseModelMethodProcessor } from "./BaseModelMethodProcessor";
@@ -17,7 +15,6 @@ export class MethodsProcessor extends BaseModelMethodProcessor {
             distRuntimeDir: BUILD_CONFIG.runtimeDataDir,
             categoriesRelativePath: BUILD_CONFIG.methods.assets.categories,
             categoryKeys: MethodsProcessor.defaultCategoryKeys,
-            isCategoriesGenerationEnabled: true,
             categoryCollectOptions: {
                 includeUnits: true,
                 includeTags: true,
@@ -38,8 +35,7 @@ export class MethodsProcessor extends BaseModelMethodProcessor {
         return entity;
     }
 
-    protected getDataSubdirectory(_entity: any, sourceFile: string): string {
-        const basename = path.basename(sourceFile, path.extname(sourceFile));
-        return basename.replace(/_methods?$/i, "");
+    protected getDataSubdirectory(_entity: any): string {
+        return super.getDataSubdirectory(_entity).split("::")[0];
     }
 }

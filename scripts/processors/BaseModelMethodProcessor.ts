@@ -136,4 +136,10 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
         }
         if (includeTags && Array.isArray(obj?.tags)) obj.tags.forEach((t: string) => target.add(t));
     }
+
+    protected getDataSubdirectory(entity: any): string {
+        const fullPathAsURL = entity.path || "";
+        const finalPath = fullPathAsURL.split("?")[0];
+        return finalPath;
+    }
 }

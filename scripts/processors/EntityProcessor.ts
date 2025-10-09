@@ -17,7 +17,6 @@ export interface EntityProcessorOptions {
     distRuntimeDir?: string;
     categoriesRelativePath?: string;
     categoryKeys?: string[];
-    isCategoriesGenerationEnabled?: boolean;
     excludedAssetFiles?: string[];
 }
 
@@ -161,7 +160,7 @@ export abstract class EntityProcessor {
         this.writeBuildDirectoryContent();
         this.writeDataDirectoryContent();
         this.writeDistDirectoryContent();
-        if (this.options.isCategoriesGenerationEnabled) this.updateCategoriesFile();
+        this.updateCategoriesFile();
         this.additionalProcessing();
         console.log(`✅ ${this.options.entityName} completed.`);
     }
