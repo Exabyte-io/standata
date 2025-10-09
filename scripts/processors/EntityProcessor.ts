@@ -6,7 +6,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 import BUILD_CONFIG from "../../build-config";
-import { encodeDataAsURLPath, resolveFromRoot, readYAMLFileResolved } from "../utils";
+import { encodeDataAsURLPath, readYAMLFileResolved, resolveFromRoot } from "../utils";
 
 export interface EntityProcessorOptions {
     rootDir: string;
@@ -17,6 +17,8 @@ export interface EntityProcessorOptions {
     distRuntimeDir?: string;
     categoriesRelativePath?: string;
     categoryKeys?: string[];
+    isCategoriesGenerationEnabled?: boolean;
+    excludedAssetFiles?: string[];
 }
 
 export type AssetRecord = {
@@ -41,7 +43,9 @@ export abstract class EntityProcessor {
         this.resolved = {
             assetsDir: resolveFromRoot(options.rootDir, options.assetsDir),
             dataDir: resolveFromRoot(options.rootDir, options.dataDir),
-            buildDir: options.buildDir ? resolveFromRoot(options.rootDir, options.buildDir) : undefined,
+            buildDir: options.buildDir
+                ? resolveFromRoot(options.rootDir, options.buildDir)
+                : undefined,
             distRuntimeDir: options.distRuntimeDir
                 ? resolveFromRoot(options.rootDir, options.distRuntimeDir)
                 : resolveFromRoot(options.rootDir, BUILD_CONFIG.runtimeDataDir),
@@ -53,12 +57,15 @@ export abstract class EntityProcessor {
     protected transformEntity(entity: any, _sourceFile: string): any {
         return entity;
     }
+
     // eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
     protected getDataSubdirectory(_entity: any, _sourceFile: string): string {
         return "";
     }
+
     // eslint-disable-next-line class-methods-use-this
     protected additionalProcessing(): void {}
+
     // eslint-disable-next-line class-methods-use-this
     protected getBuildArtifacts(): { relativePath: string; content: any }[] {
         return [];
@@ -66,13 +73,31 @@ export abstract class EntityProcessor {
 
     // Default implementations
     public readAssets(): AssetRecord[] {
-        const yamlFiles = serverUtils.file.getFilesInDirectory(this.resolved.assetsDir, [".yml", ".yaml"]);
-        this.assets = yamlFiles.map((filePath: string) => {
-            const parsed = readYAMLFileResolved(filePath);
-            const entities = Utils.array.normalizeToArray(parsed);
-            return { sourceFile: filePath, entities } as AssetRecord;
-        });
+        const yamlFiles = serverUtils.file.getFilesInDirectory(this.resolved.assetsDir, [
+            ".yml",
+            ".yaml",
+        ]);
+        const excludeFiles = this.getExcludedAssetFiles();
+
+        this.assets = yamlFiles
+            .filter((filePath: string) => {
+                const basename = path.basename(filePath);
+                return !excludeFiles.includes(basename);
+            })
+            .map((filePath: string) => {
+                const parsed = readYAMLFileResolved(filePath);
+                const entities = Utils.array.normalizeToArray(parsed);
+                return { sourceFile: filePath, entities } as AssetRecord;
+            });
         return this.assets;
+    }
+
+    protected getExcludedAssetFiles(): string[] {
+        const excludeFiles: string[] = [...(this.options.excludedAssetFiles || [])];
+        if (this.options.categoriesRelativePath) {
+            excludeFiles.push(path.basename(this.options.categoriesRelativePath));
+        }
+        return excludeFiles;
     }
 
     public writeBuildDirectoryContent(): void {
@@ -82,7 +107,9 @@ export abstract class EntityProcessor {
         artifacts.forEach(({ relativePath, content }) => {
             const targetPath = path.resolve(this.resolved.buildDir as string, relativePath);
             serverUtils.file.createDirIfNotExistsSync(path.dirname(targetPath));
-            serverUtils.json.writeJSONFileSync(targetPath, content, { spaces: BUILD_CONFIG.jsonFormat.spaces });
+            serverUtils.json.writeJSONFileSync(targetPath, content, {
+                spaces: BUILD_CONFIG.jsonFormat.spaces,
+            });
             console.log(`  Built: ${targetPath}`);
         });
     }
@@ -102,7 +129,9 @@ export abstract class EntityProcessor {
 
                 const subdir = this.getDataSubdirectory(transformed, sourceFile);
                 const targetDir = path.join(dataDir, subdir);
-                const filename = `${Utils.str.createSafeFilename(transformed.name || "entity")}.json`;
+                const filename = `${Utils.str.createSafeFilename(
+                    transformed.name || "entity",
+                )}.json`;
                 const targetPath = path.join(targetDir, filename);
                 serverUtils.json.writeJSONFileSync(targetPath, transformed, {
                     spaces: BUILD_CONFIG.jsonFormat.spaces,
@@ -132,7 +161,7 @@ export abstract class EntityProcessor {
         this.writeBuildDirectoryContent();
         this.writeDataDirectoryContent();
         this.writeDistDirectoryContent();
-        this.updateCategoriesFile();
+        if (this.options.isCategoriesGenerationEnabled) this.updateCategoriesFile();
         this.additionalProcessing();
         console.log(`✅ ${this.options.entityName} completed.`);
     }
@@ -162,5 +191,3 @@ export abstract class EntityProcessor {
         return results;
     }
 }
-
-
