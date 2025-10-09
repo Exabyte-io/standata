@@ -195,12 +195,12 @@ export function normalizeToArray(data: any): any[] {
 /**
  * Saves an entity as a JSON file in the specified subdirectory.
  */
-export function saveEntity(entity: any, subdirectory: string, dataPath: string): void {
+export function saveEntity(entity: any, subdirectory: string, dataPath: string, spaces = BUILD_CONFIG.jsonFormat.spaces): void {
     const targetDir = path.join(dataPath, subdirectory);
     const filename = `${createSafeFilename(entity.name)}.json`;
     const targetPath = path.join(targetDir, filename);
 
-    writeJSONFile(targetPath, entity);
+    writeJSONFile(targetPath, entity, spaces);
     console.log(`  Created: ${targetPath}`);
 }
 
@@ -243,6 +243,7 @@ export function processAndSaveEntity(
     dataPath: string,
     categoryKeys: string[],
     getSubdirectory: (entity: any, sourceFile: string) => string,
+    spaces = BUILD_CONFIG.jsonFormat.spaces,
 ): void {
     if (!entity.name) return;
 
@@ -252,7 +253,7 @@ export function processAndSaveEntity(
     delete entity.schema;
 
     const subdirectory = getSubdirectory(entity, sourceFile);
-    saveEntity(entity, subdirectory, dataPath);
+    saveEntity(entity, subdirectory, dataPath, spaces);
 }
 
 /**
