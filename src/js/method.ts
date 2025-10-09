@@ -5,10 +5,6 @@ import { MethodConfig, UnitMethod } from "./types/method";
 import { ModelConfig } from "./types/model";
 import { getCategoryValue } from "./utils/category";
 
-function getMissingUnitsErrorMessage(methodName: string): string {
-    return `Method "${methodName}" has no units defined`;
-}
-
 export class MethodStandata extends Standata<MethodConfig> {
     static runtimeData = METHODS;
 
@@ -20,8 +16,8 @@ export class MethodStandata extends Standata<MethodConfig> {
     getByUnitType(unitType: string): MethodConfig[] {
         const allMethods = this.getAll();
         return allMethods.filter((method) => {
-            if (!method.units) {
-                throw new Error(getMissingUnitsErrorMessage(method.name));
+            if (!("units" in method)) {
+                return getCategoryValue(method.categories.type) === unitType;
             }
             return method.units.some((unit) => getCategoryValue(unit.categories.type) === unitType);
         });
@@ -30,8 +26,8 @@ export class MethodStandata extends Standata<MethodConfig> {
     getByUnitSubtype(unitSubtype: string): MethodConfig[] {
         const allMethods = this.getAll();
         return allMethods.filter((method) => {
-            if (!method.units) {
-                throw new Error(getMissingUnitsErrorMessage(method.name));
+            if (!("units" in method)) {
+                return getCategoryValue(method.categories.subtype) === unitSubtype;
             }
             return method.units.some(
                 (unit) => getCategoryValue(unit.categories.subtype) === unitSubtype,
@@ -42,8 +38,8 @@ export class MethodStandata extends Standata<MethodConfig> {
     getByUnitTags(...tags: string[]): MethodConfig[] {
         const allMethods = this.getAll();
         return allMethods.filter((method) => {
-            if (!method.units) {
-                throw new Error(getMissingUnitsErrorMessage(method.name));
+            if (!("units" in method)) {
+                return tags.some((tag) => method.tags.includes(tag));
             }
             return method.units.some((unit) => tags.some((tag) => unit.tags.includes(tag)));
         });
@@ -57,8 +53,11 @@ export class MethodStandata extends Standata<MethodConfig> {
     getByUnitParameters(parameters: Record<string, any>): MethodConfig[] {
         const allMethods = this.getAll();
         return allMethods.filter((method) => {
-            if (!method.units) {
-                throw new Error(getMissingUnitsErrorMessage(method.name));
+            if (!("units" in method)) {
+                if (!method.parameters) return false;
+                return Object.entries(parameters).every(
+                    ([key, value]) => method.parameters[key] === value,
+                );
             }
             return method.units.some((unit) => {
                 if (!unit.parameters) return false;
@@ -82,8 +81,8 @@ export class MethodStandata extends Standata<MethodConfig> {
     getAllUnits(): UnitMethod[] {
         const allMethods = this.getAll();
         return allMethods.flatMap((method) => {
-            if (!method.units) {
-                throw new Error(getMissingUnitsErrorMessage(method.name));
+            if (!("units" in method)) {
+                return [method];
             }
             return method.units;
         });

@@ -2,6 +2,7 @@ import { CategorizedUnitMethod } from "@mat3ra/esse/dist/js/types";
 
 // TODO: maybe change ESSE Schema. We expect these properties to be defined in UnitMethod
 export interface UnitMethod extends CategorizedUnitMethod {
+    name: Required<CategorizedUnitMethod>["name"];
     categories: Required<CategorizedUnitMethod>["categories"] & {
         type: Required<CategorizedUnitMethod>["categories"]["type"];
         subtype: Required<CategorizedUnitMethod>["categories"]["subtype"];
@@ -11,9 +12,11 @@ export interface UnitMethod extends CategorizedUnitMethod {
     path: Required<CategorizedUnitMethod>["path"];
 }
 
-export interface MethodConfig {
+export interface CompositeMethod {
     name: string;
     shortName?: string;
     path: string;
     units: UnitMethod[];
 }
+
+export type MethodConfig = CompositeMethod | UnitMethod;

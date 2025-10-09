@@ -47,7 +47,7 @@ export class ModelMethodFilter {
     }
 
     private isMethodCompatible(method: MethodConfig, filterRules: FilterRule[]): boolean {
-        if (!method.units || !Array.isArray(method.units)) {
+        if (!("units" in method)) {
             return filterRules.some((rule) => this.isPathMatchingRule(method.path, rule));
         }
         return method.units.every((unit: UnitMethod) =>
