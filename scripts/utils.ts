@@ -128,23 +128,6 @@ export function encodeDataAsURLPath(
 }
 
 /**
- * Processes a single YAML file and extracts entities.
- */
-export function processFile(
-    filePath: string,
-    processEntity: (entity: any, sourceFile: string) => void,
-): void {
-    console.log(`Processing: ${filePath}`);
-    try {
-        const parsedFile = readYAMLFile(filePath);
-        const entities = Utils.array.normalizeToArray(parsedFile);
-        entities.forEach((entity) => processEntity(entity, filePath));
-    } catch (error: any) {
-        console.error(`  Error: ${error.message}`);
-    }
-}
-
-/**
  * Builds entity JSON files from YAML sources when some processing is needed.
  */
 export function buildEntities(config: EntityProcessorConfig): void {
@@ -153,7 +136,15 @@ export function buildEntities(config: EntityProcessorConfig): void {
 
     const yamlFiles = serverUtils.file.getFilesInDirectory(config.sourcesPath, [".yml", ".yaml"]);
 
-    yamlFiles.forEach((file) => processFile(file, config.processEntity));
+    yamlFiles.forEach((filePath) => {
+        try {
+            const parsedFile = readYAMLFile(filePath);
+            const entities = Utils.array.normalizeToArray(parsedFile);
+            entities.forEach((entity) => config.processEntity(entity, filePath));
+        } catch (error: any) {
+            console.error(`  Error: ${error.message}`);
+        }
+    });
 }
 
 /**

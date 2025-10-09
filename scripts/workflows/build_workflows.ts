@@ -12,7 +12,7 @@ import {
 import path from "path";
 
 import BUILD_CONFIG from "../../build-config";
-import { loadYAMLFilesAsMap, resolveFromRoot } from "../utils";
+import { createSafeFilename, loadYAMLFilesAsMap, resolveFromRoot } from "../utils";
 
 // TODO: get from sources/applications directory
 const applications = ["espresso"];
@@ -116,7 +116,7 @@ const workflowConfigs = createWorkflowConfigs({
 } as any) as any[];
 const workflowItems = workflowConfigs.map((config: any) => ({
     appName: config.application,
-    name: config.name.toLowerCase().replace(/[^a-z0-9]/g, "_"),
+    name: createSafeFilename(config.name),
     config: config.config,
 }));
 
