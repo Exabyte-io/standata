@@ -7,7 +7,7 @@ exports.workflowSubforkflowMapByApplication = exports.SubworkflowStandata = expo
 const base_1 = require("./base");
 const subworkflows_json_1 = __importDefault(require("./runtime_data/subworkflows.json"));
 const workflows_json_1 = __importDefault(require("./runtime_data/workflows.json"));
-const workflowSubforkflowMapByApplication_json_1 = __importDefault(require("./runtime_data/workflowSubforkflowMapByApplication.json"));
+const workflowSubforkflowMapByApplication_json_1 = __importDefault(require("./runtime_data/workflows/workflowSubforkflowMapByApplication.json"));
 exports.workflowSubforkflowMapByApplication = workflowSubforkflowMapByApplication_json_1.default;
 var TAGS;
 (function (TAGS) {

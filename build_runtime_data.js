@@ -135,37 +135,6 @@ function linkJSONAsset({ sourcePath, targetPath }) {
     }
 }
 
-// Copy JSON assets to runtime_data
-copyJSONAsset({
-    sourcePath: `./${BUILD_CONFIG.workflows.build.path}/${BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication}`,
-    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication}`,
-});
-
-copyJSONAsset({
-    sourcePath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.modelMethodMapByApplication}`,
-    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.build.modelMethodMapByApplication}`,
-});
-
-copyJSONAsset({
-    sourcePath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.templatesList}`,
-    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.build.templatesList}`,
-});
-
-copyJSONAsset({
-    sourcePath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
-    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
-});
-
-copyJSONAsset({
-    sourcePath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.applicationVersionsMapByApplication}`,
-    targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.build.applicationVersionsMapByApplication}`,
-});
-
-copyJSONAsset({
-    sourcePath: `./${BUILD_CONFIG.models.build.path}/${BUILD_CONFIG.models.build.modelMethodMap}`,
-    targetPath: `${runtimeDataDir}/modelMethodMap.json`,
-});
-
 // Py Modules
 
 buildAsset({

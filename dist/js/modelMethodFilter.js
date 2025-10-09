@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModelMethodFilter = void 0;
-const modelMethodMap_json_1 = __importDefault(require("./runtime_data/modelMethodMap.json"));
+const modelMethodMap_json_1 = __importDefault(require("./runtime_data/models/modelMethodMap.json"));
 class ModelMethodFilter {
     constructor() {
         this.filterMap = modelMethodMap_json_1.default;

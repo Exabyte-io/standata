@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplicationStandata = exports.TAGS = void 0;
 const base_1 = require("./base");
 const applications_json_1 = __importDefault(require("./runtime_data/applications.json"));
-const applicationVersionsMapByApplication_json_1 = __importDefault(require("./runtime_data/applicationVersionsMapByApplication.json"));
-const executableFlavorMapByApplication_json_1 = __importDefault(require("./runtime_data/executableFlavorMapByApplication.json"));
-const templatesList_json_1 = __importDefault(require("./runtime_data/templatesList.json"));
+const applicationVersionsMapByApplication_json_1 = __importDefault(require("./runtime_data/applications/applicationVersionsMapByApplication.json"));
+const executableFlavorMapByApplication_json_1 = __importDefault(require("./runtime_data/applications/executableFlavorMapByApplication.json"));
+const templatesList_json_1 = __importDefault(require("./runtime_data/applications/templatesList.json"));
 const applicationVersionMap_1 = require("./utils/applicationVersionMap");
 var TAGS;
 (function (TAGS) {
