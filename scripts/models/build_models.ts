@@ -4,19 +4,9 @@ import { buildEntities, processAndSaveEntity } from "../utils";
 const categoriesKeys = ["tier1", "tier2", "tier3", "type", "subtype"];
 
 function getSubdirectory(entity: any, _sourceFile: string): string {
-    if (!entity.categories) {
-        throw new Error(`Entity "${entity.name}" is missing categories`);
-    }
-
-    for (const key of [...categoriesKeys].reverse()) {
-        if (entity.categories[key]) {
-            return entity.categories[key];
-        }
-    }
-
-    throw new Error(
-        `Entity "${entity.name}" has no valid category from: ${categoriesKeys.join(", ")}`,
-    );
+    const fullPathAsURL = entity.path;
+    const finalPath = fullPathAsURL.split("?")[0]; // Remove query parameters if any
+    return finalPath;
 }
 
 function processEntity(entity: any, sourceFile: string): void {
