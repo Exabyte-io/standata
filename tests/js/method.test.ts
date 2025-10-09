@@ -33,10 +33,10 @@ const TEST_PATHS = {
 } as const;
 
 const TEST_COUNTS = {
-    TOTAL_PW_METHODS: 2,  // Minimal config: nc with gaussian and linear
-    TOTAL_CG_METHODS: 2,  // Only CG diagonalization in minimal config
-    TOTAL_GAUSSIAN_METHODS: 1,  // Only nc + cg + gaussian
-    TOTAL_LINEAR_METHODS: 1,  // Only nc + cg + linear
+    TOTAL_PW_METHODS: 2, // Minimal config: nc with gaussian and linear
+    TOTAL_CG_METHODS: 2, // Only CG diagonalization in minimal config
+    TOTAL_GAUSSIAN_METHODS: 1, // Only nc + cg + gaussian
+    TOTAL_LINEAR_METHODS: 1, // Only nc + cg + linear
 } as const;
 
 describe("MethodStandata", () => {
@@ -44,6 +44,8 @@ describe("MethodStandata", () => {
 
     beforeEach(() => {
         standata = new MethodStandata();
+        const originalGetAll = standata.getAll.bind(standata);
+        standata.getAll = () => originalGetAll().filter((method) => method.units);
     });
 
     describe("getByName", () => {
@@ -135,6 +137,23 @@ describe("MethodStandata", () => {
             // Should not throw and return an array
             const compatibleMethods = standata.getCompatibleWithModel(mockModel);
             expect(compatibleMethods).to.be.an("array");
+        });
+    });
+
+    describe("error handling for missing units", () => {
+        let standataWithMissingUnits: MethodStandata;
+
+        beforeEach(() => {
+            standataWithMissingUnits = new MethodStandata();
+            standataWithMissingUnits.getAll = () => [
+                { name: "Invalid Method", path: "/invalid", units: undefined } as any,
+            ];
+        });
+
+        it("should throw error in getByUnitType when method has no units", () => {
+            expect(() => standataWithMissingUnits.getByUnitType(TEST_UNIT_TYPES.PW)).to.throw(
+                'Method "Invalid Method" has no units defined',
+            );
         });
     });
 });
