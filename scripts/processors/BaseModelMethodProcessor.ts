@@ -1,8 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
 import * as fs from "fs";
-import * as path from "path";
 import * as yaml from "js-yaml";
+import * as path from "path";
 
 import BUILD_CONFIG from "../../build-config";
 import { resolveFromRoot } from "../utils";
@@ -11,21 +11,30 @@ import { EntityProcessor } from "./EntityProcessor";
 export abstract class BaseModelMethodProcessor extends EntityProcessor {
     // Subclasses may override to enable tags/units scanning and entities list
     // eslint-disable-next-line class-methods-use-this
-    protected getCategoryCollectOptions(): { includeUnits: boolean; includeTags: boolean; includeEntitiesMap: boolean } {
+    protected getCategoryCollectOptions(): {
+        includeUnits: boolean;
+        includeTags: boolean;
+        includeEntitiesMap: boolean;
+    } {
         return { includeUnits: false, includeTags: false, includeEntitiesMap: false };
     }
 
     public updateCategoriesFile(): void {
         const dataPath = path.resolve(this.resolved.dataDir);
         const categoriesPath = this.options.categoriesRelativePath
-            ? path.resolve(resolveFromRoot(this.options.rootDir, this.options.assetsDir), this.options.categoriesRelativePath)
+            ? path.resolve(
+                  resolveFromRoot(this.options.rootDir, this.options.assetsDir),
+                  this.options.categoriesRelativePath,
+              )
             : path.resolve(this.resolved.dataDir, "categories.yml");
 
         const categoryKeys = this.options.categoryKeys || [];
         const { includeUnits, includeTags, includeEntitiesMap } = this.getCategoryCollectOptions();
 
         const categorySets: Record<string, Set<string>> = Object.fromEntries(
-            [...categoryKeys, includeTags ? "tags" : null].filter(Boolean).map((k) => [k as string, new Set<string>()]),
+            [...categoryKeys, includeTags ? "tags" : null]
+                .filter(Boolean)
+                .map((k) => [k as string, new Set<string>()]),
         ) as any;
         const entities: { filename: string; categories: string[] }[] = [];
 
@@ -45,7 +54,8 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
                     const flat = new Set<string>();
                     this.addCategoriesToSet(data, categoryKeys, includeTags, flat);
                     if (includeUnits && Array.isArray((data as any)?.units)) {
-                        for (const u of (data as any).units) this.addCategoriesToSet(u, categoryKeys, includeTags, flat);
+                        for (const u of (data as any).units)
+                            this.addCategoriesToSet(u, categoryKeys, includeTags, flat);
                     }
                     entities.push({ filename: relativePath, categories: Array.from(flat).sort() });
                 }
@@ -65,7 +75,10 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
         }
 
         const payload = includeEntitiesMap
-            ? { categories: categoriesOut, entities: entities.sort((a, b) => a.filename.localeCompare(b.filename)) }
+            ? {
+                  categories: categoriesOut,
+                  entities: entities.sort((a, b) => a.filename.localeCompare(b.filename)),
+              }
             : { categories: categoriesOut, entities: [] };
 
         const yamlContent = yaml.dump(payload, {
@@ -110,5 +123,3 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
         if (includeTags && Array.isArray(obj?.tags)) obj.tags.forEach((t: string) => target.add(t));
     }
 }
-
-

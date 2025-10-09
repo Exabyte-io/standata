@@ -17,6 +17,8 @@ export class MethodsProcessor extends BaseModelMethodProcessor {
             distRuntimeDir: BUILD_CONFIG.runtimeDataDir,
             categoriesRelativePath: BUILD_CONFIG.methods.assets.categories,
             categoryKeys: MethodsProcessor.defaultCategoryKeys,
+            isCategoriesGenerationEnabled: true,
+            excludedAssetFiles: [BUILD_CONFIG.methods.assets.categories],
         });
     }
 
@@ -41,5 +43,3 @@ export class MethodsProcessor extends BaseModelMethodProcessor {
         return { includeUnits: true, includeTags: true, includeEntitiesMap: true };
     }
 }
-
-

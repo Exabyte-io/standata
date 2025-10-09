@@ -12,8 +12,8 @@ import {
     Workflow, // @ts-ignore
 } from "@mat3ra/wode";
 import * as fs from "fs";
-import * as path from "path";
 import * as yaml from "js-yaml";
+import * as path from "path";
 
 import BUILD_CONFIG from "../../build-config";
 import { loadYAMLFilesAsMap, resolveFromRoot } from "../utils";
@@ -28,29 +28,48 @@ export class WorkflowsProcessor extends EntityProcessor {
             dataDir: BUILD_CONFIG.workflows.data.path,
             buildDir: BUILD_CONFIG.workflows.build.path,
             distRuntimeDir: BUILD_CONFIG.runtimeDataDir,
+            isCategoriesGenerationEnabled: false,
+            excludedAssetFiles: [
+                BUILD_CONFIG.workflows.assets.workflowsCategories,
+                BUILD_CONFIG.workflows.assets.subworkflowsCategories,
+            ],
         });
     }
 
     private applications: string[] = ["espresso"];
-    private workflowSubforkflowMapByApplication: { workflows: Record<string, any>; subworkflows: Record<string, any> } =
-        { workflows: {}, subworkflows: {} };
+
+    private workflowSubforkflowMapByApplication: {
+        workflows: Record<string, any>;
+        subworkflows: Record<string, any>;
+    } = { workflows: {}, subworkflows: {} };
 
     public readAssets() {
-        const sourcesRoot = resolveFromRoot(this.options.rootDir, BUILD_CONFIG.workflows.assets.path);
+        const sourcesRoot = resolveFromRoot(
+            this.options.rootDir,
+            BUILD_CONFIG.workflows.assets.path,
+        );
 
         this.applications.forEach((name) => {
             this.workflowSubforkflowMapByApplication.workflows[name] = {};
             this.workflowSubforkflowMapByApplication.subworkflows[name] = {};
 
             const wfDir = path.resolve(sourcesRoot, BUILD_CONFIG.workflows.assets.workflows, name);
-            const swDir = path.resolve(sourcesRoot, BUILD_CONFIG.workflows.assets.subworkflows, name);
+            const swDir = path.resolve(
+                sourcesRoot,
+                BUILD_CONFIG.workflows.assets.subworkflows,
+                name,
+            );
 
             this.workflowSubforkflowMapByApplication.workflows[name] = loadYAMLFilesAsMap(wfDir);
-            const wfCount = Object.keys(this.workflowSubforkflowMapByApplication.workflows[name]).length;
+            const wfCount = Object.keys(
+                this.workflowSubforkflowMapByApplication.workflows[name],
+            ).length;
             console.log(`Building ${name}: ${wfCount} workflow(s)`);
 
             this.workflowSubforkflowMapByApplication.subworkflows[name] = loadYAMLFilesAsMap(swDir);
-            const swCount = Object.keys(this.workflowSubforkflowMapByApplication.subworkflows[name]).length;
+            const swCount = Object.keys(
+                this.workflowSubforkflowMapByApplication.subworkflows[name],
+            ).length;
             console.log(`Building ${name}: ${swCount} subworkflow(s)`);
         });
 
@@ -64,7 +83,10 @@ export class WorkflowsProcessor extends EntityProcessor {
         serverUtils.file.createDirIfNotExistsSync(buildDir);
 
         serverUtils.json.writeJSONFileSync(
-            path.resolve(buildDir, BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication),
+            path.resolve(
+                buildDir,
+                BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication,
+            ),
             this.workflowSubforkflowMapByApplication,
         );
     }
@@ -110,8 +132,15 @@ export class WorkflowsProcessor extends EntityProcessor {
             config: config.config,
         }));
 
-        const outputWorkflowsDir = path.resolve(this.resolved.dataDir, BUILD_CONFIG.workflows.data.workflows);
-        const outputSubworkflowsDir = path.resolve(this.resolved.dataDir, BUILD_CONFIG.workflows.data.subworkflows);
+        const outputWorkflowsDir = path.resolve(
+            this.resolved.dataDir,
+            BUILD_CONFIG.workflows.data.workflows,
+        );
+        const outputSubworkflowsDir = path.resolve(
+            this.resolved.dataDir,
+            BUILD_CONFIG.workflows.data.subworkflows,
+        );
+
         serverUtils.file.createDirIfNotExistsSync(outputWorkflowsDir);
         serverUtils.file.createDirIfNotExistsSync(outputSubworkflowsDir);
 
@@ -166,7 +195,10 @@ export class WorkflowsProcessor extends EntityProcessor {
         );
 
         const collect = (baseDir: string) => {
-            const sets: Record<string, Set<string>> = { names: new Set<string>(), applications: new Set<string>() };
+            const sets: Record<string, Set<string>> = {
+                names: new Set<string>(),
+                applications: new Set<string>(),
+            };
             const files = this.findJsonFilesRecursively(baseDir);
             files.forEach((fp) => {
                 const rel = path.relative(baseDir, fp);
@@ -205,5 +237,3 @@ export class WorkflowsProcessor extends EntityProcessor {
         dump(categoriesPathSw, swSets);
     }
 }
-
-
