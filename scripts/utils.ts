@@ -1,4 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { JsYamlAllSchemas } from "@mat3ra/code/dist/js/utils";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
@@ -14,44 +16,6 @@ export function readYAMLFile(filePath: string): any {
 
 export function resolveFromRoot(scriptDirname: string, ...pathSegments: string[]): string {
     return path.resolve(scriptDirname, "../..", ...pathSegments);
-}
-
-export function findFilesWithExtensions(directoryPath: string, extensions: string[]): string[] {
-    const files: string[] = [];
-    const items = fs.readdirSync(directoryPath);
-
-    items.forEach((item) => {
-        const fullPath = path.join(directoryPath, item);
-        const stat = fs.statSync(fullPath);
-
-        if (stat.isDirectory()) {
-            files.push(...findFilesWithExtensions(fullPath, extensions));
-        } else if (extensions.some((ext) => item.endsWith(ext))) {
-            files.push(fullPath);
-        }
-    });
-
-    return files;
-}
-
-/**
- * Clears all files and subdirectories in the specified directory,
- * optionally excluding a specific file from deletion.
- */
-export function clearDirectory(dirPath: string, excludeFile?: string): void {
-    if (!fs.existsSync(dirPath)) return;
-
-    const items = fs.readdirSync(dirPath);
-    items.forEach((item) => {
-        if (item === excludeFile) return;
-
-        const itemPath = path.join(dirPath, item);
-        if (fs.statSync(itemPath).isDirectory()) {
-            fs.rmSync(itemPath, { recursive: true });
-        } else {
-            fs.unlinkSync(itemPath);
-        }
-    });
 }
 
 /**
@@ -198,9 +162,9 @@ export function processFile(
  */
 export function buildEntities(config: EntityProcessorConfig): void {
     const { categoriesFile } = config;
-    clearDirectory(config.dataPath, categoriesFile);
+    serverUtils.file.cleanDirectorySync(config.dataPath, [categoriesFile]);
 
-    const yamlFiles = findFilesWithExtensions(config.sourcesPath, [".yml", ".yaml"]);
+    const yamlFiles = serverUtils.file.getFilesInDirectory(config.sourcesPath, [".yml", ".yaml"]);
 
     yamlFiles.forEach((file) => processFile(file, config.processEntity));
 }
@@ -261,7 +225,7 @@ export function flattenNestedObjects<T>(
  */
 export function loadYAMLFilesAsMap(dirPath: string): Record<string, any> {
     const map: Record<string, any> = {};
-    const yamlFiles = findFilesWithExtensions(dirPath, [".yml", ".yaml"]);
+    const yamlFiles = serverUtils.file.getFilesInDirectory(dirPath, [".yml", ".yaml"]);
 
     yamlFiles.forEach((filePath) => {
         const filename = path.basename(filePath);
