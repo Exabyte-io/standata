@@ -4,15 +4,13 @@ import { Utils } from "@mat3ra/utils";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
 import * as fs from "fs";
-import * as yaml from "js-yaml";
 import * as lodash from "lodash";
 import * as path from "path";
 
 import BUILD_CONFIG from "../build-config";
 
-export function readYAMLFile(filePath: string): any {
-    const content = fs.readFileSync(filePath, "utf-8");
-    return yaml.load(content, { schema: JsYamlAllSchemas });
+export function readYAMLFileResolved(filePath: string): any {
+    return serverUtils.yaml.readYAMLFile(filePath, { schema: JsYamlAllSchemas });
 }
 
 export function resolveFromRoot(scriptDirname: string, ...pathSegments: string[]): string {
@@ -39,7 +37,7 @@ export function buildJSONFromYAMLInDir({
             process.chdir(workingDir);
         }
 
-        const data = readYAMLFile(assetPath);
+        const data = readYAMLFileResolved(assetPath);
         const resolvedTargetPath = workingDir ? path.resolve(originalCwd, targetPath) : targetPath;
 
         serverUtils.json.writeJSONFileSync(resolvedTargetPath, data, {
@@ -73,7 +71,7 @@ export function loadYAMLTree(
             items.forEach((item) => traverse(path.join(currentPath, item)));
         } else if (stat.isFile() && /\.(yml|yaml)$/i.test(currentPath)) {
             try {
-                const data = readYAMLFile(currentPath);
+                const data = readYAMLFileResolved(currentPath);
                 const objectPath = createObjectPath(currentPath, rootPath);
                 lodash.set(tree, objectPath, data);
             } catch (error) {
@@ -128,7 +126,7 @@ export function buildEntities(config: EntityProcessorConfig): void {
 
     yamlFiles.forEach((filePath) => {
         try {
-            const parsedFile = readYAMLFile(filePath);
+            const parsedFile = readYAMLFileResolved(filePath);
             const entities = Utils.array.normalizeToArray(parsedFile);
             entities.forEach((entity) => config.processEntity(entity, filePath));
         } catch (error: any) {
@@ -175,7 +173,7 @@ export function loadYAMLFilesAsMap(dirPath: string): Record<string, any> {
     yamlFiles.forEach((filePath) => {
         const filename = path.basename(filePath);
         const key = filename.replace(/\.(yml|yaml)$/i, "");
-        map[key] = readYAMLFile(filePath);
+        map[key] = readYAMLFileResolved(filePath);
     });
 
     return map;

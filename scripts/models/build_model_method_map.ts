@@ -6,7 +6,7 @@ import {
     ModelCategories,
     ModelMethodFilterEntry,
 } from "../../src/js/types/modelMethodFilter";
-import { readYAMLFile } from "../utils";
+import { readYAMLFileResolved } from "../utils";
 
 function parseModelCategories(categoryPath: string[]): ModelCategories {
     const categories: ModelCategories = {};
@@ -44,7 +44,7 @@ export function buildModelMethodMap(): void {
 
     console.log(`Building model-method map from ${sourceFile}...`);
 
-    const yamlData = readYAMLFile(sourceFile) as Record<string, any>;
+    const yamlData = readYAMLFileResolved(sourceFile) as Record<string, any>;
 
     const filterEntries: ModelMethodFilterEntry[] = [];
     traverseNestedCategories(yamlData, [], filterEntries);
