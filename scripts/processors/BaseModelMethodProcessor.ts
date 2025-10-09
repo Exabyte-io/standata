@@ -29,57 +29,30 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
         ) as any;
         const entities: { filename: string; categories: string[] }[] = [];
 
-        const findJsonFilesRecursively = (dir: string): string[] => {
-            const results: string[] = [];
-            const items = fs.readdirSync(dir);
-            items.forEach((item) => {
-                const full = path.join(dir, item);
-                const stat = fs.statSync(full);
-                if (stat.isDirectory()) results.push(...findJsonFilesRecursively(full));
-                else if (stat.isFile() && item.endsWith(".json")) results.push(full);
-            });
-            return results;
-        };
-
-        const addCatsFromObj = (obj: any) => {
-            if (obj?.categories) {
-                categoryKeys.forEach((key) => {
-                    const value = obj.categories[key];
-                    if (typeof value === "string" && value) (categorySets as any)[key].add(value);
-                });
-            }
-            if (includeTags && Array.isArray(obj?.tags)) {
-                obj.tags.forEach((t: string) => (categorySets as any).tags.add(t));
-            }
-        };
-
-        const jsonFiles = findJsonFilesRecursively(dataPath);
-        jsonFiles.forEach((filePath) => {
+        const jsonFiles = this.findJsonFilesRecursively(dataPath);
+        for (const filePath of jsonFiles) {
             try {
                 const data = serverUtils.json.readJSONFileSync(filePath) as any;
-                addCatsFromObj(data);
-                if (includeUnits && Array.isArray((data as any)?.units)) (data as any).units.forEach(addCatsFromObj);
+                this.addCategoriesFromObject(data, categoryKeys, includeTags, categorySets);
+                if (includeUnits && Array.isArray((data as any)?.units)) {
+                    for (const u of (data as any).units) {
+                        this.addCategoriesFromObject(u, categoryKeys, includeTags, categorySets);
+                    }
+                }
 
                 if (includeEntitiesMap) {
                     const relativePath = path.relative(this.resolved.dataDir, filePath);
                     const flat = new Set<string>();
-                    const collectFrom = (obj: any) => {
-                        if (obj?.categories) {
-                            categoryKeys.forEach((key) => {
-                                const v = obj.categories[key];
-                                if (typeof v === "string" && v) flat.add(v);
-                            });
-                        }
-                        if (includeTags && Array.isArray(obj?.tags)) obj.tags.forEach((t: string) => flat.add(t));
-                    };
-                    collectFrom(data);
-                    if (includeUnits && Array.isArray((data as any)?.units)) (data as any).units.forEach(collectFrom);
+                    this.addCategoriesToSet(data, categoryKeys, includeTags, flat);
+                    if (includeUnits && Array.isArray((data as any)?.units)) {
+                        for (const u of (data as any).units) this.addCategoriesToSet(u, categoryKeys, includeTags, flat);
+                    }
                     entities.push({ filename: relativePath, categories: Array.from(flat).sort() });
                 }
             } catch (e: any) {
                 console.error(`Error processing ${filePath}: ${e.message}`);
             }
-        });
+        }
 
         const categoriesOut: any = {};
         categoryKeys.forEach((key) => {
@@ -103,6 +76,38 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
         serverUtils.file.createDirIfNotExistsSync(path.dirname(categoriesPath));
         fs.writeFileSync(categoriesPath, yamlContent, "utf-8");
         console.log(`Categories file written to: ${categoriesPath}`);
+    }
+
+    protected addCategoriesFromObject(
+        obj: any,
+        categoryKeys: string[],
+        includeTags: boolean,
+        categorySets: Record<string, Set<string>>,
+    ): void {
+        if (obj?.categories) {
+            categoryKeys.forEach((key) => {
+                const value = obj.categories[key];
+                if (typeof value === "string" && value) (categorySets as any)[key].add(value);
+            });
+        }
+        if (includeTags && Array.isArray(obj?.tags)) {
+            obj.tags.forEach((t: string) => (categorySets as any).tags.add(t));
+        }
+    }
+
+    protected addCategoriesToSet(
+        obj: any,
+        categoryKeys: string[],
+        includeTags: boolean,
+        target: Set<string>,
+    ): void {
+        if (obj?.categories) {
+            categoryKeys.forEach((key) => {
+                const v = obj.categories[key];
+                if (typeof v === "string" && v) target.add(v);
+            });
+        }
+        if (includeTags && Array.isArray(obj?.tags)) obj.tags.forEach((t: string) => target.add(t));
     }
 }
 

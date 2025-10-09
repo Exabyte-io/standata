@@ -167,18 +167,7 @@ export class WorkflowsProcessor extends EntityProcessor {
 
         const collect = (baseDir: string) => {
             const sets: Record<string, Set<string>> = { names: new Set<string>(), applications: new Set<string>() };
-            const findJsonFilesRecursively = (dir: string): string[] => {
-                const results: string[] = [];
-                const items = fs.readdirSync(dir);
-                items.forEach((item) => {
-                    const full = path.join(dir, item);
-                    const stat = fs.statSync(full);
-                    if (stat.isDirectory()) results.push(...findJsonFilesRecursively(full));
-                    else if (stat.isFile() && item.endsWith(".json")) results.push(full);
-                });
-                return results;
-            };
-            const files = findJsonFilesRecursively(baseDir);
+            const files = this.findJsonFilesRecursively(baseDir);
             files.forEach((fp) => {
                 const rel = path.relative(baseDir, fp);
                 const [appName, fileName] = rel.split(path.sep);
