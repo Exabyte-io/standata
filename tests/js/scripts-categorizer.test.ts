@@ -4,7 +4,13 @@ import * as yaml from "js-yaml";
 import * as path from "path";
 
 import { generateCategoriesFile } from "../../scripts/categoriesUtils";
-import { METHOD_MODEL_VALUE_MAP } from "../../scripts/valueMaps";
+
+const METHOD_MODEL_VALUE_MAP: Record<string, string> = {
+    qm: "quantum mechanics",
+    dft: "density functional theory",
+    nc: "norm-conserving",
+    paw: "projector augmented wave",
+};
 
 const EXPECTED = {
     QUANTUM_MECHANICS: "quantum mechanics",
