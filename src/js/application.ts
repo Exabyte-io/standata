@@ -2,9 +2,9 @@ import type { ApplicationSchemaBase, TemplateSchema } from "@mat3ra/esse/dist/js
 
 import { Standata } from "./base";
 import APPLICATIONS from "./runtime_data/applications.json";
-import APPLICATION_VERSIONS_MAP from "./runtime_data/applicationVersionsMapByApplication.json";
-import EXECUTABLE_FLAVOR_MAP from "./runtime_data/executableFlavorMapByApplication.json";
-import TEMPLATES_LIST from "./runtime_data/templatesList.json";
+import APPLICATION_VERSIONS_MAP from "./runtime_data/applications/applicationVersionsMapByApplication.json";
+import EXECUTABLE_FLAVOR_MAP from "./runtime_data/applications/executableFlavorMapByApplication.json";
+import TEMPLATES_LIST from "./runtime_data/applications/templatesList.json";
 import {
     ApplicationExecutableTree,
     ApplicationVersionsMapByApplicationType,

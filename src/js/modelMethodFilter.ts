@@ -1,4 +1,4 @@
-import MODEL_METHOD_MAP from "./runtime_data/modelMethodMap.json";
+import MODEL_METHOD_MAP from "./runtime_data/models/modelMethodMap.json";
 import type { MethodConfig, UnitMethod } from "./types/method";
 import type { ModelConfig } from "./types/model";
 import { FilterRule, ModelCategories, ModelMethodFilterEntry } from "./types/modelMethodFilter";
