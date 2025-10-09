@@ -19,6 +19,14 @@ interface EntityCategories {
     categories: string[];
 }
 
+interface BuildEntityCategoriesConfig {
+    filePath: string;
+    dataPath: string;
+    categoryPaths: string[];
+    categoryData: CategoryData;
+    valueMap?: Record<string, string>;
+}
+
 /**
  * Extracts the final segment from a path (e.g., "categories.type" → "type").
  */
@@ -30,8 +38,8 @@ function getCategoryKey(categoryPath: string): string {
 /**
  * Transforms a value to human-readable format using the value map.
  */
-function transformValue(value: string, valueMap?: Record<string, string>): string {
-    return valueMap?.[value] ?? value;
+function inflateShortName(shortName: string, shortNameToNameMap?: Record<string, string>): string {
+    return shortNameToNameMap?.[shortName] ?? shortName;
 }
 
 /**
@@ -46,7 +54,7 @@ function addValuesToCategory(
     const valueArray = Array.isArray(values) ? values : [values];
     valueArray.forEach((item) => {
         if (typeof item === "string") {
-            categoryData[categoryKey].add(transformValue(item, valueMap));
+            categoryData[categoryKey].add(inflateShortName(item, valueMap));
         }
     });
 }
@@ -100,7 +108,7 @@ function addCategoriesToSet(
     const values = Array.isArray(value) ? value : [value];
     values.forEach((item) => {
         if (typeof item === "string") {
-            categories.add(transformValue(item, valueMap));
+            categories.add(inflateShortName(item, valueMap));
         }
     });
 }
@@ -164,13 +172,9 @@ function extractAllCategories(
 /**
  * Processes a single JSON file and extracts category information.
  */
-function processJsonFile(
-    filePath: string,
-    dataPath: string,
-    categoryPaths: string[],
-    categoryData: CategoryData,
-    valueMap?: Record<string, string>,
-): EntityCategories | null {
+function processJsonFile(config: BuildEntityCategoriesConfig): EntityCategories | null {
+    const { filePath, dataPath, categoryPaths, categoryData, valueMap } = config;
+
     try {
         const entity = readJsonFile(filePath);
         extractAllCategories(entity, categoryPaths, categoryData, valueMap);
@@ -223,13 +227,13 @@ export function generateCategoriesFile(config: CategoriesConfig): void {
 
     const entities = jsonFiles
         .map((filePath) =>
-            processJsonFile(
+            processJsonFile({
                 filePath,
-                config.dataPath,
-                config.categoryPathsInEntity,
+                dataPath: config.dataPath,
+                categoryPaths: config.categoryPathsInEntity,
                 categoryData,
-                config.shortToHumanReadableValueMap,
-            ),
+                valueMap: config.shortToHumanReadableValueMap,
+            }),
         )
         .filter((entity): entity is EntityCategories => entity !== null);
 
