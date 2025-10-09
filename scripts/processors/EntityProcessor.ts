@@ -49,8 +49,6 @@ export abstract class EntityProcessor {
     }
 
     // Hooks
-    // eslint-disable-next-line class-methods-use-this
-    protected onBeforeBuildDirectoryContent(): void {}
     // eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
     protected transformEntity(entity: any, _sourceFile: string): any {
         return entity;
@@ -80,7 +78,6 @@ export abstract class EntityProcessor {
     public writeBuildDirectoryContent(): void {
         if (!this.resolved.buildDir) return;
         serverUtils.file.createDirIfNotExistsSync(this.resolved.buildDir);
-        this.onBeforeBuildDirectoryContent();
         const artifacts = this.getBuildArtifacts();
         artifacts.forEach(({ relativePath, content }) => {
             const targetPath = path.resolve(this.resolved.buildDir as string, relativePath);
