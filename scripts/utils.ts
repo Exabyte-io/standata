@@ -37,7 +37,7 @@ export function resolveFromRoot(scriptDirname: string, ...pathSegments: string[]
     return path.resolve(scriptDirname, "../..", ...pathSegments);
 }
 
-export function findFiles(directoryPath: string, extensions: string[]): string[] {
+export function findFilesWithExtensions(directoryPath: string, extensions: string[]): string[] {
     const files: string[] = [];
     const items = fs.readdirSync(directoryPath);
 
@@ -46,7 +46,7 @@ export function findFiles(directoryPath: string, extensions: string[]): string[]
         const stat = fs.statSync(fullPath);
 
         if (stat.isDirectory()) {
-            files.push(...findFiles(fullPath, extensions));
+            files.push(...findFilesWithExtensions(fullPath, extensions));
         } else if (extensions.some((ext) => item.endsWith(ext))) {
             files.push(fullPath);
         }
@@ -236,7 +236,7 @@ export function buildEntities(config: EntityProcessorConfig): void {
     const { categoriesFile } = config;
     clearDirectory(config.dataPath, categoriesFile);
 
-    const yamlFiles = findFiles(config.sourcesPath, [".yml", ".yaml"]);
+    const yamlFiles = findFilesWithExtensions(config.sourcesPath, [".yml", ".yaml"]);
 
     yamlFiles.forEach((file) => processFile(file, config.processEntity));
 }
@@ -292,7 +292,7 @@ export function flattenNestedObjects<T>(
  */
 export function loadYAMLFilesAsMap(dirPath: string): Record<string, any> {
     const map: Record<string, any> = {};
-    const yamlFiles = findFiles(dirPath, [".yml", ".yaml"]);
+    const yamlFiles = findFilesWithExtensions(dirPath, [".yml", ".yaml"]);
 
     yamlFiles.forEach((filePath) => {
         const filename = path.basename(filePath);
