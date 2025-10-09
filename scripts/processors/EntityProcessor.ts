@@ -122,21 +122,8 @@ export abstract class EntityProcessor {
         );
         serverUtils.file.createDirIfNotExistsSync(entityRuntimeDir);
 
-        const copyJsonFiles = (fromDir: string | undefined) => {
-            if (!fromDir || !fs.existsSync(fromDir)) return;
-            const files = serverUtils.file.getFilesInDirectory(fromDir, [".json"]);
-            files.forEach((filePath: string) => {
-                const rel = path.relative(fromDir, filePath);
-                const destPath = path.resolve(entityRuntimeDir, rel);
-                serverUtils.file.createDirIfNotExistsSync(path.dirname(destPath));
-                const content = serverUtils.json.readJSONFileSync(filePath);
-                serverUtils.json.writeJSONFileSync(destPath, content, { spaces: 0 });
-                console.log(`  Dist: ${destPath}`);
-            });
-        };
-
-        copyJsonFiles(this.resolved.dataDir);
-        copyJsonFiles(this.resolved.buildDir);
+        this.copyJsonFiles(this.resolved.dataDir, entityRuntimeDir);
+        this.copyJsonFiles(this.resolved.buildDir, entityRuntimeDir);
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -151,6 +138,19 @@ export abstract class EntityProcessor {
         this.updateCategoriesFile();
         this.additionalProcessing();
         console.log(`✅ ${this.options.entityName} completed.`);
+    }
+
+    protected copyJsonFiles(fromDir: string | undefined, destinationBaseDir: string): void {
+        if (!fromDir || !fs.existsSync(fromDir)) return;
+        const files = serverUtils.file.getFilesInDirectory(fromDir, [".json"]);
+        files.forEach((filePath: string) => {
+            const relativePath = path.relative(fromDir, filePath);
+            const destinationPath = path.resolve(destinationBaseDir, relativePath);
+            serverUtils.file.createDirIfNotExistsSync(path.dirname(destinationPath));
+            const content = serverUtils.json.readJSONFileSync(filePath);
+            serverUtils.json.writeJSONFileSync(destinationPath, content, { spaces: 0 });
+            console.log(`  Dist: ${destinationPath}`);
+        });
     }
 }
 
