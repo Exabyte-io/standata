@@ -1,77 +1,86 @@
 categories:
   tier1:
-    - physics-based
+    - pb
   tier2:
-    - quantum mechanics
+    - qm
   tier3:
-    - density functional theory
+    - dft
   type:
-    - Kohn-Sham DFT
+    - ksdft
   subtype:
-    - local density approximation
+    - lda
   tags:
     - density functional theory
 entities:
   - filename: lda/dft_lda_pz_collinear.json
     categories:
-      - Kohn-Sham DFT
       - density functional theory
-      - local density approximation
-      - physics-based
-      - quantum mechanics
+      - dft
+      - ksdft
+      - lda
+      - pb
+      - qm
   - filename: lda/dft_lda_pz_d3_collinear.json
     categories:
-      - Kohn-Sham DFT
       - density functional theory
-      - local density approximation
-      - physics-based
-      - quantum mechanics
+      - dft
+      - ksdft
+      - lda
+      - pb
+      - qm
   - filename: lda/dft_lda_pz_d3_soc.json
     categories:
-      - Kohn-Sham DFT
       - density functional theory
-      - local density approximation
-      - physics-based
-      - quantum mechanics
+      - dft
+      - ksdft
+      - lda
+      - pb
+      - qm
   - filename: lda/dft_lda_pz_d3.json
     categories:
-      - Kohn-Sham DFT
       - density functional theory
-      - local density approximation
-      - physics-based
-      - quantum mechanics
+      - dft
+      - ksdft
+      - lda
+      - pb
+      - qm
   - filename: lda/dft_lda_pz_soc.json
     categories:
-      - Kohn-Sham DFT
       - density functional theory
-      - local density approximation
-      - physics-based
-      - quantum mechanics
+      - dft
+      - ksdft
+      - lda
+      - pb
+      - qm
   - filename: lda/dft_lda_pz_u_collinear.json
     categories:
-      - Kohn-Sham DFT
       - density functional theory
-      - local density approximation
-      - physics-based
-      - quantum mechanics
+      - dft
+      - ksdft
+      - lda
+      - pb
+      - qm
   - filename: lda/dft_lda_pz_u_soc.json
     categories:
-      - Kohn-Sham DFT
       - density functional theory
-      - local density approximation
-      - physics-based
-      - quantum mechanics
+      - dft
+      - ksdft
+      - lda
+      - pb
+      - qm
   - filename: lda/dft_lda_pz_u.json
     categories:
-      - Kohn-Sham DFT
       - density functional theory
-      - local density approximation
-      - physics-based
-      - quantum mechanics
+      - dft
+      - ksdft
+      - lda
+      - pb
+      - qm
   - filename: lda/dft_lda_pz.json
     categories:
-      - Kohn-Sham DFT
       - density functional theory
-      - local density approximation
-      - physics-based
-      - quantum mechanics
+      - dft
+      - ksdft
+      - lda
+      - pb
+      - qm

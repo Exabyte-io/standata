@@ -1,6 +1,5 @@
 import BUILD_CONFIG from "../../build-config";
 import { generateCategoriesFile } from "../categoriesUtils";
-import { METHOD_MODEL_VALUE_MAP } from "../valueMaps";
 
 generateCategoriesFile({
     categoriesYamlFilePath: `${BUILD_CONFIG.methods.assets.path}/${BUILD_CONFIG.methods.assets.categories}`,
@@ -13,5 +12,4 @@ generateCategoriesFile({
         "categories.subtype",
         "tags",
     ],
-    shortToHumanReadableValueMap: METHOD_MODEL_VALUE_MAP,
 });

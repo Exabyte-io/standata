@@ -1,55 +1,93 @@
 categories:
   tier1:
-    - optimization
-    - quantum mechanics
+    - opt
+    - qm
   tier2:
-    - differential
-    - wave function
+    - diff
+    - wf
   tier3:
-    - order-n
+    - ordern
   type:
-    - conjugate gradient
-    - plane wave
-    - pseudopotential
+    - cg
+    - psp
+    - pw
     - smearing
     - tetrahedron
   subtype:
-    - gaussian smearing
+    - gaussian
     - linear
-    - norm-conserving
+    - nc
   tags:
     - diagonalization
     - occupation number
     - plane wave
     - pseudopotential
 entities:
+  - filename: diagonalization/conjugate_gradient_diagonalization.json
+    categories:
+      - cg
+      - diagonalization
+      - diff
+      - opt
+      - ordern
+  - filename: occupations/gaussian_smearing.json
+    categories:
+      - gaussian
+      - occupation number
+      - qm
+      - smearing
+      - wf
+  - filename: occupations/linear_tetrahedron_method.json
+    categories:
+      - linear
+      - occupation number
+      - qm
+      - tetrahedron
+      - wf
+  - filename: psp/norm_conserving_pseudopotential.json
+    categories:
+      - nc
+      - pseudopotential
+      - psp
+      - qm
+      - wf
   - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
     categories:
-      - conjugate gradient
+      - cg
       - diagonalization
-      - differential
-      - gaussian smearing
-      - norm-conserving
+      - diff
+      - gaussian
+      - nc
       - occupation number
-      - optimization
-      - order-n
+      - opt
+      - ordern
       - plane wave
       - pseudopotential
-      - quantum mechanics
+      - psp
+      - pw
+      - qm
       - smearing
-      - wave function
+      - wf
   - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
     categories:
-      - conjugate gradient
+      - cg
       - diagonalization
-      - differential
+      - diff
       - linear
-      - norm-conserving
+      - nc
       - occupation number
-      - optimization
-      - order-n
+      - opt
+      - ordern
       - plane wave
       - pseudopotential
-      - quantum mechanics
+      - psp
+      - pw
+      - qm
       - tetrahedron
-      - wave function
+      - wf
+  - filename: pw/wave_function_plane_wave.json
+    categories:
+      - plane wave
+      - pw
+      - qm
+      - wf
