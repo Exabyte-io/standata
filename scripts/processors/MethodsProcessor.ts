@@ -18,7 +18,11 @@ export class MethodsProcessor extends BaseModelMethodProcessor {
             categoriesRelativePath: BUILD_CONFIG.methods.assets.categories,
             categoryKeys: MethodsProcessor.defaultCategoryKeys,
             isCategoriesGenerationEnabled: true,
-            excludedAssetFiles: [BUILD_CONFIG.methods.assets.categories],
+            categoryCollectOptions: {
+                includeUnits: true,
+                includeTags: true,
+                includeEntitiesMap: true,
+            },
         });
     }
 
@@ -37,9 +41,5 @@ export class MethodsProcessor extends BaseModelMethodProcessor {
     protected getDataSubdirectory(_entity: any, sourceFile: string): string {
         const basename = path.basename(sourceFile, path.extname(sourceFile));
         return basename.replace(/_methods?$/i, "");
-    }
-
-    protected getCategoryCollectOptions() {
-        return { includeUnits: true, includeTags: true, includeEntitiesMap: true };
     }
 }

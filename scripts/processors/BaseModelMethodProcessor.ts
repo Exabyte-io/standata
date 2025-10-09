@@ -6,17 +6,31 @@ import * as path from "path";
 
 import BUILD_CONFIG from "../../build-config";
 import { resolveFromRoot } from "../utils";
-import { EntityProcessor } from "./EntityProcessor";
+import { EntityProcessor, EntityProcessorOptions } from "./EntityProcessor";
+
+export interface ModelMethodProcessorOptions extends EntityProcessorOptions {
+    categoryCollectOptions?: {
+        includeUnits?: boolean;
+        includeTags?: boolean;
+        includeEntitiesMap?: boolean;
+    };
+}
 
 export abstract class BaseModelMethodProcessor extends EntityProcessor {
-    // Subclasses may override to enable tags/units scanning and entities list
-    // eslint-disable-next-line class-methods-use-this
-    protected getCategoryCollectOptions(): {
-        includeUnits: boolean;
-        includeTags: boolean;
-        includeEntitiesMap: boolean;
-    } {
-        return { includeUnits: false, includeTags: false, includeEntitiesMap: false };
+    protected readonly options: ModelMethodProcessorOptions;
+
+    constructor(options: ModelMethodProcessorOptions) {
+        super(options);
+        this.options = options;
+    }
+
+    protected getCategoryCollectOptions() {
+        return {
+            includeUnits: false,
+            includeTags: false,
+            includeEntitiesMap: false,
+            ...this.options.categoryCollectOptions,
+        };
     }
 
     public updateCategoriesFile(): void {

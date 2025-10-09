@@ -16,6 +16,11 @@ export class ModelsProcessor extends BaseModelMethodProcessor {
             categoryKeys: ModelsProcessor.defaultCategoryKeys,
             isCategoriesGenerationEnabled: true,
             excludedAssetFiles: [BUILD_CONFIG.models.assets.modelMethodMap],
+            categoryCollectOptions: {
+                includeUnits: false,
+                includeTags: true,
+                includeEntitiesMap: true,
+            },
         });
     }
 
