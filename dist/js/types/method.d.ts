@@ -1,5 +1,6 @@
 import { CategorizedUnitMethod } from "@mat3ra/esse/dist/js/types";
 export interface UnitMethod extends CategorizedUnitMethod {
+    name: Required<CategorizedUnitMethod>["name"];
     categories: Required<CategorizedUnitMethod>["categories"] & {
         type: Required<CategorizedUnitMethod>["categories"]["type"];
         subtype: Required<CategorizedUnitMethod>["categories"]["subtype"];
@@ -8,9 +9,10 @@ export interface UnitMethod extends CategorizedUnitMethod {
     tags: Required<CategorizedUnitMethod>["tags"];
     path: Required<CategorizedUnitMethod>["path"];
 }
-export interface MethodConfig {
+export interface CompositeMethod {
     name: string;
     shortName?: string;
     path: string;
     units: UnitMethod[];
 }
+export type MethodConfig = CompositeMethod | UnitMethod;

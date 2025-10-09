@@ -844,6 +844,7 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                     tier2: string;
                     tier3: string;
                     type: string;
+                    subtype: string;
                 };
                 parameters: {};
                 name: string;

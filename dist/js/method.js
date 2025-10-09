@@ -8,9 +8,6 @@ const base_1 = require("./base");
 const modelMethodFilter_1 = require("./modelMethodFilter");
 const methods_json_1 = __importDefault(require("./runtime_data/methods.json"));
 const category_1 = require("./utils/category");
-function getMissingUnitsErrorMessage(methodName) {
-    return `Method "${methodName}" has no units defined`;
-}
 class MethodStandata extends base_1.Standata {
     getByName(name) {
         const allMethods = this.getAll();
@@ -19,8 +16,8 @@ class MethodStandata extends base_1.Standata {
     getByUnitType(unitType) {
         const allMethods = this.getAll();
         return allMethods.filter((method) => {
-            if (!method.units) {
-                throw new Error(getMissingUnitsErrorMessage(method.name));
+            if (!("units" in method)) {
+                return (0, category_1.getCategoryValue)(method.categories.type) === unitType;
             }
             return method.units.some((unit) => (0, category_1.getCategoryValue)(unit.categories.type) === unitType);
         });
@@ -28,8 +25,8 @@ class MethodStandata extends base_1.Standata {
     getByUnitSubtype(unitSubtype) {
         const allMethods = this.getAll();
         return allMethods.filter((method) => {
-            if (!method.units) {
-                throw new Error(getMissingUnitsErrorMessage(method.name));
+            if (!("units" in method)) {
+                return (0, category_1.getCategoryValue)(method.categories.subtype) === unitSubtype;
             }
             return method.units.some((unit) => (0, category_1.getCategoryValue)(unit.categories.subtype) === unitSubtype);
         });
@@ -37,8 +34,8 @@ class MethodStandata extends base_1.Standata {
     getByUnitTags(...tags) {
         const allMethods = this.getAll();
         return allMethods.filter((method) => {
-            if (!method.units) {
-                throw new Error(getMissingUnitsErrorMessage(method.name));
+            if (!("units" in method)) {
+                return tags.some((tag) => method.tags.includes(tag));
             }
             return method.units.some((unit) => tags.some((tag) => unit.tags.includes(tag)));
         });
@@ -50,8 +47,10 @@ class MethodStandata extends base_1.Standata {
     getByUnitParameters(parameters) {
         const allMethods = this.getAll();
         return allMethods.filter((method) => {
-            if (!method.units) {
-                throw new Error(getMissingUnitsErrorMessage(method.name));
+            if (!("units" in method)) {
+                if (!method.parameters)
+                    return false;
+                return Object.entries(parameters).every(([key, value]) => method.parameters[key] === value);
             }
             return method.units.some((unit) => {
                 if (!unit.parameters)
@@ -71,8 +70,8 @@ class MethodStandata extends base_1.Standata {
     getAllUnits() {
         const allMethods = this.getAll();
         return allMethods.flatMap((method) => {
-            if (!method.units) {
-                throw new Error(getMissingUnitsErrorMessage(method.name));
+            if (!("units" in method)) {
+                return [method];
             }
             return method.units;
         });
