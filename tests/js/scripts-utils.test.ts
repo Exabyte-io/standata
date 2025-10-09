@@ -7,11 +7,11 @@ import {
     clearDirectory,
     createSafeFilename,
     findFiles,
-    loadYamlTree,
-    readJsonFile,
-    readYamlFile,
-    writeJsonFile,
-    writeYamlFile,
+    loadYAMLTree,
+    readJSONFile,
+    readYAMLFile,
+    writeJSONFile,
+    writeYAMLFile,
 } from "../../scripts/utils";
 
 describe("scripts/utils (compact)", () => {
@@ -27,16 +27,16 @@ describe("scripts/utils (compact)", () => {
     it("reads/writes YAML & JSON with spacing and parent dirs", () => {
         const yObj = { a: 1, b: { c: 2 }, arr: [1, 2] };
         const yPath = path.join(TEST_DIR, "nested/dir/test.yml");
-        writeYamlFile(yPath, yObj);
+        writeYAMLFile(yPath, yObj);
         expect(fs.existsSync(yPath)).to.be.true;
-        expect(readYamlFile(yPath)).to.deep.equal(yObj);
+        expect(readYAMLFile(yPath)).to.deep.equal(yObj);
 
         const jObj = { x: 1, y: 2 };
         const jMin = path.join(TEST_DIR, "m.json");
         const jPretty = path.join(TEST_DIR, "p.json");
-        writeJsonFile(jMin, jObj, 0);
-        writeJsonFile(jPretty, jObj, 2);
-        expect(readJsonFile(jMin)).to.deep.equal(jObj);
+        writeJSONFile(jMin, jObj, 0);
+        writeJSONFile(jPretty, jObj, 2);
+        expect(readJSONFile(jMin)).to.deep.equal(jObj);
         const min = fs.readFileSync(jMin, "utf-8");
         const pretty = fs.readFileSync(jPretty, "utf-8");
         expect(min).to.equal('{"x":1,"y":2}');
@@ -84,7 +84,7 @@ describe("scripts/utils (compact)", () => {
         const yPath = path.join(TEST_DIR, "s.yml");
         const jPath = path.join(TEST_DIR, "o.json");
         const obj = { name: "t", value: 1 };
-        writeYamlFile(yPath, obj);
+        writeYAMLFile(yPath, obj);
         const out = buildJsonFromYamlInDir({
             assetPath: yPath,
             targetPath: jPath,
@@ -98,15 +98,15 @@ describe("scripts/utils (compact)", () => {
 
     it("loadYamlTree aggregates nested YAML", () => {
         const data = { lda: { type: "lda" }, gga: { type: "gga" } };
-        writeYamlFile(path.join(TEST_DIR, "models/espresso/lda.yml"), data.lda);
-        writeYamlFile(path.join(TEST_DIR, "models/espresso/gga.yml"), data.gga);
+        writeYAMLFile(path.join(TEST_DIR, "models/espresso/lda.yml"), data.lda);
+        writeYAMLFile(path.join(TEST_DIR, "models/espresso/gga.yml"), data.gga);
         const mapPath = (f: string, root: string) =>
             path
                 .relative(root, f)
                 .split(path.sep)
                 .map((p) => p.replace(/\.(yml|yaml)$/i, ""))
                 .join(".");
-        const tree = loadYamlTree(TEST_DIR, mapPath);
+        const tree = loadYAMLTree(TEST_DIR, mapPath);
         expect(tree).to.have.nested.property("models.espresso.lda");
         expect(tree.models.espresso.lda).to.deep.equal(data.lda);
         expect(tree.models.espresso.gga).to.deep.equal(data.gga);

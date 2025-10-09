@@ -12,23 +12,23 @@ export function ensureDirectory(dirPath: string): void {
     }
 }
 
-export function readYamlFile(filePath: string): any {
+export function readYAMLFile(filePath: string): any {
     const content = fs.readFileSync(filePath, "utf-8");
     return yaml.load(content, { schema: JsYamlAllSchemas });
 }
 
-export function writeYamlFile(filePath: string, data: any): void {
+export function writeYAMLFile(filePath: string, data: any): void {
     ensureDirectory(path.dirname(filePath));
     const content = yaml.dump(data, { ...BUILD_CONFIG.yamlFormat });
     fs.writeFileSync(filePath, content, "utf-8");
 }
 
-export function readJsonFile(filePath: string): any {
+export function readJSONFile(filePath: string): any {
     const content = fs.readFileSync(filePath, "utf-8");
     return JSON.parse(content);
 }
 
-export function writeJsonFile(filePath: string, data: any, spaces = 0): void {
+export function writeJSONFile(filePath: string, data: any, spaces = 0): void {
     ensureDirectory(path.dirname(filePath));
     fs.writeFileSync(filePath, JSON.stringify(data, null, spaces), "utf-8");
 }
@@ -102,10 +102,10 @@ export function buildJsonFromYamlInDir({
             process.chdir(workingDir);
         }
 
-        const data = readYamlFile(assetPath);
+        const data = readYAMLFile(assetPath);
         const resolvedTargetPath = workingDir ? path.resolve(originalCwd, targetPath) : targetPath;
 
-        writeJsonFile(resolvedTargetPath, data, spaces);
+        writeJSONFile(resolvedTargetPath, data, spaces);
         console.log(`Written asset "${assetPath}" to "${targetPath}"`);
         return data;
     } finally {
@@ -118,7 +118,7 @@ export function buildJsonFromYamlInDir({
 /**
  * Loads a directory tree of YAML files into a nested object structure.
  */
-export function loadYamlTree(
+export function loadYAMLTree(
     rootPath: string,
     createObjectPath: (filePath: string, rootPath: string) => string,
 ): Record<string, any> {
@@ -134,7 +134,7 @@ export function loadYamlTree(
             items.forEach((item) => traverse(path.join(currentPath, item)));
         } else if (stat.isFile() && /\.(yml|yaml)$/i.test(currentPath)) {
             try {
-                const data = readYamlFile(currentPath);
+                const data = readYAMLFile(currentPath);
                 const objectPath = createObjectPath(currentPath, rootPath);
                 lodash.set(tree, objectPath, data);
             } catch (error) {
@@ -200,7 +200,7 @@ export function saveEntity(entity: any, subdirectory: string, dataPath: string):
     const filename = `${createSafeFilename(entity.name)}.json`;
     const targetPath = path.join(targetDir, filename);
 
-    writeJsonFile(targetPath, entity);
+    writeJSONFile(targetPath, entity);
     console.log(`  Created: ${targetPath}`);
 }
 
@@ -213,7 +213,7 @@ export function processFile(
 ): void {
     console.log(`Processing: ${filePath}`);
     try {
-        const parsedFile = readYamlFile(filePath);
+        const parsedFile = readYAMLFile(filePath);
         const entities = normalizeToArray(parsedFile);
         entities.forEach((entity) => processEntity(entity, filePath));
     } catch (error: any) {
@@ -281,14 +281,14 @@ export function flattenNestedObjects<T>(
 /**
  * Loads YAML files from a directory and stores them in a map keyed by filename (without extension).
  */
-export function loadYamlFilesAsMap(dirPath: string): Record<string, any> {
+export function loadYAMLFilesAsMap(dirPath: string): Record<string, any> {
     const map: Record<string, any> = {};
     const yamlFiles = findFiles(dirPath, [".yml", ".yaml"]);
 
     yamlFiles.forEach((filePath) => {
         const filename = path.basename(filePath);
         const key = filename.replace(/\.(yml|yaml)$/i, "");
-        map[key] = readYamlFile(filePath);
+        map[key] = readYAMLFile(filePath);
     });
 
     return map;

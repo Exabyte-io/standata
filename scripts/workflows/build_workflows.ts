@@ -10,7 +10,7 @@ import {
 import path from "path";
 
 import BUILD_CONFIG from "../../build-config";
-import { ensureDirectory, loadYamlFilesAsMap, resolveFromRoot, writeJsonFile } from "../utils";
+import { ensureDirectory, loadYAMLFilesAsMap, resolveFromRoot, writeJSONFile } from "../utils";
 
 // TODO: get from sources/applications directory
 const applications = ["espresso"];
@@ -47,7 +47,7 @@ function generateConfigFiles(items: ConfigItem[], type: "workflow" | "subworkflo
         const filename = `${name}.json`;
         const filePath = path.resolve(appDir, filename);
 
-        writeJsonFile(filePath, config);
+        writeJSONFile(filePath, config);
         console.log(`Generated ${type}: ${appName}/${filename}`);
     });
 }
@@ -60,11 +60,11 @@ applications.forEach((name) => {
     const wfDir = path.resolve(sourcesRoot, BUILD_CONFIG.workflows.assets.workflows, name);
     const swDir = path.resolve(sourcesRoot, BUILD_CONFIG.workflows.assets.subworkflows, name);
 
-    workflowSubforkflowMapByApplication.workflows[name] = loadYamlFilesAsMap(wfDir);
+    workflowSubforkflowMapByApplication.workflows[name] = loadYAMLFilesAsMap(wfDir);
     const wfCount = Object.keys(workflowSubforkflowMapByApplication.workflows[name]).length;
     console.log(`Building ${name}: ${wfCount} workflow(s)`);
 
-    workflowSubforkflowMapByApplication.subworkflows[name] = loadYamlFilesAsMap(swDir);
+    workflowSubforkflowMapByApplication.subworkflows[name] = loadYAMLFilesAsMap(swDir);
     const swCount = Object.keys(workflowSubforkflowMapByApplication.subworkflows[name]).length;
     console.log(`Building ${name}: ${swCount} subworkflow(s)`);
 });
@@ -72,7 +72,7 @@ applications.forEach((name) => {
 const buildDir = resolveFromRoot(__dirname, BUILD_CONFIG.workflows.build.path);
 ensureDirectory(buildDir);
 
-writeJsonFile(
+writeJSONFile(
     path.resolve(buildDir, BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication),
     workflowSubforkflowMapByApplication,
     0,

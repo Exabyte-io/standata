@@ -8,9 +8,9 @@ import {
     buildJsonFromYamlInDir,
     ensureDirectory,
     flattenNestedObjects,
-    loadYamlTree,
+    loadYAMLTree,
     resolveFromRoot,
-    writeJsonFile,
+    writeJSONFile,
 } from "../utils";
 
 type NestedApplicationData = Record<string, Record<string, ApplicationVersionsMapType>>;
@@ -45,12 +45,12 @@ const METHOD_ASSET_PATH = resolveFromRoot(
     BUILD_CONFIG.applications.assets.methods,
 );
 
-const APPLICATION_DATA = loadYamlTree(
+const APPLICATION_DATA = loadYAMLTree(
     APPLICATION_ASSET_PATH,
     utils.createObjectPathFromFilePath,
 ) as NestedApplicationData;
-const MODEL_FILTER_TREE = loadYamlTree(MODEL_ASSET_PATH, utils.createObjectPathFromFilePath);
-const METHOD_FILTER_TREE = loadYamlTree(METHOD_ASSET_PATH, utils.createObjectPathFromFilePath);
+const MODEL_FILTER_TREE = loadYAMLTree(MODEL_ASSET_PATH, utils.createObjectPathFromFilePath);
+const METHOD_FILTER_TREE = loadYAMLTree(METHOD_ASSET_PATH, utils.createObjectPathFromFilePath);
 
 const cleanApplicationData = flattenNestedObjects(APPLICATION_DATA);
 
@@ -65,7 +65,7 @@ Object.keys(cleanApplicationData).forEach((appName) => {
     versionConfigsFull.forEach((versionConfigFull) => {
         const fileName = appVersionsMap.getSlugForVersionConfig(versionConfigFull);
         const filePath = path.resolve(appDir, fileName);
-        writeJsonFile(filePath, versionConfigFull);
+        writeJSONFile(filePath, versionConfigFull);
         console.log(`Generated application version: ${appName}/${fileName}`);
     });
 });
@@ -75,7 +75,7 @@ const modelMethodMapByApplication = {
     methods: METHOD_FILTER_TREE,
 };
 
-writeJsonFile(
+writeJSONFile(
     resolveFromRoot(
         __dirname,
         BUILD_CONFIG.applications.build.path,
@@ -84,7 +84,7 @@ writeJsonFile(
     cleanApplicationData,
 );
 
-writeJsonFile(
+writeJSONFile(
     resolveFromRoot(
         __dirname,
         BUILD_CONFIG.applications.build.path,
