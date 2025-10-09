@@ -13,7 +13,7 @@ import {
 } from "@mat3ra/wode";
 import * as path from "path";
 
-import BUILD_CONFIG from "../../build-config";
+import { BUILD_CONFIG } from "../../build-config";
 import { loadYAMLFilesAsMap, resolveFromRoot } from "../utils";
 import { EntityProcessor } from "./EntityProcessor";
 
@@ -21,11 +21,11 @@ export class WorkflowsProcessor extends EntityProcessor {
     constructor(rootDir: string) {
         super({
             rootDir,
-            entityName: "workflows",
+            entityNamePlural: "workflows",
             assetsDir: BUILD_CONFIG.workflows.assets.path,
+            categoriesRelativePath: BUILD_CONFIG.workflows.assets.workflowsCategories,
             dataDir: BUILD_CONFIG.workflows.data.path,
             buildDir: BUILD_CONFIG.workflows.build.path,
-            distRuntimeDir: BUILD_CONFIG.runtimeDataDir,
             excludedAssetFiles: [
                 BUILD_CONFIG.workflows.assets.workflowsCategories,
                 BUILD_CONFIG.workflows.assets.subworkflowsCategories,
@@ -75,8 +75,8 @@ export class WorkflowsProcessor extends EntityProcessor {
     }
 
     public writeBuildDirectoryContent(): void {
-        if (!this.resolved.buildDir) return;
-        const buildDir = this.resolved.buildDir as string;
+        if (!this.resolvedPaths.buildDir) return;
+        const buildDir = this.resolvedPaths.buildDir as string;
         serverUtils.file.createDirIfNotExistsSync(buildDir);
 
         serverUtils.json.writeJSONFileSync(
@@ -130,11 +130,11 @@ export class WorkflowsProcessor extends EntityProcessor {
         }));
 
         const outputWorkflowsDir = path.resolve(
-            this.resolved.dataDir,
+            this.resolvedPaths.dataDir,
             BUILD_CONFIG.workflows.data.workflows,
         );
         const outputSubworkflowsDir = path.resolve(
-            this.resolved.dataDir,
+            this.resolvedPaths.dataDir,
             BUILD_CONFIG.workflows.data.subworkflows,
         );
 

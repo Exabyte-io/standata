@@ -4,7 +4,7 @@ import * as fs from "fs";
 import * as yaml from "js-yaml";
 import * as path from "path";
 
-import BUILD_CONFIG from "../../build-config";
+import { BUILD_CONFIG } from "../../build-config";
 import { resolveFromRoot } from "../utils";
 import { EntityProcessor, EntityProcessorOptions } from "./EntityProcessor";
 
@@ -34,13 +34,13 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
     }
 
     public updateCategoriesFile(): void {
-        const dataPath = path.resolve(this.resolved.dataDir);
+        const dataPath = path.resolve(this.resolvedPaths.dataDir);
         const categoriesPath = this.options.categoriesRelativePath
             ? path.resolve(
                   resolveFromRoot(this.options.rootDir, this.options.assetsDir),
                   this.options.categoriesRelativePath,
               )
-            : path.resolve(this.resolved.dataDir, "categories.yml");
+            : path.resolve(this.resolvedPaths.dataDir, "categories.yml");
 
         const categoryKeys = this.options.categoryKeys || [];
         const { includeUnits, includeTags, includeEntitiesMap } = this.getCategoryCollectOptions();
@@ -64,7 +64,7 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
                 }
 
                 if (includeEntitiesMap) {
-                    const relativePath = path.relative(this.resolved.dataDir, filePath);
+                    const relativePath = path.relative(this.resolvedPaths.dataDir, filePath);
                     const flat = new Set<string>();
                     this.addCategoriesToSet(data, categoryKeys, includeTags, flat);
                     if (includeUnits && Array.isArray((data as any)?.units)) {

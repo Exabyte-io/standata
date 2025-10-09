@@ -1,4 +1,4 @@
-import BUILD_CONFIG from "../../build-config";
+import { BUILD_CONFIG } from "../../build-config";
 import { encodeDataAsURLPath } from "../utils";
 import { BaseModelMethodProcessor } from "./BaseModelMethodProcessor";
 
@@ -8,11 +8,10 @@ export class MethodsProcessor extends BaseModelMethodProcessor {
     constructor(rootDir: string) {
         super({
             rootDir,
-            entityName: "methods",
+            entityNamePlural: "methods",
             assetsDir: BUILD_CONFIG.methods.assets.path,
             dataDir: BUILD_CONFIG.methods.data.path,
             buildDir: BUILD_CONFIG.methods.build?.path,
-            distRuntimeDir: BUILD_CONFIG.runtimeDataDir,
             categoriesRelativePath: BUILD_CONFIG.methods.assets.categories,
             categoryKeys: MethodsProcessor.defaultCategoryKeys,
             categoryCollectOptions: {

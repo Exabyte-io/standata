@@ -1,4 +1,4 @@
-import BUILD_CONFIG from "../../build-config";
+import { BUILD_CONFIG } from "../../build-config";
 import { BaseModelMethodProcessor } from "./BaseModelMethodProcessor";
 
 export class ModelsProcessor extends BaseModelMethodProcessor {
@@ -7,11 +7,10 @@ export class ModelsProcessor extends BaseModelMethodProcessor {
     constructor(rootDir: string) {
         super({
             rootDir,
-            entityName: "models",
+            entityNamePlural: "models",
             assetsDir: BUILD_CONFIG.models.assets.path,
             dataDir: BUILD_CONFIG.models.data.path,
             buildDir: BUILD_CONFIG.models.build?.path,
-            distRuntimeDir: BUILD_CONFIG.runtimeDataDir,
             categoriesRelativePath: BUILD_CONFIG.models.assets.categories,
             categoryKeys: ModelsProcessor.defaultCategoryKeys,
             excludedAssetFiles: [BUILD_CONFIG.models.assets.modelMethodMap],

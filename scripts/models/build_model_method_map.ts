@@ -1,6 +1,6 @@
 import serverUtils from "@mat3ra/utils/server";
 
-import BUILD_CONFIG from "../../build-config";
+import { BUILD_CONFIG } from "../../build-config";
 import {
     FilterRule,
     ModelCategories,

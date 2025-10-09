@@ -17,7 +17,7 @@
  *                                                         →  build/standata/models/*.json  →  [copied to]  →  dist/js/runtime_data/
  */
 
-const BUILD_CONFIG = {
+export const BUILD_CONFIG = {
     models: {
         assets: {
             path: "assets/models",
@@ -117,7 +117,7 @@ const BUILD_CONFIG = {
         workflows: "scripts/workflows",
     },
 
-    runtimeDataDir: "./dist/js/runtime_data",
+    distRuntimeDataDir: "./dist/js/runtime_data",
 
     jsonFormat: {
         spaces: 4,
@@ -129,5 +129,3 @@ const BUILD_CONFIG = {
         sortKeys: false,
     },
 };
-
-module.exports = BUILD_CONFIG;

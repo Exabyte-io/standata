@@ -4,7 +4,7 @@ import { Utils } from "@mat3ra/utils";
 import serverUtils from "@mat3ra/utils/server";
 import * as path from "path";
 
-import BUILD_CONFIG from "../../build-config";
+import { BUILD_CONFIG } from "../../build-config";
 import { ApplicationVersionsMapType } from "../../src/js/types/application";
 import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
 import { buildJSONFromYAMLInDir, loadYAMLTree, resolveFromRoot } from "../utils";
@@ -14,22 +14,29 @@ export class ApplicationsProcessor extends EntityProcessor {
     constructor(rootDir: string) {
         super({
             rootDir,
-            entityName: "applications",
+            entityNamePlural: "applications",
             assetsDir: BUILD_CONFIG.applications.assets.path,
             dataDir: BUILD_CONFIG.applications.data.path,
             buildDir: BUILD_CONFIG.applications.build.path,
-            distRuntimeDir: BUILD_CONFIG.runtimeDataDir,
             categoriesRelativePath: BUILD_CONFIG.applications.assets.categories,
         });
     }
 
     private cleanApplicationData: Record<string, ApplicationVersionsMapType> = {} as any;
+
     private modelFilterTree: Record<string, any> = {};
+
     private methodFilterTree: Record<string, any> = {};
 
     public readAssets() {
-        const sourcesRoot = resolveFromRoot(this.options.rootDir, BUILD_CONFIG.applications.assets.path);
-        const applicationAssetPath = path.resolve(sourcesRoot, BUILD_CONFIG.applications.assets.applications);
+        const sourcesRoot = resolveFromRoot(
+            this.options.rootDir,
+            BUILD_CONFIG.applications.assets.path,
+        );
+        const applicationAssetPath = path.resolve(
+            sourcesRoot,
+            BUILD_CONFIG.applications.assets.applications,
+        );
         const modelAssetPath = path.resolve(sourcesRoot, BUILD_CONFIG.applications.assets.models);
         const methodAssetPath = path.resolve(sourcesRoot, BUILD_CONFIG.applications.assets.methods);
 
@@ -55,10 +62,10 @@ export class ApplicationsProcessor extends EntityProcessor {
     }
 
     public writeBuildDirectoryContent(): void {
-        if (!this.resolved.buildDir) return;
-        serverUtils.file.createDirIfNotExistsSync(this.resolved.buildDir);
+        if (!this.resolvedPaths.buildDir) return;
+        serverUtils.file.createDirIfNotExistsSync(this.resolvedPaths.buildDir);
 
-        const targetBuildDir = this.resolved.buildDir as string;
+        const targetBuildDir = this.resolvedPaths.buildDir as string;
         const workingDir = BUILD_CONFIG.applications.assets.path;
         buildJSONFromYAMLInDir({
             assetPath: BUILD_CONFIG.applications.assets.templates,
@@ -74,7 +81,10 @@ export class ApplicationsProcessor extends EntityProcessor {
         });
 
         serverUtils.json.writeJSONFileSync(
-            path.resolve(targetBuildDir, BUILD_CONFIG.applications.build.applicationVersionsMapByApplication),
+            path.resolve(
+                targetBuildDir,
+                BUILD_CONFIG.applications.build.applicationVersionsMapByApplication,
+            ),
             this.cleanApplicationData,
         );
 
@@ -83,7 +93,10 @@ export class ApplicationsProcessor extends EntityProcessor {
             methods: this.methodFilterTree,
         };
         serverUtils.json.writeJSONFileSync(
-            path.resolve(targetBuildDir, BUILD_CONFIG.applications.build.modelMethodMapByApplication),
+            path.resolve(
+                targetBuildDir,
+                BUILD_CONFIG.applications.build.modelMethodMapByApplication,
+            ),
             modelMethodMapByApplication,
         );
     }
@@ -95,7 +108,7 @@ export class ApplicationsProcessor extends EntityProcessor {
             const appVersionsMap = new ApplicationVersionsMap(applicationDataForVersions);
             const { versionConfigsFull } = appVersionsMap as any;
 
-            const appDir = path.resolve(this.resolved.dataDir, appName);
+            const appDir = path.resolve(this.resolvedPaths.dataDir, appName);
             serverUtils.file.createDirIfNotExistsSync(appDir);
             versionConfigsFull.forEach((versionConfigFull: any) => {
                 const fileName = (appVersionsMap as any).getSlugForVersionConfig(versionConfigFull);
@@ -108,5 +121,3 @@ export class ApplicationsProcessor extends EntityProcessor {
         });
     }
 }
-
-
