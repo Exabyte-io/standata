@@ -17,7 +17,6 @@ const VALUES = {
     DFT: "density functional theory",
     NORM_CONSERVING: "norm-conserving",
     PAW: "projector augmented wave",
-    LONG_NAME: "long name",
     TAGS: ["t1", "t2", "t3"],
 };
 
@@ -46,7 +45,7 @@ describe("categoriesUtils", () => {
     });
     afterEach(() => fs.existsSync(TEST_DIR) && fs.rmSync(TEST_DIR, { recursive: true }));
 
-    it("extracts categories, maps values, excludes empty entities, and sorts", () => {
+    it("extracts categories, excludes empty entities, and sorts", () => {
         writeEntity(FILENAMES.A_SORTED_NAME_ENTITY, { name: "A", type: "a", tags: ["t2", "t1"] });
         writeEntity(FILENAMES.Z_SORTED_NAME_ENTITY, { name: "Z", type: "z" });
         writeEntity(FILENAMES.NO_CATEGORIES, { name: "Empty" });
@@ -60,12 +59,11 @@ describe("categoriesUtils", () => {
             dataPath: DATA_DIR,
             categoriesYamlFilePath: CATEGORIES_FILE,
             categoryPathsInEntity: ["type", "tags", "categories.tier1", "categories.type"],
-            shortToHumanReadableValueMap: { short: VALUES.LONG_NAME },
         });
 
         const result = readCategories();
 
-        expect(result.categories.type).to.deep.equal(["a", VALUES.LONG_NAME, "pw", "z"]);
+        expect(result.categories.type).to.deep.equal(["a", "pw", "z"]);
         expect(result.categories.tags).to.deep.equal(VALUES.TAGS);
         expect(result.categories.tier1).to.deep.equal(["qm"]);
         expect(result.entities.map((e: any) => e.filename)).to.deep.equal([
