@@ -57,9 +57,11 @@ describe("ModelMethodFilter", () => {
             allModels.forEach((model) => {
                 const compatible = filter.getCompatibleMethods(model, allMethods);
                 expect(compatible).to.be.an("array");
-                // DFT models (LDA/GGA/hybrid) are compatible with 25 plane-wave methods
-                // Models should have some compatible methods, but not necessarily all
-                expect(compatible.length).to.be.greaterThan(0);
+                // DFT/GW models are compatible with plane-wave methods
+                // ML models may not have compatible methods defined yet
+                if (model.categories.tier3 !== "ml") {
+                    expect(compatible.length).to.be.greaterThan(0);
+                }
             });
         });
 

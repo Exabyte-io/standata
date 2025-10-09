@@ -33,10 +33,10 @@ const TEST_PATHS = {
 } as const;
 
 const TEST_COUNTS = {
-    TOTAL_PW_METHODS: 25,
-    TOTAL_CG_METHODS: 12,
-    TOTAL_GAUSSIAN_METHODS: 8,
-    TOTAL_LINEAR_METHODS: 8,
+    TOTAL_PW_METHODS: 26,
+    TOTAL_CG_METHODS: 13,
+    TOTAL_GAUSSIAN_METHODS: 9,
+    TOTAL_LINEAR_METHODS: 9,
 } as const;
 
 describe("MethodStandata", () => {
