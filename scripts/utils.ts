@@ -33,6 +33,10 @@ export function buildJSONFromYAMLInDir({
 }): any {
     const originalCwd = process.cwd();
     try {
+        // To make sure we are actually in the working directory when running scripts consecutively
+        if (workingDir) {
+            process.chdir(workingDir);
+        }
         const data = readYAMLFileResolved(assetPath);
         const resolvedTargetPath = workingDir ? path.resolve(originalCwd, targetPath) : targetPath;
 

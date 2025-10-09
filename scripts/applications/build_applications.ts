@@ -6,88 +6,125 @@ import path from "path";
 import BUILD_CONFIG from "../../build-config";
 import { ApplicationVersionsMapType } from "../../src/js/types/application";
 import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
+import { BaseEntityDataBuilder } from "../BaseEntityDataBuilder";
 import { buildJSONFromYAMLInDir, loadYAMLTree, resolveFromRoot } from "../utils";
 
 type NestedApplicationData = Record<string, Record<string, ApplicationVersionsMapType>>;
 
-buildJSONFromYAMLInDir({
-    assetPath: BUILD_CONFIG.applications.assets.templates,
-    targetPath: `${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.templatesList}`,
-    workingDir: BUILD_CONFIG.applications.assets.path,
-    spaces: 0,
-});
+class ApplicationDataBuilder extends BaseEntityDataBuilder {
+    private buildPath: string;
 
-buildJSONFromYAMLInDir({
-    assetPath: BUILD_CONFIG.applications.assets.executableTree,
-    targetPath: `${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
-    workingDir: BUILD_CONFIG.applications.assets.path,
-    spaces: 0,
-});
+    constructor(assetsPath: string, dataPath: string, buildPath: string) {
+        const applicationsPath = path.join(
+            assetsPath,
+            BUILD_CONFIG.applications.assets.applications,
+        );
+        super({ assetsPath: applicationsPath, dataPath });
+        this.buildPath = buildPath;
+    }
 
-const APPLICATION_ASSET_PATH = resolveFromRoot(
-    __dirname,
-    BUILD_CONFIG.applications.assets.path,
-    BUILD_CONFIG.applications.assets.applications,
-);
-const MODEL_ASSET_PATH = resolveFromRoot(
-    __dirname,
-    BUILD_CONFIG.applications.assets.path,
-    BUILD_CONFIG.applications.assets.models,
-);
-const METHOD_ASSET_PATH = resolveFromRoot(
-    __dirname,
-    BUILD_CONFIG.applications.assets.path,
-    BUILD_CONFIG.applications.assets.methods,
-);
+    protected getSubdirectory(entity: any, _sourceFile: string): string {
+        return entity.name || "";
+    }
 
-const APPLICATION_DATA = loadYAMLTree(
-    APPLICATION_ASSET_PATH,
-    utils.createObjectPathFromFilePath,
-) as NestedApplicationData;
-const MODEL_FILTER_TREE = loadYAMLTree(MODEL_ASSET_PATH, utils.createObjectPathFromFilePath);
-const METHOD_FILTER_TREE = loadYAMLTree(METHOD_ASSET_PATH, utils.createObjectPathFromFilePath);
+    protected shouldProcessEntity(entity: any): boolean {
+        return entity.name && entity.versions && Array.isArray(entity.versions);
+    }
 
-const cleanApplicationData = Utils.object.flattenNestedObjects(APPLICATION_DATA);
+    protected processEntity(entity: any, _sourceFile: string): void {
+        const appName = entity.name;
+        const appVersionsMap = new ApplicationVersionsMap(entity);
+        const { versionConfigsFull } = appVersionsMap;
 
-Object.keys(cleanApplicationData).forEach((appName) => {
-    const applicationDataForVersions = cleanApplicationData[appName];
-    const appVersionsMap = new ApplicationVersionsMap(applicationDataForVersions);
-    const { versionConfigsFull } = appVersionsMap;
+        const appDir = resolveFromRoot(__dirname, this.dataPath, appName);
+        serverUtils.file.createDirIfNotExistsSync(appDir);
 
-    const appDir = resolveFromRoot(__dirname, BUILD_CONFIG.applications.data.path, appName);
-    serverUtils.file.createDirIfNotExistsSync(appDir);
-
-    versionConfigsFull.forEach((versionConfigFull) => {
-        const fileName = appVersionsMap.getSlugForVersionConfig(versionConfigFull);
-        const filePath = path.resolve(appDir, fileName);
-        serverUtils.json.writeJSONFileSync(filePath, versionConfigFull, {
-            spaces: BUILD_CONFIG.jsonFormat.spaces,
+        versionConfigsFull.forEach((versionConfigFull) => {
+            const fileName = appVersionsMap.getSlugForVersionConfig(versionConfigFull);
+            const filePath = path.resolve(appDir, fileName);
+            this.writeJSON(versionConfigFull, filePath, BUILD_CONFIG.jsonFormat.spaces);
+            console.log(`Generated application version: ${appName}/${fileName}`);
         });
-        console.log(`Generated application version: ${appName}/${fileName}`);
-    });
-});
+    }
 
-const modelMethodMapByApplication = {
-    models: MODEL_FILTER_TREE,
-    methods: METHOD_FILTER_TREE,
-};
+    buildMaps(): void {
+        this.buildTemplates();
+        this.buildExecutableTree();
+        this.buildApplicationVersionsMap();
+        this.buildModelMethodMapByApplication();
+    }
 
-serverUtils.json.writeJSONFileSync(
-    resolveFromRoot(
-        __dirname,
-        BUILD_CONFIG.applications.build.path,
-        BUILD_CONFIG.applications.build.applicationVersionsMapByApplication,
-    ),
-    cleanApplicationData,
+    private buildTemplates(): void {
+        buildJSONFromYAMLInDir({
+            assetPath: BUILD_CONFIG.applications.assets.templates,
+            targetPath: `${this.buildPath}/${BUILD_CONFIG.applications.build.templatesList}`,
+            workingDir: BUILD_CONFIG.applications.assets.path,
+            spaces: 0,
+        });
+    }
+
+    private buildExecutableTree(): void {
+        buildJSONFromYAMLInDir({
+            assetPath: BUILD_CONFIG.applications.assets.executableTree,
+            targetPath: `${this.buildPath}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
+            workingDir: BUILD_CONFIG.applications.assets.path,
+            spaces: 0,
+        });
+    }
+
+    private buildApplicationVersionsMap(): void {
+        const applicationAssetPath = resolveFromRoot(
+            __dirname,
+            BUILD_CONFIG.applications.assets.path,
+            BUILD_CONFIG.applications.assets.applications,
+        );
+        const applicationData = loadYAMLTree(
+            applicationAssetPath,
+            utils.createObjectPathFromFilePath,
+        ) as NestedApplicationData;
+        const cleanApplicationData = Utils.object.flattenNestedObjects(applicationData);
+
+        const applicationVersionsMapPath = resolveFromRoot(
+            __dirname,
+            this.buildPath,
+            BUILD_CONFIG.applications.build.applicationVersionsMapByApplication,
+        );
+        this.writeJSON(cleanApplicationData, applicationVersionsMapPath);
+    }
+
+    private buildModelMethodMapByApplication(): void {
+        const modelAssetPath = resolveFromRoot(
+            __dirname,
+            BUILD_CONFIG.applications.assets.path,
+            BUILD_CONFIG.applications.assets.models,
+        );
+        const methodAssetPath = resolveFromRoot(
+            __dirname,
+            BUILD_CONFIG.applications.assets.path,
+            BUILD_CONFIG.applications.assets.methods,
+        );
+
+        const modelMethodMapByApplication = {
+            models: loadYAMLTree(modelAssetPath, utils.createObjectPathFromFilePath),
+            methods: loadYAMLTree(methodAssetPath, utils.createObjectPathFromFilePath),
+        };
+
+        const modelMethodMapPath = resolveFromRoot(
+            __dirname,
+            this.buildPath,
+            BUILD_CONFIG.applications.build.modelMethodMapByApplication,
+        );
+        this.writeJSON(modelMethodMapByApplication, modelMethodMapPath);
+    }
+}
+
+const builder = new ApplicationDataBuilder(
+    BUILD_CONFIG.applications.assets.path,
+    BUILD_CONFIG.applications.data.path,
+    BUILD_CONFIG.applications.build.path,
 );
 
-serverUtils.json.writeJSONFileSync(
-    resolveFromRoot(
-        __dirname,
-        BUILD_CONFIG.applications.build.path,
-        BUILD_CONFIG.applications.build.modelMethodMapByApplication,
-    ),
-    modelMethodMapByApplication,
-);
+builder.build();
+builder.buildMaps();
 
 console.log("✅ All application assets built successfully!");
