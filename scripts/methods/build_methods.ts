@@ -1,37 +1,40 @@
 import * as path from "path";
 
 import BUILD_CONFIG from "../../build-config";
-import { buildEntities, encodeDataAsURLPath, processAndSaveEntity } from "../utils";
+import { BaseEntityDataBuilder } from "../BaseEntityDataBuilder";
+import { encodeDataAsURLPath, processAndSaveEntity } from "../utils";
 
 const categoriesKeys = ["tier1", "tier2", "tier3", "type", "subtype"];
 
-function getSubdirectory(_entity: any, sourceFile: string): string {
-    const basename = path.basename(sourceFile, path.extname(sourceFile));
-    return basename.replace(/_methods?$/i, "");
-}
-
-function processEntity(entity: any, sourceFile: string): void {
-    if (entity.units) {
-        entity.units.forEach((unit: any) => {
-            unit.path = encodeDataAsURLPath(unit, categoriesKeys);
-            delete unit.schema;
-        });
-        entity.path = entity.units.map((u: any) => u.path).join("::");
+class MethodDataBuilder extends BaseEntityDataBuilder {
+    protected getSubdirectory(_entity: any, sourceFile: string): string {
+        const basename = path.basename(sourceFile, path.extname(sourceFile));
+        return basename.replace(/_methods?$/i, "");
     }
 
-    processAndSaveEntity(
-        entity,
-        sourceFile,
-        BUILD_CONFIG.methods.data.path,
-        categoriesKeys,
-        getSubdirectory,
-    );
+    protected processEntity(entity: any, sourceFile: string): void {
+        if (entity.units) {
+            entity.units.forEach((unit: any) => {
+                unit.path = encodeDataAsURLPath(unit, categoriesKeys);
+                delete unit.schema;
+            });
+            entity.path = entity.units.map((unit: any) => unit.path).join("::");
+        }
+
+        processAndSaveEntity(
+            entity,
+            sourceFile,
+            this.dataPath,
+            categoriesKeys,
+            (entityItem, sourceFileItem) => this.getSubdirectory(entityItem, sourceFileItem),
+        );
+    }
 }
 
-buildEntities({
-    sourcesPath: BUILD_CONFIG.methods.assets.path,
+const builder = new MethodDataBuilder({
+    assetsPath: BUILD_CONFIG.methods.assets.path,
     dataPath: BUILD_CONFIG.methods.data.path,
-    processEntity,
-    getSubdirectory,
     categoriesFile: BUILD_CONFIG.methods.assets.categories,
 });
+
+builder.build();
