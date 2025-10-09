@@ -55,7 +55,8 @@ describe("ModelStandata", () => {
                         m.categories.tier1 &&
                         m.categories.tier2 &&
                         m.categories.tier3 &&
-                        m.categories.type,
+                        m.categories.type &&
+                        m.categories.subtype,
                 ),
             ).to.be.true;
         });

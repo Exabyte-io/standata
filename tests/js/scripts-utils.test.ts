@@ -85,12 +85,7 @@ describe("scripts/utils (compact)", () => {
         const jPath = path.join(TEST_DIR, "o.json");
         const obj = { name: "t", value: 1 };
         writeYamlFile(yPath, obj);
-        const out = buildJsonFromYamlInDir({
-            assetPath: yPath,
-            targetPath: jPath,
-            workingDir: TEST_DIR,
-            spaces: 0,
-        });
+        const out = buildJsonFromYamlInDir(yPath, jPath, undefined, 0);
         expect(out).to.deep.equal(obj);
         expect(fs.existsSync(jPath)).to.be.true;
         expect(fs.readFileSync(jPath, "utf-8")).to.equal('{"name":"t","value":1}');
