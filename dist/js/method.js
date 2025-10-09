@@ -5,9 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MethodStandata = void 0;
 const base_1 = require("./base");
-const methods_json_1 = __importDefault(require("./runtime_data/methods.json"));
 const modelMethodFilter_1 = require("./modelMethodFilter");
+const methods_json_1 = __importDefault(require("./runtime_data/methods.json"));
 const category_1 = require("./utils/category");
+function getMissingUnitsErrorMessage(methodName) {
+    return `Method "${methodName}" has no units defined`;
+}
 class MethodStandata extends base_1.Standata {
     getByName(name) {
         const allMethods = this.getAll();
@@ -15,15 +18,30 @@ class MethodStandata extends base_1.Standata {
     }
     getByUnitType(unitType) {
         const allMethods = this.getAll();
-        return allMethods.filter((method) => { var _a; return (_a = method.units) === null || _a === void 0 ? void 0 : _a.some((unit) => (0, category_1.getCategoryValue)(unit.categories.type) === unitType); });
+        return allMethods.filter((method) => {
+            if (!method.units) {
+                throw new Error(getMissingUnitsErrorMessage(method.name));
+            }
+            return method.units.some((unit) => (0, category_1.getCategoryValue)(unit.categories.type) === unitType);
+        });
     }
     getByUnitSubtype(unitSubtype) {
         const allMethods = this.getAll();
-        return allMethods.filter((method) => { var _a; return (_a = method.units) === null || _a === void 0 ? void 0 : _a.some((unit) => (0, category_1.getCategoryValue)(unit.categories.subtype) === unitSubtype); });
+        return allMethods.filter((method) => {
+            if (!method.units) {
+                throw new Error(getMissingUnitsErrorMessage(method.name));
+            }
+            return method.units.some((unit) => (0, category_1.getCategoryValue)(unit.categories.subtype) === unitSubtype);
+        });
     }
     getByUnitTags(...tags) {
         const allMethods = this.getAll();
-        return allMethods.filter((method) => { var _a; return (_a = method.units) === null || _a === void 0 ? void 0 : _a.some((unit) => tags.some((tag) => unit.tags.includes(tag))); });
+        return allMethods.filter((method) => {
+            if (!method.units) {
+                throw new Error(getMissingUnitsErrorMessage(method.name));
+            }
+            return method.units.some((unit) => tags.some((tag) => unit.tags.includes(tag)));
+        });
     }
     getByPath(path) {
         const allMethods = this.getAll();
@@ -32,8 +50,10 @@ class MethodStandata extends base_1.Standata {
     getByUnitParameters(parameters) {
         const allMethods = this.getAll();
         return allMethods.filter((method) => {
-            var _a;
-            return (_a = method.units) === null || _a === void 0 ? void 0 : _a.some((unit) => {
+            if (!method.units) {
+                throw new Error(getMissingUnitsErrorMessage(method.name));
+            }
+            return method.units.some((unit) => {
                 if (!unit.parameters)
                     return false;
                 return Object.entries(parameters).every(([key, value]) => unit.parameters[key] === value);
@@ -50,7 +70,12 @@ class MethodStandata extends base_1.Standata {
     }
     getAllUnits() {
         const allMethods = this.getAll();
-        return allMethods.flatMap((method) => method.units || []);
+        return allMethods.flatMap((method) => {
+            if (!method.units) {
+                throw new Error(getMissingUnitsErrorMessage(method.name));
+            }
+            return method.units;
+        });
     }
     getUniqueUnitTypes() {
         const allUnits = this.getAllUnits();

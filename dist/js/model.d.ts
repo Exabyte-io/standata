@@ -17,7 +17,7 @@ export declare class ModelStandata extends Standata<ModelConfig> {
             }[];
         };
         filesMapByName: {
-            "lda/dft_lda_pz_collinear.json": {
+            "pb/qm/dft/ksdft/lda/dft_lda_pz_collinear.json": {
                 parameters: {
                     spinPolarization: string;
                     functional: string;
@@ -33,7 +33,7 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                 name: string;
                 path: string;
             };
-            "lda/dft_lda_pz_d3_collinear.json": {
+            "pb/qm/dft/ksdft/lda/dft_lda_pz_d3_collinear.json": {
                 parameters: {
                     spinPolarization: string;
                     dispersionCorrection: string;
@@ -50,7 +50,7 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                 name: string;
                 path: string;
             };
-            "lda/dft_lda_pz_d3_soc.json": {
+            "pb/qm/dft/ksdft/lda/dft_lda_pz_d3_soc.json": {
                 parameters: {
                     spinOrbitCoupling: boolean;
                     dispersionCorrection: string;
@@ -67,7 +67,7 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                 name: string;
                 path: string;
             };
-            "lda/dft_lda_pz_d3.json": {
+            "pb/qm/dft/ksdft/lda/dft_lda_pz_d3.json": {
                 parameters: {
                     dispersionCorrection: string;
                     functional: string;
@@ -83,7 +83,7 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                 name: string;
                 path: string;
             };
-            "lda/dft_lda_pz_soc.json": {
+            "pb/qm/dft/ksdft/lda/dft_lda_pz_soc.json": {
                 parameters: {
                     spinOrbitCoupling: boolean;
                     functional: string;
@@ -99,7 +99,7 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                 name: string;
                 path: string;
             };
-            "lda/dft_lda_pz_u_collinear.json": {
+            "pb/qm/dft/ksdft/lda/dft_lda_pz_u_collinear.json": {
                 parameters: {
                     spinPolarization: string;
                     hubbardType: string;
@@ -116,7 +116,7 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                 name: string;
                 path: string;
             };
-            "lda/dft_lda_pz_u_soc.json": {
+            "pb/qm/dft/ksdft/lda/dft_lda_pz_u_soc.json": {
                 parameters: {
                     hubbardType: string;
                     spinOrbitCoupling: boolean;
@@ -133,7 +133,7 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                 name: string;
                 path: string;
             };
-            "lda/dft_lda_pz_u.json": {
+            "pb/qm/dft/ksdft/lda/dft_lda_pz_u.json": {
                 parameters: {
                     hubbardType: string;
                     functional: string;
@@ -149,7 +149,7 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                 name: string;
                 path: string;
             };
-            "lda/dft_lda_pz.json": {
+            "pb/qm/dft/ksdft/lda/dft_lda_pz.json": {
                 parameters: {
                     functional: string;
                 };
