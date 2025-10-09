@@ -1,6 +1,5 @@
 import { Utils } from "@mat3ra/utils";
 import serverUtils from "@mat3ra/utils/server";
-import * as path from "path";
 
 import { readYAMLFileResolved } from "./utils";
 
@@ -23,29 +22,13 @@ export abstract class BaseEntityDataBuilder<T = any> {
         this.categoriesFile = config.categoriesFile;
     }
 
-    protected loadYAML(filePath: string): any {
-        return readYAMLFileResolved(filePath);
-    }
-
     protected writeJSON(data: any, targetPath: string, spaces = 4): void {
         serverUtils.json.writeJSONFileSync(targetPath, data, { spaces });
-    }
-
-    protected getYAMLFiles(): string[] {
-        return serverUtils.file.getFilesInDirectory(this.assetsPath, [".yml", ".yaml"]);
     }
 
     protected cleanDataDirectory(): void {
         const excludeFiles = this.categoriesFile ? [this.categoriesFile] : undefined;
         serverUtils.file.cleanDirectorySync(this.dataPath, excludeFiles);
-    }
-
-    protected resolveDataPath(...pathSegments: string[]): string {
-        return path.resolve(this.dataPath, ...pathSegments);
-    }
-
-    protected resolveAssetPath(...pathSegments: string[]): string {
-        return path.resolve(this.assetsPath, ...pathSegments);
     }
 
     protected processEntity(_entity: T, _sourceFile: string): void {
@@ -62,11 +45,11 @@ export abstract class BaseEntityDataBuilder<T = any> {
 
     build(): void {
         this.cleanDataDirectory();
-        const yamlFiles = this.getYAMLFiles();
+        const yamlFiles = serverUtils.file.getFilesInDirectory(this.assetsPath, [".yml", ".yaml"]);
 
         yamlFiles.forEach((filePath) => {
             try {
-                const parsedFile = this.loadYAML(filePath);
+                const parsedFile = readYAMLFileResolved(filePath);
                 const entities = Utils.array.normalizeToArray(parsedFile);
 
                 entities.forEach((entity) => {
