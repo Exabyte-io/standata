@@ -66,7 +66,6 @@
         "build:applications": "ts-node scripts/applications/build_applications.ts",
         "build:models": "ts-node scripts/models/build_models.ts",
         "build:methods": "ts-node scripts/methods/build_methods.ts",
-        "build:methods:categories": "ts-node scripts/methods/create_methods_categories.ts",
         "build:runtime-data": "node build_runtime_data.js",
         "build:model-method-map": "ts-node scripts/models/build_model_method_map.ts",
         "build": "npm run build:models && npm run build:methods && npm run build:model-method-map && npm run build:applications && npm run build:workflows && npm run transpile && npm run build:runtime-data",

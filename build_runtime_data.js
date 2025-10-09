@@ -36,16 +36,21 @@ function buildAsset({
 
     obj.filesMapByName = {};
 
-    // Check duplicate filenames for sanity
-    const filenames = obj.standataConfig.entities.map((entity) => entity.filename);
-    const duplicateFilenames = filenames.filter(
-        (filename, index) => filenames.indexOf(filename) !== index,
-    );
-    if (duplicateFilenames.length > 0) {
-        throw new Error(`Duplicate filenames found in ${assetPath}: ${duplicateFilenames}`);
+    const entities = Array.isArray(obj.standataConfig?.entities) ? obj.standataConfig.entities : [];
+
+    // Check duplicate filenames for sanity (only if entities provided)
+    if (entities.length > 0) {
+        const filenames = entities.map((entity) => entity.filename);
+        const duplicateFilenames = filenames.filter(
+            (filename, index) => filenames.indexOf(filename) !== index,
+        );
+        if (duplicateFilenames.length > 0) {
+            throw new Error(`Duplicate filenames found in ${assetPath}: ${duplicateFilenames}`);
+        }
     }
+
     // Create JSON
-    obj.standataConfig.entities?.forEach((entity) => {
+    entities.forEach((entity) => {
         const entityPath = path.join(dataPath, entity.filename);
         const content = fs.readFileSync(path.resolve(entityPath), { encoding: "utf-8" });
         console.log({ content, entityPath });
