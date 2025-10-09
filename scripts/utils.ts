@@ -28,11 +28,7 @@ export function readJsonFile(filePath: string): any {
     return JSON.parse(content);
 }
 
-export function writeJsonFile(
-    filePath: string,
-    data: any,
-    spaces: number = BUILD_CONFIG.jsonFormat.spaces,
-): void {
+export function writeJsonFile(filePath: string, data: any, spaces = 0): void {
     ensureDirectory(path.dirname(filePath));
     fs.writeFileSync(filePath, JSON.stringify(data, null, spaces), "utf-8");
 }
@@ -89,12 +85,17 @@ export function createSafeFilename(name: string): string {
 /**
  * Converts YAML file to JSON, optionally resolving relative includes from a working directory
  */
-export function buildJsonFromYamlInDir(
-    assetPath: string,
-    targetPath: string,
-    workingDir?: string,
+export function buildJsonFromYamlInDir({
+    assetPath,
+    targetPath,
+    workingDir,
     spaces = 0,
-): any {
+}: {
+    assetPath: string;
+    targetPath: string;
+    workingDir?: string;
+    spaces?: number;
+}): any {
     const originalCwd = process.cwd();
     try {
         if (workingDir) {
