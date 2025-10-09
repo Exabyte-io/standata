@@ -34,7 +34,7 @@ categories:
     - machine-learning
 
 entities:
-  - filename: lda/dft_lda_pz.json
+  - filename: pb/qm/dft/ksdft/lda/dft_lda_pz.json
     categories:
       - pb
       - qm
@@ -42,7 +42,7 @@ entities:
       - ksdft
       - lda
       - density-functional-theory
-  - filename: lda/dft_lda_pz_collinear.json
+  - filename: pb/qm/dft/ksdft/lda/dft_lda_pz_collinear.json
     categories:
       - pb
       - qm
@@ -50,7 +50,7 @@ entities:
       - ksdft
       - lda
       - density-functional-theory
-  - filename: lda/dft_lda_pz_d3.json
+  - filename: pb/qm/dft/ksdft/lda/dft_lda_pz_d3.json
     categories:
       - pb
       - qm
@@ -58,7 +58,7 @@ entities:
       - ksdft
       - lda
       - density-functional-theory
-  - filename: lda/dft_lda_pz_d3_collinear.json
+  - filename: pb/qm/dft/ksdft/lda/dft_lda_pz_d3_collinear.json
     categories:
       - pb
       - qm
@@ -66,7 +66,7 @@ entities:
       - ksdft
       - lda
       - density-functional-theory
-  - filename: lda/dft_lda_pz_d3_soc.json
+  - filename: pb/qm/dft/ksdft/lda/dft_lda_pz_d3_soc.json
     categories:
       - pb
       - qm
@@ -74,7 +74,7 @@ entities:
       - ksdft
       - lda
       - density-functional-theory
-  - filename: lda/dft_lda_pz_soc.json
+  - filename: pb/qm/dft/ksdft/lda/dft_lda_pz_soc.json
     categories:
       - pb
       - qm
@@ -82,7 +82,7 @@ entities:
       - ksdft
       - lda
       - density-functional-theory
-  - filename: lda/dft_lda_pz_u.json
+  - filename: pb/qm/dft/ksdft/lda/dft_lda_pz_u.json
     categories:
       - pb
       - qm
@@ -90,7 +90,7 @@ entities:
       - ksdft
       - lda
       - density-functional-theory
-  - filename: lda/dft_lda_pz_u_collinear.json
+  - filename: pb/qm/dft/ksdft/lda/dft_lda_pz_u_collinear.json
     categories:
       - pb
       - qm
@@ -98,7 +98,7 @@ entities:
       - ksdft
       - lda
       - density-functional-theory
-  - filename: lda/dft_lda_pz_u_soc.json
+  - filename: pb/qm/dft/ksdft/lda/dft_lda_pz_u_soc.json
     categories:
       - pb
       - qm
