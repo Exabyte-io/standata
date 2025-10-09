@@ -1,16 +1,12 @@
 import * as utils from "@mat3ra/code/dist/js/utils";
+import { Utils } from "@mat3ra/utils";
 import serverUtils from "@mat3ra/utils/server";
 import path from "path";
 
 import BUILD_CONFIG from "../../build-config";
 import { ApplicationVersionsMapType } from "../../src/js/types/application";
 import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
-import {
-    buildJSONFromYAMLInDir,
-    flattenNestedObjects,
-    loadYAMLTree,
-    resolveFromRoot,
-} from "../utils";
+import { buildJSONFromYAMLInDir, loadYAMLTree, resolveFromRoot } from "../utils";
 
 type NestedApplicationData = Record<string, Record<string, ApplicationVersionsMapType>>;
 
@@ -51,7 +47,7 @@ const APPLICATION_DATA = loadYAMLTree(
 const MODEL_FILTER_TREE = loadYAMLTree(MODEL_ASSET_PATH, utils.createObjectPathFromFilePath);
 const METHOD_FILTER_TREE = loadYAMLTree(METHOD_ASSET_PATH, utils.createObjectPathFromFilePath);
 
-const cleanApplicationData = flattenNestedObjects(APPLICATION_DATA);
+const cleanApplicationData = Utils.object.flattenNestedObjects(APPLICATION_DATA);
 
 Object.keys(cleanApplicationData).forEach((appName) => {
     const applicationDataForVersions = cleanApplicationData[appName];

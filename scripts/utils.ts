@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { JsYamlAllSchemas } from "@mat3ra/code/dist/js/utils";
+import { Utils } from "@mat3ra/utils";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
 import * as fs from "fs";
@@ -127,20 +128,6 @@ export function encodeDataAsURLPath(
 }
 
 /**
- * Normalizes data to an array format for consistent processing.
- */
-export function normalizeToArray(data: any): any[] {
-    if (Array.isArray(data)) {
-        // Flatten nested arrays (e.g., from multiple !combine blocks)
-        return data.flat();
-    }
-    if (lodash.isPlainObject(data) && !data.name) {
-        return Object.values(data).flat();
-    }
-    return [data];
-}
-
-/**
  * Processes a single YAML file and extracts entities.
  */
 export function processFile(
@@ -150,7 +137,7 @@ export function processFile(
     console.log(`Processing: ${filePath}`);
     try {
         const parsedFile = readYAMLFile(filePath);
-        const entities = normalizeToArray(parsedFile);
+        const entities = Utils.array.normalizeToArray(parsedFile);
         entities.forEach((entity) => processEntity(entity, filePath));
     } catch (error: any) {
         console.error(`  Error: ${error.message}`);
@@ -195,29 +182,6 @@ export function processAndSaveEntity(
 
     serverUtils.json.writeJSONFileSync(targetPath, entity, { spaces });
     console.log(`  Created: ${targetPath}`);
-}
-
-/**
- * Flattens nested object structure to single-level object.
- * Useful for extracting entities from deeply nested configurations.
- */
-export function flattenNestedObjects<T>(
-    nestedData: Record<string, Record<string, T>>,
-    filterFn?: (item: T) => boolean,
-): Record<string, T> {
-    const flattened: Record<string, T> = {};
-
-    Object.values(nestedData).forEach((levelData) => {
-        Object.values(levelData).forEach((item) => {
-            if (item && typeof item === "object" && (item as any).name) {
-                if (!filterFn || filterFn(item)) {
-                    flattened[(item as any).name] = item;
-                }
-            }
-        });
-    });
-
-    return flattened;
 }
 
 /**
