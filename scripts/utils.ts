@@ -30,19 +30,19 @@ export function readJSONFile(filePath: string): any {
 
 export function writeJSONFile(filePath: string, data: any, spaces = 0): void {
     ensureDirectory(path.dirname(filePath));
-    fs.writeFileSync(filePath, JSON.stringify(data, null, spaces), "utf-8");
+    fs.writeFileSync(filePath, JSON.stringify(data, null, spaces) + "\n", "utf-8");
 }
 
 export function resolveFromRoot(scriptDirname: string, ...pathSegments: string[]): string {
     return path.resolve(scriptDirname, "../..", ...pathSegments);
 }
 
-export function findFiles(dir: string, extensions: string[]): string[] {
+export function findFiles(directoryPath: string, extensions: string[]): string[] {
     const files: string[] = [];
-    const items = fs.readdirSync(dir);
+    const items = fs.readdirSync(directoryPath);
 
     items.forEach((item) => {
-        const fullPath = path.join(dir, item);
+        const fullPath = path.join(directoryPath, item);
         const stat = fs.statSync(fullPath);
 
         if (stat.isDirectory()) {
@@ -75,6 +75,9 @@ export function clearDirectory(dirPath: string, excludeFile?: string): void {
     });
 }
 
+/**
+ * Creates a filesystem-safe filename from a given name.
+ */
 export function createSafeFilename(name: string): string {
     return name
         .toLowerCase()
@@ -85,7 +88,7 @@ export function createSafeFilename(name: string): string {
 /**
  * Converts YAML file to JSON, optionally resolving relative includes from a working directory
  */
-export function buildJsonFromYamlInDir({
+export function buildJSONFromYAMLInDir({
     assetPath,
     targetPath,
     workingDir,
@@ -195,7 +198,12 @@ export function normalizeToArray(data: any): any[] {
 /**
  * Saves an entity as a JSON file in the specified subdirectory.
  */
-export function saveEntity(entity: any, subdirectory: string, dataPath: string, spaces = BUILD_CONFIG.jsonFormat.spaces): void {
+export function saveEntity(
+    entity: any,
+    subdirectory: string,
+    dataPath: string,
+    spaces = BUILD_CONFIG.jsonFormat.spaces,
+): void {
     const targetDir = path.join(dataPath, subdirectory);
     const filename = `${createSafeFilename(entity.name)}.json`;
     const targetPath = path.join(targetDir, filename);

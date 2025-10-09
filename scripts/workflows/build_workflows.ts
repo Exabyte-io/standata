@@ -75,7 +75,6 @@ ensureDirectory(buildDir);
 writeJSONFile(
     path.resolve(buildDir, BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication),
     workflowSubforkflowMapByApplication,
-    0,
 );
 
 const WorkflowCls = Workflow as any;

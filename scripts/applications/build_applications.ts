@@ -5,7 +5,7 @@ import BUILD_CONFIG from "../../build-config";
 import { ApplicationVersionsMapType } from "../../src/js/types/application";
 import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
 import {
-    buildJsonFromYamlInDir,
+    buildJSONFromYAMLInDir,
     ensureDirectory,
     flattenNestedObjects,
     loadYAMLTree,
@@ -15,14 +15,14 @@ import {
 
 type NestedApplicationData = Record<string, Record<string, ApplicationVersionsMapType>>;
 
-buildJsonFromYamlInDir({
+buildJSONFromYAMLInDir({
     assetPath: BUILD_CONFIG.applications.assets.templates,
     targetPath: `${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.templatesList}`,
     workingDir: BUILD_CONFIG.applications.assets.path,
     spaces: 0,
 });
 
-buildJsonFromYamlInDir({
+buildJSONFromYAMLInDir({
     assetPath: BUILD_CONFIG.applications.assets.executableTree,
     targetPath: `${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
     workingDir: BUILD_CONFIG.applications.assets.path,

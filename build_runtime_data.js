@@ -104,7 +104,7 @@ buildAsset({
     targetPath: `${runtimeDataDir}/subworkflows.json`,
 });
 
-function copyJsonAsset({ sourcePath, targetPath }) {
+function copyJSONAsset({ sourcePath, targetPath }) {
     if (fs.existsSync(sourcePath)) {
         const content = fs.readFileSync(sourcePath, "utf8");
         writeFile(targetPath, content, "utf8");
@@ -115,7 +115,7 @@ function copyJsonAsset({ sourcePath, targetPath }) {
 }
 
 // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-function linkJsonAsset({ sourcePath, targetPath }) {
+function linkJSONAsset({ sourcePath, targetPath }) {
     if (fs.existsSync(sourcePath)) {
         const resolvedSourcePath = path.resolve(__dirname, sourcePath);
         const resolvedTargetPath = path.resolve(__dirname, targetPath);
@@ -128,32 +128,32 @@ function linkJsonAsset({ sourcePath, targetPath }) {
 }
 
 // Copy JSON assets to runtime_data
-copyJsonAsset({
+copyJSONAsset({
     sourcePath: `./${BUILD_CONFIG.workflows.build.path}/${BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication}`,
     targetPath: `${runtimeDataDir}/${BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication}`,
 });
 
-copyJsonAsset({
+copyJSONAsset({
     sourcePath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.modelMethodMapByApplication}`,
     targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.build.modelMethodMapByApplication}`,
 });
 
-copyJsonAsset({
+copyJSONAsset({
     sourcePath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.templatesList}`,
     targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.build.templatesList}`,
 });
 
-copyJsonAsset({
+copyJSONAsset({
     sourcePath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
     targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
 });
 
-copyJsonAsset({
+copyJSONAsset({
     sourcePath: `./${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.applicationVersionsMapByApplication}`,
     targetPath: `${runtimeDataDir}/${BUILD_CONFIG.applications.build.applicationVersionsMapByApplication}`,
 });
 
-copyJsonAsset({
+copyJSONAsset({
     sourcePath: `./${BUILD_CONFIG.models.build.path}/${BUILD_CONFIG.models.build.modelMethodMap}`,
     targetPath: `${runtimeDataDir}/modelMethodMap.json`,
 });
