@@ -32,7 +32,10 @@ function buildAsset({
 }) {
     const fileContent = fs.readFileSync(assetPath, { encoding: "utf-8" });
     const obj = {};
-    obj.standataConfig = yaml.load(fileContent);
+    obj.standataConfig = yaml.load(fileContent) || {};
+    if (!Array.isArray(obj.standataConfig.entities)) {
+        obj.standataConfig.entities = [];
+    }
 
     obj.filesMapByName = {};
 
