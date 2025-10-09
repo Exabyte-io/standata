@@ -1,4 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import serverUtils from "@mat3ra/utils/server";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import {
     builders,
     createSubworkflowByName,
@@ -10,7 +12,7 @@ import {
 import path from "path";
 
 import BUILD_CONFIG from "../../build-config";
-import { ensureDirectory, loadYAMLFilesAsMap, resolveFromRoot, writeJSONFile } from "../utils";
+import { loadYAMLFilesAsMap, resolveFromRoot } from "../utils";
 
 // TODO: get from sources/applications directory
 const applications = ["espresso"];
@@ -42,12 +44,14 @@ function generateConfigFiles(items: ConfigItem[], type: "workflow" | "subworkflo
         const { appName, name, config } = item;
 
         const appDir = path.resolve(outputBaseDir, appName);
-        ensureDirectory(appDir);
+        serverUtils.file.createDirIfNotExistsSync(appDir);
 
         const filename = `${name}.json`;
         const filePath = path.resolve(appDir, filename);
 
-        writeJSONFile(filePath, config, BUILD_CONFIG.jsonFormat.spaces);
+        serverUtils.json.writeJSONFileSync(filePath, config, {
+            spaces: BUILD_CONFIG.jsonFormat.spaces,
+        });
         console.log(`Generated ${type}: ${appName}/${filename}`);
     });
 }
@@ -70,9 +74,9 @@ applications.forEach((name) => {
 });
 
 const buildDir = resolveFromRoot(__dirname, BUILD_CONFIG.workflows.build.path);
-ensureDirectory(buildDir);
+serverUtils.file.createDirIfNotExistsSync(buildDir);
 
-writeJSONFile(
+serverUtils.json.writeJSONFileSync(
     path.resolve(buildDir, BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication),
     workflowSubforkflowMapByApplication,
 );

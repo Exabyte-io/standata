@@ -1,10 +1,12 @@
+import serverUtils from "@mat3ra/utils/server";
+
 import BUILD_CONFIG from "../../build-config";
 import {
     FilterRule,
     ModelCategories,
     ModelMethodFilterEntry,
 } from "../../src/js/types/modelMethodFilter";
-import { readYAMLFile, writeJSONFile } from "../utils";
+import { readYAMLFile } from "../utils";
 
 function parseModelCategories(categoryPath: string[]): ModelCategories {
     const categories: ModelCategories = {};
@@ -47,7 +49,7 @@ export function buildModelMethodMap(): void {
     const filterEntries: ModelMethodFilterEntry[] = [];
     traverseNestedCategories(yamlData, [], filterEntries);
 
-    writeJSONFile(targetFile, filterEntries);
+    serverUtils.json.writeJSONFileSync(targetFile, filterEntries);
     console.log(`Generated: ${targetFile}`);
     console.log(`Model-method map built successfully with ${filterEntries.length} entries`);
 }

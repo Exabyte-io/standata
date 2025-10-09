@@ -1,4 +1,5 @@
 import * as utils from "@mat3ra/code/dist/js/utils";
+import serverUtils from "@mat3ra/utils/server";
 import path from "path";
 
 import BUILD_CONFIG from "../../build-config";
@@ -6,11 +7,9 @@ import { ApplicationVersionsMapType } from "../../src/js/types/application";
 import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
 import {
     buildJSONFromYAMLInDir,
-    ensureDirectory,
     flattenNestedObjects,
     loadYAMLTree,
     resolveFromRoot,
-    writeJSONFile,
 } from "../utils";
 
 type NestedApplicationData = Record<string, Record<string, ApplicationVersionsMapType>>;
@@ -60,12 +59,14 @@ Object.keys(cleanApplicationData).forEach((appName) => {
     const { versionConfigsFull } = appVersionsMap;
 
     const appDir = resolveFromRoot(__dirname, BUILD_CONFIG.applications.data.path, appName);
-    ensureDirectory(appDir);
+    serverUtils.file.createDirIfNotExistsSync(appDir);
 
     versionConfigsFull.forEach((versionConfigFull) => {
         const fileName = appVersionsMap.getSlugForVersionConfig(versionConfigFull);
         const filePath = path.resolve(appDir, fileName);
-        writeJSONFile(filePath, versionConfigFull, BUILD_CONFIG.jsonFormat.spaces);
+        serverUtils.json.writeJSONFileSync(filePath, versionConfigFull, {
+            spaces: BUILD_CONFIG.jsonFormat.spaces,
+        });
         console.log(`Generated application version: ${appName}/${fileName}`);
     });
 });
@@ -75,24 +76,22 @@ const modelMethodMapByApplication = {
     methods: METHOD_FILTER_TREE,
 };
 
-writeJSONFile(
+serverUtils.json.writeJSONFileSync(
     resolveFromRoot(
         __dirname,
         BUILD_CONFIG.applications.build.path,
         BUILD_CONFIG.applications.build.applicationVersionsMapByApplication,
     ),
     cleanApplicationData,
-    0,
 );
 
-writeJSONFile(
+serverUtils.json.writeJSONFileSync(
     resolveFromRoot(
         __dirname,
         BUILD_CONFIG.applications.build.path,
         BUILD_CONFIG.applications.build.modelMethodMapByApplication,
     ),
     modelMethodMapByApplication,
-    0,
 );
 
 console.log("✅ All application assets built successfully!");

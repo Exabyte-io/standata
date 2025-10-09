@@ -1,4 +1,5 @@
 import { JsYamlAllSchemas } from "@mat3ra/code/dist/js/utils";
+import serverUtils from "@mat3ra/utils/server";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
 import * as lodash from "lodash";
@@ -6,31 +7,9 @@ import * as path from "path";
 
 import BUILD_CONFIG from "../build-config";
 
-export function ensureDirectory(dirPath: string): void {
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
-    }
-}
-
 export function readYAMLFile(filePath: string): any {
     const content = fs.readFileSync(filePath, "utf-8");
     return yaml.load(content, { schema: JsYamlAllSchemas });
-}
-
-export function writeYAMLFile(filePath: string, data: any): void {
-    ensureDirectory(path.dirname(filePath));
-    const content = yaml.dump(data, { ...BUILD_CONFIG.yamlFormat });
-    fs.writeFileSync(filePath, content, "utf-8");
-}
-
-export function readJSONFile(filePath: string): any {
-    const content = fs.readFileSync(filePath, "utf-8");
-    return JSON.parse(content);
-}
-
-export function writeJSONFile(filePath: string, data: any, spaces = 0): void {
-    ensureDirectory(path.dirname(filePath));
-    fs.writeFileSync(filePath, JSON.stringify(data, null, spaces) + "\n", "utf-8");
 }
 
 export function resolveFromRoot(scriptDirname: string, ...pathSegments: string[]): string {
@@ -108,7 +87,9 @@ export function buildJSONFromYAMLInDir({
         const data = readYAMLFile(assetPath);
         const resolvedTargetPath = workingDir ? path.resolve(originalCwd, targetPath) : targetPath;
 
-        writeJSONFile(resolvedTargetPath, data, spaces);
+        serverUtils.json.writeJSONFileSync(resolvedTargetPath, data, {
+            spaces,
+        });
         console.log(`Written asset "${assetPath}" to "${targetPath}"`);
         return data;
     } finally {
@@ -196,23 +177,6 @@ export function normalizeToArray(data: any): any[] {
 }
 
 /**
- * Saves an entity as a JSON file in the specified subdirectory.
- */
-export function saveEntity(
-    entity: any,
-    subdirectory: string,
-    dataPath: string,
-    spaces = BUILD_CONFIG.jsonFormat.spaces,
-): void {
-    const targetDir = path.join(dataPath, subdirectory);
-    const filename = `${createSafeFilename(entity.name)}.json`;
-    const targetPath = path.join(targetDir, filename);
-
-    writeJSONFile(targetPath, entity, spaces);
-    console.log(`  Created: ${targetPath}`);
-}
-
-/**
  * Processes a single YAML file and extracts entities.
  */
 export function processFile(
@@ -261,7 +225,12 @@ export function processAndSaveEntity(
     delete entity.schema;
 
     const subdirectory = getSubdirectory(entity, sourceFile);
-    saveEntity(entity, subdirectory, dataPath, spaces);
+    const targetDir = path.join(dataPath, subdirectory);
+    const filename = `${createSafeFilename(entity.name)}.json`;
+    const targetPath = path.join(targetDir, filename);
+
+    serverUtils.json.writeJSONFileSync(targetPath, entity, { spaces });
+    console.log(`  Created: ${targetPath}`);
 }
 
 /**
