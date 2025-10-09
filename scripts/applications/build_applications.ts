@@ -15,17 +15,19 @@ import {
 
 type NestedApplicationData = Record<string, Record<string, ApplicationVersionsMapType>>;
 
-buildJsonFromYamlInDir(
-    BUILD_CONFIG.applications.assets.templates,
-    `${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.templatesList}`,
-    BUILD_CONFIG.applications.assets.path,
-);
+buildJsonFromYamlInDir({
+    assetPath: BUILD_CONFIG.applications.assets.templates,
+    targetPath: `${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.templatesList}`,
+    workingDir: BUILD_CONFIG.applications.assets.path,
+    spaces: 0,
+});
 
-buildJsonFromYamlInDir(
-    BUILD_CONFIG.applications.assets.executableTree,
-    `${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
-    BUILD_CONFIG.applications.assets.path,
-);
+buildJsonFromYamlInDir({
+    assetPath: BUILD_CONFIG.applications.assets.executableTree,
+    targetPath: `${BUILD_CONFIG.applications.build.path}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
+    workingDir: BUILD_CONFIG.applications.assets.path,
+    spaces: 0,
+});
 
 const APPLICATION_ASSET_PATH = resolveFromRoot(
     __dirname,
@@ -63,7 +65,7 @@ Object.keys(cleanApplicationData).forEach((appName) => {
     versionConfigsFull.forEach((versionConfigFull) => {
         const fileName = appVersionsMap.getSlugForVersionConfig(versionConfigFull);
         const filePath = path.resolve(appDir, fileName);
-        writeJsonFile(filePath, versionConfigFull);
+        writeJsonFile(filePath, versionConfigFull, BUILD_CONFIG.jsonFormat.spaces);
         console.log(`Generated application version: ${appName}/${fileName}`);
     });
 });

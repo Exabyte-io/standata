@@ -1,9 +1,13 @@
 import { Standata } from "./base";
+import { ModelMethodFilter } from "./modelMethodFilter";
 import METHODS from "./runtime_data/methods.json";
 import { MethodConfig, UnitMethod } from "./types/method";
-import { ModelMethodFilter } from "./modelMethodFilter";
 import { ModelConfig } from "./types/model";
 import { getCategoryValue } from "./utils/category";
+
+function getMissingUnitsErrorMessage(methodName: string): string {
+    return `Method "${methodName}" has no units defined`;
+}
 
 export class MethodStandata extends Standata<MethodConfig> {
     static runtimeData = METHODS;
@@ -15,23 +19,34 @@ export class MethodStandata extends Standata<MethodConfig> {
 
     getByUnitType(unitType: string): MethodConfig[] {
         const allMethods = this.getAll();
-        return allMethods.filter((method) =>
-            method.units?.some((unit) => getCategoryValue(unit.categories.type) === unitType),
-        );
+        return allMethods.filter((method) => {
+            if (!method.units) {
+                throw new Error(getMissingUnitsErrorMessage(method.name));
+            }
+            return method.units.some((unit) => getCategoryValue(unit.categories.type) === unitType);
+        });
     }
 
     getByUnitSubtype(unitSubtype: string): MethodConfig[] {
         const allMethods = this.getAll();
-        return allMethods.filter((method) =>
-            method.units?.some((unit) => getCategoryValue(unit.categories.subtype) === unitSubtype),
-        );
+        return allMethods.filter((method) => {
+            if (!method.units) {
+                throw new Error(getMissingUnitsErrorMessage(method.name));
+            }
+            return method.units.some(
+                (unit) => getCategoryValue(unit.categories.subtype) === unitSubtype,
+            );
+        });
     }
 
     getByUnitTags(...tags: string[]): MethodConfig[] {
         const allMethods = this.getAll();
-        return allMethods.filter((method) =>
-            method.units?.some((unit) => tags.some((tag) => unit.tags.includes(tag))),
-        );
+        return allMethods.filter((method) => {
+            if (!method.units) {
+                throw new Error(getMissingUnitsErrorMessage(method.name));
+            }
+            return method.units.some((unit) => tags.some((tag) => unit.tags.includes(tag)));
+        });
     }
 
     getByPath(path: string): MethodConfig[] {
@@ -41,14 +56,17 @@ export class MethodStandata extends Standata<MethodConfig> {
 
     getByUnitParameters(parameters: Record<string, any>): MethodConfig[] {
         const allMethods = this.getAll();
-        return allMethods.filter((method) =>
-            method.units?.some((unit) => {
+        return allMethods.filter((method) => {
+            if (!method.units) {
+                throw new Error(getMissingUnitsErrorMessage(method.name));
+            }
+            return method.units.some((unit) => {
                 if (!unit.parameters) return false;
                 return Object.entries(parameters).every(
                     ([key, value]) => unit.parameters[key] === value,
                 );
-            }),
-        );
+            });
+        });
     }
 
     getAllMethodNames(): string[] {
@@ -63,7 +81,12 @@ export class MethodStandata extends Standata<MethodConfig> {
 
     getAllUnits(): UnitMethod[] {
         const allMethods = this.getAll();
-        return allMethods.flatMap((method) => method.units || []);
+        return allMethods.flatMap((method) => {
+            if (!method.units) {
+                throw new Error(getMissingUnitsErrorMessage(method.name));
+            }
+            return method.units;
+        });
     }
 
     getUniqueUnitTypes(): string[] {

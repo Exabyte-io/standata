@@ -47,7 +47,7 @@ function generateConfigFiles(items: ConfigItem[], type: "workflow" | "subworkflo
         const filename = `${name}.json`;
         const filePath = path.resolve(appDir, filename);
 
-        writeJsonFile(filePath, config);
+        writeJsonFile(filePath, config, BUILD_CONFIG.jsonFormat.spaces);
         console.log(`Generated ${type}: ${appName}/${filename}`);
     });
 }

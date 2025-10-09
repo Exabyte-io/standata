@@ -28,11 +28,7 @@ export function readJsonFile(filePath: string): any {
     return JSON.parse(content);
 }
 
-export function writeJsonFile(
-    filePath: string,
-    data: any,
-    spaces: number = BUILD_CONFIG.jsonFormat.spaces,
-): void {
+export function writeJsonFile(filePath: string, data: any, spaces = 0): void {
     ensureDirectory(path.dirname(filePath));
     fs.writeFileSync(filePath, JSON.stringify(data, null, spaces), "utf-8");
 }
@@ -89,12 +85,17 @@ export function createSafeFilename(name: string): string {
 /**
  * Converts YAML file to JSON, optionally resolving relative includes from a working directory
  */
-export function buildJsonFromYamlInDir(
-    assetPath: string,
-    targetPath: string,
-    workingDir?: string,
+export function buildJsonFromYamlInDir({
+    assetPath,
+    targetPath,
+    workingDir,
     spaces = 0,
-): any {
+}: {
+    assetPath: string;
+    targetPath: string;
+    workingDir?: string;
+    spaces?: number;
+}): any {
     const originalCwd = process.cwd();
     try {
         if (workingDir) {
@@ -194,12 +195,12 @@ export function normalizeToArray(data: any): any[] {
 /**
  * Saves an entity as a JSON file in the specified subdirectory.
  */
-export function saveEntity(entity: any, subdirectory: string, dataPath: string): void {
+export function saveEntity(entity: any, subdirectory: string, dataPath: string, spaces = BUILD_CONFIG.jsonFormat.spaces): void {
     const targetDir = path.join(dataPath, subdirectory);
     const filename = `${createSafeFilename(entity.name)}.json`;
     const targetPath = path.join(targetDir, filename);
 
-    writeJsonFile(targetPath, entity);
+    writeJsonFile(targetPath, entity, spaces);
     console.log(`  Created: ${targetPath}`);
 }
 
@@ -242,6 +243,7 @@ export function processAndSaveEntity(
     dataPath: string,
     categoryKeys: string[],
     getSubdirectory: (entity: any, sourceFile: string) => string,
+    spaces = BUILD_CONFIG.jsonFormat.spaces,
 ): void {
     if (!entity.name) return;
 
@@ -251,7 +253,7 @@ export function processAndSaveEntity(
     delete entity.schema;
 
     const subdirectory = getSubdirectory(entity, sourceFile);
-    saveEntity(entity, subdirectory, dataPath);
+    saveEntity(entity, subdirectory, dataPath, spaces);
 }
 
 /**
