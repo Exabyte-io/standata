@@ -23,7 +23,7 @@ categories:
     - plane wave
     - pseudopotential
 entities:
-  - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
+  - filename: qm/wf/none/smearing/gaussian/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
     categories:
       - cg
       - diagonalization
@@ -40,7 +40,7 @@ entities:
       - qm
       - smearing
       - wf
-  - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
+  - filename: qm/wf/none/tetrahedron/linear/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
     categories:
       - cg
       - diagonalization
