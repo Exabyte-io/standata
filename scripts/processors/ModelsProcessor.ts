@@ -1,0 +1,27 @@
+import BUILD_CONFIG from "../../build-config";
+import { BaseModelMethodProcessor } from "./BaseModelMethodProcessor";
+
+export class ModelsProcessor extends BaseModelMethodProcessor {
+    private static defaultCategoryKeys = ["tier1", "tier2", "tier3", "type", "subtype"];
+
+    constructor(rootDir: string) {
+        super({
+            rootDir,
+            entityName: "models",
+            assetsDir: BUILD_CONFIG.models.assets.path,
+            dataDir: BUILD_CONFIG.models.data.path,
+            buildDir: BUILD_CONFIG.models.build?.path,
+            distRuntimeDir: BUILD_CONFIG.runtimeDataDir,
+            categoriesRelativePath: BUILD_CONFIG.models.assets.categories,
+            categoryKeys: ModelsProcessor.defaultCategoryKeys,
+        });
+    }
+
+    protected getDataSubdirectory(entity: any): string {
+        const fullPathAsURL = entity.path || "";
+        const finalPath = fullPathAsURL.split("?")[0];
+        return finalPath;
+    }
+}
+
+

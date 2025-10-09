@@ -1,3 +1,3 @@
-import { ApplicationsProcessor } from "../utils";
+import { ApplicationsProcessor } from "../processors/ApplicationsProcessor";
 
 new ApplicationsProcessor(__dirname).process();

@@ -1,0 +1,109 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import serverUtils from "@mat3ra/utils/server";
+import * as fs from "fs";
+import * as path from "path";
+import * as yaml from "js-yaml";
+
+import BUILD_CONFIG from "../../build-config";
+import { resolveFromRoot } from "../utils";
+import { EntityProcessor } from "./EntityProcessor";
+
+export abstract class BaseModelMethodProcessor extends EntityProcessor {
+    // Subclasses may override to enable tags/units scanning and entities list
+    // eslint-disable-next-line class-methods-use-this
+    protected getCategoryCollectOptions(): { includeUnits: boolean; includeTags: boolean; includeEntitiesMap: boolean } {
+        return { includeUnits: false, includeTags: false, includeEntitiesMap: false };
+    }
+
+    public updateCategoriesFile(): void {
+        const dataPath = path.resolve(this.resolved.dataDir);
+        const categoriesPath = this.options.categoriesRelativePath
+            ? path.resolve(resolveFromRoot(this.options.rootDir, this.options.assetsDir), this.options.categoriesRelativePath)
+            : path.resolve(this.resolved.dataDir, "categories.yml");
+
+        const categoryKeys = this.options.categoryKeys || [];
+        const { includeUnits, includeTags, includeEntitiesMap } = this.getCategoryCollectOptions();
+
+        const categorySets: Record<string, Set<string>> = Object.fromEntries(
+            [...categoryKeys, includeTags ? "tags" : null].filter(Boolean).map((k) => [k as string, new Set<string>()]),
+        ) as any;
+        const entities: { filename: string; categories: string[] }[] = [];
+
+        const findJsonFilesRecursively = (dir: string): string[] => {
+            const results: string[] = [];
+            const items = fs.readdirSync(dir);
+            items.forEach((item) => {
+                const full = path.join(dir, item);
+                const stat = fs.statSync(full);
+                if (stat.isDirectory()) results.push(...findJsonFilesRecursively(full));
+                else if (stat.isFile() && item.endsWith(".json")) results.push(full);
+            });
+            return results;
+        };
+
+        const addCatsFromObj = (obj: any) => {
+            if (obj?.categories) {
+                categoryKeys.forEach((key) => {
+                    const value = obj.categories[key];
+                    if (typeof value === "string" && value) (categorySets as any)[key].add(value);
+                });
+            }
+            if (includeTags && Array.isArray(obj?.tags)) {
+                obj.tags.forEach((t: string) => (categorySets as any).tags.add(t));
+            }
+        };
+
+        const jsonFiles = findJsonFilesRecursively(dataPath);
+        jsonFiles.forEach((filePath) => {
+            try {
+                const data = serverUtils.json.readJSONFileSync(filePath) as any;
+                addCatsFromObj(data);
+                if (includeUnits && Array.isArray((data as any)?.units)) (data as any).units.forEach(addCatsFromObj);
+
+                if (includeEntitiesMap) {
+                    const relativePath = path.relative(this.resolved.dataDir, filePath);
+                    const flat = new Set<string>();
+                    const collectFrom = (obj: any) => {
+                        if (obj?.categories) {
+                            categoryKeys.forEach((key) => {
+                                const v = obj.categories[key];
+                                if (typeof v === "string" && v) flat.add(v);
+                            });
+                        }
+                        if (includeTags && Array.isArray(obj?.tags)) obj.tags.forEach((t: string) => flat.add(t));
+                    };
+                    collectFrom(data);
+                    if (includeUnits && Array.isArray((data as any)?.units)) (data as any).units.forEach(collectFrom);
+                    entities.push({ filename: relativePath, categories: Array.from(flat).sort() });
+                }
+            } catch (e: any) {
+                console.error(`Error processing ${filePath}: ${e.message}`);
+            }
+        });
+
+        const categoriesOut: any = {};
+        categoryKeys.forEach((key) => {
+            const arr = Array.from((categorySets as any)[key]).sort();
+            if (arr.length > 0) categoriesOut[key] = arr;
+        });
+        if (includeTags) {
+            const tagsArr = Array.from((categorySets as any).tags || []).sort();
+            if (tagsArr.length > 0) categoriesOut.tags = tagsArr;
+        }
+
+        const payload = includeEntitiesMap
+            ? { categories: categoriesOut, entities: entities.sort((a, b) => a.filename.localeCompare(b.filename)) }
+            : { categories: categoriesOut, entities: [] };
+
+        const yamlContent = yaml.dump(payload, {
+            indent: BUILD_CONFIG.yamlFormat.indent,
+            lineWidth: BUILD_CONFIG.yamlFormat.lineWidth,
+            sortKeys: BUILD_CONFIG.yamlFormat.sortKeys as boolean,
+        });
+        serverUtils.file.createDirIfNotExistsSync(path.dirname(categoriesPath));
+        fs.writeFileSync(categoriesPath, yamlContent, "utf-8");
+        console.log(`Categories file written to: ${categoriesPath}`);
+    }
+}
+
+

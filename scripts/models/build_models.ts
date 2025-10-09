@@ -1,3 +1,3 @@
-import { ModelsProcessor } from "../utils";
+import { ModelsProcessor } from "../processors/ModelsProcessor";
 
 new ModelsProcessor(__dirname).process();
