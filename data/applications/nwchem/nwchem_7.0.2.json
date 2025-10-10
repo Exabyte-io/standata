@@ -1,0 +1,7 @@
+{
+    "name": "nwchem",
+    "shortName": "nwchem",
+    "summary": "NWChem",
+    "version": "7.0.2",
+    "isDefault": true
+}
