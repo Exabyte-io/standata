@@ -895,6 +895,319 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 };
             };
         };
+        nwchem: {
+            nwchem: {
+                isDefault: boolean;
+                hasAdvancedComputeOptions: boolean;
+                postProcessors: string[];
+                monitors: string[];
+                results: string[];
+                flavors: {
+                    nwchem_total_energy: {
+                        isDefault: boolean;
+                        input: {
+                            name: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                };
+            };
+        };
+        python: {
+            python: {
+                isDefault: boolean;
+                monitors: string[];
+                results: string[];
+                flavors: {
+                    hello_world: {
+                        isDefault: boolean;
+                        input: ({
+                            name: string;
+                            templateName: string;
+                        } | {
+                            name: string;
+                            templateName?: undefined;
+                        })[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    espresso_xml_get_qpt_irr: {
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    espresso_extract_kpoints: {
+                        input: ({
+                            name: string;
+                            templateName?: undefined;
+                        } | {
+                            name: string;
+                            templateName: string;
+                        })[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "generic:post_processing:plot:matplotlib": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "generic:processing:find_extrema:scipy": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:setup_variables_packages": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:custom": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:data_input:read_csv:pandas": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:data_input:train_test_split:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:pre_processing:min_max_scaler:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:pre_processing:remove_duplicates:pandas": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:pre_processing:remove_missing:pandas": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:pre_processing:standardization:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:adaboosted_trees_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        results: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:bagged_trees_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:gradboosted_trees_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:extreme_gradboosted_trees_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:k_means_clustering:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:kernel_ridge_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:lasso_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:multilayer_perceptron:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:random_forest_classification:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:gradboosted_trees_classification:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:extreme_gradboosted_trees_classification:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:random_forest_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:ridge_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:post_processing:parity_plot:matplotlib": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:post_processing:pca_2d_clusters:matplotlib": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:post_processing:roc_curve:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                };
+            };
+        };
         vasp: {
             vasp: {
                 isDefault: boolean;
