@@ -46,9 +46,6 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
         const entities: { filename: string; categories: string[] }[] = [];
 
         const jsonFiles = this.findJsonFilesRecursively(this.resolvedPaths.dataDir);
-
-        console.log({ jsonFiles });
-
         for (const filePath of jsonFiles) {
             try {
                 const data = serverUtils.json.readJSONFileSync(filePath) as any;

@@ -210,10 +210,10 @@ export abstract class EntityProcessor {
         console.log(`Written JS runtime data to "${fullPath}"`);
     }
 
-    static createPythonRuntimeModule(content: object, fullPath: string): void {
-        const pyContent = `import json\n\n${fullPath}_data = json.loads(r'''${JSON.stringify(
-            content,
-        )}''')\n`;
+    public createPythonRuntimeModule(content: object, fullPath: string): void {
+        const pyContent = `import json\n\n${
+            this.options.entityNamePlural
+        }_data = json.loads(r'''${JSON.stringify(content)}''')\n`;
         fs.writeFileSync(fullPath, pyContent, "utf8");
         console.log(`Written Python Module to "${fullPath}"`);
     }
@@ -221,7 +221,7 @@ export abstract class EntityProcessor {
     protected generateRuntimeFiles() {
         const runtimeData = this.generateRuntimeDataConfig();
         EntityProcessor.createJsRuntimeFile(runtimeData, this.runtimeDataJsPath);
-        EntityProcessor.createPythonRuntimeModule(runtimeData, this.runtimeDataPyPath);
+        this.createPythonRuntimeModule(runtimeData, this.runtimeDataPyPath);
     }
 
     // End of Runtime data generation

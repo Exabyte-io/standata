@@ -1,21 +1,4 @@
-interface EntityItem {
-    filename: string;
-    categories: string[];
-}
-
-interface EntityCategories {
-    [key: string]: string[];
-}
-
-export interface StandataConfig {
-    categories: EntityCategories;
-    entities: EntityItem[];
-}
-
-interface RuntimeData {
-    standataConfig: StandataConfig;
-    filesMapByName: object;
-}
+import { EntityCategories, EntityItem, RuntimeData, StandataConfig } from "./types/standata";
 
 export class Standata<EntityType extends object = object> {
     static runtimeData: RuntimeData = {
