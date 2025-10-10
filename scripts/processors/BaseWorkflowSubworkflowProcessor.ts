@@ -5,6 +5,7 @@ import serverUtils from "@mat3ra/utils/server";
 // @ts-ignore
 import { builders, Subworkflow, UnitFactory, Workflow } from "@mat3ra/wode";
 
+import { BUILD_CONFIG } from "../../build-config";
 import { loadYAMLFilesAsMap } from "../utils";
 import { AssetRecord, EntityProcessor, EntityProcessorOptions } from "./EntityProcessor";
 
@@ -82,20 +83,18 @@ export abstract class BaseWorkflowSubworkflowProcessor extends EntityProcessor {
         this.writeEntityConfigs();
     }
 
-    protected generateRuntimeDataConfig() {
-        const runtimeDataConfig: any = super.generateRuntimeDataConfig();
-
+    public writeDataDirectoryContent(): void {
         this.entityConfigs.forEach((entityConfig: any) => {
-            const filename = `${entityConfig.appName}/${entityConfig.name}.json`;
+            const { appName } = entityConfig;
+            const { name } = entityConfig;
             const { config } = entityConfig;
-            if (config.config) {
-                runtimeDataConfig.filesMapByName[filename] = config.config;
-            } else {
-                runtimeDataConfig.filesMapByName[filename] = config;
-            }
-        });
+            const targetPath = `${this.resolvedPaths.dataDir}/${appName}/${name}.json`;
 
-        return runtimeDataConfig;
+            serverUtils.json.writeJSONFileSync(targetPath, config.config || config, {
+                spaces: BUILD_CONFIG.jsonFormat.spaces,
+            });
+            console.log(`  Created: ${targetPath}`);
+        });
     }
 
     public writeDistDirectoryContent(): void {
