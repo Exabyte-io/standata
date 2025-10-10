@@ -59,3 +59,9 @@ entities:
       - scripting
       - default_version
       - default
+  - filename: shell/shell_default_5.1.8.json
+    categories:
+      - programming_language
+      - scripting
+      - default_version
+      - default
