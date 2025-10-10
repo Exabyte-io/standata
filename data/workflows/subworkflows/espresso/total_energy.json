@@ -1,5 +1,5 @@
 {
-    "_id": "2512d0e0-730a-4a05-84fc-24ef8447bc88",
+    "_id": "3e6ffd40-f80c-4cf2-814e-50c69a0d1262",
     "name": "Total Energy",
     "application": {
         "name": "espresso",
@@ -70,7 +70,7 @@
                     "name": "convergence_electronic"
                 }
             ],
-            "flowchartId": "9942c44e-00e5-4446-bef9-04defc1c7a77",
+            "flowchartId": "6515e44f-d9d1-4d3b-a3fd-8f126a545432",
             "preProcessors": [],
             "postProcessors": [],
             "application": {
@@ -96,13 +96,20 @@
                 ],
                 "results": [
                     "atomic_forces",
+                    "band_gaps",
+                    "charge_density_profile",
+                    "density_of_states",
                     "fermi_energy",
+                    "final_structure",
+                    "magnetic_moments",
+                    "potential_profile",
                     "pressure",
+                    "reaction_energy_barrier",
+                    "reaction_energy_profile",
                     "stress_tensor",
                     "total_energy",
                     "total_energy_contributions",
-                    "total_force",
-                    "final_structure"
+                    "total_force"
                 ],
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"
