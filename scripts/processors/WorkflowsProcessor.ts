@@ -29,10 +29,10 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         return workflowSubforkflowMapByApplication;
     }
 
-    protected buildEntityConfigs(): any[] {
+    protected generateEntities(): any[] {
         const WorkflowCls = Workflow as any;
         this.enablePredefinedIds();
-        const workflowConfigs = createWorkflowConfigs({
+        const workflows = createWorkflowConfigs({
             applications: this.applications,
             WorkflowCls,
             workflowSubforkflowMapByApplication: this.workflowSubforkflowMapByApplication,
@@ -41,22 +41,11 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
             unitBuilders: { ...builders, Workflow: WorkflowCls },
         } as any) as any[];
 
-        const formattedConfigs: { appName: string; name: string; config: any }[] = [];
-        workflowConfigs.forEach((workflow: any) => {
-            const appName = workflow.application;
-            const workflowKey = Object.keys(this.entityMapByApplication[appName] || {}).find(
-                (key) => this.entityMapByApplication[appName][key].name === workflow.name,
-            );
-            if (workflowKey) {
-                formattedConfigs.push({
-                    appName,
-                    name: workflowKey,
-                    config: workflow,
-                });
-            }
+        workflows.forEach((workflow: any) => {
+            workflow._appName = workflow.application;
         });
 
-        return formattedConfigs;
+        return workflows;
     }
 
     protected writeWorkflowSubforkflowMapByApplication(): void {
