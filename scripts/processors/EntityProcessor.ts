@@ -32,7 +32,7 @@ export abstract class EntityProcessor {
         assetsDir: string;
         srcPythonDataDir: string;
         dataDir: string;
-        buildDir?: string;
+        buildDir: string;
         distRuntimeDir?: string;
     };
 

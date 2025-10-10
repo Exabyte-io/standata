@@ -1,52 +1,59 @@
-import { Utils } from "@mat3ra/utils";
 import serverUtils from "@mat3ra/utils/server";
+// @ts-ignore
+import { builders, createWorkflowConfigs, Subworkflow, UnitFactory, Workflow } from "@mat3ra/wode";
 import * as path from "path";
 
 import { BUILD_CONFIG } from "../../build-config";
 import { BaseWorkflowSubworkflowProcessor } from "./BaseWorkflowSubworkflowProcessor";
 
 export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
-    constructor(rootDir: string) {
+    private subworkflowMapByApplication: Record<any, string>;
+
+    constructor(rootDir: string, subworkflowsMapByApplication: Record<any, string>) {
         super({
             rootDir,
             entityNamePlural: "workflows",
             assetsDir: BUILD_CONFIG.workflows.assets.path,
-            categoriesRelativePath: BUILD_CONFIG.workflows.assets.workflowsCategories,
+            categoriesRelativePath: BUILD_CONFIG.workflows.assets.categories,
             dataDir: BUILD_CONFIG.workflows.data.path,
             buildDir: BUILD_CONFIG.workflows.build.path,
-            excludedAssetFiles: [
-                BUILD_CONFIG.workflows.assets.workflowsCategories,
-                BUILD_CONFIG.workflows.assets.subworkflowsCategories,
-            ],
+            excludedAssetFiles: [BUILD_CONFIG.workflows.assets.categories],
         });
+        this.subworkflowMapByApplication = subworkflowsMapByApplication;
     }
 
-    public writeBuildDirectoryContent(): void {
-        if (!this.resolvedPaths.buildDir) return;
-        const buildDir = this.resolvedPaths.buildDir as string;
-        serverUtils.file.createDirIfNotExistsSync(buildDir);
+    private get workflowSubforkflowMapByApplication(): { workflows: any; subworkflows: any } {
+        const workflowSubforkflowMapByApplication = { workflows: {}, subworkflows: {} } as any;
+        workflowSubforkflowMapByApplication.workflows = this.entityMapByApplication;
+        workflowSubforkflowMapByApplication.subworkflows = this.subworkflowMapByApplication;
+        return workflowSubforkflowMapByApplication;
+    }
 
+    protected buildEntityConfigs(): any[] {
+        const WorkflowCls = Workflow as any;
+        this.enablePredefinedIds();
+        const configs = createWorkflowConfigs({
+            applications: this.applications,
+            WorkflowCls,
+            workflowSubforkflowMapByApplication: this.workflowSubforkflowMapByApplication,
+            SubworkflowCls: Subworkflow,
+            UnitFactoryCls: UnitFactory,
+            unitBuilders: { ...builders, Workflow: WorkflowCls },
+        } as any) as any[];
+        return configs;
+    }
+
+    protected writeWorkflowSubforkflowMapByApplication(): void {
         serverUtils.json.writeJSONFileSync(
             path.resolve(
-                buildDir,
+                this.resolvedPaths.buildDir,
                 BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication,
             ),
             this.workflowSubforkflowMapByApplication,
         );
     }
 
-    public writeDataDirectoryContent(): void {
-        this.generateAndWriteWorkflowsData();
-    }
-
-    protected generateAndWriteWorkflowsData(): void {
-        const configs = this.buildWorkflowConfigs();
-        const items = configs.map((config: any) => ({
-            appName: config.application,
-            name: Utils.str.createSafeFilename(config.name),
-            config: config.config,
-        }));
-        const { outputWorkflowsDir } = this.getOutputDirs();
-        this.writeItems(items, outputWorkflowsDir);
+    public writeBuildDirectoryContent(): void {
+        this.writeWorkflowSubforkflowMapByApplication();
     }
 }

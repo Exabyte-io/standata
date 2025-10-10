@@ -1,48 +1,41 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import serverUtils from "@mat3ra/utils/server";
 // eslint-disable-next-line import/no-extraneous-dependencies
 // @ts-ignore
-import { builders, createWorkflowConfigs, Subworkflow, UnitFactory, Workflow } from "@mat3ra/wode";
-import * as path from "path";
+import serverUtils from "@mat3ra/utils/server";
+// @ts-ignore
+import { builders, Subworkflow, UnitFactory, Workflow } from "@mat3ra/wode";
 
-import { BUILD_CONFIG } from "../../build-config";
-import { loadYAMLFilesAsMap, resolveFromRoot } from "../utils";
-import { EntityProcessor, EntityProcessorOptions } from "./EntityProcessor";
+import { loadYAMLFilesAsMap } from "../utils";
+import { AssetRecord, EntityProcessor, EntityProcessorOptions } from "./EntityProcessor";
 
 export abstract class BaseWorkflowSubworkflowProcessor extends EntityProcessor {
+    // TODO: get from applications yaml
     protected applications: string[] = ["espresso"];
 
-    protected workflowSubforkflowMapByApplication: {
-        workflows: Record<string, any>;
-        subworkflows: Record<string, any>;
-    } = { workflows: {}, subworkflows: {} };
+    public entityMapByApplication: Record<string, any>;
+
+    public entityConfigs: object[];
 
     constructor(options: EntityProcessorOptions) {
         super(options);
+        this.entityMapByApplication = {};
+        this.entityConfigs = [];
     }
 
-    public readAssets() {
-        const sourcesRoot = resolveFromRoot(
-            this.options.rootDir,
-            BUILD_CONFIG.workflows.assets.path,
-        );
-
+    public setEntityMapByApplication() {
         this.applications.forEach((name) => {
-            this.workflowSubforkflowMapByApplication.workflows[name] = {};
-            this.workflowSubforkflowMapByApplication.subworkflows[name] = {};
-
-            const wfDir = path.resolve(sourcesRoot, BUILD_CONFIG.workflows.assets.workflows, name);
-            const swDir = path.resolve(
-                sourcesRoot,
-                BUILD_CONFIG.workflows.assets.subworkflows,
-                name,
-            );
-
-            this.workflowSubforkflowMapByApplication.workflows[name] = loadYAMLFilesAsMap(wfDir);
-            this.workflowSubforkflowMapByApplication.subworkflows[name] = loadYAMLFilesAsMap(swDir);
+            const pathForName = `${this.resolvedPaths.assetsDir}/${name}`;
+            this.entityMapByApplication[name] = loadYAMLFilesAsMap(pathForName);
         });
+    }
 
-        this.assets = [];
+    protected abstract buildEntityConfigs(): object[];
+
+    public readAssets(): AssetRecord[] {
+        this.setEntityMapByApplication();
+        // read assets to be able to run buildEntityConfigs
+        super.readAssets();
+        this.buildEntityConfigs();
         return this.assets;
     }
 
@@ -77,45 +70,15 @@ export abstract class BaseWorkflowSubworkflowProcessor extends EntityProcessor {
         (UnitFactory as any).ProcessingUnit.usePredefinedIds = true;
     }
 
-    protected getOutputDirs() {
-        const outputWorkflowsDir = path.resolve(
-            this.resolvedPaths.dataDir,
-            BUILD_CONFIG.workflows.data.workflows,
-        );
-        const outputSubworkflowsDir = path.resolve(
-            this.resolvedPaths.dataDir,
-            BUILD_CONFIG.workflows.data.subworkflows,
-        );
-        serverUtils.file.createDirIfNotExistsSync(outputWorkflowsDir);
-        serverUtils.file.createDirIfNotExistsSync(outputSubworkflowsDir);
-        return { outputWorkflowsDir, outputSubworkflowsDir };
-    }
-
-    protected buildWorkflowConfigs(): any[] {
-        const WorkflowCls = Workflow as any;
-        this.enablePredefinedIds();
-        return createWorkflowConfigs({
-            applications: this.applications,
-            WorkflowCls,
-            workflowSubforkflowMapByApplication: this.workflowSubforkflowMapByApplication,
-            SubworkflowCls: Subworkflow,
-            UnitFactoryCls: UnitFactory,
-            unitBuilders: { ...builders, Workflow: WorkflowCls },
-        } as any) as any[];
-    }
-
-    protected writeItems(
-        items: { appName: string; name: string; config: any }[],
-        baseDir: string,
-    ): void {
-        items.forEach((item) => {
-            const appDir = path.resolve(baseDir, item.appName);
-            serverUtils.file.createDirIfNotExistsSync(appDir);
-            const filename = `${item.name}.json`;
-            const filePath = path.resolve(appDir, filename);
-            serverUtils.json.writeJSONFileSync(filePath, item.config, {
-                spaces: BUILD_CONFIG.jsonFormat.spaces,
-            });
+    private writeEntityConfigs(): void {
+        this.entityConfigs.forEach((entityConfig) => {
+            const entityName = (entityConfig as any).name;
+            const targetPath = `${this.resolvedPaths.buildDir}/${entityName}.json`;
+            serverUtils.json.writeJSONFileSync(targetPath, entityConfig);
         });
+    }
+
+    public writeBuildDirectoryContent(): void {
+        this.writeEntityConfigs();
     }
 }
