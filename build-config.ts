@@ -72,20 +72,28 @@ export const BUILD_CONFIG = {
 
     workflows: {
         assets: {
-            path: "assets/workflows",
-            workflows: "workflows",
-            subworkflows: "subworkflows",
-            workflowsCategories: "workflows/categories.yml",
-            subworkflowsCategories: "subworkflows/categories.yml",
+            path: "assets/workflows/workflows",
+            categories: "categories.yml",
         },
         data: {
-            path: "data/workflows",
-            workflows: "workflows",
-            subworkflows: "subworkflows",
+            path: "data/workflows/workflows",
         },
         build: {
             path: "build/standata/workflows",
             workflowSubforkflowMapByApplication: "workflowSubforkflowMapByApplication.json",
+        },
+    },
+
+    subworkflows: {
+        assets: {
+            path: "assets/workflows/subworkflows",
+            categories: "categories.yml",
+        },
+        data: {
+            path: "data/workflows/subworkflows",
+        },
+        build: {
+            path: "build/standata/workflows",
         },
     },
 
@@ -118,6 +126,7 @@ export const BUILD_CONFIG = {
     },
 
     distRuntimeDataDir: "./dist/js/runtime_data",
+    srcPythonRuntimeDataDir: "./src/py/mat3ra/standata/data",
 
     jsonFormat: {
         spaces: 4,

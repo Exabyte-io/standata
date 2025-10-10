@@ -5,7 +5,6 @@ import * as yaml from "js-yaml";
 import * as path from "path";
 
 import { BUILD_CONFIG } from "../../build-config";
-import { resolveFromRoot } from "../utils";
 import { EntityProcessor, EntityProcessorOptions } from "./EntityProcessor";
 
 export interface ModelMethodProcessorOptions extends EntityProcessorOptions {
@@ -34,13 +33,7 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
     }
 
     public updateCategoriesFile(): void {
-        const dataPath = path.resolve(this.resolvedPaths.dataDir);
-        const categoriesPath = this.options.categoriesRelativePath
-            ? path.resolve(
-                  resolveFromRoot(this.options.rootDir, this.options.assetsDir),
-                  this.options.categoriesRelativePath,
-              )
-            : path.resolve(this.resolvedPaths.dataDir, "categories.yml");
+        const { categoriesPath } = this;
 
         const categoryKeys = this.options.categoryKeys || [];
         const { includeUnits, includeTags, includeEntitiesMap } = this.getCategoryCollectOptions();
@@ -52,7 +45,10 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
         ) as any;
         const entities: { filename: string; categories: string[] }[] = [];
 
-        const jsonFiles = this.findJsonFilesRecursively(dataPath);
+        const jsonFiles = this.findJsonFilesRecursively(this.resolvedPaths.dataDir);
+
+        console.log({ jsonFiles });
+
         for (const filePath of jsonFiles) {
             try {
                 const data = serverUtils.json.readJSONFileSync(filePath) as any;
@@ -100,6 +96,7 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
             lineWidth: BUILD_CONFIG.yamlFormat.lineWidth,
             sortKeys: BUILD_CONFIG.yamlFormat.sortKeys as boolean,
         });
+
         serverUtils.file.createDirIfNotExistsSync(path.dirname(categoriesPath));
         fs.writeFileSync(categoriesPath, yamlContent, "utf-8");
         console.log(`Categories file written to: ${categoriesPath}`);
