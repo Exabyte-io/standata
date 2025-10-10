@@ -72,3 +72,4 @@ K_points
 {% for coordinate in point.coordinates %}{{ coordinate }}{% endfor %}
 {% endfor %}
 /
+

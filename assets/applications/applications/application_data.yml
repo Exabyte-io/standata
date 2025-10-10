@@ -1,1 +1,2 @@
 espresso: !include 'applications/espresso.yml'
+vasp: !include 'applications/vasp.yml'

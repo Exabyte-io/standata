@@ -18,7 +18,7 @@
     nat = {{ input.NAT }}
     ntyp = {{ input.NTYP }}
     ecutwfc = {{ cutoffs.wavefunction }}
-! TODO: figure out the runtime error when `ecutrho` is set.
+! TODO: figure out the runtime error when `ecutrho` is set. 
 ! In the meantime, using Norm-conserving pseudopotentials works.
 !    ecutrho = {{ cutoffs.density }}
     nr1b = 20
