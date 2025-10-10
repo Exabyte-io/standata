@@ -37,3 +37,11 @@ entities:
       - modeling
       - compiled
       - default_build
+  - filename: vasp/vasp_gnu_5.4.4.json
+    categories:
+      - quantum-mechanical
+      - modeling
+      - compiled
+      - default_version
+      - default_build
+      - default
