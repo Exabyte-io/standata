@@ -1,6 +1,4 @@
-deepmd: !include 'applications/deepmd.yml'
 espresso: !include 'applications/espresso.yml'
-jupyterLab: !include 'applications/jupyterLab.yml'
 nwchem: !include 'applications/nwchem.yml'
 python: !include 'applications/python.yml'
 shell: !include 'applications/shell.yml'
