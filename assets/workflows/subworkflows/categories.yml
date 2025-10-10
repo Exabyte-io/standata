@@ -13,7 +13,7 @@ categories:
   material_count:
     - single-material
     - multi-material
-  workflow_type:
+  workflow_type: !manually_added
     - calculation
     - variable-cell_relaxation
 entities:

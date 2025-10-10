@@ -4,13 +4,27 @@ import { JsYamlAllSchemas } from "@mat3ra/code/dist/js/utils";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
 import * as fs from "fs";
+import * as yaml from "js-yaml";
 import * as lodash from "lodash";
 import * as path from "path";
 
 //
 
+const ManuallyAddedType = new yaml.Type("!manually_added", {
+    kind: "sequence",
+    construct: (data) => ({ __manually_added: true, values: data }),
+    represent: (data: any) => (data && data.values ? data.values : data),
+    predicate: (obj: any) => obj && obj.__manually_added === true,
+});
+
+export const StandataYamlSchema = JsYamlAllSchemas.extend([ManuallyAddedType]);
+
 export function readYAMLFileResolved(filePath: string): any {
     return serverUtils.yaml.readYAMLFile(filePath, { schema: JsYamlAllSchemas });
+}
+
+export function readYAMLFileWithManualTags(filePath: string): any {
+    return serverUtils.yaml.readYAMLFile(filePath, { schema: StandataYamlSchema });
 }
 
 export function resolveFromRoot(scriptDirname: string, ...pathSegments: string[]): string {
