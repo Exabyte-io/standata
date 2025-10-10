@@ -35,7 +35,7 @@ export abstract class BaseWorkflowSubworkflowProcessor extends EntityProcessor {
         this.setEntityMapByApplication();
         // read assets to be able to run buildEntityConfigs
         super.readAssets();
-        this.buildEntityConfigs();
+        this.entityConfigs = this.buildEntityConfigs();
         return this.assets;
     }
 
@@ -80,5 +80,25 @@ export abstract class BaseWorkflowSubworkflowProcessor extends EntityProcessor {
 
     public writeBuildDirectoryContent(): void {
         this.writeEntityConfigs();
+    }
+
+    protected generateRuntimeDataConfig() {
+        const runtimeDataConfig: any = super.generateRuntimeDataConfig();
+
+        this.entityConfigs.forEach((entityConfig: any) => {
+            const filename = `${entityConfig.appName}/${entityConfig.name}.json`;
+            const { config } = entityConfig;
+            if (config.config) {
+                runtimeDataConfig.filesMapByName[filename] = config.config;
+            } else {
+                runtimeDataConfig.filesMapByName[filename] = config;
+            }
+        });
+
+        return runtimeDataConfig;
+    }
+
+    public writeDistDirectoryContent(): void {
+        // Workflows and subworkflows are not distributed as individual files
     }
 }

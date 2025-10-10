@@ -44,8 +44,4 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         });
         return configs;
     }
-
-    public writeDistDirectoryContent(): void {
-        // Subworkflows are not distributed as individual files in a folder
-    }
 }
