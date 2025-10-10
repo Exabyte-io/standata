@@ -879,6 +879,27 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 };
             };
         };
+        nwchem: {
+            nwchem: {
+                isDefault: boolean;
+                hasAdvancedComputeOptions: boolean;
+                postProcessors: string[];
+                monitors: string[];
+                results: string[];
+                flavors: {
+                    nwchem_total_energy: {
+                        isDefault: boolean;
+                        input: {
+                            name: string;
+                        }[];
+                        results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                };
+            };
+        };
         vasp: {
             vasp: {
                 isDefault: boolean;
