@@ -1,0 +1,7 @@
+# Build outputs - keep minified
+dist/
+build/
+data/
+
+# Generated Python files
+src/py/mat3ra/standata/data/*.py
