@@ -4,6 +4,7 @@ import { ModelStandata } from "../../src/js";
 
 // Test data constants
 const TEST_MODEL_TAGS = {
+    DFT: "dft",
     LDA: "lda",
 } as const;
 
@@ -16,10 +17,12 @@ const TEST_MODEL_CATEGORIES = {
 } as const;
 
 const TEST_MODEL_NAME_FRAGMENTS = {
+    DFT: "DFT",
     LDA: "LDA",
 } as const;
 
 const TEST_COUNTS = {
+    TOTAL_DFT_MODELS: 39,
     TOTAL_LDA_MODELS: 9,
 } as const;
 
@@ -32,16 +35,19 @@ describe("ModelStandata", () => {
 
     describe("getByTags", () => {
         it("should find models by category tags", () => {
+            const dftModels = standata.getByTags(TEST_MODEL_TAGS.DFT);
             const ldaModels = standata.getByTags(TEST_MODEL_TAGS.LDA);
 
+            expect(dftModels).to.have.length(TEST_COUNTS.TOTAL_DFT_MODELS);
+            expect(dftModels[0].name).to.include(TEST_MODEL_NAME_FRAGMENTS.DFT);
             expect(ldaModels).to.have.length(TEST_COUNTS.TOTAL_LDA_MODELS);
             expect(ldaModels[0].name).to.include(TEST_MODEL_NAME_FRAGMENTS.LDA);
         });
 
         it("should find models by multiple tags", () => {
-            const models = standata.getByTags(TEST_MODEL_TAGS.LDA);
+            const models = standata.getByTags(TEST_MODEL_TAGS.DFT, TEST_MODEL_TAGS.LDA);
 
-            expect(models).to.have.length(TEST_COUNTS.TOTAL_LDA_MODELS);
+            expect(models).to.have.length(TEST_COUNTS.TOTAL_DFT_MODELS);
         });
     });
 
