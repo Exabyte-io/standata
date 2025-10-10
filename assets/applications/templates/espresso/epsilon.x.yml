@@ -1,5 +1,0 @@
-- content: !readFile 'assets/espresso/epsilon.j2.in'
-  name: epsilon.in
-  contextProviders: []
-  applicationName: espresso
-  executableName: epsilon.x

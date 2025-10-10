@@ -4,7 +4,7 @@ import { Standata } from "./base";
 import APPLICATIONS from "./runtime_data/applications.json";
 import APPLICATION_VERSIONS_MAP from "./runtime_data/applications/applicationVersionsMapByApplication.json";
 import EXECUTABLE_FLAVOR_MAP from "./runtime_data/applications/executableFlavorMapByApplication.json";
-import TEMPLATES_LIST_RAW from "./runtime_data/applications/templatesList.json";
+import TEMPLATES_LIST from "./runtime_data/applications/templatesList.json";
 import {
     ApplicationExecutableTree,
     ApplicationVersionsMapByApplicationType,
@@ -12,8 +12,6 @@ import {
     DefaultApplicationConfig,
 } from "./types/application";
 import { ApplicationVersionsMap } from "./utils/applicationVersionMap";
-
-const TEMPLATES_LIST = TEMPLATES_LIST_RAW as TemplateSchema[];
 
 export enum TAGS {
     DEFAULT = "default",
@@ -48,7 +46,7 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
     // eslint-disable-next-line class-methods-use-this
     getAllAppTemplates(): TemplateSchema[] {
         // TODO: Convert to use this.getAll() when template data is in Standata format
-        return TEMPLATES_LIST;
+        return TEMPLATES_LIST as TemplateSchema[];
     }
 
     // eslint-disable-next-line class-methods-use-this

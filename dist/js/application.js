@@ -10,7 +10,6 @@ const applicationVersionsMapByApplication_json_1 = __importDefault(require("./ru
 const executableFlavorMapByApplication_json_1 = __importDefault(require("./runtime_data/applications/executableFlavorMapByApplication.json"));
 const templatesList_json_1 = __importDefault(require("./runtime_data/applications/templatesList.json"));
 const applicationVersionMap_1 = require("./utils/applicationVersionMap");
-const TEMPLATES_LIST = templatesList_json_1.default;
 var TAGS;
 (function (TAGS) {
     TAGS["DEFAULT"] = "default";
@@ -38,7 +37,7 @@ class ApplicationStandata extends base_1.Standata {
     // eslint-disable-next-line class-methods-use-this
     getAllAppTemplates() {
         // TODO: Convert to use this.getAll() when template data is in Standata format
-        return TEMPLATES_LIST;
+        return templatesList_json_1.default;
     }
     // eslint-disable-next-line class-methods-use-this
     getAllAppTree() {
@@ -58,7 +57,7 @@ class ApplicationStandata extends base_1.Standata {
     // eslint-disable-next-line class-methods-use-this
     getTemplatesByName(appName, execName, templateName) {
         // TODO: Convert to use this.findEntitiesByTags() when template data is in Standata format
-        const templates = TEMPLATES_LIST;
+        const templates = templatesList_json_1.default;
         const filtered = templates.filter((template) => {
             const matchesApp = template.applicationName === appName;
             const matchesExec = template.executableName === execName;
