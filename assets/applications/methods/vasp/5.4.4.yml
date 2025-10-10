@@ -9,4 +9,3 @@ Default:
       - path: /linalg/diag/none/davidson/none
 #            -   regex: \/qm\/wf\/none\/smearing\/(fermi-dirac|gaussian|methfessel-paxton)
 #            -   regex: \/qm\/wf\/none\/tetrahedron\/(linear|bloechl)
-
