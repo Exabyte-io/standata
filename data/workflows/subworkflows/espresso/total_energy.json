@@ -1,5 +1,5 @@
 {
-    "_id": "0cc8f3e0-d755-461e-b6e4-3116fcd62ba3",
+    "_id": "3e6ffd40-f80c-4cf2-814e-50c69a0d1262",
     "name": "Total Energy",
     "application": {
         "name": "espresso",
@@ -70,7 +70,7 @@
                     "name": "convergence_electronic"
                 }
             ],
-            "flowchartId": "cd58c58d-f336-47be-bfb2-81720013df58",
+            "flowchartId": "6515e44f-d9d1-4d3b-a3fd-8f126a545432",
             "preProcessors": [],
             "postProcessors": [],
             "application": {

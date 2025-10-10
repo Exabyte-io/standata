@@ -24,8 +24,8 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         return workflowSubforkflowMapByApplication;
     }
 
-    protected generateEntities(): any[] {
-        const entities: any[] = [];
+    protected buildEntityConfigs(): any[] {
+        const configs: { appName: string; name: string; config: any }[] = [];
         this.applications.forEach((appName) => {
             const subworkflows = this.workflowSubforkflowMapByApplication.subworkflows[appName];
             if (!subworkflows) return;
@@ -35,11 +35,13 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
                     swfName: subworkflowName,
                     workflowsData: this.workflowSubforkflowMapByApplication,
                 });
-                const entity = (subworkflow as any).toJSON();
-                entity._appName = appName;
-                entities.push(entity);
+                configs.push({
+                    appName,
+                    name: subworkflowName,
+                    config: (subworkflow as any).toJSON(),
+                });
             });
         });
-        return entities;
+        return configs;
     }
 }

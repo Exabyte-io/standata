@@ -1,11 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line import/no-extraneous-dependencies
 // @ts-ignore
 import serverUtils from "@mat3ra/utils/server";
 // @ts-ignore
 import { builders, Subworkflow, UnitFactory, Workflow } from "@mat3ra/wode";
-import * as path from "path";
 
-import { BUILD_CONFIG } from "../../build-config";
 import { loadYAMLFilesAsMap } from "../utils";
 import { AssetRecord, EntityProcessor, EntityProcessorOptions } from "./EntityProcessor";
 
@@ -15,9 +14,12 @@ export abstract class BaseWorkflowSubworkflowProcessor extends EntityProcessor {
 
     public entityMapByApplication: Record<string, any>;
 
+    public entityConfigs: object[];
+
     constructor(options: EntityProcessorOptions) {
         super(options);
         this.entityMapByApplication = {};
+        this.entityConfigs = [];
     }
 
     public setEntityMapByApplication() {
@@ -27,49 +29,14 @@ export abstract class BaseWorkflowSubworkflowProcessor extends EntityProcessor {
         });
     }
 
-    protected abstract generateEntities(): any[];
+    protected abstract buildEntityConfigs(): object[];
 
     public readAssets(): AssetRecord[] {
         this.setEntityMapByApplication();
+        // read assets to be able to run buildEntityConfigs
         super.readAssets();
-
-        const generatedEntities = this.generateEntities();
-        this.assets = [
-            {
-                sourceFile: this.categoriesPath,
-                entities: generatedEntities,
-            },
-        ];
-
+        this.buildEntityConfigs();
         return this.assets;
-    }
-
-    protected transformEntity(entity: any, _sourceFile: string): any {
-        const baseEntity = entity.config && entity.config.name ? entity.config : entity;
-        const transformed = { ...baseEntity };
-        delete transformed._appName;
-        delete transformed.schema;
-        return transformed;
-    }
-
-    public writeDataDirectoryContent(): void {
-        const { dataDir } = this.resolvedPaths;
-
-        this.assets.forEach(({ sourceFile, entities }) => {
-            entities.forEach((entity: any) => {
-                const subdir = entity._appName || "";
-                const transformed = this.transformEntity({ ...entity }, sourceFile);
-
-                const targetDir = path.join(dataDir, subdir);
-                const filename = `${transformed.name.toLowerCase().replace(/[-\s]+/g, "_")}.json`;
-                const targetPath = path.join(targetDir, filename);
-
-                serverUtils.json.writeJSONFileSync(targetPath, transformed, {
-                    spaces: BUILD_CONFIG.jsonFormat.spaces,
-                });
-                console.log(`  Created: ${targetPath}`);
-            });
-        });
     }
 
     protected enablePredefinedIds(): void {
@@ -103,7 +70,15 @@ export abstract class BaseWorkflowSubworkflowProcessor extends EntityProcessor {
         (UnitFactory as any).ProcessingUnit.usePredefinedIds = true;
     }
 
-    public writeDistDirectoryContent(): void {
-        // Workflows and subworkflows are not distributed as individual files
+    private writeEntityConfigs(): void {
+        this.entityConfigs.forEach((entityConfig) => {
+            const entityName = (entityConfig as any).name;
+            const targetPath = `${this.resolvedPaths.buildDir}/${entityName}.json`;
+            serverUtils.json.writeJSONFileSync(targetPath, entityConfig);
+        });
+    }
+
+    public writeBuildDirectoryContent(): void {
+        this.writeEntityConfigs();
     }
 }
