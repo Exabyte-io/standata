@@ -1,8 +1,0 @@
-{
-    "name": "vasp",
-    "shortName": "vasp",
-    "summary": "Vienna Ab-initio Simulation Package",
-    "isLicensed": true,
-    "version": "5.3.5",
-    "isDefault": true
-}
