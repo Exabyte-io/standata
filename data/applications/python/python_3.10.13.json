@@ -1,0 +1,7 @@
+{
+    "name": "python",
+    "shortName": "py",
+    "summary": "Python Script",
+    "version": "3.10.13",
+    "isDefault": true
+}

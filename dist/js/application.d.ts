@@ -65,6 +65,14 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 isDefault: boolean;
                 build: string;
             };
+            "python/python_default_3.10.13.json": {
+                name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+                isDefault: boolean;
+                build: string;
+            };
         };
     };
     getAppDataForApplication(appName: string): ApplicationVersionsMapType;
