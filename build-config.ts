@@ -93,7 +93,7 @@ export const BUILD_CONFIG = {
             path: "data/workflows/subworkflows",
         },
         build: {
-            path: "build/standata/workflows",
+            path: "build/standata/subworkflows",
         },
     },
 
