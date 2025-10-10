@@ -73,6 +73,14 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 isDefault: boolean;
                 build: string;
             };
+            "shell/shell_default_5.1.8.json": {
+                name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+                isDefault: boolean;
+                build: string;
+            };
         };
     };
     getAppDataForApplication(appName: string): ApplicationVersionsMapType;
