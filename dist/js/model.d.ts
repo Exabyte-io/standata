@@ -17,6 +17,680 @@ export declare class ModelStandata extends Standata<ModelConfig> {
             }[];
         };
         filesMapByName: {
+            "pb/qm/abin/gw/evgw/evgw_pbe_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "pb/qm/abin/gw/evgw/evgw_pbe.json": {
+                parameters: {
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "pb/qm/abin/gw/evgw/evgw_pbesol_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "pb/qm/abin/gw/evgw/evgw_pbesol.json": {
+                parameters: {
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "pb/qm/abin/gw/evgw0/evgw0_pbe_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "pb/qm/abin/gw/evgw0/evgw0_pbe.json": {
+                parameters: {
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "pb/qm/abin/gw/evgw0/evgw0_pbesol_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "pb/qm/abin/gw/evgw0/evgw0_pbesol.json": {
+                parameters: {
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "pb/qm/abin/gw/g0w0/g0w0_pbe_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "pb/qm/abin/gw/g0w0/g0w0_pbe.json": {
+                parameters: {
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "pb/qm/abin/gw/g0w0/g0w0_pbesol_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "pb/qm/abin/gw/g0w0/g0w0_pbesol.json": {
+                parameters: {
+                    functional: string;
+                    require: string;
+                };
+                categories: {
+                    subtype: string;
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbe_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbe_d3_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbe_d3_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbe_d3.json": {
+                parameters: {
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbe_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbe_u_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    hubbardType: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbe_u_soc.json": {
+                parameters: {
+                    hubbardType: string;
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbe_u.json": {
+                parameters: {
+                    hubbardType: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbe.json": {
+                parameters: {
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbesol_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbesol_d3_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbesol_d3_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbesol_d3.json": {
+                parameters: {
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbesol_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbesol_u_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    hubbardType: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbesol_u_soc.json": {
+                parameters: {
+                    hubbardType: string;
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbesol_u.json": {
+                parameters: {
+                    hubbardType: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/gga/dft_gga_pbesol.json": {
+                parameters: {
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/hybrid/dft_hybrid_b3lyp_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/hybrid/dft_hybrid_b3lyp_d3_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/hybrid/dft_hybrid_b3lyp_d3_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/hybrid/dft_hybrid_b3lyp_d3.json": {
+                parameters: {
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/hybrid/dft_hybrid_b3lyp_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/hybrid/dft_hybrid_b3lyp.json": {
+                parameters: {
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/hybrid/dft_hybrid_hse_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/hybrid/dft_hybrid_hse_d3_collinear.json": {
+                parameters: {
+                    spinPolarization: string;
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/hybrid/dft_hybrid_hse_d3_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/hybrid/dft_hybrid_hse_d3.json": {
+                parameters: {
+                    dispersionCorrection: string;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/hybrid/dft_hybrid_hse_soc.json": {
+                parameters: {
+                    spinOrbitCoupling: boolean;
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
+            "pb/qm/dft/ksdft/hybrid/dft_hybrid_hse.json": {
+                parameters: {
+                    functional: string;
+                };
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                    subtype: string;
+                };
+                tags: string[];
+                name: string;
+                path: string;
+            };
             "pb/qm/dft/ksdft/lda/dft_lda_pz_collinear.json": {
                 parameters: {
                     spinPolarization: string;
@@ -161,6 +835,17 @@ export declare class ModelStandata extends Standata<ModelConfig> {
                     subtype: string;
                 };
                 tags: string[];
+                name: string;
+                path: string;
+            };
+            "st/det/ml/re/none/regression.json": {
+                categories: {
+                    tier1: string;
+                    tier2: string;
+                    tier3: string;
+                    type: string;
+                };
+                parameters: {};
                 name: string;
                 path: string;
             };
