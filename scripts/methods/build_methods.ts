@@ -1,11 +1,3 @@
-import BUILD_CONFIG from "../../build-config";
-import { BuildConfig, buildEntities } from "./buildUtils";
+import { MethodsProcessor } from "../processors/MethodsProcessor";
 
-const buildConfig: BuildConfig = {
-    sourcesPath: BUILD_CONFIG.methods.assets.path,
-    dataPath: BUILD_CONFIG.methods.data.path,
-    entityType: "methods",
-    pathSeparator: "::",
-};
-
-buildEntities(buildConfig);
+new MethodsProcessor(__dirname).process();

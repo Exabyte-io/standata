@@ -1,10 +1,3 @@
-import BUILD_CONFIG from "../../build-config";
-import { BuildConfig, buildEntities } from "../methods/buildUtils";
+import { ModelsProcessor } from "../processors/ModelsProcessor";
 
-const buildConfig: BuildConfig = {
-    sourcesPath: BUILD_CONFIG.models.assets.path,
-    dataPath: BUILD_CONFIG.models.data.path,
-    entityType: "models",
-};
-
-buildEntities(buildConfig);
+new ModelsProcessor(__dirname).process();

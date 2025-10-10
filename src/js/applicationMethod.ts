@@ -1,5 +1,5 @@
 import { ApplicationFilterStandata } from "./utils/applicationFilter";
-import MODEL_METHOD_DATA from "./runtime_data/modelMethodMapByApplication.json";
+import MODEL_METHOD_DATA from "./runtime_data/applications/modelMethodMapByApplication.json";
 import { ApplicationMethodParametersInterface, ModelMethodMapByApplication } from "./types/applicationFilter";
 
 export class ApplicationMethodStandata extends ApplicationFilterStandata {

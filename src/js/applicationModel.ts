@@ -1,4 +1,4 @@
-import MODEL_METHOD_DATA from "./runtime_data/modelMethodMapByApplication.json";
+import MODEL_METHOD_DATA from "./runtime_data/applications/modelMethodMapByApplication.json";
 import {
     ApplicationModelParametersInterface,
     ModelMethodMapByApplication,

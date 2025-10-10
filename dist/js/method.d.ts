@@ -18,7 +18,7 @@ export declare class MethodStandata extends Standata<MethodConfig> {
             }[];
         };
         filesMapByName: {
-            "pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json": {
+            "qm/wf/none/smearing/gaussian/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json": {
                 units: ({
                     categories: {
                         subtype: string;
@@ -56,7 +56,7 @@ export declare class MethodStandata extends Standata<MethodConfig> {
                 name: string;
                 path: string;
             };
-            "pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json": {
+            "qm/wf/none/tetrahedron/linear/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json": {
                 units: ({
                     categories: {
                         subtype: string;

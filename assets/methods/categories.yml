@@ -1,54 +1,57 @@
 categories:
   tier1:
-    - qm    # quantum mechanical
-    - opt   # optimization
-    - linalg # linear algebra
+    - opt
+    - qm
   tier2:
-    - wf    # wave function
-    - diff  # differential
-    - diag  # diagonalization
+    - diff
+    - wf
   tier3:
-    - ordern # order-n
+    - ordern
   type:
-    - psp        # pseudopotential
-    - pw         # plane wave
-    - smearing   # smearing
-    - tetrahedron # tetrahedron
-    - cg         # conjugate gradient
+    - cg
+    - psp
+    - pw
+    - smearing
+    - tetrahedron
   subtype:
-    - nc      # norm-conserving
-    - gaussian # gaussian smearing
-    - linear  # linear
+    - gaussian
+    - linear
+    - nc
   tags:
-    - pseudopotential
-    - plane-wave
-    - atomic-orbital
-    - occupation-number
     - diagonalization
-    - machine-learning
-
+    - occupation number
+    - plane wave
+    - pseudopotential
 entities:
-  - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
+  - filename: qm/wf/none/smearing/gaussian/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_gaussian_smearing.json
     categories:
       - cg
+      - diagonalization
       - diff
       - gaussian
       - nc
+      - occupation number
       - opt
       - ordern
+      - plane wave
+      - pseudopotential
       - psp
       - pw
       - qm
       - smearing
       - wf
-  - filename: pw/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
+  - filename: qm/wf/none/tetrahedron/linear/plane_wave_norm_conserving_pseudopotential_conjugate_gradient_diagonalization_linear_tetrahedron_method.json
     categories:
       - cg
+      - diagonalization
       - diff
       - linear
       - nc
+      - occupation number
       - opt
       - ordern
+      - plane wave
+      - pseudopotential
       - psp
       - pw
       - qm
