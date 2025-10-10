@@ -118,6 +118,7 @@ export const BUILD_CONFIG = {
     },
 
     distRuntimeDataDir: "./dist/js/runtime_data",
+    srcPythonRuntimeDataDir: "./src/py/mat3ra/standata/runtime_data",
 
     jsonFormat: {
         spaces: 4,

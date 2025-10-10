@@ -13,8 +13,8 @@ export function readYAMLFileResolved(filePath: string): any {
     return serverUtils.yaml.readYAMLFile(filePath, { schema: JsYamlAllSchemas });
 }
 
-export function resolveFromRoot(scriptDirname: string, ...pathSegments: string[]): string {
-    return path.resolve(scriptDirname, "../..", ...pathSegments);
+export function resolveFromRoot(...pathSegments: string[]): string {
+    return path.resolve(process.cwd(), ...pathSegments);
 }
 
 /**

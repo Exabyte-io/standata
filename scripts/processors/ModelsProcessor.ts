@@ -1,12 +1,12 @@
-import { BUILD_CONFIG } from "../../build-config";
-import { BaseModelMethodProcessor } from "./BaseModelMethodProcessor";
 
-export class ModelsProcessor extends BaseModelMethodProcessor {
+import { BUILD_CONFIG } from "../../build-config";
+import { CategorizedProcessor, CategorizedProcessorOptions } from "../lib/CategorizedProcessor";
+
+export class ModelsProcessor extends CategorizedProcessor {
     private static defaultCategoryKeys = ["tier1", "tier2", "tier3", "type", "subtype"];
 
-    constructor(rootDir: string) {
+    constructor() {
         super({
-            rootDir,
             entityNamePlural: "models",
             assetsDir: BUILD_CONFIG.models.assets.path,
             dataDir: BUILD_CONFIG.models.data.path,
@@ -19,6 +19,6 @@ export class ModelsProcessor extends BaseModelMethodProcessor {
                 includeTags: true,
                 includeEntitiesMap: true,
             },
-        });
+        } as CategorizedProcessorOptions);
     }
 }
