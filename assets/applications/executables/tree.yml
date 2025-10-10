@@ -23,5 +23,7 @@ espresso:
   simple_ip.x: !include 'executables/espresso/simple_ip.x.yml'
 nwchem:
   nwchem: !include 'executables/nwchem/nwchem.yml'
+python:
+  python: !include 'executables/python/python.yml'
 vasp:
   vasp: !include 'executables/vasp/vasp.yml'

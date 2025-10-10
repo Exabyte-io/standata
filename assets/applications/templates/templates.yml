@@ -24,5 +24,7 @@
 - !include 'templates/espresso/simple_ip.x.yml'
 # nwchem
 - !include 'templates/nwchem/nwchem.yml'
+# python
+- !include 'templates/python/python.yml'
 # vasp
 - !include 'templates/vasp/vasp.yml'
