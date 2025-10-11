@@ -26,14 +26,6 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         this.subworkflowMapByApplication = subworkflowsMapByApplication;
     }
 
-    public getCategoryCollectOptions() {
-        return {
-            includeUnits: false,
-            includeTags: true,
-            includeEntitiesMap: true,
-        };
-    }
-
     private get workflowSubforkflowMapByApplication(): { workflows: any; subworkflows: any } {
         const workflowSubforkflowMapByApplication = { workflows: {}, subworkflows: {} } as any;
         workflowSubforkflowMapByApplication.workflows = this.entityMapByApplication;
