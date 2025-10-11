@@ -30,6 +30,15 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 build: string;
                 hasAdvancedComputeOptions: boolean;
             };
+            "vasp/vasp_gnu_5.4.4.json": {
+                name: string;
+                shortName: string;
+                summary: string;
+                isLicensed: boolean;
+                version: string;
+                isDefault: boolean;
+                build: string;
+            };
         };
     };
     getAppDataForApplication(appName: string): ApplicationVersionsMapType;
