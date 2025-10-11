@@ -1,7 +1,5 @@
 categories:
-  application:
-    - espresso
-  property:
+  properties:
     - atomic_forces
     - fermi_energy
     - final_structure
@@ -10,34 +8,27 @@ categories:
     - total_energy
     - total_energy_contributions
     - total_force
-  material_count:
-    - single-material
-    - multi-material
-  workflow_type:
-    - variable-cell_relaxation
+  tags:
     - default
+    - variable-cell_relaxation
 entities:
   - filename: espresso/total_energy.json
     categories:
-      - espresso
       - atomic_forces
+      - default
       - fermi_energy
       - pressure
       - stress_tensor
       - total_energy
       - total_energy_contributions
       - total_force
-      - single-material
-      - default
   - filename: espresso/variable_cell_relaxation.json
     categories:
-      - espresso
-      - total_energy
-      - fermi_energy
-      - pressure
       - atomic_forces
-      - total_force
-      - stress_tensor
+      - fermi_energy
       - final_structure
-      - single-material
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_force
       - variable-cell_relaxation
