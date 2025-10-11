@@ -47,7 +47,15 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 isDefault: boolean;
                 build: string;
             };
-            "python/python_default_3.10.13.json": {
+            "python/python_gnu_3.10.13.json": {
+                name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+                isDefault: boolean;
+                build: string;
+            };
+            "shell/shell_gnu_5.1.8.json": {
                 name: string;
                 shortName: string;
                 summary: string;
@@ -1175,6 +1183,57 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                             templateName: string;
                         }[];
                         results: string[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                };
+            };
+        };
+        shell: {
+            sh: {
+                isDefault: boolean;
+                monitors: string[];
+                results: string[];
+                flavors: {
+                    hello_world: {
+                        isDefault: boolean;
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    job_espresso_pw_scf: {
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    espresso_link_outdir_save: {
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    espresso_collect_dynmat: {
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    bash_vasp_prepare_neb_images: {
+                        isMultiMaterial: boolean;
+                        input: {
+                            name: string;
+                        }[];
                         monitors: string[];
                         applicationName: string;
                         executableName: string;

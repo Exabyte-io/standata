@@ -26,5 +26,7 @@
 - !include 'templates/nwchem/nwchem.yml'
 # python
 - !include 'templates/python/python.yml'
+# shell
+- !include 'templates/shell/sh.yml'
 # vasp
 - !include 'templates/vasp/vasp.yml'
