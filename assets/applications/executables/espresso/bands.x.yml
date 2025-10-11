@@ -1,0 +1,28 @@
+monitors:
+  - standard_output
+results:
+  - band_structure
+flavors:
+  bands:
+    input:
+      - name: bands.in
+    monitors:
+      - standard_output
+    applicationName: espresso
+    executableName: bands.x
+
+  bands_spin_up:
+    input:
+      - name: bands_spin_up.in
+    monitors:
+      - standard_output
+    applicationName: espresso
+    executableName: bands.x
+
+  bands_spin_dn:
+    input:
+      - name: bands_spin_dn.in
+    monitors:
+      - standard_output
+    applicationName: espresso
+    executableName: bands.x

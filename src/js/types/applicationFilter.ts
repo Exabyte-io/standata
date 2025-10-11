@@ -43,7 +43,7 @@ export type ModelMethodFilterTree = Record<
         Required<ApplicationSchemaBase>["version"],
         Record<
             Required<ApplicationSchemaBase>["build"],
-            Record<ExecutableSchema["name"], Record<string, FilterObject[]>>
+            Record<ExecutableSchema["name"], Record<string, FilterObject[]>> | string
         >
     >
 >;
