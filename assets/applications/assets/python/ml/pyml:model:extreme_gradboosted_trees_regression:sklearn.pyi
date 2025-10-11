@@ -15,10 +15,10 @@
 #   written to a filed named "predictions.csv"                      #
 # ----------------------------------------------------------------- #
 
-import xgboost
-import sklearn.metrics
 import numpy as np
 import settings
+import sklearn.metrics
+import xgboost
 
 with settings.context as context:
     # Train

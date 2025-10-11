@@ -12,10 +12,10 @@
 #   written to a filed named "predictions.csv"                      #
 # ----------------------------------------------------------------- #
 
-import sklearn.ensemble
-import sklearn.metrics
 import numpy as np
 import settings
+import sklearn.ensemble
+import sklearn.metrics
 
 with settings.context as context:
     # Train

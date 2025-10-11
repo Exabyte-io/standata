@@ -14,11 +14,11 @@
 # ------------------------------------------------------------ #
 
 
-import sklearn.ensemble
-import sklearn.tree
-import sklearn.metrics
 import numpy as np
 import settings
+import sklearn.ensemble
+import sklearn.metrics
+import sklearn.tree
 
 with settings.context as context:
     # Train

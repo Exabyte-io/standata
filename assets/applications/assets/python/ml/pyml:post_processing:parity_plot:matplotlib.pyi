@@ -15,7 +15,6 @@
 
 
 import matplotlib.pyplot as plt
-
 import settings
 
 with settings.context as context:

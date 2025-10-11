@@ -19,7 +19,8 @@
 # ----------------------------------------------------------------- #
 
 
-import pickle, os
+import os
+import pickle
 
 # ==================================================
 # Variables modified in the Important Settings menu

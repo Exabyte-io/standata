@@ -10,10 +10,10 @@
 # ------------------------------------------------------------ #
 
 
-import sklearn.cluster
-import sklearn.metrics
 import numpy as np
 import settings
+import sklearn.cluster
+import sklearn.metrics
 
 with settings.context as context:
     # Train
