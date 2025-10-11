@@ -22,5 +22,3 @@
 - !include 'templates/espresso/simple.x.yml'
 - !include 'templates/espresso/simple_bse.x.yml'
 - !include 'templates/espresso/simple_ip.x.yml'
-# vasp
-- !include 'templates/vasp/vasp.yml'
