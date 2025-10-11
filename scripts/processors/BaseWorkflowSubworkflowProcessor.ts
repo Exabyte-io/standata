@@ -38,7 +38,10 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
         categorySets: Record<string, Set<string>>,
     ): void {
         categoryKeys.forEach((key) => {
-            const value = (obj as any)[key];
+            let value = (obj as any)[key];
+            if (key === "application" && value && typeof value === "object" && value.name) {
+                value = value.name;
+            }
             if (Array.isArray(value)) {
                 value.forEach((v: string) => {
                     if (typeof v === "string" && v) (categorySets as any)[key].add(v);
@@ -59,7 +62,10 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
         target: Set<string>,
     ): void {
         categoryKeys.forEach((key) => {
-            const value = (obj as any)[key];
+            let value = (obj as any)[key];
+            if (key === "application" && value && typeof value === "object" && value.name) {
+                value = value.name;
+            }
             if (Array.isArray(value)) {
                 value.forEach((v: string) => {
                     if (typeof v === "string" && v) target.add(v);
@@ -128,6 +134,7 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
             const dataToWrite = {
                 ...entityConfig.config,
                 ...(entityConfig.tags ? { tags: entityConfig.tags } : {}),
+                ...(entityConfig.appName ? { application: { name: entityConfig.appName } } : {}),
             };
             serverUtils.json.writeJSONFileSync(targetPath, dataToWrite);
         });

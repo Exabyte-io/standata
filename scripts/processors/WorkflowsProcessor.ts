@@ -8,7 +8,7 @@ import { BUILD_CONFIG } from "../../build-config";
 import { BaseWorkflowSubworkflowProcessor } from "./BaseWorkflowSubworkflowProcessor";
 
 export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
-    public static defaultCategoryKeys = ["properties", "isMultimaterial", "tags"];
+    public static defaultCategoryKeys = ["properties", "isMultimaterial", "tags", "application"];
 
     private subworkflowMapByApplication: Record<any, string>;
 
