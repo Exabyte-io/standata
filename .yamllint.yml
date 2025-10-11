@@ -9,7 +9,6 @@ rules:
     level: warning
     max-end: 1
   quoted-strings:
-    quote-type: single
     required: false
   indentation:
     spaces: 2
