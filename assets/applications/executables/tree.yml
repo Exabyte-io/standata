@@ -21,7 +21,3 @@ espresso:
   simple.x: !include 'executables/espresso/simple.x.yml'
   simple_bse.x: !include 'executables/espresso/simple_bse.x.yml'
   simple_ip.x: !include 'executables/espresso/simple_ip.x.yml'
-nwchem:
-  nwchem: !include 'executables/nwchem/nwchem.yml'
-vasp:
-  vasp: !include 'executables/vasp/vasp.yml'
