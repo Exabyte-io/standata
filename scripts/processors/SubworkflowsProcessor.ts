@@ -1,5 +1,5 @@
 // @ts-ignore
-import { createSubworkflowByName } from "@mat3ra/wode";
+import { builders, createSubworkflowByName, Subworkflow, UnitFactory } from "@mat3ra/wode";
 
 import { BUILD_CONFIG } from "../../build-config";
 import { BaseWorkflowSubworkflowProcessor } from "./BaseWorkflowSubworkflowProcessor";
@@ -28,6 +28,7 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
     }
 
     protected buildEntityConfigs(): any[] {
+        this.enablePredefinedIds();
         const configs: { appName: string; safeName: string; config: any }[] = [];
         this.applications.forEach((appName) => {
             const subworkflows = this.workflowSubforkflowMapByApplication.subworkflows[appName];
@@ -36,7 +37,10 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
                 const subworkflow = createSubworkflowByName({
                     appName,
                     swfName: subworkflowName,
-                    workflowsData: this.workflowSubforkflowMapByApplication,
+                    workflowSubforkflowMapByApplication: this.workflowSubforkflowMapByApplication,
+                    SubworkflowCls: Subworkflow,
+                    UnitFactoryCls: UnitFactory,
+                    unitBuilders: builders,
                 });
                 const tags = subworkflows[subworkflowName]?.tags;
                 configs.push({
@@ -45,7 +49,6 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
                     config: (subworkflow as any).toJSON(),
                     ...(tags ? { tags } : {}),
                 });
-                console.log({ configs });
             });
         });
         return configs;

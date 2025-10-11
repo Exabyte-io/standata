@@ -4,14 +4,16 @@
 import serverUtils from "@mat3ra/utils/server";
 // @ts-ignore
 import { builders, Subworkflow, UnitFactory, Workflow } from "@mat3ra/wode";
+import path from "path";
 
-import { loadYAMLFilesAsMap } from "../utils";
+import { BUILD_CONFIG } from "../../build-config";
+import { loadYAMLFilesAsMap, readYAMLFileResolved } from "../utils";
 import { CategorizedEntityProcessor } from "./CategorizedEntityProcessor";
 import { AssetRecord, EntityProcessorOptions } from "./EntityProcessor";
 
 export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntityProcessor {
     // TODO: get from applications yaml
-    protected applications: string[] = ["espresso"];
+    protected applications: string[] = [];
 
     public entityMapByApplication: Record<string, any>;
 
@@ -21,6 +23,14 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
         super(options);
         this.entityMapByApplication = {};
         this.entityConfigs = [];
+        this.applications = this.getApplicationSListFromYAML();
+    }
+
+    protected getApplicationSListFromYAML(): string[] {
+        const appsPath = `${BUILD_CONFIG.applications.assets.path}/applications/application_data.yml`;
+        const resolvedAppsPath = path.resolve(__dirname, "../../", appsPath);
+        const appsYAML: any = readYAMLFileResolved(resolvedAppsPath);
+        return Object.keys(appsYAML);
     }
 
     public getCategoryCollectOptions() {

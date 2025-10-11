@@ -39,7 +39,7 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         const configs = createWorkflowConfigs({
             applications: this.applications,
             WorkflowCls,
-            workflowSubforkflowMapByApplication: this.workflowSubforkflowMapByApplication,
+            workflowSubworkflowMapByApplication: this.workflowSubforkflowMapByApplication,
             SubworkflowCls: Subworkflow,
             UnitFactoryCls: UnitFactory,
             unitBuilders: { ...builders, Workflow: WorkflowCls },
@@ -70,7 +70,7 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
     }
 
     public writeBuildDirectoryContent(): void {
-        super.writeDataDirectoryContent();
         this.writeWorkflowSubforkflowMapByApplication();
+        super.writeDataDirectoryContent();
     }
 }
