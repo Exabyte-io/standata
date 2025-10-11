@@ -33,3 +33,11 @@ entities:
       - default_version
       - default_build
       - default
+  - filename: nwchem/nwchem_gnu_7.0.2.json
+    categories:
+      - quantum-mechanical
+      - modeling
+      - compiled
+      - default_version
+      - default_build
+      - default
