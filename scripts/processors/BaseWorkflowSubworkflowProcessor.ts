@@ -23,6 +23,56 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
         this.entityConfigs = [];
     }
 
+    public getCategoryCollectOptions() {
+        return {
+            includeUnits: true,
+            includeTags: true,
+            includeEntitiesMap: true,
+        };
+    }
+
+    public addCategoriesFromObject(
+        obj: any,
+        categoryKeys: string[],
+        includeTags: boolean,
+        categorySets: Record<string, Set<string>>,
+    ): void {
+        categoryKeys.forEach((key) => {
+            const value = (obj as any)[key];
+            if (Array.isArray(value)) {
+                value.forEach((v: string) => {
+                    if (typeof v === "string" && v) (categorySets as any)[key].add(v);
+                });
+            } else if (typeof value === "string" && value) {
+                (categorySets as any)[key].add(value);
+            }
+        });
+        if (includeTags && Array.isArray(obj?.tags)) {
+            obj.tags.forEach((t: string) => (categorySets as any).tags.add(t));
+        }
+    }
+
+    public addCategoriesToSet(
+        obj: any,
+        categoryKeys: string[],
+        includeTags: boolean,
+        target: Set<string>,
+    ): void {
+        categoryKeys.forEach((key) => {
+            const value = (obj as any)[key];
+            if (Array.isArray(value)) {
+                value.forEach((v: string) => {
+                    if (typeof v === "string" && v) target.add(v);
+                });
+            } else if (typeof value === "string" && value) {
+                target.add(value);
+            }
+        });
+        if (includeTags && Array.isArray(obj?.tags)) {
+            obj.tags.forEach((t: string) => target.add(t));
+        }
+    }
+
     public setEntityMapByApplication() {
         this.applications.forEach((name) => {
             const pathForName = `${this.resolvedPaths.assetsDir}/${name}`;
@@ -75,7 +125,11 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
         this.entityConfigs.forEach((entityConfig: any) => {
             const entityName = (entityConfig as any).safeName;
             const targetPath = `${dirPath}/${entityConfig.appName}/${entityName}.json`;
-            serverUtils.json.writeJSONFileSync(targetPath, entityConfig);
+            const dataToWrite = {
+                ...entityConfig.config,
+                ...(entityConfig.tags ? { tags: entityConfig.tags } : {}),
+            };
+            serverUtils.json.writeJSONFileSync(targetPath, dataToWrite);
         });
     }
 
