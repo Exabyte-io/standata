@@ -17,8 +17,8 @@
 
 
 import pandas
-import sklearn.preprocessing
 import settings
+import sklearn.preprocessing
 
 with settings.context as context:
     data = pandas.read_csv(settings.datafile)

@@ -12,9 +12,9 @@
 #                                                                   #
 # ----------------------------------------------------------------- #
 
-import sklearn.model_selection
 import numpy as np
 import settings
+import sklearn.model_selection
 
 # `percent_held_as_test` is the amount of the dataset held out as the testing set. If it is set to 0.2,
 # then 20% of the dataset is held out as a testing set. The remaining 80% is the training set.

@@ -4,10 +4,11 @@
 # Note: This template expects the array to be defined in the  #
 # context as 'array_from_context' (see details below).        #
 # ----------------------------------------------------------- #
-import numpy as np
-from scipy.signal import find_peaks
 import json
+
+import numpy as np
 from munch import Munch
+from scipy.signal import find_peaks
 
 # Data From Context
 # -----------------

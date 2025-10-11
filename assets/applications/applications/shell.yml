@@ -5,4 +5,4 @@ defaultVersion: '5.1.8'
 versions:
   - version: '5.1.8'
     isDefault: true
-    build: default
+    build: GNU

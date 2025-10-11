@@ -8,11 +8,11 @@
 # ----------------------------------------------------------------- #
 
 
-import matplotlib.pyplot as plt
 import matplotlib.collections
-import sklearn.metrics
+import matplotlib.pyplot as plt
 import numpy as np
 import settings
+import sklearn.metrics
 
 with settings.context as context:
     # Train

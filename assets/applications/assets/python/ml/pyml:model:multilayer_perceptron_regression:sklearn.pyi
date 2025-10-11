@@ -19,10 +19,10 @@
 # ------------------------------------------------------------ #
 
 
-import sklearn.neural_network
-import sklearn.metrics
 import numpy as np
 import settings
+import sklearn.metrics
+import sklearn.neural_network
 
 with settings.context as context:
     # Train

@@ -1,5 +1,5 @@
-import re
 import json
+import re
 
 double_regex = r'[-+]?\d*\.\d+(?:[eE][-+]?\d+)?'
 regex = r"\s+k\(\s+\d*\)\s+=\s+\(\s+({0})\s+({0})\s+({0})\),\s+wk\s+=\s+({0}).+?\n".format(double_regex)

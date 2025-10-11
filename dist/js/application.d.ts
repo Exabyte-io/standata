@@ -30,14 +30,38 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 build: string;
                 hasAdvancedComputeOptions: boolean;
             };
-            "espresso/espresso_gnu_7.4.json": {
+            "vasp/vasp_gnu_5.4.4.json": {
+                name: string;
+                shortName: string;
+                summary: string;
+                isLicensed: boolean;
+                version: string;
+                isDefault: boolean;
+                build: string;
+            };
+            "nwchem/nwchem_gnu_7.0.2.json": {
                 name: string;
                 shortName: string;
                 summary: string;
                 version: string;
                 isDefault: boolean;
                 build: string;
-                hasAdvancedComputeOptions: boolean;
+            };
+            "python/python_gnu_3.10.13.json": {
+                name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+                isDefault: boolean;
+                build: string;
+            };
+            "shell/shell_gnu_5.1.8.json": {
+                name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+                isDefault: boolean;
+                build: string;
             };
             "espresso/espresso_intel_7.4.1.json": {
                 name: string;

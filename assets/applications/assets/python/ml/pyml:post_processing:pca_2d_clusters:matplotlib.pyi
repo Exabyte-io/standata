@@ -18,12 +18,12 @@
 #                                                                   #
 # ----------------------------------------------------------------- #
 
-import pandas as pd
 import matplotlib.cm
 import matplotlib.lines
 import matplotlib.pyplot as plt
-import sklearn.decomposition
+import pandas as pd
 import settings
+import sklearn.decomposition
 
 with settings.context as context:
     # Train

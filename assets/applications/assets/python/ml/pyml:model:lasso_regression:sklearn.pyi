@@ -15,10 +15,10 @@
 # ------------------------------------------------------------ #
 
 
-import sklearn.linear_model
-import sklearn.metrics
 import numpy as np
 import settings
+import sklearn.linear_model
+import sklearn.metrics
 
 with settings.context as context:
     # Train

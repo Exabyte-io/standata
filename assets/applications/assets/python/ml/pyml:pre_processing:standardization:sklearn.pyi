@@ -16,9 +16,8 @@
 # ----------------------------------------------------------------- #
 
 
-import sklearn.preprocessing
-
 import settings
+import sklearn.preprocessing
 
 with settings.context as context:
     # Train

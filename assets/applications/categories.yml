@@ -25,18 +25,6 @@ entities:
       - default_version
       - default_build
       - default
-  - filename: espresso/espresso_gnu_7.4.json
-    categories:
-      - quantum-mechanical
-      - modeling
-      - compiled
-      - default_build
-  - filename: espresso/espresso_intel_7.4.1.json
-    categories:
-      - quantum-mechanical
-      - modeling
-      - compiled
-      - default_build
   - filename: vasp/vasp_gnu_5.4.4.json
     categories:
       - quantum-mechanical
@@ -53,13 +41,13 @@ entities:
       - default_version
       - default_build
       - default
-  - filename: python/python_default_3.10.13.json
+  - filename: python/python_gnu_3.10.13.json
     categories:
       - programming_language
       - scripting
       - default_version
       - default
-  - filename: shell/shell_default_5.1.8.json
+  - filename: shell/shell_gnu_5.1.8.json
     categories:
       - programming_language
       - scripting
