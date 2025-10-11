@@ -349,4 +349,9 @@ To rebuild all entities at once:
 npm run build
 ```
 
-## 6. Links
+## 6. Important notes
+
+### 6.1. Transpilation and Runtime Data Build
+
+We want to keep the runtime_data files minified with no formatting for the sake of download size.
+During build process, we run transpilation of TypeScript to JavaScript using `tsc` to make all runtime_data files available for src/js/ files. Later we build runtime_data files using `npm run build:runtime-data` command. They are copied to `dist/js/runtime_data` folder directly to preserve minified content. Do not run `tsc` transpilation on its own for commiting, only if needed for local development.

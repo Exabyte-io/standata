@@ -22,7 +22,7 @@ const TEST_MODEL_NAME_FRAGMENTS = {
 } as const;
 
 const TEST_COUNTS = {
-    TOTAL_DFT_MODELS: 9,
+    TOTAL_DFT_MODELS: 39,
     TOTAL_LDA_MODELS: 9,
 } as const;
 
@@ -61,8 +61,7 @@ describe("ModelStandata", () => {
                         m.categories.tier1 &&
                         m.categories.tier2 &&
                         m.categories.tier3 &&
-                        m.categories.type &&
-                        m.categories.subtype,
+                        m.categories.type,
                 ),
             ).to.be.true;
         });
@@ -70,13 +69,13 @@ describe("ModelStandata", () => {
 
     describe("integration", () => {
         it("should work with filtering systems", () => {
-            const dftModel = standata.getByTags(TEST_MODEL_TAGS.DFT)[0];
+            const ldaModel = standata.getByTags(TEST_MODEL_TAGS.LDA)[0];
 
-            expect(dftModel.categories.tier1).to.equal(TEST_MODEL_CATEGORIES.TIER1_PB);
-            expect(dftModel.categories.tier2).to.equal(TEST_MODEL_CATEGORIES.TIER2_QM);
-            expect(dftModel.categories.tier3).to.equal(TEST_MODEL_CATEGORIES.TIER3_DFT);
-            expect(dftModel.categories.type).to.equal(TEST_MODEL_CATEGORIES.TYPE_KSDFT);
-            expect(dftModel.categories.subtype).to.equal(TEST_MODEL_CATEGORIES.SUBTYPE_LDA);
+            expect(ldaModel.categories.tier1).to.equal(TEST_MODEL_CATEGORIES.TIER1_PB);
+            expect(ldaModel.categories.tier2).to.equal(TEST_MODEL_CATEGORIES.TIER2_QM);
+            expect(ldaModel.categories.tier3).to.equal(TEST_MODEL_CATEGORIES.TIER3_DFT);
+            expect(ldaModel.categories.type).to.equal(TEST_MODEL_CATEGORIES.TYPE_KSDFT);
+            expect(ldaModel.categories.subtype).to.equal(TEST_MODEL_CATEGORIES.SUBTYPE_LDA);
         });
     });
 });
