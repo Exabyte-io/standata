@@ -6,9 +6,10 @@ import serverUtils from "@mat3ra/utils/server";
 import { builders, Subworkflow, UnitFactory, Workflow } from "@mat3ra/wode";
 
 import { loadYAMLFilesAsMap } from "../utils";
-import { AssetRecord, EntityProcessor, EntityProcessorOptions } from "./EntityProcessor";
+import { CategorizedEntityProcessor } from "./CategorizedEntityProcessor";
+import { AssetRecord, EntityProcessorOptions } from "./EntityProcessor";
 
-export abstract class BaseWorkflowSubworkflowProcessor extends EntityProcessor {
+export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntityProcessor {
     // TODO: get from applications yaml
     protected applications: string[] = ["espresso"];
 
@@ -35,7 +36,7 @@ export abstract class BaseWorkflowSubworkflowProcessor extends EntityProcessor {
         this.setEntityMapByApplication();
         // read assets to be able to run buildEntityConfigs
         super.readAssets();
-        this.buildEntityConfigs();
+        this.entityConfigs = this.buildEntityConfigs();
         return this.assets;
     }
 
@@ -70,15 +71,20 @@ export abstract class BaseWorkflowSubworkflowProcessor extends EntityProcessor {
         (UnitFactory as any).ProcessingUnit.usePredefinedIds = true;
     }
 
-    private writeEntityConfigs(): void {
-        this.entityConfigs.forEach((entityConfig) => {
-            const entityName = (entityConfig as any).name;
-            const targetPath = `${this.resolvedPaths.buildDir}/${entityName}.json`;
+    private writeEntityConfigs(dirPath: string): void {
+        this.entityConfigs.forEach((entityConfig: any) => {
+            const entityName = (entityConfig as any).safeName;
+            const targetPath = `${dirPath}/${entityConfig.appName}/${entityName}.json`;
             serverUtils.json.writeJSONFileSync(targetPath, entityConfig);
         });
     }
 
     public writeBuildDirectoryContent(): void {
-        this.writeEntityConfigs();
+        this.writeEntityConfigs(this.resolvedPaths.buildDir);
+    }
+
+    public writeDataDirectoryContent() {
+        super.writeDataDirectoryContent();
+        this.writeEntityConfigs(this.resolvedPaths.dataDir);
     }
 }
