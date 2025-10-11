@@ -137,7 +137,7 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
         (UnitFactory as any).ProcessingUnit.usePredefinedIds = true;
     }
 
-    private writeEntityConfigs(dirPath: string): void {
+    private writeEntityConfigs(dirPath: string, formatted = false): void {
         this.entityConfigs.forEach((entityConfig: any) => {
             const entityName = (entityConfig as any).safeName;
             const targetPath = `${dirPath}/${entityConfig.appName}/${entityName}.json`;
@@ -146,7 +146,8 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
                 ...(entityConfig.tags ? { tags: entityConfig.tags } : {}),
                 ...(entityConfig.appName ? { application: { name: entityConfig.appName } } : {}),
             };
-            serverUtils.json.writeJSONFileSync(targetPath, dataToWrite);
+            const spaces = formatted ? BUILD_CONFIG.jsonFormat.spaces : 0;
+            serverUtils.json.writeJSONFileSync(targetPath, dataToWrite, { spaces });
         });
     }
 
@@ -156,6 +157,6 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
 
     public writeDataDirectoryContent() {
         super.writeDataDirectoryContent();
-        this.writeEntityConfigs(this.resolvedPaths.dataDir);
+        this.writeEntityConfigs(this.resolvedPaths.dataDir, true);
     }
 }
