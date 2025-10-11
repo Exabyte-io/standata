@@ -33,8 +33,15 @@ export abstract class BaseModelMethodProcessor extends CategorizedEntityProcesso
         includeTags: boolean,
         categorySets: Record<string, Set<string>>,
     ): void {
-        const realCategoryKeys = categoryKeys.map((k) => `categories.${k}`);
-        super.addCategoriesFromObject(obj, realCategoryKeys, includeTags, categorySets);
+        if (obj?.categories) {
+            categoryKeys.forEach((key) => {
+                const v = obj.categories[key];
+                if (typeof v === "string" && v) (categorySets as any)[key].add(v);
+            });
+        }
+        if (includeTags && Array.isArray(obj?.tags)) {
+            obj.tags.forEach((t: string) => (categorySets as any).tags.add(t));
+        }
     }
 
     public addCategoriesToSet(
