@@ -242,7 +242,9 @@
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
-    "tags": [],
+    "tags": [
+        "variable-cell_relaxation"
+    ],
     "application": {
         "name": "vasp"
     }

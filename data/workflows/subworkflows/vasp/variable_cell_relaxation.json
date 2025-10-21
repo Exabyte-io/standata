@@ -204,5 +204,8 @@
                 }
             ]
         }
+    ],
+    "tags": [
+        "variable-cell_relaxation"
     ]
 }
