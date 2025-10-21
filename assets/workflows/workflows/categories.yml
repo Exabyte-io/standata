@@ -326,6 +326,15 @@ entities:
       - nwchem
       - total_energy
       - total_energy_contributions
+  - filename: python/python_ml_train_classification.json
+    categories:
+      - python
+  - filename: python/python_ml_train_clustering.json
+    categories:
+      - python
+  - filename: python/python_ml_train_regression.json
+    categories:
+      - python
   - filename: python/python_script.json
     categories:
       - python
@@ -444,6 +453,7 @@ entities:
       - stress_tensor
       - total_energy
       - total_force
+      - variable-cell_relaxation
       - vasp
   - filename: vasp/zero_point_energy.json
     categories:
