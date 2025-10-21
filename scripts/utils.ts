@@ -121,19 +121,21 @@ export function encodeDataAsURLPath(
 //
 
 /**
- * Loads YAML files from a directory and stores them in a map keyed by filename (without extension).
+ * Loads YAML files from a directory and stores them in a flat map keyed by filename (without extension).
+ * Recursively searches subdirectories. Files in subdirectories are accessible by their filename only.
+ * This is useful when you want all YAML files in a directory tree accessible by simple filenames.
+ *
+ * Example:
+ *   Input: assets/workflows/subworkflows/python/
+ *     - python_script.yml
+ *     - ml/classification_tail.yml
+ *   Output: { python_script: {...}, classification_tail: {...} }
  */
 export function loadYAMLFilesAsMap(dirPath: string): Record<string, any> {
-    const map: Record<string, any> = {};
-    const yamlFiles = serverUtils.file.getFilesInDirectory(dirPath, [".yml", ".yaml"]);
-
-    yamlFiles.forEach((filePath) => {
+    return loadYAMLTree(dirPath, (filePath: string) => {
         const filename = path.basename(filePath);
-        const key = filename.replace(/\.(yml|yaml)$/i, "");
-        map[key] = readYAMLFileResolved(filePath);
+        return filename.replace(/\.(yml|yaml)$/i, "");
     });
-
-    return map;
 }
 
 // Classes moved to scripts/processors/*; keep only shared helpers in this file
