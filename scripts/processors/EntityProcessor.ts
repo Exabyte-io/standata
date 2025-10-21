@@ -115,7 +115,7 @@ export abstract class EntityProcessor {
                 );
                 serverUtils.file.createDirIfNotExistsSync(path.dirname(targetPath));
                 serverUtils.json.writeJSONFileSync(targetPath, content, {
-                    spaces: BUILD_CONFIG.buildFormat.spaces,
+                    spaces: BUILD_CONFIG.buildJSONFormat.spaces,
                 });
                 console.log(`  Built: ${targetPath}`);
             });
@@ -144,7 +144,7 @@ export abstract class EntityProcessor {
 
             const content = serverUtils.json.readJSONFileSync(filePath);
             serverUtils.json.writeJSONFileSync(destinationPath, content, {
-                spaces: BUILD_CONFIG.buildFormat.spaces,
+                spaces: BUILD_CONFIG.buildJSONFormat.spaces,
             });
             console.log(`  Built: ${destinationPath}`);
         });
@@ -182,7 +182,7 @@ export abstract class EntityProcessor {
                 )}.json`;
                 const targetPath = path.join(targetDir, filename);
                 serverUtils.json.writeJSONFileSync(targetPath, transformed, {
-                    spaces: BUILD_CONFIG.jsonFormat.spaces,
+                    spaces: BUILD_CONFIG.dataJSONFormat.spaces,
                 });
                 console.log(`  Created: ${targetPath}`);
             });

@@ -147,8 +147,8 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
                 ...(entityConfig.appName ? { application: { name: entityConfig.appName } } : {}),
             };
             const spaces = minified
-                ? BUILD_CONFIG.buildFormat.spaces
-                : BUILD_CONFIG.jsonFormat.spaces;
+                ? BUILD_CONFIG.buildJSONFormat.spaces
+                : BUILD_CONFIG.dataJSONFormat.spaces;
             serverUtils.json.writeJSONFileSync(targetPath, dataToWrite, { spaces });
         });
     }

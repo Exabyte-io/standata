@@ -114,7 +114,7 @@ export class ApplicationsProcessor extends EntityProcessor {
                 const fileName = (appVersionsMap as any).getSlugForVersionConfig(versionConfigFull);
                 const filePath = path.resolve(appDir, fileName);
                 serverUtils.json.writeJSONFileSync(filePath, versionConfigFull, {
-                    spaces: BUILD_CONFIG.jsonFormat.spaces,
+                    spaces: BUILD_CONFIG.dataJSONFormat.spaces,
                 });
                 console.log(`Generated application version: ${appName}/${fileName}`);
             });
