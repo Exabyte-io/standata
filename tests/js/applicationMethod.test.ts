@@ -97,6 +97,8 @@ describe("Application Method Standata", () => {
             methodList: categorizedMethodList,
             name: "vasp",
         });
+        expect(vaspMethods).to.be.an("array");
+        expect(vaspMethods.length).to.equal(2);
         vaspMethods.forEach((method) => {
             expect(method).to.have.property("name");
             expect(method.name).to.include("Projector-augmented Wave");
