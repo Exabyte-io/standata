@@ -1,3 +1,4 @@
+import { MethodStandata } from "./method";
 import MODEL_METHOD_DATA from "./runtime_data/applications/modelMethodMapByApplication.json";
 import {
     ApplicationMethodParametersInterface,
@@ -31,5 +32,27 @@ export class ApplicationMethodStandata extends ApplicationFilterStandata {
 
     getAvailableMethods(name: string): any {
         return this.getAvailableEntities(name);
+    }
+
+    getDefaultMethodConfigForApplication(applicationConfig: any): any {
+        const { name, version, build, executable, flavor } = applicationConfig;
+
+        const methodStandata = new MethodStandata();
+        const allMethods = methodStandata.getAll();
+
+        const compatibleMethods = this.findByApplicationParameters({
+            methodList: allMethods,
+            name,
+            version,
+            build,
+            executable,
+            flavor,
+        });
+
+        if (!compatibleMethods || compatibleMethods.length === 0) {
+            return {};
+        }
+
+        return compatibleMethods[0];
     }
 }
