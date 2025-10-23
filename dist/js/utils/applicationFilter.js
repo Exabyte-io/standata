@@ -1,6 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ApplicationFilterStandata = void 0;
+exports.ApplicationFilterStandata = exports.FilterMode = void 0;
+var FilterMode;
+(function (FilterMode) {
+    FilterMode["ANY_MATCH"] = "ANY";
+    FilterMode["ALL_MATCH"] = "ALL";
+})(FilterMode = exports.FilterMode || (exports.FilterMode = {}));
 function safelyGet(obj, ...args) {
     let current = obj;
     // We use for instead of forEach to allow early return on undefined
@@ -70,34 +75,38 @@ function getFilterObjects({ filterTree, name = "", version = "", build = "", exe
     }
     return [...extractUniqueBy(filterList, "path"), ...extractUniqueBy(filterList, "regex")];
 }
-function filterEntityList({ entitiesOrPaths, filterObjects, }) {
+function filterEntityList({ entitiesOrPaths, filterObjects, filterMode = FilterMode.ANY_MATCH, }) {
     if (!filterObjects || filterObjects.length === 0) {
         return entitiesOrPaths;
     }
+    const matchesFilter = (entityPath, filter) => {
+        if ("path" in filter) {
+            return entityPath === filter.path || entityPath.includes(filter.path);
+        }
+        if ("regex" in filter) {
+            try {
+                const regex = new RegExp(filter.regex);
+                return regex.test(entityPath);
+            }
+            catch (_a) {
+                return false;
+            }
+        }
+        return false;
+    };
     return entitiesOrPaths.filter((entity) => {
         const entityPath = typeof entity === "string" ? entity : entity.path;
         if (!entityPath)
             return false;
-        return filterObjects.every((filter) => {
-            if ("path" in filter) {
-                return entityPath === filter.path || entityPath.includes(filter.path);
-            }
-            if ("regex" in filter) {
-                try {
-                    const regex = new RegExp(filter.regex);
-                    return regex.test(entityPath);
-                }
-                catch (_a) {
-                    return false;
-                }
-            }
-            return false;
-        });
+        return filterMode === FilterMode.ALL_MATCH
+            ? filterObjects.every((filter) => matchesFilter(entityPath, filter))
+            : filterObjects.some((filter) => matchesFilter(entityPath, filter));
     });
 }
 class ApplicationFilterStandata {
-    constructor(filterTree) {
+    constructor(filterTree, filterMode = FilterMode.ANY_MATCH) {
         this.filterTree = filterTree || {};
+        this.filterMode = filterMode;
     }
     filterByApplicationParameters(entityList, name, version, build, executable, flavor) {
         const filterObjects = getFilterObjects({
@@ -111,6 +120,7 @@ class ApplicationFilterStandata {
         return filterEntityList({
             entitiesOrPaths: entityList,
             filterObjects,
+            filterMode: this.filterMode,
         });
     }
     getAvailableEntities(name) {

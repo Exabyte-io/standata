@@ -9,7 +9,7 @@ const applicationFilter_1 = require("./utils/applicationFilter");
 class ApplicationModelStandata extends applicationFilter_1.ApplicationFilterStandata {
     constructor() {
         const data = modelMethodMapByApplication_json_1.default;
-        super(data === null || data === void 0 ? void 0 : data.models);
+        super(data === null || data === void 0 ? void 0 : data.models, applicationFilter_1.FilterMode.ANY_MATCH);
     }
     findByApplicationParameters({ modelList, name, version, build, executable, flavor, }) {
         return this.filterByApplicationParameters(modelList, name, version, build, executable, flavor);
