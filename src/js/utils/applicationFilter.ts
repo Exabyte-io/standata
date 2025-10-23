@@ -96,7 +96,7 @@ function filterEntityList({
         const entityPath = typeof entity === "string" ? entity : entity.path;
         if (!entityPath) return false;
 
-        return filterObjects.some((filter) => {
+        return filterObjects.every((filter) => {
             if ("path" in filter) {
                 return entityPath === filter.path || entityPath.includes(filter.path);
             }
