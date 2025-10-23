@@ -92,16 +92,30 @@ describe("Application Method Standata", () => {
         });
     });
 
-    it("can filter methods for VASP application", () => {
-        const vaspMethods = methodStandata.findByApplicationParameters({
-            methodList: categorizedMethodList,
-            name: "vasp",
-        });
-        expect(vaspMethods).to.be.an("array");
-        expect(vaspMethods.length).to.equal(2);
-        vaspMethods.forEach((method) => {
-            expect(method).to.have.property("name");
-            expect(method.name).to.include("Projector-augmented Wave");
+    it("can filter methods for each application", () => {
+        const testCases = [
+            { name: "vasp", expectedCount: 2, expectedNameValues: ["Projector-augmented Wave"] },
+            {
+                name: "espresso",
+                expectedCount: 4,
+                expectedNameValues: ["Norm-conserving", "Projector-augmented Wave", "Ultra-soft"],
+            },
+        ];
+        testCases.forEach(({ name, expectedCount, expectedNameValues }) => {
+            const methods = methodStandata.findByApplicationParameters({
+                methodList: categorizedMethodList,
+                name,
+            });
+            expect(methods).to.be.an("array");
+            expect(methods.length).to.equal(expectedCount);
+
+            methods.forEach((method) => {
+                expect(method).to.have.property("name");
+                const isMatch = expectedNameValues.some((expected) =>
+                    method.name.toLowerCase().includes(expected.toLowerCase()),
+                );
+                expect(isMatch).to.be.true;
+            });
         });
     });
 
