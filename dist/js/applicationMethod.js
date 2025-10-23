@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplicationMethodStandata = void 0;
+const method_1 = require("./method");
 const modelMethodMapByApplication_json_1 = __importDefault(require("./runtime_data/applications/modelMethodMapByApplication.json"));
 const applicationFilter_1 = require("./utils/applicationFilter");
 class ApplicationMethodStandata extends applicationFilter_1.ApplicationFilterStandata {
@@ -16,6 +17,23 @@ class ApplicationMethodStandata extends applicationFilter_1.ApplicationFilterSta
     }
     getAvailableMethods(name) {
         return this.getAvailableEntities(name);
+    }
+    getDefaultMethodConfigForApplication(applicationConfig) {
+        const { name, version, build, executable, flavor } = applicationConfig;
+        const methodStandata = new method_1.MethodStandata();
+        const allMethods = methodStandata.getAll();
+        const compatibleMethods = this.findByApplicationParameters({
+            methodList: allMethods,
+            name,
+            version,
+            build,
+            executable,
+            flavor,
+        });
+        if (!compatibleMethods || compatibleMethods.length === 0) {
+            return {};
+        }
+        return compatibleMethods[0];
     }
 }
 exports.ApplicationMethodStandata = ApplicationMethodStandata;

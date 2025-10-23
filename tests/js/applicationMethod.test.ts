@@ -141,4 +141,34 @@ describe("Application Method Standata", () => {
         // For non-existent version, the filter falls back to all methods for the application
         expect(methods.length).to.equal(categorizedMethodList.length);
     });
+
+    it("can get default method config for VASP application", () => {
+        const defaultMethod = methodStandata.getDefaultMethodConfigForApplication({
+            name: "vasp",
+            version: "5.4.4",
+            build: "Default",
+            executable: "vasp",
+            flavor: "vasp",
+        });
+
+        expect(defaultMethod).to.be.an("object");
+        expect(defaultMethod).to.have.property("units");
+        expect(defaultMethod.units).to.be.an("array");
+        expect(defaultMethod.units.length).to.be.greaterThan(0);
+    });
+
+    it("can get default method config for Espresso application", () => {
+        const defaultMethod = methodStandata.getDefaultMethodConfigForApplication({
+            name: "espresso",
+            version: "6.3",
+            build: "Default",
+            executable: "pw.x",
+            flavor: "pw_scf",
+        });
+
+        expect(defaultMethod).to.be.an("object");
+        expect(defaultMethod).to.have.property("units");
+        expect(defaultMethod.units).to.be.an("array");
+        expect(defaultMethod.units.length).to.be.greaterThan(0);
+    });
 });
