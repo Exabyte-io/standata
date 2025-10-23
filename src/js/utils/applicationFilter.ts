@@ -6,6 +6,11 @@ import {
     FilterTree,
 } from "../types/applicationFilter";
 
+export enum FilterMode {
+    ANY_MATCH = "ANY", // OR logic - at least one filter must match (for models)
+    ALL_MATCH = "ALL", // AND logic - all filters must match (for methods)
+}
+
 function safelyGet(obj: any, ...args: string[]): any {
     let current = obj;
     // We use for instead of forEach to allow early return on undefined
@@ -87,37 +92,45 @@ function getFilterObjects({
 function filterEntityList({
     entitiesOrPaths,
     filterObjects,
-}: FilterEntityListParams): (string | FilterableEntity)[] {
+    filterMode = FilterMode.ANY_MATCH,
+}: FilterEntityListParams & { filterMode?: FilterMode }): (string | FilterableEntity)[] {
     if (!filterObjects || filterObjects.length === 0) {
         return entitiesOrPaths;
     }
+
+    const matchesFilter = (entityPath: string, filter: FilterObject): boolean => {
+        if ("path" in filter) {
+            return entityPath === filter.path || entityPath.includes(filter.path);
+        }
+        if ("regex" in filter) {
+            try {
+                const regex = new RegExp(filter.regex);
+                return regex.test(entityPath);
+            } catch {
+                return false;
+            }
+        }
+        return false;
+    };
 
     return entitiesOrPaths.filter((entity) => {
         const entityPath = typeof entity === "string" ? entity : entity.path;
         if (!entityPath) return false;
 
-        return filterObjects.every((filter) => {
-            if ("path" in filter) {
-                return entityPath === filter.path || entityPath.includes(filter.path);
-            }
-            if ("regex" in filter) {
-                try {
-                    const regex = new RegExp(filter.regex);
-                    return regex.test(entityPath);
-                } catch {
-                    return false;
-                }
-            }
-            return false;
-        });
+        return filterMode === FilterMode.ALL_MATCH
+            ? filterObjects.every((filter) => matchesFilter(entityPath, filter))
+            : filterObjects.some((filter) => matchesFilter(entityPath, filter));
     });
 }
 
 export abstract class ApplicationFilterStandata {
     protected filterTree: FilterTree;
 
-    constructor(filterTree: FilterTree) {
+    protected filterMode: FilterMode;
+
+    constructor(filterTree: FilterTree, filterMode = FilterMode.ANY_MATCH) {
         this.filterTree = filterTree || {};
+        this.filterMode = filterMode;
     }
 
     protected filterByApplicationParameters(
@@ -140,6 +153,7 @@ export abstract class ApplicationFilterStandata {
         return filterEntityList({
             entitiesOrPaths: entityList,
             filterObjects,
+            filterMode: this.filterMode,
         });
     }
 

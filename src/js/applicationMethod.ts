@@ -1,11 +1,14 @@
-import { ApplicationFilterStandata } from "./utils/applicationFilter";
 import MODEL_METHOD_DATA from "./runtime_data/applications/modelMethodMapByApplication.json";
-import { ApplicationMethodParametersInterface, ModelMethodMapByApplication } from "./types/applicationFilter";
+import {
+    ApplicationMethodParametersInterface,
+    ModelMethodMapByApplication,
+} from "./types/applicationFilter";
+import { ApplicationFilterStandata, FilterMode } from "./utils/applicationFilter";
 
 export class ApplicationMethodStandata extends ApplicationFilterStandata {
     constructor() {
         const data = MODEL_METHOD_DATA as ModelMethodMapByApplication;
-        super(data?.methods as any); // Cast to any for FilterTree compatibility
+        super(data?.methods as any, FilterMode.ALL_MATCH);
     }
 
     findByApplicationParameters({
