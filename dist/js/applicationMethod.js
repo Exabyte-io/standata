@@ -19,6 +19,7 @@ class ApplicationMethodStandata extends applicationFilter_1.ApplicationFilterSta
         return this.getAvailableEntities(name);
     }
     getDefaultMethodConfigForApplication(applicationConfig) {
+        var _a;
         const { name, version, build, executable, flavor } = applicationConfig;
         const methodStandata = new method_1.MethodStandata();
         const allMethods = methodStandata.getAll();
@@ -33,7 +34,16 @@ class ApplicationMethodStandata extends applicationFilter_1.ApplicationFilterSta
         if (!compatibleMethods || compatibleMethods.length === 0) {
             return {};
         }
-        return compatibleMethods[0];
+        const firstMethod = compatibleMethods[0];
+        // Find the pseudopotential unit (type: "psp")
+        const pspUnit = (_a = firstMethod.units) === null || _a === void 0 ? void 0 : _a.find((unit) => { var _a; return ((_a = unit.categories) === null || _a === void 0 ? void 0 : _a.type) === "psp"; });
+        if (!(pspUnit === null || pspUnit === void 0 ? void 0 : pspUnit.categories))
+            return {};
+        const { subtype } = pspUnit.categories;
+        return {
+            type: "pseudopotential",
+            ...(subtype ? { subtype } : {}),
+        };
     }
 }
 exports.ApplicationMethodStandata = ApplicationMethodStandata;

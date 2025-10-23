@@ -53,6 +53,18 @@ export class ApplicationMethodStandata extends ApplicationFilterStandata {
             return {};
         }
 
-        return compatibleMethods[0];
+        const firstMethod = compatibleMethods[0];
+        
+        // Find the pseudopotential unit (type: "psp")
+        const pspUnit = firstMethod.units?.find((unit: any) => unit.categories?.type === "psp");
+
+        if (!pspUnit?.categories) return {};
+
+        const { subtype } = pspUnit.categories;
+
+        return {
+            type: "pseudopotential",
+            ...(subtype ? { subtype } : {}),
+        };
     }
 }

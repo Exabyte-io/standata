@@ -143,7 +143,7 @@ describe("Application Method Standata", () => {
     });
 
     it("can get default method config for VASP application", () => {
-        const defaultMethod = methodStandata.getDefaultMethodConfigForApplication({
+        const defaultConfig = methodStandata.getDefaultMethodConfigForApplication({
             name: "vasp",
             version: "5.4.4",
             build: "Default",
@@ -151,14 +151,13 @@ describe("Application Method Standata", () => {
             flavor: "vasp",
         });
 
-        expect(defaultMethod).to.be.an("object");
-        expect(defaultMethod).to.have.property("units");
-        expect(defaultMethod.units).to.be.an("array");
-        expect(defaultMethod.units.length).to.be.greaterThan(0);
+        expect(defaultConfig).to.be.an("object");
+        expect(defaultConfig).to.have.property("type");
+        expect(defaultConfig).to.have.property("subtype");
     });
 
     it("can get default method config for Espresso application", () => {
-        const defaultMethod = methodStandata.getDefaultMethodConfigForApplication({
+        const defaultConfig = methodStandata.getDefaultMethodConfigForApplication({
             name: "espresso",
             version: "6.3",
             build: "Default",
@@ -166,9 +165,8 @@ describe("Application Method Standata", () => {
             flavor: "pw_scf",
         });
 
-        expect(defaultMethod).to.be.an("object");
-        expect(defaultMethod).to.have.property("units");
-        expect(defaultMethod.units).to.be.an("array");
-        expect(defaultMethod.units.length).to.be.greaterThan(0);
+        expect(defaultConfig).to.be.an("object");
+        expect(defaultConfig).to.have.property("type");
+        expect(defaultConfig).to.have.property("subtype");
     });
 });
