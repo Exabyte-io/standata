@@ -3,9 +3,9 @@ import { expect } from "chai";
 import { ApplicationMethodStandata, MethodStandata, ModelStandata } from "../../src/js";
 
 describe("Application Method Standata", () => {
-    let methodStandata: ApplicationMethodStandata;
-    let categorizedMethodList: any[];
-    let categorizedModelList: any[]
+    let methodStandata: ApplicationMethodStandata,
+        categorizedMethodList: any[],
+        categorizedModelList: any[];
 
     beforeEach(() => {
         methodStandata = new ApplicationMethodStandata();
@@ -73,7 +73,6 @@ describe("Application Method Standata", () => {
             flavor: sampleModel.flavor,
         });
 
-
         expect(filteredMethods).to.be.an("array");
 
         // Step 2: Further filter by application parameters (like in webapp)
@@ -90,6 +89,17 @@ describe("Application Method Standata", () => {
             expect(filteredMethods).to.include(method);
             expect(method).to.have.property("path");
             expect(method).to.have.property("name");
+        });
+    });
+
+    it("can filter methods for VASP application", () => {
+        const vaspMethods = methodStandata.findByApplicationParameters({
+            methodList: categorizedMethodList,
+            name: "vasp",
+        });
+        vaspMethods.forEach((method) => {
+            expect(method).to.have.property("name");
+            expect(method.name).to.include("Projector-augmented Wave");
         });
     });
 
