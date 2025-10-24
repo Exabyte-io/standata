@@ -9,4 +9,5 @@ export declare abstract class ApplicationFilterStandata {
     constructor(filterTree: FilterTree, filterMode?: FilterMode);
     protected filterByApplicationParameters(entityList: any[], name: string, version?: string, build?: string, executable?: string, flavor?: string): any[];
     getAvailableEntities(name: string): any;
+    protected filterByApplicationParametersGetDefault(entityList: any[], name: string, version?: string, build?: string, executable?: string, flavor?: string): any;
 }

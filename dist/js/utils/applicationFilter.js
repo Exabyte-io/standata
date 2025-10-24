@@ -75,25 +75,63 @@ function getFilterObjects({ filterTree, name = "", version = "", build = "", exe
     }
     return [...extractUniqueBy(filterList, "path"), ...extractUniqueBy(filterList, "regex")];
 }
+const matchesFilter = (entityPath, filter) => {
+    if ("path" in filter) {
+        return entityPath === filter.path || entityPath.includes(filter.path);
+    }
+    if ("regex" in filter) {
+        try {
+            const regex = new RegExp(filter.regex);
+            return regex.test(entityPath);
+        }
+        catch (_a) {
+            return false;
+        }
+    }
+    return false;
+};
+function filterEntityListGetDefault({ entitiesOrPaths, filterObjects, }) {
+    if (!filterObjects || filterObjects.length === 0) {
+        return entitiesOrPaths[0];
+    }
+    const arrayToMark = [...entitiesOrPaths];
+    arrayToMark.forEach((entity, index, array) => {
+        filterObjects.forEach((filter) => {
+            const entityPath = typeof entity === "string" ? entity : entity.path;
+            if (!entityPath)
+                return;
+            if ("defaultPath" in filter) {
+                if (entityPath === filter.defaultPath ||
+                    entityPath.includes(filter.defaultPath)) {
+                    if (typeof entity === "string") {
+                        array[index] = { path: entityPath, isDefault: true };
+                    }
+                    else {
+                        array[index] = { ...entity, isDefault: true };
+                    }
+                }
+            }
+        });
+    });
+    const result = arrayToMark.filter((entity) => {
+        if (typeof entity === "string") {
+            return false;
+        }
+        return (entity.isDefault === true &&
+            filterObjects.every((filter) => matchesFilter(entity.path, filter)));
+    });
+    if (result.length === 0) {
+        return entitiesOrPaths[0];
+    }
+    if (typeof entitiesOrPaths[0] === "string" && typeof result[0] === "object") {
+        return result[0].path;
+    }
+    return result[0];
+}
 function filterEntityList({ entitiesOrPaths, filterObjects, filterMode = FilterMode.ANY_MATCH, }) {
     if (!filterObjects || filterObjects.length === 0) {
         return entitiesOrPaths;
     }
-    const matchesFilter = (entityPath, filter) => {
-        if ("path" in filter) {
-            return entityPath === filter.path || entityPath.includes(filter.path);
-        }
-        if ("regex" in filter) {
-            try {
-                const regex = new RegExp(filter.regex);
-                return regex.test(entityPath);
-            }
-            catch (_a) {
-                return false;
-            }
-        }
-        return false;
-    };
     return entitiesOrPaths.filter((entity) => {
         const entityPath = typeof entity === "string" ? entity : entity.path;
         if (!entityPath)
@@ -125,6 +163,20 @@ class ApplicationFilterStandata {
     }
     getAvailableEntities(name) {
         return this.filterTree[name] || {};
+    }
+    filterByApplicationParametersGetDefault(entityList, name, version, build, executable, flavor) {
+        const filterObjects = getFilterObjects({
+            filterTree: this.filterTree,
+            name,
+            version,
+            build,
+            executable,
+            flavor,
+        });
+        return filterEntityListGetDefault({
+            entitiesOrPaths: entityList,
+            filterObjects,
+        });
     }
 }
 exports.ApplicationFilterStandata = ApplicationFilterStandata;

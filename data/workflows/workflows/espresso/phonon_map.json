@@ -288,8 +288,8 @@
                 "type": "unknown",
                 "subtype": "unknown",
                 "method": {
-                    "type": "unknown",
-                    "subtype": "unknown",
+                    "type": "localorbital",
+                    "subtype": "pople",
                     "data": {}
                 }
             },
@@ -805,8 +805,8 @@
                         "type": "unknown",
                         "subtype": "unknown",
                         "method": {
-                            "type": "unknown",
-                            "subtype": "unknown",
+                            "type": "localorbital",
+                            "subtype": "pople",
                             "data": {}
                         }
                     },
@@ -1013,8 +1013,8 @@
                         "type": "unknown",
                         "subtype": "unknown",
                         "method": {
-                            "type": "unknown",
-                            "subtype": "unknown",
+                            "type": "localorbital",
+                            "subtype": "pople",
                             "data": {}
                         }
                     },

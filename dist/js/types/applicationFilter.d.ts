@@ -6,6 +6,7 @@ export interface FilterObjectPath {
 }
 export interface FilterObjectRegex {
     regex: string;
+    defaultPath?: string;
 }
 export type FilterObject = FilterObjectPath | FilterObjectRegex;
 export interface FilterObjectsParams extends Partial<Pick<ApplicationSchemaBase, "name" | "version" | "build">> {

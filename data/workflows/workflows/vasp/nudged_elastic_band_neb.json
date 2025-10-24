@@ -36,7 +36,7 @@
                 "subtype": "gga",
                 "method": {
                     "type": "pseudopotential",
-                    "subtype": "us",
+                    "subtype": "paw",
                     "data": {}
                 },
                 "functional": {
@@ -405,8 +405,8 @@
                 "type": "unknown",
                 "subtype": "unknown",
                 "method": {
-                    "type": "unknown",
-                    "subtype": "unknown",
+                    "type": "localorbital",
+                    "subtype": "pople",
                     "data": {}
                 }
             },
@@ -521,7 +521,7 @@
                 "subtype": "gga",
                 "method": {
                     "type": "pseudopotential",
-                    "subtype": "us",
+                    "subtype": "paw",
                     "data": {}
                 },
                 "functional": {

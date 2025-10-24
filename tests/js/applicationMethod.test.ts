@@ -146,27 +146,29 @@ describe("Application Method Standata", () => {
         const defaultConfig = methodStandata.getDefaultMethodConfigForApplication({
             name: "vasp",
             version: "5.4.4",
-            build: "Default",
+            build: "GNU",
             executable: "vasp",
             flavor: "vasp",
         });
+        console.log("defaultConfig", defaultConfig);
 
         expect(defaultConfig).to.be.an("object");
-        expect(defaultConfig).to.have.property("type");
-        expect(defaultConfig).to.have.property("subtype");
+        expect(defaultConfig.type).to.equal("pseudopotential");
+        expect(defaultConfig.subtype).to.equal("paw");
     });
 
     it("can get default method config for Espresso application", () => {
         const defaultConfig = methodStandata.getDefaultMethodConfigForApplication({
             name: "espresso",
             version: "6.3",
-            build: "Default",
+            build: "GNU",
             executable: "pw.x",
             flavor: "pw_scf",
         });
+        console.log("defaultConfig", defaultConfig);
 
         expect(defaultConfig).to.be.an("object");
-        expect(defaultConfig).to.have.property("type");
-        expect(defaultConfig).to.have.property("subtype");
+        expect(defaultConfig.type).to.equal("pseudopotential");
+        expect(defaultConfig.subtype).to.equal("us");
     });
 });

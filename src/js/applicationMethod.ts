@@ -1,5 +1,3 @@
-// @ts-ignore
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { MethodConversionHandler } from "@mat3ra/mode";
 
 import { MethodStandata } from "./method";
