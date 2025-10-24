@@ -10,6 +10,7 @@ export interface FilterObjectPath {
 
 export interface FilterObjectRegex {
     regex: string;
+    defaultPath?: string;
 }
 
 export type FilterObject = FilterObjectPath | FilterObjectRegex;

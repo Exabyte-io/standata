@@ -89,6 +89,71 @@ function getFilterObjects({
     return [...extractUniqueBy(filterList, "path"), ...extractUniqueBy(filterList, "regex")];
 }
 
+const matchesFilter = (entityPath: string, filter: FilterObject): boolean => {
+    if ("path" in filter) {
+        return entityPath === filter.path || entityPath.includes(filter.path);
+    }
+    if ("regex" in filter) {
+        try {
+            const regex = new RegExp(filter.regex);
+            return regex.test(entityPath);
+        } catch {
+            return false;
+        }
+    }
+    return false;
+};
+
+function filterEntityListGetDefault({
+    entitiesOrPaths,
+    filterObjects,
+}: FilterEntityListParams): string | FilterableEntity {
+    if (!filterObjects || filterObjects.length === 0) {
+        return entitiesOrPaths[0];
+    }
+
+    const arrayToMark = [...entitiesOrPaths];
+
+    arrayToMark.forEach((entity, index, array) => {
+        filterObjects.forEach((filter) => {
+            const entityPath = typeof entity === "string" ? entity : entity.path;
+            if (!entityPath) return;
+
+            if ("defaultPath" in filter) {
+                if (
+                    entityPath === filter.defaultPath ||
+                    entityPath.includes(<string>filter.defaultPath)
+                ) {
+                    if (typeof entity === "string") {
+                        array[index] = { path: entityPath, isDefault: true };
+                    } else {
+                        array[index] = { ...entity, isDefault: true };
+                    }
+                }
+            }
+        });
+    });
+
+    const result = arrayToMark.filter((entity) => {
+        if (typeof entity === "string") {
+            return false;
+        }
+        return (
+            entity.isDefault === true &&
+            filterObjects.every((filter) => matchesFilter(entity.path, filter))
+        );
+    });
+
+    if (result.length === 0) {
+        return entitiesOrPaths[0];
+    }
+    if (typeof entitiesOrPaths[0] === "string" && typeof result[0] === "object") {
+        return result[0].path;
+    }
+
+    return result[0];
+}
+
 function filterEntityList({
     entitiesOrPaths,
     filterObjects,
@@ -97,21 +162,6 @@ function filterEntityList({
     if (!filterObjects || filterObjects.length === 0) {
         return entitiesOrPaths;
     }
-
-    const matchesFilter = (entityPath: string, filter: FilterObject): boolean => {
-        if ("path" in filter) {
-            return entityPath === filter.path || entityPath.includes(filter.path);
-        }
-        if ("regex" in filter) {
-            try {
-                const regex = new RegExp(filter.regex);
-                return regex.test(entityPath);
-            } catch {
-                return false;
-            }
-        }
-        return false;
-    };
 
     return entitiesOrPaths.filter((entity) => {
         const entityPath = typeof entity === "string" ? entity : entity.path;
@@ -159,5 +209,28 @@ export abstract class ApplicationFilterStandata {
 
     getAvailableEntities(name: string): any {
         return this.filterTree[name] || {};
+    }
+
+    protected filterByApplicationParametersGetDefault(
+        entityList: any[],
+        name: string,
+        version?: string,
+        build?: string,
+        executable?: string,
+        flavor?: string,
+    ): any {
+        const filterObjects = getFilterObjects({
+            filterTree: this.filterTree,
+            name,
+            version,
+            build,
+            executable,
+            flavor,
+        });
+
+        return filterEntityListGetDefault({
+            entitiesOrPaths: entityList,
+            filterObjects,
+        });
     }
 }
