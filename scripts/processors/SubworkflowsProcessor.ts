@@ -34,6 +34,7 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
             const subworkflows = this.workflowSubforkflowMapByApplication.subworkflows[appName];
             if (!subworkflows) return;
             Object.keys(subworkflows).forEach((subworkflowName) => {
+                // @ts-ignore - Type definitions issue with linked package
                 const subworkflow = createSubworkflowByName({
                     appName,
                     swfName: subworkflowName,

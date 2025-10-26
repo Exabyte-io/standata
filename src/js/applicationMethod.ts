@@ -39,6 +39,11 @@ export class ApplicationMethodStandata extends ApplicationFilterStandata {
     getDefaultMethodConfigForApplication(applicationConfig: any): any {
         const { name, version, build, executable, flavor } = applicationConfig;
 
+        const availableMethods = this.getAvailableMethods(name);
+        if (!availableMethods || Object.keys(availableMethods).length === 0) {
+            return { type: "unknown", subtype: "unknown" };
+        }
+
         const methodStandata = new MethodStandata();
         const allMethods = methodStandata.getAll();
 
