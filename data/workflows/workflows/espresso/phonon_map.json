@@ -2,7 +2,7 @@
     "name": "Phonon Map",
     "subworkflows": [
         {
-            "_id": "359d7005-793e-53ff-8a3b-23c064a14b23",
+            "_id": "42482965-357f-5f35-9609-1f26eb845bca",
             "name": "Preliminary SCF Calculation",
             "application": {
                 "name": "espresso",
@@ -288,8 +288,8 @@
                 "type": "unknown",
                 "subtype": "unknown",
                 "method": {
-                    "type": "localorbital",
-                    "subtype": "pople",
+                    "type": "unknown",
+                    "subtype": "unknown",
                     "data": {}
                 }
             },
@@ -715,7 +715,7 @@
         {
             "name": "Preliminary SCF Calculation",
             "type": "subworkflow",
-            "_id": "359d7005-793e-53ff-8a3b-23c064a14b23",
+            "_id": "42482965-357f-5f35-9609-1f26eb845bca",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "b6a2b27a-0fec-5e0e-8974-073ee9d2ad83",
@@ -805,8 +805,8 @@
                         "type": "unknown",
                         "subtype": "unknown",
                         "method": {
-                            "type": "localorbital",
-                            "subtype": "pople",
+                            "type": "unknown",
+                            "subtype": "unknown",
                             "data": {}
                         }
                     },
@@ -1013,8 +1013,8 @@
                         "type": "unknown",
                         "subtype": "unknown",
                         "method": {
-                            "type": "localorbital",
-                            "subtype": "pople",
+                            "type": "unknown",
+                            "subtype": "unknown",
                             "data": {}
                         }
                     },

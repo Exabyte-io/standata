@@ -1,5 +1,5 @@
 {
-    "_id": "10e5bb6c-f62d-57aa-a9b7-fcb191e41287",
+    "_id": "e6ead691-5660-5cf5-af8f-3e7669bc4e2c",
     "name": "Find ESP Value (Interface right)",
     "application": {
         "name": "espresso"
@@ -9,8 +9,8 @@
         "type": "unknown",
         "subtype": "unknown",
         "method": {
-            "type": "localorbital",
-            "subtype": "pople",
+            "type": "unknown",
+            "subtype": "unknown",
             "data": {}
         }
     },

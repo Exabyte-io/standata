@@ -405,8 +405,8 @@
                 "type": "unknown",
                 "subtype": "unknown",
                 "method": {
-                    "type": "localorbital",
-                    "subtype": "pople",
+                    "type": "unknown",
+                    "subtype": "unknown",
                     "data": {}
                 }
             },

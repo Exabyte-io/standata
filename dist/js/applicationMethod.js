@@ -21,6 +21,10 @@ class ApplicationMethodStandata extends applicationFilter_1.ApplicationFilterSta
     }
     getDefaultMethodConfigForApplication(applicationConfig) {
         const { name, version, build, executable, flavor } = applicationConfig;
+        const availableMethods = this.getAvailableMethods(name);
+        if (!availableMethods || Object.keys(availableMethods).length === 0) {
+            return { type: "unknown", subtype: "unknown" };
+        }
         const methodStandata = new method_1.MethodStandata();
         const allMethods = methodStandata.getAll();
         const categorizedMethod = this.filterByApplicationParametersGetDefault(allMethods, name, version, build, executable, flavor);
