@@ -1,5 +1,5 @@
 # Below are the currently supported models
-Default:
+GNU:
   pw.x:
     pw_scf:
       - path: /pb/qm/dft/ksdft/lda?functional=pz
