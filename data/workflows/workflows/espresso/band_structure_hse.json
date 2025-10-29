@@ -2,7 +2,7 @@
     "name": "Band Structure - HSE",
     "subworkflows": [
         {
-            "_id": "359d7005-793e-53ff-8a3b-23c064a14b23",
+            "_id": "42482965-357f-5f35-9609-1f26eb845bca",
             "name": "Preliminary SCF Calculation",
             "application": {
                 "name": "espresso",
@@ -272,7 +272,7 @@
             ]
         },
         {
-            "_id": "ed5fa668-2a4f-5d72-866e-115ef2c0bddf",
+            "_id": "ffbba351-b294-5ec4-8fda-fee0d975e6d5",
             "name": "Main HSE Run",
             "application": {
                 "name": "espresso",
@@ -512,7 +512,7 @@
         {
             "name": "Preliminary SCF Calculation",
             "type": "subworkflow",
-            "_id": "359d7005-793e-53ff-8a3b-23c064a14b23",
+            "_id": "42482965-357f-5f35-9609-1f26eb845bca",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "b6a2b27a-0fec-5e0e-8974-073ee9d2ad83",
@@ -534,7 +534,7 @@
         {
             "name": "Main HSE Run",
             "type": "subworkflow",
-            "_id": "ed5fa668-2a4f-5d72-866e-115ef2c0bddf",
+            "_id": "ffbba351-b294-5ec4-8fda-fee0d975e6d5",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "8f4c63a3-a06a-5f73-88d7-a57d7958b91d",

@@ -367,35 +367,35 @@ entities:
       - nwchem
       - total_energy
       - total_energy_contributions
-  - filename: python/classification_tail.json
+  - filename: python/ml/classification_tail.json
     categories:
       - creates-predictions-csv-during-predict-phase
       - file_content
       - python
       - remove-all-results
       - workflow:pyml_predict
-  - filename: python/clustering_tail.json
+  - filename: python/ml/clustering_tail.json
     categories:
       - creates-predictions-csv-during-predict-phase
       - file_content
       - python
       - remove-all-results
       - workflow:pyml_predict
-  - filename: python/python_script.json
-    categories:
-      - python
-  - filename: python/regression_tail.json
+  - filename: python/ml/regression_tail.json
     categories:
       - creates-predictions-csv-during-predict-phase
       - file_content
       - python
       - remove-all-results
       - workflow:pyml_predict
-  - filename: python/train_head.json
+  - filename: python/ml/train_head.json
     categories:
       - pyml:workflow-type-setter
       - python
       - set-io-unit-filenames
+  - filename: python/python_script.json
+    categories:
+      - python
   - filename: shell/batch_espresso_pwscf.json
     categories:
       - shell

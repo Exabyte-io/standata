@@ -18,7 +18,7 @@
         "subtype": "gga",
         "method": {
             "type": "pseudopotential",
-            "subtype": "us",
+            "subtype": "paw",
             "data": {}
         },
         "functional": {

@@ -54,6 +54,29 @@ describe("Application Model Standata", () => {
         });
     });
 
+    it("can filter models for each application", () => {
+        const testCases = [
+            { name: "vasp", expectedCount: 4, expectedNameValues: ["DFT"] },
+            { name: "espresso", expectedCount: 4, expectedNameValues: ["DFT"] },
+        ];
+        testCases.forEach(({ name, expectedCount, expectedNameValues }) => {
+            const models = applicationModelStandata.findByApplicationParameters({
+                modelList: categorizedModelList,
+                name,
+            });
+            expect(models).to.be.an("array");
+            expect(models.length).to.equal(expectedCount);
+
+            models.forEach((model) => {
+                expect(model).to.have.property("name");
+                const isMatch = expectedNameValues.some((expected) =>
+                    model.name.toLowerCase().includes(expected.toLowerCase()),
+                );
+                expect(isMatch).to.be.true;
+            });
+        });
+    });
+
     it("returns empty array for non-existent application", () => {
         const models = applicationModelStandata.findByApplicationParameters({
             modelList: categorizedModelList,

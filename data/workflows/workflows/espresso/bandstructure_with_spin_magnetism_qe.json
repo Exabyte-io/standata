@@ -2,7 +2,7 @@
     "name": "Bandstructure with spin magnetism - QE",
     "subworkflows": [
         {
-            "_id": "9ee8085b-5adc-5dc8-9f8f-9ec0eff36432",
+            "_id": "3018cf08-9c29-5030-b544-24acbaca3829",
             "name": "Bandstructure with spin magnetism",
             "application": {
                 "name": "espresso",
@@ -413,7 +413,7 @@
         {
             "name": "Bandstructure with spin magnetism",
             "type": "subworkflow",
-            "_id": "9ee8085b-5adc-5dc8-9f8f-9ec0eff36432",
+            "_id": "3018cf08-9c29-5030-b544-24acbaca3829",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "41e70bc1-ba00-5871-9289-4d57c7b79452",

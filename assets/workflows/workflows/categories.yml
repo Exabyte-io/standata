@@ -326,13 +326,13 @@ entities:
       - nwchem
       - total_energy
       - total_energy_contributions
-  - filename: python/python_ml_train_classification.json
+  - filename: python/ml/classification_workflow.json
     categories:
       - python
-  - filename: python/python_ml_train_clustering.json
+  - filename: python/ml/clustering_workflow.json
     categories:
       - python
-  - filename: python/python_ml_train_regression.json
+  - filename: python/ml/regression_workflow.json
     categories:
       - python
   - filename: python/python_script.json

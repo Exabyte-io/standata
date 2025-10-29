@@ -1,4 +1,4 @@
-Default:
+GNU:
   vasp:
     vasp:
       - path: /pb/qm/dft/ksdft/lda?functional=pz

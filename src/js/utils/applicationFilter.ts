@@ -6,6 +6,11 @@ import {
     FilterTree,
 } from "../types/applicationFilter";
 
+export enum FilterMode {
+    ANY_MATCH = "ANY", // OR logic - at least one filter must match (for models)
+    ALL_MATCH = "ALL", // AND logic - all filters must match (for methods)
+}
+
 function safelyGet(obj: any, ...args: string[]): any {
     let current = obj;
     // We use for instead of forEach to allow early return on undefined
@@ -84,10 +89,76 @@ function getFilterObjects({
     return [...extractUniqueBy(filterList, "path"), ...extractUniqueBy(filterList, "regex")];
 }
 
+const matchesFilter = (entityPath: string, filter: FilterObject): boolean => {
+    if ("path" in filter) {
+        return entityPath === filter.path || entityPath.includes(filter.path);
+    }
+    if ("regex" in filter) {
+        try {
+            const regex = new RegExp(filter.regex);
+            return regex.test(entityPath);
+        } catch {
+            return false;
+        }
+    }
+    return false;
+};
+
+function filterEntityListGetDefault({
+    entitiesOrPaths,
+    filterObjects,
+}: FilterEntityListParams): string | FilterableEntity {
+    if (!filterObjects || filterObjects.length === 0) {
+        return entitiesOrPaths[0];
+    }
+
+    const arrayToMark = [...entitiesOrPaths];
+
+    arrayToMark.forEach((entity, index, array) => {
+        filterObjects.forEach((filter) => {
+            const entityPath = typeof entity === "string" ? entity : entity.path;
+            if (!entityPath) return;
+
+            if ("defaultPath" in filter) {
+                if (
+                    entityPath === filter.defaultPath ||
+                    entityPath.includes(<string>filter.defaultPath)
+                ) {
+                    if (typeof entity === "string") {
+                        array[index] = { path: entityPath, isDefault: true };
+                    } else {
+                        array[index] = { ...entity, isDefault: true };
+                    }
+                }
+            }
+        });
+    });
+
+    const result = arrayToMark.filter((entity) => {
+        if (typeof entity === "string") {
+            return false;
+        }
+        return (
+            entity.isDefault === true &&
+            filterObjects.every((filter) => matchesFilter(entity.path, filter))
+        );
+    });
+
+    if (result.length === 0) {
+        return entitiesOrPaths[0];
+    }
+    if (typeof entitiesOrPaths[0] === "string" && typeof result[0] === "object") {
+        return result[0].path;
+    }
+
+    return result[0];
+}
+
 function filterEntityList({
     entitiesOrPaths,
     filterObjects,
-}: FilterEntityListParams): (string | FilterableEntity)[] {
+    filterMode = FilterMode.ANY_MATCH,
+}: FilterEntityListParams & { filterMode?: FilterMode }): (string | FilterableEntity)[] {
     if (!filterObjects || filterObjects.length === 0) {
         return entitiesOrPaths;
     }
@@ -96,28 +167,20 @@ function filterEntityList({
         const entityPath = typeof entity === "string" ? entity : entity.path;
         if (!entityPath) return false;
 
-        return filterObjects.some((filter) => {
-            if ("path" in filter) {
-                return entityPath === filter.path || entityPath.includes(filter.path);
-            }
-            if ("regex" in filter) {
-                try {
-                    const regex = new RegExp(filter.regex);
-                    return regex.test(entityPath);
-                } catch {
-                    return false;
-                }
-            }
-            return false;
-        });
+        return filterMode === FilterMode.ALL_MATCH
+            ? filterObjects.every((filter) => matchesFilter(entityPath, filter))
+            : filterObjects.some((filter) => matchesFilter(entityPath, filter));
     });
 }
 
 export abstract class ApplicationFilterStandata {
     protected filterTree: FilterTree;
 
-    constructor(filterTree: FilterTree) {
+    protected filterMode: FilterMode;
+
+    constructor(filterTree: FilterTree, filterMode = FilterMode.ANY_MATCH) {
         this.filterTree = filterTree || {};
+        this.filterMode = filterMode;
     }
 
     protected filterByApplicationParameters(
@@ -140,10 +203,34 @@ export abstract class ApplicationFilterStandata {
         return filterEntityList({
             entitiesOrPaths: entityList,
             filterObjects,
+            filterMode: this.filterMode,
         });
     }
 
     getAvailableEntities(name: string): any {
         return this.filterTree[name] || {};
+    }
+
+    protected filterByApplicationParametersGetDefault(
+        entityList: any[],
+        name: string,
+        version?: string,
+        build?: string,
+        executable?: string,
+        flavor?: string,
+    ): any {
+        const filterObjects = getFilterObjects({
+            filterTree: this.filterTree,
+            name,
+            version,
+            build,
+            executable,
+            flavor,
+        });
+
+        return filterEntityListGetDefault({
+            entitiesOrPaths: entityList,
+            filterObjects,
+        });
     }
 }

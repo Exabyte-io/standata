@@ -53,14 +53,12 @@ export function buildJSONFromYAMLInDir({
 }
 
 /**
- * Loads a directory tree of YAML files into a nested object structure.
+ * Traverses a directory and processes YAML files with a callback.
  */
-export function loadYAMLTree(
+function traverseYAMLFiles(
     rootPath: string,
-    createObjectPath: (filePath: string, rootPath: string) => string,
-): Record<string, any> {
-    const tree: Record<string, any> = {};
-
+    callback: (filePath: string, data: any) => void,
+): void {
     function traverse(currentPath: string) {
         if (!fs.existsSync(currentPath)) return;
 
@@ -72,8 +70,7 @@ export function loadYAMLTree(
         } else if (stat.isFile() && /\.(yml|yaml)$/i.test(currentPath)) {
             try {
                 const data = readYAMLFileResolved(currentPath);
-                const objectPath = createObjectPath(currentPath, rootPath);
-                lodash.set(tree, objectPath, data);
+                callback(currentPath, data);
             } catch (error) {
                 console.error(`Error loading ${currentPath}:`, error);
             }
@@ -81,11 +78,26 @@ export function loadYAMLTree(
     }
 
     traverse(rootPath);
-    return tree;
 }
 
 // Functions for processing entities from YAML files to JSON files when some processing inside the files is needed
 
+/**
+ * Loads a directory tree of YAML files into a nested object structure.
+ */
+export function loadYAMLTree(
+    rootPath: string,
+    createObjectPath: (filePath: string, rootPath: string) => string,
+): Record<string, any> {
+    const tree: Record<string, any> = {};
+
+    traverseYAMLFiles(rootPath, (filePath, data) => {
+        const objectPath = createObjectPath(filePath, rootPath);
+        lodash.set(tree, objectPath, data);
+    });
+
+    return tree;
+}
 // Legacy procedural interfaces (unused) removed
 
 /**
@@ -121,21 +133,28 @@ export function encodeDataAsURLPath(
 //
 
 /**
- * Loads YAML files from a directory and stores them in a flat map keyed by filename (without extension).
- * Recursively searches subdirectories. Files in subdirectories are accessible by their filename only.
- * This is useful when you want all YAML files in a directory tree accessible by simple filenames.
+ * Loads YAML files from a directory and stores them in a map keyed by filename (without extension).
+ * Recursively searches subdirectories. Adds __path__ metadata with the relative path.
  *
  * Example:
  *   Input: assets/workflows/subworkflows/python/
  *     - python_script.yml
  *     - ml/classification_tail.yml
- *   Output: { python_script: {...}, classification_tail: {...} }
+ *   Output: {
+ *     python_script: { __path__: "python_script", ... },
+ *     classification_tail: { __path__: "ml/classification_tail", ... }
+ *   }
  */
 export function loadYAMLFilesAsMap(dirPath: string): Record<string, any> {
-    return loadYAMLTree(dirPath, (filePath: string) => {
-        const filename = path.basename(filePath);
-        return filename.replace(/\.(yml|yaml)$/i, "");
+    const result: Record<string, any> = {};
+
+    traverseYAMLFiles(dirPath, (filePath, data) => {
+        const key = path.basename(filePath).replace(/\.(yml|yaml)$/i, "");
+        const relativePath = path.relative(dirPath, filePath).replace(/\.(yml|yaml)$/i, "");
+        result[key] = { __path__: relativePath, ...data };
     });
+
+    return result;
 }
 
 // Classes moved to scripts/processors/*; keep only shared helpers in this file
