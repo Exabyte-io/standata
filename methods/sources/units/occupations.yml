@@ -1,6 +1,6 @@
 !combine
 name:
-  template: '{{ categories.subtype }} Smearing'
+  template: "{{ categories.subtype }} Smearing"
   substitutions:
     gaussian: Gaussian
     marzari-vanderbilt: Marzari-Vanderbilt
@@ -19,10 +19,10 @@ config:
     type: smearing
   tags:
     - occupation number
-  schema: !esse 'methods-directory/physical/smearing'
+  schema: !esse "methods-directory/physical/smearing"
 extraConfigs: !combine
   name:
-    template: '{{ categories.subtype | title }} Tetrahedron Method'
+    template: "{{ categories.subtype | title }} Tetrahedron Method"
   forEach:
     - !parameter
       key: categories.subtype
@@ -36,4 +36,4 @@ extraConfigs: !combine
       type: tetrahedron
     tags:
       - occupation number
-    schema: !esse 'methods-directory/physical/tetrahedron'
+    schema: !esse "methods-directory/physical/tetrahedron"

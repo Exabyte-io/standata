@@ -3,7 +3,7 @@
 #
 !combine
 name:
-  template: '{{ categories.subtype }} Pseudopotential'
+  template: "{{ categories.subtype }} Pseudopotential"
   substitutions:
     us: Ultra-soft
     nc: Norm-conserving
@@ -22,4 +22,4 @@ config:
     type: psp
   tags:
     - pseudopotential
-  schema: !esse 'methods-directory/physical/psp'
+  schema: !esse "methods-directory/physical/psp"

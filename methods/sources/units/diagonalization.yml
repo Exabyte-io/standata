@@ -1,6 +1,6 @@
 !combine
 name:
-  template: '{{ categories.type }} Diagonalization'
+  template: "{{ categories.type }} Diagonalization"
   substitutions:
     cg: Conjugate Gradient
 config:
@@ -11,7 +11,7 @@ config:
     type: cg
   tags:
     - diagonalization
-  schema: !esse 'methods-directory/mathematical/cg'
+  schema: !esse "methods-directory/mathematical/cg"
 #extraConfigs: !combine
 #  name:
 #    template: '{{ categories.type | title }} Diagonalization'

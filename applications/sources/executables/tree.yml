@@ -1,2 +1,2 @@
 espresso:
-  pw.x: !include 'executables/espresso/pw.x.yml'
+  pw.x: !include "executables/espresso/pw.x.yml"

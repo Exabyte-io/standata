@@ -1,7 +1,7 @@
 ldaConfigs: !combine
   name:
     # yamllint disable-line rule:line-length
-    template: 'DFT {{ categories.subtype | upper }} {{ parameters.functional }}{{ "-" + parameters.dispersionCorrection if parameters.dispersionCorrection }}{{ "+" + parameters.hubbardType if parameters.hubbardType}}{{ " (SOC)" if parameters.spinOrbitCoupling }}{{ " (" + parameters.spinPolarization + ")" if parameters.spinPolarization }}'
+    template: "DFT {{ categories.subtype | upper }} {{ parameters.functional }}{{ \"-\" + parameters.dispersionCorrection if parameters.dispersionCorrection }}{{ \"+\" + parameters.hubbardType if parameters.hubbardType}}{{ \" (SOC)\" if parameters.spinOrbitCoupling }}{{ \" (\" + parameters.spinPolarization + \")\" if parameters.spinPolarization }}"
     substitutions:
       pz: PZ
       dft-d3: D3
@@ -9,11 +9,11 @@ ldaConfigs: !combine
   forEach:
     - !parameter
       key: parameters.functional
-      values: !esse 'model/mixins/dft/enum-options#/lda/enum'
+      values: !esse "model/mixins/dft/enum-options#/lda/enum"
     - !parameter
       key: parameters.dispersionCorrection
-      values: !esse 'model/mixins/enum-options#/dispersionCorrection/enum'
-      exclude: '^(?!.*dft-d3).*$'
+      values: !esse "model/mixins/enum-options#/dispersionCorrection/enum"
+      exclude: "^(?!.*dft-d3).*$"
       isOptional: true
     - !parameter
       key: parameters.spinOrbitCoupling
@@ -21,12 +21,12 @@ ldaConfigs: !combine
       isOptional: true
     - !parameter
       key: parameters.hubbardType
-      values: !esse 'model/mixins/enum-options#/hubbardType/enum'
+      values: !esse "model/mixins/enum-options#/hubbardType/enum"
       isOptional: true
     - !parameter
       key: parameters.spinPolarization
-      values: !esse 'model/mixins/enum-options#/spinPolarization/enum'
-      exclude: '^non-collinear'
+      values: !esse "model/mixins/enum-options#/spinPolarization/enum"
+      exclude: "^non-collinear"
       isOptional: true
   exclusions:
     - [parameters.spinPolarization, parameters.spinOrbitCoupling]
@@ -40,4 +40,4 @@ ldaConfigs: !combine
       subtype: lda
     tags:
       - density functional theory
-    schema: !esse 'models-directory/lda'
+    schema: !esse "models-directory/lda"
