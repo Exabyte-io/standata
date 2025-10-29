@@ -2,7 +2,7 @@
 # Planewave method unit
 #
 !combine
-name: 'Wave function: Plane wave'
+name: "Wave function: Plane wave"
 config:
   categories:
     tier1: qm
@@ -10,4 +10,4 @@ config:
     type: pw
   tags:
     - plane wave
-  schema: !esse 'methods-directory/physical/pw'
+  schema: !esse "methods-directory/physical/pw"
