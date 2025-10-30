@@ -40,22 +40,15 @@ export class ApplicationsProcessor extends EntityProcessor {
         const modelAssetPath = path.resolve(sourcesRoot, BUILD_CONFIG.applications.assets.models);
         const methodAssetPath = path.resolve(sourcesRoot, BUILD_CONFIG.applications.assets.methods);
 
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const utilsCode = require("@mat3ra/code/dist/js/utils");
-        const createObjectPathFromFilePath = utilsCode.createObjectPathFromFilePath as (
-            fp: string,
-            root: string,
-        ) => string;
-
-        const nestedApplicationData = loadYAMLTree(
-            applicationAssetPath,
-            createObjectPathFromFilePath,
-        ) as Record<string, Record<string, ApplicationVersionsMapType>>;
+        const nestedApplicationData = loadYAMLTree(applicationAssetPath) as Record<
+            string,
+            Record<string, ApplicationVersionsMapType>
+        >;
         const clean = (Utils.object.flattenNestedObjects as any)(nestedApplicationData);
 
         this.cleanApplicationData = clean;
-        this.modelFilterTree = loadYAMLTree(modelAssetPath, createObjectPathFromFilePath);
-        this.methodFilterTree = loadYAMLTree(methodAssetPath, createObjectPathFromFilePath);
+        this.modelFilterTree = loadYAMLTree(modelAssetPath);
+        this.methodFilterTree = loadYAMLTree(methodAssetPath);
 
         this.assets = [];
         return this.assets;

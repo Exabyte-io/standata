@@ -84,15 +84,13 @@ function traverseYAMLFiles(
 
 /**
  * Loads a directory tree of YAML files into a nested object structure.
+ * Uses lodash-compatible object paths for nested structure.
  */
-export function loadYAMLTree(
-    rootPath: string,
-    createObjectPath: (filePath: string, rootPath: string) => string,
-): Record<string, any> {
+export function loadYAMLTree(rootPath: string): Record<string, any> {
     const tree: Record<string, any> = {};
 
     traverseYAMLFiles(rootPath, (filePath, data) => {
-        const objectPath = createObjectPath(filePath, rootPath);
+        const objectPath = serverUtils.file.createObjectPathFromFilePath(filePath, rootPath);
         lodash.set(tree, objectPath, data);
     });
 
