@@ -1,4 +1,4 @@
-- content: !readFile 'assets/espresso/abcoeff_to_eps_simple.j2.in'
+- content: !readFile 'input_files_templates/espresso/abcoeff_to_eps_simple.j2.in'
   name: abcoeff_to_eps_simple.in
   contextProviders: []
   applicationName: espresso

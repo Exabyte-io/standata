@@ -1,4 +1,4 @@
-- content: !readFile 'assets/nwchem/nwchem_total_energy.j2.inp'
+- content: !readFile 'input_files_templates/nwchem/nwchem_total_energy.j2.inp'
   name: nwchem_total_energy.inp
   contextProviders:
     - name: NWChemInputDataManager
