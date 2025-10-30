@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { JsYamlAllSchemas } from "@mat3ra/code/dist/js/utils";
-//
 // eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
 import * as fs from "fs";
@@ -64,39 +63,57 @@ export function buildJSONFromYAMLInDir({
     }
 }
 
+function isYAMLFile(filePath: string): boolean {
+    return /\.(yml|yaml)$/i.test(filePath);
+}
+
+function removeYAMLExtension(filePath: string): string {
+    return filePath.replace(/\.(yml|yaml)$/i, "");
+}
+
+/**
+ * Processes a single YAML file with a callback.
+ * Skips files marked with !ignore directive.
+ */
+function processYAMLFile(filePath: string, callback: (filePath: string, data: any) => void): void {
+    try {
+        const data = readYAMLFileResolved(filePath);
+        if (hasIgnoreDirective(data)) {
+            console.log(`  Ignoring: ${filePath} (marked with !ignore)`);
+            return;
+        }
+        callback(filePath, data);
+    } catch (error) {
+        console.error(`Error loading ${filePath}:`, error);
+    }
+}
+
+/**
+ * Recursively traverses a path and processes YAML files.
+ */
+function traversePath(currentPath: string, callback: (filePath: string, data: any) => void): void {
+    if (!fs.existsSync(currentPath)) return;
+
+    const stat = fs.statSync(currentPath);
+
+    if (stat.isDirectory()) {
+        const items = fs.readdirSync(currentPath);
+        items.forEach((item) => traversePath(path.join(currentPath, item), callback));
+    } else if (stat.isFile() && isYAMLFile(currentPath)) {
+        processYAMLFile(currentPath, callback);
+    }
+}
+
 /**
  * Traverses a directory and processes YAML files with a callback.
+ * Skips files marked with !ignore directive.
  */
-function traverseYAMLFiles(
+export function traverseYAMLFiles(
     rootPath: string,
     callback: (filePath: string, data: any) => void,
 ): void {
-    function traverse(currentPath: string) {
-        if (!fs.existsSync(currentPath)) return;
-
-        const stat = fs.statSync(currentPath);
-
-        if (stat.isDirectory()) {
-            const items = fs.readdirSync(currentPath);
-            items.forEach((item) => traverse(path.join(currentPath, item)));
-        } else if (stat.isFile() && /\.(yml|yaml)$/i.test(currentPath)) {
-            try {
-                const data = readYAMLFileResolved(currentPath);
-                if (hasIgnoreDirective(data)) {
-                    console.log(`  Ignoring: ${currentPath} (marked with !ignore)`);
-                    return;
-                }
-                callback(currentPath, data);
-            } catch (error) {
-                console.error(`Error loading ${currentPath}:`, error);
-            }
-        }
-    }
-
-    traverse(rootPath);
+    traversePath(rootPath, callback);
 }
-
-// Functions for processing entities from YAML files to JSON files when some processing inside the files is needed
 
 /**
  * Loads a directory tree of YAML files into a nested object structure.
@@ -112,7 +129,6 @@ export function loadYAMLTree(rootPath: string): Record<string, any> {
 
     return tree;
 }
-// Legacy procedural interfaces (unused) removed
 
 /**
  * Encodes entity data as a URL path with categories and parameters.
@@ -136,17 +152,6 @@ export function encodeDataAsURLPath(
 }
 
 /**
- * Builds entity JSON files from YAML sources when some processing is needed.
- */
-//
-
-/**
- * Processes and saves an entity with standard operations:
- * encodes path, deletes schema, determines subdirectory, and saves.
- */
-//
-
-/**
  * Loads YAML files from a directory and stores them in a map keyed by filename (without extension).
  * Recursively searches subdirectories. Adds __path__ metadata with the relative path.
  *
@@ -163,12 +168,10 @@ export function loadYAMLFilesAsMap(dirPath: string): Record<string, any> {
     const result: Record<string, any> = {};
 
     traverseYAMLFiles(dirPath, (filePath, data) => {
-        const key = path.basename(filePath).replace(/\.(yml|yaml)$/i, "");
-        const relativePath = path.relative(dirPath, filePath).replace(/\.(yml|yaml)$/i, "");
+        const key = removeYAMLExtension(path.basename(filePath));
+        const relativePath = removeYAMLExtension(path.relative(dirPath, filePath));
         result[key] = { __path__: relativePath, ...data };
     });
 
     return result;
 }
-
-// Classes moved to scripts/processors/*; keep only shared helpers in this file
