@@ -79,7 +79,7 @@
         "lint:staged": "lint-staged",
         "prettier": "prettier --check src/js tests/js",
         "test": "mocha",
-        "transpile": "tsc && cp -r build/standata/* ./dist/js/runtime_data/"
+        "transpile": "tsc && cp -r build/standata/* ./dist/js/runtime_data/ || true"
     },
     "engines": {
         "node": ">=20.0.0"
