@@ -4,13 +4,25 @@ import { JsYamlAllSchemas } from "@mat3ra/code/dist/js/utils";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
 import * as fs from "fs";
+import * as yaml from "js-yaml";
 import * as lodash from "lodash";
 import * as path from "path";
 
-//
+const IGNORE_MARKER = Symbol("YAML_IGNORE");
+
+const ignoreType = new yaml.Type("!ignore", {
+    kind: "mapping",
+    construct: (data) => ({ ...data, [IGNORE_MARKER]: true }),
+});
+
+const schemaWithIgnore = JsYamlAllSchemas.extend([ignoreType]);
 
 export function readYAMLFileResolved(filePath: string): any {
-    return serverUtils.yaml.readYAMLFile(filePath, { schema: JsYamlAllSchemas });
+    return serverUtils.yaml.readYAMLFile(filePath, { schema: schemaWithIgnore });
+}
+
+export function hasIgnoreDirective(data: any): boolean {
+    return data?.[IGNORE_MARKER] === true;
 }
 
 export function resolveFromRoot(scriptDirname: string, ...pathSegments: string[]): string {
@@ -70,6 +82,10 @@ function traverseYAMLFiles(
         } else if (stat.isFile() && /\.(yml|yaml)$/i.test(currentPath)) {
             try {
                 const data = readYAMLFileResolved(currentPath);
+                if (hasIgnoreDirective(data)) {
+                    console.log(`  Ignoring: ${currentPath} (marked with !ignore)`);
+                    return;
+                }
                 callback(currentPath, data);
             } catch (error) {
                 console.error(`Error loading ${currentPath}:`, error);
