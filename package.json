@@ -65,7 +65,7 @@
     },
     "scripts": {
         "build:categories": "ts-node src/js/cli.ts",
-        "build:materials": "ts-node scripts/materials/build_materials.ts",
+        "build:materials": "python scripts/materials/create_materials.py",
         "build:properties": "ts-node scripts/properties/build_properties.ts",
         "build:workflows": "ts-node scripts/workflows/build_workflows.ts",
         "build:applications": "ts-node scripts/applications/build_applications.ts",
@@ -73,7 +73,7 @@
         "build:methods": "ts-node scripts/methods/build_methods.ts",
         "build:model-method-map": "ts-node scripts/models/build_model_method_map.ts",
         "build:symlink": "test -L src/js/runtime_data || ln -s ../../dist/js/runtime_data src/js/runtime_data",
-        "build": "npm run transpile && npm run build:symlink && npm run build:models && npm run build:methods && npm run build:model-method-map && npm run build:applications && npm run build:materials && npm run build:properties && npm run build:workflows",
+        "build": "npm run transpile && npm run build:symlink && npm run build:models && npm run build:methods && npm run build:model-method-map && npm run build:applications && npm run build:properties && npm run build:workflows",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
