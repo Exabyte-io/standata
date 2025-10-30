@@ -1,25 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
-import { execSync } from "child_process";
-import * as path from "path";
 
 import { BUILD_CONFIG } from "../../build-config";
 import { CategorizedEntityProcessor } from "./CategorizedEntityProcessor";
 import { AssetRecord } from "./EntityProcessor";
-
-interface ManifestSource {
-    filename: string;
-    common_name: string;
-    lattice_type: string;
-    space_group: string;
-    dimensionality: string;
-    form_factor: string;
-    source_id: string;
-    source: string;
-    doi: string;
-    url: string;
-    metadata?: any;
-}
 
 export class MaterialsProcessor extends CategorizedEntityProcessor {
     private static defaultCategoryKeys = [
@@ -29,8 +13,6 @@ export class MaterialsProcessor extends CategorizedEntityProcessor {
         "form_factor",
         "source",
     ];
-
-    private manifestSources: ManifestSource[] = [];
 
     constructor(rootDir: string) {
         super({
@@ -51,31 +33,22 @@ export class MaterialsProcessor extends CategorizedEntityProcessor {
     }
 
     public readAssets(): AssetRecord[] {
-        console.log("  Reading manifest and POSCAR files...");
-        const manifestPath = path.resolve(
-            this.resolvedPaths.assetsDir,
-            BUILD_CONFIG.materials.assets.manifest,
-        );
-        const manifest = serverUtils.yaml.readYAMLFileSync(manifestPath) as {
-            sources?: ManifestSource[];
-        };
-        this.manifestSources = manifest.sources || [];
-        console.log(`  Found ${this.manifestSources.length} materials in manifest`);
+        console.log("  Reading generated materials from data directory...");
+        const dataFiles = serverUtils.file.getFilesInDirectory(this.resolvedPaths.dataDir, [
+            ".json",
+        ]);
+        console.log(`  Found ${dataFiles.length} generated material files`);
         return [];
     }
 
+    public cleanDataDirectory(): void {
+        console.log("  Skipping data cleanup (materials generated externally by Python)");
+    }
+
     public writeDataDirectoryContent(): void {
-        console.log("  Generating materials JSON from POSCAR files using Python (formatted)...");
-        const scriptPath = path.resolve(__dirname, "../materials/create_materials.py");
-        try {
-            execSync(`python ${scriptPath}`, {
-                cwd: path.resolve(__dirname, "../.."),
-                stdio: "inherit",
-            });
-        } catch (error: any) {
-            console.error("Error running materials Python script:", error.message);
-            throw error;
-        }
+        console.log(
+            "  Skipping data generation (run 'npm run create:materials' to generate from POSCAR files)",
+        );
     }
 
     public writeBuildDirectoryContent(): void {
