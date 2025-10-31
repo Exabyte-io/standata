@@ -1,5 +1,5 @@
 {
-    "_id": "07ed6979-32f1-57c1-821a-1afb78fcc985",
+    "_id": "e4b6b2e7-7d8f-5ae1-b6bd-ee81ecbca11a",
     "name": "espresso-xml-get-qpt-irr",
     "application": {
         "name": "espresso"
@@ -41,10 +41,6 @@
                 "isDefault": true,
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "file_content",
-                    "workflow:pyml_predict"
                 ],
                 "name": "python",
                 "schemaVersion": "2022.8.16"

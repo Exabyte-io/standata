@@ -2,7 +2,7 @@
     "name": "Shell Batch Job (Espresso PWSCF)",
     "subworkflows": [
         {
-            "_id": "5a5148ff-63a8-58ee-a880-7c65f1c34de6",
+            "_id": "f0775c7b-214a-5245-b921-5b4eb53d15a9",
             "name": "Shell Batch Job (Espresso PWSCF)",
             "application": {
                 "name": "shell",
@@ -51,27 +51,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "band_structure",
-                            "density_of_states",
-                            "fermi_energy",
-                            "phonon_dispersions",
-                            "phonon_dos",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force",
-                            "zero_point_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "potential_profile",
-                            "charge_density_profile"
-                        ],
                         "name": "sh",
                         "schemaVersion": "2022.8.16"
                     },
@@ -112,7 +91,7 @@
         {
             "name": "Shell Batch Job (Espresso PWSCF)",
             "type": "subworkflow",
-            "_id": "5a5148ff-63a8-58ee-a880-7c65f1c34de6",
+            "_id": "f0775c7b-214a-5245-b921-5b4eb53d15a9",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "d884e8f7-7acf-5a03-bc9a-186903bdaa0e",

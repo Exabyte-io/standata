@@ -1,5 +1,5 @@
 {
-    "_id": "d88fed1c-946e-5e73-85ba-5744d2203fe0",
+    "_id": "38340b52-83ad-5862-bc18-c140bdc0cb72",
     "name": "Compute Dielectric Function",
     "application": {
         "name": "espresso"
@@ -89,23 +89,6 @@
                     "standard_output",
                     "convergence_ionic",
                     "convergence_electronic"
-                ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "charge_density_profile",
-                    "density_of_states",
-                    "fermi_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "potential_profile",
-                    "pressure",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force"
                 ],
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"
@@ -225,23 +208,6 @@
                     "convergence_ionic",
                     "convergence_electronic"
                 ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "charge_density_profile",
-                    "density_of_states",
-                    "fermi_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "potential_profile",
-                    "pressure",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force"
-                ],
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"
             },
@@ -320,9 +286,6 @@
             "executable": {
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "dielectric_tensor"
                 ],
                 "name": "epsilon.x",
                 "schemaVersion": "2022.8.16",

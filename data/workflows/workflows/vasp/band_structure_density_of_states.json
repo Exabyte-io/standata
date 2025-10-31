@@ -2,7 +2,7 @@
     "name": "Band Structure + Density of States",
     "subworkflows": [
         {
-            "_id": "3feb4c5d-62a3-5a2f-88e2-9eeb28aff2d4",
+            "_id": "d38fea11-9781-5151-8dae-d705381498be",
             "name": "Band Structure + Density of States",
             "application": {
                 "name": "vasp",
@@ -102,25 +102,6 @@
                             "standard_output",
                             "convergence_ionic",
                             "convergence_electronic"
-                        ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "band_structure",
-                            "density_of_states",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force",
-                            "zero_point_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "potential_profile",
-                            "charge_density_profile"
                         ],
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
@@ -247,25 +228,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "band_structure",
-                            "density_of_states",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force",
-                            "zero_point_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "potential_profile",
-                            "charge_density_profile"
-                        ],
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
@@ -352,7 +314,7 @@
         {
             "name": "Band Structure + Density of States",
             "type": "subworkflow",
-            "_id": "3feb4c5d-62a3-5a2f-88e2-9eeb28aff2d4",
+            "_id": "d38fea11-9781-5151-8dae-d705381498be",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "8a098bb9-73b1-5e84-bfc7-b783e02d0f53",
@@ -361,17 +323,17 @@
         }
     ],
     "properties": [
+        "atomic_forces",
+        "band_structure",
         "density_of_states",
+        "fermi_energy",
+        "pressure",
+        "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "pressure",
-        "fermi_energy",
-        "atomic_forces",
-        "total_force",
-        "stress_tensor",
-        "band_structure"
+        "total_force"
     ],
-    "_id": "679acb2e-eca9-5351-b290-6248097410c1",
+    "_id": "eac65df9-c0eb-5441-896d-e995c5436620",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

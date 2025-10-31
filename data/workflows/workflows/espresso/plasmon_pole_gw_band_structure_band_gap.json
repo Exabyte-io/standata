@@ -2,7 +2,7 @@
     "name": "Plasmon-Pole GW Band Structure + Band Gap",
     "subworkflows": [
         {
-            "_id": "676a2dca-f7c2-5528-82f8-0a1c401c8725",
+            "_id": "72b79a87-8eef-5fe2-9d6c-6c9c256dd56c",
             "name": "Plasmon-Pole GW Band Structure + Band Gap",
             "application": {
                 "name": "espresso",
@@ -102,23 +102,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -210,11 +193,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "band_structure",
-                            "fermi_energy",
-                            "band_gaps"
-                        ],
                         "name": "gw.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -271,7 +249,7 @@
         {
             "name": "Plasmon-Pole GW Band Structure + Band Gap",
             "type": "subworkflow",
-            "_id": "676a2dca-f7c2-5528-82f8-0a1c401c8725",
+            "_id": "72b79a87-8eef-5fe2-9d6c-6c9c256dd56c",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "911d4cc1-cde5-5097-a7be-0e11f73113a7",
@@ -281,17 +259,17 @@
     ],
     "properties": [
         "atomic_forces",
+        "band_gaps",
+        "band_structure",
+        "fermi_energy",
         "fermi_energy",
         "pressure",
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force",
-        "band_structure",
-        "fermi_energy",
-        "band_gaps"
+        "total_force"
     ],
-    "_id": "8b6b3196-edc5-5235-824a-37f0f6bf51b7",
+    "_id": "bbc13126-f0de-57ff-8248-5c67f81e097b",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

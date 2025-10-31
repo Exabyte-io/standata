@@ -2,7 +2,7 @@
     "name": "Total Energy",
     "subworkflows": [
         {
-            "_id": "a27b9ca8-5618-528e-8f40-37c27883984f",
+            "_id": "a16677f9-bb5b-54b5-9f97-c2af8c073184",
             "name": "Total Energy",
             "application": {
                 "name": "espresso",
@@ -97,23 +97,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -174,7 +157,7 @@
         {
             "name": "Total Energy",
             "type": "subworkflow",
-            "_id": "a27b9ca8-5618-528e-8f40-37c27883984f",
+            "_id": "a16677f9-bb5b-54b5-9f97-c2af8c073184",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "6059d61a-6a92-5657-9130-02208639aff8",
@@ -191,7 +174,7 @@
         "total_energy_contributions",
         "total_force"
     ],
-    "_id": "6e937035-b03b-5b2c-a2ba-28f1f49d4a3d",
+    "_id": "9dc14660-d212-5eec-9989-c4a35a6fe437",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

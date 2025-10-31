@@ -2,7 +2,7 @@
     "name": "Band Structure - HSE",
     "subworkflows": [
         {
-            "_id": "42482965-357f-5f35-9609-1f26eb845bca",
+            "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
             "name": "Preliminary SCF Calculation",
             "application": {
                 "name": "espresso",
@@ -97,23 +97,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -170,7 +153,7 @@
             ]
         },
         {
-            "_id": "f10f2337-a692-5d33-b8d8-076e31cede39",
+            "_id": "a2785cc5-2427-5c7a-b30f-7077475b948c",
             "name": "Extract KPOINTS",
             "application": {
                 "name": "python",
@@ -218,10 +201,6 @@
                         "isDefault": true,
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "file_content",
-                            "workflow:pyml_predict"
                         ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -272,7 +251,7 @@
             ]
         },
         {
-            "_id": "ffbba351-b294-5ec4-8fda-fee0d975e6d5",
+            "_id": "e47ca302-96f2-5726-9b4c-f34cdfaa7f72",
             "name": "Main HSE Run",
             "application": {
                 "name": "espresso",
@@ -367,23 +346,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -468,9 +430,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "band_structure"
-                        ],
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -512,7 +471,7 @@
         {
             "name": "Preliminary SCF Calculation",
             "type": "subworkflow",
-            "_id": "42482965-357f-5f35-9609-1f26eb845bca",
+            "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "b6a2b27a-0fec-5e0e-8974-073ee9d2ad83",
@@ -523,7 +482,7 @@
         {
             "name": "Extract KPOINTS",
             "type": "subworkflow",
-            "_id": "f10f2337-a692-5d33-b8d8-076e31cede39",
+            "_id": "a2785cc5-2427-5c7a-b30f-7077475b948c",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "65789b0a-cfe2-5062-a53e-89f71112fb57",
@@ -534,7 +493,7 @@
         {
             "name": "Main HSE Run",
             "type": "subworkflow",
-            "_id": "ffbba351-b294-5ec4-8fda-fee0d975e6d5",
+            "_id": "e47ca302-96f2-5726-9b4c-f34cdfaa7f72",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "8f4c63a3-a06a-5f73-88d7-a57d7958b91d",
@@ -551,7 +510,7 @@
         "total_energy_contributions",
         "total_force"
     ],
-    "_id": "1d44965f-b2ca-5155-a125-fa40bbf1f2bd",
+    "_id": "9d0fae7b-c910-5e7a-9c28-95bbb00de0f9",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

@@ -1,6 +1,6 @@
 {
     "isMultiMaterial": true,
-    "_id": "7f9bcdd7-45e4-5409-86a3-54f7a542a811",
+    "_id": "c9034468-df28-5357-8912-02226f919042",
     "name": "Nudged Elastic Band (NEB)",
     "application": {
         "name": "espresso"
@@ -57,10 +57,6 @@
             "executable": {
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile"
                 ],
                 "name": "neb.x",
                 "schemaVersion": "2022.8.16",

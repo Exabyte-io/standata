@@ -3,7 +3,7 @@
     "subworkflows": [
         {
             "systemName": "vasp-variable-cell-relaxation",
-            "_id": "c8246dea-d0be-50f0-af61-2bd60eaa0f72",
+            "_id": "542f7e87-cf65-5579-952c-ddd9611ac558",
             "name": "Variable-cell Relaxation",
             "application": {
                 "name": "vasp",
@@ -106,25 +106,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "band_structure",
-                            "density_of_states",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force",
-                            "zero_point_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "potential_profile",
-                            "charge_density_profile"
-                        ],
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
@@ -221,7 +202,7 @@
         {
             "name": "Variable-cell Relaxation",
             "type": "subworkflow",
-            "_id": "c8246dea-d0be-50f0-af61-2bd60eaa0f72",
+            "_id": "542f7e87-cf65-5579-952c-ddd9611ac558",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "8f6e9590-6a87-584b-abd7-1fb98253054c",
@@ -230,15 +211,15 @@
         }
     ],
     "properties": [
-        "total_energy",
         "atomic_forces",
         "fermi_energy",
+        "final_structure",
         "pressure",
         "stress_tensor",
-        "total_force",
-        "final_structure"
+        "total_energy",
+        "total_force"
     ],
-    "_id": "cdd87c53-de79-57c4-9bd9-1930e89a0635",
+    "_id": "949bb80d-67b0-55c5-9050-dc446b5a2d06",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

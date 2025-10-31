@@ -1,5 +1,5 @@
 {
-    "_id": "bf4198d0-b040-5b07-84cb-f854aa6b7113",
+    "_id": "0de669f6-a455-5dae-b331-19dc85f7090f",
     "name": "Effective Screening Medium (ESM)",
     "application": {
         "name": "espresso"
@@ -94,23 +94,6 @@
                     "standard_output",
                     "convergence_ionic",
                     "convergence_electronic"
-                ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "charge_density_profile",
-                    "density_of_states",
-                    "fermi_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "potential_profile",
-                    "pressure",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force"
                 ],
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"

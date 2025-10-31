@@ -2,7 +2,7 @@
     "name": "Total Energy",
     "subworkflows": [
         {
-            "_id": "a27b9ca8-5618-528e-8f40-37c27883984f",
+            "_id": "1cd988fa-03f2-5b8c-aa72-8d7e50554988",
             "name": "Total Energy",
             "application": {
                 "name": "vasp",
@@ -98,25 +98,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "band_structure",
-                            "density_of_states",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force",
-                            "zero_point_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "potential_profile",
-                            "charge_density_profile"
-                        ],
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
@@ -206,7 +187,7 @@
         {
             "name": "Total Energy",
             "type": "subworkflow",
-            "_id": "a27b9ca8-5618-528e-8f40-37c27883984f",
+            "_id": "1cd988fa-03f2-5b8c-aa72-8d7e50554988",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "6059d61a-6a92-5657-9130-02208639aff8",
@@ -215,15 +196,15 @@
         }
     ],
     "properties": [
+        "atomic_forces",
+        "fermi_energy",
+        "pressure",
+        "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "pressure",
-        "fermi_energy",
-        "atomic_forces",
-        "total_force",
-        "stress_tensor"
+        "total_force"
     ],
-    "_id": "6e937035-b03b-5b2c-a2ba-28f1f49d4a3d",
+    "_id": "9dc14660-d212-5eec-9989-c4a35a6fe437",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

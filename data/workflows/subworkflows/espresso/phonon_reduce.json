@@ -1,5 +1,5 @@
 {
-    "_id": "e5f7d226-7d0d-56d8-8538-80bdb5168875",
+    "_id": "545a66e2-dfbe-513e-acaf-d79d0d139b9c",
     "name": "reduce",
     "application": {
         "name": "espresso"
@@ -49,11 +49,6 @@
             "executable": {
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "phonon_dos",
-                    "phonon_dispersions",
-                    "zero_point_energy"
                 ],
                 "name": "ph.x",
                 "schemaVersion": "2022.8.16",
@@ -122,7 +117,6 @@
                 "monitors": [
                     "standard_output"
                 ],
-                "results": [],
                 "name": "q2r.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
@@ -189,10 +183,6 @@
             "executable": {
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "phonon_dos",
-                    "phonon_dispersions"
                 ],
                 "name": "matdyn.x",
                 "schemaVersion": "2022.8.16",
@@ -266,10 +256,6 @@
             "executable": {
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "phonon_dos",
-                    "phonon_dispersions"
                 ],
                 "name": "matdyn.x",
                 "schemaVersion": "2022.8.16",

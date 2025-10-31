@@ -1,5 +1,5 @@
 {
-    "_id": "ffbba351-b294-5ec4-8fda-fee0d975e6d5",
+    "_id": "e47ca302-96f2-5726-9b4c-f34cdfaa7f72",
     "name": "Main HSE Run",
     "application": {
         "name": "espresso"
@@ -87,23 +87,6 @@
                     "convergence_ionic",
                     "convergence_electronic"
                 ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "charge_density_profile",
-                    "density_of_states",
-                    "fermi_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "potential_profile",
-                    "pressure",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force"
-                ],
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"
             },
@@ -187,9 +170,6 @@
             "executable": {
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "band_structure"
                 ],
                 "name": "bands.x",
                 "schemaVersion": "2022.8.16",

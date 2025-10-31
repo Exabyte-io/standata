@@ -2,7 +2,7 @@
     "name": "Density of States",
     "subworkflows": [
         {
-            "_id": "270b9cbc-ae88-5194-b5f5-c32d88d9d306",
+            "_id": "2cf317f3-3306-5a96-bc9b-e9103ebcd5be",
             "name": "Density of States",
             "application": {
                 "name": "espresso",
@@ -100,23 +100,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -212,23 +195,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -308,9 +274,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "density_of_states"
-                        ],
                         "name": "projwfc.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -355,7 +318,7 @@
         {
             "name": "Density of States",
             "type": "subworkflow",
-            "_id": "270b9cbc-ae88-5194-b5f5-c32d88d9d306",
+            "_id": "2cf317f3-3306-5a96-bc9b-e9103ebcd5be",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "3e64fdb4-ab5b-52a0-a1d5-51343c49481c",
@@ -365,17 +328,17 @@
     ],
     "properties": [
         "atomic_forces",
+        "band_gaps",
+        "density_of_states",
+        "fermi_energy",
         "fermi_energy",
         "pressure",
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force",
-        "fermi_energy",
-        "band_gaps",
-        "density_of_states"
+        "total_force"
     ],
-    "_id": "d5cc3c12-48e2-5e75-821c-43defa8ed1e4",
+    "_id": "5cdfd525-d906-5778-aced-a6db56acdb17",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

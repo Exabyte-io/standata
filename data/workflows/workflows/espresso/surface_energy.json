@@ -2,7 +2,7 @@
     "name": "Surface Energy",
     "subworkflows": [
         {
-            "_id": "9e47f966-4caa-559b-8a05-fa51a55644bc",
+            "_id": "3e05a2b5-4171-54a2-9d2d-9e46118a56bf",
             "name": "Surface Energy",
             "application": {
                 "name": "espresso",
@@ -440,23 +440,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -580,7 +563,7 @@
         {
             "name": "Surface Energy",
             "type": "subworkflow",
-            "_id": "9e47f966-4caa-559b-8a05-fa51a55644bc",
+            "_id": "3e05a2b5-4171-54a2-9d2d-9e46118a56bf",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "d81dc9ce-bb50-5bc6-af1d-e5ede03bb0a6",
@@ -593,12 +576,12 @@
         "fermi_energy",
         "pressure",
         "stress_tensor",
+        "surface_energy",
         "total_energy",
         "total_energy_contributions",
-        "total_force",
-        "surface_energy"
+        "total_force"
     ],
-    "_id": "54417d08-f6f8-5b0f-bb09-26d8683005c5",
+    "_id": "61d0a57d-05be-53a8-b148-97ddff4d3a05",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

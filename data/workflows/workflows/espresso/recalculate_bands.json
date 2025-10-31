@@ -2,7 +2,7 @@
     "name": "Recalculate Bands",
     "subworkflows": [
         {
-            "_id": "0bccd5f3-32dd-5a68-a981-5127ee549170",
+            "_id": "64551dfb-e529-5d8d-9092-ff268f4da134",
             "name": "Recalculate Bands",
             "application": {
                 "name": "espresso",
@@ -69,23 +69,6 @@
                             "standard_output",
                             "convergence_ionic",
                             "convergence_electronic"
-                        ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -161,9 +144,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "band_structure"
-                        ],
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -205,7 +185,7 @@
         {
             "name": "Recalculate Bands",
             "type": "subworkflow",
-            "_id": "0bccd5f3-32dd-5a68-a981-5127ee549170",
+            "_id": "64551dfb-e529-5d8d-9092-ff268f4da134",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "e8b72a45-765e-565f-ab17-c91a21aec09d",
@@ -216,7 +196,7 @@
     "properties": [
         "band_structure"
     ],
-    "_id": "13b428bf-9aec-59a3-8705-536612a35bde",
+    "_id": "0c288012-218b-5d0e-a401-5347171a4c38",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

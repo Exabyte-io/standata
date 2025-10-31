@@ -2,7 +2,7 @@
     "name": "Zero Point Energy",
     "subworkflows": [
         {
-            "_id": "8c05e783-0094-530d-94c1-a87848e9218c",
+            "_id": "2667054e-3c04-50a9-bd95-55c530d727c9",
             "name": "Zero Point Energy",
             "application": {
                 "name": "vasp",
@@ -101,25 +101,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "band_structure",
-                            "density_of_states",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force",
-                            "zero_point_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "potential_profile",
-                            "charge_density_profile"
-                        ],
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
@@ -213,7 +194,7 @@
         {
             "name": "Zero Point Energy",
             "type": "subworkflow",
-            "_id": "8c05e783-0094-530d-94c1-a87848e9218c",
+            "_id": "2667054e-3c04-50a9-bd95-55c530d727c9",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "d906bd20-eb92-5a01-a0e2-c81a2d9b2a41",
@@ -222,15 +203,15 @@
         }
     ],
     "properties": [
-        "total_energy",
+        "atomic_forces",
         "fermi_energy",
         "pressure",
-        "atomic_forces",
         "stress_tensor",
+        "total_energy",
         "total_force",
         "zero_point_energy"
     ],
-    "_id": "c7e07486-cf31-57fd-a52b-da1b71215391",
+    "_id": "bdd98c3e-9781-5edd-9325-c5b52437e270",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

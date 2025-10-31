@@ -2,7 +2,7 @@
     "name": "Effective Screening Medium (ESM) Relax",
     "subworkflows": [
         {
-            "_id": "0c209663-2035-5431-941d-a7e0b6930ca3",
+            "_id": "69728792-afeb-50aa-9b4e-6974a90f676a",
             "name": "Effective Screening Medium (ESM) Relax",
             "application": {
                 "name": "espresso",
@@ -105,23 +105,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -187,7 +170,7 @@
         {
             "name": "Effective Screening Medium (ESM) Relax",
             "type": "subworkflow",
-            "_id": "0c209663-2035-5431-941d-a7e0b6930ca3",
+            "_id": "69728792-afeb-50aa-9b4e-6974a90f676a",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "f0733dc9-f3ad-5a1c-82fc-515edc0276b6",
@@ -196,17 +179,17 @@
         }
     ],
     "properties": [
+        "atomic_forces",
+        "charge_density_profile",
+        "fermi_energy",
+        "potential_profile",
+        "pressure",
+        "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "pressure",
-        "fermi_energy",
-        "atomic_forces",
-        "total_force",
-        "stress_tensor",
-        "potential_profile",
-        "charge_density_profile"
+        "total_force"
     ],
-    "_id": "9eeab5a8-e994-51c9-9806-3815970c56c4",
+    "_id": "50bc0318-dc54-5b83-86b2-8ff0e28633b3",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

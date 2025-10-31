@@ -2,7 +2,7 @@
     "name": "Fixed-cell Relaxation",
     "subworkflows": [
         {
-            "_id": "1a0d970b-ddcb-55a3-9582-3538c19d7fb1",
+            "_id": "fb75e249-5489-5146-bd8a-786d33330d9c",
             "name": "Fixed-cell Relaxation",
             "application": {
                 "name": "espresso",
@@ -100,23 +100,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -178,7 +161,7 @@
         {
             "name": "Fixed-cell Relaxation",
             "type": "subworkflow",
-            "_id": "1a0d970b-ddcb-55a3-9582-3538c19d7fb1",
+            "_id": "fb75e249-5489-5146-bd8a-786d33330d9c",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "0de8c4c8-b722-5cd2-ae68-b484262e0a01",
@@ -187,15 +170,15 @@
         }
     ],
     "properties": [
-        "total_energy",
-        "fermi_energy",
-        "pressure",
         "atomic_forces",
-        "total_force",
+        "fermi_energy",
+        "final_structure",
+        "pressure",
         "stress_tensor",
-        "final_structure"
+        "total_energy",
+        "total_force"
     ],
-    "_id": "abaf204b-b1cf-550b-a79e-7adea4fdd97d",
+    "_id": "55b36923-52be-50c3-80a7-14a8fc29f9a8",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

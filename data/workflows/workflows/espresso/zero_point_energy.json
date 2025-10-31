@@ -2,7 +2,7 @@
     "name": "Zero Point Energy",
     "subworkflows": [
         {
-            "_id": "8c05e783-0094-530d-94c1-a87848e9218c",
+            "_id": "151538cc-9e71-5269-8b9e-cb5977151227",
             "name": "Zero Point Energy",
             "application": {
                 "name": "espresso",
@@ -98,23 +98,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -200,11 +183,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "phonon_dos",
-                            "phonon_dispersions",
-                            "zero_point_energy"
-                        ],
                         "name": "ph.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -249,7 +227,7 @@
         {
             "name": "Zero Point Energy",
             "type": "subworkflow",
-            "_id": "8c05e783-0094-530d-94c1-a87848e9218c",
+            "_id": "151538cc-9e71-5269-8b9e-cb5977151227",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "d906bd20-eb92-5a01-a0e2-c81a2d9b2a41",
@@ -267,7 +245,7 @@
         "total_force",
         "zero_point_energy"
     ],
-    "_id": "c7e07486-cf31-57fd-a52b-da1b71215391",
+    "_id": "fa0f9a8d-f327-5405-af7d-cbc6ea384b3f",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

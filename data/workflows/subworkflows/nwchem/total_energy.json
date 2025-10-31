@@ -1,5 +1,5 @@
 {
-    "_id": "a27b9ca8-5618-528e-8f40-37c27883984f",
+    "_id": "9e7a15b7-0b7d-5a8e-be7f-b8fcacd5cc13",
     "name": "Total Energy",
     "application": {
         "name": "nwchem"
@@ -60,10 +60,6 @@
                 ],
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "total_energy",
-                    "total_energy_contributions"
                 ],
                 "name": "nwchem",
                 "schemaVersion": "2022.8.16"

@@ -1,5 +1,5 @@
 {
-    "_id": "c7e535a9-7a24-578e-afd6-4a2d0658d44c",
+    "_id": "30acc5cd-54e6-5f05-aafd-413ee8a69aa1",
     "name": "Machine Learning",
     "application": {
         "name": "python"
@@ -44,10 +44,6 @@
                 "isDefault": true,
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "file_content",
-                    "workflow:pyml_predict"
                 ],
                 "name": "python",
                 "schemaVersion": "2022.8.16"
@@ -129,10 +125,6 @@
                 "monitors": [
                     "standard_output"
                 ],
-                "results": [
-                    "file_content",
-                    "workflow:pyml_predict"
-                ],
                 "name": "python",
                 "schemaVersion": "2022.8.16"
             },
@@ -207,10 +199,6 @@
                 "isDefault": true,
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "file_content",
-                    "workflow:pyml_predict"
                 ],
                 "name": "python",
                 "schemaVersion": "2022.8.16"
@@ -291,10 +279,6 @@
                 "monitors": [
                     "standard_output"
                 ],
-                "results": [
-                    "file_content",
-                    "workflow:pyml_predict"
-                ],
                 "name": "python",
                 "schemaVersion": "2022.8.16"
             },
@@ -373,10 +357,6 @@
                 "isDefault": true,
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "file_content",
-                    "workflow:pyml_predict"
                 ],
                 "name": "python",
                 "schemaVersion": "2022.8.16"
@@ -468,10 +448,6 @@
                 "isDefault": true,
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "file_content",
-                    "workflow:pyml_predict"
                 ],
                 "name": "python",
                 "schemaVersion": "2022.8.16"

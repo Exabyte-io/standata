@@ -2,7 +2,7 @@
     "name": "K-point Convergence",
     "subworkflows": [
         {
-            "_id": "6da556a0-befe-55ca-91fc-a2c5c916711f",
+            "_id": "ff6a8fbc-2202-5786-9a26-67c843417d0b",
             "name": "K-point Convergence",
             "application": {
                 "name": "espresso",
@@ -184,23 +184,6 @@
                             "standard_output",
                             "convergence_ionic",
                             "convergence_electronic"
-                        ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -402,7 +385,7 @@
         {
             "name": "K-point Convergence",
             "type": "subworkflow",
-            "_id": "6da556a0-befe-55ca-91fc-a2c5c916711f",
+            "_id": "ff6a8fbc-2202-5786-9a26-67c843417d0b",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "a34eec2c-cdb2-537d-88c0-ed1d7b205879",
@@ -411,14 +394,14 @@
         }
     ],
     "properties": [
-        "total_energy",
+        "atomic_forces",
         "fermi_energy",
         "pressure",
-        "atomic_forces",
-        "total_force",
-        "stress_tensor"
+        "stress_tensor",
+        "total_energy",
+        "total_force"
     ],
-    "_id": "edee2f0b-e486-5e42-8997-63188f3f40c7",
+    "_id": "cfed476b-7c0d-5e46-a60e-56eff3dfee91",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
