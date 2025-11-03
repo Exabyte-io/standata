@@ -1,9 +1,9 @@
 {
-    "name": "Bandstructure with spin magnetism - QE",
+    "name": "Dielectric Function",
     "subworkflows": [
         {
-            "_id": "3018cf08-9c29-5030-b544-24acbaca3829",
-            "name": "Bandstructure with spin magnetism",
+            "_id": "d88fed1c-946e-5e73-85ba-5744d2203fe0",
+            "name": "Compute Dielectric Function",
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -22,14 +22,16 @@
                 "total_energy",
                 "total_energy_contributions",
                 "total_force",
-                "band_structure"
+                "fermi_energy",
+                "band_gaps",
+                "dielectric_tensor"
             ],
             "model": {
                 "type": "dft",
                 "subtype": "gga",
                 "method": {
                     "type": "pseudopotential",
-                    "subtype": "us",
+                    "subtype": "nc",
                     "data": {}
                 },
                 "functional": {
@@ -41,7 +43,7 @@
             "units": [
                 {
                     "type": "execution",
-                    "name": "pw_scf_magn",
+                    "name": "pw_scf",
                     "head": true,
                     "results": [
                         {
@@ -74,7 +76,7 @@
                             "name": "convergence_electronic"
                         }
                     ],
-                    "flowchartId": "c229d2a0-3c19-5f13-b3e0-ceb86cb9fbc1",
+                    "flowchartId": "9fc7a088-5533-5f70-bb33-f676ec65f565",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -119,9 +121,10 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "isDefault": true,
                         "input": [
                             {
-                                "name": "pw_scf_magn.in"
+                                "name": "pw_scf.in"
                             }
                         ],
                         "results": [
@@ -139,17 +142,16 @@
                         ],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
-                        "name": "pw_scf_magn",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
+                        "name": "pw_scf",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
                     "input": [
                         {
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP_WITH_LABELS }}\n    nspin = 2\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n{%- if collinearMagnetization.isTotalMagnetization %}\n    tot_magnetization = {{ collinearMagnetization.totalMagnetization }}\n{%- else %}\n{%- for item in collinearMagnetization.startingMagnetization %}\n    starting_magnetization({{ item.index }}) = {{ item.value }} {% endfor -%}\n{%- endif %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES_WITH_LABELS }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "name": "pw_scf_magn.in",
+                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                            "name": "pw_scf.in",
                             "contextProviders": [
                                 {
                                     "name": "KGridFormDataManager"
@@ -159,26 +161,49 @@
                                 },
                                 {
                                     "name": "PlanewaveCutoffDataManager"
-                                },
-                                {
-                                    "name": "CollinearMagnetizationDataManager"
                                 }
                             ],
                             "applicationName": "espresso",
                             "executableName": "pw.x",
-                            "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    nspin = 2\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n    starting_magnetization(1) = 0 \n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
+                            "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "ea06c333-0cc7-51d4-bd98-cc53fa0844d1"
+                    "next": "3b230ec3-0791-52f7-a4db-625390b8718f"
+                },
+                {
+                    "name": "Set No-Symmetry Flag",
+                    "type": "assignment",
+                    "operand": "NO_SYMMETRY_NO_INVERSION",
+                    "value": true,
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "3b230ec3-0791-52f7-a4db-625390b8718f",
+                    "tags": [],
+                    "head": false,
+                    "next": "7b4c726e-3c46-501a-9a3a-ca19e06de5f0",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "version": "6.3",
+                        "isDefault": true,
+                        "hasAdvancedComputeOptions": true,
+                        "schemaVersion": "2022.8.16"
+                    }
                 },
                 {
                     "type": "execution",
-                    "name": "pw_bands_magn",
+                    "name": "pw_nscf",
                     "head": false,
                     "results": [
                         {
-                            "name": "band_structure"
+                            "name": "fermi_energy"
+                        },
+                        {
+                            "name": "band_gaps"
                         }
                     ],
                     "monitors": [
@@ -186,7 +211,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "ea06c333-0cc7-51d4-bd98-cc53fa0844d1",
+                    "flowchartId": "7b4c726e-3c46-501a-9a3a-ca19e06de5f0",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -233,18 +258,19 @@
                     "flavor": {
                         "input": [
                             {
-                                "name": "pw_bands_magn.in"
+                                "name": "pw_nscf.in"
                             }
                         ],
                         "results": [
-                            "band_structure"
+                            "fermi_energy",
+                            "band_gaps"
                         ],
                         "monitors": [
                             "standard_output"
                         ],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
-                        "name": "pw_bands_magn",
+                        "name": "pw_nscf",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -253,41 +279,42 @@
                     "tags": [],
                     "input": [
                         {
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP_WITH_LABELS }}\n    nspin = 2\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n{%- if collinearMagnetization.isTotalMagnetization %}\n    tot_magnetization = {{ collinearMagnetization.totalMagnetization }}\n{%- else %}\n{%- for item in collinearMagnetization.startingMagnetization %}\n    starting_magnetization({{ item.index }}) = {{ item.value }} {% endfor -%}\n{%- endif %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES_WITH_LABELS }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
-                            "name": "pw_bands_magn.in",
+                            "content": "&CONTROL\n    calculation = 'nscf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n{%- if subworkflowContext.NO_SYMMETRY_NO_INVERSION %}\n    nosym = .true.\n    noinv = .true.\n{%- endif %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                            "name": "pw_nscf.in",
                             "contextProviders": [
                                 {
-                                    "name": "KPathFormDataManager"
+                                    "name": "KGridFormDataManager"
                                 },
                                 {
                                     "name": "QEPWXInputDataManager"
                                 },
                                 {
                                     "name": "PlanewaveCutoffDataManager"
-                                },
-                                {
-                                    "name": "CollinearMagnetizationDataManager"
                                 }
                             ],
                             "applicationName": "espresso",
                             "executableName": "pw.x",
-                            "rendered": "&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    nspin = 2\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n    starting_magnetization(1) = 0 \n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal_b\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n",
+                            "rendered": "&CONTROL\n    calculation = 'nscf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "a8e4de4b-1f55-50e8-a712-ce0b37c04752"
+                    "next": "8c2ec8bd-cdbf-54a0-a217-64a7a26eaebb"
                 },
                 {
                     "type": "execution",
-                    "name": "bands_spin_up",
+                    "name": "Compute dielectric function",
                     "head": false,
-                    "results": [],
+                    "results": [
+                        {
+                            "name": "dielectric_tensor"
+                        }
+                    ],
                     "monitors": [
                         {
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "a8e4de4b-1f55-50e8-a712-ce0b37c04752",
+                    "flowchartId": "8c2ec8bd-cdbf-54a0-a217-64a7a26eaebb",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -305,89 +332,27 @@
                             "standard_output"
                         ],
                         "results": [
-                            "band_structure"
+                            "dielectric_tensor"
                         ],
-                        "name": "bands.x",
+                        "name": "epsilon.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
                         "input": [
                             {
-                                "name": "bands_spin_up.in"
+                                "name": "epsilon.in"
                             }
-                        ],
-                        "monitors": [
-                            "standard_output"
-                        ],
-                        "applicationName": "espresso",
-                        "executableName": "bands.x",
-                        "name": "bands_spin_up",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "input": [
-                        {
-                            "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands_up.dat'{% endraw %}\n    spin_component = 1\n    no_overlap = .true.\n/\n",
-                            "name": "bands_spin_up.in",
-                            "contextProviders": [],
-                            "applicationName": "espresso",
-                            "executableName": "bands.x",
-                            "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands_up.dat'\n    spin_component = 1\n    no_overlap = .true.\n/\n",
-                            "schemaVersion": "2022.8.16"
-                        }
-                    ],
-                    "next": "fd937050-a3f3-5d4d-bb50-d150a93ea5e0"
-                },
-                {
-                    "type": "execution",
-                    "name": "bands_spin_dn",
-                    "head": false,
-                    "results": [],
-                    "monitors": [
-                        {
-                            "name": "standard_output"
-                        }
-                    ],
-                    "flowchartId": "fd937050-a3f3-5d4d-bb50-d150a93ea5e0",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "version": "6.3",
-                        "isDefault": true,
-                        "hasAdvancedComputeOptions": true,
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "executable": {
-                        "monitors": [
-                            "standard_output"
                         ],
                         "results": [
-                            "band_structure"
-                        ],
-                        "name": "bands.x",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
-                    },
-                    "flavor": {
-                        "input": [
-                            {
-                                "name": "bands_spin_dn.in"
-                            }
+                            "dielectric_tensor"
                         ],
                         "monitors": [
                             "standard_output"
                         ],
                         "applicationName": "espresso",
-                        "executableName": "bands.x",
-                        "name": "bands_spin_dn",
+                        "executableName": "epsilon.x",
+                        "name": "dielectric_tensor",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -396,12 +361,12 @@
                     "tags": [],
                     "input": [
                         {
-                            "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands_dn.dat'{% endraw %}\n    spin_component = 2\n    no_overlap = .true.\n/\n",
-                            "name": "bands_spin_dn.in",
+                            "content": "&inputpp\n    calculation = \"eps\"\n    prefix = \"__prefix__\"\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n/\n\n&energy_grid\n    smeartype = \"gauss\"\n    intersmear = 0.2\n    intrasmear = 0.0\n    wmin =  0.0\n    wmax = 30.0\n    nw = 500\n    shift = 0.0\n/\n",
+                            "name": "epsilon.in",
                             "contextProviders": [],
                             "applicationName": "espresso",
-                            "executableName": "bands.x",
-                            "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands_dn.dat'\n    spin_component = 2\n    no_overlap = .true.\n/\n",
+                            "executableName": "epsilon.x",
+                            "rendered": "&inputpp\n    calculation = \"eps\"\n    prefix = \"__prefix__\"\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n/\n\n&energy_grid\n    smeartype = \"gauss\"\n    intersmear = 0.2\n    intrasmear = 0.0\n    wmin =  0.0\n    wmax = 30.0\n    nw = 500\n    shift = 0.0\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
                     ]
@@ -411,12 +376,12 @@
     ],
     "units": [
         {
-            "name": "Bandstructure with spin magnetism",
+            "name": "Compute Dielectric Function",
             "type": "subworkflow",
-            "_id": "3018cf08-9c29-5030-b544-24acbaca3829",
+            "_id": "d88fed1c-946e-5e73-85ba-5744d2203fe0",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "41e70bc1-ba00-5871-9289-4d57c7b79452",
+            "flowchartId": "8408f3c4-1c42-5ffe-bc29-bee11b5a6a05",
             "tags": [],
             "head": true
         }
@@ -429,13 +394,14 @@
         "total_energy",
         "total_energy_contributions",
         "total_force",
-        "band_structure"
+        "fermi_energy",
+        "band_gaps",
+        "dielectric_tensor"
     ],
-    "_id": "3d4ada29-e3e8-552a-aadb-9dfe92489d19",
+    "_id": "f76b4343-2968-54af-8aae-1e6bdff79e13",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
-    "tags": [],
     "application": {
         "name": "espresso"
     }

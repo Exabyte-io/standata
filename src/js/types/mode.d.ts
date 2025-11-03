@@ -1,3 +1,4 @@
+// TODO: remove when @mat3ra/mode provides its own types
 declare module "@mat3ra/mode" {
     export class MethodConversionHandler {
         static convertToSimple(cm: any, allMethods?: any[]): any;
