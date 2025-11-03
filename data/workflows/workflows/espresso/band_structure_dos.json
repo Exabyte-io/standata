@@ -1,9 +1,9 @@
 {
-    "name": "Dielectric Function",
+    "name": "Band Structure + Density of States",
     "subworkflows": [
         {
-            "_id": "d88fed1c-946e-5e73-85ba-5744d2203fe0",
-            "name": "Compute Dielectric Function",
+            "_id": "3feb4c5d-62a3-5a2f-88e2-9eeb28aff2d4",
+            "name": "Band Structure + Density of States",
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -22,16 +22,17 @@
                 "total_energy",
                 "total_energy_contributions",
                 "total_force",
+                "band_structure",
                 "fermi_energy",
                 "band_gaps",
-                "dielectric_tensor"
+                "density_of_states"
             ],
             "model": {
                 "type": "dft",
                 "subtype": "gga",
                 "method": {
                     "type": "pseudopotential",
-                    "subtype": "nc",
+                    "subtype": "us",
                     "data": {}
                 },
                 "functional": {
@@ -169,20 +170,25 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "3b230ec3-0791-52f7-a4db-625390b8718f"
+                    "next": "d618df45-5af3-5da5-8882-d74a27e00b04"
                 },
                 {
-                    "name": "Set No-Symmetry Flag",
-                    "type": "assignment",
-                    "operand": "NO_SYMMETRY_NO_INVERSION",
-                    "value": true,
-                    "input": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "flowchartId": "3b230ec3-0791-52f7-a4db-625390b8718f",
-                    "tags": [],
+                    "type": "execution",
+                    "name": "pw_bands",
                     "head": false,
-                    "next": "7b4c726e-3c46-501a-9a3a-ca19e06de5f0",
+                    "results": [
+                        {
+                            "name": "band_structure"
+                        }
+                    ],
+                    "monitors": [
+                        {
+                            "name": "standard_output"
+                        }
+                    ],
+                    "flowchartId": "d618df45-5af3-5da5-8882-d74a27e00b04",
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -192,7 +198,146 @@
                         "isDefault": true,
                         "hasAdvancedComputeOptions": true,
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "executable": {
+                        "isDefault": true,
+                        "hasAdvancedComputeOptions": true,
+                        "postProcessors": [
+                            "remove_non_zero_weight_kpoints"
+                        ],
+                        "monitors": [
+                            "standard_output",
+                            "convergence_ionic",
+                            "convergence_electronic"
+                        ],
+                        "results": [
+                            "atomic_forces",
+                            "band_gaps",
+                            "charge_density_profile",
+                            "density_of_states",
+                            "fermi_energy",
+                            "final_structure",
+                            "magnetic_moments",
+                            "potential_profile",
+                            "pressure",
+                            "reaction_energy_barrier",
+                            "reaction_energy_profile",
+                            "stress_tensor",
+                            "total_energy",
+                            "total_energy_contributions",
+                            "total_force"
+                        ],
+                        "name": "pw.x",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "flavor": {
+                        "input": [
+                            {
+                                "name": "pw_bands.in"
+                            }
+                        ],
+                        "results": [
+                            "band_structure"
+                        ],
+                        "monitors": [
+                            "standard_output"
+                        ],
+                        "applicationName": "espresso",
+                        "executableName": "pw.x",
+                        "name": "pw_bands",
+                        "schemaVersion": "2022.8.16",
+                        "isDefault": false
+                    },
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "input": [
+                        {
+                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
+                            "name": "pw_bands.in",
+                            "contextProviders": [
+                                {
+                                    "name": "KPathFormDataManager"
+                                },
+                                {
+                                    "name": "QEPWXInputDataManager"
+                                },
+                                {
+                                    "name": "PlanewaveCutoffDataManager"
+                                }
+                            ],
+                            "applicationName": "espresso",
+                            "executableName": "pw.x",
+                            "rendered": "&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal_b\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n",
+                            "schemaVersion": "2022.8.16"
+                        }
+                    ],
+                    "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2"
+                },
+                {
+                    "type": "execution",
+                    "name": "bands",
+                    "head": false,
+                    "results": [],
+                    "monitors": [
+                        {
+                            "name": "standard_output"
+                        }
+                    ],
+                    "flowchartId": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "version": "6.3",
+                        "isDefault": true,
+                        "hasAdvancedComputeOptions": true,
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "executable": {
+                        "monitors": [
+                            "standard_output"
+                        ],
+                        "results": [
+                            "band_structure"
+                        ],
+                        "name": "bands.x",
+                        "schemaVersion": "2022.8.16",
+                        "isDefault": false
+                    },
+                    "flavor": {
+                        "input": [
+                            {
+                                "name": "bands.in"
+                            }
+                        ],
+                        "monitors": [
+                            "standard_output"
+                        ],
+                        "applicationName": "espresso",
+                        "executableName": "bands.x",
+                        "name": "bands",
+                        "schemaVersion": "2022.8.16",
+                        "isDefault": false
+                    },
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "input": [
+                        {
+                            "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
+                            "name": "bands.in",
+                            "contextProviders": [],
+                            "applicationName": "espresso",
+                            "executableName": "bands.x",
+                            "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n",
+                            "schemaVersion": "2022.8.16"
+                        }
+                    ],
+                    "next": "7b4c726e-3c46-501a-9a3a-ca19e06de5f0"
                 },
                 {
                     "type": "execution",
@@ -298,15 +443,15 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "8c2ec8bd-cdbf-54a0-a217-64a7a26eaebb"
+                    "next": "3c8ffaf7-d01d-57e3-a0ae-118b3ecfc651"
                 },
                 {
                     "type": "execution",
-                    "name": "Compute dielectric function",
+                    "name": "projwfc",
                     "head": false,
                     "results": [
                         {
-                            "name": "dielectric_tensor"
+                            "name": "density_of_states"
                         }
                     ],
                     "monitors": [
@@ -314,7 +459,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "8c2ec8bd-cdbf-54a0-a217-64a7a26eaebb",
+                    "flowchartId": "3c8ffaf7-d01d-57e3-a0ae-118b3ecfc651",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -332,27 +477,27 @@
                             "standard_output"
                         ],
                         "results": [
-                            "dielectric_tensor"
+                            "density_of_states"
                         ],
-                        "name": "epsilon.x",
+                        "name": "projwfc.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
                         "input": [
                             {
-                                "name": "epsilon.in"
+                                "name": "projwfc.in"
                             }
                         ],
                         "results": [
-                            "dielectric_tensor"
+                            "density_of_states"
                         ],
                         "monitors": [
                             "standard_output"
                         ],
                         "applicationName": "espresso",
-                        "executableName": "epsilon.x",
-                        "name": "dielectric_tensor",
+                        "executableName": "projwfc.x",
+                        "name": "projwfc",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -361,12 +506,12 @@
                     "tags": [],
                     "input": [
                         {
-                            "content": "&inputpp\n    calculation = \"eps\"\n    prefix = \"__prefix__\"\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n/\n\n&energy_grid\n    smeartype = \"gauss\"\n    intersmear = 0.2\n    intrasmear = 0.0\n    wmin =  0.0\n    wmax = 30.0\n    nw = 500\n    shift = 0.0\n/\n",
-                            "name": "epsilon.in",
+                            "content": "&PROJWFC\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    degauss = 0.01\n    deltaE = 0.05\n/\n",
+                            "name": "projwfc.in",
                             "contextProviders": [],
                             "applicationName": "espresso",
-                            "executableName": "epsilon.x",
-                            "rendered": "&inputpp\n    calculation = \"eps\"\n    prefix = \"__prefix__\"\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n/\n\n&energy_grid\n    smeartype = \"gauss\"\n    intersmear = 0.2\n    intrasmear = 0.0\n    wmin =  0.0\n    wmax = 30.0\n    nw = 500\n    shift = 0.0\n/\n",
+                            "executableName": "projwfc.x",
+                            "rendered": "&PROJWFC\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    degauss = 0.01\n    deltaE = 0.05\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
                     ]
@@ -376,12 +521,12 @@
     ],
     "units": [
         {
-            "name": "Compute Dielectric Function",
+            "name": "Band Structure + Density of States",
             "type": "subworkflow",
-            "_id": "d88fed1c-946e-5e73-85ba-5744d2203fe0",
+            "_id": "3feb4c5d-62a3-5a2f-88e2-9eeb28aff2d4",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "8408f3c4-1c42-5ffe-bc29-bee11b5a6a05",
+            "flowchartId": "8a098bb9-73b1-5e84-bfc7-b783e02d0f53",
             "tags": [],
             "head": true
         }
@@ -394,15 +539,15 @@
         "total_energy",
         "total_energy_contributions",
         "total_force",
+        "band_structure",
         "fermi_energy",
         "band_gaps",
-        "dielectric_tensor"
+        "density_of_states"
     ],
-    "_id": "f76b4343-2968-54af-8aae-1e6bdff79e13",
+    "_id": "679acb2e-eca9-5351-b290-6248097410c1",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
-    "tags": [],
     "application": {
         "name": "espresso"
     }

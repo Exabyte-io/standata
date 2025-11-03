@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ModelMethodFilter = void 0;
+exports.filterMethodsByModel = exports.ModelMethodFilter = void 0;
 const modelMethodMap_json_1 = __importDefault(require("./runtime_data/models/modelMethodMap.json"));
 class ModelMethodFilter {
     constructor() {
@@ -71,3 +71,18 @@ class ModelMethodFilter {
     }
 }
 exports.ModelMethodFilter = ModelMethodFilter;
+/**
+ * Convenience function to filter methods by model
+ * This is a helper wrapper around ModelMethodFilter.getCompatibleMethods()
+ *
+ * @param methodList - Array of method configs to filter
+ * @param model - Model config to use for filtering
+ * @returns Filtered array of compatible method configs
+ */
+function filterMethodsByModel({ methodList, model, }) {
+    if (!model)
+        return [];
+    const modelMethodFilter = new ModelMethodFilter();
+    return modelMethodFilter.getCompatibleMethods(model, methodList);
+}
+exports.filterMethodsByModel = filterMethodsByModel;

@@ -5,9 +5,6 @@ application:
 model:
   name: DFTModel
 method:
-  config:
-    type: pseudopotential
-    subtype: paw
   name: PseudopotentialMethod
 units:
   - config:

@@ -34,6 +34,7 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
             const subworkflows = this.workflowSubforkflowMapByApplication.subworkflows[appName];
             if (!subworkflows) return;
             Object.keys(subworkflows).forEach((subworkflowName) => {
+                const subworkflowData = subworkflows[subworkflowName];
                 const subworkflow = createSubworkflowByName({
                     appName,
                     swfName: subworkflowName,
@@ -42,13 +43,13 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
                     UnitFactoryCls: UnitFactory,
                     unitBuilders: builders,
                 });
-                const tags = subworkflows[subworkflowName]?.tags;
-                configs.push({
+                const config = this.buildConfigFromEntityData(
+                    subworkflowData,
+                    subworkflowName,
                     appName,
-                    safeName: subworkflowName,
-                    config: (subworkflow as any).toJSON(),
-                    ...(tags ? { tags } : {}),
-                });
+                    subworkflow,
+                );
+                configs.push(config);
             });
         });
         return configs;

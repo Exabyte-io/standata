@@ -1,9 +1,9 @@
 {
-    "name": "Band Structure + Density of States",
+    "name": "Phonon Density of States + Dispersions",
     "subworkflows": [
         {
-            "_id": "3feb4c5d-62a3-5a2f-88e2-9eeb28aff2d4",
-            "name": "Band Structure + Density of States",
+            "_id": "ad43c051-4f92-5051-a477-e9fd2772737a",
+            "name": "Phonon Density of States + Dispersions",
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -22,10 +22,8 @@
                 "total_energy",
                 "total_energy_contributions",
                 "total_force",
-                "band_structure",
-                "fermi_energy",
-                "band_gaps",
-                "density_of_states"
+                "phonon_dos",
+                "phonon_dispersions"
             ],
             "model": {
                 "type": "dft",
@@ -170,15 +168,15 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "d618df45-5af3-5da5-8882-d74a27e00b04"
+                    "next": "13bcafce-56ef-5b47-b079-317495eb6933"
                 },
                 {
                     "type": "execution",
-                    "name": "pw_bands",
+                    "name": "ph_grid",
                     "head": false,
                     "results": [
                         {
-                            "name": "band_structure"
+                            "name": "phonon_dos"
                         }
                     ],
                     "monitors": [
@@ -186,7 +184,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "d618df45-5af3-5da5-8882-d74a27e00b04",
+                    "flowchartId": "13bcafce-56ef-5b47-b079-317495eb6933",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -200,51 +198,33 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "isDefault": true,
-                        "hasAdvancedComputeOptions": true,
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
-                        ],
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
+                            "standard_output"
                         ],
                         "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
+                            "phonon_dos",
+                            "phonon_dispersions",
+                            "zero_point_energy"
                         ],
-                        "name": "pw.x",
-                        "schemaVersion": "2022.8.16"
+                        "name": "ph.x",
+                        "schemaVersion": "2022.8.16",
+                        "isDefault": false
                     },
                     "flavor": {
                         "input": [
                             {
-                                "name": "pw_bands.in"
+                                "name": "ph_grid.in"
                             }
                         ],
                         "results": [
-                            "band_structure"
+                            "phonon_dos"
                         ],
                         "monitors": [
                             "standard_output"
                         ],
                         "applicationName": "espresso",
-                        "executableName": "pw.x",
-                        "name": "pw_bands",
+                        "executableName": "ph.x",
+                        "name": "ph_grid",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -253,30 +233,24 @@
                     "tags": [],
                     "input": [
                         {
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
-                            "name": "pw_bands.in",
+                            "content": "&INPUTPH\n    tr2_ph = 1.0d-12\n    asr = .true.\n    search_sym = .false.\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    fildyn = 'dyn'\n    ldisp = .true.\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
+                            "name": "ph_grid.in",
                             "contextProviders": [
                                 {
-                                    "name": "KPathFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
+                                    "name": "QGridFormDataManager"
                                 }
                             ],
                             "applicationName": "espresso",
-                            "executableName": "pw.x",
-                            "rendered": "&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal_b\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n",
+                            "executableName": "ph.x",
+                            "rendered": "&INPUTPH\n    tr2_ph = 1.0d-12\n    asr = .true.\n    search_sym = .false.\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    fildyn = 'dyn'\n    ldisp = .true.\n    nq1 = 1\n    nq2 = 1\n    nq3 = 1\n    \n/\n",
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2"
+                    "next": "3b4507a7-9244-540b-abe0-66bceab700f5"
                 },
                 {
                     "type": "execution",
-                    "name": "bands",
+                    "name": "q2r",
                     "head": false,
                     "results": [],
                     "monitors": [
@@ -284,7 +258,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
+                    "flowchartId": "3b4507a7-9244-540b-abe0-66bceab700f5",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -301,25 +275,24 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "band_structure"
-                        ],
-                        "name": "bands.x",
+                        "results": [],
+                        "name": "q2r.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
                         "input": [
                             {
-                                "name": "bands.in"
+                                "name": "q2r.in"
                             }
                         ],
+                        "results": [],
                         "monitors": [
                             "standard_output"
                         ],
                         "applicationName": "espresso",
-                        "executableName": "bands.x",
-                        "name": "bands",
+                        "executableName": "q2r.x",
+                        "name": "q2r",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -328,27 +301,24 @@
                     "tags": [],
                     "input": [
                         {
-                            "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
-                            "name": "bands.in",
+                            "content": "&INPUT\n    fildyn = 'dyn'\n    zasr = 'simple'\n    flfrc = 'force_constants.fc'\n/\n",
+                            "name": "q2r.in",
                             "contextProviders": [],
                             "applicationName": "espresso",
-                            "executableName": "bands.x",
-                            "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n",
+                            "executableName": "q2r.x",
+                            "rendered": "&INPUT\n    fildyn = 'dyn'\n    zasr = 'simple'\n    flfrc = 'force_constants.fc'\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "7b4c726e-3c46-501a-9a3a-ca19e06de5f0"
+                    "next": "8fe6a24b-c994-55a2-a448-88657292e8c2"
                 },
                 {
                     "type": "execution",
-                    "name": "pw_nscf",
+                    "name": "matdyn_grid",
                     "head": false,
                     "results": [
                         {
-                            "name": "fermi_energy"
-                        },
-                        {
-                            "name": "band_gaps"
+                            "name": "phonon_dos"
                         }
                     ],
                     "monitors": [
@@ -356,7 +326,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "7b4c726e-3c46-501a-9a3a-ca19e06de5f0",
+                    "flowchartId": "8fe6a24b-c994-55a2-a448-88657292e8c2",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -370,52 +340,32 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "isDefault": true,
-                        "hasAdvancedComputeOptions": true,
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
-                        ],
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
+                            "standard_output"
                         ],
                         "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
+                            "phonon_dos",
+                            "phonon_dispersions"
                         ],
-                        "name": "pw.x",
-                        "schemaVersion": "2022.8.16"
+                        "name": "matdyn.x",
+                        "schemaVersion": "2022.8.16",
+                        "isDefault": false
                     },
                     "flavor": {
                         "input": [
                             {
-                                "name": "pw_nscf.in"
+                                "name": "matdyn_grid.in"
                             }
-                        ],
-                        "results": [
-                            "fermi_energy",
-                            "band_gaps"
                         ],
                         "monitors": [
                             "standard_output"
                         ],
+                        "results": [
+                            "phonon_dos"
+                        ],
                         "applicationName": "espresso",
-                        "executableName": "pw.x",
-                        "name": "pw_nscf",
+                        "executableName": "matdyn.x",
+                        "name": "matdyn_grid",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -424,34 +374,28 @@
                     "tags": [],
                     "input": [
                         {
-                            "content": "&CONTROL\n    calculation = 'nscf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n{%- if subworkflowContext.NO_SYMMETRY_NO_INVERSION %}\n    nosym = .true.\n    noinv = .true.\n{%- endif %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "name": "pw_nscf.in",
+                            "content": "&INPUT\n    asr = 'simple'\n    flfrc = 'force_constants.fc'\n    flfrq = 'frequencies.freq'\n    dos = .true.\n    fldos = 'phonon_dos.out'\n    deltaE = 1.d0\n    {% for d in igrid.dimensions -%}\n    nk{{loop.index}} = {{d}}\n    {% endfor %}\n /\n",
+                            "name": "matdyn_grid.in",
                             "contextProviders": [
                                 {
-                                    "name": "KGridFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
+                                    "name": "IGridFormDataManager"
                                 }
                             ],
                             "applicationName": "espresso",
-                            "executableName": "pw.x",
-                            "rendered": "&CONTROL\n    calculation = 'nscf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
+                            "executableName": "matdyn.x",
+                            "rendered": "&INPUT\n    asr = 'simple'\n    flfrc = 'force_constants.fc'\n    flfrq = 'frequencies.freq'\n    dos = .true.\n    fldos = 'phonon_dos.out'\n    deltaE = 1.d0\n    nk1 = 3\n    nk2 = 3\n    nk3 = 3\n    \n /\n",
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "3c8ffaf7-d01d-57e3-a0ae-118b3ecfc651"
+                    "next": "a7fded20-889b-54fc-bbb0-456e82689ab1"
                 },
                 {
                     "type": "execution",
-                    "name": "projwfc",
+                    "name": "matdyn_path",
                     "head": false,
                     "results": [
                         {
-                            "name": "density_of_states"
+                            "name": "phonon_dispersions"
                         }
                     ],
                     "monitors": [
@@ -459,7 +403,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "3c8ffaf7-d01d-57e3-a0ae-118b3ecfc651",
+                    "flowchartId": "a7fded20-889b-54fc-bbb0-456e82689ab1",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -477,27 +421,28 @@
                             "standard_output"
                         ],
                         "results": [
-                            "density_of_states"
+                            "phonon_dos",
+                            "phonon_dispersions"
                         ],
-                        "name": "projwfc.x",
+                        "name": "matdyn.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
                         "input": [
                             {
-                                "name": "projwfc.in"
+                                "name": "matdyn_path.in"
                             }
-                        ],
-                        "results": [
-                            "density_of_states"
                         ],
                         "monitors": [
                             "standard_output"
                         ],
+                        "results": [
+                            "phonon_dispersions"
+                        ],
                         "applicationName": "espresso",
-                        "executableName": "projwfc.x",
-                        "name": "projwfc",
+                        "executableName": "matdyn.x",
+                        "name": "matdyn_path",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -506,12 +451,16 @@
                     "tags": [],
                     "input": [
                         {
-                            "content": "&PROJWFC\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    degauss = 0.01\n    deltaE = 0.05\n/\n",
-                            "name": "projwfc.in",
-                            "contextProviders": [],
+                            "content": "&INPUT\n    asr = 'simple'\n    flfrc ='force_constants.fc'\n    flfrq ='frequencies.freq'\n    flvec ='normal_modes.out'\n    q_in_band_form = .true.\n /\n{{ipath.length}}\n{% for point in ipath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
+                            "name": "matdyn_path.in",
+                            "contextProviders": [
+                                {
+                                    "name": "IPathFormDataManager"
+                                }
+                            ],
                             "applicationName": "espresso",
-                            "executableName": "projwfc.x",
-                            "rendered": "&PROJWFC\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    degauss = 0.01\n    deltaE = 0.05\n/\n",
+                            "executableName": "matdyn.x",
+                            "rendered": "&INPUT\n    asr = 'simple'\n    flfrc ='force_constants.fc'\n    flfrq ='frequencies.freq'\n    flvec ='normal_modes.out'\n    q_in_band_form = .true.\n /\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n",
                             "schemaVersion": "2022.8.16"
                         }
                     ]
@@ -521,12 +470,12 @@
     ],
     "units": [
         {
-            "name": "Band Structure + Density of States",
+            "name": "Phonon Density of States + Dispersions",
             "type": "subworkflow",
-            "_id": "3feb4c5d-62a3-5a2f-88e2-9eeb28aff2d4",
+            "_id": "ad43c051-4f92-5051-a477-e9fd2772737a",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "8a098bb9-73b1-5e84-bfc7-b783e02d0f53",
+            "flowchartId": "7897ed9a-6b48-5a79-a50e-28797f3912a5",
             "tags": [],
             "head": true
         }
@@ -539,16 +488,14 @@
         "total_energy",
         "total_energy_contributions",
         "total_force",
-        "band_structure",
-        "fermi_energy",
-        "band_gaps",
-        "density_of_states"
+        "phonon_dos",
+        "phonon_dos",
+        "phonon_dispersions"
     ],
-    "_id": "679acb2e-eca9-5351-b290-6248097410c1",
+    "_id": "7efb957b-4446-516a-9b0e-ba5b062f9dbc",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
-    "tags": [],
     "application": {
         "name": "espresso"
     }

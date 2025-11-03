@@ -14,7 +14,7 @@ def read_build_config():
     """
     Read formatting settings from build-config.js
     """
-    with open('build-config.js', 'r') as f:
+    with open('build-config.ts', 'r') as f:
         content = f.read()
         # Extract jsonFormat.spaces value
         match = re.search(r'jsonFormat:\s*{\s*spaces:\s*(\d+)', content)

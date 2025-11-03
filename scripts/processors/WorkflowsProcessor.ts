@@ -1,7 +1,8 @@
-import { Utils } from "@mat3ra/utils";
 import serverUtils from "@mat3ra/utils/server";
 // @ts-ignore
-import { builders, createWorkflowConfigs, Subworkflow, UnitFactory, Workflow } from "@mat3ra/wode";
+import { builders, Subworkflow, UnitFactory, Workflow } from "@mat3ra/wode";
+// @ts-ignore
+import { createWorkflow } from "@mat3ra/wode/dist/workflows/create";
 import * as path from "path";
 
 import { BUILD_CONFIG } from "../../build-config";
@@ -36,27 +37,33 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
     protected buildEntityConfigs(): any[] {
         const WorkflowCls = Workflow as any;
         this.enablePredefinedIds();
-        const configs = createWorkflowConfigs({
-            applications: this.applications,
-            WorkflowCls,
-            workflowSubworkflowMapByApplication: this.workflowSubforkflowMapByApplication,
-            SubworkflowCls: Subworkflow,
-            UnitFactoryCls: UnitFactory,
-            unitBuilders: { ...builders, Workflow: WorkflowCls },
-        } as any) as any[];
-        configs.forEach((c) => {
-            c.appName = c.application;
-            c.safeName = Utils.str.createSafeFilename(c.name);
-            c.tags = this.getTagsForWorkflowByName(c.application, c.name);
+        const configs: { appName: string; safeName: string; config: any; tags?: any[] }[] = [];
+        // For each application (from application_data.yml), look into its folder under assets/workflows/workflows/{appName}
+        // and load all YAML files, preserving their relative paths to use as safeName in build/data output structure
+        this.applications.forEach((appName) => {
+            const workflows = this.workflowSubforkflowMapByApplication.workflows[appName];
+            if (!workflows) return;
+            Object.keys(workflows).forEach((workflowKey) => {
+                const workflowData = workflows[workflowKey];
+                const workflow = createWorkflow({
+                    appName,
+                    workflowData,
+                    workflowSubworkflowMapByApplication: this.workflowSubforkflowMapByApplication,
+                    workflowCls: WorkflowCls,
+                    SubworkflowCls: Subworkflow,
+                    UnitFactoryCls: UnitFactory,
+                    unitBuilders: { ...builders, Workflow: WorkflowCls },
+                });
+                const config = this.buildConfigFromEntityData(
+                    workflowData,
+                    workflowKey,
+                    appName,
+                    workflow,
+                );
+                configs.push(config);
+            });
         });
         return configs;
-    }
-
-    protected getTagsForWorkflowByName(appName: string, name: string): void {
-        const asset: any = Object.values(this.entityMapByApplication?.[appName]).find(
-            (a: any) => a.name === name,
-        );
-        return asset?.tags || [];
     }
 
     protected writeWorkflowSubforkflowMapByApplication(): void {

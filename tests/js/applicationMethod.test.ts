@@ -3,9 +3,9 @@ import { expect } from "chai";
 import { ApplicationMethodStandata, MethodStandata, ModelStandata } from "../../src/js";
 
 describe("Application Method Standata", () => {
-    let methodStandata: ApplicationMethodStandata;
-    let categorizedMethodList: any[];
-    let categorizedModelList: any[]
+    let methodStandata: ApplicationMethodStandata,
+        categorizedMethodList: any[],
+        categorizedModelList: any[];
 
     beforeEach(() => {
         methodStandata = new ApplicationMethodStandata();
@@ -73,7 +73,6 @@ describe("Application Method Standata", () => {
             flavor: sampleModel.flavor,
         });
 
-
         expect(filteredMethods).to.be.an("array");
 
         // Step 2: Further filter by application parameters (like in webapp)
@@ -90,6 +89,33 @@ describe("Application Method Standata", () => {
             expect(filteredMethods).to.include(method);
             expect(method).to.have.property("path");
             expect(method).to.have.property("name");
+        });
+    });
+
+    it("can filter methods for each application", () => {
+        const testCases = [
+            { name: "vasp", expectedCount: 2, expectedNameValues: ["Projector-augmented Wave"] },
+            {
+                name: "espresso",
+                expectedCount: 4,
+                expectedNameValues: ["Norm-conserving", "Projector-augmented Wave", "Ultra-soft"],
+            },
+        ];
+        testCases.forEach(({ name, expectedCount, expectedNameValues }) => {
+            const methods = methodStandata.findByApplicationParameters({
+                methodList: categorizedMethodList,
+                name,
+            });
+            expect(methods).to.be.an("array");
+            expect(methods.length).to.equal(expectedCount);
+
+            methods.forEach((method) => {
+                expect(method).to.have.property("name");
+                const isMatch = expectedNameValues.some((expected) =>
+                    method.name.toLowerCase().includes(expected.toLowerCase()),
+                );
+                expect(isMatch).to.be.true;
+            });
         });
     });
 
@@ -114,5 +140,35 @@ describe("Application Method Standata", () => {
         expect(methods).to.be.an("array");
         // For non-existent version, the filter falls back to all methods for the application
         expect(methods.length).to.equal(categorizedMethodList.length);
+    });
+
+    it("can get default method config for VASP application", () => {
+        const defaultConfig = methodStandata.getDefaultMethodConfigForApplication({
+            name: "vasp",
+            version: "5.4.4",
+            build: "GNU",
+            executable: "vasp",
+            flavor: "vasp",
+        });
+        console.log("defaultConfig", defaultConfig);
+
+        expect(defaultConfig).to.be.an("object");
+        expect(defaultConfig.type).to.equal("pseudopotential");
+        expect(defaultConfig.subtype).to.equal("paw");
+    });
+
+    it("can get default method config for Espresso application", () => {
+        const defaultConfig = methodStandata.getDefaultMethodConfigForApplication({
+            name: "espresso",
+            version: "6.3",
+            build: "GNU",
+            executable: "pw.x",
+            flavor: "pw_scf",
+        });
+        console.log("defaultConfig", defaultConfig);
+
+        expect(defaultConfig).to.be.an("object");
+        expect(defaultConfig.type).to.equal("pseudopotential");
+        expect(defaultConfig.subtype).to.equal("us");
     });
 });

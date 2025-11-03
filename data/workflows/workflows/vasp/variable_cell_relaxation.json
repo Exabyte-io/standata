@@ -29,7 +29,7 @@
                 "subtype": "gga",
                 "method": {
                     "type": "pseudopotential",
-                    "subtype": "us",
+                    "subtype": "paw",
                     "data": {}
                 },
                 "functional": {
@@ -242,7 +242,9 @@
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
-    "tags": [],
+    "tags": [
+        "variable-cell_relaxation"
+    ],
     "application": {
         "name": "vasp"
     }

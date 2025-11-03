@@ -1,9 +1,9 @@
 {
-    "name": "Phonon Density of States",
+    "name": "Dielectric Function",
     "subworkflows": [
         {
-            "_id": "81984134-07cc-5de0-865d-eb30cb4632ff",
-            "name": "Phonon Density of States",
+            "_id": "d88fed1c-946e-5e73-85ba-5744d2203fe0",
+            "name": "Compute Dielectric Function",
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -22,14 +22,16 @@
                 "total_energy",
                 "total_energy_contributions",
                 "total_force",
-                "phonon_dos"
+                "fermi_energy",
+                "band_gaps",
+                "dielectric_tensor"
             ],
             "model": {
                 "type": "dft",
                 "subtype": "gga",
                 "method": {
                     "type": "pseudopotential",
-                    "subtype": "us",
+                    "subtype": "nc",
                     "data": {}
                 },
                 "functional": {
@@ -167,15 +169,41 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "13bcafce-56ef-5b47-b079-317495eb6933"
+                    "next": "3b230ec3-0791-52f7-a4db-625390b8718f"
+                },
+                {
+                    "name": "Set No-Symmetry Flag",
+                    "type": "assignment",
+                    "operand": "NO_SYMMETRY_NO_INVERSION",
+                    "value": true,
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "3b230ec3-0791-52f7-a4db-625390b8718f",
+                    "tags": [],
+                    "head": false,
+                    "next": "7b4c726e-3c46-501a-9a3a-ca19e06de5f0",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "version": "6.3",
+                        "isDefault": true,
+                        "hasAdvancedComputeOptions": true,
+                        "schemaVersion": "2022.8.16"
+                    }
                 },
                 {
                     "type": "execution",
-                    "name": "ph_grid",
+                    "name": "pw_nscf",
                     "head": false,
                     "results": [
                         {
-                            "name": "phonon_dos"
+                            "name": "fermi_energy"
+                        },
+                        {
+                            "name": "band_gaps"
                         }
                     ],
                     "monitors": [
@@ -183,7 +211,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "13bcafce-56ef-5b47-b079-317495eb6933",
+                    "flowchartId": "7b4c726e-3c46-501a-9a3a-ca19e06de5f0",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -197,33 +225,52 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "isDefault": true,
+                        "hasAdvancedComputeOptions": true,
+                        "postProcessors": [
+                            "remove_non_zero_weight_kpoints"
+                        ],
                         "monitors": [
-                            "standard_output"
+                            "standard_output",
+                            "convergence_ionic",
+                            "convergence_electronic"
                         ],
                         "results": [
-                            "phonon_dos",
-                            "phonon_dispersions",
-                            "zero_point_energy"
+                            "atomic_forces",
+                            "band_gaps",
+                            "charge_density_profile",
+                            "density_of_states",
+                            "fermi_energy",
+                            "final_structure",
+                            "magnetic_moments",
+                            "potential_profile",
+                            "pressure",
+                            "reaction_energy_barrier",
+                            "reaction_energy_profile",
+                            "stress_tensor",
+                            "total_energy",
+                            "total_energy_contributions",
+                            "total_force"
                         ],
-                        "name": "ph.x",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
+                        "name": "pw.x",
+                        "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
                         "input": [
                             {
-                                "name": "ph_grid.in"
+                                "name": "pw_nscf.in"
                             }
                         ],
                         "results": [
-                            "phonon_dos"
+                            "fermi_energy",
+                            "band_gaps"
                         ],
                         "monitors": [
                             "standard_output"
                         ],
                         "applicationName": "espresso",
-                        "executableName": "ph.x",
-                        "name": "ph_grid",
+                        "executableName": "pw.x",
+                        "name": "pw_nscf",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -232,32 +279,42 @@
                     "tags": [],
                     "input": [
                         {
-                            "content": "&INPUTPH\n    tr2_ph = 1.0d-12\n    asr = .true.\n    search_sym = .false.\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    fildyn = 'dyn'\n    ldisp = .true.\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
-                            "name": "ph_grid.in",
+                            "content": "&CONTROL\n    calculation = 'nscf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n{%- if subworkflowContext.NO_SYMMETRY_NO_INVERSION %}\n    nosym = .true.\n    noinv = .true.\n{%- endif %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                            "name": "pw_nscf.in",
                             "contextProviders": [
                                 {
-                                    "name": "QGridFormDataManager"
+                                    "name": "KGridFormDataManager"
+                                },
+                                {
+                                    "name": "QEPWXInputDataManager"
+                                },
+                                {
+                                    "name": "PlanewaveCutoffDataManager"
                                 }
                             ],
                             "applicationName": "espresso",
-                            "executableName": "ph.x",
-                            "rendered": "&INPUTPH\n    tr2_ph = 1.0d-12\n    asr = .true.\n    search_sym = .false.\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    fildyn = 'dyn'\n    ldisp = .true.\n    nq1 = 1\n    nq2 = 1\n    nq3 = 1\n    \n/\n",
+                            "executableName": "pw.x",
+                            "rendered": "&CONTROL\n    calculation = 'nscf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "3b4507a7-9244-540b-abe0-66bceab700f5"
+                    "next": "8c2ec8bd-cdbf-54a0-a217-64a7a26eaebb"
                 },
                 {
                     "type": "execution",
-                    "name": "q2r",
+                    "name": "Compute dielectric function",
                     "head": false,
-                    "results": [],
+                    "results": [
+                        {
+                            "name": "dielectric_tensor"
+                        }
+                    ],
                     "monitors": [
                         {
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "3b4507a7-9244-540b-abe0-66bceab700f5",
+                    "flowchartId": "8c2ec8bd-cdbf-54a0-a217-64a7a26eaebb",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -274,24 +331,28 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [],
-                        "name": "q2r.x",
+                        "results": [
+                            "dielectric_tensor"
+                        ],
+                        "name": "epsilon.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
                         "input": [
                             {
-                                "name": "q2r.in"
+                                "name": "epsilon.in"
                             }
                         ],
-                        "results": [],
+                        "results": [
+                            "dielectric_tensor"
+                        ],
                         "monitors": [
                             "standard_output"
                         ],
                         "applicationName": "espresso",
-                        "executableName": "q2r.x",
-                        "name": "q2r",
+                        "executableName": "epsilon.x",
+                        "name": "dielectric_tensor",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -300,89 +361,12 @@
                     "tags": [],
                     "input": [
                         {
-                            "content": "&INPUT\n    fildyn = 'dyn'\n    zasr = 'simple'\n    flfrc = 'force_constants.fc'\n/\n",
-                            "name": "q2r.in",
+                            "content": "&inputpp\n    calculation = \"eps\"\n    prefix = \"__prefix__\"\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n/\n\n&energy_grid\n    smeartype = \"gauss\"\n    intersmear = 0.2\n    intrasmear = 0.0\n    wmin =  0.0\n    wmax = 30.0\n    nw = 500\n    shift = 0.0\n/\n",
+                            "name": "epsilon.in",
                             "contextProviders": [],
                             "applicationName": "espresso",
-                            "executableName": "q2r.x",
-                            "rendered": "&INPUT\n    fildyn = 'dyn'\n    zasr = 'simple'\n    flfrc = 'force_constants.fc'\n/\n",
-                            "schemaVersion": "2022.8.16"
-                        }
-                    ],
-                    "next": "8fe6a24b-c994-55a2-a448-88657292e8c2"
-                },
-                {
-                    "type": "execution",
-                    "name": "matdyn_grid",
-                    "head": false,
-                    "results": [
-                        {
-                            "name": "phonon_dos"
-                        }
-                    ],
-                    "monitors": [
-                        {
-                            "name": "standard_output"
-                        }
-                    ],
-                    "flowchartId": "8fe6a24b-c994-55a2-a448-88657292e8c2",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "version": "6.3",
-                        "isDefault": true,
-                        "hasAdvancedComputeOptions": true,
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "executable": {
-                        "monitors": [
-                            "standard_output"
-                        ],
-                        "results": [
-                            "phonon_dos",
-                            "phonon_dispersions"
-                        ],
-                        "name": "matdyn.x",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
-                    },
-                    "flavor": {
-                        "input": [
-                            {
-                                "name": "matdyn_grid.in"
-                            }
-                        ],
-                        "monitors": [
-                            "standard_output"
-                        ],
-                        "results": [
-                            "phonon_dos"
-                        ],
-                        "applicationName": "espresso",
-                        "executableName": "matdyn.x",
-                        "name": "matdyn_grid",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "input": [
-                        {
-                            "content": "&INPUT\n    asr = 'simple'\n    flfrc = 'force_constants.fc'\n    flfrq = 'frequencies.freq'\n    dos = .true.\n    fldos = 'phonon_dos.out'\n    deltaE = 1.d0\n    {% for d in igrid.dimensions -%}\n    nk{{loop.index}} = {{d}}\n    {% endfor %}\n /\n",
-                            "name": "matdyn_grid.in",
-                            "contextProviders": [
-                                {
-                                    "name": "IGridFormDataManager"
-                                }
-                            ],
-                            "applicationName": "espresso",
-                            "executableName": "matdyn.x",
-                            "rendered": "&INPUT\n    asr = 'simple'\n    flfrc = 'force_constants.fc'\n    flfrq = 'frequencies.freq'\n    dos = .true.\n    fldos = 'phonon_dos.out'\n    deltaE = 1.d0\n    nk1 = 3\n    nk2 = 3\n    nk3 = 3\n    \n /\n",
+                            "executableName": "epsilon.x",
+                            "rendered": "&inputpp\n    calculation = \"eps\"\n    prefix = \"__prefix__\"\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n/\n\n&energy_grid\n    smeartype = \"gauss\"\n    intersmear = 0.2\n    intrasmear = 0.0\n    wmin =  0.0\n    wmax = 30.0\n    nw = 500\n    shift = 0.0\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
                     ]
@@ -392,12 +376,12 @@
     ],
     "units": [
         {
-            "name": "Phonon Density of States",
+            "name": "Compute Dielectric Function",
             "type": "subworkflow",
-            "_id": "81984134-07cc-5de0-865d-eb30cb4632ff",
+            "_id": "d88fed1c-946e-5e73-85ba-5744d2203fe0",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "1954e749-1d37-50e6-8ae7-7292f5ef59c0",
+            "flowchartId": "8408f3c4-1c42-5ffe-bc29-bee11b5a6a05",
             "tags": [],
             "head": true
         }
@@ -410,14 +394,14 @@
         "total_energy",
         "total_energy_contributions",
         "total_force",
-        "phonon_dos",
-        "phonon_dos"
+        "fermi_energy",
+        "band_gaps",
+        "dielectric_tensor"
     ],
-    "_id": "c4cbbb69-1015-50cf-8110-22540b001879",
+    "_id": "f76b4343-2968-54af-8aae-1e6bdff79e13",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
-    "tags": [],
     "application": {
         "name": "espresso"
     }

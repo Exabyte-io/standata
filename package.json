@@ -28,7 +28,9 @@
     },
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",
-        "@mat3ra/wode" : "2025.10.2-2",
+        "@mat3ra/ade": "^2025.10.2-0",
+        "@mat3ra/wode": "^2025.11.3-0",
+        "@mat3ra/mode": "^2025.11.3-0",
         "@mat3ra/utils": "2025.10.9-5",
         "@mat3ra/code": "^2025.8.7-0",
         "@mat3ra/tsconfig": "^2024.6.3-0",
@@ -62,7 +64,7 @@
     "scripts": {
         "build:categories": "ts-node src/js/cli.ts",
         "build:materials": "python scripts/materials/create_materials.py",
-        "build:workflows": "ts-node scripts/workflows/build_workflows.ts ",
+        "build:workflows": "ts-node scripts/workflows/build_workflows.ts",
         "build:applications": "ts-node scripts/applications/build_applications.ts",
         "build:models": "ts-node scripts/models/build_models.ts",
         "build:methods": "ts-node scripts/methods/build_methods.ts",
