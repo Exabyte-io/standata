@@ -1,9 +1,9 @@
 {
-    "name": "Phonon Density of States",
+    "name": "Phonon Density of States + Dispersions",
     "subworkflows": [
         {
-            "_id": "81984134-07cc-5de0-865d-eb30cb4632ff",
-            "name": "Phonon Density of States",
+            "_id": "ad43c051-4f92-5051-a477-e9fd2772737a",
+            "name": "Phonon Density of States + Dispersions",
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -22,7 +22,8 @@
                 "total_energy",
                 "total_energy_contributions",
                 "total_force",
-                "phonon_dos"
+                "phonon_dos",
+                "phonon_dispersions"
             ],
             "model": {
                 "type": "dft",
@@ -385,6 +386,83 @@
                             "rendered": "&INPUT\n    asr = 'simple'\n    flfrc = 'force_constants.fc'\n    flfrq = 'frequencies.freq'\n    dos = .true.\n    fldos = 'phonon_dos.out'\n    deltaE = 1.d0\n    nk1 = 3\n    nk2 = 3\n    nk3 = 3\n    \n /\n",
                             "schemaVersion": "2022.8.16"
                         }
+                    ],
+                    "next": "a7fded20-889b-54fc-bbb0-456e82689ab1"
+                },
+                {
+                    "type": "execution",
+                    "name": "matdyn_path",
+                    "head": false,
+                    "results": [
+                        {
+                            "name": "phonon_dispersions"
+                        }
+                    ],
+                    "monitors": [
+                        {
+                            "name": "standard_output"
+                        }
+                    ],
+                    "flowchartId": "a7fded20-889b-54fc-bbb0-456e82689ab1",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "version": "6.3",
+                        "isDefault": true,
+                        "hasAdvancedComputeOptions": true,
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "executable": {
+                        "monitors": [
+                            "standard_output"
+                        ],
+                        "results": [
+                            "phonon_dos",
+                            "phonon_dispersions"
+                        ],
+                        "name": "matdyn.x",
+                        "schemaVersion": "2022.8.16",
+                        "isDefault": false
+                    },
+                    "flavor": {
+                        "input": [
+                            {
+                                "name": "matdyn_path.in"
+                            }
+                        ],
+                        "monitors": [
+                            "standard_output"
+                        ],
+                        "results": [
+                            "phonon_dispersions"
+                        ],
+                        "applicationName": "espresso",
+                        "executableName": "matdyn.x",
+                        "name": "matdyn_path",
+                        "schemaVersion": "2022.8.16",
+                        "isDefault": false
+                    },
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "input": [
+                        {
+                            "content": "&INPUT\n    asr = 'simple'\n    flfrc ='force_constants.fc'\n    flfrq ='frequencies.freq'\n    flvec ='normal_modes.out'\n    q_in_band_form = .true.\n /\n{{ipath.length}}\n{% for point in ipath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
+                            "name": "matdyn_path.in",
+                            "contextProviders": [
+                                {
+                                    "name": "IPathFormDataManager"
+                                }
+                            ],
+                            "applicationName": "espresso",
+                            "executableName": "matdyn.x",
+                            "rendered": "&INPUT\n    asr = 'simple'\n    flfrc ='force_constants.fc'\n    flfrq ='frequencies.freq'\n    flvec ='normal_modes.out'\n    q_in_band_form = .true.\n /\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n",
+                            "schemaVersion": "2022.8.16"
+                        }
                     ]
                 }
             ]
@@ -392,12 +470,12 @@
     ],
     "units": [
         {
-            "name": "Phonon Density of States",
+            "name": "Phonon Density of States + Dispersions",
             "type": "subworkflow",
-            "_id": "81984134-07cc-5de0-865d-eb30cb4632ff",
+            "_id": "ad43c051-4f92-5051-a477-e9fd2772737a",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "1954e749-1d37-50e6-8ae7-7292f5ef59c0",
+            "flowchartId": "7897ed9a-6b48-5a79-a50e-28797f3912a5",
             "tags": [],
             "head": true
         }
@@ -411,13 +489,13 @@
         "total_energy_contributions",
         "total_force",
         "phonon_dos",
-        "phonon_dos"
+        "phonon_dos",
+        "phonon_dispersions"
     ],
-    "_id": "c4cbbb69-1015-50cf-8110-22540b001879",
+    "_id": "7efb957b-4446-516a-9b0e-ba5b062f9dbc",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
-    "tags": [],
     "application": {
         "name": "espresso"
     }

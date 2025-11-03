@@ -1,9 +1,9 @@
 {
-    "name": "Effective Screening Medium (ESM) Relax",
+    "name": "Effective Screening Medium (ESM)",
     "subworkflows": [
         {
-            "_id": "0c209663-2035-5431-941d-a7e0b6930ca3",
-            "name": "Effective Screening Medium (ESM) Relax",
+            "_id": "bf4198d0-b040-5b07-84cb-f854aa6b7113",
+            "name": "Effective Screening Medium (ESM)",
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -42,7 +42,7 @@
             "units": [
                 {
                     "type": "execution",
-                    "name": "pw_esm_relax",
+                    "name": "pw_esm",
                     "head": true,
                     "results": [
                         {
@@ -81,7 +81,7 @@
                             "name": "convergence_electronic"
                         }
                     ],
-                    "flowchartId": "a2bec506-1fdd-5125-a787-85f31cde20c1",
+                    "flowchartId": "2f487bc6-c237-53e4-bad5-be60369662cb",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -128,7 +128,7 @@
                     "flavor": {
                         "input": [
                             {
-                                "name": "pw_esm_relax.in"
+                                "name": "pw_esm.in"
                             }
                         ],
                         "results": [
@@ -148,7 +148,7 @@
                         ],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
-                        "name": "pw_esm_relax",
+                        "name": "pw_esm",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -157,8 +157,8 @@
                     "tags": [],
                     "input": [
                         {
-                            "content": "&CONTROL\n    calculation = 'relax'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n    assume_isolated = 'esm'\n    esm_bc = '{{ boundaryConditions.type }}'\n    fcp_mu = {{ boundaryConditions.targetFermiEnergy }}\n    esm_w = {{ boundaryConditions.offset }}\n    esm_efield = {{ boundaryConditions.electricField }}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "name": "pw_esm_relax.in",
+                            "content": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n    assume_isolated = 'esm'\n    esm_bc = '{{ boundaryConditions.type }}'\n    fcp_mu = {{ boundaryConditions.targetFermiEnergy }}\n    esm_w = {{ boundaryConditions.offset }}\n    esm_efield = {{ boundaryConditions.electricField }}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                            "name": "pw_esm.in",
                             "contextProviders": [
                                 {
                                     "name": "KGridFormDataManager"
@@ -175,7 +175,7 @@
                             ],
                             "applicationName": "espresso",
                             "executableName": "pw.x",
-                            "rendered": "&CONTROL\n    calculation = 'relax'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n    assume_isolated = 'esm'\n    esm_bc = 'pbc'\n    fcp_mu = 0\n    esm_w = 0\n    esm_efield = 0\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
+                            "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n    assume_isolated = 'esm'\n    esm_bc = 'pbc'\n    fcp_mu = 0\n    esm_w = 0\n    esm_efield = 0\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
                             "schemaVersion": "2022.8.16"
                         }
                     ]
@@ -185,12 +185,12 @@
     ],
     "units": [
         {
-            "name": "Effective Screening Medium (ESM) Relax",
+            "name": "Effective Screening Medium (ESM)",
             "type": "subworkflow",
-            "_id": "0c209663-2035-5431-941d-a7e0b6930ca3",
+            "_id": "bf4198d0-b040-5b07-84cb-f854aa6b7113",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "f0733dc9-f3ad-5a1c-82fc-515edc0276b6",
+            "flowchartId": "e7893fdf-0515-58a0-a9e1-0393bdc57d33",
             "tags": [],
             "head": true
         }
@@ -206,11 +206,10 @@
         "potential_profile",
         "charge_density_profile"
     ],
-    "_id": "9eeab5a8-e994-51c9-9806-3815970c56c4",
+    "_id": "613f9402-6830-5e43-a5b7-270a8b03a1fa",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
-    "tags": [],
     "application": {
         "name": "espresso"
     }
