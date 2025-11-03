@@ -258,6 +258,8 @@
     ],
     "properties": [
         "atomic_forces",
+        "band_gaps",
+        "fermi_energy",
         "fermi_energy",
         "pressure",
         "stress_tensor",
@@ -269,7 +271,6 @@
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
-    "tags": [],
     "application": {
         "name": "espresso"
     }

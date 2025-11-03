@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { Utils } from "@mat3ra/utils";
 // eslint-disable-next-line import/no-extraneous-dependencies
 // @ts-ignore
 import serverUtils from "@mat3ra/utils/server";
@@ -12,7 +13,6 @@ import { CategorizedEntityProcessor } from "./CategorizedEntityProcessor";
 import { AssetRecord, EntityProcessorOptions } from "./EntityProcessor";
 
 export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntityProcessor {
-    // TODO: get from applications yaml
     protected applications: string[] = [];
 
     public entityMapByApplication: Record<string, any>;
@@ -94,6 +94,29 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
             const pathForName = `${this.resolvedPaths.assetsDir}/${name}`;
             this.entityMapByApplication[name] = loadYAMLFilesAsMap(pathForName);
         });
+    }
+
+    protected getSafeNameFromPath(pathInSource: string | undefined, fallbackName: string): string {
+        return pathInSource || Utils.str.createSafeFilename(fallbackName);
+    }
+
+    protected buildConfigFromEntityData(
+        entityData: any,
+        entityKey: string,
+        appName: string,
+        entity: any,
+    ): { appName: string; safeName: string; config: any; tags?: any[] } {
+        const entityName = entity.prop ? entity.prop("name") : entityKey;
+        const pathInSource = entityData?.__path__;
+        const safeName = this.getSafeNameFromPath(pathInSource, entityName);
+        const tags = entityData?.tags;
+        const hasTags = tags && Array.isArray(tags) && tags.length > 0;
+        return {
+            appName,
+            safeName,
+            config: entity.toJSON(),
+            ...(hasTags ? { tags } : {}),
+        };
     }
 
     protected abstract buildEntityConfigs(): object[];
