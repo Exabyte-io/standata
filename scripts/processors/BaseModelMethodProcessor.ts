@@ -1,11 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import serverUtils from "@mat3ra/utils/server";
-import * as fs from "fs";
-import * as yaml from "js-yaml";
-import * as path from "path";
-
-import { BUILD_CONFIG } from "../../build-config";
-import { EntityProcessor, EntityProcessorOptions } from "./EntityProcessor";
+import { CategorizedEntityProcessor } from "./CategorizedEntityProcessor";
+import { EntityProcessorOptions } from "./EntityProcessor";
 
 export interface ModelMethodProcessorOptions extends EntityProcessorOptions {
     categoryCollectOptions?: {
@@ -15,7 +10,7 @@ export interface ModelMethodProcessorOptions extends EntityProcessorOptions {
     };
 }
 
-export abstract class BaseModelMethodProcessor extends EntityProcessor {
+export abstract class BaseModelMethodProcessor extends CategorizedEntityProcessor {
     protected readonly options: ModelMethodProcessorOptions;
 
     constructor(options: ModelMethodProcessorOptions) {
@@ -23,7 +18,7 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
         this.options = options;
     }
 
-    protected getCategoryCollectOptions() {
+    public getCategoryCollectOptions() {
         return {
             includeUnits: false,
             includeTags: false,
@@ -32,74 +27,7 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
         };
     }
 
-    public updateCategoriesFile(): void {
-        const { categoriesPath } = this;
-
-        const categoryKeys = this.options.categoryKeys || [];
-        const { includeUnits, includeTags, includeEntitiesMap } = this.getCategoryCollectOptions();
-
-        const categorySets: Record<string, Set<string>> = Object.fromEntries(
-            [...categoryKeys, includeTags ? "tags" : null]
-                .filter(Boolean)
-                .map((k) => [k as string, new Set<string>()]),
-        ) as any;
-        const entities: { filename: string; categories: string[] }[] = [];
-
-        const jsonFiles = this.findJsonFilesRecursively(this.resolvedPaths.dataDir);
-        for (const filePath of jsonFiles) {
-            try {
-                const data = serverUtils.json.readJSONFileSync(filePath) as any;
-                this.addCategoriesFromObject(data, categoryKeys, includeTags, categorySets);
-                if (includeUnits && Array.isArray((data as any)?.units)) {
-                    for (const u of (data as any).units) {
-                        this.addCategoriesFromObject(u, categoryKeys, includeTags, categorySets);
-                    }
-                }
-
-                if (includeEntitiesMap) {
-                    const relativePath = path.relative(this.resolvedPaths.dataDir, filePath);
-                    const flat = new Set<string>();
-                    this.addCategoriesToSet(data, categoryKeys, includeTags, flat);
-                    if (includeUnits && Array.isArray((data as any)?.units)) {
-                        for (const u of (data as any).units)
-                            this.addCategoriesToSet(u, categoryKeys, includeTags, flat);
-                    }
-                    entities.push({ filename: relativePath, categories: Array.from(flat).sort() });
-                }
-            } catch (e: any) {
-                console.error(`Error processing ${filePath}: ${e.message}`);
-            }
-        }
-
-        const categoriesOut: any = {};
-        categoryKeys.forEach((key) => {
-            const arr = Array.from((categorySets as any)[key]).sort();
-            if (arr.length > 0) categoriesOut[key] = arr;
-        });
-        if (includeTags) {
-            const tagsArr = Array.from((categorySets as any).tags || []).sort();
-            if (tagsArr.length > 0) categoriesOut.tags = tagsArr;
-        }
-
-        const payload = includeEntitiesMap
-            ? {
-                  categories: categoriesOut,
-                  entities: entities.sort((a, b) => a.filename.localeCompare(b.filename)),
-              }
-            : { categories: categoriesOut, entities: [] };
-
-        const yamlContent = yaml.dump(payload, {
-            indent: BUILD_CONFIG.yamlFormat.indent,
-            lineWidth: BUILD_CONFIG.yamlFormat.lineWidth,
-            sortKeys: BUILD_CONFIG.yamlFormat.sortKeys as boolean,
-        });
-
-        serverUtils.file.createDirIfNotExistsSync(path.dirname(categoriesPath));
-        fs.writeFileSync(categoriesPath, yamlContent, "utf-8");
-        console.log(`Categories file written to: ${categoriesPath}`);
-    }
-
-    protected addCategoriesFromObject(
+    public addCategoriesFromObject(
         obj: any,
         categoryKeys: string[],
         includeTags: boolean,
@@ -107,8 +35,8 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
     ): void {
         if (obj?.categories) {
             categoryKeys.forEach((key) => {
-                const value = obj.categories[key];
-                if (typeof value === "string" && value) (categorySets as any)[key].add(value);
+                const v = obj.categories[key];
+                if (typeof v === "string" && v) (categorySets as any)[key].add(v);
             });
         }
         if (includeTags && Array.isArray(obj?.tags)) {
@@ -116,7 +44,7 @@ export abstract class BaseModelMethodProcessor extends EntityProcessor {
         }
     }
 
-    protected addCategoriesToSet(
+    public addCategoriesToSet(
         obj: any,
         categoryKeys: string[],
         includeTags: boolean,
