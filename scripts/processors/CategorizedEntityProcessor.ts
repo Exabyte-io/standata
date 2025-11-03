@@ -90,8 +90,6 @@ export abstract class CategorizedEntityProcessor extends EntityProcessor {
               }
             : { categories: categoriesOut, entities: [] };
 
-        console.log({ payload });
-
         const yamlContent = yaml.dump(payload, {
             indent: BUILD_CONFIG.yamlFormat.indent,
             lineWidth: BUILD_CONFIG.yamlFormat.lineWidth,
@@ -112,7 +110,6 @@ export abstract class CategorizedEntityProcessor extends EntityProcessor {
         categoryKeys.forEach((key) => {
             const value = lodash.get(obj, key);
             if (typeof value === "string" && value) {
-                console.log({ categorySets });
                 (categorySets as any)[key].add(value);
             }
         });

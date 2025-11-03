@@ -1,0 +1,208 @@
+{
+    "systemName": "vasp-variable-cell-relaxation",
+    "_id": "c8246dea-d0be-50f0-af61-2bd60eaa0f72",
+    "name": "Variable-cell Relaxation",
+    "application": {
+        "name": "vasp"
+    },
+    "properties": [
+        "total_energy",
+        "atomic_forces",
+        "fermi_energy",
+        "pressure",
+        "stress_tensor",
+        "total_force",
+        "final_structure"
+    ],
+    "model": {
+        "type": "dft",
+        "subtype": "gga",
+        "method": {
+            "type": "pseudopotential",
+            "subtype": "us",
+            "data": {}
+        },
+        "functional": {
+            "slug": "pbe"
+        },
+        "refiners": [],
+        "modifiers": []
+    },
+    "units": [
+        {
+            "type": "execution",
+            "name": "vasp_vc_relax",
+            "head": true,
+            "results": [
+                {
+                    "name": "total_energy"
+                },
+                {
+                    "name": "atomic_forces"
+                },
+                {
+                    "name": "fermi_energy"
+                },
+                {
+                    "name": "pressure"
+                },
+                {
+                    "name": "stress_tensor"
+                },
+                {
+                    "name": "total_force"
+                },
+                {
+                    "name": "final_structure"
+                }
+            ],
+            "monitors": [
+                {
+                    "name": "standard_output"
+                },
+                {
+                    "name": "convergence_electronic"
+                },
+                {
+                    "name": "convergence_ionic"
+                }
+            ],
+            "flowchartId": "26d53101-7288-547d-a994-e244417568d6",
+            "preProcessors": [],
+            "postProcessors": [
+                {
+                    "name": "prepare_restart"
+                }
+            ],
+            "application": {
+                "name": "vasp",
+                "shortName": "vasp",
+                "summary": "Vienna Ab-initio Simulation Package",
+                "isLicensed": true,
+                "build": "GNU",
+                "version": "5.4.4",
+                "isDefault": true,
+                "schemaVersion": "2022.8.16"
+            },
+            "executable": {
+                "isDefault": true,
+                "postProcessors": [
+                    "error_handler",
+                    "prepare_restart",
+                    "remove_non_zero_weight_kpoints"
+                ],
+                "monitors": [
+                    "standard_output",
+                    "convergence_ionic",
+                    "convergence_electronic"
+                ],
+                "results": [
+                    "atomic_forces",
+                    "band_gaps",
+                    "band_structure",
+                    "density_of_states",
+                    "fermi_energy",
+                    "pressure",
+                    "stress_tensor",
+                    "total_energy",
+                    "total_energy_contributions",
+                    "total_force",
+                    "zero_point_energy",
+                    "final_structure",
+                    "magnetic_moments",
+                    "reaction_energy_barrier",
+                    "reaction_energy_profile",
+                    "potential_profile",
+                    "charge_density_profile"
+                ],
+                "name": "vasp",
+                "schemaVersion": "2022.8.16"
+            },
+            "flavor": {
+                "input": [
+                    {
+                        "name": "INCAR",
+                        "templateName": "INCAR_VC_RELAX"
+                    },
+                    {
+                        "name": "KPOINTS",
+                        "templateName": "KPOINTS"
+                    },
+                    {
+                        "name": "POSCAR",
+                        "templateName": "POSCAR"
+                    }
+                ],
+                "results": [
+                    "total_energy",
+                    "atomic_forces",
+                    "fermi_energy",
+                    "pressure",
+                    "stress_tensor",
+                    "total_force",
+                    "final_structure"
+                ],
+                "monitors": [
+                    "standard_output",
+                    "convergence_electronic",
+                    "convergence_ionic"
+                ],
+                "postProcessors": [
+                    "prepare_restart"
+                ],
+                "applicationName": "vasp",
+                "executableName": "vasp",
+                "name": "vasp_vc_relax",
+                "schemaVersion": "2022.8.16",
+                "isDefault": false
+            },
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "input": [
+                {
+                    "content": "ISMEAR = 0\nSIGMA = 0.05\nISIF = 3\nIBRION = 2\nNSW = 300\nLWAVE = .FALSE.\nLCHARG = .FALSE.\n",
+                    "name": "INCAR",
+                    "contextProviders": [
+                        {
+                            "name": "VASPInputDataManager"
+                        }
+                    ],
+                    "applicationName": "vasp",
+                    "executableName": "vasp",
+                    "rendered": "ISMEAR = 0\nSIGMA = 0.05\nISIF = 3\nIBRION = 2\nNSW = 300\nLWAVE = .FALSE.\nLCHARG = .FALSE.\n",
+                    "schemaVersion": "2022.8.16"
+                },
+                {
+                    "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                    "name": "KPOINTS",
+                    "contextProviders": [
+                        {
+                            "name": "KGridFormDataManager"
+                        },
+                        {
+                            "name": "VASPInputDataManager"
+                        }
+                    ],
+                    "applicationName": "vasp",
+                    "executableName": "vasp",
+                    "rendered": "Automatic mesh\n0\nGamma\n  2 2 2 \n  0 0 0 \n",
+                    "schemaVersion": "2022.8.16"
+                },
+                {
+                    "content": "{{ input.POSCAR }}\n",
+                    "name": "POSCAR",
+                    "contextProviders": [
+                        {
+                            "name": "VASPInputDataManager"
+                        }
+                    ],
+                    "applicationName": "vasp",
+                    "executableName": "vasp",
+                    "rendered": "Silicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\n",
+                    "schemaVersion": "2022.8.16"
+                }
+            ]
+        }
+    ]
+}
