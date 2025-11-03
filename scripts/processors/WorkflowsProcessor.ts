@@ -1,4 +1,3 @@
-import { Utils } from "@mat3ra/utils";
 import serverUtils from "@mat3ra/utils/server";
 // @ts-ignore
 import { builders, Subworkflow, UnitFactory, Workflow } from "@mat3ra/wode";
@@ -39,6 +38,8 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         const WorkflowCls = Workflow as any;
         this.enablePredefinedIds();
         const configs: { appName: string; safeName: string; config: any; tags?: any[] }[] = [];
+        // For each application (from application_data.yml), look into its folder under assets/workflows/workflows/{appName}
+        // and load all YAML files, preserving their relative paths to use as safeName in build/data output structure
         this.applications.forEach((appName) => {
             const workflows = this.workflowSubforkflowMapByApplication.workflows[appName];
             if (!workflows) return;
@@ -53,19 +54,13 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
                     UnitFactoryCls: UnitFactory,
                     unitBuilders: { ...builders, Workflow: WorkflowCls },
                 });
-                const workflowName = workflow.prop("name");
-                const pathInSource = workflowData?.__path__;
-                // Use source path only if it contains nested structure, otherwise use workflow name
-                const safeName = pathInSource?.includes("/")
-                    ? pathInSource
-                    : Utils.str.createSafeFilename(workflowName);
-                const tags = workflowData?.tags || [];
-                configs.push({
+                const config = this.buildConfigFromEntityData(
+                    workflowData,
+                    workflowKey,
                     appName,
-                    safeName,
-                    config: (workflow as any).toJSON(),
-                    tags,
-                });
+                    workflow,
+                );
+                configs.push(config);
             });
         });
         return configs;
