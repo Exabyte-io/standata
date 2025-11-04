@@ -708,7 +708,7 @@
         {
             "name": "map",
             "type": "map",
-            "workflowId": "47785567-5302-5145-be58-3293aba59ac5",
+            "workflowId": "731d3397-3278-516a-b28e-53626ef50f0a",
             "input": {
                 "target": "MAP_DATA",
                 "scope": "global",
@@ -743,7 +743,7 @@
         "total_energy_contributions",
         "total_force"
     ],
-    "_id": "9d0fae7b-c910-5e7a-9c28-95bbb00de0f9",
+    "_id": "23b9058b-884c-52d4-82a8-ee162b9761e0",
     "workflows": [
         {
             "name": "pre-processor",
@@ -1051,7 +1051,7 @@
                 }
             ],
             "properties": [],
-            "_id": "47785567-5302-5145-be58-3293aba59ac5",
+            "_id": "731d3397-3278-516a-b28e-53626ef50f0a",
             "workflows": [],
             "schemaVersion": "2022.8.16",
             "isDefault": false,
