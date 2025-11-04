@@ -9,6 +9,7 @@
         "/dist",
         "/src/js",
         "/tests",
+        "/data",
         "tsconfig.json"
     ],
     "dependencies": {
