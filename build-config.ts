@@ -55,7 +55,7 @@ export const BUILD_CONFIG = {
             applications: "applications",
             models: "models",
             methods: "methods",
-            assetsDir: "input_files_templates",
+            inputFilesTemplatesDir: "input_files_templates",
             categories: "categories.yml",
         },
         data: {
