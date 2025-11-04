@@ -29,7 +29,7 @@
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",
         "@mat3ra/ade": "^2025.10.2-0",
-        "@mat3ra/wode": "git+https://github.com/Exabyte-io/wode.js.git#864272b76b4a3bf98aae1ba11fc00c1c9173c33b",
+        "@mat3ra/wode": "^2025.11.4-0",
         "@mat3ra/mode": "^2025.11.3-0",
         "@mat3ra/utils": "2025.10.9-5",
         "@mat3ra/code": "^2025.8.7-0",
