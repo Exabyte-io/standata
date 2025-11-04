@@ -29,7 +29,7 @@
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",
         "@mat3ra/ade": "^2025.10.2-0",
-        "@mat3ra/wode": "^2025.11.3-0",
+        "@mat3ra/wode": "^2025.11.4-0",
         "@mat3ra/mode": "^2025.11.3-0",
         "@mat3ra/utils": "2025.10.9-5",
         "@mat3ra/code": "^2025.8.7-0",
@@ -63,20 +63,22 @@
     },
     "scripts": {
         "build:categories": "ts-node src/js/cli.ts",
-        "build:materials": "python scripts/materials/create_materials.py",
+        "create:materials": "python scripts/materials/create_materials.py",
+        "build:materials": "ts-node scripts/materials/build_materials.ts",
+        "build:properties": "ts-node scripts/properties/build_properties.ts",
         "build:workflows": "ts-node scripts/workflows/build_workflows.ts",
         "build:applications": "ts-node scripts/applications/build_applications.ts",
         "build:models": "ts-node scripts/models/build_models.ts",
         "build:methods": "ts-node scripts/methods/build_methods.ts",
-        "build:runtime-data": "ts-node build_runtime_data.ts",
         "build:model-method-map": "ts-node scripts/models/build_model_method_map.ts",
-        "build": "npm run transpile && npm run build:models && npm run build:methods && npm run build:model-method-map && npm run build:applications && npm run build:workflows && npm run build:runtime-data",
+        "build:symlink": "test -L src/js/runtime_data || ln -s ../../dist/js/runtime_data src/js/runtime_data",
+        "build": "npm run transpile && npm run build:symlink && npm run build:models && npm run build:methods && npm run build:model-method-map && npm run build:applications && npm run build:properties && npm run build:workflows && npm run build:materials",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
         "prettier": "prettier --check src/js tests/js",
         "test": "mocha",
-        "transpile": "tsc"
+        "transpile": "tsc && cp -r build/standata/* ./dist/js/runtime_data/ || true"
     },
     "engines": {
         "node": ">=20.0.0"

@@ -1,4 +1,4 @@
-- content: !readFile 'assets/espresso/simple.j2.in'
+- content: !readFile 'input_files_templates/espresso/simple.j2.in'
   name: simple.in
   contextProviders: []
   applicationName: espresso

@@ -55,7 +55,7 @@ export const BUILD_CONFIG = {
             applications: "applications",
             models: "models",
             methods: "methods",
-            assetsDir: "assets",
+            inputFilesTemplatesDir: "input_files_templates",
             categories: "categories.yml",
         },
         data: {
@@ -106,6 +106,9 @@ export const BUILD_CONFIG = {
         data: {
             path: "data/materials",
         },
+        build: {
+            path: "build/standata/materials",
+        },
     },
 
     properties: {
@@ -116,6 +119,9 @@ export const BUILD_CONFIG = {
         data: {
             path: "data/properties",
         },
+        build: {
+            path: "build/standata/properties",
+        },
     },
 
     scripts: {
@@ -123,13 +129,19 @@ export const BUILD_CONFIG = {
         methods: "scripts/methods",
         applications: "scripts/applications",
         workflows: "scripts/workflows",
+        materials: "scripts/materials",
+        properties: "scripts/properties",
     },
 
     distRuntimeDataDir: "./dist/js/runtime_data",
     srcPythonRuntimeDataDir: "./src/py/mat3ra/standata/data",
 
-    jsonFormat: {
+    dataJSONFormat: {
         spaces: 4,
+    },
+
+    buildJSONFormat: {
+        spaces: 0,
     },
 
     yamlFormat: {

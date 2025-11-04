@@ -1,4 +1,4 @@
-- content: !readFile 'assets/espresso/gww_simple.j2.in'
+- content: !readFile 'input_files_templates/espresso/gww_simple.j2.in'
   name: gww_simple.in
   contextProviders: []
   applicationName: espresso

@@ -1,4 +1,4 @@
-- content: !readFile 'assets/espresso/cp.j2.in'
+- content: !readFile 'input_files_templates/espresso/cp.j2.in'
   name: cp.in
   contextProviders:
     - name: QEPWXInputDataManager
@@ -7,7 +7,7 @@
   applicationName: espresso
   executableName: cp.x
 
-- content: !readFile 'assets/espresso/cp_wf.j2.in'
+- content: !readFile 'input_files_templates/espresso/cp_wf.j2.in'
   name: cp_wf.in
   contextProviders:
     - name: QEPWXInputDataManager

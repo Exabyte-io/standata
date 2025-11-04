@@ -88,7 +88,7 @@ extend-exclude = [
     "src/py/mat3ra/standata/data/models.py",
     "src/py/mat3ra/standata/data/methods.py",
     "tests/js",
-    "assets/applications/assets/**/*.pyi"
+    "assets/applications/input_files_templates/**/*.pyi"
 ]
 line-length = 120
 target-version = "py38"

@@ -103,16 +103,63 @@ export abstract class EntityProcessor {
 
     public writeBuildDirectoryContent(): void {
         if (!this.resolvedPaths.buildDir) return;
-        serverUtils.file.createDirIfNotExistsSync(this.resolvedPaths.buildDir);
+
+        // Write special build artifacts (maps, aggregations, etc.)
         const artifacts = this.getBuildArtifacts();
-        artifacts.forEach(({ relativePath, content }) => {
-            const targetPath = path.resolve(this.resolvedPaths.buildDir as string, relativePath);
-            serverUtils.file.createDirIfNotExistsSync(path.dirname(targetPath));
-            serverUtils.json.writeJSONFileSync(targetPath, content, {
-                spaces: BUILD_CONFIG.jsonFormat.spaces,
+        if (artifacts.length > 0) {
+            serverUtils.file.createDirIfNotExistsSync(this.resolvedPaths.buildDir);
+            artifacts.forEach(({ relativePath, content }) => {
+                const targetPath = path.resolve(
+                    this.resolvedPaths.buildDir as string,
+                    relativePath,
+                );
+                serverUtils.file.createDirIfNotExistsSync(path.dirname(targetPath));
+                serverUtils.json.writeJSONFileSync(targetPath, content, {
+                    spaces: BUILD_CONFIG.buildJSONFormat.spaces,
+                });
+                console.log(`  Built: ${targetPath}`);
             });
-            console.log(`  Built: ${targetPath}`);
+        }
+
+        // Copy and minify entity JSON files from data/ to build/
+        this.copyAndMinifyFromDataToBuild();
+    }
+
+    protected copyAndMinifyFromDataToBuild(): void {
+        const { dataDir, buildDir } = this.resolvedPaths;
+        if (!dataDir || !buildDir) return;
+        if (!fs.existsSync(dataDir)) {
+            console.warn(`  Warning: Data directory ${dataDir} does not exist`);
+            return;
+        }
+
+        const files = serverUtils.file.getFilesInDirectory(dataDir, [".json"]);
+        if (files.length === 0) return;
+
+        serverUtils.file.createDirIfNotExistsSync(buildDir);
+        files.forEach((filePath: string) => {
+            const relativePath = path.relative(dataDir, filePath);
+            const destinationPath = path.resolve(buildDir, relativePath);
+            serverUtils.file.createDirIfNotExistsSync(path.dirname(destinationPath));
+
+            const content = serverUtils.json.readJSONFileSync(filePath);
+            serverUtils.json.writeJSONFileSync(destinationPath, content, {
+                spaces: BUILD_CONFIG.buildJSONFormat.spaces,
+            });
+            console.log(`  Built: ${destinationPath}`);
         });
+    }
+
+    protected cleanDataDirectory(): void {
+        const { dataDir } = this.resolvedPaths;
+        if (!fs.existsSync(dataDir)) return;
+
+        console.log(`  Cleaning ${dataDir}...`);
+        const files = serverUtils.file.getFilesInDirectory(dataDir, [".json"]);
+        files.forEach((file: string) => {
+            fs.unlinkSync(file);
+        });
+        console.log(`  Removed ${files.length} files`);
     }
 
     public writeDataDirectoryContent(): void {
@@ -135,7 +182,7 @@ export abstract class EntityProcessor {
                 )}.json`;
                 const targetPath = path.join(targetDir, filename);
                 serverUtils.json.writeJSONFileSync(targetPath, transformed, {
-                    spaces: BUILD_CONFIG.jsonFormat.spaces,
+                    spaces: BUILD_CONFIG.dataJSONFormat.spaces,
                 });
                 console.log(`  Created: ${targetPath}`);
             });
@@ -149,8 +196,19 @@ export abstract class EntityProcessor {
         );
         serverUtils.file.createDirIfNotExistsSync(entityRuntimeDir);
 
-        this.copyJsonFiles(this.resolvedPaths.dataDir, entityRuntimeDir);
         this.copyJsonFiles(this.resolvedPaths.buildDir, entityRuntimeDir);
+    }
+
+    protected copyJsonFiles(fromDir: string, destinationBaseDir: string): void {
+        if (!fromDir || !fs.existsSync(fromDir)) return;
+        const files = serverUtils.file.getFilesInDirectory(fromDir, [".json"]);
+        files.forEach((filePath: string) => {
+            const relativePath = path.relative(fromDir, filePath);
+            const destinationPath = path.resolve(destinationBaseDir, relativePath);
+            serverUtils.file.createDirIfNotExistsSync(path.dirname(destinationPath));
+            fs.copyFileSync(filePath, destinationPath);
+            console.log(`  Dist: ${destinationPath}`);
+        });
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -229,26 +287,14 @@ export abstract class EntityProcessor {
     public process(): void {
         console.log(`▶ Processing ${this.options.entityNamePlural} ...`);
         this.readAssets();
-        this.writeBuildDirectoryContent();
+        this.cleanDataDirectory();
         this.writeDataDirectoryContent();
+        this.writeBuildDirectoryContent();
         this.writeDistDirectoryContent();
         this.updateCategoriesFile();
         this.generateRuntimeFiles();
         this.additionalProcessing();
         console.log(`✅ ${this.options.entityNamePlural} completed.`);
-    }
-
-    protected copyJsonFiles(fromDir: string | undefined, destinationBaseDir: string): void {
-        if (!fromDir || !fs.existsSync(fromDir)) return;
-        const files = serverUtils.file.getFilesInDirectory(fromDir, [".json"]);
-        files.forEach((filePath: string) => {
-            const relativePath = path.relative(fromDir, filePath);
-            const destinationPath = path.resolve(destinationBaseDir, relativePath);
-            serverUtils.file.createDirIfNotExistsSync(path.dirname(destinationPath));
-            const content = serverUtils.json.readJSONFileSync(filePath);
-            serverUtils.json.writeJSONFileSync(destinationPath, content, { spaces: 0 });
-            console.log(`  Dist: ${destinationPath}`);
-        });
     }
 
     protected findJsonFilesRecursively(dir: string): string[] {
