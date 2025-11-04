@@ -4,7 +4,8 @@ import yaml from "js-yaml";
 import * as path from "path";
 import * as process from "process";
 
-import { Standata, StandataConfig } from "./base";
+import { Standata } from "./base";
+import { StandataConfig } from "./types/standata";
 
 function readEntityConfig(entityConfig: string): StandataConfig {
     const fileContent = fs.readFileSync(path.resolve(entityConfig), { encoding: "utf-8" });

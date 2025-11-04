@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ModelMethodFilter = exports.MethodStandata = exports.ModelStandata = exports.ApplicationMethodStandata = exports.ApplicationModelStandata = exports.workflowSubforkflowMapByApplication = exports.SubworkflowStandata = exports.WorkflowStandata = exports.PropertyStandata = exports.ApplicationStandata = exports.MaterialStandata = exports.Standata = void 0;
+exports.filterMethodsByModel = exports.ModelMethodFilter = exports.MethodStandata = exports.ModelStandata = exports.ApplicationMethodStandata = exports.ApplicationModelStandata = exports.workflowSubforkflowMapByApplication = exports.SubworkflowStandata = exports.WorkflowStandata = exports.PropertyStandata = exports.ApplicationStandata = exports.MaterialStandata = exports.Standata = void 0;
 var base_1 = require("./base");
 Object.defineProperty(exports, "Standata", { enumerable: true, get: function () { return base_1.Standata; } });
 var material_1 = require("./material");
@@ -23,3 +23,4 @@ var method_1 = require("./method");
 Object.defineProperty(exports, "MethodStandata", { enumerable: true, get: function () { return method_1.MethodStandata; } });
 var modelMethodFilter_1 = require("./modelMethodFilter");
 Object.defineProperty(exports, "ModelMethodFilter", { enumerable: true, get: function () { return modelMethodFilter_1.ModelMethodFilter; } });
+Object.defineProperty(exports, "filterMethodsByModel", { enumerable: true, get: function () { return modelMethodFilter_1.filterMethodsByModel; } });

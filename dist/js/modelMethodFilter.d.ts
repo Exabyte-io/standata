@@ -1,20 +1,6 @@
 import type { MethodConfig } from "./types/method";
 import type { ModelConfig } from "./types/model";
-export interface FilterRule {
-    path?: string;
-    regex?: string;
-}
-export interface ModelCategories {
-    tier1?: string;
-    tier2?: string;
-    tier3?: string;
-    type?: string;
-    subtype?: string;
-}
-export interface ModelMethodFilterEntry {
-    modelCategories: ModelCategories;
-    filterRules: FilterRule[];
-}
+import { FilterRule, ModelMethodFilterEntry } from "./types/modelMethodFilter";
 export type ModelMethodFilterMap = ModelMethodFilterEntry[];
 export declare class ModelMethodFilter {
     private filterMap;
@@ -29,3 +15,15 @@ export declare class ModelMethodFilter {
     getUniqueFilterPaths(): string[];
     getUniqueFilterRegexes(): string[];
 }
+/**
+ * Convenience function to filter methods by model
+ * This is a helper wrapper around ModelMethodFilter.getCompatibleMethods()
+ *
+ * @param methodList - Array of method configs to filter
+ * @param model - Model config to use for filtering
+ * @returns Filtered array of compatible method configs
+ */
+export declare function filterMethodsByModel({ methodList, model, }: {
+    methodList: MethodConfig[];
+    model?: ModelConfig;
+}): MethodConfig[];

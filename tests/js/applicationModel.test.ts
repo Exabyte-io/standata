@@ -1,24 +1,23 @@
-// @ts-ignore - No type definitions available for @exabyte-io/mode.js
-import { categorizedModelList } from "@exabyte-io/mode.js/dist";
 import { expect } from "chai";
 
-import { ApplicationModelStandata } from "../../src/js";
+import { ApplicationModelStandata, ModelStandata } from "../../src/js";
 
 describe("Application Model Standata", () => {
-    let modelStandata: ApplicationModelStandata;
+    let applicationModelStandata: ApplicationModelStandata, categorizedModelList: any[];
 
     beforeEach(() => {
-        modelStandata = new ApplicationModelStandata();
+        applicationModelStandata = new ApplicationModelStandata();
+        categorizedModelList = new ModelStandata().getAll();
     });
 
     it("can get available models for an application", () => {
-        const availableModels = modelStandata.getAvailableModels("espresso");
+        const availableModels = applicationModelStandata.getAvailableModels("espresso");
         expect(availableModels).to.be.an("object");
         expect(Object.keys(availableModels)).to.include("6.3");
     });
 
     it("can find models by application parameters", () => {
-        const espressoModels = modelStandata.findByApplicationParameters({
+        const espressoModels = applicationModelStandata.findByApplicationParameters({
             modelList: categorizedModelList,
             name: "espresso",
         });
@@ -35,7 +34,7 @@ describe("Application Model Standata", () => {
     });
 
     it("can filter models with specific parameters", () => {
-        const specificModels = modelStandata.findByApplicationParameters({
+        const specificModels = applicationModelStandata.findByApplicationParameters({
             modelList: categorizedModelList,
             name: "espresso",
             version: "6.3",
@@ -55,8 +54,31 @@ describe("Application Model Standata", () => {
         });
     });
 
+    it("can filter models for each application", () => {
+        const testCases = [
+            { name: "vasp", expectedCount: 4, expectedNameValues: ["DFT"] },
+            { name: "espresso", expectedCount: 4, expectedNameValues: ["DFT"] },
+        ];
+        testCases.forEach(({ name, expectedCount, expectedNameValues }) => {
+            const models = applicationModelStandata.findByApplicationParameters({
+                modelList: categorizedModelList,
+                name,
+            });
+            expect(models).to.be.an("array");
+            expect(models.length).to.equal(expectedCount);
+
+            models.forEach((model) => {
+                expect(model).to.have.property("name");
+                const isMatch = expectedNameValues.some((expected) =>
+                    model.name.toLowerCase().includes(expected.toLowerCase()),
+                );
+                expect(isMatch).to.be.true;
+            });
+        });
+    });
+
     it("returns empty array for non-existent application", () => {
-        const models = modelStandata.findByApplicationParameters({
+        const models = applicationModelStandata.findByApplicationParameters({
             modelList: categorizedModelList,
             name: "nonexistent",
         });

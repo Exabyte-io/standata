@@ -1,0 +1,110 @@
+{
+    "_id": "07ed6979-32f1-57c1-821a-1afb78fcc985",
+    "name": "espresso-xml-get-qpt-irr",
+    "application": {
+        "name": "espresso"
+    },
+    "properties": [],
+    "model": {
+        "type": "unknown",
+        "subtype": "unknown",
+        "method": {
+            "type": "unknown",
+            "subtype": "unknown",
+            "data": {}
+        }
+    },
+    "units": [
+        {
+            "type": "execution",
+            "name": "python",
+            "head": true,
+            "results": [],
+            "monitors": [
+                {
+                    "name": "standard_output"
+                }
+            ],
+            "flowchartId": "9b8a495e-1ac1-56a7-b2e0-af1b405a1219",
+            "preProcessors": [],
+            "postProcessors": [],
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "version": "3.10.13",
+                "isDefault": true,
+                "schemaVersion": "2022.8.16"
+            },
+            "executable": {
+                "isDefault": true,
+                "monitors": [
+                    "standard_output"
+                ],
+                "results": [
+                    "file_content",
+                    "workflow:pyml_predict"
+                ],
+                "name": "python",
+                "schemaVersion": "2022.8.16"
+            },
+            "flavor": {
+                "input": [
+                    {
+                        "name": "espresso_xml_get_qpt_irr.py"
+                    }
+                ],
+                "monitors": [
+                    "standard_output"
+                ],
+                "applicationName": "python",
+                "executableName": "python",
+                "name": "espresso_xml_get_qpt_irr",
+                "schemaVersion": "2022.8.16",
+                "isDefault": false
+            },
+            "next": "d0fd8654-2106-546b-8792-7bb46272befc",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "input": [
+                {
+                    "content": "# ---------------------------------------------------------- #\n#                                                            #\n#  This script extracts q-points and irreducible             #\n#  representations from Quantum ESPRESSO xml data.           #\n#                                                            #\n#  Expects control_ph.xml and patterns.?.xml files to exist  #\n#                                                            #\n# ---------------------------------------------------------- #\nfrom __future__ import print_function\n\nimport json\nfrom xml.dom import minidom\n\n{#    JOB_WORK_DIR will be initialized at runtime => avoid substituion below    #}\n{% raw %}\nCONTROL_PH_FILENAME = \"{{JOB_WORK_DIR}}/outdir/_ph0/__prefix__.phsave/control_ph.xml\"\nPATTERNS_FILENAME = \"{{JOB_WORK_DIR}}/outdir/_ph0/__prefix__.phsave/patterns.{}.xml\"\n{% endraw %}\n\n# get integer content of an xml tag in a document\ndef get_int_by_tag_name(doc, tag_name):\n    element = doc.getElementsByTagName(tag_name)\n    return int(element[0].firstChild.nodeValue)\n\nvalues = []\n\n# get number of q-points and cycle through them\nxmldoc = minidom.parse(CONTROL_PH_FILENAME)\nnumber_of_qpoints = get_int_by_tag_name(xmldoc, \"NUMBER_OF_Q_POINTS\")\n\nfor i in range(number_of_qpoints):\n    # get number of irreducible representations per qpoint\n    xmldoc = minidom.parse(PATTERNS_FILENAME.format(i+1))\n    number_of_irr_per_qpoint = get_int_by_tag_name(xmldoc, \"NUMBER_IRR_REP\")\n    # add each distinct combination of qpoint and irr as a separate entry\n    for j in range(number_of_irr_per_qpoint):\n      values.append({\n          \"qpoint\": i + 1,\n          \"irr\": j + 1\n      })\n\n# store final values in standard output (STDOUT)\nprint(json.dumps(values, indent=4))\n",
+                    "name": "espresso_xml_get_qpt_irr.py",
+                    "contextProviders": [],
+                    "applicationName": "python",
+                    "executableName": "python",
+                    "rendered": "# ---------------------------------------------------------- #\n#                                                            #\n#  This script extracts q-points and irreducible             #\n#  representations from Quantum ESPRESSO xml data.           #\n#                                                            #\n#  Expects control_ph.xml and patterns.?.xml files to exist  #\n#                                                            #\n# ---------------------------------------------------------- #\nfrom __future__ import print_function\n\nimport json\nfrom xml.dom import minidom\n\n\n\nCONTROL_PH_FILENAME = \"{{JOB_WORK_DIR}}/outdir/_ph0/__prefix__.phsave/control_ph.xml\"\nPATTERNS_FILENAME = \"{{JOB_WORK_DIR}}/outdir/_ph0/__prefix__.phsave/patterns.{}.xml\"\n\n\n# get integer content of an xml tag in a document\ndef get_int_by_tag_name(doc, tag_name):\n    element = doc.getElementsByTagName(tag_name)\n    return int(element[0].firstChild.nodeValue)\n\nvalues = []\n\n# get number of q-points and cycle through them\nxmldoc = minidom.parse(CONTROL_PH_FILENAME)\nnumber_of_qpoints = get_int_by_tag_name(xmldoc, \"NUMBER_OF_Q_POINTS\")\n\nfor i in range(number_of_qpoints):\n    # get number of irreducible representations per qpoint\n    xmldoc = minidom.parse(PATTERNS_FILENAME.format(i+1))\n    number_of_irr_per_qpoint = get_int_by_tag_name(xmldoc, \"NUMBER_IRR_REP\")\n    # add each distinct combination of qpoint and irr as a separate entry\n    for j in range(number_of_irr_per_qpoint):\n      values.append({\n          \"qpoint\": i + 1,\n          \"irr\": j + 1\n      })\n\n# store final values in standard output (STDOUT)\nprint(json.dumps(values, indent=4))\n",
+                    "schemaVersion": "2022.8.16"
+                }
+            ]
+        },
+        {
+            "name": "assignment",
+            "type": "assignment",
+            "operand": "Q_POINTS",
+            "value": "json.loads(STDOUT)",
+            "input": [
+                {
+                    "scope": "9b8a495e-1ac1-56a7-b2e0-af1b405a1219",
+                    "name": "STDOUT"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "d0fd8654-2106-546b-8792-7bb46272befc",
+            "tags": [],
+            "head": false,
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "version": "3.10.13",
+                "isDefault": true,
+                "schemaVersion": "2022.8.16"
+            }
+        }
+    ]
+}

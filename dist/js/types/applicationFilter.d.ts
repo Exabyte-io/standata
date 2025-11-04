@@ -6,6 +6,7 @@ export interface FilterObjectPath {
 }
 export interface FilterObjectRegex {
     regex: string;
+    defaultPath?: string;
 }
 export type FilterObject = FilterObjectPath | FilterObjectRegex;
 export interface FilterObjectsParams extends Partial<Pick<ApplicationSchemaBase, "name" | "version" | "build">> {
@@ -25,7 +26,7 @@ export interface ApplicationModelParametersInterface extends Omit<FilterObjectsP
     modelList: any[];
     name: Required<ApplicationSchemaBase>["name"];
 }
-export type ModelMethodFilterTree = Record<Required<ApplicationSchemaBase>["name"], Record<Required<ApplicationSchemaBase>["version"], Record<Required<ApplicationSchemaBase>["build"], Record<ExecutableSchema["name"], Record<string, FilterObject[]>>>>>;
+export type ModelMethodFilterTree = Record<Required<ApplicationSchemaBase>["name"], Record<Required<ApplicationSchemaBase>["version"], Record<Required<ApplicationSchemaBase>["build"], Record<ExecutableSchema["name"], Record<string, FilterObject[]>> | string>>>;
 export interface ModelMethodMapByApplication {
     models: ModelMethodFilterTree;
     methods: ModelMethodFilterTree;

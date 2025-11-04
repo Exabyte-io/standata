@@ -3,8 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ModelMethodFilter = void 0;
-const modelMethodMap_json_1 = __importDefault(require("./runtime_data/modelMethodMap.json"));
+exports.filterMethodsByModel = exports.ModelMethodFilter = void 0;
+const modelMethodMap_json_1 = __importDefault(require("./runtime_data/models/modelMethodMap.json"));
 class ModelMethodFilter {
     constructor() {
         this.filterMap = modelMethodMap_json_1.default;
@@ -34,7 +34,6 @@ class ModelMethodFilter {
             (!filterCategories.subtype || modelCategories.subtype === filterCategories.subtype));
     }
     isMethodCompatible(method, filterRules) {
-        // Check if ALL units in the method match SOME filter rule
         return method.units.every((unit) => filterRules.some((rule) => this.isUnitMatchingRule(unit, rule)));
     }
     // eslint-disable-next-line class-methods-use-this
@@ -72,3 +71,18 @@ class ModelMethodFilter {
     }
 }
 exports.ModelMethodFilter = ModelMethodFilter;
+/**
+ * Convenience function to filter methods by model
+ * This is a helper wrapper around ModelMethodFilter.getCompatibleMethods()
+ *
+ * @param methodList - Array of method configs to filter
+ * @param model - Model config to use for filtering
+ * @returns Filtered array of compatible method configs
+ */
+function filterMethodsByModel({ methodList, model, }) {
+    if (!model)
+        return [];
+    const modelMethodFilter = new ModelMethodFilter();
+    return modelMethodFilter.getCompatibleMethods(model, methodList);
+}
+exports.filterMethodsByModel = filterMethodsByModel;
