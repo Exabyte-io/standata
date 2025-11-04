@@ -2,7 +2,7 @@
     "name": "Bandstructure with SOC - QE",
     "subworkflows": [
         {
-            "_id": "de8069bf-5379-5f10-9ed9-1160b1fb2ce4",
+            "_id": "153b4a88-5d56-553f-b7d3-40df96968eb4",
             "name": "Bandstructure with SOC",
             "application": {
                 "name": "espresso",
@@ -100,23 +100,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -212,23 +195,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -306,9 +272,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "band_structure"
-                        ],
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -350,7 +313,7 @@
         {
             "name": "Bandstructure with SOC",
             "type": "subworkflow",
-            "_id": "de8069bf-5379-5f10-9ed9-1160b1fb2ce4",
+            "_id": "153b4a88-5d56-553f-b7d3-40df96968eb4",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "872d54a6-679c-5af5-a153-72709fcf46df",
@@ -360,15 +323,15 @@
     ],
     "properties": [
         "atomic_forces",
+        "band_structure",
         "fermi_energy",
         "pressure",
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force",
-        "band_structure"
+        "total_force"
     ],
-    "_id": "ca09ff4c-c840-57cd-b19e-c3bb70d23d0a",
+    "_id": "b4587b15-eb6f-5316-8497-a79f321b3c76",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

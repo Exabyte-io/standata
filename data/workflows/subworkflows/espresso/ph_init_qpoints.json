@@ -1,5 +1,5 @@
 {
-    "_id": "58a02fe0-2ccb-5781-b003-0b82ebcaa390",
+    "_id": "2f017bcb-f4ba-55b8-b939-1f780679a88e",
     "name": "ph-init-qpoints",
     "application": {
         "name": "espresso"
@@ -46,11 +46,6 @@
             "executable": {
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "phonon_dos",
-                    "phonon_dispersions",
-                    "zero_point_energy"
                 ],
                 "name": "ph.x",
                 "schemaVersion": "2022.8.16",

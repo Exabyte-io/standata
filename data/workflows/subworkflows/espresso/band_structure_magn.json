@@ -1,5 +1,5 @@
 {
-    "_id": "3018cf08-9c29-5030-b544-24acbaca3829",
+    "_id": "354942f1-9f3d-57a9-b5ae-6bdf5b3a60af",
     "name": "Bandstructure with spin magnetism",
     "application": {
         "name": "espresso"
@@ -87,23 +87,6 @@
                     "standard_output",
                     "convergence_ionic",
                     "convergence_electronic"
-                ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "charge_density_profile",
-                    "density_of_states",
-                    "fermi_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "potential_profile",
-                    "pressure",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force"
                 ],
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"
@@ -200,23 +183,6 @@
                     "convergence_ionic",
                     "convergence_electronic"
                 ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "charge_density_profile",
-                    "density_of_states",
-                    "fermi_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "potential_profile",
-                    "pressure",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force"
-                ],
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"
             },
@@ -294,9 +260,6 @@
                 "monitors": [
                     "standard_output"
                 ],
-                "results": [
-                    "band_structure"
-                ],
                 "name": "bands.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
@@ -358,9 +321,6 @@
             "executable": {
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "band_structure"
                 ],
                 "name": "bands.x",
                 "schemaVersion": "2022.8.16",

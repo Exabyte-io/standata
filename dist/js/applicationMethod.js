@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplicationMethodStandata = void 0;
+// eslint-disable-next-line import/no-extraneous-dependencies
 const mode_1 = require("@mat3ra/mode");
 const method_1 = require("./method");
 const modelMethodMapByApplication_json_1 = __importDefault(require("./runtime_data/applications/modelMethodMapByApplication.json"));

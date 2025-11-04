@@ -2,7 +2,7 @@
     "name": "Band Gap",
     "subworkflows": [
         {
-            "_id": "82673aa1-c4d7-5b2c-b216-7579760fdfaf",
+            "_id": "e65f2461-5f5c-5a51-8c48-88ad37bff100",
             "name": "Band Gap",
             "application": {
                 "name": "vasp",
@@ -99,25 +99,6 @@
                             "standard_output",
                             "convergence_ionic",
                             "convergence_electronic"
-                        ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "band_structure",
-                            "density_of_states",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force",
-                            "zero_point_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "potential_profile",
-                            "charge_density_profile"
                         ],
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
@@ -247,25 +228,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "band_structure",
-                            "density_of_states",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force",
-                            "zero_point_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "potential_profile",
-                            "charge_density_profile"
-                        ],
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
@@ -353,7 +315,7 @@
         {
             "name": "Band Gap",
             "type": "subworkflow",
-            "_id": "82673aa1-c4d7-5b2c-b216-7579760fdfaf",
+            "_id": "e65f2461-5f5c-5a51-8c48-88ad37bff100",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "db3b83ea-0ef5-594c-89a8-bde38dbc6105",
@@ -362,17 +324,17 @@
         }
     ],
     "properties": [
+        "atomic_forces",
+        "band_gaps",
+        "fermi_energy",
+        "fermi_energy",
+        "pressure",
+        "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "pressure",
-        "fermi_energy",
-        "atomic_forces",
-        "total_force",
-        "stress_tensor",
-        "band_gaps",
-        "fermi_energy"
+        "total_force"
     ],
-    "_id": "512cb2cc-5cca-52c7-9dd9-1d2b57196188",
+    "_id": "16ca0232-a570-53d1-a4d3-32bbd6f3f0a2",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

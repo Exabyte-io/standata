@@ -1,5 +1,5 @@
 {
-    "_id": "94566992-7675-55de-91a1-8b77c7aef8bb",
+    "_id": "cd6e3d59-5544-56ac-878b-fd8716a09768",
     "name": "Band Structure",
     "application": {
         "name": "vasp"
@@ -88,25 +88,6 @@
                     "standard_output",
                     "convergence_ionic",
                     "convergence_electronic"
-                ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "band_structure",
-                    "density_of_states",
-                    "fermi_energy",
-                    "pressure",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force",
-                    "zero_point_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "potential_profile",
-                    "charge_density_profile"
                 ],
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
@@ -232,25 +213,6 @@
                     "standard_output",
                     "convergence_ionic",
                     "convergence_electronic"
-                ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "band_structure",
-                    "density_of_states",
-                    "fermi_energy",
-                    "pressure",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force",
-                    "zero_point_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "potential_profile",
-                    "charge_density_profile"
                 ],
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"

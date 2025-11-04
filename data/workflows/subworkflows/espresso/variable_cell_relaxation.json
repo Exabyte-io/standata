@@ -1,6 +1,6 @@
 {
     "systemName": "espresso-variable-cell-relaxation",
-    "_id": "c8246dea-d0be-50f0-af61-2bd60eaa0f72",
+    "_id": "58709c44-47f6-5fbf-bf2e-358b9d98f75d",
     "name": "Variable-cell Relaxation",
     "application": {
         "name": "espresso"
@@ -90,23 +90,6 @@
                     "standard_output",
                     "convergence_ionic",
                     "convergence_electronic"
-                ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "charge_density_profile",
-                    "density_of_states",
-                    "fermi_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "potential_profile",
-                    "pressure",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force"
                 ],
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"

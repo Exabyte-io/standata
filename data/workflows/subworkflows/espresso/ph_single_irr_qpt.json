@@ -1,5 +1,5 @@
 {
-    "_id": "a5ed4646-2f0c-5fd2-b961-6b5dcb959b14",
+    "_id": "e68db280-8636-53e3-81a0-88396ba6147d",
     "name": "ph-single-irr-qpt",
     "application": {
         "name": "espresso"
@@ -46,11 +46,6 @@
             "executable": {
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "phonon_dos",
-                    "phonon_dispersions",
-                    "zero_point_energy"
                 ],
                 "name": "ph.x",
                 "schemaVersion": "2022.8.16",

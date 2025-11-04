@@ -2,7 +2,7 @@
     "name": "Band Structure + Density of States",
     "subworkflows": [
         {
-            "_id": "3feb4c5d-62a3-5a2f-88e2-9eeb28aff2d4",
+            "_id": "fa594399-6b98-5d79-986c-0713601dc06c",
             "name": "Band Structure + Density of States",
             "application": {
                 "name": "espresso",
@@ -101,23 +101,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -210,23 +193,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -300,9 +266,6 @@
                     "executable": {
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "band_structure"
                         ],
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
@@ -379,23 +342,6 @@
                             "standard_output",
                             "convergence_ionic",
                             "convergence_electronic"
-                        ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -476,9 +422,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "density_of_states"
-                        ],
                         "name": "projwfc.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -523,7 +466,7 @@
         {
             "name": "Band Structure + Density of States",
             "type": "subworkflow",
-            "_id": "3feb4c5d-62a3-5a2f-88e2-9eeb28aff2d4",
+            "_id": "fa594399-6b98-5d79-986c-0713601dc06c",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "8a098bb9-73b1-5e84-bfc7-b783e02d0f53",
@@ -533,18 +476,18 @@
     ],
     "properties": [
         "atomic_forces",
+        "band_gaps",
+        "band_structure",
+        "density_of_states",
+        "fermi_energy",
         "fermi_energy",
         "pressure",
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force",
-        "band_structure",
-        "fermi_energy",
-        "band_gaps",
-        "density_of_states"
+        "total_force"
     ],
-    "_id": "679acb2e-eca9-5351-b290-6248097410c1",
+    "_id": "9b36cf93-81b9-5a40-bba3-d25955a9bfa8",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

@@ -2,7 +2,7 @@
     "name": "Electronic Density Mesh",
     "subworkflows": [
         {
-            "_id": "95557482-4bcd-58be-8922-c77c54978148",
+            "_id": "e2749c5a-fcd9-589c-819b-8b88c5c90924",
             "name": "Electronic Density Mesh",
             "application": {
                 "name": "espresso",
@@ -97,23 +97,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -195,7 +178,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [],
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -238,7 +220,7 @@
         {
             "name": "Electronic Density Mesh",
             "type": "subworkflow",
-            "_id": "95557482-4bcd-58be-8922-c77c54978148",
+            "_id": "e2749c5a-fcd9-589c-819b-8b88c5c90924",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "79e421a1-18aa-5c27-b8a8-9a769c1a89a0",
@@ -255,7 +237,7 @@
         "total_energy_contributions",
         "total_force"
     ],
-    "_id": "f2d3e9e5-5a07-5a6e-bb3a-c2f565d339a5",
+    "_id": "67b8445c-14ea-5efb-acbf-7dd7bd9df4b4",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

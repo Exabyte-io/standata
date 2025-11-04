@@ -2,7 +2,7 @@
     "name": "Band Gap",
     "subworkflows": [
         {
-            "_id": "82673aa1-c4d7-5b2c-b216-7579760fdfaf",
+            "_id": "233bb8cf-3b4a-5378-84d9-a6a95a2ab43d",
             "name": "Band Gap",
             "application": {
                 "name": "espresso",
@@ -99,23 +99,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -211,23 +194,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -282,7 +248,7 @@
         {
             "name": "Band Gap",
             "type": "subworkflow",
-            "_id": "82673aa1-c4d7-5b2c-b216-7579760fdfaf",
+            "_id": "233bb8cf-3b4a-5378-84d9-a6a95a2ab43d",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "db3b83ea-0ef5-594c-89a8-bde38dbc6105",
@@ -292,16 +258,16 @@
     ],
     "properties": [
         "atomic_forces",
+        "band_gaps",
+        "fermi_energy",
         "fermi_energy",
         "pressure",
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force",
-        "fermi_energy",
-        "band_gaps"
+        "total_force"
     ],
-    "_id": "512cb2cc-5cca-52c7-9dd9-1d2b57196188",
+    "_id": "cd826954-8c96-59f7-b2de-f36ce2d86105",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

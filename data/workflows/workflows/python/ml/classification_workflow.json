@@ -2,7 +2,7 @@
     "name": "Python ML Train Classification",
     "subworkflows": [
         {
-            "_id": "652639cf-0029-555b-8831-d53ddabe622f",
+            "_id": "03e3f15b-2b22-5bb4-8bfd-6839d28a1ba9",
             "name": "Set Up the Job",
             "application": {
                 "name": "python",
@@ -172,7 +172,7 @@
             ]
         },
         {
-            "_id": "c7e535a9-7a24-578e-afd6-4a2d0658d44c",
+            "_id": "30acc5cd-54e6-5f05-aafd-413ee8a69aa1",
             "name": "Machine Learning",
             "application": {
                 "name": "python",
@@ -223,10 +223,6 @@
                         "isDefault": true,
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "file_content",
-                            "workflow:pyml_predict"
                         ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -308,10 +304,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "file_content",
-                            "workflow:pyml_predict"
-                        ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
@@ -386,10 +378,6 @@
                         "isDefault": true,
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "file_content",
-                            "workflow:pyml_predict"
                         ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -470,10 +458,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "file_content",
-                            "workflow:pyml_predict"
-                        ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
@@ -552,10 +536,6 @@
                         "isDefault": true,
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "file_content",
-                            "workflow:pyml_predict"
                         ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -648,10 +628,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "file_content",
-                            "workflow:pyml_predict"
-                        ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
@@ -711,7 +687,7 @@
         {
             "name": "Set Up the Job",
             "type": "subworkflow",
-            "_id": "652639cf-0029-555b-8831-d53ddabe622f",
+            "_id": "03e3f15b-2b22-5bb4-8bfd-6839d28a1ba9",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "5b51df93-15dd-5440-90fd-a3ffa264b7d8",
@@ -722,7 +698,7 @@
         {
             "name": "Machine Learning",
             "type": "subworkflow",
-            "_id": "c7e535a9-7a24-578e-afd6-4a2d0658d44c",
+            "_id": "30acc5cd-54e6-5f05-aafd-413ee8a69aa1",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "90738aae-daac-599f-913f-29fb6acdff00",
@@ -731,7 +707,7 @@
         }
     ],
     "properties": [],
-    "_id": "7cb5f08f-cb38-5c6a-b7e7-875a35b4f055",
+    "_id": "f447c6df-3b7b-5b8e-a0cc-1a743847ceed",
     "workflows": [],
     "isUsingDataset": true,
     "schemaVersion": "2022.8.16",

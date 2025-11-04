@@ -2,7 +2,7 @@
     "name": "Band Gap + DoS - HSE",
     "subworkflows": [
         {
-            "_id": "9d1801d2-f7be-56c6-b57f-a1fe1a1c11ff",
+            "_id": "f1341a29-777d-5ca3-8933-78a5e0d3f6f2",
             "name": "HSE Band Gap",
             "application": {
                 "name": "espresso",
@@ -102,23 +102,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -205,9 +188,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "density_of_states"
-                        ],
                         "name": "projwfc.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -252,7 +232,7 @@
         {
             "name": "HSE Band Gap",
             "type": "subworkflow",
-            "_id": "9d1801d2-f7be-56c6-b57f-a1fe1a1c11ff",
+            "_id": "f1341a29-777d-5ca3-8933-78a5e0d3f6f2",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "f7a0860d-6f9e-59e3-b600-07bbf986998a",
@@ -263,15 +243,15 @@
     "properties": [
         "atomic_forces",
         "band_gaps",
+        "density_of_states",
         "fermi_energy",
         "pressure",
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force",
-        "density_of_states"
+        "total_force"
     ],
-    "_id": "fbc5f381-cba9-5a45-b550-240b788f5cee",
+    "_id": "ab28e7cf-a363-5223-ae0b-a60c82bb4f9a",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

@@ -2,7 +2,7 @@
     "name": "Phonon Map",
     "subworkflows": [
         {
-            "_id": "42482965-357f-5f35-9609-1f26eb845bca",
+            "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
             "name": "Preliminary SCF Calculation",
             "application": {
                 "name": "espresso",
@@ -97,23 +97,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -170,7 +153,7 @@
             ]
         },
         {
-            "_id": "58a02fe0-2ccb-5781-b003-0b82ebcaa390",
+            "_id": "2f017bcb-f4ba-55b8-b939-1f780679a88e",
             "name": "ph-init-qpoints",
             "application": {
                 "name": "espresso",
@@ -225,11 +208,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "phonon_dos",
-                            "phonon_dispersions",
-                            "zero_point_energy"
-                        ],
                         "name": "ph.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -272,7 +250,7 @@
             ]
         },
         {
-            "_id": "07ed6979-32f1-57c1-821a-1afb78fcc985",
+            "_id": "e4b6b2e7-7d8f-5ae1-b6bd-ee81ecbca11a",
             "name": "espresso-xml-get-qpt-irr",
             "application": {
                 "name": "python",
@@ -320,10 +298,6 @@
                         "isDefault": true,
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "file_content",
-                            "workflow:pyml_predict"
                         ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -388,7 +362,7 @@
             ]
         },
         {
-            "_id": "e5f7d226-7d0d-56d8-8538-80bdb5168875",
+            "_id": "545a66e2-dfbe-513e-acaf-d79d0d139b9c",
             "name": "reduce",
             "application": {
                 "name": "espresso",
@@ -445,11 +419,6 @@
                     "executable": {
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "phonon_dos",
-                            "phonon_dispersions",
-                            "zero_point_energy"
                         ],
                         "name": "ph.x",
                         "schemaVersion": "2022.8.16",
@@ -518,7 +487,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [],
                         "name": "q2r.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -585,10 +553,6 @@
                     "executable": {
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "phonon_dos",
-                            "phonon_dispersions"
                         ],
                         "name": "matdyn.x",
                         "schemaVersion": "2022.8.16",
@@ -663,10 +627,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "phonon_dos",
-                            "phonon_dispersions"
-                        ],
                         "name": "matdyn.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -715,7 +675,7 @@
         {
             "name": "Preliminary SCF Calculation",
             "type": "subworkflow",
-            "_id": "42482965-357f-5f35-9609-1f26eb845bca",
+            "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "b6a2b27a-0fec-5e0e-8974-073ee9d2ad83",
@@ -726,7 +686,7 @@
         {
             "name": "ph-init-qpoints",
             "type": "subworkflow",
-            "_id": "58a02fe0-2ccb-5781-b003-0b82ebcaa390",
+            "_id": "2f017bcb-f4ba-55b8-b939-1f780679a88e",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "4bb74dfb-46a6-5bf4-a477-5d374dc2e271",
@@ -737,7 +697,7 @@
         {
             "name": "espresso-xml-get-qpt-irr",
             "type": "subworkflow",
-            "_id": "07ed6979-32f1-57c1-821a-1afb78fcc985",
+            "_id": "e4b6b2e7-7d8f-5ae1-b6bd-ee81ecbca11a",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "9894b91f-6e97-5ee6-af02-0bef26bd62c0",
@@ -748,7 +708,7 @@
         {
             "name": "map",
             "type": "map",
-            "workflowId": "47785567-5302-5145-be58-3293aba59ac5",
+            "workflowId": "731d3397-3278-516a-b28e-53626ef50f0a",
             "input": {
                 "target": "MAP_DATA",
                 "scope": "global",
@@ -766,7 +726,7 @@
         {
             "name": "reduce",
             "type": "subworkflow",
-            "_id": "e5f7d226-7d0d-56d8-8538-80bdb5168875",
+            "_id": "545a66e2-dfbe-513e-acaf-d79d0d139b9c",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "55a9e9fb-3545-5c4b-a1bb-b64a899b78c6",
@@ -783,13 +743,13 @@
         "total_energy_contributions",
         "total_force"
     ],
-    "_id": "1d44965f-b2ca-5155-a125-fa40bbf1f2bd",
+    "_id": "23b9058b-884c-52d4-82a8-ee162b9761e0",
     "workflows": [
         {
             "name": "pre-processor",
             "subworkflows": [
                 {
-                    "_id": "258056fb-d257-5709-b391-bbb84ce6506d",
+                    "_id": "03f3a8a3-1fd0-5007-925f-fba78be63a51",
                     "name": "pre-processor",
                     "application": {
                         "name": "shell",
@@ -838,27 +798,6 @@
                                 "monitors": [
                                     "standard_output"
                                 ],
-                                "results": [
-                                    "atomic_forces",
-                                    "band_gaps",
-                                    "band_structure",
-                                    "density_of_states",
-                                    "fermi_energy",
-                                    "phonon_dispersions",
-                                    "phonon_dos",
-                                    "pressure",
-                                    "stress_tensor",
-                                    "total_energy",
-                                    "total_energy_contributions",
-                                    "total_force",
-                                    "zero_point_energy",
-                                    "final_structure",
-                                    "magnetic_moments",
-                                    "reaction_energy_barrier",
-                                    "reaction_energy_profile",
-                                    "potential_profile",
-                                    "charge_density_profile"
-                                ],
                                 "name": "sh",
                                 "schemaVersion": "2022.8.16"
                             },
@@ -895,7 +834,7 @@
                     ]
                 },
                 {
-                    "_id": "a5ed4646-2f0c-5fd2-b961-6b5dcb959b14",
+                    "_id": "e68db280-8636-53e3-81a0-88396ba6147d",
                     "name": "ph-single-irr-qpt",
                     "application": {
                         "name": "espresso",
@@ -950,11 +889,6 @@
                                 "monitors": [
                                     "standard_output"
                                 ],
-                                "results": [
-                                    "phonon_dos",
-                                    "phonon_dispersions",
-                                    "zero_point_energy"
-                                ],
                                 "name": "ph.x",
                                 "schemaVersion": "2022.8.16",
                                 "isDefault": false
@@ -997,7 +931,7 @@
                     ]
                 },
                 {
-                    "_id": "6355f529-12a3-5281-9687-be87259a12a8",
+                    "_id": "7239fc3a-b343-513f-af35-e8687e1829da",
                     "name": "post-processor",
                     "application": {
                         "name": "shell",
@@ -1046,27 +980,6 @@
                                 "monitors": [
                                     "standard_output"
                                 ],
-                                "results": [
-                                    "atomic_forces",
-                                    "band_gaps",
-                                    "band_structure",
-                                    "density_of_states",
-                                    "fermi_energy",
-                                    "phonon_dispersions",
-                                    "phonon_dos",
-                                    "pressure",
-                                    "stress_tensor",
-                                    "total_energy",
-                                    "total_energy_contributions",
-                                    "total_force",
-                                    "zero_point_energy",
-                                    "final_structure",
-                                    "magnetic_moments",
-                                    "reaction_energy_barrier",
-                                    "reaction_energy_profile",
-                                    "potential_profile",
-                                    "charge_density_profile"
-                                ],
                                 "name": "sh",
                                 "schemaVersion": "2022.8.16"
                             },
@@ -1107,7 +1020,7 @@
                 {
                     "name": "pre-processor",
                     "type": "subworkflow",
-                    "_id": "258056fb-d257-5709-b391-bbb84ce6506d",
+                    "_id": "03f3a8a3-1fd0-5007-925f-fba78be63a51",
                     "status": "idle",
                     "statusTrack": [],
                     "flowchartId": "e9a790f4-dec6-52c1-b951-014f0ff01cb4",
@@ -1118,7 +1031,7 @@
                 {
                     "name": "ph-single-irr-qpt",
                     "type": "subworkflow",
-                    "_id": "a5ed4646-2f0c-5fd2-b961-6b5dcb959b14",
+                    "_id": "e68db280-8636-53e3-81a0-88396ba6147d",
                     "status": "idle",
                     "statusTrack": [],
                     "flowchartId": "c2195045-7a5c-54d3-ab88-211c82de09f1",
@@ -1129,7 +1042,7 @@
                 {
                     "name": "post-processor",
                     "type": "subworkflow",
-                    "_id": "6355f529-12a3-5281-9687-be87259a12a8",
+                    "_id": "7239fc3a-b343-513f-af35-e8687e1829da",
                     "status": "idle",
                     "statusTrack": [],
                     "flowchartId": "e483c7fb-2a29-5e91-819a-7465ead70134",
@@ -1138,7 +1051,7 @@
                 }
             ],
             "properties": [],
-            "_id": "47785567-5302-5145-be58-3293aba59ac5",
+            "_id": "731d3397-3278-516a-b28e-53626ef50f0a",
             "workflows": [],
             "schemaVersion": "2022.8.16",
             "isDefault": false,

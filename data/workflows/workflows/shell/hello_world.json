@@ -2,7 +2,7 @@
     "name": "Shell Script",
     "subworkflows": [
         {
-            "_id": "a0ca1e06-11d5-5df9-8640-b7309b9a580a",
+            "_id": "ce33d4cf-e0d2-5020-854d-9ea1fe5c8512",
             "name": "Shell Hello World",
             "application": {
                 "name": "shell",
@@ -51,27 +51,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "band_structure",
-                            "density_of_states",
-                            "fermi_energy",
-                            "phonon_dispersions",
-                            "phonon_dos",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force",
-                            "zero_point_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "potential_profile",
-                            "charge_density_profile"
-                        ],
                         "name": "sh",
                         "schemaVersion": "2022.8.16"
                     },
@@ -112,7 +91,7 @@
         {
             "name": "Shell Hello World",
             "type": "subworkflow",
-            "_id": "a0ca1e06-11d5-5df9-8640-b7309b9a580a",
+            "_id": "ce33d4cf-e0d2-5020-854d-9ea1fe5c8512",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "319307c2-bf22-5bf2-b4e9-a4cdf671b786",
@@ -121,7 +100,7 @@
         }
     ],
     "properties": [],
-    "_id": "a3850f44-888e-5095-ba5b-a2594138e7b2",
+    "_id": "d2fd444c-06b4-5d66-baeb-449c680ae1bf",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

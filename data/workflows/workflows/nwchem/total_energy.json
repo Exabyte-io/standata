@@ -2,7 +2,7 @@
     "name": "Total Energy",
     "subworkflows": [
         {
-            "_id": "a27b9ca8-5618-528e-8f40-37c27883984f",
+            "_id": "9e7a15b7-0b7d-5a8e-be7f-b8fcacd5cc13",
             "name": "Total Energy",
             "application": {
                 "name": "nwchem",
@@ -70,10 +70,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "total_energy",
-                            "total_energy_contributions"
-                        ],
                         "name": "nwchem",
                         "schemaVersion": "2022.8.16"
                     },
@@ -122,7 +118,7 @@
         {
             "name": "Total Energy",
             "type": "subworkflow",
-            "_id": "a27b9ca8-5618-528e-8f40-37c27883984f",
+            "_id": "9e7a15b7-0b7d-5a8e-be7f-b8fcacd5cc13",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "6059d61a-6a92-5657-9130-02208639aff8",
@@ -134,7 +130,7 @@
         "total_energy",
         "total_energy_contributions"
     ],
-    "_id": "6e937035-b03b-5b2c-a2ba-28f1f49d4a3d",
+    "_id": "937fbac8-2dec-5fb1-a46f-b8a0cc3d3d05",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

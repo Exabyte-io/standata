@@ -1,5 +1,5 @@
 {
-    "_id": "270b9cbc-ae88-5194-b5f5-c32d88d9d306",
+    "_id": "2cf317f3-3306-5a96-bc9b-e9103ebcd5be",
     "name": "Density of States",
     "application": {
         "name": "espresso"
@@ -89,23 +89,6 @@
                     "standard_output",
                     "convergence_ionic",
                     "convergence_electronic"
-                ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "charge_density_profile",
-                    "density_of_states",
-                    "fermi_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "potential_profile",
-                    "pressure",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force"
                 ],
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"
@@ -202,23 +185,6 @@
                     "convergence_ionic",
                     "convergence_electronic"
                 ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "charge_density_profile",
-                    "density_of_states",
-                    "fermi_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "potential_profile",
-                    "pressure",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force"
-                ],
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"
             },
@@ -297,9 +263,6 @@
             "executable": {
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "density_of_states"
                 ],
                 "name": "projwfc.x",
                 "schemaVersion": "2022.8.16",

@@ -1,5 +1,5 @@
 {
-    "_id": "e6ead691-5660-5cf5-af8f-3e7669bc4e2c",
+    "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
     "name": "Find ESP Value (Interface right)",
     "application": {
         "name": "espresso"
@@ -41,10 +41,6 @@
                 "isDefault": true,
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "file_content",
-                    "workflow:pyml_predict"
                 ],
                 "name": "python",
                 "schemaVersion": "2022.8.16"

@@ -90,6 +90,28 @@ const matchesFilter = (entityPath, filter) => {
     }
     return false;
 };
+/**
+ * Filters a list of entities and returns the default one based on filter criteria.
+ *
+ * This function performs a two-step process:
+ * 1. Marks entities as default if they match a filter's `defaultPath`
+ * 2. Returns the first marked entity that matches ALL filters
+ *
+ * @param entitiesOrPaths - Array of entity paths (strings) or entity objects with path property
+ * @param filterObjects - Array of filters to apply (can include path, regex, and defaultPath)
+ *
+ * @returns The default entity (as string or object) that matches all filters, or the first entity if none match
+ *
+ * @example
+ * // Given entities: ["models/dft/gga/pbe", "models/dft/lda/pz", "models/dft/gga/pbesol"]
+ * // And filter: { regex: "gga", defaultPath: "models/dft/gga/pbe" }
+ * // Returns: "models/dft/gga/pbe" (marked as default and matches the regex filter)
+ *
+ * @example
+ * // Given entities: [{ path: "method/pw", name: "PW" }, { path: "method/lcao", name: "LCAO" }]
+ * // And filter: { path: "method/pw", defaultPath: "method/pw" }
+ * // Returns: { path: "method/pw", name: "PW", isDefault: true }
+ */
 function filterEntityListGetDefault({ entitiesOrPaths, filterObjects, }) {
     if (!filterObjects || filterObjects.length === 0) {
         return entitiesOrPaths[0];

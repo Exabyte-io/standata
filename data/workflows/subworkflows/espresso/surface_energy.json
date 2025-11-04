@@ -1,5 +1,5 @@
 {
-    "_id": "9e47f966-4caa-559b-8a05-fa51a55644bc",
+    "_id": "3e05a2b5-4171-54a2-9d2d-9e46118a56bf",
     "name": "Surface Energy",
     "application": {
         "name": "espresso"
@@ -429,23 +429,6 @@
                     "standard_output",
                     "convergence_ionic",
                     "convergence_electronic"
-                ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "charge_density_profile",
-                    "density_of_states",
-                    "fermi_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "potential_profile",
-                    "pressure",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force"
                 ],
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"

@@ -1,6 +1,6 @@
 {
     "isMultiMaterial": true,
-    "_id": "5e7cb02a-6c89-5cac-80ba-120b9c11e62e",
+    "_id": "c9b7ad2a-5207-5e41-9b66-28474a8921f8",
     "name": "Prepare Directories",
     "application": {
         "name": "vasp"
@@ -42,27 +42,6 @@
                 "isDefault": true,
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "band_structure",
-                    "density_of_states",
-                    "fermi_energy",
-                    "phonon_dispersions",
-                    "phonon_dos",
-                    "pressure",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force",
-                    "zero_point_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "potential_profile",
-                    "charge_density_profile"
                 ],
                 "name": "sh",
                 "schemaVersion": "2022.8.16"

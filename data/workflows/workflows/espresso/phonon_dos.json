@@ -2,7 +2,7 @@
     "name": "Phonon Density of States",
     "subworkflows": [
         {
-            "_id": "81984134-07cc-5de0-865d-eb30cb4632ff",
+            "_id": "2232051b-9f2a-5a48-9b4d-6231eb6e8297",
             "name": "Phonon Density of States",
             "application": {
                 "name": "espresso",
@@ -98,23 +98,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -200,11 +183,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "phonon_dos",
-                            "phonon_dispersions",
-                            "zero_point_energy"
-                        ],
                         "name": "ph.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -274,7 +252,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [],
                         "name": "q2r.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -342,10 +319,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "phonon_dos",
-                            "phonon_dispersions"
-                        ],
                         "name": "matdyn.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -394,7 +367,7 @@
         {
             "name": "Phonon Density of States",
             "type": "subworkflow",
-            "_id": "81984134-07cc-5de0-865d-eb30cb4632ff",
+            "_id": "2232051b-9f2a-5a48-9b4d-6231eb6e8297",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "1954e749-1d37-50e6-8ae7-7292f5ef59c0",
@@ -405,15 +378,15 @@
     "properties": [
         "atomic_forces",
         "fermi_energy",
+        "phonon_dos",
+        "phonon_dos",
         "pressure",
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force",
-        "phonon_dos",
-        "phonon_dos"
+        "total_force"
     ],
-    "_id": "c4cbbb69-1015-50cf-8110-22540b001879",
+    "_id": "3f7ff505-615d-5544-ab5f-407e67e1add6",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

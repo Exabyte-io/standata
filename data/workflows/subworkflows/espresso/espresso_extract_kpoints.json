@@ -1,5 +1,5 @@
 {
-    "_id": "f10f2337-a692-5d33-b8d8-076e31cede39",
+    "_id": "a2785cc5-2427-5c7a-b30f-7077475b948c",
     "name": "Extract KPOINTS",
     "application": {
         "name": "espresso"
@@ -41,10 +41,6 @@
                 "isDefault": true,
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "file_content",
-                    "workflow:pyml_predict"
                 ],
                 "name": "python",
                 "schemaVersion": "2022.8.16"

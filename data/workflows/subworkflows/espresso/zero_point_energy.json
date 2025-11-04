@@ -1,5 +1,5 @@
 {
-    "_id": "8c05e783-0094-530d-94c1-a87848e9218c",
+    "_id": "151538cc-9e71-5269-8b9e-cb5977151227",
     "name": "Zero Point Energy",
     "application": {
         "name": "espresso"
@@ -88,23 +88,6 @@
                     "convergence_ionic",
                     "convergence_electronic"
                 ],
-                "results": [
-                    "atomic_forces",
-                    "band_gaps",
-                    "charge_density_profile",
-                    "density_of_states",
-                    "fermi_energy",
-                    "final_structure",
-                    "magnetic_moments",
-                    "potential_profile",
-                    "pressure",
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force"
-                ],
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"
             },
@@ -189,11 +172,6 @@
             "executable": {
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "phonon_dos",
-                    "phonon_dispersions",
-                    "zero_point_energy"
                 ],
                 "name": "ph.x",
                 "schemaVersion": "2022.8.16",

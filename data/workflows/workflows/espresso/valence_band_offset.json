@@ -3,7 +3,7 @@
     "subworkflows": [
         {
             "isMultiMaterial": true,
-            "_id": "130b29ae-90e6-559a-bdb6-76f538b61e4a",
+            "_id": "9c65d03e-6a30-58f3-947a-f174342be0c3",
             "name": "BS + Avg ESP (Interface)",
             "application": {
                 "name": "espresso",
@@ -123,23 +123,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -231,23 +214,6 @@
                             "standard_output",
                             "convergence_ionic",
                             "convergence_electronic"
-                        ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -374,9 +340,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "band_structure"
-                        ],
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -439,7 +402,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [],
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -506,9 +468,6 @@
                     "executable": {
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "average_potential_profile"
                         ],
                         "name": "average.x",
                         "schemaVersion": "2022.8.16",
@@ -578,7 +537,7 @@
             ]
         },
         {
-            "_id": "0ca404f5-49e7-558c-80ca-6ba8bc1573c7",
+            "_id": "ce26adc1-6a26-53ef-9626-5eb6a6b9ccb7",
             "name": "Find ESP Values (Interface)",
             "application": {
                 "name": "python",
@@ -626,10 +585,6 @@
                         "isDefault": true,
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "file_content",
-                            "workflow:pyml_predict"
                         ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -709,7 +664,7 @@
         },
         {
             "isMultiMaterial": true,
-            "_id": "6cbfa50b-5b5c-5bf7-91a1-038a12f3dc25",
+            "_id": "ba46d9b4-610f-537e-ae39-e39ce5240cda",
             "name": "BS + Avg ESP (interface left)",
             "application": {
                 "name": "espresso",
@@ -829,23 +784,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -937,23 +875,6 @@
                             "standard_output",
                             "convergence_ionic",
                             "convergence_electronic"
-                        ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -1080,9 +1001,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "band_structure"
-                        ],
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -1145,7 +1063,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [],
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -1212,9 +1129,6 @@
                     "executable": {
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "average_potential_profile"
                         ],
                         "name": "average.x",
                         "schemaVersion": "2022.8.16",
@@ -1284,7 +1198,7 @@
             ]
         },
         {
-            "_id": "294b949b-01c4-5bd5-a717-1f216a99f450",
+            "_id": "6c303926-905c-5749-81d5-2d2964fdf09a",
             "name": "Find ESP Value (Interface left)",
             "application": {
                 "name": "python",
@@ -1332,10 +1246,6 @@
                         "isDefault": true,
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "file_content",
-                            "workflow:pyml_predict"
                         ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -1415,7 +1325,7 @@
         },
         {
             "isMultiMaterial": true,
-            "_id": "6937424f-e51e-5c70-99b0-3bfb3416b948",
+            "_id": "aa611fe8-1e6a-5e5c-976a-f64bfaaaace9",
             "name": "BS + Avg ESP (interface right)",
             "application": {
                 "name": "espresso",
@@ -1535,23 +1445,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -1643,23 +1536,6 @@
                             "standard_output",
                             "convergence_ionic",
                             "convergence_electronic"
-                        ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -1786,9 +1662,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "band_structure"
-                        ],
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -1851,7 +1724,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [],
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -1918,9 +1790,6 @@
                     "executable": {
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "average_potential_profile"
                         ],
                         "name": "average.x",
                         "schemaVersion": "2022.8.16",
@@ -1990,7 +1859,7 @@
             ]
         },
         {
-            "_id": "e6ead691-5660-5cf5-af8f-3e7669bc4e2c",
+            "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
             "name": "Find ESP Value (Interface right)",
             "application": {
                 "name": "python",
@@ -2038,10 +1907,6 @@
                         "isDefault": true,
                         "monitors": [
                             "standard_output"
-                        ],
-                        "results": [
-                            "file_content",
-                            "workflow:pyml_predict"
                         ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -2120,7 +1985,7 @@
             ]
         },
         {
-            "_id": "a3d2974d-2631-587a-a2c5-0b66d7b0dabf",
+            "_id": "1b70e606-a7ee-599e-89e0-91a7dc5faa4a",
             "name": "Calculate VBO",
             "application": {
                 "name": "python",
@@ -2243,7 +2108,7 @@
         {
             "name": "BS + Avg ESP (Interface)",
             "type": "subworkflow",
-            "_id": "130b29ae-90e6-559a-bdb6-76f538b61e4a",
+            "_id": "9c65d03e-6a30-58f3-947a-f174342be0c3",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "fd622b5c-5c02-594e-b582-b245c17ca9a4",
@@ -2254,7 +2119,7 @@
         {
             "name": "Find ESP Values (Interface)",
             "type": "subworkflow",
-            "_id": "0ca404f5-49e7-558c-80ca-6ba8bc1573c7",
+            "_id": "ce26adc1-6a26-53ef-9626-5eb6a6b9ccb7",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "ad3b1e4c-5965-5605-a067-dd0c59907c4b",
@@ -2265,7 +2130,7 @@
         {
             "name": "BS + Avg ESP (interface left)",
             "type": "subworkflow",
-            "_id": "6cbfa50b-5b5c-5bf7-91a1-038a12f3dc25",
+            "_id": "ba46d9b4-610f-537e-ae39-e39ce5240cda",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "8d5b4734-edfd-55cc-ad80-aaa72487398d",
@@ -2276,7 +2141,7 @@
         {
             "name": "Find ESP Value (Interface left)",
             "type": "subworkflow",
-            "_id": "294b949b-01c4-5bd5-a717-1f216a99f450",
+            "_id": "6c303926-905c-5749-81d5-2d2964fdf09a",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "102ec582-5b75-52f5-8b39-19ca725ed47a",
@@ -2287,7 +2152,7 @@
         {
             "name": "BS + Avg ESP (interface right)",
             "type": "subworkflow",
-            "_id": "6937424f-e51e-5c70-99b0-3bfb3416b948",
+            "_id": "aa611fe8-1e6a-5e5c-976a-f64bfaaaace9",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "603c45db-93aa-54ce-a7fe-6e9b65b0037d",
@@ -2298,7 +2163,7 @@
         {
             "name": "Find ESP Value (Interface right)",
             "type": "subworkflow",
-            "_id": "e6ead691-5660-5cf5-af8f-3e7669bc4e2c",
+            "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "e3444d35-cc41-59f5-8481-78d0c383b84e",
@@ -2309,7 +2174,7 @@
         {
             "name": "Calculate VBO",
             "type": "subworkflow",
-            "_id": "a3d2974d-2631-587a-a2c5-0b66d7b0dabf",
+            "_id": "1b70e606-a7ee-599e-89e0-91a7dc5faa4a",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "0e0b141a-39ca-52bc-9094-e5f96dc72f39",
@@ -2319,16 +2184,16 @@
     ],
     "properties": [
         "atomic_forces",
+        "average_potential_profile",
+        "band_gaps",
         "fermi_energy",
         "pressure",
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force",
-        "band_gaps",
-        "average_potential_profile"
+        "total_force"
     ],
-    "_id": "414eb9d5-e64d-5a5d-bec7-09a9b9aaa84d",
+    "_id": "d8e08cac-7747-50aa-b925-41f214d722c6",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

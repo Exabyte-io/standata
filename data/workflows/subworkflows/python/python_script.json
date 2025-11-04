@@ -1,5 +1,5 @@
 {
-    "_id": "d2c87014-118f-5997-8e92-186e43c74f72",
+    "_id": "64a079ba-7a12-57b7-ac06-310b2bf8d354",
     "name": "Python Script",
     "application": {
         "name": "python"
@@ -41,10 +41,6 @@
                 "isDefault": true,
                 "monitors": [
                     "standard_output"
-                ],
-                "results": [
-                    "file_content",
-                    "workflow:pyml_predict"
                 ],
                 "name": "python",
                 "schemaVersion": "2022.8.16"

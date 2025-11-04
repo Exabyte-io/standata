@@ -2,7 +2,7 @@
     "name": "Phonon Dispersions",
     "subworkflows": [
         {
-            "_id": "dd8aca9d-8175-572b-8228-b13cd3c1008a",
+            "_id": "bfb69b48-8fbf-5a0d-8949-448f20754766",
             "name": "Phonon Dispersions",
             "application": {
                 "name": "espresso",
@@ -99,23 +99,6 @@
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "band_gaps",
-                            "charge_density_profile",
-                            "density_of_states",
-                            "fermi_energy",
-                            "final_structure",
-                            "magnetic_moments",
-                            "potential_profile",
-                            "pressure",
-                            "reaction_energy_barrier",
-                            "reaction_energy_profile",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -201,11 +184,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "phonon_dos",
-                            "phonon_dispersions",
-                            "zero_point_energy"
-                        ],
                         "name": "ph.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -275,7 +253,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [],
                         "name": "q2r.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -343,10 +320,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "results": [
-                            "phonon_dos",
-                            "phonon_dispersions"
-                        ],
                         "name": "matdyn.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -395,7 +368,7 @@
         {
             "name": "Phonon Dispersions",
             "type": "subworkflow",
-            "_id": "dd8aca9d-8175-572b-8228-b13cd3c1008a",
+            "_id": "bfb69b48-8fbf-5a0d-8949-448f20754766",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "2cd13237-d089-5d5e-8372-1db8bb8e383f",
@@ -406,15 +379,15 @@
     "properties": [
         "atomic_forces",
         "fermi_energy",
+        "phonon_dispersions",
+        "phonon_dos",
         "pressure",
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force",
-        "phonon_dos",
-        "phonon_dispersions"
+        "total_force"
     ],
-    "_id": "090d3cbd-3358-5567-9351-722383c29a6f",
+    "_id": "8623c689-9ba3-5454-a3c8-0c6c49c402b4",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
