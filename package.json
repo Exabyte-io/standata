@@ -31,7 +31,7 @@
         "@exabyte-io/eslint-config": "^2022.11.17-0",
         "@mat3ra/ade": "^2025.10.2-0",
         "@mat3ra/wode": "^2025.11.4-0",
-        "@mat3ra/mode": "git+https://github.com/Exabyte-io/mode.js.git#4afbad94d485c5e18a2c9b1c0543a685f029a2e5",
+        "@mat3ra/mode": "git+https://github.com/Exabyte-io/mode.js.git#d84a86242c7a9f88f90044e7c099435a9ab453a3",
         "@mat3ra/utils": "2025.10.9-5",
         "@mat3ra/code": "^2025.8.7-0",
         "@mat3ra/tsconfig": "^2024.6.3-0",
