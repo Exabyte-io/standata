@@ -72,7 +72,7 @@
         "build:models": "ts-node scripts/models/build_models.ts",
         "build:methods": "ts-node scripts/methods/build_methods.ts",
         "build:model-method-map": "ts-node scripts/models/build_model_method_map.ts",
-        "build:ui": "ts-node ui/build_ui_trees.ts",
+        "build:ui": "ts-node ui/scripts/build_ui_trees.ts",
         "build:symlink": "test -L src/js/runtime_data || ln -s ../../dist/js/runtime_data src/js/runtime_data",
         "build": "npm run transpile && npm run build:symlink && npm run build:models && npm run build:methods && npm run build:model-method-map && npm run build:applications && npm run build:properties && npm run build:workflows && npm run build:materials",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",

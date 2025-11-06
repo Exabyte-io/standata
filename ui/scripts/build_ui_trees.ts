@@ -1,44 +1,35 @@
 /* This script build the RJSF schemas for models and methods from the Yaml assets in `./ui`.
  */
-import * as fs from "fs";
-import * as path from "path";
 
-import { readYAMLFileResolved } from "../scripts/utils";
+// @ts-ignore
+import { buildJSONFromYAMLInDir } from "../../scripts/utils";
+import { BUILD_CONFIG as ROOT_BUILD_CONFIG } from "../../build-config";
+import { BUILD_CONFIG } from "../build-config";
 
-function getUiTreesFileContent(): string {
-    const originalCwd = process.cwd();
-    try {
-        process.chdir("ui");
+buildJSONFromYAMLInDir({
+    assetPath: BUILD_CONFIG.assets.model,
+    targetPath: `${BUILD_CONFIG.data.commonPath}/${BUILD_CONFIG.data.model}`,
+    workingDir: BUILD_CONFIG.assets.commonPath,
+    spaces: ROOT_BUILD_CONFIG.dataJSONFormat.spaces,
+});
 
-        const methodTree = readYAMLFileResolved("method.yml");
-        const modelTree = readYAMLFileResolved("model.yml");
+buildJSONFromYAMLInDir({
+    assetPath: BUILD_CONFIG.assets.method,
+    targetPath: `${BUILD_CONFIG.data.commonPath}/${BUILD_CONFIG.data.method}`,
+    workingDir: BUILD_CONFIG.assets.commonPath,
+    spaces: ROOT_BUILD_CONFIG.dataJSONFormat.spaces,
+});
 
-        const exportObject = {
-            method: methodTree,
-            model: modelTree,
-        };
+buildJSONFromYAMLInDir({
+    assetPath: BUILD_CONFIG.assets.model,
+    targetPath: `${BUILD_CONFIG.dist.commonPath}/${BUILD_CONFIG.dist.model}`,
+    workingDir: BUILD_CONFIG.assets.commonPath,
+    spaces: ROOT_BUILD_CONFIG.buildJSONFormat.spaces,
+});
 
-        const ignore = "/* eslint-disable */\n";
-        return ignore + `module.exports = ${JSON.stringify(exportObject)}`;
-    } finally {
-        process.chdir(originalCwd);
-    }
-}
-
-
-try {
-    const outputDir = path.join("ui", "data");
-    if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true });
-    }
-
-    const uiTreesPath = path.join(outputDir, "ui_trees.js");
-
-    fs.writeFileSync(uiTreesPath, getUiTreesFileContent(), "utf8");
-    console.log(`Generated: ${uiTreesPath}`);
-
-} catch (e) {
-    console.error("Error generating UI trees:", e);
-    process.exit(1);
-}
-
+buildJSONFromYAMLInDir({
+    assetPath: BUILD_CONFIG.assets.method,
+    targetPath: `${BUILD_CONFIG.dist.commonPath}/${BUILD_CONFIG.dist.method}`,
+    workingDir: BUILD_CONFIG.assets.commonPath,
+    spaces: ROOT_BUILD_CONFIG.buildJSONFormat.spaces,
+});
