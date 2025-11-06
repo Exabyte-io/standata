@@ -6,6 +6,8 @@ import { buildJSONFromYAMLInDir } from "../../scripts/utils";
 import { BUILD_CONFIG as ROOT_BUILD_CONFIG } from "../../build-config";
 import { BUILD_CONFIG } from "../build-config";
 
+
+// Build JSON files from YAML assets in data
 buildJSONFromYAMLInDir({
     assetPath: BUILD_CONFIG.assets.model,
     targetPath: `${BUILD_CONFIG.data.commonPath}/${BUILD_CONFIG.data.model}`,
@@ -21,6 +23,14 @@ buildJSONFromYAMLInDir({
 });
 
 buildJSONFromYAMLInDir({
+    assetPath: BUILD_CONFIG.assets.schemas,
+    targetPath: `${BUILD_CONFIG.data.commonPath}/${BUILD_CONFIG.data.schemas}`,
+    workingDir: BUILD_CONFIG.assets.commonPath,
+    spaces: ROOT_BUILD_CONFIG.dataJSONFormat.spaces,
+});
+
+// Build JSON files from YAML assets in dist
+buildJSONFromYAMLInDir({
     assetPath: BUILD_CONFIG.assets.model,
     targetPath: `${BUILD_CONFIG.dist.commonPath}/${BUILD_CONFIG.dist.model}`,
     workingDir: BUILD_CONFIG.assets.commonPath,
@@ -30,6 +40,13 @@ buildJSONFromYAMLInDir({
 buildJSONFromYAMLInDir({
     assetPath: BUILD_CONFIG.assets.method,
     targetPath: `${BUILD_CONFIG.dist.commonPath}/${BUILD_CONFIG.dist.method}`,
+    workingDir: BUILD_CONFIG.assets.commonPath,
+    spaces: ROOT_BUILD_CONFIG.buildJSONFormat.spaces,
+});
+
+buildJSONFromYAMLInDir({
+    assetPath: BUILD_CONFIG.assets.schemas,
+    targetPath: `${BUILD_CONFIG.dist.commonPath}/${BUILD_CONFIG.dist.schemas}`,
     workingDir: BUILD_CONFIG.assets.commonPath,
     spaces: ROOT_BUILD_CONFIG.buildJSONFormat.spaces,
 });

@@ -3,6 +3,7 @@ export const BUILD_CONFIG = {
         commonPath: "ui/assets",
         model: "model.yml",
         method: "method.yml",
+        schemas: "../manifest/ui_schema_titles.yml",
     },
     data: {
         commonPath: "ui/data",
