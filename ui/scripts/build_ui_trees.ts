@@ -1,6 +1,3 @@
-/* This script build the RJSF schemas for models and methods from the Yaml assets in `./ui`.
- */
-
 // @ts-ignore
 import { buildJSONFromYAMLInDir } from "../../scripts/utils";
 import { BUILD_CONFIG as ROOT_BUILD_CONFIG } from "../../build-config";
