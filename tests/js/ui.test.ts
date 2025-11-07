@@ -1,14 +1,9 @@
 import { expect } from "chai";
 import { readFileSync } from "fs";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
+import path from "path";
 
 // @ts-ignore
 import type { TreeNode } from "@mat3ra/standata/ui/types/uiTree";
-
-// @ts-ignore
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const baseUiSchemas = JSON.parse(
     readFileSync(path.join(__dirname, "fixtures", "schemas.json"), "utf8"),
