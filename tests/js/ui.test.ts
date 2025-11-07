@@ -4,7 +4,7 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
 // @ts-ignore
-import type { TreeNode } from "../../ui/types/uiTree";
+import type { TreeNode } from "@mat3ra/standata/ui/types/uiTree";
 
 // @ts-ignore
 const __filename = fileURLToPath(import.meta.url);
