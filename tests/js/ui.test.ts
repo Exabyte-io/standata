@@ -1,12 +1,6 @@
 import { expect } from "chai";
 import { readFileSync } from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
-
-// Handle both CommonJS and ESM environments
-// @ts-ignore - import.meta works at runtime, suppress TS compilation error
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const baseUiSchemas = JSON.parse(
     readFileSync(path.join(__dirname, "fixtures", "schemas.json"), "utf8"),
