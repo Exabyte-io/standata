@@ -2,6 +2,8 @@ import { expect } from "chai";
 import { readFileSync } from "fs";
 import path from "path";
 
+// This is a workaround for __dirname not being defined in ES modules.
+// Mocha/Node may load this file as ESM in some envs; fallback keeps fixture paths stable.
 const currentDirectory =
     typeof __dirname !== "undefined" ? __dirname : path.resolve(process.cwd(), "tests/js");
 
