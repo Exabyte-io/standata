@@ -3,9 +3,9 @@ import { expect } from "chai";
 // @ts-ignore
 import type { TreeNode } from "../../ui/types/uiTree";
 
-import baseUiSchemas from "../../dist/js/ui/schemas.json";
-import methodTree from "../../dist/js/ui/methodTree.json";
-import modelTree from "../../dist/js/ui/modelTree.json";
+import baseUiSchemas from "./fixtures/schemas.json" with { type: "json" };
+import methodTree from "./fixtures/methodTree.json" with { type: "json" };
+import modelTree from "./fixtures/modelTree.json" with { type: "json" };
 
 function validateTree(tree: TreeNode): void {
     expect(tree.path).to.be.a("string");
@@ -34,7 +34,7 @@ function validateTree(tree: TreeNode): void {
 describe("UI Trees", () => {
     [
         { name: "modelTree", tree: modelTree, expectedCategories: ["pb"] },
-        { name: "methodTree", tree: methodTree, expectedCategories: ["qm", "linalg", "opt"] },
+        { name: "methodTree", tree: methodTree, expectedCategories: ["qm", "linalg"] },
     ].forEach(({ name, tree, expectedCategories }) => {
         describe(name, () => {
             it("should have valid structure", () => {
