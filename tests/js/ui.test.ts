@@ -1,9 +1,12 @@
 import { expect } from "chai";
 import { readFileSync } from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
-// @ts-ignore
-import type { TreeNode } from "@mat3ra/standata/ui/types/uiTree";
+// Handle both CommonJS and ESM environments
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const baseUiSchemas = JSON.parse(
     readFileSync(path.join(__dirname, "fixtures", "schemas.json"), "utf8"),
@@ -15,7 +18,7 @@ const modelTree = JSON.parse(
     readFileSync(path.join(__dirname, "fixtures", "modelTree.json"), "utf8"),
 );
 
-function validateTree(tree: TreeNode): void {
+function validateTree(tree: any): void {
     expect(tree.path).to.be.a("string");
     expect(tree.data === null || typeof tree.data?.key === "string").to.be.true;
 
@@ -53,7 +56,7 @@ describe("UI Trees", () => {
             });
 
             it("should include expected categories", () => {
-                const tier1Values = tree.children?.map((c: TreeNode) => c.data?.value) || [];
+                const tier1Values = tree.children?.map((c: any) => c.data?.value) || [];
                 expect(tier1Values).to.include.members(expectedCategories);
             });
         });
