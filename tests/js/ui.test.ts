@@ -1,11 +1,19 @@
 import { expect } from "chai";
+import { readFileSync } from "fs";
+import path from "path";
 
 // @ts-ignore
 import type { TreeNode } from "../../ui/types/uiTree";
 
-import baseUiSchemas from "./fixtures/schemas.json" with { type: "json" };
-import methodTree from "./fixtures/methodTree.json" with { type: "json" };
-import modelTree from "./fixtures/modelTree.json" with { type: "json" };
+const baseUiSchemas = JSON.parse(
+    readFileSync(path.join(__dirname, "fixtures", "schemas.json"), "utf8"),
+);
+const methodTree = JSON.parse(
+    readFileSync(path.join(__dirname, "fixtures", "methodTree.json"), "utf8"),
+);
+const modelTree = JSON.parse(
+    readFileSync(path.join(__dirname, "fixtures", "modelTree.json"), "utf8"),
+);
 
 function validateTree(tree: TreeNode): void {
     expect(tree.path).to.be.a("string");
@@ -45,7 +53,7 @@ describe("UI Trees", () => {
             });
 
             it("should include expected categories", () => {
-                const tier1Values = tree.children?.map((c) => c.data?.value);
+                const tier1Values = tree.children?.map((c: TreeNode) => c.data?.value) || [];
                 expect(tier1Values).to.include.members(expectedCategories);
             });
         });
