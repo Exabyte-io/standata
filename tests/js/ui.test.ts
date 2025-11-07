@@ -4,7 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 // Handle both CommonJS and ESM environments
-
+// @ts-ignore - import.meta works at runtime, suppress TS compilation error
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -32,7 +32,7 @@ function validateTree(tree: any): void {
     }
 
     if (tree.staticOptions) {
-        tree.staticOptions.forEach((opt) => {
+        tree.staticOptions.forEach((opt: any) => {
             expect(opt.key).to.be.a("string");
             expect(opt.values).to.be.an("array");
             if (opt.namesMap) {
