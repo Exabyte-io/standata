@@ -1,9 +1,14 @@
 import { expect } from "chai";
 import { readFileSync } from "fs";
-import path from "path";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 
 // @ts-ignore
 import type { TreeNode } from "../../ui/types/uiTree";
+
+// @ts-ignore
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const baseUiSchemas = JSON.parse(
     readFileSync(path.join(__dirname, "fixtures", "schemas.json"), "utf8"),
