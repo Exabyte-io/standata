@@ -349,6 +349,31 @@ To rebuild all entities at once:
 npm run build
 ```
 
+### 5.4. UI Trees
+
+UI trees are hierarchical data structures for generating RJSF schemas for model and method filters. They're built from YAML assets in `ui/assets/` and output as:
+- **modelTree.json** - Model category hierarchy with parameters
+- **methodTree.json** - Method category hierarchy with parameters
+- **schemas.json** - UI schema titles for form labels
+
+#### 5.4.1. Building
+
+```shell
+npm run build:ui
+```
+
+Outputs formatted JSON to `ui/data/` (development) and minified to `dist/js/ui/` (production).
+
+
+#### 5.4.2. Adding New Categories
+
+1. Create YAML file in `ui/assets/model/` (or `method/`) with `path`, `data`, and optional `staticOptions`
+2. Add human-readable names to `ui/assets/manifest/names_map.yml`
+3. Include in parent file using `!include`
+4. Run `npm run build:ui`
+
+See existing files in `ui/assets/` for examples. TypeScript types are in `ui/types/uiTree.ts`.
+
 ## 6. Important notes
 
 ### 6.1. Transpilation and Runtime Data Build
