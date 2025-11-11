@@ -1,4 +1,6 @@
 import { expect } from "chai";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { MethodConversionHandler } from "@mat3ra/mode";
 
 import { ApplicationMethodStandata, MethodStandata, ModelStandata } from "../../src/js";
 
@@ -8,7 +10,9 @@ describe("Application Method Standata", () => {
         categorizedModelList: any[];
 
     beforeEach(() => {
-        methodStandata = new ApplicationMethodStandata();
+        methodStandata = new ApplicationMethodStandata(
+            MethodConversionHandler.convertToSimple.bind(MethodConversionHandler),
+        );
         categorizedMethodList = new MethodStandata().getAll();
         categorizedModelList = new ModelStandata().getAll();
     });
@@ -150,7 +154,6 @@ describe("Application Method Standata", () => {
             executable: "vasp",
             flavor: "vasp",
         });
-        console.log("defaultConfig", defaultConfig);
 
         expect(defaultConfig).to.be.an("object");
         expect(defaultConfig.type).to.equal("pseudopotential");
@@ -165,7 +168,6 @@ describe("Application Method Standata", () => {
             executable: "pw.x",
             flavor: "pw_scf",
         });
-        console.log("defaultConfig", defaultConfig);
 
         expect(defaultConfig).to.be.an("object");
         expect(defaultConfig.type).to.equal("pseudopotential");
