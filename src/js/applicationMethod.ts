@@ -1,6 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { MethodConversionHandler } from "@mat3ra/mode";
-
 import { MethodStandata } from "./method";
 import MODEL_METHOD_DATA from "./runtime_data/applications/modelMethodMapByApplication.json";
 import { ApplicationMethodParametersInterface } from "./types/applicationFilter";
@@ -45,7 +42,7 @@ export class ApplicationMethodStandata extends ApplicationFilterStandata {
         const methodStandata = new MethodStandata();
         const allMethods = methodStandata.getAll();
 
-        const categorizedMethod = this.filterByApplicationParametersGetDefault(
+        return this.filterByApplicationParametersGetDefault(
             allMethods,
             name,
             version,
@@ -53,7 +50,5 @@ export class ApplicationMethodStandata extends ApplicationFilterStandata {
             executable,
             flavor,
         );
-        const simpleMethod = MethodConversionHandler.convertToSimple(categorizedMethod);
-        return simpleMethod;
     }
 }

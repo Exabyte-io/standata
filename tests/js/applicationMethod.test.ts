@@ -1,4 +1,6 @@
 import { expect } from "chai";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { MethodConversionHandler } from "@mat3ra/mode";
 
 import { ApplicationMethodStandata, MethodStandata, ModelStandata } from "../../src/js";
 
@@ -150,11 +152,15 @@ describe("Application Method Standata", () => {
             executable: "vasp",
             flavor: "vasp",
         });
-        console.log("defaultConfig", defaultConfig);
 
         expect(defaultConfig).to.be.an("object");
-        expect(defaultConfig.type).to.equal("pseudopotential");
-        expect(defaultConfig.subtype).to.equal("paw");
+        expect(defaultConfig).to.have.property("units");
+        expect(defaultConfig).to.have.property("path");
+        expect(defaultConfig).to.have.property("name");
+
+        const simpleConfig = MethodConversionHandler.convertToSimple(defaultConfig);
+        expect(simpleConfig.type).to.equal("pseudopotential");
+        expect(simpleConfig.subtype).to.equal("paw");
     });
 
     it("can get default method config for Espresso application", () => {
@@ -165,10 +171,14 @@ describe("Application Method Standata", () => {
             executable: "pw.x",
             flavor: "pw_scf",
         });
-        console.log("defaultConfig", defaultConfig);
 
         expect(defaultConfig).to.be.an("object");
-        expect(defaultConfig.type).to.equal("pseudopotential");
-        expect(defaultConfig.subtype).to.equal("us");
+        expect(defaultConfig).to.have.property("units");
+        expect(defaultConfig).to.have.property("path");
+        expect(defaultConfig).to.have.property("name");
+
+        const simpleConfig = MethodConversionHandler.convertToSimple(defaultConfig);
+        expect(simpleConfig.type).to.equal("pseudopotential");
+        expect(simpleConfig.subtype).to.equal("us");
     });
 });

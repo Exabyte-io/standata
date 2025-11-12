@@ -16,13 +16,13 @@
     "model": {
         "type": "dft",
         "subtype": "hybrid",
-        "functional": {
-            "slug": "hse06"
-        },
         "method": {
             "type": "pseudopotential",
             "subtype": "us",
             "data": {}
+        },
+        "functional": {
+            "slug": "hse06"
         },
         "refiners": [],
         "modifiers": []

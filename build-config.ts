@@ -30,6 +30,8 @@ export const BUILD_CONFIG = {
         build: {
             path: "build/standata/models",
             modelMethodMap: "modelMethodMap.json",
+            modelTree: "modelTree.json",
+            modelsTreeConfigByApplication: "modelsTreeConfigByApplication.json",
         },
     },
 
