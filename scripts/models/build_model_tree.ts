@@ -1,3 +1,5 @@
+import * as fs from "fs";
+import * as path from "path";
 import serverUtils from "@mat3ra/utils/server";
 
 import { BUILD_CONFIG } from "../../build-config";
@@ -15,6 +17,17 @@ export function buildModelTree(): void {
 
     serverUtils.json.writeJSONFileSync(targetFile, modelTreeData);
     console.log(`Generated: ${targetFile}`);
+
+    const pyTargetFile = path.resolve(BUILD_CONFIG.srcPythonRuntimeDataDir, "model_tree.py");
+    const pyContent = `import json
+
+model_tree_data = json.loads(r'''${JSON.stringify(modelTreeData)}''')
+MODEL_TREE = model_tree_data.get("MODEL_TREE", {})
+MODEL_NAMES = model_tree_data.get("MODEL_NAMES", {})
+`;
+    fs.writeFileSync(pyTargetFile, pyContent, "utf8");
+    console.log(`Written Python Module to "${pyTargetFile}"`);
+
     console.log(`Model tree built successfully`);
 }
 

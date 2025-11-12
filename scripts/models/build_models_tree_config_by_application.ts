@@ -1,3 +1,6 @@
+import * as fs from "fs";
+import * as path from "path";
+
 import { deepClone } from "@mat3ra/code/dist/js/utils";
 import serverUtils from "@mat3ra/utils/server";
 import _ from "underscore";
@@ -43,6 +46,20 @@ export function buildModelsTreeConfigByApplication(): void {
 
     serverUtils.json.writeJSONFileSync(targetFile, modelsTreeConfigByApplication);
     console.log(`Generated: ${targetFile}`);
+
+    const pyTargetFile = path.resolve(
+        BUILD_CONFIG.srcPythonRuntimeDataDir,
+        "models_tree_config_by_application.py",
+    );
+    const pyContent = `import json
+
+models_tree_config_by_application = json.loads(r'''${JSON.stringify(
+        modelsTreeConfigByApplication,
+    )}''')
+`;
+    fs.writeFileSync(pyTargetFile, pyContent, "utf8");
+    console.log(`Written Python Module to "${pyTargetFile}"`);
+
     console.log(
         `Models tree config built successfully with ${
             Object.keys(modelsTreeConfigByApplication).length
