@@ -118,7 +118,7 @@
   },
   "external": {
     "id": "mavrl-si-100",
-    "source": "Materials Virtual Lab",
+    "source": "MaterialsVirtualLab",
     "doi": "10.1038/sdata.2016.80",
     "url": "https://crystalium.materialsvirtuallab.org/",
     "origin": true
