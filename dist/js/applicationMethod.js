@@ -23,7 +23,6 @@ class ApplicationMethodStandata extends applicationFilter_1.ApplicationFilterSta
         const { name, version, build, executable, flavor } = applicationConfig;
         const availableMethods = this.getAvailableMethods(name);
         if (!availableMethods || Object.keys(availableMethods).length === 0) {
-            // When nothing is available, preserve the previous behavior: return "unknown" simple.
             return { type: "unknown", subtype: "unknown" };
         }
         const methodStandata = new method_1.MethodStandata();
