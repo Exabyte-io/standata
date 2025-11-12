@@ -3,13 +3,8 @@ import MODEL_METHOD_DATA from "./runtime_data/applications/modelMethodMapByAppli
 import { ApplicationMethodParametersInterface } from "./types/applicationFilter";
 import { ApplicationFilterStandata, FilterMode } from "./utils/applicationFilter";
 
-// A converter function that turns a categorized method into the "simple" shape.
-// Mode can inject its own implementation at runtime via the constructor.
-export type SimpleMethod = { type: string; subtype: string };
-export type MethodToSimple = (categorized: any) => SimpleMethod;
-
 export class ApplicationMethodStandata extends ApplicationFilterStandata {
-    constructor(private readonly convertToSimple?: MethodToSimple) {
+    constructor() {
         const data = MODEL_METHOD_DATA;
         super(data?.methods as any, FilterMode.ALL_MATCH);
     }
@@ -36,18 +31,18 @@ export class ApplicationMethodStandata extends ApplicationFilterStandata {
         return this.getAvailableEntities(name);
     }
 
-    getDefaultMethodConfigForApplication(applicationConfig: any): SimpleMethod | any {
+    getDefaultMethodConfigForApplication(applicationConfig: any): any {
         const { name, version, build, executable, flavor } = applicationConfig;
 
         const availableMethods = this.getAvailableMethods(name);
         if (!availableMethods || Object.keys(availableMethods).length === 0) {
-            return { type: "unknown", subtype: "unknown" } satisfies SimpleMethod;
+            return { type: "unknown", subtype: "unknown" };
         }
 
         const methodStandata = new MethodStandata();
         const allMethods = methodStandata.getAll();
 
-        const categorizedMethod = this.filterByApplicationParametersGetDefault(
+        return this.filterByApplicationParametersGetDefault(
             allMethods,
             name,
             version,
@@ -55,10 +50,5 @@ export class ApplicationMethodStandata extends ApplicationFilterStandata {
             executable,
             flavor,
         );
-
-        if (!this.convertToSimple) {
-            return categorizedMethod;
-        }
-        return this.convertToSimple(categorizedMethod);
     }
 }
