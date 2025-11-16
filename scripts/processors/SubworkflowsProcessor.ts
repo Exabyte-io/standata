@@ -35,6 +35,7 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
             if (!subworkflows) return;
             Object.keys(subworkflows).forEach((subworkflowName) => {
                 const subworkflowData = subworkflows[subworkflowName];
+                // @ts-ignore
                 const subworkflow = createSubworkflowByName({
                     appName,
                     swfName: subworkflowName,
