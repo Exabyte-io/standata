@@ -9,6 +9,7 @@ monitors:
 results:
   - atomic_forces
   - band_gaps
+  - band_structure
   - charge_density_profile
   - density_of_states
   - fermi_energy
