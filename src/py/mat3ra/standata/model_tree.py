@@ -7,7 +7,7 @@ from .data.model_tree import MODEL_NAMES, MODEL_TREE, model_tree_data
 from .data.models_tree_config_by_application import models_tree_config_by_application
 
 
-class ModelTree(Standata):
+class ModelTreeStandata(Standata):
     data_dict: Dict = model_tree_data
     data: StandataData = StandataData(data_dict)
 
