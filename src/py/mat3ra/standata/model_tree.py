@@ -11,6 +11,12 @@ class ModelTreeStandata(Standata):
     data_dict: Dict = model_tree_data
     data: StandataData = StandataData(data_dict)
 
+    def get_method_types_by_model(self, model_shortname: str, method_shortname: str) -> List[str]:
+        model_tree = MODEL_TREE.get(model_shortname, {})
+        methods_tree = model_tree.get("methods", {})
+        method_info = methods_tree.get(method_shortname, {})
+        return method_info.get("types", [])
+
     def get_pseudopotential_types_from_tree(self) -> List[str]:
         methods_tree = MODEL_TREE.get("dft", {}).get("gga", {}).get("methods", {})
         return methods_tree.get("pseudopotential", [])
