@@ -8,3 +8,7 @@ export { ApplicationMethodStandata } from "./applicationMethod";
 export { ModelStandata } from "./model";
 export { MethodStandata } from "./method";
 export { ModelMethodFilter, filterMethodsByModel } from "./modelMethodFilter";
+import modelTree from "./ui/modelTree.json";
+import methodTree from "./ui/methodTree.json";
+import baseUiSchema from "./ui/schemas.json";
+export { modelTree, methodTree, baseUiSchema };
