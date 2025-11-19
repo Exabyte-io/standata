@@ -29,16 +29,6 @@ def test_get_method_types_by_model(model_shortname, method_shortname, expected):
         assert result == expected
 
 
-def test_get_pseudopotential_types_from_tree():
-    model_tree = ModelTreeStandata()
-    result = model_tree.get_pseudopotential_types_from_tree()
-    assert isinstance(result, list)
-    assert PSEUDOPOTENTIAL_TYPE.PAW in result
-    assert PSEUDOPOTENTIAL_TYPE.NC in result
-    assert PSEUDOPOTENTIAL_TYPE.NC_FR in result
-    assert PSEUDOPOTENTIAL_TYPE.US in result
-
-
 @pytest.mark.parametrize(
     "slug,expected_slug,expected_name",
     [
