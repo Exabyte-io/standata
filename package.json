@@ -76,7 +76,7 @@
         "build:models-tree-config-by-application": "ts-node scripts/models/build_models_tree_config_by_application.ts",
         "build:models-related": "npm run build:model-method-map && npm run build:model-tree && npm run build:models-tree-config-by-application",
         "build:ui": "ts-node ui/scripts/build_ui_trees.ts",
-        "build:symlink": "(test -L src/js/runtime_data || (rm -rf src/js/runtime_data && ln -s ../../dist/js/runtime_data src/js/runtime_data)) && (test -L src/js/ui || (rm -rf src/js/ui && ln -s ../../dist/js/ui src/js/ui))",
+        "build:symlink": "test -L src/js/runtime_data || ln -s ../../dist/js/runtime_data src/js/runtime_data",
         "build": "npm run transpile && npm run build:symlink && npm run build:models && npm run build:methods && npm run build:models-related && npm run build:applications && npm run build:properties && npm run build:workflows && npm run build:materials",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
