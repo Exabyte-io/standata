@@ -82,6 +82,7 @@
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
         "prettier": "prettier --check src/js tests/js",
+        "check:json-minified": "ts-node scripts/check_json_minified.ts",
         "test": "mocha",
         "transpile": "tsc && cp -r build/standata/* ./dist/js/runtime_data/ || true"
     },
@@ -90,6 +91,7 @@
     },
     "lint-staged": {
         "*.{js,ts,tsx,!dist/**/*,!*runtime_data*}": "eslint --cache --fix",
-        "*.{js,ts,tsx,css,!dist/**/*,!*runtime_data*}": "prettier --write"
+        "*.{js,ts,tsx,css,!dist/**/*,!*runtime_data*}": "prettier --write",
+        "dist/js/runtime_data/**/*.json": "npm run check:json-minified"
     }
 }
