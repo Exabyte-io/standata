@@ -33,8 +33,8 @@
                 "shortName": "sh",
                 "summary": "Shell Script",
                 "build": "GNU",
-                "version": "5.1.8",
                 "isDefault": true,
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
@@ -46,6 +46,8 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
+                "applicationName": "shell",
+                "executableName": "sh",
                 "input": [
                     {
                         "name": "espresso_collect_dynmat.sh"
@@ -54,8 +56,6 @@
                 "monitors": [
                     "standard_output"
                 ],
-                "applicationName": "shell",
-                "executableName": "sh",
                 "name": "espresso_collect_dynmat",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
@@ -65,11 +65,11 @@
             "tags": [],
             "input": [
                 {
-                    "content": "{% raw %}\n#!/bin/bash\n\ncp {{ JOB_SCRATCH_DIR }}/outdir/_ph0/__prefix__.phsave/dynmat* {{ JOB_WORK_DIR }}/../outdir/_ph0/__prefix__.phsave\n{% endraw %}\n",
-                    "name": "espresso_collect_dynmat.sh",
-                    "contextProviders": [],
                     "applicationName": "shell",
+                    "content": "{% raw %}\n#!/bin/bash\n\ncp {{ JOB_SCRATCH_DIR }}/outdir/_ph0/__prefix__.phsave/dynmat* {{ JOB_WORK_DIR }}/../outdir/_ph0/__prefix__.phsave\n{% endraw %}\n",
+                    "contextProviders": [],
                     "executableName": "sh",
+                    "name": "espresso_collect_dynmat.sh",
                     "rendered": "\n#!/bin/bash\n\ncp {{ JOB_SCRATCH_DIR }}/outdir/_ph0/__prefix__.phsave/dynmat* {{ JOB_WORK_DIR }}/../outdir/_ph0/__prefix__.phsave\n\n",
                     "schemaVersion": "2022.8.16"
                 }
