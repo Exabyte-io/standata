@@ -9,9 +9,9 @@
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
                 "build": "GNU",
-                "version": "6.3",
-                "isDefault": true,
                 "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
             "properties": [
@@ -81,31 +81,37 @@
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
                         "build": "GNU",
-                        "version": "6.3",
-                        "isDefault": true,
                         "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "isDefault": true,
                         "hasAdvancedComputeOptions": true,
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
-                        ],
+                        "isDefault": true,
                         "monitors": [
                             "standard_output",
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
+                        "postProcessors": [
+                            "remove_non_zero_weight_kpoints"
+                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "isDefault": true,
+                        "applicationName": "espresso",
+                        "executableName": "pw.x",
                         "input": [
                             {
                                 "name": "pw_scf.in"
                             }
+                        ],
+                        "isDefault": true,
+                        "monitors": [
+                            "standard_output",
+                            "convergence_electronic"
                         ],
                         "results": [
                             "atomic_forces",
@@ -116,12 +122,6 @@
                             "total_energy_contributions",
                             "total_force"
                         ],
-                        "monitors": [
-                            "standard_output",
-                            "convergence_electronic"
-                        ],
-                        "applicationName": "espresso",
-                        "executableName": "pw.x",
                         "name": "pw_scf",
                         "schemaVersion": "2022.8.16"
                     },
@@ -130,8 +130,8 @@
                     "tags": [],
                     "input": [
                         {
+                            "applicationName": "espresso",
                             "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "name": "pw_scf.in",
                             "contextProviders": [
                                 {
                                     "name": "KGridFormDataManager"
@@ -143,8 +143,8 @@
                                     "name": "PlanewaveCutoffDataManager"
                                 }
                             ],
-                            "applicationName": "espresso",
                             "executableName": "pw.x",
+                            "name": "pw_scf.in",
                             "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
                             "schemaVersion": "2022.8.16"
                         }
