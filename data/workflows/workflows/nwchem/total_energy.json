@@ -9,8 +9,8 @@
                 "shortName": "nwchem",
                 "summary": "NWChem",
                 "build": "GNU",
-                "version": "7.0.2",
                 "isDefault": true,
+                "version": "7.0.2",
                 "schemaVersion": "2022.8.16"
             },
             "properties": [
@@ -57,38 +57,38 @@
                         "shortName": "nwchem",
                         "summary": "NWChem",
                         "build": "GNU",
-                        "version": "7.0.2",
                         "isDefault": true,
+                        "version": "7.0.2",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "isDefault": true,
                         "hasAdvancedComputeOptions": false,
-                        "postProcessors": [
-                            "error_handler"
-                        ],
+                        "isDefault": true,
                         "monitors": [
                             "standard_output"
+                        ],
+                        "postProcessors": [
+                            "error_handler"
                         ],
                         "name": "nwchem",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "isDefault": true,
+                        "applicationName": "nwchem",
+                        "executableName": "nwchem",
                         "input": [
                             {
                                 "name": "nwchem_total_energy.inp"
                             }
                         ],
+                        "isDefault": true,
+                        "monitors": [
+                            "standard_output"
+                        ],
                         "results": [
                             "total_energy",
                             "total_energy_contributions"
                         ],
-                        "monitors": [
-                            "standard_output"
-                        ],
-                        "applicationName": "nwchem",
-                        "executableName": "nwchem",
                         "name": "nwchem_total_energy",
                         "schemaVersion": "2022.8.16"
                     },
@@ -97,15 +97,15 @@
                     "tags": [],
                     "input": [
                         {
+                            "applicationName": "nwchem",
                             "content": " start nwchem\n title \"Test\"\n charge {{ input.CHARGE }}\n geometry units au noautosym\n {{ input.ATOMIC_POSITIONS }}\n end\n basis\n   * library {{ input.BASIS }}\n end\n dft\n xc {{ input.FUNCTIONAL }}\n mult {{ input.MULT }}\n end\n task dft energy\n",
-                            "name": "nwchem_total_energy.inp",
                             "contextProviders": [
                                 {
                                     "name": "NWChemInputDataManager"
                                 }
                             ],
-                            "applicationName": "nwchem",
                             "executableName": "nwchem",
+                            "name": "nwchem_total_energy.inp",
                             "rendered": " start nwchem\n title \"Test\"\n charge 0\n geometry units au noautosym\n Si     0.000000000    0.000000000    0.000000000 \nSi     1.116306745    0.789348070    1.933500000 \n end\n basis\n   * library 6-31G\n end\n dft\n xc B3LYP\n mult 1\n end\n task dft energy\n",
                             "schemaVersion": "2022.8.16"
                         }

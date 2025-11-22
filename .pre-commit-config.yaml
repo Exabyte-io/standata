@@ -34,6 +34,13 @@ repos:
         exclude: ^dist/
   - repo: local
     hooks:
+      - id: check-json-minified
+        name: check-json-minified
+        language: system
+        entry: npm run check:json-minified
+        pass_filenames: false
+        verbose: true
+        files: ^dist/js/runtime_data/.*\.json$
       - id: lint-staged
         exclude: "^dist/"
         name: lint-staged

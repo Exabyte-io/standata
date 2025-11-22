@@ -45,31 +45,33 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
                 "isDefault": true,
-                "postProcessors": [
-                    "error_handler",
-                    "prepare_restart",
-                    "remove_non_zero_weight_kpoints"
-                ],
                 "monitors": [
                     "standard_output",
                     "convergence_ionic",
                     "convergence_electronic"
                 ],
+                "postProcessors": [
+                    "error_handler",
+                    "prepare_restart",
+                    "remove_non_zero_weight_kpoints"
+                ],
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
+                "applicationName": "vasp",
+                "executableName": "vasp",
                 "input": [
                     {
                         "name": "INCAR",
@@ -80,15 +82,13 @@
                         "templateName": "KPOINTS"
                     }
                 ],
+                "monitors": [
+                    "standard_output"
+                ],
                 "results": [
                     "reaction_energy_barrier",
                     "reaction_energy_profile"
                 ],
-                "monitors": [
-                    "standard_output"
-                ],
-                "applicationName": "vasp",
-                "executableName": "vasp",
                 "name": "vasp_neb",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
@@ -98,8 +98,8 @@
             "tags": [],
             "input": [
                 {
+                    "applicationName": "vasp",
                     "content": "ISTART = 0\nIBRION = 1\nEDIFFG = -0.001\nENCUT = 500\nNELM = 100\nNSW = 100\nIMAGES = {{ input.INTERMEDIATE_IMAGES.length or neb.nImages }}\nSPRING = -5\nISPIN = 2\n",
-                    "name": "INCAR",
                     "contextProviders": [
                         {
                             "name": "NEBFormDataManager"
@@ -108,14 +108,14 @@
                             "name": "VASPNEBInputDataManager"
                         }
                     ],
-                    "applicationName": "vasp",
                     "executableName": "vasp",
+                    "name": "INCAR",
                     "rendered": "ISTART = 0\nIBRION = 1\nEDIFFG = -0.001\nENCUT = 500\nNELM = 100\nNSW = 100\nIMAGES = 1\nSPRING = -5\nISPIN = 2\n",
                     "schemaVersion": "2022.8.16"
                 },
                 {
+                    "applicationName": "vasp",
                     "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                    "name": "KPOINTS",
                     "contextProviders": [
                         {
                             "name": "KGridFormDataManager"
@@ -124,8 +124,8 @@
                             "name": "VASPInputDataManager"
                         }
                     ],
-                    "applicationName": "vasp",
                     "executableName": "vasp",
+                    "name": "KPOINTS",
                     "rendered": "Automatic mesh\n0\nGamma\n  2 2 2 \n  0 0 0 \n",
                     "schemaVersion": "2022.8.16"
                 }
