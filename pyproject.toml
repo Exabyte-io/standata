@@ -39,6 +39,7 @@ tests = [
     # B/c of https://github.com/binary-husky/gpt_academic/issues/1237
     "gradio",
     "pydantic",
+    "mat3ra-esse",
 ]
 all = [
     "mat3ra-standata[tests]",
