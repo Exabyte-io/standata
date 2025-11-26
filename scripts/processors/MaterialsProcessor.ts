@@ -24,7 +24,7 @@ export class MaterialsProcessor extends CategorizedEntityProcessor {
             categoriesRelativePath: BUILD_CONFIG.materials.assets.categories,
             categoryKeys: MaterialsProcessor.defaultCategoryKeys,
             excludedAssetFiles: [BUILD_CONFIG.materials.assets.manifest],
-            sortJsonKeys: false,
+            areKeysSorted: false,
             categoryCollectOptions: {
                 includeUnits: false,
                 includeTags: true,
