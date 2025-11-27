@@ -6,6 +6,7 @@ import * as lodash from "lodash";
 import * as path from "path";
 
 import { BUILD_CONFIG } from "../../build-config";
+import { findJsonFilesRecursively } from "../utils";
 import { EntityProcessor, EntityProcessorOptions } from "./EntityProcessor";
 
 export interface ModelMethodProcessorOptions extends EntityProcessorOptions {
@@ -46,7 +47,7 @@ export abstract class CategorizedEntityProcessor extends EntityProcessor {
         ) as any;
         const entities: { filename: string; categories: string[] }[] = [];
 
-        const jsonFiles = this.findJsonFilesRecursively(this.resolvedPaths.dataDir);
+        const jsonFiles = findJsonFilesRecursively(this.resolvedPaths.dataDir);
         for (const filePath of jsonFiles) {
             console.log(`Processing file: ${filePath}`);
             try {

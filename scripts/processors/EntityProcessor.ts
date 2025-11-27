@@ -307,16 +307,4 @@ export abstract class EntityProcessor {
         this.additionalProcessing();
         console.log(`✅ ${this.options.entityNamePlural} completed.`);
     }
-
-    protected findJsonFilesRecursively(dir: string): string[] {
-        const results: string[] = [];
-        const items = fs.readdirSync(dir);
-        items.forEach((item) => {
-            const full = path.join(dir, item);
-            const stat = fs.statSync(full);
-            if (stat.isDirectory()) results.push(...this.findJsonFilesRecursively(full));
-            else if (stat.isFile() && item.endsWith(".json")) results.push(full);
-        });
-        return results;
-    }
 }

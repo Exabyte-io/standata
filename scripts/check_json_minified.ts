@@ -1,25 +1,10 @@
 import * as fs from "fs";
 import * as path from "path";
 
-const RUNTIME_DATA_DIR = path.resolve(__dirname, "../dist/js/runtime_data");
+// @ts-ignore
+import { findJsonFilesRecursively } from "./utils";
 
-function findJsonFilesRecursively(dir: string): string[] {
-    const results: string[] = [];
-    if (!fs.existsSync(dir)) {
-        return results;
-    }
-    const items = fs.readdirSync(dir);
-    items.forEach((item) => {
-        const full = path.join(dir, item);
-        const stat = fs.statSync(full);
-        if (stat.isDirectory()) {
-            results.push(...findJsonFilesRecursively(full));
-        } else if (stat.isFile() && item.endsWith(".json")) {
-            results.push(full);
-        }
-    });
-    return results;
-}
+const RUNTIME_DATA_DIR = path.resolve(__dirname, "../dist/js/runtime_data");
 
 function isMinified(filePath: string): boolean {
     const content = fs.readFileSync(filePath, "utf8");
@@ -54,7 +39,9 @@ function checkJsonFilesMinified(): void {
     });
 
     if (errors.length > 0) {
-        console.error("❌ The following JSON files are not minified (contain formatting like newlines or unnecessary whitespace):");
+        console.error(
+            "❌ The following JSON files are not minified (contain formatting like newlines or unnecessary whitespace):",
+        );
         errors.forEach((file) => console.error(`  - ${file}`));
         process.exit(1);
     }

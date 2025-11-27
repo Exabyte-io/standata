@@ -175,3 +175,21 @@ export function loadYAMLFilesAsMap(dirPath: string): Record<string, any> {
 
     return result;
 }
+
+export function findJsonFilesRecursively(dir: string): string[] {
+    const results: string[] = [];
+    if (!fs.existsSync(dir)) {
+        return results;
+    }
+    const items = fs.readdirSync(dir);
+    items.forEach((item) => {
+        const full = path.join(dir, item);
+        const stat = fs.statSync(full);
+        if (stat.isDirectory()) {
+            results.push(...findJsonFilesRecursively(full));
+        } else if (stat.isFile() && item.endsWith(".json")) {
+            results.push(full);
+        }
+    });
+    return results;
+}
