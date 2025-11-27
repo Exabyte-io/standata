@@ -269,8 +269,8 @@ export abstract class EntityProcessor {
         return runtimeDataConfig;
     }
 
-    static createJsRuntimeFile(content: object, fullPath: string, shouldSort = true): void {
-        const finalContent = shouldSort ? Utils.object.sortKeysDeepForObject(content) : content;
+    static createJsRuntimeFile(content: object, fullPath: string, areKeysSorted = true): void {
+        const finalContent = areKeysSorted ? Utils.object.sortKeysDeepForObject(content) : content;
         serverUtils.json.writeJSONFileSync(fullPath, finalContent, { spaces: 0 });
         console.log(`Written JS runtime data to "${fullPath}"`);
     }
