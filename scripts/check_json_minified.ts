@@ -1,41 +1,12 @@
 import * as fs from "fs";
 import * as path from "path";
 
+// @ts-ignore
+import { findJsonFilesRecursively } from "./utils";
+import { isJSONMinified } from "@mat3ra/utils/dist/js/server/json";
+
 const RUNTIME_DATA_DIR = path.resolve(__dirname, "../dist/js/runtime_data");
 
-function findJsonFilesRecursively(dir: string): string[] {
-    const results: string[] = [];
-    if (!fs.existsSync(dir)) {
-        return results;
-    }
-    const items = fs.readdirSync(dir);
-    items.forEach((item) => {
-        const full = path.join(dir, item);
-        const stat = fs.statSync(full);
-        if (stat.isDirectory()) {
-            results.push(...findJsonFilesRecursively(full));
-        } else if (stat.isFile() && item.endsWith(".json")) {
-            results.push(full);
-        }
-    });
-    return results;
-}
-
-function isMinified(filePath: string): boolean {
-    const content = fs.readFileSync(filePath, "utf8");
-    const trimmed = content.trim();
-    const lines = trimmed.split("\n");
-    if (lines.length > 1) {
-        return false;
-    }
-    try {
-        const parsed = JSON.parse(trimmed);
-        const minified = JSON.stringify(parsed);
-        return trimmed === minified;
-    } catch {
-        return false;
-    }
-}
 
 function checkJsonFilesMinified(): void {
     if (!fs.existsSync(RUNTIME_DATA_DIR)) {
@@ -47,14 +18,16 @@ function checkJsonFilesMinified(): void {
     const errors: string[] = [];
 
     jsonFiles.forEach((filePath) => {
-        if (!isMinified(filePath)) {
+        if (!isJSONMinified(filePath)) {
             const relativePath = path.relative(process.cwd(), filePath);
             errors.push(relativePath);
         }
     });
 
     if (errors.length > 0) {
-        console.error("❌ The following JSON files are not minified (contain formatting like newlines or unnecessary whitespace):");
+        console.error(
+            "❌ The following JSON files are not minified (contain formatting like newlines or unnecessary whitespace):",
+        );
         errors.forEach((file) => console.error(`  - ${file}`));
         process.exit(1);
     }

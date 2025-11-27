@@ -269,8 +269,8 @@ export abstract class EntityProcessor {
         return runtimeDataConfig;
     }
 
-    static createJsRuntimeFile(content: object, fullPath: string, shouldSort = true): void {
-        const finalContent = shouldSort ? Utils.object.sortKeysDeepForObject(content) : content;
+    static createJsRuntimeFile(content: object, fullPath: string, areKeysSorted = true): void {
+        const finalContent = areKeysSorted ? Utils.object.sortKeysDeepForObject(content) : content;
         serverUtils.json.writeJSONFileSync(fullPath, finalContent, { spaces: 0 });
         console.log(`Written JS runtime data to "${fullPath}"`);
     }
@@ -306,17 +306,5 @@ export abstract class EntityProcessor {
         this.generateRuntimeFiles();
         this.additionalProcessing();
         console.log(`✅ ${this.options.entityNamePlural} completed.`);
-    }
-
-    protected findJsonFilesRecursively(dir: string): string[] {
-        const results: string[] = [];
-        const items = fs.readdirSync(dir);
-        items.forEach((item) => {
-            const full = path.join(dir, item);
-            const stat = fs.statSync(full);
-            if (stat.isDirectory()) results.push(...this.findJsonFilesRecursively(full));
-            else if (stat.isFile() && item.endsWith(".json")) results.push(full);
-        });
-        return results;
     }
 }
