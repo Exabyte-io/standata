@@ -53,13 +53,13 @@
             ],
             "next": "ee7abb4e-7848-5aeb-960d-0d441909e2d1",
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "status": "idle",
@@ -85,13 +85,13 @@
             "postProcessors": [],
             "next": "44263820-0c80-5bd1-b854-9da8d198eac1",
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "status": "idle",
@@ -123,13 +123,13 @@
             ],
             "next": "b70656f1-a394-57f4-b4de-00096969df4b",
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "status": "idle",
@@ -155,13 +155,13 @@
             "postProcessors": [],
             "next": "6ca4006a-e3ae-56ea-91a1-06b9790b5f7e",
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "status": "idle",
@@ -181,13 +181,13 @@
             "postProcessors": [],
             "next": "490635e0-c593-5809-9eb2-c794b96cfed1",
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "status": "idle",
@@ -219,13 +219,13 @@
             ],
             "next": "bbe13b97-4243-5a85-8f61-a279d0b797aa",
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "status": "idle",
@@ -251,13 +251,13 @@
             "postProcessors": [],
             "next": "a06c9f43-7670-5fd0-ac42-7028a472235a",
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "status": "idle",
@@ -277,13 +277,13 @@
             "postProcessors": [],
             "next": "cdf210be-26ed-585a-b4ac-d55795ba2975",
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "status": "idle",
@@ -304,13 +304,13 @@
             "postProcessors": [],
             "next": "ffa8e43d-096a-555b-b8d0-6d283365ef47",
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "status": "idle",
@@ -331,13 +331,13 @@
             "postProcessors": [],
             "next": "a0336ec5-a6da-5e4c-bb48-82b70cf5245f",
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "status": "idle",
@@ -358,13 +358,13 @@
             "postProcessors": [],
             "next": "913f756d-fbe1-548f-b3fc-f82ac46f1015",
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "status": "idle",
@@ -410,31 +410,33 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
                 "isDefault": true,
-                "postProcessors": [
-                    "error_handler",
-                    "prepare_restart",
-                    "remove_non_zero_weight_kpoints"
-                ],
                 "monitors": [
                     "standard_output",
                     "convergence_ionic",
                     "convergence_electronic"
                 ],
+                "postProcessors": [
+                    "error_handler",
+                    "prepare_restart",
+                    "remove_non_zero_weight_kpoints"
+                ],
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
+                "applicationName": "vasp",
+                "executableName": "vasp",
                 "input": [
                     {
                         "name": "INCAR",
@@ -447,6 +449,10 @@
                         "name": "POSCAR"
                     }
                 ],
+                "monitors": [
+                    "standard_output",
+                    "convergence_electronic"
+                ],
                 "results": [
                     "total_energy",
                     "total_energy_contributions",
@@ -456,12 +462,6 @@
                     "total_force",
                     "stress_tensor"
                 ],
-                "monitors": [
-                    "standard_output",
-                    "convergence_electronic"
-                ],
-                "applicationName": "vasp",
-                "executableName": "vasp",
                 "name": "vasp_symprec",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
@@ -471,21 +471,21 @@
             "tags": [],
             "input": [
                 {
+                    "applicationName": "vasp",
                     "content": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n# To avoid errors with high precision structures: \"internal error in subroutine SGRCON\"\nSYMPREC = 1e-6\n",
-                    "name": "INCAR",
                     "contextProviders": [
                         {
                             "name": "VASPInputDataManager"
                         }
                     ],
-                    "applicationName": "vasp",
                     "executableName": "vasp",
+                    "name": "INCAR",
                     "rendered": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n# To avoid errors with high precision structures: \"internal error in subroutine SGRCON\"\nSYMPREC = 1e-6\n",
                     "schemaVersion": "2022.8.16"
                 },
                 {
+                    "applicationName": "vasp",
                     "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                    "name": "KPOINTS",
                     "contextProviders": [
                         {
                             "name": "KGridFormDataManager"
@@ -494,21 +494,21 @@
                             "name": "VASPInputDataManager"
                         }
                     ],
-                    "applicationName": "vasp",
                     "executableName": "vasp",
+                    "name": "KPOINTS",
                     "rendered": "Automatic mesh\n0\nGamma\n  2 2 2 \n  0 0 0 \n",
                     "schemaVersion": "2022.8.16"
                 },
                 {
+                    "applicationName": "vasp",
                     "content": "{{ input.POSCAR }}\n",
-                    "name": "POSCAR",
                     "contextProviders": [
                         {
                             "name": "VASPInputDataManager"
                         }
                     ],
-                    "applicationName": "vasp",
                     "executableName": "vasp",
+                    "name": "POSCAR",
                     "rendered": "Silicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\n",
                     "schemaVersion": "2022.8.16"
                 }
@@ -534,13 +534,13 @@
             "postProcessors": [],
             "next": "542ea9ad-8a07-5a76-b233-f72fb27c4fc6",
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "status": "idle",
@@ -564,13 +564,13 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isLicensed": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "isLicensed": true,
                 "build": "GNU",
-                "version": "5.4.4",
                 "isDefault": true,
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "status": "idle",

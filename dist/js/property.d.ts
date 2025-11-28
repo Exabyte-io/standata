@@ -1,25 +1,7 @@
 import { Standata } from "./base";
 export declare class PropertyStandata extends Standata {
     static runtimeData: {
-        standataConfig: {
-            categories: {
-                type: string[];
-                property_class: string[];
-                value_type: string[];
-                measurement: string[];
-                application: string[];
-            };
-            entities: {
-                filename: string;
-                categories: string[];
-            }[];
-        };
         filesMapByName: {
-            "valence_band_offset.json": {
-                name: string;
-                units: string;
-                value: number;
-            };
             "band_structure.json": {
                 name: string;
                 spin: number[];
@@ -34,6 +16,24 @@ export declare class PropertyStandata extends Standata {
                 };
                 yDataSeries: number[][];
             };
+            "valence_band_offset.json": {
+                name: string;
+                units: string;
+                value: number;
+            };
+        };
+        standataConfig: {
+            categories: {
+                application: string[];
+                measurement: string[];
+                property_class: string[];
+                type: string[];
+                value_type: string[];
+            };
+            entities: {
+                categories: string[];
+                filename: string;
+            }[];
         };
     };
 }
