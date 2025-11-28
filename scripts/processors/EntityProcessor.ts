@@ -18,6 +18,7 @@ export interface EntityProcessorOptions {
     categoriesRelativePath: string;
     categoryKeys?: string[];
     excludedAssetFiles?: string[];
+    areKeysSorted?: boolean;
 }
 
 export type AssetRecord = {
@@ -202,11 +203,16 @@ export abstract class EntityProcessor {
     protected copyJsonFiles(fromDir: string, destinationBaseDir: string): void {
         if (!fromDir || !fs.existsSync(fromDir)) return;
         const files = serverUtils.file.getFilesInDirectory(fromDir, [".json"]);
+        const shouldSort = this.options.areKeysSorted !== false;
         files.forEach((filePath: string) => {
             const relativePath = path.relative(fromDir, filePath);
             const destinationPath = path.resolve(destinationBaseDir, relativePath);
             serverUtils.file.createDirIfNotExistsSync(path.dirname(destinationPath));
-            fs.copyFileSync(filePath, destinationPath);
+            const content = serverUtils.json.readJSONFileSync(filePath);
+            const finalContent = shouldSort ? Utils.object.sortKeysDeepForObject(content) : content;
+            serverUtils.json.writeJSONFileSync(destinationPath, finalContent, {
+                spaces: BUILD_CONFIG.buildJSONFormat.spaces,
+            });
             console.log(`  Dist: ${destinationPath}`);
         });
     }
@@ -263,8 +269,9 @@ export abstract class EntityProcessor {
         return runtimeDataConfig;
     }
 
-    static createJsRuntimeFile(content: object, fullPath: string): void {
-        serverUtils.json.writeJSONFileSync(fullPath, content, { spaces: 0 });
+    static createJsRuntimeFile(content: object, fullPath: string, areKeysSorted = true): void {
+        const finalContent = areKeysSorted ? Utils.object.sortKeysDeepForObject(content) : content;
+        serverUtils.json.writeJSONFileSync(fullPath, finalContent, { spaces: 0 });
         console.log(`Written JS runtime data to "${fullPath}"`);
     }
 
@@ -278,7 +285,11 @@ export abstract class EntityProcessor {
 
     protected generateRuntimeFiles() {
         const runtimeData = this.generateRuntimeDataConfig();
-        EntityProcessor.createJsRuntimeFile(runtimeData, this.runtimeDataJsPath);
+        EntityProcessor.createJsRuntimeFile(
+            runtimeData,
+            this.runtimeDataJsPath,
+            this.options.areKeysSorted,
+        );
         this.createPythonRuntimeModule(runtimeData, this.runtimeDataPyPath);
     }
 
@@ -295,17 +306,5 @@ export abstract class EntityProcessor {
         this.generateRuntimeFiles();
         this.additionalProcessing();
         console.log(`✅ ${this.options.entityNamePlural} completed.`);
-    }
-
-    protected findJsonFilesRecursively(dir: string): string[] {
-        const results: string[] = [];
-        const items = fs.readdirSync(dir);
-        items.forEach((item) => {
-            const full = path.join(dir, item);
-            const stat = fs.statSync(full);
-            if (stat.isDirectory()) results.push(...this.findJsonFilesRecursively(full));
-            else if (stat.isFile() && item.endsWith(".json")) results.push(full);
-        });
-        return results;
     }
 }

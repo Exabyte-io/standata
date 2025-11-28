@@ -9,9 +9,9 @@
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
                 "build": "GNU",
-                "version": "6.3",
-                "isDefault": true,
                 "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
             "properties": [
@@ -84,30 +84,36 @@
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
                         "build": "GNU",
-                        "version": "6.3",
-                        "isDefault": true,
                         "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "isDefault": true,
                         "hasAdvancedComputeOptions": true,
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
-                        ],
+                        "isDefault": true,
                         "monitors": [
                             "standard_output",
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
+                        "postProcessors": [
+                            "remove_non_zero_weight_kpoints"
+                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "applicationName": "espresso",
+                        "executableName": "pw.x",
                         "input": [
                             {
                                 "name": "pw_scf_soc.in"
                             }
+                        ],
+                        "monitors": [
+                            "standard_output",
+                            "convergence_electronic"
                         ],
                         "results": [
                             "atomic_forces",
@@ -118,12 +124,6 @@
                             "total_energy_contributions",
                             "total_force"
                         ],
-                        "monitors": [
-                            "standard_output",
-                            "convergence_electronic"
-                        ],
-                        "applicationName": "espresso",
-                        "executableName": "pw.x",
                         "name": "pw_scf_soc",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -133,8 +133,8 @@
                     "tags": [],
                     "input": [
                         {
+                            "applicationName": "espresso",
                             "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP_WITH_LABELS }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n    noncolin = .true.\n    lspinorb = .true.\n{%- if nonCollinearMagnetization.isStartingMagnetization %}\n{%- for item in nonCollinearMagnetization.startingMagnetization %}\n    starting_magnetization({{ item.index }}) = {{ item.value }} {% endfor -%}\n{%- endif %}\n{%- if nonCollinearMagnetization.isConstrainedMagnetization %}\n    constrained_magnetization = '{{ nonCollinearMagnetization.constrainedMagnetization.constrainType }}'\n    lambda = {{ nonCollinearMagnetization.constrainedMagnetization.lambda }}\n{%- endif %}\n{%- if nonCollinearMagnetization.isConstrainedMagnetization and nonCollinearMagnetization.isFixedMagnetization %}\n    fixed_magnetization(1) = {{ nonCollinearMagnetization.fixedMagnetization.x }}\n    fixed_magnetization(2) = {{ nonCollinearMagnetization.fixedMagnetization.y }}\n    fixed_magnetization(3) = {{ nonCollinearMagnetization.fixedMagnetization.z }}\n{%- endif %}\n{%- if nonCollinearMagnetization.isExistingChargeDensity and nonCollinearMagnetization.lforcet %}\n    lforcet = .true.\n{%- endif %}\n{%- if nonCollinearMagnetization.isExistingChargeDensity and not nonCollinearMagnetization.lforcet %}\n    lforcet = .false.\n{%- endif %}\n{%- if nonCollinearMagnetization.isArbitrarySpinDirection %}\n{%- for item in nonCollinearMagnetization.spinAngles %}\n    angle1({{ item.index }}) = {{ item.angle1 }}\n    angle2({{ item.index }}) = {{ item.angle2 }} {% endfor %}\n{%- endif %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n{%- if nonCollinearMagnetization.isExistingChargeDensity %}\n    startingpot = 'file'\n{%- endif %}\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES_WITH_LABELS }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "name": "pw_scf_soc.in",
                             "contextProviders": [
                                 {
                                     "name": "KGridFormDataManager"
@@ -149,8 +149,8 @@
                                     "name": "NonCollinearMagnetizationDataManager"
                                 }
                             ],
-                            "applicationName": "espresso",
                             "executableName": "pw.x",
+                            "name": "pw_scf_soc.in",
                             "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n    noncolin = .true.\n    lspinorb = .true.\n    starting_magnetization(1) = 0 \n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
                             "schemaVersion": "2022.8.16"
                         }
@@ -179,39 +179,39 @@
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
                         "build": "GNU",
-                        "version": "6.3",
-                        "isDefault": true,
                         "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "isDefault": true,
                         "hasAdvancedComputeOptions": true,
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
-                        ],
+                        "isDefault": true,
                         "monitors": [
                             "standard_output",
                             "convergence_ionic",
                             "convergence_electronic"
                         ],
+                        "postProcessors": [
+                            "remove_non_zero_weight_kpoints"
+                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "applicationName": "espresso",
+                        "executableName": "pw.x",
                         "input": [
                             {
                                 "name": "pw_bands_soc.in"
                             }
                         ],
-                        "results": [
-                            "band_structure"
-                        ],
                         "monitors": [
                             "standard_output"
                         ],
-                        "applicationName": "espresso",
-                        "executableName": "pw.x",
+                        "results": [
+                            "band_structure"
+                        ],
                         "name": "pw_bands_soc",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -221,8 +221,8 @@
                     "tags": [],
                     "input": [
                         {
+                            "applicationName": "espresso",
                             "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP_WITH_LABELS }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n    noncolin = .true.\n    lspinorb = .true.\n{%- if nonCollinearMagnetization.isStartingMagnetization %}\n{%- for item in nonCollinearMagnetization.startingMagnetization %}\n    starting_magnetization({{ item.index }}) = {{ item.value }} {% endfor -%}\n{%- endif %}\n{%- if nonCollinearMagnetization.isConstrainedMagnetization %}\n    constrained_magnetization = '{{ nonCollinearMagnetization.constrainedMagnetization.constrainType }}'\n    lambda = {{ nonCollinearMagnetization.constrainedMagnetization.lambda }}\n{%- endif %}\n{%- if nonCollinearMagnetization.isConstrainedMagnetization and nonCollinearMagnetization.isFixedMagnetization %}\n    fixed_magnetization(1) = {{ nonCollinearMagnetization.fixedMagnetization.x }}\n    fixed_magnetization(2) = {{ nonCollinearMagnetization.fixedMagnetization.y }}\n    fixed_magnetization(3) = {{ nonCollinearMagnetization.fixedMagnetization.z }}\n{%- endif %}\n{%- if nonCollinearMagnetization.isExistingChargeDensity and nonCollinearMagnetization.lforcet %}\n    lforcet = .true.\n{%- endif %}\n{%- if nonCollinearMagnetization.isExistingChargeDensity and not nonCollinearMagnetization.lforcet %}\n    lforcet = .false.\n{%- endif %}\n{%- if nonCollinearMagnetization.isArbitrarySpinDirection %}\n{%- for item in nonCollinearMagnetization.spinAngles %}\n    angle1({{ item.index }}) = {{ item.angle1 }}\n    angle2({{ item.index }}) = {{ item.angle2 }} {% endfor %}\n{%- endif %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES_WITH_LABELS }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
-                            "name": "pw_bands_soc.in",
                             "contextProviders": [
                                 {
                                     "name": "KPathFormDataManager"
@@ -237,8 +237,8 @@
                                     "name": "NonCollinearMagnetizationDataManager"
                                 }
                             ],
-                            "applicationName": "espresso",
                             "executableName": "pw.x",
+                            "name": "pw_bands_soc.in",
                             "rendered": "&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n    noncolin = .true.\n    lspinorb = .true.\n    starting_magnetization(1) = 0 \n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal_b\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n",
                             "schemaVersion": "2022.8.16"
                         }
@@ -263,9 +263,9 @@
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
                         "build": "GNU",
-                        "version": "6.3",
-                        "isDefault": true,
                         "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
@@ -277,6 +277,8 @@
                         "isDefault": false
                     },
                     "flavor": {
+                        "applicationName": "espresso",
+                        "executableName": "bands.x",
                         "input": [
                             {
                                 "name": "bands.in"
@@ -285,8 +287,6 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "applicationName": "espresso",
-                        "executableName": "bands.x",
                         "name": "bands",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -296,11 +296,11 @@
                     "tags": [],
                     "input": [
                         {
-                            "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
-                            "name": "bands.in",
-                            "contextProviders": [],
                             "applicationName": "espresso",
+                            "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
+                            "contextProviders": [],
                             "executableName": "bands.x",
+                            "name": "bands.in",
                             "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n",
                             "schemaVersion": "2022.8.16"
                         }

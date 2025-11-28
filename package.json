@@ -32,7 +32,7 @@
         "@mat3ra/ade": "2025.11.19-0",
         "@mat3ra/wode": "2025.11.19-0",
         "@mat3ra/mode": "2025.11.13-0",
-        "@mat3ra/utils": "2025.10.9-5",
+        "@mat3ra/utils": "git+https://github.com/Exabyte-io/utils.git#c6ff6aa6f08a0ff573c213005bb4c3619d2a7fd4",
         "@mat3ra/code": "^2025.8.7-0",
         "@mat3ra/tsconfig": "^2024.6.3-0",
         "@mat3ra/esse": "^2025.11.19-0",
@@ -82,6 +82,7 @@
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
         "prettier": "prettier --check src/js tests/js",
+        "check:json-minified": "ts-node scripts/check_json_minified.ts",
         "test": "mocha",
         "transpile": "tsc && cp -r build/standata/* ./dist/js/runtime_data/ || true"
     },
@@ -90,6 +91,7 @@
     },
     "lint-staged": {
         "*.{js,ts,tsx,!dist/**/*,!*runtime_data*}": "eslint --cache --fix",
-        "*.{js,ts,tsx,css,!dist/**/*,!*runtime_data*}": "prettier --write"
+        "*.{js,ts,tsx,css,!dist/**/*,!*runtime_data*}": "prettier --write",
+        "dist/js/runtime_data/**/*.json": "npm run check:json-minified"
     }
 }
