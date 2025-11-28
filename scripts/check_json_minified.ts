@@ -3,10 +3,9 @@ import * as path from "path";
 
 // @ts-ignore
 import { findJsonFilesRecursively } from "./utils";
-import { isJSONMinified } from "@mat3ra/utils/dist/js/server/json";
+import { Utils } from "@mat3ra/utils/server";
 
 const RUNTIME_DATA_DIR = path.resolve(__dirname, "../dist/js/runtime_data");
-
 
 function checkJsonFilesMinified(): void {
     if (!fs.existsSync(RUNTIME_DATA_DIR)) {
@@ -18,7 +17,7 @@ function checkJsonFilesMinified(): void {
     const errors: string[] = [];
 
     jsonFiles.forEach((filePath) => {
-        if (!isJSONMinified(filePath)) {
+        if (!Utils.json.isJSONMinified(filePath)) {
             const relativePath = path.relative(process.cwd(), filePath);
             errors.push(relativePath);
         }
