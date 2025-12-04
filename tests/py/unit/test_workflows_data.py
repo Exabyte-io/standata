@@ -1,5 +1,5 @@
 from mat3ra.standata.data.workflows import workflows_data
-from mat3ra.standata.workflowstandata import WorkflowStandata
+from mat3ra.standata.workflows import WorkflowStandata
 
 
 def test_get_by_name():

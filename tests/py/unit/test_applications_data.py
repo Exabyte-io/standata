@@ -1,5 +1,5 @@
 from mat3ra.standata.data.applications import applications_data
-from mat3ra.standata.application import ApplicationStandata
+from mat3ra.standata.applications import ApplicationStandata
 
 
 def test_get_by_name():
