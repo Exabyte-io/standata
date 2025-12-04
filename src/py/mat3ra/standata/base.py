@@ -1,5 +1,5 @@
 import re
-from typing import Dict, List
+from typing import Dict, List, Type
 
 import pandas as pd
 from pydantic import BaseModel, Field
@@ -183,10 +183,6 @@ class Standata:
     data_dict: Dict = {}
     data: StandataData = StandataData(data_dict)
 
-    def __init__(self, data: StandataData = None):
-        if data is not None:
-            self.data = data
-
     @classmethod
     def get_as_list(cls) -> List[dict]:
         return list(cls.data.filesMapByName.dictionary.values())
@@ -215,8 +211,11 @@ class Standata:
             name: Name of the entity.
         """
         matching_filenames = cls.data.standataConfig.get_filenames_by_regex(name)
-        return cls.data.filesMapByName.get_objects_by_filenames(matching_filenames)[0]
-
+        objects = cls.data.filesMapByName.get_objects_by_filenames(matching_filenames)
+        if not objects:
+            raise ValueError(f"No matches found for name '{name}'")
+        return objects[0]
+    
     @classmethod
     def get_by_categories(cls, *tags: str) -> List[dict]:
         """
@@ -251,22 +250,27 @@ class Standata:
 
         return cls.data.filesMapByName.get_objects_by_filenames(matching_filenames)[0]
 
-    def _create_filtered_data(self, filenames: List[str]) -> StandataData:
-        filtered_files_map = {k: v for k, v in self.data.filesMapByName.dictionary.items() if k in filenames}
-        filtered_entities = [e for e in self.data.standataConfig.entities if e.filename in filenames]
+    @classmethod
+    def _create_filtered_data(cls, filenames: List[str]) -> StandataData:
+        filtered_files_map = {k: v for k, v in cls.data.filesMapByName.dictionary.items() if k in filenames}
+        filtered_entities = [e for e in cls.data.standataConfig.entities if e.filename in filenames]
         return StandataData({
             "filesMapByName": filtered_files_map,
             "standataConfig": {
-                "categories": self.data.standataConfig.categories,
+                "categories": cls.data.standataConfig.categories,
                 "entities": [{"filename": e.filename, "categories": e.categories} for e in filtered_entities]
             }
         })
 
-    def filter_by_name(self, name: str) -> "Standata":
-        matching_filenames = self.data.standataConfig.get_filenames_by_regex(name)
-        return Standata(self._create_filtered_data(matching_filenames))
+    @classmethod
+    def filter_by_name(cls, name: str) -> "Standata":
+        matching_filenames = cls.data.standataConfig.get_filenames_by_regex(name)
+        filtered_data = cls._create_filtered_data(matching_filenames)
+        return type(cls.__name__, (cls,), {"data": filtered_data})
 
-    def filter_by_tags(self, *tags: str) -> "Standata":
-        categories = self.data.standataConfig.convert_tags_to_categories_list(*tags)
-        matching_filenames = self.data.standataConfig.get_filenames_by_categories(*categories)
-        return Standata(self._create_filtered_data(matching_filenames))
+    @classmethod
+    def filter_by_tags(cls, *tags: str) -> "Standata":
+        categories = cls.data.standataConfig.convert_tags_to_categories_list(*tags)
+        matching_filenames = cls.data.standataConfig.get_filenames_by_categories(*categories)
+        filtered_data = cls._create_filtered_data(matching_filenames)
+        return type(cls.__name__, (cls,), {"data": filtered_data})
