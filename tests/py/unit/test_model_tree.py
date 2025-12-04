@@ -1,3 +1,4 @@
+from enum import Enum
 from types import SimpleNamespace
 
 import pytest
@@ -77,3 +78,46 @@ def test_get_default_model_type_for_application(application, expected):
         assert result == expected
     else:
         assert result is None
+
+
+@pytest.mark.parametrize(
+    "model_type,expected_subtypes",
+    [
+        ("dft", {"GGA": "gga", "LDA": "lda", "HYBRID": "hybrid", "OTHER": "other"}),
+        ("invalid_model", {}),
+    ],
+)
+def test_get_subtypes_by_model_type(model_type, expected_subtypes):
+    subtypes = ModelTreeStandata.get_subtypes_by_model_type(model_type)
+    assert issubclass(subtypes, Enum)
+    assert len(list(subtypes)) == len(expected_subtypes)
+    for enum_name, expected_value in expected_subtypes.items():
+        assert hasattr(subtypes, enum_name)
+        assert getattr(subtypes, enum_name).value == expected_value
+
+
+@pytest.mark.parametrize(
+    "model_type,subtype_input,use_string,expected_functionals,excluded_functionals",
+    [
+        ("dft", "lda", False, {"PZ": "pz", "PW": "pw", "VWN": "vwn", "OTHER": "other"}, ["pbe"]),
+        ("dft", "gga", False, {"PBE": "pbe", "PBESOL": "pbesol", "PW91": "pw91", "OTHER": "other"}, ["pz"]),
+        ("dft", "lda", True, {"PZ": "pz", "PW": "pw", "VWN": "vwn", "OTHER": "other"}, ["pbe"]),
+    ],
+)
+def test_get_functionals_by_subtype(model_type, subtype_input, use_string, expected_functionals, excluded_functionals):
+    if use_string:
+        subtype_arg = subtype_input
+    else:
+        subtypes = ModelTreeStandata.get_subtypes_by_model_type(model_type)
+        subtype_arg = getattr(subtypes, subtype_input.upper())
+    
+    functionals = ModelTreeStandata.get_functionals_by_subtype(model_type, subtype_arg)
+    assert issubclass(functionals, Enum)
+    
+    for enum_name, expected_value in expected_functionals.items():
+        assert hasattr(functionals, enum_name)
+        assert getattr(functionals, enum_name).value == expected_value
+    
+    functional_values = [f.value for f in functionals]
+    for excluded in excluded_functionals:
+        assert excluded not in functional_values

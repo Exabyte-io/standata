@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import Any, Dict, List, Optional
 
 from mat3ra.esse.models.method.categorized_method import SlugifiedEntry
@@ -32,3 +33,27 @@ class ModelTreeStandata(Standata):
         tree = self.get_tree_by_application_name_and_version(name, application.get("version", ""))
         keys = list(tree.keys())
         return keys[0] if keys else None
+
+    @classmethod
+    def _normalize_enum_name(cls, name: str) -> str:
+        return name.upper().replace("-", "_")
+
+    @classmethod
+    def _create_enum_from_values(cls, values: List[str], enum_name: str) -> type[Enum]:
+        enum_dict = {cls._normalize_enum_name(value): value for value in values}
+        return Enum(enum_name, enum_dict)
+
+    @classmethod
+    def get_subtypes_by_model_type(cls, model_type: str) -> type[Enum]:
+        model_tree = MODEL_TREE.get(model_type, {})
+        subtypes = list(model_tree.keys())
+        return cls._create_enum_from_values(subtypes, f"{model_type.upper()}Subtypes")
+
+    @classmethod
+    def get_functionals_by_subtype(cls, model_type: str, subtype_enum: Enum) -> type[Enum]:
+        model_tree = MODEL_TREE.get(model_type, {})
+        subtype_value = subtype_enum.value if isinstance(subtype_enum, Enum) else subtype_enum
+        subtype_tree = model_tree.get(subtype_value, {})
+        functionals = subtype_tree.get("functionals", [])
+        enum_name = f"{model_type.upper()}{cls._normalize_enum_name(subtype_value)}Functionals"
+        return cls._create_enum_from_values(functionals, enum_name)
