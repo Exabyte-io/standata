@@ -1,5 +1,5 @@
 import re
-from typing import Dict, List, Type
+from typing import Dict, List
 
 import pandas as pd
 from pydantic import BaseModel, Field

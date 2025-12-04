@@ -6,7 +6,7 @@ def test_get_by_name():
     workflow = WorkflowStandata.get_by_name_first_match("band_gap")
     assert type(workflow) == dict
     assert "name" in workflow
-    assert "band_gap" in workflow["name"].lower() or "band_gap" in str(workflow.get("_id", "")).lower()
+    assert 'Band Gap + DoS - HSE' in workflow["name"]
 
 
 def test_get_by_categories():
@@ -42,6 +42,5 @@ def test_filter_by_application_and_get_by_name():
     workflow = WorkflowStandata.filter_by_application("espresso").get_by_name_first_match("band_gap")
     assert type(workflow) == dict
     assert "name" in workflow
-    assert workflow["name"] == "Band Gap"
+    assert workflow["name"] == 'Band Gap + DoS - HSE'
     assert "espresso" in str(workflow.get("application", {})).lower()
-
