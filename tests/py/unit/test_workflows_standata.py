@@ -1,51 +1,47 @@
-from mat3ra.standata.data.applications import applications_data
-from mat3ra.standata.application import ApplicationStandata
+from mat3ra.standata.data.workflows import workflows_data
+from mat3ra.standata.workflowstandata import WorkflowStandata
 
 
 def test_get_by_name():
-    application = ApplicationStandata.get_by_name_first_match("espresso")
-    assert type(application) == dict
-    assert application["name"] == "espresso"
-    assert application["version"] == "6.3"
+    workflow = WorkflowStandata.get_by_name_first_match("band_gap")
+    assert type(workflow) == dict
+    assert "name" in workflow
+    assert "band_gap" in workflow["name"].lower() or "band_gap" in str(workflow.get("_id", "")).lower()
 
 
 def test_get_by_categories():
-    applications = ApplicationStandata.get_by_categories("quantum-mechanical")
-    assert isinstance(applications, list)
-    assert applications[0]["name"] == "espresso"
+    workflows = WorkflowStandata.get_by_categories("espresso")
+    assert isinstance(workflows, list)
+    assert len(workflows) >= 1
+    assert isinstance(workflows[0], dict)
 
 
-def test_get_application_data():
-    application = applications_data["filesMapByName"]["espresso/espresso_gnu_6.3.json"]
-    assert type(application) == dict
-    assert application["name"] == "espresso"
-    assert application["version"] == "6.3"
+def test_get_workflow_data():
+    workflow = workflows_data["filesMapByName"]["espresso/band_gap.json"]
+    assert type(workflow) == dict
+    assert "name" in workflow
+    assert workflow["name"] == "Band Gap"
 
 
 def test_get_by_name_and_categories():
-    application = ApplicationStandata.get_by_name_and_categories("vasp", "quantum-mechanical")
-    assert type(application) == dict
-    assert application["name"] == "vasp"
-    assert application["version"] == "5.4.4"
+    workflow = WorkflowStandata.get_by_name_and_categories("band_gap", "espresso")
+    assert type(workflow) == dict
+    assert "name" in workflow
+    assert "espresso" in str(workflow.get("application", {})).lower() or "espresso" in str(workflow)
 
-
-def test_list_all():
-    applications = ApplicationStandata.list_all()
-    assert isinstance(applications, dict)
-    assert len(applications) >= 1
-    assert "espresso" in applications
-    assert isinstance(applications["espresso"], list)
-    assert len(applications["espresso"]) >= 1
-    assert isinstance(applications["espresso"][0], dict)
-    assert "version" in applications["espresso"][0]
-    assert "build" in applications["espresso"][0]
-    assert applications["espresso"][0]["version"] == "6.3"
-    assert applications["espresso"][0]["build"] == "GNU"
 
 def test_get_as_list():
-    applications_list = ApplicationStandata.get_as_list()
-    assert isinstance(applications_list, list)
-    assert len(applications_list) >= 1
-    assert isinstance(applications_list[0], dict)
-    assert applications_list[0]["name"] == "espresso"
+    workflows_list = WorkflowStandata.get_as_list()
+    assert isinstance(workflows_list, list)
+    assert len(workflows_list) >= 1
+    assert isinstance(workflows_list[0], dict)
+    assert "name" in workflows_list[0]
+
+
+def test_filter_by_application_and_get_by_name():
+    workflow = WorkflowStandata.filter_by_application("espresso").get_by_name_first_match("band_gap")
+    assert type(workflow) == dict
+    assert "name" in workflow
+    assert workflow["name"] == "Band Gap"
+    assert "espresso" in str(workflow.get("application", {})).lower()
 
