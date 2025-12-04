@@ -183,6 +183,10 @@ class Standata:
     data_dict: Dict = {}
     data: StandataData = StandataData(data_dict)
 
+    def __init__(self, data: StandataData = None):
+        if data is not None:
+            self.data = data
+
     @classmethod
     def get_as_list(cls) -> List[dict]:
         return list(cls.data.filesMapByName.dictionary.values())
@@ -246,3 +250,23 @@ class Standata:
             raise ValueError(f"No matches found for name '{name}' and categories {tags}")
 
         return cls.data.filesMapByName.get_objects_by_filenames(matching_filenames)[0]
+
+    def _create_filtered_data(self, filenames: List[str]) -> StandataData:
+        filtered_files_map = {k: v for k, v in self.data.filesMapByName.dictionary.items() if k in filenames}
+        filtered_entities = [e for e in self.data.standataConfig.entities if e.filename in filenames]
+        return StandataData({
+            "filesMapByName": filtered_files_map,
+            "standataConfig": {
+                "categories": self.data.standataConfig.categories,
+                "entities": [{"filename": e.filename, "categories": e.categories} for e in filtered_entities]
+            }
+        })
+
+    def filter_by_name(self, name: str) -> "Standata":
+        matching_filenames = self.data.standataConfig.get_filenames_by_regex(name)
+        return Standata(self._create_filtered_data(matching_filenames))
+
+    def filter_by_tags(self, *tags: str) -> "Standata":
+        categories = self.data.standataConfig.convert_tags_to_categories_list(*tags)
+        matching_filenames = self.data.standataConfig.get_filenames_by_categories(*categories)
+        return Standata(self._create_filtered_data(matching_filenames))
