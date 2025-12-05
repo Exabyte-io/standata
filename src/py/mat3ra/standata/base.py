@@ -1,4 +1,5 @@
 import re
+from enum import Enum
 from typing import Dict, List
 
 import pandas as pd
@@ -261,6 +262,15 @@ class Standata:
                 "entities": [{"filename": e.filename, "categories": e.categories} for e in filtered_entities]
             }
         })
+
+    @classmethod
+    def _normalize_enum_name(cls, name: str) -> str:
+        return name.upper().replace("-", "_")
+
+    @classmethod
+    def _create_enum_from_values(cls, values: List[str], enum_name: str) -> type[Enum]:
+        enum_dict = {cls._normalize_enum_name(value): value for value in values}
+        return Enum(enum_name, enum_dict)
 
     @classmethod
     def filter_by_name(cls, name: str) -> "Standata":

@@ -35,15 +35,6 @@ class ModelTreeStandata(Standata):
         return keys[0] if keys else None
 
     @classmethod
-    def _normalize_enum_name(cls, name: str) -> str:
-        return name.upper().replace("-", "_")
-
-    @classmethod
-    def _create_enum_from_values(cls, values: List[str], enum_name: str) -> type[Enum]:
-        enum_dict = {cls._normalize_enum_name(value): value for value in values}
-        return Enum(enum_name, enum_dict)
-
-    @classmethod
     def get_subtypes_by_model_type(cls, model_type: str) -> type[Enum]:
         model_tree = MODEL_TREE.get(model_type, {})
         subtypes = list(model_tree.keys())
