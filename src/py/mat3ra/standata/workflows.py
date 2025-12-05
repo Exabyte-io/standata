@@ -1,4 +1,4 @@
-from typing import Dict, Type
+from typing import Dict
 
 from .base import Standata, StandataData
 from .data.workflows import workflows_data
@@ -9,5 +9,5 @@ class WorkflowStandata(Standata):
     data: StandataData = StandataData(data_dict)
 
     @classmethod
-    def filter_by_application(cls, application: str) -> Type["Standata"]:
+    def filter_by_application(cls, application: str) -> "WorkflowStandata":
         return cls.filter_by_tags(application)
