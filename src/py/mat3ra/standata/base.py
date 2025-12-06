@@ -1,4 +1,5 @@
 import re
+from enum import Enum
 from typing import Dict, List
 
 import pandas as pd
@@ -211,8 +212,11 @@ class Standata:
             name: Name of the entity.
         """
         matching_filenames = cls.data.standataConfig.get_filenames_by_regex(name)
-        return cls.data.filesMapByName.get_objects_by_filenames(matching_filenames)[0]
-
+        objects = cls.data.filesMapByName.get_objects_by_filenames(matching_filenames)
+        if not objects:
+            raise ValueError(f"No matches found for name '{name}'")
+        return objects[0]
+    
     @classmethod
     def get_by_categories(cls, *tags: str) -> List[dict]:
         """
@@ -246,3 +250,37 @@ class Standata:
             raise ValueError(f"No matches found for name '{name}' and categories {tags}")
 
         return cls.data.filesMapByName.get_objects_by_filenames(matching_filenames)[0]
+
+    @classmethod
+    def _create_filtered_data(cls, filenames: List[str]) -> StandataData:
+        filtered_files_map = {k: v for k, v in cls.data.filesMapByName.dictionary.items() if k in filenames}
+        filtered_entities = [e for e in cls.data.standataConfig.entities if e.filename in filenames]
+        return StandataData({
+            "filesMapByName": filtered_files_map,
+            "standataConfig": {
+                "categories": cls.data.standataConfig.categories,
+                "entities": [{"filename": e.filename, "categories": e.categories} for e in filtered_entities]
+            }
+        })
+
+    @classmethod
+    def _normalize_enum_name(cls, name: str) -> str:
+        return name.upper().replace("-", "_")
+
+    @classmethod
+    def _create_enum_from_values(cls, values: List[str], enum_name: str) -> type[Enum]:
+        enum_dict = {cls._normalize_enum_name(value): value for value in values}
+        return Enum(enum_name, enum_dict)
+
+    @classmethod
+    def filter_by_name(cls, name: str) -> "Standata":
+        matching_filenames = cls.data.standataConfig.get_filenames_by_regex(name)
+        filtered_data = cls._create_filtered_data(matching_filenames)
+        return type(cls.__name__, (cls,), {"data": filtered_data})
+
+    @classmethod
+    def filter_by_tags(cls, *tags: str) -> "Standata":
+        categories = cls.data.standataConfig.convert_tags_to_categories_list(*tags)
+        matching_filenames = cls.data.standataConfig.get_filenames_by_categories(*categories)
+        filtered_data = cls._create_filtered_data(matching_filenames)
+        return type(cls.__name__, (cls,), {"data": filtered_data})
