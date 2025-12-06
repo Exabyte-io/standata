@@ -1,6 +1,4 @@
-from typing import Dict, Union
-
-from mat3ra.ade import Application
+from typing import Dict
 
 from .base import Standata, StandataData
 from .data.workflows import workflows_data
@@ -11,9 +9,7 @@ class WorkflowStandata(Standata):
     data: StandataData = StandataData(data_dict)
 
     @classmethod
-    def filter_by_application(cls, application: Union[str, Application]) -> "WorkflowStandata":
-        if isinstance(application, Application):
-            application = application.name
+    def filter_by_application(cls, application: str) -> "WorkflowStandata":
         return cls.filter_by_tags(application)
 
     @classmethod
