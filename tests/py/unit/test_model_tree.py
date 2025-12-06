@@ -11,6 +11,22 @@ APP = SimpleNamespace(VASP="vasp", INVALID="invalid_app")
 VERSION = SimpleNamespace(V6_0="6.0", V1_0="1.0")
 PSEUDOPOTENTIAL_TYPE = SimpleNamespace(PAW="paw", NC="nc", NC_FR="nc-fr", US="us")
 MODEL_TYPE = SimpleNamespace(DFT="dft")
+SUBTYPE = SimpleNamespace(GGA="gga", LDA="lda", HYBRID="hybrid", OTHER="other", INVALID="invalid_subtype")
+FUNCTIONAL = SimpleNamespace(
+    PBE="pbe",
+    PBESOL="pbesol",
+    PW91="pw91",
+    PZ="pz",
+    PW="pw",
+    VWN="vwn",
+    OTHER="other",
+    INVALID="invalid_functional",
+)
+GGA_FUNCTIONALS = {"PBE": FUNCTIONAL.PBE, "PBESOL": FUNCTIONAL.PBESOL, "PW91": FUNCTIONAL.PW91,
+                   "OTHER": FUNCTIONAL.OTHER}
+LDA_FUNCTIONALS = {"PZ": FUNCTIONAL.PZ, "PW": FUNCTIONAL.PW, "VWN": FUNCTIONAL.VWN, "OTHER": FUNCTIONAL.OTHER}
+EXPECTED_MODEL_BY_PARAMETERS_GGA = {"type": MODEL.DFT, "subtype": SUBTYPE.GGA, "functional": FUNCTIONAL.PBE}
+EXPECTED_MODEL_BY_PARAMETERS_LDA = {"type": MODEL.DFT, "subtype": SUBTYPE.LDA, "functional": FUNCTIONAL.PZ}
 
 
 @pytest.mark.parametrize(
@@ -99,9 +115,9 @@ def test_get_subtypes_by_model_type(model_type, expected_subtypes):
 @pytest.mark.parametrize(
     "model_type,subtype_input,use_string,expected_functionals,excluded_functionals",
     [
-        ("dft", "lda", False, {"PZ": "pz", "PW": "pw", "VWN": "vwn", "OTHER": "other"}, ["pbe"]),
-        ("dft", "gga", False, {"PBE": "pbe", "PBESOL": "pbesol", "PW91": "pw91", "OTHER": "other"}, ["pz"]),
-        ("dft", "lda", True, {"PZ": "pz", "PW": "pw", "VWN": "vwn", "OTHER": "other"}, ["pbe"]),
+        (MODEL.DFT, SUBTYPE.LDA, False, LDA_FUNCTIONALS, [FUNCTIONAL.PBE]),
+        (MODEL.DFT, SUBTYPE.GGA, False, GGA_FUNCTIONALS, [FUNCTIONAL.PZ]),
+        (MODEL.DFT, SUBTYPE.LDA, True, LDA_FUNCTIONALS, [FUNCTIONAL.PBE]),
     ],
 )
 def test_get_functionals_by_subtype(model_type, subtype_input, use_string, expected_functionals, excluded_functionals):
@@ -110,14 +126,14 @@ def test_get_functionals_by_subtype(model_type, subtype_input, use_string, expec
     else:
         subtypes = ModelTreeStandata.get_subtypes_by_model_type(model_type)
         subtype_arg = getattr(subtypes, subtype_input.upper())
-    
+
     functionals = ModelTreeStandata.get_functionals_by_subtype(model_type, subtype_arg)
     assert issubclass(functionals, Enum)
-    
+
     for enum_name, expected_value in expected_functionals.items():
         assert hasattr(functionals, enum_name)
         assert getattr(functionals, enum_name).value == expected_value
-    
+
     functional_values = [f.value for f in functionals]
     for excluded in excluded_functionals:
         assert excluded not in functional_values
@@ -126,15 +142,15 @@ def test_get_functionals_by_subtype(model_type, subtype_input, use_string, expec
 @pytest.mark.parametrize(
     "type,subtype,functional,expected",
     [
-        ("dft", "gga", "pbe", {"type": "dft", "subtype": "gga", "functional": "pbe"}),
-        ("dft", "lda", "pz", {"type": "dft", "subtype": "lda", "functional": "pz"}),
-        ("dft", "gga", None, {"type": "dft", "subtype": "gga", "functional": "pbe"}),
-        ("dft", None, None, {"type": "dft", "subtype": "gga", "functional": "pbe"}),
-        ("dft", None, "pbe", {"type": "dft", "subtype": "gga", "functional": "pbe"}),
-        ("dft", "lda", None, {"type": "dft", "subtype": "lda", "functional": "pz"}),
-        ("invalid_type", None, None, {}),
-        ("dft", "invalid_subtype", None, {"type": "dft"}),
-        ("dft", "gga", "invalid_functional", {"type": "dft", "subtype": "gga"}),
+        (MODEL.DFT, SUBTYPE.GGA, FUNCTIONAL.PBE, EXPECTED_MODEL_BY_PARAMETERS_GGA),
+        (MODEL.DFT, SUBTYPE.LDA, FUNCTIONAL.PZ, EXPECTED_MODEL_BY_PARAMETERS_LDA),
+        (MODEL.DFT, SUBTYPE.GGA, None, EXPECTED_MODEL_BY_PARAMETERS_GGA),
+        (MODEL.DFT, None, None, EXPECTED_MODEL_BY_PARAMETERS_GGA),
+        (MODEL.DFT, None, FUNCTIONAL.PBE, EXPECTED_MODEL_BY_PARAMETERS_GGA),
+        (MODEL.DFT, SUBTYPE.LDA, None, EXPECTED_MODEL_BY_PARAMETERS_LDA),
+        (MODEL.INVALID, None, None, {}),
+        (MODEL.DFT, SUBTYPE.INVALID, None, {"type": MODEL.DFT}),
+        (MODEL.DFT, SUBTYPE.GGA, FUNCTIONAL.INVALID, EXPECTED_MODEL_BY_PARAMETERS_GGA),
     ],
 )
 def test_get_model_by_parameters(type, subtype, functional, expected):
