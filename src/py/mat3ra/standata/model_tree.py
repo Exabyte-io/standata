@@ -69,9 +69,11 @@ class ModelTreeStandata(Standata):
 
         result["subtype"] = resolved_subtype
 
-        functionals = subtype_tree.get("functionals", [])
-        resolved_functional = functional or (functionals[0] if functionals else None)
-        if resolved_functional and resolved_functional in functionals:
-            result["functional"] = resolved_functional
+        functionals_from_tree = subtype_tree.get("functionals", [])
+        if functionals_from_tree:
+            if functional and functional in functionals_from_tree:
+                result["functional"] = functional
+            else:
+                result["functional"] = functionals_from_tree[0]
 
         return result
