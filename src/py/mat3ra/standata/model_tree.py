@@ -48,3 +48,30 @@ class ModelTreeStandata(Standata):
         functionals = subtype_tree.get("functionals", [])
         enum_name = f"{model_type.upper()}{cls._normalize_enum_name(subtype_value)}Functionals"
         return cls._create_enum_from_values(functionals, enum_name)
+
+    @classmethod
+    def get_default_subtype(cls, model_tree: Dict[str, Any]) -> Optional[str]:
+        subtypes = [key for key in model_tree.keys() if key not in ["refiners", "modifiers", "methods"]]
+        return subtypes[0] if subtypes else None
+
+    @classmethod
+    def get_model_by_parameters(cls, type: str, subtype: Optional[str], functional: Optional[str]) -> Dict[str, Any]:
+        model_tree = MODEL_TREE.get(type, {})
+        if not model_tree:
+            return {}
+
+        result = {"type": type}
+
+        resolved_subtype = subtype or cls.get_default_subtype(model_tree)
+        subtype_tree = model_tree.get(resolved_subtype, {}) if resolved_subtype else {}
+        if not subtype_tree:
+            return result
+
+        result["subtype"] = resolved_subtype
+
+        functionals = subtype_tree.get("functionals", [])
+        resolved_functional = functional or (functionals[0] if functionals else None)
+        if resolved_functional and resolved_functional in functionals:
+            result["functional"] = resolved_functional
+
+        return result

@@ -121,3 +121,22 @@ def test_get_functionals_by_subtype(model_type, subtype_input, use_string, expec
     functional_values = [f.value for f in functionals]
     for excluded in excluded_functionals:
         assert excluded not in functional_values
+
+
+@pytest.mark.parametrize(
+    "type,subtype,functional,expected",
+    [
+        ("dft", "gga", "pbe", {"type": "dft", "subtype": "gga", "functional": "pbe"}),
+        ("dft", "lda", "pz", {"type": "dft", "subtype": "lda", "functional": "pz"}),
+        ("dft", "gga", None, {"type": "dft", "subtype": "gga", "functional": "pbe"}),
+        ("dft", None, None, {"type": "dft", "subtype": "gga", "functional": "pbe"}),
+        ("dft", None, "pbe", {"type": "dft", "subtype": "gga", "functional": "pbe"}),
+        ("dft", "lda", None, {"type": "dft", "subtype": "lda", "functional": "pz"}),
+        ("invalid_type", None, None, {}),
+        ("dft", "invalid_subtype", None, {"type": "dft"}),
+        ("dft", "gga", "invalid_functional", {"type": "dft", "subtype": "gga"}),
+    ],
+)
+def test_get_model_by_parameters(type, subtype, functional, expected):
+    result = ModelTreeStandata.get_model_by_parameters(type, subtype, functional)
+    assert result == expected
