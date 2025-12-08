@@ -877,6 +877,25 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 results: never[];
             };
         };
+        lammps: {
+            lmp: {
+                flavors: {
+                    emin: {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                        }[];
+                        isDefault: boolean;
+                        monitors: string[];
+                        results: never[];
+                    };
+                };
+                isDefault: boolean;
+                monitors: string[];
+                results: never[];
+            };
+        };
         nwchem: {
             nwchem: {
                 flavors: {
