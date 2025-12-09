@@ -5,7 +5,7 @@ method:
   name: UnknownMethod
 model:
   name: UnknownModel
-name: Energy minimization - LAMMPS
+name: Energy minimization
 units:
   - config:
       execName: lmp

@@ -25,6 +25,12 @@ entities:
       - default_version
       - default_build
       - default
+  - filename: lammps/lammps_gnu_2025.07.22.2.json
+    categories:
+      - statistical
+      - modeling
+      - default_version
+      - default
   - filename: vasp/vasp_gnu_5.4.4.json
     categories:
       - quantum-mechanical
@@ -51,10 +57,5 @@ entities:
     categories:
       - programming_language
       - scripting
-      - default_version
-      - default
-  - filename: lammps/lammps_gnu_2025.07.22.2.json
-    categories:
-      - statistical
       - default_version
       - default

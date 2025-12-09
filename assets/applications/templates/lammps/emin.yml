@@ -1,5 +1,5 @@
 - content: !readFile 'input_files_templates/lammps/in.emin'
-  name: in.min
+  name: in.emin
   contextProviders: []
   applicationName: lammps
   executableName: lmp
