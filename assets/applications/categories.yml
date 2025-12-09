@@ -53,3 +53,8 @@ entities:
       - scripting
       - default_version
       - default
+  - filename: lammps/lammps_gnu_2025.07.22.2.json
+    categories:
+      - statistical
+      - default_version
+      - default
