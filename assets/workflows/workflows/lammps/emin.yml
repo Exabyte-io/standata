@@ -1,4 +1,0 @@
-name: Energy minimization - LAMMPS
-units:
-- name: emin
-  type: subworkflow
