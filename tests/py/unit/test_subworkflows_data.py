@@ -71,8 +71,8 @@ def test_filter_by_application_and_get_by_name():
         (APP.NWCHEM, None),
     ],
 )
-def test_get_relaxation_subworkflow_by_application(application, expected_name):
-    result = SubworkflowStandata.get_relaxation_subworkflow_by_application(application)
+def test_get_relaxation_by_application(application, expected_name):
+    result = SubworkflowStandata.get_relaxation_by_application(application)
     assert isinstance(result, dict)
     if expected_name is None:
         assert result == {}
@@ -83,3 +83,9 @@ def test_get_relaxation_subworkflow_by_application(application, expected_name):
         expected_app_data = ApplicationStandata.get_by_name_first_match(application)
         actual_app_data = result.get("application", {})
         assert_deep_almost_equal(expected_app_data, actual_app_data)
+
+
+def test_get_default():
+    result = SubworkflowStandata.get_default()
+    assert isinstance(result, dict)
+    assert result.get("name") == "Total Energy"

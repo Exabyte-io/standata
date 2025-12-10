@@ -1,7 +1,6 @@
 from types import SimpleNamespace
 from typing import Dict
 
-from .applications import ApplicationStandata
 from .base import Standata, StandataData
 from .data.subworkflows import subworkflows_data
 
@@ -20,10 +19,15 @@ class SubworkflowStandata(Standata):
         return cls.filter_by_tags(application)
 
     @classmethod
-    def get_relaxation_subworkflow_by_application(cls, application: str) -> Dict:
+    def get_default(cls) -> Dict:
+        default_subworkflow_data = cls.get_by_categories(TAGS.DEFAULT)
+        if not default_subworkflow_data:
+            return {}
+        return default_subworkflow_data[0]
+
+    @classmethod
+    def get_relaxation_by_application(cls, application: str) -> Dict:
         found_subworkflow_data = cls.get_by_categories(application, TAGS.RELAXATION)
         if not found_subworkflow_data:
             return {}
-        relaxation_data = found_subworkflow_data[0].copy()
-
-        return relaxation_data
+        return found_subworkflow_data[0]
