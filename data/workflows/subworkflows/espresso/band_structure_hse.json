@@ -1,6 +1,6 @@
 {
-    "_id": "e47ca302-96f2-5726-9b4c-f34cdfaa7f72",
-    "name": "Main HSE Run",
+    "_id": "ef3089f3-7460-56f2-9aa2-172d5339d3be",
+    "name": "Band Structure - HSE",
     "application": {
         "name": "espresso"
     },

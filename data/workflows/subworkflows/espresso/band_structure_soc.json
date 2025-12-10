@@ -1,6 +1,6 @@
 {
-    "_id": "153b4a88-5d56-553f-b7d3-40df96968eb4",
-    "name": "Bandstructure with SOC",
+    "_id": "51e6fb82-538a-58ee-8d4e-991c8446f657",
+    "name": "Spin orbit coupling bandstructure",
     "application": {
         "name": "espresso"
     },

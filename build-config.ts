@@ -82,7 +82,7 @@ export const BUILD_CONFIG = {
         },
         build: {
             path: "build/standata/workflows",
-            workflowSubforkflowMapByApplication: "workflowSubforkflowMapByApplication.json",
+            workflowSubworkflowMapByApplication: "workflowSubworkflowMapByApplication.json",
         },
     },
 

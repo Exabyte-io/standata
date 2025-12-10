@@ -1,6 +1,6 @@
 {
-    "_id": "354942f1-9f3d-57a9-b5ae-6bdf5b3a60af",
-    "name": "Bandstructure with spin magnetism",
+    "_id": "4a7dced1-224e-57d7-a616-cbad99062c7b",
+    "name": "Spin magnetic bandstructure",
     "application": {
         "name": "espresso"
     },

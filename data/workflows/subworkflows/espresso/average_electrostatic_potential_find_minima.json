@@ -1,6 +1,6 @@
 {
-    "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
-    "name": "Find ESP Value (Interface right)",
+    "_id": "e5bee93f-2b6b-5d91-9a53-5ed309a918d3",
+    "name": "Find ESP Value",
     "application": {
         "name": "espresso"
     },
@@ -25,7 +25,7 @@
                     "name": "standard_output"
                 }
             ],
-            "flowchartId": "python-find-extrema-right",
+            "flowchartId": "python-find-extrema",
             "preProcessors": [],
             "postProcessors": [],
             "application": {
@@ -93,12 +93,12 @@
         {
             "name": "Set Average ESP Value",
             "type": "assignment",
-            "operand": "AVG_ESP_RIGHT",
+            "operand": "AVG_ESP",
             "value": "json.loads(STDOUT)['minima']",
             "input": [
                 {
                     "name": "STDOUT",
-                    "scope": "python-find-extrema-right"
+                    "scope": "python-find-extrema"
                 }
             ],
             "status": "idle",

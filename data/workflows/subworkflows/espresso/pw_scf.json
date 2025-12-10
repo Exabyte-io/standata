@@ -1,6 +1,6 @@
 {
-    "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
-    "name": "Preliminary SCF Calculation",
+    "_id": "f52b8039-83d0-5485-a1f1-0bc37cb01ed3",
+    "name": "pw-scf",
     "application": {
         "name": "espresso"
     },

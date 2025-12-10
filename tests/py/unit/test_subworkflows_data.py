@@ -7,7 +7,7 @@ APP = SimpleNamespace(ESPRESSO="espresso")
 SUBWORKFLOW = SimpleNamespace(
     SEARCH_NAME="pw_scf",
     FILENAME="espresso/pw_scf.json",
-    EXACT_NAME="Preliminary SCF Calculation",
+    EXACT_NAME="pw-scf",
 )
 
 

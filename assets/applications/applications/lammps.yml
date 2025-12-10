@@ -1,0 +1,8 @@
+name: lammps
+shortName: lmp
+summary: LAMMPS
+defaultVersion: '2025.07.22.2'
+versions:
+  - version: '2025.07.22.2'
+    isDefault: true
+    build: GNU

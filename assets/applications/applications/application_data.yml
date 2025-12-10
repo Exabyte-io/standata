@@ -1,4 +1,5 @@
 espresso: !include 'applications/espresso.yml'
+lammps: !include 'applications/lammps.yml'
 nwchem: !include 'applications/nwchem.yml'
 python: !include 'applications/python.yml'
 shell: !include 'applications/shell.yml'

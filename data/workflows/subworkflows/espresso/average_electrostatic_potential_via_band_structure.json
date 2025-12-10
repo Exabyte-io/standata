@@ -1,7 +1,7 @@
 {
     "isMultiMaterial": true,
-    "_id": "aa611fe8-1e6a-5e5c-976a-f64bfaaaace9",
-    "name": "BS + Avg ESP (interface right)",
+    "_id": "09f5f4ff-7dbd-59ae-ad27-5af1bdfc2bd0",
+    "name": "Band Structure + average ESP",
     "application": {
         "name": "espresso"
     },
@@ -32,14 +32,14 @@
     },
     "units": [
         {
-            "name": "Set Material Index (Interface right)",
+            "name": "Set Material Index",
             "type": "assignment",
             "operand": "MATERIAL_INDEX",
-            "value": "2",
+            "value": 0,
             "input": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "a05809d1-cc0d-5a0b-bf5e-d43b90a6ac4b",
+            "flowchartId": "2d360607-c739-54ad-97a0-8a83f0971f2c",
             "tags": [],
             "head": true,
             "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
@@ -165,7 +165,7 @@
                     "schemaVersion": "2022.8.16"
                 }
             ],
-            "next": "pw-bands-calculate-band-gap-right"
+            "next": "pw-bands-calculate-band-gap"
         },
         {
             "type": "execution",
@@ -181,7 +181,7 @@
                     "name": "standard_output"
                 }
             ],
-            "flowchartId": "pw-bands-calculate-band-gap-right",
+            "flowchartId": "pw-bands-calculate-band-gap",
             "preProcessors": [],
             "postProcessors": [],
             "application": {
@@ -260,7 +260,7 @@
             "input": [
                 {
                     "name": "band_gaps",
-                    "scope": "pw-bands-calculate-band-gap-right"
+                    "scope": "pw-bands-calculate-band-gap"
                 }
             ],
             "status": "idle",
@@ -283,7 +283,7 @@
         {
             "name": "Set Valence Band Maximum",
             "type": "assignment",
-            "operand": "VBM_RIGHT",
+            "operand": "VBM",
             "value": "BAND_GAP_INDIRECT['eigenvalueValence']",
             "input": [],
             "status": "idle",
@@ -426,7 +426,7 @@
                     "schemaVersion": "2022.8.16"
                 }
             ],
-            "next": "average-electrostatic-potential-right"
+            "next": "average-electrostatic-potential"
         },
         {
             "type": "execution",
@@ -442,7 +442,7 @@
                     "name": "standard_output"
                 }
             ],
-            "flowchartId": "average-electrostatic-potential-right",
+            "flowchartId": "average-electrostatic-potential",
             "preProcessors": [],
             "postProcessors": [],
             "application": {
@@ -505,7 +505,7 @@
             "input": [
                 {
                     "name": "average_potential_profile",
-                    "scope": "average-electrostatic-potential-right"
+                    "scope": "average-electrostatic-potential"
                 }
             ],
             "status": "idle",
