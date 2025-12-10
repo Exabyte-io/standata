@@ -79,7 +79,7 @@ def test_get_relaxation_by_application(application, expected_name):
     else:
         assert result.get("name") == expected_name
         assert application in str(result.get("application", {})).lower()
-        
+
         expected_app_data = ApplicationStandata.get_by_name_first_match(application)
         actual_app_data = result.get("application", {})
         assert_deep_almost_equal(expected_app_data, actual_app_data)
