@@ -1,5 +1,5 @@
 import { Standata } from "./base";
-import workflowSubforkflowMapByApplication from "./runtime_data/workflows/workflowSubforkflowMapByApplication.json";
+import workflowSubworkflowMapByApplication from "./runtime_data/workflows/workflowSubworkflowMapByApplication.json";
 export declare enum TAGS {
     RELAXATION = "variable-cell_relaxation",
     DEFAULT = "default"
@@ -37,4 +37,4 @@ export declare class SubworkflowStandata extends BaseWorkflowStandata<StandataEn
     static runtimeData: WorkflowStandataRuntimeData;
     getRelaxationSubworkflowByApplication(appName: string): StandataEntity | undefined;
 }
-export { workflowSubforkflowMapByApplication };
+export { workflowSubworkflowMapByApplication };
