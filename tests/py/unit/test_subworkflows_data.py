@@ -1,13 +1,16 @@
 from types import SimpleNamespace
 
+import pytest
+
 from mat3ra.standata.data.subworkflows import subworkflows_data
 from mat3ra.standata.subworkflows import SubworkflowStandata
 
-APP = SimpleNamespace(ESPRESSO="espresso")
+APP = SimpleNamespace(ESPRESSO="espresso", VASP="vasp", PYTHON="python", SHELL="shell", NWCHEM="nwchem")
 SUBWORKFLOW = SimpleNamespace(
     SEARCH_NAME="pw_scf",
     FILENAME="espresso/pw_scf.json",
     EXACT_NAME="Preliminary SCF Calculation",
+    RELAXATION_NAME="Variable-cell Relaxation",
 )
 
 
@@ -54,3 +57,23 @@ def test_filter_by_application_and_get_by_name():
     assert "name" in subworkflow
     assert subworkflow["name"] == SUBWORKFLOW.EXACT_NAME
     assert APP.ESPRESSO in str(subworkflow.get("application", {})).lower()
+
+
+@pytest.mark.parametrize(
+    "application,expected_name",
+    [
+        (APP.ESPRESSO, SUBWORKFLOW.RELAXATION_NAME),
+        (APP.VASP, SUBWORKFLOW.RELAXATION_NAME),
+        (APP.PYTHON, None),
+        (APP.SHELL, None),
+        (APP.NWCHEM, None),
+    ],
+)
+def test_get_relaxation_subworkflow_by_application(application, expected_name):
+    result = SubworkflowStandata.get_relaxation_subworkflow_by_application(application)
+    assert isinstance(result, dict)
+    if expected_name is None:
+        assert result == {}
+    else:
+        assert result.get("name") == expected_name
+        assert application in str(result.get("application", {})).lower()
