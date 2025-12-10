@@ -20,18 +20,18 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         });
     }
 
-    private get workflowSubforkflowMapByApplication(): { workflows: any; subworkflows: any } {
-        const workflowSubforkflowMapByApplication = { workflows: {}, subworkflows: {} } as any;
-        workflowSubforkflowMapByApplication.workflows = {};
-        workflowSubforkflowMapByApplication.subworkflows = this.entityMapByApplication;
-        return workflowSubforkflowMapByApplication;
+    private get workflowSubworkflowMapByApplication(): { workflows: any; subworkflows: any } {
+        const workflowSubworkflowMapByApplication = { workflows: {}, subworkflows: {} } as any;
+        workflowSubworkflowMapByApplication.workflows = {};
+        workflowSubworkflowMapByApplication.subworkflows = this.entityMapByApplication;
+        return workflowSubworkflowMapByApplication;
     }
 
     protected buildEntityConfigs(): any[] {
         this.enablePredefinedIds();
         const configs: { appName: string; safeName: string; config: any }[] = [];
         this.applications.forEach((appName) => {
-            const subworkflows = this.workflowSubforkflowMapByApplication.subworkflows[appName];
+            const subworkflows = this.workflowSubworkflowMapByApplication.subworkflows[appName];
             if (!subworkflows) return;
             Object.keys(subworkflows).forEach((subworkflowName) => {
                 const subworkflowData = subworkflows[subworkflowName];
@@ -39,7 +39,7 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
                 const subworkflow = createSubworkflowByName({
                     appName,
                     swfName: subworkflowName,
-                    workflowSubworkflowMapByApplication: this.workflowSubforkflowMapByApplication,
+                    workflowSubworkflowMapByApplication: this.workflowSubworkflowMapByApplication,
                     SubworkflowCls: Subworkflow,
                     UnitFactoryCls: UnitFactory,
                     unitBuilders: builders,

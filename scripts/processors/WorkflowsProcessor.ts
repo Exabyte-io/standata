@@ -25,11 +25,11 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         this.subworkflowMapByApplication = subworkflowsMapByApplication;
     }
 
-    private get workflowSubforkflowMapByApplication(): { workflows: any; subworkflows: any } {
-        const workflowSubforkflowMapByApplication = { workflows: {}, subworkflows: {} } as any;
-        workflowSubforkflowMapByApplication.workflows = this.entityMapByApplication;
-        workflowSubforkflowMapByApplication.subworkflows = this.subworkflowMapByApplication;
-        return workflowSubforkflowMapByApplication;
+    private get workflowSubworkflowMapByApplication(): { workflows: any; subworkflows: any } {
+        const workflowSubworkflowMapByApplication = { workflows: {}, subworkflows: {} } as any;
+        workflowSubworkflowMapByApplication.workflows = this.entityMapByApplication;
+        workflowSubworkflowMapByApplication.subworkflows = this.subworkflowMapByApplication;
+        return workflowSubworkflowMapByApplication;
     }
 
     protected buildEntityConfigs(): any[] {
@@ -39,14 +39,14 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         // For each application (from application_data.yml), look into its folder under assets/workflows/workflows/{appName}
         // and load all YAML files, preserving their relative paths to use as safeName in build/data output structure
         this.applications.forEach((appName) => {
-            const workflows = this.workflowSubforkflowMapByApplication.workflows[appName];
+            const workflows = this.workflowSubworkflowMapByApplication.workflows[appName];
             if (!workflows) return;
             Object.keys(workflows).forEach((workflowKey) => {
                 const workflowData = workflows[workflowKey];
                 const workflow = createWorkflow({
                     appName,
                     workflowData,
-                    workflowSubworkflowMapByApplication: this.workflowSubforkflowMapByApplication,
+                    workflowSubworkflowMapByApplication: this.workflowSubworkflowMapByApplication,
                     workflowCls: WorkflowCls,
                     SubworkflowCls: Subworkflow,
                     UnitFactoryCls: UnitFactory,
@@ -64,18 +64,18 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         return configs;
     }
 
-    protected writeWorkflowSubforkflowMapByApplication(): void {
+    protected writeWorkflowSubworkflowMapByApplication(): void {
         serverUtils.json.writeJSONFileSync(
             path.resolve(
                 this.resolvedPaths.buildDir,
-                BUILD_CONFIG.workflows.build.workflowSubforkflowMapByApplication,
+                BUILD_CONFIG.workflows.build.workflowSubworkflowMapByApplication,
             ),
-            this.workflowSubforkflowMapByApplication,
+            this.workflowSubworkflowMapByApplication,
         );
     }
 
     public writeBuildDirectoryContent(): void {
-        this.writeWorkflowSubforkflowMapByApplication();
+        this.writeWorkflowSubworkflowMapByApplication();
         super.writeDataDirectoryContent();
     }
 }
