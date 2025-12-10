@@ -2,14 +2,16 @@ from types import SimpleNamespace
 
 import pytest
 
+from mat3ra.standata.applications import ApplicationStandata
 from mat3ra.standata.data.subworkflows import subworkflows_data
 from mat3ra.standata.subworkflows import SubworkflowStandata
+from mat3ra.utils.assertion import assert_deep_almost_equal
 
 APP = SimpleNamespace(ESPRESSO="espresso", VASP="vasp", PYTHON="python", SHELL="shell", NWCHEM="nwchem")
 SUBWORKFLOW = SimpleNamespace(
     SEARCH_NAME="pw_scf",
     FILENAME="espresso/pw_scf.json",
-    EXACT_NAME="Preliminary SCF Calculation",
+    EXACT_NAME="pw-scf",
     RELAXATION_NAME="Variable-cell Relaxation",
 )
 
@@ -77,3 +79,7 @@ def test_get_relaxation_subworkflow_by_application(application, expected_name):
     else:
         assert result.get("name") == expected_name
         assert application in str(result.get("application", {})).lower()
+        
+        expected_app_data = ApplicationStandata.get_by_name_first_match(application)
+        actual_app_data = result.get("application", {})
+        assert_deep_almost_equal(expected_app_data, actual_app_data)
