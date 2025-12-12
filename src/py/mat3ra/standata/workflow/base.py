@@ -1,8 +1,8 @@
 from types import SimpleNamespace
 from typing import Dict, List
 
-from .applications import ApplicationStandata
-from .base import Standata
+from mat3ra.standata.applications import ApplicationStandata
+from mat3ra.standata.base import Standata
 
 TAGS = SimpleNamespace(
     RELAXATION="variable-cell_relaxation",
@@ -40,7 +40,7 @@ class BaseWorkflowSubworkflowStandata(Standata):
     def get_relaxation_by_application(cls, application: str) -> Dict:
         """
         Get relaxation entity for a specific application.
-        
+
         Enriches the application field with full application data if available.
         """
         found_data = cls.get_by_categories(application, TAGS.RELAXATION)

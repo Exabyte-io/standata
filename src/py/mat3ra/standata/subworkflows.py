@@ -1,8 +1,8 @@
 from typing import Dict
 
 from .base import StandataData
-from .core import BaseWorkflowSubworkflowStandata
 from .data.subworkflows import subworkflows_data
+from .workflow.base import BaseWorkflowSubworkflowStandata
 
 
 class SubworkflowStandata(BaseWorkflowSubworkflowStandata):
