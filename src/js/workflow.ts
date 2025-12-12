@@ -32,6 +32,7 @@ abstract class BaseWorkflowStandata<T extends { name?: string }> extends Standat
         return this.findByApplication(appName).find((e) => e?.name === displayName);
     }
 
+    // NOTE: The WF/SWF returned will have only `name` inside the application object. 
     getRelaxationByApplication(appName: string): T | undefined {
         const list = this.findEntitiesByTags(TAGS.RELAXATION, appName) as T[];
         return list[0];

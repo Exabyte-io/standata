@@ -39,7 +39,7 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
                 const subworkflow = createSubworkflowByName({
                     appName,
                     swfName: subworkflowName,
-                    workflowSubforkflowMapByApplication: this.workflowSubforkflowMapByApplication,
+                    workflowSubworkflowMapByApplication: this.workflowSubforkflowMapByApplication,
                     SubworkflowCls: Subworkflow,
                     UnitFactoryCls: UnitFactory,
                     unitBuilders: builders,
