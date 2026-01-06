@@ -300,6 +300,7 @@ entities:
   - filename: espresso/plot_wavefunction.json
     categories:
       - espresso
+      - file_content
       - potential_profile
       - python
   - filename: espresso/post_processor.json
@@ -392,9 +393,6 @@ entities:
       - nwchem
       - total_energy
       - total_energy_contributions
-  - filename: python/extract_bands_fermi.json
-    categories:
-      - python
   - filename: python/ml/classification_tail.json
     categories:
       - creates-predictions-csv-during-predict-phase
@@ -427,7 +425,6 @@ entities:
       - python
   - filename: python/python_script.json
     categories:
-      - potential_profile
       - python
   - filename: shell/batch_espresso_pwscf.json
     categories:

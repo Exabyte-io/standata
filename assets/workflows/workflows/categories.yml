@@ -350,7 +350,6 @@ entities:
       - python
   - filename: python/python_script.json
     categories:
-      - potential_profile
       - python
   - filename: shell/batch_espresso_pwscf.json
     categories:

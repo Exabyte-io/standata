@@ -4,6 +4,7 @@ monitors:
 results:
   - file_content
   - 'workflow:pyml_predict'
+  - potential_profile
 flavors:
   hello_world:
     isDefault: true
@@ -39,6 +40,20 @@ flavors:
       - name: extract_bands_fermi.py
       - name: requirements.txt
         templateName: requirements_bands_fermi.txt
+    monitors:
+      - standard_output
+    applicationName: python
+    executableName: python
+
+  plot_wavefunction:
+    input:
+      - name: script.py
+        templateName: plot_wavefunction.py
+      - name: requirements.txt
+        templateName: requirements_plot_wavefunction.txt
+    results:
+      - potential_profile
+      - file_content
     monitors:
       - standard_output
     applicationName: python

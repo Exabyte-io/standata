@@ -1,0 +1,53 @@
+application:
+  name: espresso
+  version: '6.3'
+method:
+  name: PseudopotentialMethod
+model:
+  name: DFTModel
+name: Total Energy with Bands
+properties:
+  - atomic_forces
+  - fermi_energy
+  - pressure
+  - stress_tensor
+  - total_energy
+  - total_energy_contributions
+  - total_force
+  - band_structure
+units:
+  - config:
+      execName: pw.x
+      flavorName: pw_scf
+      name: pw_scf
+      flowchartId: pw-scf-total-energy
+    functions:
+      head: true
+    type: executionBuilder
+  - config:
+      execName: pw.x
+      flavorName: pw_bands
+      name: pw_bands
+      flowchartId: pw-bands-total-energy
+      results:
+        - name: band_structure
+    type: executionBuilder
+  - config:
+      name: assignment BS
+      operand: band_structure
+      value: band_structure
+      input:
+        - name: band_structure
+          scope: pw-bands-total-energy
+    type: assignment
+  - config:
+      name: assignment FE
+      operand: fermi_energy
+      value: fermi_energy
+      input:
+        - name: fermi_energy
+          scope: pw-scf-total-energy
+    type: assignment
+tags:
+  - wfn_plot
+

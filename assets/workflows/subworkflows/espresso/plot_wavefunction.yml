@@ -6,13 +6,18 @@ method:
 model:
   name: UnknownModel
 name: Plot Wavefunction
+properties:
+  - potential_profile
+  - file_content
 units:
-  - attributes:
+  - config:
+      execName: python
+      flavorName: plot_wavefunction
+      name: plot WFN
       results:
         - name: potential_profile
-    config:
-      execName: python
-      flavorName: hello_world
-      name: plot WFN
+        - name: file_content
+          basename: wf_r.png
+          filetype: image
     type: executionBuilder
 

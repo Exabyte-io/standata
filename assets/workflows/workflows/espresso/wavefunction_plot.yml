@@ -1,0 +1,13 @@
+name: Wavefunction Plot
+
+units:
+  - name: total_energy_with_bands
+    type: subworkflow
+  - name: extract_bands_fermi
+    type: subworkflow
+  - name: pp_wfn
+    type: subworkflow
+  - name: plot_wavefunction
+    type: subworkflow
+tags:
+  - wfn_plot

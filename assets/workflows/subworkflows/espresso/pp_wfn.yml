@@ -1,0 +1,15 @@
+application:
+  name: espresso
+  version: "6.3"
+method:
+  name: PseudopotentialMethod
+model:
+  name: DFTModel
+name: PP Wavefunction
+units:
+  - config:
+      execName: pp.x
+      flavorName: pp_wfn
+      name: pp_wfn
+      flowchartId: pp-wfn
+    type: executionBuilder
