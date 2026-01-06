@@ -30,6 +30,7 @@ categories:
     - remove-all-results
     - set-io-unit-filenames
     - variable-cell_relaxation
+    - wfn_plot
   application:
     - espresso
     - nwchem
@@ -336,10 +337,21 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
-  - filename: espresso/total_energy.json
+  - filename: espresso/total_energy_with_bands.json
     categories:
       - atomic_forces
       - band_structure
+      - espresso
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - wfn_plot
+  - filename: espresso/total_energy.json
+    categories:
+      - atomic_forces
       - default
       - espresso
       - fermi_energy

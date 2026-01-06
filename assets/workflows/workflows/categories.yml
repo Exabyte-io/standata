@@ -24,6 +24,7 @@ categories:
   tags:
     - default
     - variable-cell_relaxation
+    - wfn_plot
   application:
     - espresso
     - nwchem
@@ -310,6 +311,18 @@ entities:
       - total_energy
       - total_force
       - variable-cell_relaxation
+  - filename: espresso/wavefunction_plot.json
+    categories:
+      - atomic_forces
+      - band_structure
+      - espresso
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - wfn_plot
   - filename: espresso/zero_point_energy.json
     categories:
       - atomic_forces
@@ -337,6 +350,7 @@ entities:
       - python
   - filename: python/python_script.json
     categories:
+      - potential_profile
       - python
   - filename: shell/batch_espresso_pwscf.json
     categories:
