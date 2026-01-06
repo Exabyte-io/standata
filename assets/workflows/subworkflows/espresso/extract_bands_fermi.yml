@@ -1,0 +1,25 @@
+# Note: this subworkflow expects fermi_energy and STDOUT to be passed
+# via input at the workflow level using unitConfigs
+application:
+  name: python
+  version: 3.10.13
+method:
+  name: UnknownMethod
+model:
+  name: UnknownModel
+name: Extract Bands Near Fermi
+units:
+  - config:
+      execName: python
+      flavorName: extract_bands_fermi
+      name: extract_bands_fermi
+      flowchartId: extract-band-fermi
+    type: executionBuilder
+  - config:
+      name: Store Band Number
+      operand: KBAND_VALUE
+      value: "json.loads(STDOUT)['band_below_fermi']"
+      input:
+        - name: STDOUT
+          scope: extract-band-fermi
+    type: assignment
