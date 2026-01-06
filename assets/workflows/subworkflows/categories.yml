@@ -198,6 +198,10 @@ entities:
     categories:
       - espresso
       - python
+  - filename: espresso/extract_bands_fermi.json
+    categories:
+      - espresso
+      - python
   - filename: espresso/fixed_cell_relaxation.json
     categories:
       - atomic_forces
@@ -292,10 +296,18 @@ entities:
       - espresso
       - phonon_dispersions
       - phonon_dos
+  - filename: espresso/plot_wavefunction.json
+    categories:
+      - espresso
+      - potential_profile
+      - python
   - filename: espresso/post_processor.json
     categories:
       - espresso
       - shell
+  - filename: espresso/pp_wfn.json
+    categories:
+      - espresso
   - filename: espresso/pre_processor.json
     categories:
       - espresso
@@ -327,6 +339,7 @@ entities:
   - filename: espresso/total_energy.json
     categories:
       - atomic_forces
+      - band_structure
       - default
       - espresso
       - fermi_energy
@@ -367,6 +380,9 @@ entities:
       - nwchem
       - total_energy
       - total_energy_contributions
+  - filename: python/extract_bands_fermi.json
+    categories:
+      - python
   - filename: python/ml/classification_tail.json
     categories:
       - creates-predictions-csv-during-predict-phase
@@ -393,8 +409,13 @@ entities:
       - pyml:workflow-type-setter
       - python
       - set-io-unit-filenames
+  - filename: python/plot_wavefunction.json
+    categories:
+      - file_content
+      - python
   - filename: python/python_script.json
     categories:
+      - potential_profile
       - python
   - filename: shell/batch_espresso_pwscf.json
     categories:

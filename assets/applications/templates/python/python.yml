@@ -16,6 +16,12 @@
   applicationName: python
   executableName: python
 
+- content: !readFile 'input_files_templates/python/espresso/requirements_bands_fermi.j2.txt'
+  name: requirements_bands_fermi.txt
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
 - content: !readFile 'input_files_templates/python/generic/post_processing:plot:matplotlib.pyi'
   name: matplotlib_basic.py
   contextProviders: []
@@ -24,6 +30,12 @@
 
 - content: !readFile 'input_files_templates/python/espresso_xml_get_qpt_irr.pyi'
   name: espresso_xml_get_qpt_irr.py
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
+- content: !readFile 'input_files_templates/python/espresso/extract_bands_fermi.pyi'
+  name: extract_bands_fermi.py
   contextProviders: []
   applicationName: python
   executableName: python
