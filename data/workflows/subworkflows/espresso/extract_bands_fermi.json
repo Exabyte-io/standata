@@ -79,11 +79,11 @@
                 },
                 {
                     "applicationName": "python",
-                    "content": "input_files_templates/python/espresso/requirements_bands_fermi.j2.txt",
+                    "content": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for extract_bands_fermi unit          #\n#                                                                    #\n# ------------------------------------------------------------------ #\n\nmunch==2.5.0\n\n",
                     "contextProviders": [],
                     "executableName": "python",
                     "name": "requirements.txt",
-                    "rendered": "input_files_templates/python/espresso/requirements_bands_fermi.j2.txt",
+                    "rendered": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for extract_bands_fermi unit          #\n#                                                                    #\n# ------------------------------------------------------------------ #\n\nmunch==2.5.0\n\n",
                     "schemaVersion": "2022.8.16"
                 }
             ],
