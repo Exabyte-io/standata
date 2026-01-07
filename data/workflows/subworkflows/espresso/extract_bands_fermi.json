@@ -87,12 +87,12 @@
                     "schemaVersion": "2022.8.16"
                 }
             ],
-            "next": "f9b3f66b-6659-581d-8791-7153c195214f"
+            "next": "8771dc7f-878e-5f13-a840-a3a416854f1e"
         },
         {
-            "name": "Store Band Number",
+            "name": "Store Band Below EF",
             "type": "assignment",
-            "operand": "KBAND_VALUE",
+            "operand": "KBAND_VALUE_BELOW_EF",
             "value": "json.loads(STDOUT)['band_below_fermi']",
             "input": [
                 {
@@ -102,7 +102,56 @@
             ],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "f9b3f66b-6659-581d-8791-7153c195214f",
+            "flowchartId": "8771dc7f-878e-5f13-a840-a3a416854f1e",
+            "tags": [],
+            "head": false,
+            "next": "91e1328f-39dd-5c24-83f9-d49bfe5c620e",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Store Band Above EF",
+            "type": "assignment",
+            "operand": "KBAND_VALUE_ABOVE_EF",
+            "value": "json.loads(STDOUT)['band_above_fermi']",
+            "input": [
+                {
+                    "name": "STDOUT",
+                    "scope": "extract-band-fermi"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "91e1328f-39dd-5c24-83f9-d49bfe5c620e",
+            "tags": [],
+            "head": false,
+            "next": "57a07d7d-3f68-5f31-97ad-ebe8c5593cd2",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Select Band",
+            "type": "assignment",
+            "operand": "KBAND_VALUE",
+            "value": "KBAND_VALUE_BELOW_EF",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "57a07d7d-3f68-5f31-97ad-ebe8c5593cd2",
             "tags": [],
             "head": false,
             "application": {

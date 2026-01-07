@@ -1,5 +1,6 @@
-# Note: this subworkflow expects fermi_energy and STDOUT to be passed
-# via input at the workflow level using unitConfigs
+# Note: This subworkflow extracts band indices near Fermi energy
+# Expects fermi_energy and band_structure to be passed via unitConfigs
+# Outputs: KBAND_VALUE_BELOW_EF, KBAND_VALUE_ABOVE_EF, and KBAND_VALUE (selected)
 application:
   name: python
   version: 3.10.13
@@ -16,10 +17,23 @@ units:
       flowchartId: extract-band-fermi
     type: executionBuilder
   - config:
-      name: Store Band Number
-      operand: KBAND_VALUE
+      name: Store Band Below EF
+      operand: KBAND_VALUE_BELOW_EF
       value: "json.loads(STDOUT)['band_below_fermi']"
       input:
         - name: STDOUT
           scope: extract-band-fermi
+    type: assignment
+  - config:
+      name: Store Band Above EF
+      operand: KBAND_VALUE_ABOVE_EF
+      value: "json.loads(STDOUT)['band_above_fermi']"
+      input:
+        - name: STDOUT
+          scope: extract-band-fermi
+    type: assignment
+  - config:
+      name: Select Band
+      operand: KBAND_VALUE
+      value: "KBAND_VALUE_BELOW_EF"
     type: assignment
