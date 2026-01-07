@@ -3,6 +3,7 @@
 # This script expects fermi_energy and band_structure results      #
 # ---------------------------------------------------------------- #
 import json
+
 from munch import Munch
 
 # Data From Context

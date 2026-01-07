@@ -5,8 +5,10 @@
 # ---------------------------------------------------------------- #
 
 import json
-import numpy as np
+
 import matplotlib
+import numpy as np
+
 matplotlib.use('Agg')  # Non-interactive backend
 import matplotlib.pyplot as plt
 
@@ -46,4 +48,3 @@ wavefunction_data = {
 
 # Print JSON to STDOUT (will be captured as potential_profile result)
 print(json.dumps(wavefunction_data, indent=2))
-

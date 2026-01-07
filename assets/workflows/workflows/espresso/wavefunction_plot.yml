@@ -10,7 +10,7 @@ name: Wavefunction Plot
 units:
   - name: total_energy_with_bands
     type: subworkflow
-  
+
   - name: extract_bands_fermi
     type: subworkflow
     config:
@@ -31,7 +31,7 @@ units:
               input:
                 - name: KBAND_VALUE_BELOW_EF
                 - name: KBAND_VALUE_ABOVE_EF
-  
+
   - name: pp_wfn
     type: subworkflow
     config:
@@ -43,7 +43,7 @@ units:
               input:
                 - name: KBAND_VALUE
                   scope: extract_bands_fermi
-  
+
   - name: plot_wavefunction
     type: subworkflow
 
