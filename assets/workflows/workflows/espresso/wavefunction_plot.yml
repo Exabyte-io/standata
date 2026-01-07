@@ -24,6 +24,13 @@ units:
                   scope: total_energy_with_bands
                 - name: fermi_energy
                   scope: total_energy_with_bands
+        - index: 3
+          type: assignment
+          config:
+            attributes:
+              input:
+                - name: KBAND_VALUE_BELOW_EF
+                - name: KBAND_VALUE_ABOVE_EF
   
   - name: pp_wfn
     type: subworkflow

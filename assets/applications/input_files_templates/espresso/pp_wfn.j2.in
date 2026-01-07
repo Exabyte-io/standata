@@ -3,7 +3,7 @@
     prefix = '__prefix__'
     plot_num       = 7,
     kpoint         = 1,
-    kband          = {{ KBAND_VALUE }},
+    kband          = {% raw %}{{ KBAND_VALUE }}{% endraw %},
     lsign          = .true.,
     !spin_component = 1
 /

@@ -313,6 +313,22 @@
                             ]
                         }
                     }
+                },
+                {
+                    "index": 3,
+                    "type": "assignment",
+                    "config": {
+                        "attributes": {
+                            "input": [
+                                {
+                                    "name": "KBAND_VALUE_BELOW_EF"
+                                },
+                                {
+                                    "name": "KBAND_VALUE_ABOVE_EF"
+                                }
+                            ]
+                        }
+                    }
                 }
             ],
             "_id": "1bb75a6a-4c8c-5336-a24c-1963e83825bc",
@@ -586,11 +602,11 @@
                     "input": [
                         {
                             "applicationName": "espresso",
-                            "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    plot_num       = 7,\n    kpoint         = 1,\n    kband          = {{ KBAND_VALUE }},\n    lsign          = .true.,\n    !spin_component = 1\n/\n&PLOT\n    iflag = 1,          ! 1D line (not 2D plane)\n    fileout = 'wf_r.dat',\n    output_format = 0,  ! gnuplot 1D\n    x0(1)=0.0, x0(2)=0.0, x0(3)=0.0,   ! line origin (alat units)\n    e1(1)=0.0, e1(2)=0.0, e1(3)=1.0,   ! direction along z (alat units)\n    nx = 200                           ! samples along the line\n/\n\n",
+                            "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    plot_num       = 7,\n    kpoint         = 1,\n    kband          = {% raw %}{{ KBAND_VALUE }}{% endraw %},\n    lsign          = .true.,\n    !spin_component = 1\n/\n&PLOT\n    iflag = 1,          ! 1D line (not 2D plane)\n    fileout = 'wf_r.dat',\n    output_format = 0,  ! gnuplot 1D\n    x0(1)=0.0, x0(2)=0.0, x0(3)=0.0,   ! line origin (alat units)\n    e1(1)=0.0, e1(2)=0.0, e1(3)=1.0,   ! direction along z (alat units)\n    nx = 200                           ! samples along the line\n/\n\n",
                             "contextProviders": [],
                             "executableName": "pp.x",
                             "name": "pp_wfn.in",
-                            "rendered": "&INPUTPP\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    plot_num       = 7,\n    kpoint         = 1,\n    kband          = ,\n    lsign          = .true.,\n    !spin_component = 1\n/\n&PLOT\n    iflag = 1,          ! 1D line (not 2D plane)\n    fileout = 'wf_r.dat',\n    output_format = 0,  ! gnuplot 1D\n    x0(1)=0.0, x0(2)=0.0, x0(3)=0.0,   ! line origin (alat units)\n    e1(1)=0.0, e1(2)=0.0, e1(3)=1.0,   ! direction along z (alat units)\n    nx = 200                           ! samples along the line\n/\n\n",
+                            "rendered": "&INPUTPP\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    plot_num       = 7,\n    kpoint         = 1,\n    kband          = {{ KBAND_VALUE }},\n    lsign          = .true.,\n    !spin_component = 1\n/\n&PLOT\n    iflag = 1,          ! 1D line (not 2D plane)\n    fileout = 'wf_r.dat',\n    output_format = 0,  ! gnuplot 1D\n    x0(1)=0.0, x0(2)=0.0, x0(3)=0.0,   ! line origin (alat units)\n    e1(1)=0.0, e1(2)=0.0, e1(3)=1.0,   ! direction along z (alat units)\n    nx = 200                           ! samples along the line\n/\n\n",
                             "schemaVersion": "2022.8.16"
                         }
                     ]
