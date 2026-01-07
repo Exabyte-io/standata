@@ -5,6 +5,7 @@
         "name": "python"
     },
     "properties": [
+        "potential_profile",
         "file_content"
     ],
     "model": {
@@ -23,9 +24,10 @@
             "head": true,
             "results": [
                 {
-                    "name": "file_content",
-                    "basename": "wf_r.png",
-                    "filetype": "image"
+                    "name": "potential_profile"
+                },
+                {
+                    "name": "file_content"
                 }
             ],
             "monitors": [
@@ -59,18 +61,23 @@
                 "input": [
                     {
                         "name": "script.py",
-                        "templateName": "hello_world.py"
+                        "templateName": "plot_wavefunction.py"
                     },
                     {
-                        "name": "requirements.txt"
+                        "name": "requirements.txt",
+                        "templateName": "requirements_plot_wavefunction.txt"
                     }
                 ],
-                "isDefault": true,
                 "monitors": [
                     "standard_output"
                 ],
-                "name": "hello_world",
-                "schemaVersion": "2022.8.16"
+                "results": [
+                    "potential_profile",
+                    "file_content"
+                ],
+                "name": "plot_wavefunction",
+                "schemaVersion": "2022.8.16",
+                "isDefault": false
             },
             "status": "idle",
             "statusTrack": [],
@@ -78,20 +85,20 @@
             "input": [
                 {
                     "applicationName": "python",
-                    "content": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example python script for Exabyte.io platform.                  #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport numpy as np\n\npi_value = np.pi\nprint(pi_value)\n",
+                    "content": "# ---------------------------------------------------------------- #\n#  Generate wavefunction plot from pp.x output                      #\n#  Outputs potential_profile JSON to STDOUT for platform rendering  #\n#  Also saves static PNG as fallback                                #\n# ---------------------------------------------------------------- #\n\nimport json\n\nimport matplotlib\nimport numpy as np\n\nmatplotlib.use('Agg')  # Non-interactive backend\nimport matplotlib.pyplot as plt\n\n# Load wavefunction data from pp.x output\ndata = np.loadtxt('wf_r.dat')\nz = data[:, 0]\npsi_r = data[:, 1]\n\n# Calculate wavefunction amplitude\npsi_amplitude = np.abs(psi_r)\n\n# Create static PNG plot\nfig, ax = plt.subplots(figsize=(10, 6))\nax.plot(z, psi_amplitude, 'b-', linewidth=2)\nax.set_xlabel('Position z (Å)', fontsize=12)\nax.set_ylabel('Wavefunction amplitude |ψ| (a.u.)', fontsize=12)\nax.set_title('Wavefunction along z-axis', fontsize=14)\nax.grid(True, alpha=0.3)\nplt.tight_layout()\nplt.savefig('wf_r.png', dpi=150, bbox_inches='tight')\nplt.close()\n\n# Create potential_profile JSON for platform rendering\nwavefunction_data = {\n    \"name\": \"potential_profile\",\n    \"xAxis\": {\n        \"label\": \"Position\",\n        \"units\": \"angstrom\"\n    },\n    \"xDataArray\": z.tolist(),\n    \"yAxis\": {\n        \"label\": \"Wavefunction Amplitude\",\n        \"units\": \"a.u.\"\n    },\n    \"yDataSeries\": [psi_amplitude.tolist()]\n}\n\n# Print JSON to STDOUT (will be captured as potential_profile result)\nprint(json.dumps(wavefunction_data, indent=2))\n",
                     "contextProviders": [],
                     "executableName": "python",
                     "name": "script.py",
-                    "rendered": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example python script for Exabyte.io platform.                  #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport numpy as np\n\npi_value = np.pi\nprint(pi_value)\n",
+                    "rendered": "# ---------------------------------------------------------------- #\n#  Generate wavefunction plot from pp.x output                      #\n#  Outputs potential_profile JSON to STDOUT for platform rendering  #\n#  Also saves static PNG as fallback                                #\n# ---------------------------------------------------------------- #\n\nimport json\n\nimport matplotlib\nimport numpy as np\n\nmatplotlib.use('Agg')  # Non-interactive backend\nimport matplotlib.pyplot as plt\n\n# Load wavefunction data from pp.x output\ndata = np.loadtxt('wf_r.dat')\nz = data[:, 0]\npsi_r = data[:, 1]\n\n# Calculate wavefunction amplitude\npsi_amplitude = np.abs(psi_r)\n\n# Create static PNG plot\nfig, ax = plt.subplots(figsize=(10, 6))\nax.plot(z, psi_amplitude, 'b-', linewidth=2)\nax.set_xlabel('Position z (Å)', fontsize=12)\nax.set_ylabel('Wavefunction amplitude |ψ| (a.u.)', fontsize=12)\nax.set_title('Wavefunction along z-axis', fontsize=14)\nax.grid(True, alpha=0.3)\nplt.tight_layout()\nplt.savefig('wf_r.png', dpi=150, bbox_inches='tight')\nplt.close()\n\n# Create potential_profile JSON for platform rendering\nwavefunction_data = {\n    \"name\": \"potential_profile\",\n    \"xAxis\": {\n        \"label\": \"Position\",\n        \"units\": \"angstrom\"\n    },\n    \"xDataArray\": z.tolist(),\n    \"yAxis\": {\n        \"label\": \"Wavefunction Amplitude\",\n        \"units\": \"a.u.\"\n    },\n    \"yDataSeries\": [psi_amplitude.tolist()]\n}\n\n# Print JSON to STDOUT (will be captured as potential_profile result)\nprint(json.dumps(wavefunction_data, indent=2))\n",
                     "schemaVersion": "2022.8.16"
                 },
                 {
                     "applicationName": "python",
-                    "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n#  Adjust the list to include your preferred packages.              #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\nnumpy<2\n",
+                    "content": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for plot_wavefunction unit            #\n#                                                                    #\n# ------------------------------------------------------------------ #\n\nnumpy<2\nmatplotlib\n",
                     "contextProviders": [],
                     "executableName": "python",
                     "name": "requirements.txt",
-                    "rendered": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n#  Adjust the list to include your preferred packages.              #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\nnumpy<2\n",
+                    "rendered": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for plot_wavefunction unit            #\n#                                                                    #\n# ------------------------------------------------------------------ #\n\nnumpy<2\nmatplotlib\n",
                     "schemaVersion": "2022.8.16"
                 }
             ]
