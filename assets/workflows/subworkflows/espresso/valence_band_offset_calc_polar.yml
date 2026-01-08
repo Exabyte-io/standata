@@ -1,0 +1,68 @@
+# Note: this subworkflow is assumed to be used as part of the polar valence band offset workflow
+# and is NOT self-sufficient!
+# For polar interfaces, ΔV is calculated from linear fits extrapolated to interface position.
+# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat), Fig. 3d
+#
+# This subworkflow expects the following variable(s) to exist in the global context:
+# VBM_LEFT, VBM_RIGHT, ESP_POLAR_FIT_LEFT, ESP_POLAR_FIT_RIGHT, ESP_POLAR_FIT_INTERFACE
+#
+# The ESP_POLAR_FIT_* variables contain:
+# - delta_v: ΔV from linear extrapolation to interface
+# - left_fit/right_fit: slope, intercept, electric_field_eV_per_angstrom
+# - interface_position: detected interface position
+application:
+  name: python
+  version: 3.10.13
+method:
+  name: UnknownMethod
+model:
+  name: UnknownModel
+name: Calculate VBO (Polar)
+units:
+  - config:
+      name: Difference of valence band maxima
+      operand: VBM_DIFF
+      value: "VBM_LEFT - VBM_RIGHT"
+    type: assignment
+  - config:
+      name: Average ESP reference (left bulk)
+      operand: ESP_REF_LEFT
+      value: "ESP_POLAR_FIT_LEFT['left_value_at_interface']"
+    type: assignment
+  - config:
+      name: Average ESP reference (right bulk)
+      operand: ESP_REF_RIGHT
+      value: "ESP_POLAR_FIT_RIGHT['right_value_at_interface']"
+    type: assignment
+  - config:
+      name: Difference of ESP references from bulk calculations
+      operand: AVG_ESP_DIFF
+      value: "ESP_REF_LEFT - ESP_REF_RIGHT"
+    type: assignment
+  - config:
+      name: Delta V from interface linear fit extrapolation
+      operand: DELTA_V_INTERFACE
+      value: "ESP_POLAR_FIT_INTERFACE['delta_v']"
+    type: assignment
+  - config:
+      name: Valence Band Offset
+      operand: VALENCE_BAND_OFFSET
+      value: "abs(VBM_DIFF - AVG_ESP_DIFF + DELTA_V_INTERFACE)"
+      results:
+        - name: valence_band_offset
+    type: assignment
+  - config:
+      name: Electric field (left side)
+      operand: ELECTRIC_FIELD_LEFT
+      value: "ESP_POLAR_FIT_INTERFACE['left_fit']['electric_field_eV_per_angstrom']"
+      results:
+        - name: electric_field_left
+    type: assignment
+  - config:
+      name: Electric field (right side)
+      operand: ELECTRIC_FIELD_RIGHT
+      value: "ESP_POLAR_FIT_INTERFACE['right_fit']['electric_field_eV_per_angstrom']"
+      results:
+        - name: electric_field_right
+    type: assignment
+

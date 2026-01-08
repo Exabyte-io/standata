@@ -1,0 +1,30 @@
+# Note: this subworkflow is assumed to be used as part of the polar valence band offset workflow
+# and is NOT self-sufficient!
+# For polar interfaces, linear regression is used instead of finding minima.
+# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)
+# Furthermore, this subworkflow expects the following variable(s) to exist in the global context:
+# array_from_context
+application:
+  name: python
+  version: 3.10.13
+method:
+  name: UnknownMethod
+model:
+  name: UnknownModel
+name: Fit Polar ESP
+units:
+  - config:
+      name: Fit ESP Linear Regions
+      execName: python
+      flavorName: generic:processing:fit_esp_polar
+      flowchartId: python-fit-esp-polar
+    type: executionBuilder
+  - config:
+      name: Set Polar ESP Fit Result
+      operand: ESP_POLAR_FIT
+      value: "json.loads(STDOUT)"
+      input:
+        - name: STDOUT
+          scope: python-fit-esp-polar
+    type: assignment
+

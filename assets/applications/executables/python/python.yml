@@ -56,6 +56,17 @@ flavors:
     applicationName: python
     executableName: python
 
+  'generic:processing:fit_esp_polar':
+    input:
+      - name: fit_esp_polar.py
+        templateName: fit_esp_polar.py
+      - name: requirements.txt
+        templateName: processing_requirements.txt
+    monitors:
+      - standard_output
+    applicationName: python
+    executableName: python
+
   'pyml:setup_variables_packages':
     input:
       - name: settings.py
