@@ -21,33 +21,59 @@ X = np.linspace(0, 1, len(Y))
 {% endif %}{% endraw %}
 
 N = len(Y)
-MARGIN_FRACTION = 0.15
-BULK_REGION_FRACTION = 0.30
+MARGIN_FRACTION = 0.10
+MIN_REGION_POINTS = 10
 
 
 def detect_interface_position(y_data, x_data):
+    n = len(y_data)
+    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)
+    if 2 * margin >= n:
+        return x_data[n // 2], n // 2
     gradient = np.abs(np.gradient(y_data))
-    window = max(len(gradient) // 20, 5)
+    window = max(n // 20, 3)
     smoothed = np.convolve(gradient, np.ones(window) / window, mode="same")
-    margin = int(len(y_data) * MARGIN_FRACTION)
-    search_region = smoothed[margin:-margin]
-    interface_idx = margin + np.argmax(search_region)
+    search_start = margin
+    search_end = n - margin
+    search_region = smoothed[search_start:search_end]
+    if len(search_region) == 0:
+        return x_data[n // 2], n // 2
+    interface_idx = search_start + np.argmax(search_region)
     return x_data[interface_idx], interface_idx
 
 
 def get_bulk_regions(n_points, interface_idx):
-    bulk_size = int(n_points * BULK_REGION_FRACTION)
-    margin = int(n_points * MARGIN_FRACTION)
-    left_end = max(margin, interface_idx - margin)
-    left_start = max(margin, left_end - bulk_size)
-    right_start = min(n_points - margin, interface_idx + margin)
-    right_end = min(n_points - margin, right_start + bulk_size)
+    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)
+    left_start = margin
+    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)
+    if left_end <= left_start:
+        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)
+    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)
+    right_end = n_points - margin
+    if right_end <= right_start:
+        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)
+    left_start = max(0, left_start)
+    left_end = min(n_points, left_end)
+    right_start = max(0, right_start)
+    right_end = min(n_points, right_end)
+    if left_end <= left_start:
+        left_start = 0
+        left_end = min(MIN_REGION_POINTS, interface_idx)
+    if right_end <= right_start:
+        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)
+        right_end = n_points
     return (left_start, left_end), (right_start, right_end)
 
 
 def fit_linear_region(x_data, y_data, start_idx, end_idx):
+    start_idx = max(0, int(start_idx))
+    end_idx = min(len(x_data), int(end_idx))
+    if end_idx <= start_idx:
+        end_idx = start_idx + MIN_REGION_POINTS
     x_region = x_data[start_idx:end_idx]
     y_region = y_data[start_idx:end_idx]
+    if len(x_region) < 2:
+        return {"slope": 0.0, "intercept": float(np.mean(y_data)), "r_squared": 0.0, "std_err": 0.0}
     slope, intercept, r_value, _, std_err = linregress(x_region, y_region)
     return {"slope": slope, "intercept": intercept, "r_squared": r_value**2, "std_err": std_err}
 
@@ -85,4 +111,3 @@ result = {
 }
 
 print(json.dumps(result, indent=4))
-
