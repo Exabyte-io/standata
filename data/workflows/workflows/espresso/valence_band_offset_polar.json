@@ -436,7 +436,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "average-electrostatic-potential-right"
+                    "next": "average-electrostatic-potential"
                 },
                 {
                     "type": "execution",
@@ -452,7 +452,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "average-electrostatic-potential-right",
+                    "flowchartId": "average-electrostatic-potential",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -515,7 +515,7 @@
                     "input": [
                         {
                             "name": "average_potential_profile",
-                            "scope": "average-electrostatic-potential-right"
+                            "scope": "average-electrostatic-potential"
                         }
                     ],
                     "status": "idle",

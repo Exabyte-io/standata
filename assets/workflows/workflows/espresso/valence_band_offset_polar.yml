@@ -45,6 +45,18 @@ units:
         config:
           attributes:
             operand: VBM
+      - index: 7
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: average-electrostatic-potential
+      - index: 8
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: average_potential_profile
+                scope: average-electrostatic-potential
   - name: average_electrostatic_potential_fit_polar
     type: subworkflow
     config:
