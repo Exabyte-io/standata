@@ -56,7 +56,7 @@ flavors:
     applicationName: python
     executableName: python
 
-  'generic:processing:fit_esp_polar':
+  'espresso:processing:fit_esp_polar':
     input:
       - name: fit_esp_polar.py
         templateName: fit_esp_polar.py

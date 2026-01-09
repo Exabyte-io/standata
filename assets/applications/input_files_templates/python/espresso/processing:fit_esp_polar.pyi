@@ -1,10 +1,14 @@
 # ------------------------------------------------------------------ #
 # This script fits linear regression to macroscopically averaged ESP #
 # for polar interfaces, detecting interface position and calculating #
-# ΔV by extrapolating fitted lines to the interface.                 #
+# ESP values by extrapolating fitted lines to the interface.         #
+#                                                                    #
+# Output format is compatible with find_extrema.pyi to enable        #
+# drop-in replacement in VBO workflows.                              #
 #                                                                    #
 # For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #
 # profile shows a slope due to internal electric field.              #
+# For non-polar interfaces, slope ≈ 0 and this reduces to flat avg. #
 # Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #
 # ------------------------------------------------------------------ #
 import json
@@ -73,9 +77,9 @@ def fit_linear_region(x_data, y_data, start_idx, end_idx):
     x_region = x_data[start_idx:end_idx]
     y_region = y_data[start_idx:end_idx]
     if len(x_region) < 2:
-        return {"slope": 0.0, "intercept": float(np.mean(y_data)), "r_squared": 0.0, "std_err": 0.0}
-    slope, intercept, r_value, _, std_err = linregress(x_region, y_region)
-    return {"slope": slope, "intercept": intercept, "r_squared": r_value**2, "std_err": std_err}
+        return {"slope": 0.0, "intercept": float(np.mean(y_data)), "r_squared": 0.0}
+    slope, intercept, r_value, _, _ = linregress(x_region, y_region)
+    return {"slope": slope, "intercept": intercept, "r_squared": r_value**2}
 
 
 interface_x, interface_idx = detect_interface_position(Y, X)
@@ -84,30 +88,11 @@ left_fit = fit_linear_region(X, Y, left_region[0], left_region[1])
 right_fit = fit_linear_region(X, Y, right_region[0], right_region[1])
 left_value_at_interface = left_fit["slope"] * interface_x + left_fit["intercept"]
 right_value_at_interface = right_fit["slope"] * interface_x + right_fit["intercept"]
-delta_v = left_value_at_interface - right_value_at_interface
-left_electric_field = -left_fit["slope"]
-right_electric_field = -right_fit["slope"]
 
 result = {
-    "interface_position": float(interface_x),
-    "interface_index": int(interface_idx),
-    "delta_v": float(delta_v),
-    "left_value_at_interface": float(left_value_at_interface),
-    "right_value_at_interface": float(right_value_at_interface),
-    "left_fit": {
-        "slope": float(left_fit["slope"]),
-        "intercept": float(left_fit["intercept"]),
-        "r_squared": float(left_fit["r_squared"]),
-        "electric_field_eV_per_angstrom": float(left_electric_field),
-    },
-    "right_fit": {
-        "slope": float(right_fit["slope"]),
-        "intercept": float(right_fit["intercept"]),
-        "r_squared": float(right_fit["r_squared"]),
-        "electric_field_eV_per_angstrom": float(right_electric_field),
-    },
-    "left_region_indices": [int(left_region[0]), int(left_region[1])],
-    "right_region_indices": [int(right_region[0]), int(right_region[1])],
+    "minima": [float(left_value_at_interface), float(right_value_at_interface)],
+    "maxima": [],
 }
 
 print(json.dumps(result, indent=4))
+

@@ -40,7 +40,7 @@
   applicationName: python
   executableName: python
 
-- content: !readFile 'input_files_templates/python/generic/processing:fit_esp_polar.pyi'
+- content: !readFile 'input_files_templates/python/espresso/processing:fit_esp_polar.pyi'
   name: fit_esp_polar.py
   contextProviders: []
   applicationName: python

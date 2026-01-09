@@ -293,7 +293,7 @@
                 {
                     "name": "Set Valence Band Maximum",
                     "type": "assignment",
-                    "operand": "VBM",
+                    "operand": "VBM_RIGHT",
                     "value": "BAND_GAP_INDIRECT['eigenvalueValence']",
                     "input": [],
                     "status": "idle",
@@ -436,7 +436,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "average-electrostatic-potential"
+                    "next": "average-electrostatic-potential-right"
                 },
                 {
                     "type": "execution",
@@ -452,7 +452,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "average-electrostatic-potential",
+                    "flowchartId": "average-electrostatic-potential-right",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -515,7 +515,7 @@
                     "input": [
                         {
                             "name": "average_potential_profile",
-                            "scope": "average-electrostatic-potential"
+                            "scope": "average-electrostatic-potential-right"
                         }
                     ],
                     "status": "idle",
@@ -537,8 +537,8 @@
             ]
         },
         {
-            "_id": "c9192ba7-ce76-5bc7-a156-7029de146550",
-            "name": "Fit Polar ESP (Interface)",
+            "_id": "ce26adc1-6a26-53ef-9626-5eb6a6b9ccb7",
+            "name": "Find ESP Values (Interface)",
             "application": {
                 "name": "python",
                 "shortName": "py",
@@ -569,7 +569,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "python-fit-esp-polar-interface",
+                    "flowchartId": "python-fit-esp-polar",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -615,11 +615,11 @@
                     "input": [
                         {
                             "applicationName": "python",
-                            "content": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ΔV by extrapolating fitted lines to the interface.                 #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n{% raw %}{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}{% endraw %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10\nMIN_REGION_POINTS = 10\n\n\ndef detect_interface_position(y_data, x_data):\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0, \"std_err\": 0.0}\n    slope, intercept, r_value, _, std_err = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2, \"std_err\": std_err}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\ndelta_v = left_value_at_interface - right_value_at_interface\nleft_electric_field = -left_fit[\"slope\"]\nright_electric_field = -right_fit[\"slope\"]\n\nresult = {\n    \"interface_position\": float(interface_x),\n    \"interface_index\": int(interface_idx),\n    \"delta_v\": float(delta_v),\n    \"left_value_at_interface\": float(left_value_at_interface),\n    \"right_value_at_interface\": float(right_value_at_interface),\n    \"left_fit\": {\n        \"slope\": float(left_fit[\"slope\"]),\n        \"intercept\": float(left_fit[\"intercept\"]),\n        \"r_squared\": float(left_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(left_electric_field),\n    },\n    \"right_fit\": {\n        \"slope\": float(right_fit[\"slope\"]),\n        \"intercept\": float(right_fit[\"intercept\"]),\n        \"r_squared\": float(right_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(right_electric_field),\n    },\n    \"left_region_indices\": [int(left_region[0]), int(left_region[1])],\n    \"right_region_indices\": [int(right_region[0]), int(right_region[1])],\n}\n\nprint(json.dumps(result, indent=4))\n",
+                            "content": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ESP values by extrapolating fitted lines to the interface.         #\n#                                                                    #\n# Output format is compatible with find_extrema.pyi to enable        #\n# drop-in replacement in VBO workflows.                              #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# For non-polar interfaces, slope ≈ 0 and this reduces to flat avg. #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n{% raw %}{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}{% endraw %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10\nMIN_REGION_POINTS = 10\n\n\ndef detect_interface_position(y_data, x_data):\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0}\n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\n\nresult = {\n    \"minima\": [float(left_value_at_interface), float(right_value_at_interface)],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n",
                             "contextProviders": [],
                             "executableName": "python",
                             "name": "fit_esp_polar.py",
-                            "rendered": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ΔV by extrapolating fitted lines to the interface.                 #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\nY = np.array({{array_from_context}})\n{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10\nMIN_REGION_POINTS = 10\n\n\ndef detect_interface_position(y_data, x_data):\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0, \"std_err\": 0.0}\n    slope, intercept, r_value, _, std_err = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2, \"std_err\": std_err}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\ndelta_v = left_value_at_interface - right_value_at_interface\nleft_electric_field = -left_fit[\"slope\"]\nright_electric_field = -right_fit[\"slope\"]\n\nresult = {\n    \"interface_position\": float(interface_x),\n    \"interface_index\": int(interface_idx),\n    \"delta_v\": float(delta_v),\n    \"left_value_at_interface\": float(left_value_at_interface),\n    \"right_value_at_interface\": float(right_value_at_interface),\n    \"left_fit\": {\n        \"slope\": float(left_fit[\"slope\"]),\n        \"intercept\": float(left_fit[\"intercept\"]),\n        \"r_squared\": float(left_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(left_electric_field),\n    },\n    \"right_fit\": {\n        \"slope\": float(right_fit[\"slope\"]),\n        \"intercept\": float(right_fit[\"intercept\"]),\n        \"r_squared\": float(right_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(right_electric_field),\n    },\n    \"left_region_indices\": [int(left_region[0]), int(left_region[1])],\n    \"right_region_indices\": [int(right_region[0]), int(right_region[1])],\n}\n\nprint(json.dumps(result, indent=4))\n",
+                            "rendered": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ESP values by extrapolating fitted lines to the interface.         #\n#                                                                    #\n# Output format is compatible with find_extrema.pyi to enable        #\n# drop-in replacement in VBO workflows.                              #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# For non-polar interfaces, slope ≈ 0 and this reduces to flat avg. #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\nY = np.array({{array_from_context}})\n{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10\nMIN_REGION_POINTS = 10\n\n\ndef detect_interface_position(y_data, x_data):\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0}\n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\n\nresult = {\n    \"minima\": [float(left_value_at_interface), float(right_value_at_interface)],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n",
                             "schemaVersion": "2022.8.16"
                         },
                         {
@@ -632,22 +632,22 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "0c37a439-d4e4-5376-8c16-1557e99e969b"
+                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d"
                 },
                 {
-                    "name": "Set Polar ESP Fit Result",
+                    "name": "Set Average ESP Value",
                     "type": "assignment",
-                    "operand": "ESP_POLAR_FIT_INTERFACE",
-                    "value": "json.loads(STDOUT)",
+                    "operand": "AVG_ESP_INTERFACE",
+                    "value": "json.loads(STDOUT)['minima']",
                     "input": [
                         {
                             "name": "STDOUT",
-                            "scope": "python-fit-esp-polar-interface"
+                            "scope": "python-fit-esp-polar"
                         }
                     ],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "0c37a439-d4e4-5376-8c16-1557e99e969b",
+                    "flowchartId": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
                     "tags": [],
                     "head": false,
                     "application": {
@@ -664,8 +664,8 @@
         },
         {
             "isMultiMaterial": true,
-            "_id": "438d67a5-7f5f-5e02-93ee-a72cb282af06",
-            "name": "BS + Avg ESP (Interface Left)",
+            "_id": "ba46d9b4-610f-537e-ae39-e39ce5240cda",
+            "name": "BS + Avg ESP (interface left)",
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -703,14 +703,14 @@
             },
             "units": [
                 {
-                    "name": "Set Material Index (Interface Left)",
+                    "name": "Set Material Index (Interface left)",
                     "type": "assignment",
                     "operand": "MATERIAL_INDEX",
                     "value": "1",
                     "input": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "517eb13b-3632-502b-a32b-8c1e07746827",
+                    "flowchartId": "0bd31760-f6e4-5826-b282-882c06c97f94",
                     "tags": [],
                     "head": true,
                     "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
@@ -1198,8 +1198,8 @@
             ]
         },
         {
-            "_id": "a9699729-298a-5e5f-9f6e-3e7b3b694a6e",
-            "name": "Fit Polar ESP (Interface Left)",
+            "_id": "6c303926-905c-5749-81d5-2d2964fdf09a",
+            "name": "Find ESP Value (Interface left)",
             "application": {
                 "name": "python",
                 "shortName": "py",
@@ -1276,11 +1276,11 @@
                     "input": [
                         {
                             "applicationName": "python",
-                            "content": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ΔV by extrapolating fitted lines to the interface.                 #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n{% raw %}{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}{% endraw %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10\nMIN_REGION_POINTS = 10\n\n\ndef detect_interface_position(y_data, x_data):\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0, \"std_err\": 0.0}\n    slope, intercept, r_value, _, std_err = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2, \"std_err\": std_err}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\ndelta_v = left_value_at_interface - right_value_at_interface\nleft_electric_field = -left_fit[\"slope\"]\nright_electric_field = -right_fit[\"slope\"]\n\nresult = {\n    \"interface_position\": float(interface_x),\n    \"interface_index\": int(interface_idx),\n    \"delta_v\": float(delta_v),\n    \"left_value_at_interface\": float(left_value_at_interface),\n    \"right_value_at_interface\": float(right_value_at_interface),\n    \"left_fit\": {\n        \"slope\": float(left_fit[\"slope\"]),\n        \"intercept\": float(left_fit[\"intercept\"]),\n        \"r_squared\": float(left_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(left_electric_field),\n    },\n    \"right_fit\": {\n        \"slope\": float(right_fit[\"slope\"]),\n        \"intercept\": float(right_fit[\"intercept\"]),\n        \"r_squared\": float(right_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(right_electric_field),\n    },\n    \"left_region_indices\": [int(left_region[0]), int(left_region[1])],\n    \"right_region_indices\": [int(right_region[0]), int(right_region[1])],\n}\n\nprint(json.dumps(result, indent=4))\n",
+                            "content": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ESP values by extrapolating fitted lines to the interface.         #\n#                                                                    #\n# Output format is compatible with find_extrema.pyi to enable        #\n# drop-in replacement in VBO workflows.                              #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# For non-polar interfaces, slope ≈ 0 and this reduces to flat avg. #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n{% raw %}{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}{% endraw %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10\nMIN_REGION_POINTS = 10\n\n\ndef detect_interface_position(y_data, x_data):\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0}\n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\n\nresult = {\n    \"minima\": [float(left_value_at_interface), float(right_value_at_interface)],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n",
                             "contextProviders": [],
                             "executableName": "python",
                             "name": "fit_esp_polar.py",
-                            "rendered": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ΔV by extrapolating fitted lines to the interface.                 #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\nY = np.array({{array_from_context}})\n{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10\nMIN_REGION_POINTS = 10\n\n\ndef detect_interface_position(y_data, x_data):\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0, \"std_err\": 0.0}\n    slope, intercept, r_value, _, std_err = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2, \"std_err\": std_err}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\ndelta_v = left_value_at_interface - right_value_at_interface\nleft_electric_field = -left_fit[\"slope\"]\nright_electric_field = -right_fit[\"slope\"]\n\nresult = {\n    \"interface_position\": float(interface_x),\n    \"interface_index\": int(interface_idx),\n    \"delta_v\": float(delta_v),\n    \"left_value_at_interface\": float(left_value_at_interface),\n    \"right_value_at_interface\": float(right_value_at_interface),\n    \"left_fit\": {\n        \"slope\": float(left_fit[\"slope\"]),\n        \"intercept\": float(left_fit[\"intercept\"]),\n        \"r_squared\": float(left_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(left_electric_field),\n    },\n    \"right_fit\": {\n        \"slope\": float(right_fit[\"slope\"]),\n        \"intercept\": float(right_fit[\"intercept\"]),\n        \"r_squared\": float(right_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(right_electric_field),\n    },\n    \"left_region_indices\": [int(left_region[0]), int(left_region[1])],\n    \"right_region_indices\": [int(right_region[0]), int(right_region[1])],\n}\n\nprint(json.dumps(result, indent=4))\n",
+                            "rendered": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ESP values by extrapolating fitted lines to the interface.         #\n#                                                                    #\n# Output format is compatible with find_extrema.pyi to enable        #\n# drop-in replacement in VBO workflows.                              #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# For non-polar interfaces, slope ≈ 0 and this reduces to flat avg. #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\nY = np.array({{array_from_context}})\n{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10\nMIN_REGION_POINTS = 10\n\n\ndef detect_interface_position(y_data, x_data):\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0}\n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\n\nresult = {\n    \"minima\": [float(left_value_at_interface), float(right_value_at_interface)],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n",
                             "schemaVersion": "2022.8.16"
                         },
                         {
@@ -1293,13 +1293,13 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "0c37a439-d4e4-5376-8c16-1557e99e969b"
+                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d"
                 },
                 {
-                    "name": "Set Polar ESP Fit Result",
+                    "name": "Set Average ESP Value",
                     "type": "assignment",
-                    "operand": "ESP_POLAR_FIT_LEFT",
-                    "value": "json.loads(STDOUT)",
+                    "operand": "AVG_ESP_LEFT",
+                    "value": "json.loads(STDOUT)['minima']",
                     "input": [
                         {
                             "name": "STDOUT",
@@ -1308,7 +1308,7 @@
                     ],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "0c37a439-d4e4-5376-8c16-1557e99e969b",
+                    "flowchartId": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
                     "tags": [],
                     "head": false,
                     "application": {
@@ -1325,8 +1325,8 @@
         },
         {
             "isMultiMaterial": true,
-            "_id": "06555e5f-08b8-5966-91b6-5ec296bf5fdf",
-            "name": "BS + Avg ESP (Interface Right)",
+            "_id": "aa611fe8-1e6a-5e5c-976a-f64bfaaaace9",
+            "name": "BS + Avg ESP (interface right)",
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -1364,14 +1364,14 @@
             },
             "units": [
                 {
-                    "name": "Set Material Index (Interface Right)",
+                    "name": "Set Material Index (Interface right)",
                     "type": "assignment",
                     "operand": "MATERIAL_INDEX",
                     "value": "2",
                     "input": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "e7f14fe8-eb8c-54da-bb9f-6cac13b25b54",
+                    "flowchartId": "a05809d1-cc0d-5a0b-bf5e-d43b90a6ac4b",
                     "tags": [],
                     "head": true,
                     "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
@@ -1859,8 +1859,8 @@
             ]
         },
         {
-            "_id": "0b8d0aca-ccd7-55c7-8bf9-2970792cee12",
-            "name": "Fit Polar ESP (Interface Right)",
+            "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
+            "name": "Find ESP Value (Interface right)",
             "application": {
                 "name": "python",
                 "shortName": "py",
@@ -1937,11 +1937,11 @@
                     "input": [
                         {
                             "applicationName": "python",
-                            "content": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ΔV by extrapolating fitted lines to the interface.                 #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n{% raw %}{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}{% endraw %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10\nMIN_REGION_POINTS = 10\n\n\ndef detect_interface_position(y_data, x_data):\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0, \"std_err\": 0.0}\n    slope, intercept, r_value, _, std_err = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2, \"std_err\": std_err}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\ndelta_v = left_value_at_interface - right_value_at_interface\nleft_electric_field = -left_fit[\"slope\"]\nright_electric_field = -right_fit[\"slope\"]\n\nresult = {\n    \"interface_position\": float(interface_x),\n    \"interface_index\": int(interface_idx),\n    \"delta_v\": float(delta_v),\n    \"left_value_at_interface\": float(left_value_at_interface),\n    \"right_value_at_interface\": float(right_value_at_interface),\n    \"left_fit\": {\n        \"slope\": float(left_fit[\"slope\"]),\n        \"intercept\": float(left_fit[\"intercept\"]),\n        \"r_squared\": float(left_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(left_electric_field),\n    },\n    \"right_fit\": {\n        \"slope\": float(right_fit[\"slope\"]),\n        \"intercept\": float(right_fit[\"intercept\"]),\n        \"r_squared\": float(right_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(right_electric_field),\n    },\n    \"left_region_indices\": [int(left_region[0]), int(left_region[1])],\n    \"right_region_indices\": [int(right_region[0]), int(right_region[1])],\n}\n\nprint(json.dumps(result, indent=4))\n",
+                            "content": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ESP values by extrapolating fitted lines to the interface.         #\n#                                                                    #\n# Output format is compatible with find_extrema.pyi to enable        #\n# drop-in replacement in VBO workflows.                              #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# For non-polar interfaces, slope ≈ 0 and this reduces to flat avg. #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n{% raw %}{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}{% endraw %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10\nMIN_REGION_POINTS = 10\n\n\ndef detect_interface_position(y_data, x_data):\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0}\n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\n\nresult = {\n    \"minima\": [float(left_value_at_interface), float(right_value_at_interface)],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n",
                             "contextProviders": [],
                             "executableName": "python",
                             "name": "fit_esp_polar.py",
-                            "rendered": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ΔV by extrapolating fitted lines to the interface.                 #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\nY = np.array({{array_from_context}})\n{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10\nMIN_REGION_POINTS = 10\n\n\ndef detect_interface_position(y_data, x_data):\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0, \"std_err\": 0.0}\n    slope, intercept, r_value, _, std_err = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2, \"std_err\": std_err}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\ndelta_v = left_value_at_interface - right_value_at_interface\nleft_electric_field = -left_fit[\"slope\"]\nright_electric_field = -right_fit[\"slope\"]\n\nresult = {\n    \"interface_position\": float(interface_x),\n    \"interface_index\": int(interface_idx),\n    \"delta_v\": float(delta_v),\n    \"left_value_at_interface\": float(left_value_at_interface),\n    \"right_value_at_interface\": float(right_value_at_interface),\n    \"left_fit\": {\n        \"slope\": float(left_fit[\"slope\"]),\n        \"intercept\": float(left_fit[\"intercept\"]),\n        \"r_squared\": float(left_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(left_electric_field),\n    },\n    \"right_fit\": {\n        \"slope\": float(right_fit[\"slope\"]),\n        \"intercept\": float(right_fit[\"intercept\"]),\n        \"r_squared\": float(right_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(right_electric_field),\n    },\n    \"left_region_indices\": [int(left_region[0]), int(left_region[1])],\n    \"right_region_indices\": [int(right_region[0]), int(right_region[1])],\n}\n\nprint(json.dumps(result, indent=4))\n",
+                            "rendered": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ESP values by extrapolating fitted lines to the interface.         #\n#                                                                    #\n# Output format is compatible with find_extrema.pyi to enable        #\n# drop-in replacement in VBO workflows.                              #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# For non-polar interfaces, slope ≈ 0 and this reduces to flat avg. #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\nY = np.array({{array_from_context}})\n{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10\nMIN_REGION_POINTS = 10\n\n\ndef detect_interface_position(y_data, x_data):\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0}\n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\n\nresult = {\n    \"minima\": [float(left_value_at_interface), float(right_value_at_interface)],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n",
                             "schemaVersion": "2022.8.16"
                         },
                         {
@@ -1954,13 +1954,13 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "0c37a439-d4e4-5376-8c16-1557e99e969b"
+                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d"
                 },
                 {
-                    "name": "Set Polar ESP Fit Result",
+                    "name": "Set Average ESP Value",
                     "type": "assignment",
-                    "operand": "ESP_POLAR_FIT_RIGHT",
-                    "value": "json.loads(STDOUT)",
+                    "operand": "AVG_ESP_RIGHT",
+                    "value": "json.loads(STDOUT)['minima']",
                     "input": [
                         {
                             "name": "STDOUT",
@@ -1969,7 +1969,7 @@
                     ],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "0c37a439-d4e4-5376-8c16-1557e99e969b",
+                    "flowchartId": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
                     "tags": [],
                     "head": false,
                     "application": {
@@ -1985,8 +1985,8 @@
             ]
         },
         {
-            "_id": "58c9c1bb-4893-55ec-a4f3-1072bf25f9fc",
-            "name": "Calculate VBO (Polar)",
+            "_id": "1b70e606-a7ee-599e-89e0-91a7dc5faa4a",
+            "name": "Calculate VBO",
             "application": {
                 "name": "python",
                 "shortName": "py",
@@ -1997,9 +1997,7 @@
                 "schemaVersion": "2022.8.16"
             },
             "properties": [
-                "valence_band_offset",
-                "electric_field_left",
-                "electric_field_right"
+                "valence_band_offset"
             ],
             "model": {
                 "type": "unknown",
@@ -2022,7 +2020,7 @@
                     "flowchartId": "bd4eaa98-b001-5694-87ef-ec77540502ab",
                     "tags": [],
                     "head": true,
-                    "next": "228c2037-c6ea-57de-b2be-b6d13a3f7f53",
+                    "next": "2626f7bb-d392-5fd4-ab71-329b508de347",
                     "application": {
                         "name": "python",
                         "shortName": "py",
@@ -2034,61 +2032,17 @@
                     }
                 },
                 {
-                    "name": "Average ESP reference (left bulk)",
-                    "type": "assignment",
-                    "operand": "ESP_REF_LEFT",
-                    "value": "ESP_POLAR_FIT_LEFT['left_value_at_interface']",
-                    "input": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "flowchartId": "228c2037-c6ea-57de-b2be-b6d13a3f7f53",
-                    "tags": [],
-                    "head": false,
-                    "next": "ef6a6033-6b30-59df-9f65-c186bb53b46d",
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "Average ESP reference (right bulk)",
-                    "type": "assignment",
-                    "operand": "ESP_REF_RIGHT",
-                    "value": "ESP_POLAR_FIT_RIGHT['right_value_at_interface']",
-                    "input": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "flowchartId": "ef6a6033-6b30-59df-9f65-c186bb53b46d",
-                    "tags": [],
-                    "head": false,
-                    "next": "a7087236-2067-5843-ba4c-75a68cd47397",
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "Difference of ESP references from bulk calculations",
+                    "name": "Difference of macroscopically averaged ESP in bulk",
                     "type": "assignment",
                     "operand": "AVG_ESP_DIFF",
-                    "value": "ESP_REF_LEFT - ESP_REF_RIGHT",
+                    "value": "AVG_ESP_LEFT[0] - AVG_ESP_RIGHT[0]",
                     "input": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "a7087236-2067-5843-ba4c-75a68cd47397",
+                    "flowchartId": "2626f7bb-d392-5fd4-ab71-329b508de347",
                     "tags": [],
                     "head": false,
-                    "next": "3fa6282e-c4ea-53a6-8d9a-cd9e25fea888",
+                    "next": "b7307787-53e2-599b-ad12-d627b04074b4",
                     "application": {
                         "name": "python",
                         "shortName": "py",
@@ -2100,14 +2054,14 @@
                     }
                 },
                 {
-                    "name": "Delta V from interface linear fit extrapolation",
+                    "name": "Lineup of macroscopically averaged ESP in interface",
                     "type": "assignment",
-                    "operand": "DELTA_V_INTERFACE",
-                    "value": "ESP_POLAR_FIT_INTERFACE['delta_v']",
+                    "operand": "ESP_LINEUP",
+                    "value": "np.abs(AVG_ESP_INTERFACE[0] - AVG_ESP_INTERFACE[1])",
                     "input": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "3fa6282e-c4ea-53a6-8d9a-cd9e25fea888",
+                    "flowchartId": "b7307787-53e2-599b-ad12-d627b04074b4",
                     "tags": [],
                     "head": false,
                     "next": "197f4b4d-cb7b-57be-a885-d44cb1f61905",
@@ -2125,7 +2079,7 @@
                     "name": "Valence Band Offset",
                     "type": "assignment",
                     "operand": "VALENCE_BAND_OFFSET",
-                    "value": "abs(VBM_DIFF - AVG_ESP_DIFF + DELTA_V_INTERFACE)",
+                    "value": "abs(VBM_DIFF - AVG_ESP_DIFF + (np.sign(AVG_ESP_DIFF) * ESP_LINEUP))",
                     "input": [],
                     "results": [
                         {
@@ -2135,60 +2089,6 @@
                     "status": "idle",
                     "statusTrack": [],
                     "flowchartId": "197f4b4d-cb7b-57be-a885-d44cb1f61905",
-                    "tags": [],
-                    "head": false,
-                    "next": "9a87eef8-b096-553f-a180-0b8b7e4ec68e",
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "Electric field (left side)",
-                    "type": "assignment",
-                    "operand": "ELECTRIC_FIELD_LEFT",
-                    "value": "ESP_POLAR_FIT_INTERFACE['left_fit']['electric_field_eV_per_angstrom']",
-                    "input": [],
-                    "results": [
-                        {
-                            "name": "electric_field_left"
-                        }
-                    ],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "flowchartId": "9a87eef8-b096-553f-a180-0b8b7e4ec68e",
-                    "tags": [],
-                    "head": false,
-                    "next": "8d210d18-c0fa-5471-8c9a-bb885620bb3e",
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "Electric field (right side)",
-                    "type": "assignment",
-                    "operand": "ELECTRIC_FIELD_RIGHT",
-                    "value": "ESP_POLAR_FIT_INTERFACE['right_fit']['electric_field_eV_per_angstrom']",
-                    "input": [],
-                    "results": [
-                        {
-                            "name": "electric_field_right"
-                        }
-                    ],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "flowchartId": "8d210d18-c0fa-5471-8c9a-bb885620bb3e",
                     "tags": [],
                     "head": false,
                     "application": {
@@ -2214,70 +2114,70 @@
             "flowchartId": "fd622b5c-5c02-594e-b582-b245c17ca9a4",
             "tags": [],
             "head": true,
-            "next": "67770422-0b81-5bbe-b2ba-355a5f920499"
+            "next": "ad3b1e4c-5965-5605-a067-dd0c59907c4b"
         },
         {
-            "name": "Fit Polar ESP (Interface)",
+            "name": "Find ESP Values (Interface)",
             "type": "subworkflow",
-            "_id": "c9192ba7-ce76-5bc7-a156-7029de146550",
+            "_id": "ce26adc1-6a26-53ef-9626-5eb6a6b9ccb7",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "67770422-0b81-5bbe-b2ba-355a5f920499",
+            "flowchartId": "ad3b1e4c-5965-5605-a067-dd0c59907c4b",
             "tags": [],
             "head": false,
-            "next": "2eb30f49-5dcb-593c-b389-ac763e7df7aa"
+            "next": "8d5b4734-edfd-55cc-ad80-aaa72487398d"
         },
         {
-            "name": "BS + Avg ESP (Interface Left)",
+            "name": "BS + Avg ESP (interface left)",
             "type": "subworkflow",
-            "_id": "438d67a5-7f5f-5e02-93ee-a72cb282af06",
+            "_id": "ba46d9b4-610f-537e-ae39-e39ce5240cda",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "2eb30f49-5dcb-593c-b389-ac763e7df7aa",
+            "flowchartId": "8d5b4734-edfd-55cc-ad80-aaa72487398d",
             "tags": [],
             "head": false,
-            "next": "f0e75e9e-cc3e-5224-a2e2-81ba4d2ef581"
+            "next": "102ec582-5b75-52f5-8b39-19ca725ed47a"
         },
         {
-            "name": "Fit Polar ESP (Interface Left)",
+            "name": "Find ESP Value (Interface left)",
             "type": "subworkflow",
-            "_id": "a9699729-298a-5e5f-9f6e-3e7b3b694a6e",
+            "_id": "6c303926-905c-5749-81d5-2d2964fdf09a",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "f0e75e9e-cc3e-5224-a2e2-81ba4d2ef581",
+            "flowchartId": "102ec582-5b75-52f5-8b39-19ca725ed47a",
             "tags": [],
             "head": false,
-            "next": "a86171a8-2b72-531d-a1cc-0ed3f03797af"
+            "next": "603c45db-93aa-54ce-a7fe-6e9b65b0037d"
         },
         {
-            "name": "BS + Avg ESP (Interface Right)",
+            "name": "BS + Avg ESP (interface right)",
             "type": "subworkflow",
-            "_id": "06555e5f-08b8-5966-91b6-5ec296bf5fdf",
+            "_id": "aa611fe8-1e6a-5e5c-976a-f64bfaaaace9",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "a86171a8-2b72-531d-a1cc-0ed3f03797af",
+            "flowchartId": "603c45db-93aa-54ce-a7fe-6e9b65b0037d",
             "tags": [],
             "head": false,
-            "next": "bf6caeb4-db41-58c5-995c-3874b728eaa6"
+            "next": "e3444d35-cc41-59f5-8481-78d0c383b84e"
         },
         {
-            "name": "Fit Polar ESP (Interface Right)",
+            "name": "Find ESP Value (Interface right)",
             "type": "subworkflow",
-            "_id": "0b8d0aca-ccd7-55c7-8bf9-2970792cee12",
+            "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "bf6caeb4-db41-58c5-995c-3874b728eaa6",
+            "flowchartId": "e3444d35-cc41-59f5-8481-78d0c383b84e",
             "tags": [],
             "head": false,
-            "next": "1c718041-09aa-5a6e-a57f-5d0b221edc37"
+            "next": "0e0b141a-39ca-52bc-9094-e5f96dc72f39"
         },
         {
-            "name": "Calculate VBO (Polar)",
+            "name": "Calculate VBO",
             "type": "subworkflow",
-            "_id": "58c9c1bb-4893-55ec-a4f3-1072bf25f9fc",
+            "_id": "1b70e606-a7ee-599e-89e0-91a7dc5faa4a",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "1c718041-09aa-5a6e-a57f-5d0b221edc37",
+            "flowchartId": "0e0b141a-39ca-52bc-9094-e5f96dc72f39",
             "tags": [],
             "head": false
         }

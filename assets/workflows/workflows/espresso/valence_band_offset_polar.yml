@@ -1,10 +1,8 @@
-# Valence band offset for POLAR interfaces via the potential lineup method.
-# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the electrostatic
-# potential shows a slope due to internal electric field from spontaneous
-# polarization or piezoelectric effects.
+# Valence band offset for polar interfaces via the potential lineup method.
+# This workflow handles polar interfaces (e.g., AlN/GaN (001), GaAs (001)) where
+# the electrostatic potential shows a slope due to internal electric fields.
 #
-# This workflow fits linear regression to bulk-like regions and extrapolates
-# to the interface position to calculate ΔV, following:
+# The workflow uses linear regression instead of finding minima, following:
 # Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat), Fig. 3d
 #
 # The workflow assumes 3 structures being present:
@@ -12,15 +10,11 @@
 #   - Interface Left - e.g., AlN
 #   - Interface Right - e.g., GaN
 # and repeats bandstructure + electrostatic potential calculation for them.
-# Then, calculates the band offset based on linear fits to ESP profiles.
+# Then, calculates the band offset based on linear fits extrapolated to interface.
 #
-# Key differences from non-polar workflow:
-#   - Uses linear regression instead of finding minima
-#   - Detects interface position from ESP gradient
-#   - Extrapolates fitted lines to interface
-#   - Also outputs internal electric field values
+# Note: This also works for non-polar interfaces where slope ≈ 0.
 #
-# See also:
+# Relevant references:
 #   - http://dx.doi.org/10.1103/PhysRevLett.61.734
 #   - http://dx.doi.org/10.1103/physrevb.44.5572
 #   - http://dx.doi.org/10.1088/0953-8984/19/21/213203
@@ -40,55 +34,30 @@ units:
           attributes:
             name: Set Material Index (Interface)
             value: "0"
-      - index: 4
-        type: assignment
-        config:
-          attributes:
-            operand: VBM
-      - index: 7
-        type: executionBuilder
-        config:
-          attributes:
-            flowchartId: average-electrostatic-potential
-      - index: 8
-        type: assignment
-        config:
-          attributes:
-            input:
-              - name: average_potential_profile
-                scope: average-electrostatic-potential
   - name: average_electrostatic_potential_fit_polar
     type: subworkflow
     config:
       attributes:
-        name: Fit Polar ESP (Interface)
+        name: Find ESP Values (Interface)
     unitConfigs:
-      - index: 0
-        type: executionBuilder
-        config:
-          attributes:
-            flowchartId: python-fit-esp-polar-interface
       - index: 1
         type: assignment
         config:
           attributes:
-            operand: ESP_POLAR_FIT_INTERFACE
-            input:
-              - name: STDOUT
-                scope: python-fit-esp-polar-interface
+            operand: AVG_ESP_INTERFACE
 
   # interface-left-related subworkflows
   - name: average_electrostatic_potential_via_band_structure
     type: subworkflow
     config:
       attributes:
-        name: BS + Avg ESP (Interface Left)
+        name: BS + Avg ESP (interface left)
     unitConfigs:
       - index: 0
         type: assignment
         config:
           attributes:
-            name: Set Material Index (Interface Left)
+            name: Set Material Index (Interface left)
             value: "1"
       - index: 2
         type: executionBuilder
@@ -123,7 +92,7 @@ units:
     type: subworkflow
     config:
       attributes:
-        name: Fit Polar ESP (Interface Left)
+        name: Find ESP Value (Interface left)
     unitConfigs:
       - index: 0
         type: executionBuilder
@@ -134,7 +103,7 @@ units:
         type: assignment
         config:
           attributes:
-            operand: ESP_POLAR_FIT_LEFT
+            operand: AVG_ESP_LEFT
             input:
               - name: STDOUT
                 scope: python-fit-esp-polar-left
@@ -144,13 +113,13 @@ units:
     type: subworkflow
     config:
       attributes:
-        name: BS + Avg ESP (Interface Right)
+        name: BS + Avg ESP (interface right)
     unitConfigs:
       - index: 0
         type: assignment
         config:
           attributes:
-            name: Set Material Index (Interface Right)
+            name: Set Material Index (Interface right)
             value: "2"
       - index: 2
         type: executionBuilder
@@ -185,7 +154,7 @@ units:
     type: subworkflow
     config:
       attributes:
-        name: Fit Polar ESP (Interface Right)
+        name: Find ESP Value (Interface right)
     unitConfigs:
       - index: 0
         type: executionBuilder
@@ -196,12 +165,11 @@ units:
         type: assignment
         config:
           attributes:
-            operand: ESP_POLAR_FIT_RIGHT
+            operand: AVG_ESP_RIGHT
             input:
               - name: STDOUT
                 scope: python-fit-esp-polar-right
 
   # final subworkflow to calculate valence band offset
-  - name: valence_band_offset_calc_polar
+  - name: valence_band_offset_calc_from_previous_esp_vbm
     type: subworkflow
-

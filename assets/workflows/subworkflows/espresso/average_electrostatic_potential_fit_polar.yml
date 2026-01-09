@@ -1,6 +1,7 @@
-# Note: this subworkflow is assumed to be used as part of the polar valence band offset workflow
+# Note: this subworkflow is assumed to be used as part of the valence band offset workflow
 # and is NOT self-sufficient!
-# For polar interfaces, linear regression is used instead of finding minima.
+# This is a drop-in replacement for average_electrostatic_potential_find_minima that uses
+# linear regression for polar interfaces instead of finding peaks.
 # Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)
 # Furthermore, this subworkflow expects the following variable(s) to exist in the global context:
 # array_from_context
@@ -11,20 +12,19 @@ method:
   name: UnknownMethod
 model:
   name: UnknownModel
-name: Fit Polar ESP
+name: Find ESP Value
 units:
   - config:
       name: Fit ESP Linear Regions
       execName: python
-      flavorName: generic:processing:fit_esp_polar
+      flavorName: espresso:processing:fit_esp_polar
       flowchartId: python-fit-esp-polar
     type: executionBuilder
   - config:
-      name: Set Polar ESP Fit Result
-      operand: ESP_POLAR_FIT
-      value: "json.loads(STDOUT)"
+      name: Set Average ESP Value
+      operand: AVG_ESP
+      value: "json.loads(STDOUT)['minima']"
       input:
         - name: STDOUT
           scope: python-fit-esp-polar
     type: assignment
-
