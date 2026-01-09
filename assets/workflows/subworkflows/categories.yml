@@ -7,6 +7,8 @@ categories:
     - charge_density_profile
     - density_of_states
     - dielectric_tensor
+    - electric_field_left
+    - electric_field_right
     - fermi_energy
     - file_content
     - final_structure
@@ -346,6 +348,8 @@ entities:
       - valence_band_offset
   - filename: espresso/valence_band_offset_calc_polar.json
     categories:
+      - electric_field_left
+      - electric_field_right
       - espresso
       - python
       - valence_band_offset

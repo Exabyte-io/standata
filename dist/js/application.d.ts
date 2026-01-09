@@ -939,6 +939,15 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         }[];
                         monitors: string[];
                     };
+                    "generic:processing:fit_esp_polar": {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                    };
                     hello_world: {
                         applicationName: string;
                         executableName: string;

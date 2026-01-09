@@ -1,0 +1,213 @@
+{
+    "_id": "58c9c1bb-4893-55ec-a4f3-1072bf25f9fc",
+    "name": "Calculate VBO (Polar)",
+    "application": {
+        "name": "espresso"
+    },
+    "properties": [
+        "valence_band_offset",
+        "electric_field_left",
+        "electric_field_right"
+    ],
+    "model": {
+        "type": "unknown",
+        "subtype": "unknown",
+        "method": {
+            "type": "unknown",
+            "subtype": "unknown",
+            "data": {}
+        }
+    },
+    "units": [
+        {
+            "name": "Difference of valence band maxima",
+            "type": "assignment",
+            "operand": "VBM_DIFF",
+            "value": "VBM_LEFT - VBM_RIGHT",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "bd4eaa98-b001-5694-87ef-ec77540502ab",
+            "tags": [],
+            "head": true,
+            "next": "228c2037-c6ea-57de-b2be-b6d13a3f7f53",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Average ESP reference (left bulk)",
+            "type": "assignment",
+            "operand": "ESP_REF_LEFT",
+            "value": "ESP_POLAR_FIT_LEFT['left_value_at_interface']",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "228c2037-c6ea-57de-b2be-b6d13a3f7f53",
+            "tags": [],
+            "head": false,
+            "next": "ef6a6033-6b30-59df-9f65-c186bb53b46d",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Average ESP reference (right bulk)",
+            "type": "assignment",
+            "operand": "ESP_REF_RIGHT",
+            "value": "ESP_POLAR_FIT_RIGHT['right_value_at_interface']",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "ef6a6033-6b30-59df-9f65-c186bb53b46d",
+            "tags": [],
+            "head": false,
+            "next": "a7087236-2067-5843-ba4c-75a68cd47397",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Difference of ESP references from bulk calculations",
+            "type": "assignment",
+            "operand": "AVG_ESP_DIFF",
+            "value": "ESP_REF_LEFT - ESP_REF_RIGHT",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "a7087236-2067-5843-ba4c-75a68cd47397",
+            "tags": [],
+            "head": false,
+            "next": "3fa6282e-c4ea-53a6-8d9a-cd9e25fea888",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Delta V from interface linear fit extrapolation",
+            "type": "assignment",
+            "operand": "DELTA_V_INTERFACE",
+            "value": "ESP_POLAR_FIT_INTERFACE['delta_v']",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "3fa6282e-c4ea-53a6-8d9a-cd9e25fea888",
+            "tags": [],
+            "head": false,
+            "next": "197f4b4d-cb7b-57be-a885-d44cb1f61905",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Valence Band Offset",
+            "type": "assignment",
+            "operand": "VALENCE_BAND_OFFSET",
+            "value": "abs(VBM_DIFF - AVG_ESP_DIFF + DELTA_V_INTERFACE)",
+            "input": [],
+            "results": [
+                {
+                    "name": "valence_band_offset"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "197f4b4d-cb7b-57be-a885-d44cb1f61905",
+            "tags": [],
+            "head": false,
+            "next": "9a87eef8-b096-553f-a180-0b8b7e4ec68e",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Electric field (left side)",
+            "type": "assignment",
+            "operand": "ELECTRIC_FIELD_LEFT",
+            "value": "ESP_POLAR_FIT_INTERFACE['left_fit']['electric_field_eV_per_angstrom']",
+            "input": [],
+            "results": [
+                {
+                    "name": "electric_field_left"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "9a87eef8-b096-553f-a180-0b8b7e4ec68e",
+            "tags": [],
+            "head": false,
+            "next": "8d210d18-c0fa-5471-8c9a-bb885620bb3e",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Electric field (right side)",
+            "type": "assignment",
+            "operand": "ELECTRIC_FIELD_RIGHT",
+            "value": "ESP_POLAR_FIT_INTERFACE['right_fit']['electric_field_eV_per_angstrom']",
+            "input": [],
+            "results": [
+                {
+                    "name": "electric_field_right"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "8d210d18-c0fa-5471-8c9a-bb885620bb3e",
+            "tags": [],
+            "head": false,
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        }
+    ]
+}

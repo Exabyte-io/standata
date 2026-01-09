@@ -1,0 +1,120 @@
+{
+    "_id": "56253784-b62a-513a-8ed3-3a12d6d1c152",
+    "name": "Fit Polar ESP",
+    "application": {
+        "name": "espresso"
+    },
+    "properties": [],
+    "model": {
+        "type": "unknown",
+        "subtype": "unknown",
+        "method": {
+            "type": "unknown",
+            "subtype": "unknown",
+            "data": {}
+        }
+    },
+    "units": [
+        {
+            "type": "execution",
+            "name": "Fit ESP Linear Regions",
+            "head": true,
+            "results": [],
+            "monitors": [
+                {
+                    "name": "standard_output"
+                }
+            ],
+            "flowchartId": "python-fit-esp-polar",
+            "preProcessors": [],
+            "postProcessors": [],
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            },
+            "executable": {
+                "isDefault": true,
+                "monitors": [
+                    "standard_output"
+                ],
+                "name": "python",
+                "schemaVersion": "2022.8.16"
+            },
+            "flavor": {
+                "applicationName": "python",
+                "executableName": "python",
+                "input": [
+                    {
+                        "name": "fit_esp_polar.py",
+                        "templateName": "fit_esp_polar.py"
+                    },
+                    {
+                        "name": "requirements.txt",
+                        "templateName": "processing_requirements.txt"
+                    }
+                ],
+                "monitors": [
+                    "standard_output"
+                ],
+                "name": "generic:processing:fit_esp_polar",
+                "schemaVersion": "2022.8.16",
+                "isDefault": false
+            },
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "input": [
+                {
+                    "applicationName": "python",
+                    "content": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ΔV by extrapolating fitted lines to the interface.                 #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n{% raw %}{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}{% endraw %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.15\nBULK_REGION_FRACTION = 0.30\n\n\ndef detect_interface_position(y_data, x_data):\n    gradient = np.abs(np.gradient(y_data))\n    window = max(len(gradient) // 20, 5)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    margin = int(len(y_data) * MARGIN_FRACTION)\n    search_region = smoothed[margin:-margin]\n    interface_idx = margin + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    bulk_size = int(n_points * BULK_REGION_FRACTION)\n    margin = int(n_points * MARGIN_FRACTION)\n    left_end = max(margin, interface_idx - margin)\n    left_start = max(margin, left_end - bulk_size)\n    right_start = min(n_points - margin, interface_idx + margin)\n    right_end = min(n_points - margin, right_start + bulk_size)\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    slope, intercept, r_value, _, std_err = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2, \"std_err\": std_err}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\ndelta_v = left_value_at_interface - right_value_at_interface\nleft_electric_field = -left_fit[\"slope\"]\nright_electric_field = -right_fit[\"slope\"]\n\nresult = {\n    \"interface_position\": float(interface_x),\n    \"interface_index\": int(interface_idx),\n    \"delta_v\": float(delta_v),\n    \"left_value_at_interface\": float(left_value_at_interface),\n    \"right_value_at_interface\": float(right_value_at_interface),\n    \"left_fit\": {\n        \"slope\": float(left_fit[\"slope\"]),\n        \"intercept\": float(left_fit[\"intercept\"]),\n        \"r_squared\": float(left_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(left_electric_field),\n    },\n    \"right_fit\": {\n        \"slope\": float(right_fit[\"slope\"]),\n        \"intercept\": float(right_fit[\"intercept\"]),\n        \"r_squared\": float(right_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(right_electric_field),\n    },\n    \"left_region_indices\": [int(left_region[0]), int(left_region[1])],\n    \"right_region_indices\": [int(right_region[0]), int(right_region[1])],\n}\n\nprint(json.dumps(result, indent=4))\n\n",
+                    "contextProviders": [],
+                    "executableName": "python",
+                    "name": "fit_esp_polar.py",
+                    "rendered": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ΔV by extrapolating fitted lines to the interface.                 #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\nY = np.array({{array_from_context}})\n{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.15\nBULK_REGION_FRACTION = 0.30\n\n\ndef detect_interface_position(y_data, x_data):\n    gradient = np.abs(np.gradient(y_data))\n    window = max(len(gradient) // 20, 5)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    margin = int(len(y_data) * MARGIN_FRACTION)\n    search_region = smoothed[margin:-margin]\n    interface_idx = margin + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    bulk_size = int(n_points * BULK_REGION_FRACTION)\n    margin = int(n_points * MARGIN_FRACTION)\n    left_end = max(margin, interface_idx - margin)\n    left_start = max(margin, left_end - bulk_size)\n    right_start = min(n_points - margin, interface_idx + margin)\n    right_end = min(n_points - margin, right_start + bulk_size)\n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    slope, intercept, r_value, _, std_err = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2, \"std_err\": std_err}\n\n\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\ndelta_v = left_value_at_interface - right_value_at_interface\nleft_electric_field = -left_fit[\"slope\"]\nright_electric_field = -right_fit[\"slope\"]\n\nresult = {\n    \"interface_position\": float(interface_x),\n    \"interface_index\": int(interface_idx),\n    \"delta_v\": float(delta_v),\n    \"left_value_at_interface\": float(left_value_at_interface),\n    \"right_value_at_interface\": float(right_value_at_interface),\n    \"left_fit\": {\n        \"slope\": float(left_fit[\"slope\"]),\n        \"intercept\": float(left_fit[\"intercept\"]),\n        \"r_squared\": float(left_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(left_electric_field),\n    },\n    \"right_fit\": {\n        \"slope\": float(right_fit[\"slope\"]),\n        \"intercept\": float(right_fit[\"intercept\"]),\n        \"r_squared\": float(right_fit[\"r_squared\"]),\n        \"electric_field_eV_per_angstrom\": float(right_electric_field),\n    },\n    \"left_region_indices\": [int(left_region[0]), int(left_region[1])],\n    \"right_region_indices\": [int(right_region[0]), int(right_region[1])],\n}\n\nprint(json.dumps(result, indent=4))\n\n",
+                    "schemaVersion": "2022.8.16"
+                },
+                {
+                    "applicationName": "python",
+                    "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
+                    "contextProviders": [],
+                    "executableName": "python",
+                    "name": "requirements.txt",
+                    "rendered": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
+                    "schemaVersion": "2022.8.16"
+                }
+            ],
+            "next": "0c37a439-d4e4-5376-8c16-1557e99e969b"
+        },
+        {
+            "name": "Set Polar ESP Fit Result",
+            "type": "assignment",
+            "operand": "ESP_POLAR_FIT",
+            "value": "json.loads(STDOUT)",
+            "input": [
+                {
+                    "name": "STDOUT",
+                    "scope": "python-fit-esp-polar"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "0c37a439-d4e4-5376-8c16-1557e99e969b",
+            "tags": [],
+            "head": false,
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        }
+    ]
+}

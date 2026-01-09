@@ -40,6 +40,11 @@ units:
           attributes:
             name: Set Material Index (Interface)
             value: "0"
+      - index: 4
+        type: assignment
+        config:
+          attributes:
+            operand: VBM
   - name: average_electrostatic_potential_fit_polar
     type: subworkflow
     config:

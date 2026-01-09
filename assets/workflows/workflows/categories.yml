@@ -287,7 +287,7 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
-  - filename: espresso/valence_band_offset.json
+  - filename: espresso/valence_band_offset_polar.json
     categories:
       - atomic_forces
       - average_potential_profile
@@ -299,7 +299,7 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
-  - filename: espresso/valence_band_offset_polar.json
+  - filename: espresso/valence_band_offset.json
     categories:
       - atomic_forces
       - average_potential_profile
