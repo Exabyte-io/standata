@@ -49,9 +49,7 @@ export function buildModelMethodMap(): void {
     const filterEntries: ModelMethodFilterEntry[] = [];
     traverseNestedCategories(yamlData, [], filterEntries);
 
-    serverUtils.json.writeJSONFileSync(targetFile, filterEntries, {
-        spaces: BUILD_CONFIG.buildJSONFormat.spaces,
-    });
+    serverUtils.json.writeJSONFileSync(targetFile, filterEntries);
     console.log(`Generated: ${targetFile}`);
     console.log(`Model-method map built successfully with ${filterEntries.length} entries`);
 }
