@@ -4,6 +4,7 @@
 # ---------------------------------------------------------------- #
 import json
 
+# The results below come as Munch objects, so we need to import Munch to handle them
 from munch import Munch
 
 # Data From Context

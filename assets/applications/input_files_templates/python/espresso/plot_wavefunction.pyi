@@ -1,7 +1,6 @@
 # ---------------------------------------------------------------- #
-#  Generate wavefunction plot from pp.x output                      #
-#  Outputs potential_profile JSON to STDOUT for platform rendering  #
-#  Also saves static PNG as fallback                                #
+#  Generate wavefunction plot from pp.x output                     #
+#  And saves static                                                #
 # ---------------------------------------------------------------- #
 
 import json
@@ -33,7 +32,7 @@ plt.close()
 
 # Create potential_profile JSON for platform rendering
 wavefunction_data = {
-    "name": "potential_profile",
+    "name": "wavefunction_amplitude",
     "xAxis": {
         "label": "Position",
         "units": "angstrom"

@@ -7,7 +7,6 @@ model:
   name: UnknownModel
 name: Plot Wavefunction
 properties:
-  - potential_profile
   - file_content
 units:
   - config:
@@ -15,7 +14,6 @@ units:
       flavorName: plot_wavefunction
       name: plot WFN
       results:
-        - name: potential_profile
         - name: file_content
           basename: wf_r.png
           filetype: image
