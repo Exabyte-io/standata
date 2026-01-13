@@ -30,7 +30,7 @@
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",
         "@mat3ra/ade": "2025.11.19-0",
-        "@mat3ra/wode": "git+https://github.com/Exabyte-io/wode.git#6928f1c75a3e883bcf38d019e45fa7ca96c50555",
+        "@mat3ra/wode": "2026.1.12-0",
         "@mat3ra/mode": "2025.11.13-0",
         "@mat3ra/utils": "^2025.12.2-0",
         "@mat3ra/code": "^2025.8.7-0",
@@ -63,6 +63,7 @@
         "prettier": "^2.7.1"
     },
     "scripts": {
+        "clean": "rm -rf build/standata",
         "build:categories": "ts-node src/js/cli.ts",
         "create:materials": "python scripts/materials/create_materials.py",
         "build:materials": "ts-node scripts/materials/build_materials.ts",
@@ -77,7 +78,7 @@
         "build:models-related": "npm run build:model-method-map && npm run build:model-tree && npm run build:models-tree-config-by-application",
         "build:ui": "ts-node ui/scripts/build_ui_trees.ts",
         "build:symlink": "test -L src/js/runtime_data || ln -s ../../dist/js/runtime_data src/js/runtime_data",
-        "build": "npm run transpile && npm run build:symlink && npm run build:models && npm run build:methods && npm run build:models-related && npm run build:applications && npm run build:properties && npm run build:workflows && npm run build:materials && npm run build:ui",
+        "build": "npm run clean && npm run transpile && npm run build:symlink && npm run build:models-related && npm run build:models && npm run build:methods && npm run build:applications && npm run build:properties && npm run build:workflows && npm run build:materials && npm run build:ui",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
