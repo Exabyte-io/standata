@@ -1,5 +1,5 @@
 {
-    "name": "Valence Band Offset (Polar Interface)",
+    "name": "Valence Band Offset (Polar)",
     "subworkflows": [
         {
             "isMultiMaterial": true,
@@ -293,7 +293,7 @@
                 {
                     "name": "Set Valence Band Maximum",
                     "type": "assignment",
-                    "operand": "VBM_RIGHT",
+                    "operand": "VBM",
                     "value": "BAND_GAP_INDIRECT['eigenvalueValence']",
                     "input": [],
                     "status": "idle",
@@ -436,7 +436,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "average-electrostatic-potential-right"
+                    "next": "average-electrostatic-potential"
                 },
                 {
                     "type": "execution",
@@ -452,7 +452,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "average-electrostatic-potential-right",
+                    "flowchartId": "average-electrostatic-potential",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -515,7 +515,7 @@
                     "input": [
                         {
                             "name": "average_potential_profile",
-                            "scope": "average-electrostatic-potential-right"
+                            "scope": "average-electrostatic-potential"
                         }
                     ],
                     "status": "idle",
@@ -537,8 +537,9 @@
             ]
         },
         {
-            "_id": "ce26adc1-6a26-53ef-9626-5eb6a6b9ccb7",
-            "name": "Find ESP Values (Interface)",
+            "isMultiMaterial": true,
+            "_id": "fe85317a-b21b-57a9-bb53-97f3671c5836",
+            "name": "Extract Interface Coordinates",
             "application": {
                 "name": "python",
                 "shortName": "py",
@@ -561,7 +562,7 @@
             "units": [
                 {
                     "type": "execution",
-                    "name": "Fit ESP Linear Regions",
+                    "name": "Extract Z-Coordinates from Material",
                     "head": true,
                     "results": [],
                     "monitors": [
@@ -569,7 +570,221 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "python-fit-esp-polar",
+                    "flowchartId": "python-extract-coords",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "executable": {
+                        "isDefault": true,
+                        "monitors": [
+                            "standard_output"
+                        ],
+                        "name": "python",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "flavor": {
+                        "applicationName": "python",
+                        "executableName": "python",
+                        "input": [
+                            {
+                                "name": "extract_slab_coordinates.py",
+                                "templateName": "extract_slab_coordinates.py"
+                            },
+                            {
+                                "name": "requirements.txt",
+                                "templateName": "requirements_with_made.txt"
+                            }
+                        ],
+                        "monitors": [
+                            "standard_output"
+                        ],
+                        "name": "generic:processing:extract_slab_coordinates",
+                        "schemaVersion": "2022.8.16",
+                        "isDefault": false
+                    },
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "input": [
+                        {
+                            "applicationName": "python",
+                            "content": "#!/usr/bin/env python\n# -*- coding: utf-8 -*-\n\"\"\"\nExtract z-coordinate boundaries from materials for polar VBO calculation.\n\nReads structure from pw_scf.out file using ASE and extracts z-coordinates.\n\"\"\"\nimport json\nimport os\n\nimport numpy as np\nimport ase.io\nfrom mat3ra.made.material import Material\nfrom mat3ra.made.tools.convert import from_ase\n\n# Material index: 0=Interface, 1=Left, 2=Right\n{% raw %}material_index = int({{material_index}}){% endraw %}\n\n# Read structure from pw_scf.out (generated by previous pw_scf calculation)\npw_scf_output = \"./pw_scf.out\"\n\nif not os.path.exists(pw_scf_output):\n    # Fallback if file doesn't exist\n    print(json.dumps({\n        \"error\": \"pw_scf.out not found\",\n        \"slab1_min\": 0.0,\n        \"slab1_max\": 20.0,\n        \"slab2_min\": 0.0,\n        \"slab2_max\": 20.0,\n        \"material_index\": material_index,\n    }, indent=4))\n    exit(0)\n\n# Read atomic structure from espresso output\natoms = ase.io.read(pw_scf_output, format=\"espresso-out\")\n\n# Convert ASE Atoms to Material using mat3ra-made\nmaterial = Material.create(from_ase(atoms))\n\n# Extract z-coordinates\ncoordinates = material.basis.coordinates\nz_coords_frac = np.array(coordinates.get_values_along_axis(axis=\"z\"))\n\n# Convert to Cartesian (Angstroms)\nc_length = material.lattice.c\nz_coords_angstrom = z_coords_frac * c_length\n\n# Extract z-range\nz_min = np.min(z_coords_angstrom)\nz_max = np.max(z_coords_angstrom)\n\nresult = {\n    \"slab1_min\": float(z_min),\n    \"slab1_max\": float(z_max),\n    \"slab2_min\": float(z_min),\n    \"slab2_max\": float(z_max),\n    \"material_index\": material_index,\n}\n\nprint(json.dumps(result, indent=4))\n",
+                            "contextProviders": [],
+                            "executableName": "python",
+                            "name": "extract_slab_coordinates.py",
+                            "rendered": "#!/usr/bin/env python\n# -*- coding: utf-8 -*-\n\"\"\"\nExtract z-coordinate boundaries from materials for polar VBO calculation.\n\nReads structure from pw_scf.out file using ASE and extracts z-coordinates.\n\"\"\"\nimport json\nimport os\n\nimport numpy as np\nimport ase.io\nfrom mat3ra.made.material import Material\nfrom mat3ra.made.tools.convert import from_ase\n\n# Material index: 0=Interface, 1=Left, 2=Right\nmaterial_index = int({{material_index}})\n\n# Read structure from pw_scf.out (generated by previous pw_scf calculation)\npw_scf_output = \"./pw_scf.out\"\n\nif not os.path.exists(pw_scf_output):\n    # Fallback if file doesn't exist\n    print(json.dumps({\n        \"error\": \"pw_scf.out not found\",\n        \"slab1_min\": 0.0,\n        \"slab1_max\": 20.0,\n        \"slab2_min\": 0.0,\n        \"slab2_max\": 20.0,\n        \"material_index\": material_index,\n    }, indent=4))\n    exit(0)\n\n# Read atomic structure from espresso output\natoms = ase.io.read(pw_scf_output, format=\"espresso-out\")\n\n# Convert ASE Atoms to Material using mat3ra-made\nmaterial = Material.create(from_ase(atoms))\n\n# Extract z-coordinates\ncoordinates = material.basis.coordinates\nz_coords_frac = np.array(coordinates.get_values_along_axis(axis=\"z\"))\n\n# Convert to Cartesian (Angstroms)\nc_length = material.lattice.c\nz_coords_angstrom = z_coords_frac * c_length\n\n# Extract z-range\nz_min = np.min(z_coords_angstrom)\nz_max = np.max(z_coords_angstrom)\n\nresult = {\n    \"slab1_min\": float(z_min),\n    \"slab1_max\": float(z_max),\n    \"slab2_min\": float(z_min),\n    \"slab2_max\": float(z_max),\n    \"material_index\": material_index,\n}\n\nprint(json.dumps(result, indent=4))\n",
+                            "schemaVersion": "2022.8.16"
+                        },
+                        {
+                            "applicationName": "python",
+                            "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\nmat3ra-made[tools]>=2024.11.12.0\n\n",
+                            "contextProviders": [],
+                            "executableName": "python",
+                            "name": "requirements.txt",
+                            "rendered": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\nmat3ra-made[tools]>=2024.11.12.0\n\n",
+                            "schemaVersion": "2022.8.16"
+                        }
+                    ],
+                    "next": "83a497a3-98ef-56c6-8645-2ed81aea47df"
+                },
+                {
+                    "name": "Parse Coordinate Results",
+                    "type": "assignment",
+                    "operand": "COORDS",
+                    "value": "json.loads(STDOUT)",
+                    "input": [
+                        {
+                            "name": "STDOUT",
+                            "scope": "python-extract-coords"
+                        }
+                    ],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "83a497a3-98ef-56c6-8645-2ed81aea47df",
+                    "tags": [],
+                    "head": false,
+                    "next": "2dd3de29-111a-5315-bc0c-5cbc45fab7d7",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "Set Slab1 Min Coordinate",
+                    "type": "assignment",
+                    "operand": "slab1_min",
+                    "value": "COORDS['slab1_min']",
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "2dd3de29-111a-5315-bc0c-5cbc45fab7d7",
+                    "tags": [],
+                    "head": false,
+                    "next": "9052b78f-56ab-587f-a5e0-5cd15ff81a61",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "Set Slab1 Max Coordinate",
+                    "type": "assignment",
+                    "operand": "slab1_max",
+                    "value": "COORDS['slab1_max']",
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "9052b78f-56ab-587f-a5e0-5cd15ff81a61",
+                    "tags": [],
+                    "head": false,
+                    "next": "3dc86d2e-680e-561c-a9f3-f58144656567",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "Set Slab2 Min Coordinate",
+                    "type": "assignment",
+                    "operand": "slab2_min",
+                    "value": "COORDS['slab2_min']",
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "3dc86d2e-680e-561c-a9f3-f58144656567",
+                    "tags": [],
+                    "head": false,
+                    "next": "9a3c8610-67ee-5954-aa9d-c9f6fe0b9c29",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "Set Slab2 Max Coordinate",
+                    "type": "assignment",
+                    "operand": "slab2_max",
+                    "value": "COORDS['slab2_max']",
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "9a3c8610-67ee-5954-aa9d-c9f6fe0b9c29",
+                    "tags": [],
+                    "head": false,
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                }
+            ]
+        },
+        {
+            "_id": "c9192ba7-ce76-5bc7-a156-7029de146550",
+            "name": "Fit Polar ESP (Interface)",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            },
+            "properties": [],
+            "model": {
+                "type": "unknown",
+                "subtype": "unknown",
+                "method": {
+                    "type": "unknown",
+                    "subtype": "unknown",
+                    "data": {}
+                }
+            },
+            "units": [
+                {
+                    "type": "execution",
+                    "name": "Fit Linear ESP for Polar Interface",
+                    "head": true,
+                    "results": [],
+                    "monitors": [
+                        {
+                            "name": "standard_output"
+                        }
+                    ],
+                    "flowchartId": "python-fit-esp-polar-interface",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -609,29 +824,31 @@
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
+                    "input": [
+                        {
+                            "name": "average_potential_profile",
+                            "scope": "global"
+                        },
+                        {
+                            "name": "slab1_min",
+                            "scope": "global"
+                        },
+                        {
+                            "name": "slab1_max",
+                            "scope": "global"
+                        },
+                        {
+                            "name": "slab2_min",
+                            "scope": "global"
+                        },
+                        {
+                            "name": "slab2_max",
+                            "scope": "global"
+                        }
+                    ],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
-                    "input": [
-                        {
-                            "applicationName": "python",
-                            "content": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ESP values by extrapolating fitted lines to the interface.         #\n#                                                                    #\n# Output format is compatible with find_extrema.pyi to enable        #\n# drop-in replacement in VBO workflows.                              #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# For non-polar interfaces, slope ≈ 0 and this reduces to flat avg. #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n{% raw %}{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}{% endraw %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10  # Exclude 10% from edges to avoid surface effects\nMIN_REGION_POINTS = 10  # Minimum points needed for linear fit\n\n\ndef detect_interface_position(y_data, x_data):\n    \"\"\"Find interface position by locating maximum gradient in ESP profile.\n    \n    Uses gradient smoothing to identify the steepest change, which indicates\n    the interface between two materials.\n    \"\"\"\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    \n    # Calculate smoothed gradient to find interface\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    \n    # Search for maximum gradient (interface) excluding margins\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    \"\"\"Determine bulk-like regions on left and right sides for linear fitting.\n    \n    Ensures regions are far enough from interface and edges to capture\n    representative bulk behavior.\n    \"\"\"\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    \n    # Left bulk region: between left margin and interface\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    \n    # Right bulk region: between interface and right margin\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    \n    # Ensure bounds are valid\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    \n    # Final fallback for edge cases\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    \n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    \"\"\"Fit linear regression to ESP data in specified region.\n    \n    Returns slope and intercept. For non-polar materials, slope ≈ 0.\n    For polar materials, slope represents internal electric field.\n    \"\"\"\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    \n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    \n    # Fallback for insufficient data: return flat line at mean\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0}\n    \n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2}\n\n\n# Main calculation: fit lines to bulk regions and extrapolate to interface\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\n\n# Extrapolate fitted lines to interface position to get ESP values\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\n\n# Output in same format as find_extrema.pyi for compatibility\nresult = {\n    \"minima\": [float(left_value_at_interface), float(right_value_at_interface)],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "fit_esp_polar.py",
-                            "rendered": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ESP values by extrapolating fitted lines to the interface.         #\n#                                                                    #\n# Output format is compatible with find_extrema.pyi to enable        #\n# drop-in replacement in VBO workflows.                              #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# For non-polar interfaces, slope ≈ 0 and this reduces to flat avg. #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\nY = np.array({{array_from_context}})\n{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10  # Exclude 10% from edges to avoid surface effects\nMIN_REGION_POINTS = 10  # Minimum points needed for linear fit\n\n\ndef detect_interface_position(y_data, x_data):\n    \"\"\"Find interface position by locating maximum gradient in ESP profile.\n    \n    Uses gradient smoothing to identify the steepest change, which indicates\n    the interface between two materials.\n    \"\"\"\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    \n    # Calculate smoothed gradient to find interface\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    \n    # Search for maximum gradient (interface) excluding margins\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    \"\"\"Determine bulk-like regions on left and right sides for linear fitting.\n    \n    Ensures regions are far enough from interface and edges to capture\n    representative bulk behavior.\n    \"\"\"\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    \n    # Left bulk region: between left margin and interface\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    \n    # Right bulk region: between interface and right margin\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    \n    # Ensure bounds are valid\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    \n    # Final fallback for edge cases\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    \n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    \"\"\"Fit linear regression to ESP data in specified region.\n    \n    Returns slope and intercept. For non-polar materials, slope ≈ 0.\n    For polar materials, slope represents internal electric field.\n    \"\"\"\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    \n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    \n    # Fallback for insufficient data: return flat line at mean\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0}\n    \n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2}\n\n\n# Main calculation: fit lines to bulk regions and extrapolate to interface\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\n\n# Extrapolate fitted lines to interface position to get ESP values\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\n\n# Output in same format as find_extrema.pyi for compatibility\nresult = {\n    \"minima\": [float(left_value_at_interface), float(right_value_at_interface)],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n",
-                            "schemaVersion": "2022.8.16"
-                        },
-                        {
-                            "applicationName": "python",
-                            "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "requirements.txt",
-                            "rendered": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
-                            "schemaVersion": "2022.8.16"
-                        }
-                    ],
                     "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d"
                 },
                 {
@@ -642,7 +859,7 @@
                     "input": [
                         {
                             "name": "STDOUT",
-                            "scope": "python-fit-esp-polar"
+                            "scope": "python-fit-esp-polar-interface"
                         }
                     ],
                     "status": "idle",
@@ -664,8 +881,8 @@
         },
         {
             "isMultiMaterial": true,
-            "_id": "ba46d9b4-610f-537e-ae39-e39ce5240cda",
-            "name": "BS + Avg ESP (interface left)",
+            "_id": "438d67a5-7f5f-5e02-93ee-a72cb282af06",
+            "name": "BS + Avg ESP (Interface Left)",
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -703,14 +920,14 @@
             },
             "units": [
                 {
-                    "name": "Set Material Index (Interface left)",
+                    "name": "Set Material Index (Interface Left)",
                     "type": "assignment",
                     "operand": "MATERIAL_INDEX",
                     "value": "1",
                     "input": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "0bd31760-f6e4-5826-b282-882c06c97f94",
+                    "flowchartId": "517eb13b-3632-502b-a32b-8c1e07746827",
                     "tags": [],
                     "head": true,
                     "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
@@ -1198,8 +1415,9 @@
             ]
         },
         {
-            "_id": "6c303926-905c-5749-81d5-2d2964fdf09a",
-            "name": "Find ESP Value (Interface left)",
+            "isMultiMaterial": true,
+            "_id": "8d784c4d-93f6-5ff4-9cbc-c166c8709e93",
+            "name": "Extract Left Coordinates",
             "application": {
                 "name": "python",
                 "shortName": "py",
@@ -1222,7 +1440,221 @@
             "units": [
                 {
                     "type": "execution",
-                    "name": "Fit ESP Linear Regions",
+                    "name": "Extract Z-Coordinates from Material",
+                    "head": true,
+                    "results": [],
+                    "monitors": [
+                        {
+                            "name": "standard_output"
+                        }
+                    ],
+                    "flowchartId": "python-extract-coords",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "executable": {
+                        "isDefault": true,
+                        "monitors": [
+                            "standard_output"
+                        ],
+                        "name": "python",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "flavor": {
+                        "applicationName": "python",
+                        "executableName": "python",
+                        "input": [
+                            {
+                                "name": "extract_slab_coordinates.py",
+                                "templateName": "extract_slab_coordinates.py"
+                            },
+                            {
+                                "name": "requirements.txt",
+                                "templateName": "requirements_with_made.txt"
+                            }
+                        ],
+                        "monitors": [
+                            "standard_output"
+                        ],
+                        "name": "generic:processing:extract_slab_coordinates",
+                        "schemaVersion": "2022.8.16",
+                        "isDefault": false
+                    },
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "input": [
+                        {
+                            "applicationName": "python",
+                            "content": "#!/usr/bin/env python\n# -*- coding: utf-8 -*-\n\"\"\"\nExtract z-coordinate boundaries from materials for polar VBO calculation.\n\nReads structure from pw_scf.out file using ASE and extracts z-coordinates.\n\"\"\"\nimport json\nimport os\n\nimport numpy as np\nimport ase.io\nfrom mat3ra.made.material import Material\nfrom mat3ra.made.tools.convert import from_ase\n\n# Material index: 0=Interface, 1=Left, 2=Right\n{% raw %}material_index = int({{material_index}}){% endraw %}\n\n# Read structure from pw_scf.out (generated by previous pw_scf calculation)\npw_scf_output = \"./pw_scf.out\"\n\nif not os.path.exists(pw_scf_output):\n    # Fallback if file doesn't exist\n    print(json.dumps({\n        \"error\": \"pw_scf.out not found\",\n        \"slab1_min\": 0.0,\n        \"slab1_max\": 20.0,\n        \"slab2_min\": 0.0,\n        \"slab2_max\": 20.0,\n        \"material_index\": material_index,\n    }, indent=4))\n    exit(0)\n\n# Read atomic structure from espresso output\natoms = ase.io.read(pw_scf_output, format=\"espresso-out\")\n\n# Convert ASE Atoms to Material using mat3ra-made\nmaterial = Material.create(from_ase(atoms))\n\n# Extract z-coordinates\ncoordinates = material.basis.coordinates\nz_coords_frac = np.array(coordinates.get_values_along_axis(axis=\"z\"))\n\n# Convert to Cartesian (Angstroms)\nc_length = material.lattice.c\nz_coords_angstrom = z_coords_frac * c_length\n\n# Extract z-range\nz_min = np.min(z_coords_angstrom)\nz_max = np.max(z_coords_angstrom)\n\nresult = {\n    \"slab1_min\": float(z_min),\n    \"slab1_max\": float(z_max),\n    \"slab2_min\": float(z_min),\n    \"slab2_max\": float(z_max),\n    \"material_index\": material_index,\n}\n\nprint(json.dumps(result, indent=4))\n",
+                            "contextProviders": [],
+                            "executableName": "python",
+                            "name": "extract_slab_coordinates.py",
+                            "rendered": "#!/usr/bin/env python\n# -*- coding: utf-8 -*-\n\"\"\"\nExtract z-coordinate boundaries from materials for polar VBO calculation.\n\nReads structure from pw_scf.out file using ASE and extracts z-coordinates.\n\"\"\"\nimport json\nimport os\n\nimport numpy as np\nimport ase.io\nfrom mat3ra.made.material import Material\nfrom mat3ra.made.tools.convert import from_ase\n\n# Material index: 0=Interface, 1=Left, 2=Right\nmaterial_index = int({{material_index}})\n\n# Read structure from pw_scf.out (generated by previous pw_scf calculation)\npw_scf_output = \"./pw_scf.out\"\n\nif not os.path.exists(pw_scf_output):\n    # Fallback if file doesn't exist\n    print(json.dumps({\n        \"error\": \"pw_scf.out not found\",\n        \"slab1_min\": 0.0,\n        \"slab1_max\": 20.0,\n        \"slab2_min\": 0.0,\n        \"slab2_max\": 20.0,\n        \"material_index\": material_index,\n    }, indent=4))\n    exit(0)\n\n# Read atomic structure from espresso output\natoms = ase.io.read(pw_scf_output, format=\"espresso-out\")\n\n# Convert ASE Atoms to Material using mat3ra-made\nmaterial = Material.create(from_ase(atoms))\n\n# Extract z-coordinates\ncoordinates = material.basis.coordinates\nz_coords_frac = np.array(coordinates.get_values_along_axis(axis=\"z\"))\n\n# Convert to Cartesian (Angstroms)\nc_length = material.lattice.c\nz_coords_angstrom = z_coords_frac * c_length\n\n# Extract z-range\nz_min = np.min(z_coords_angstrom)\nz_max = np.max(z_coords_angstrom)\n\nresult = {\n    \"slab1_min\": float(z_min),\n    \"slab1_max\": float(z_max),\n    \"slab2_min\": float(z_min),\n    \"slab2_max\": float(z_max),\n    \"material_index\": material_index,\n}\n\nprint(json.dumps(result, indent=4))\n",
+                            "schemaVersion": "2022.8.16"
+                        },
+                        {
+                            "applicationName": "python",
+                            "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\nmat3ra-made[tools]>=2024.11.12.0\n\n",
+                            "contextProviders": [],
+                            "executableName": "python",
+                            "name": "requirements.txt",
+                            "rendered": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\nmat3ra-made[tools]>=2024.11.12.0\n\n",
+                            "schemaVersion": "2022.8.16"
+                        }
+                    ],
+                    "next": "83a497a3-98ef-56c6-8645-2ed81aea47df"
+                },
+                {
+                    "name": "Parse Coordinate Results",
+                    "type": "assignment",
+                    "operand": "COORDS",
+                    "value": "json.loads(STDOUT)",
+                    "input": [
+                        {
+                            "name": "STDOUT",
+                            "scope": "python-extract-coords"
+                        }
+                    ],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "83a497a3-98ef-56c6-8645-2ed81aea47df",
+                    "tags": [],
+                    "head": false,
+                    "next": "2dd3de29-111a-5315-bc0c-5cbc45fab7d7",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "Set Slab1 Min Coordinate",
+                    "type": "assignment",
+                    "operand": "slab1_min",
+                    "value": "COORDS['slab1_min']",
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "2dd3de29-111a-5315-bc0c-5cbc45fab7d7",
+                    "tags": [],
+                    "head": false,
+                    "next": "9052b78f-56ab-587f-a5e0-5cd15ff81a61",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "Set Slab1 Max Coordinate",
+                    "type": "assignment",
+                    "operand": "slab1_max",
+                    "value": "COORDS['slab1_max']",
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "9052b78f-56ab-587f-a5e0-5cd15ff81a61",
+                    "tags": [],
+                    "head": false,
+                    "next": "3dc86d2e-680e-561c-a9f3-f58144656567",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "Set Slab2 Min Coordinate",
+                    "type": "assignment",
+                    "operand": "slab2_min",
+                    "value": "COORDS['slab2_min']",
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "3dc86d2e-680e-561c-a9f3-f58144656567",
+                    "tags": [],
+                    "head": false,
+                    "next": "9a3c8610-67ee-5954-aa9d-c9f6fe0b9c29",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "Set Slab2 Max Coordinate",
+                    "type": "assignment",
+                    "operand": "slab2_max",
+                    "value": "COORDS['slab2_max']",
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "9a3c8610-67ee-5954-aa9d-c9f6fe0b9c29",
+                    "tags": [],
+                    "head": false,
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                }
+            ]
+        },
+        {
+            "_id": "a9699729-298a-5e5f-9f6e-3e7b3b694a6e",
+            "name": "Fit Polar ESP (Interface Left)",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            },
+            "properties": [],
+            "model": {
+                "type": "unknown",
+                "subtype": "unknown",
+                "method": {
+                    "type": "unknown",
+                    "subtype": "unknown",
+                    "data": {}
+                }
+            },
+            "units": [
+                {
+                    "type": "execution",
+                    "name": "Fit Linear ESP for Polar Interface",
                     "head": true,
                     "results": [],
                     "monitors": [
@@ -1270,29 +1702,31 @@
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
+                    "input": [
+                        {
+                            "name": "average_potential_profile",
+                            "scope": "global"
+                        },
+                        {
+                            "name": "slab1_min",
+                            "scope": "global"
+                        },
+                        {
+                            "name": "slab1_max",
+                            "scope": "global"
+                        },
+                        {
+                            "name": "slab2_min",
+                            "scope": "global"
+                        },
+                        {
+                            "name": "slab2_max",
+                            "scope": "global"
+                        }
+                    ],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
-                    "input": [
-                        {
-                            "applicationName": "python",
-                            "content": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ESP values by extrapolating fitted lines to the interface.         #\n#                                                                    #\n# Output format is compatible with find_extrema.pyi to enable        #\n# drop-in replacement in VBO workflows.                              #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# For non-polar interfaces, slope ≈ 0 and this reduces to flat avg. #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n{% raw %}{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}{% endraw %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10  # Exclude 10% from edges to avoid surface effects\nMIN_REGION_POINTS = 10  # Minimum points needed for linear fit\n\n\ndef detect_interface_position(y_data, x_data):\n    \"\"\"Find interface position by locating maximum gradient in ESP profile.\n    \n    Uses gradient smoothing to identify the steepest change, which indicates\n    the interface between two materials.\n    \"\"\"\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    \n    # Calculate smoothed gradient to find interface\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    \n    # Search for maximum gradient (interface) excluding margins\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    \"\"\"Determine bulk-like regions on left and right sides for linear fitting.\n    \n    Ensures regions are far enough from interface and edges to capture\n    representative bulk behavior.\n    \"\"\"\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    \n    # Left bulk region: between left margin and interface\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    \n    # Right bulk region: between interface and right margin\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    \n    # Ensure bounds are valid\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    \n    # Final fallback for edge cases\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    \n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    \"\"\"Fit linear regression to ESP data in specified region.\n    \n    Returns slope and intercept. For non-polar materials, slope ≈ 0.\n    For polar materials, slope represents internal electric field.\n    \"\"\"\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    \n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    \n    # Fallback for insufficient data: return flat line at mean\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0}\n    \n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2}\n\n\n# Main calculation: fit lines to bulk regions and extrapolate to interface\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\n\n# Extrapolate fitted lines to interface position to get ESP values\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\n\n# Output in same format as find_extrema.pyi for compatibility\nresult = {\n    \"minima\": [float(left_value_at_interface), float(right_value_at_interface)],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "fit_esp_polar.py",
-                            "rendered": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ESP values by extrapolating fitted lines to the interface.         #\n#                                                                    #\n# Output format is compatible with find_extrema.pyi to enable        #\n# drop-in replacement in VBO workflows.                              #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# For non-polar interfaces, slope ≈ 0 and this reduces to flat avg. #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\nY = np.array({{array_from_context}})\n{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10  # Exclude 10% from edges to avoid surface effects\nMIN_REGION_POINTS = 10  # Minimum points needed for linear fit\n\n\ndef detect_interface_position(y_data, x_data):\n    \"\"\"Find interface position by locating maximum gradient in ESP profile.\n    \n    Uses gradient smoothing to identify the steepest change, which indicates\n    the interface between two materials.\n    \"\"\"\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    \n    # Calculate smoothed gradient to find interface\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    \n    # Search for maximum gradient (interface) excluding margins\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    \"\"\"Determine bulk-like regions on left and right sides for linear fitting.\n    \n    Ensures regions are far enough from interface and edges to capture\n    representative bulk behavior.\n    \"\"\"\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    \n    # Left bulk region: between left margin and interface\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    \n    # Right bulk region: between interface and right margin\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    \n    # Ensure bounds are valid\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    \n    # Final fallback for edge cases\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    \n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    \"\"\"Fit linear regression to ESP data in specified region.\n    \n    Returns slope and intercept. For non-polar materials, slope ≈ 0.\n    For polar materials, slope represents internal electric field.\n    \"\"\"\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    \n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    \n    # Fallback for insufficient data: return flat line at mean\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0}\n    \n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2}\n\n\n# Main calculation: fit lines to bulk regions and extrapolate to interface\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\n\n# Extrapolate fitted lines to interface position to get ESP values\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\n\n# Output in same format as find_extrema.pyi for compatibility\nresult = {\n    \"minima\": [float(left_value_at_interface), float(right_value_at_interface)],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n",
-                            "schemaVersion": "2022.8.16"
-                        },
-                        {
-                            "applicationName": "python",
-                            "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "requirements.txt",
-                            "rendered": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
-                            "schemaVersion": "2022.8.16"
-                        }
-                    ],
                     "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d"
                 },
                 {
@@ -1325,8 +1759,8 @@
         },
         {
             "isMultiMaterial": true,
-            "_id": "aa611fe8-1e6a-5e5c-976a-f64bfaaaace9",
-            "name": "BS + Avg ESP (interface right)",
+            "_id": "06555e5f-08b8-5966-91b6-5ec296bf5fdf",
+            "name": "BS + Avg ESP (Interface Right)",
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -1364,14 +1798,14 @@
             },
             "units": [
                 {
-                    "name": "Set Material Index (Interface right)",
+                    "name": "Set Material Index (Interface Right)",
                     "type": "assignment",
                     "operand": "MATERIAL_INDEX",
                     "value": "2",
                     "input": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "a05809d1-cc0d-5a0b-bf5e-d43b90a6ac4b",
+                    "flowchartId": "e7f14fe8-eb8c-54da-bb9f-6cac13b25b54",
                     "tags": [],
                     "head": true,
                     "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
@@ -1859,8 +2293,9 @@
             ]
         },
         {
-            "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
-            "name": "Find ESP Value (Interface right)",
+            "isMultiMaterial": true,
+            "_id": "bde0534e-171c-5108-a2bc-f7a15a956e79",
+            "name": "Extract Right Coordinates",
             "application": {
                 "name": "python",
                 "shortName": "py",
@@ -1883,7 +2318,221 @@
             "units": [
                 {
                     "type": "execution",
-                    "name": "Fit ESP Linear Regions",
+                    "name": "Extract Z-Coordinates from Material",
+                    "head": true,
+                    "results": [],
+                    "monitors": [
+                        {
+                            "name": "standard_output"
+                        }
+                    ],
+                    "flowchartId": "python-extract-coords",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "executable": {
+                        "isDefault": true,
+                        "monitors": [
+                            "standard_output"
+                        ],
+                        "name": "python",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "flavor": {
+                        "applicationName": "python",
+                        "executableName": "python",
+                        "input": [
+                            {
+                                "name": "extract_slab_coordinates.py",
+                                "templateName": "extract_slab_coordinates.py"
+                            },
+                            {
+                                "name": "requirements.txt",
+                                "templateName": "requirements_with_made.txt"
+                            }
+                        ],
+                        "monitors": [
+                            "standard_output"
+                        ],
+                        "name": "generic:processing:extract_slab_coordinates",
+                        "schemaVersion": "2022.8.16",
+                        "isDefault": false
+                    },
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "input": [
+                        {
+                            "applicationName": "python",
+                            "content": "#!/usr/bin/env python\n# -*- coding: utf-8 -*-\n\"\"\"\nExtract z-coordinate boundaries from materials for polar VBO calculation.\n\nReads structure from pw_scf.out file using ASE and extracts z-coordinates.\n\"\"\"\nimport json\nimport os\n\nimport numpy as np\nimport ase.io\nfrom mat3ra.made.material import Material\nfrom mat3ra.made.tools.convert import from_ase\n\n# Material index: 0=Interface, 1=Left, 2=Right\n{% raw %}material_index = int({{material_index}}){% endraw %}\n\n# Read structure from pw_scf.out (generated by previous pw_scf calculation)\npw_scf_output = \"./pw_scf.out\"\n\nif not os.path.exists(pw_scf_output):\n    # Fallback if file doesn't exist\n    print(json.dumps({\n        \"error\": \"pw_scf.out not found\",\n        \"slab1_min\": 0.0,\n        \"slab1_max\": 20.0,\n        \"slab2_min\": 0.0,\n        \"slab2_max\": 20.0,\n        \"material_index\": material_index,\n    }, indent=4))\n    exit(0)\n\n# Read atomic structure from espresso output\natoms = ase.io.read(pw_scf_output, format=\"espresso-out\")\n\n# Convert ASE Atoms to Material using mat3ra-made\nmaterial = Material.create(from_ase(atoms))\n\n# Extract z-coordinates\ncoordinates = material.basis.coordinates\nz_coords_frac = np.array(coordinates.get_values_along_axis(axis=\"z\"))\n\n# Convert to Cartesian (Angstroms)\nc_length = material.lattice.c\nz_coords_angstrom = z_coords_frac * c_length\n\n# Extract z-range\nz_min = np.min(z_coords_angstrom)\nz_max = np.max(z_coords_angstrom)\n\nresult = {\n    \"slab1_min\": float(z_min),\n    \"slab1_max\": float(z_max),\n    \"slab2_min\": float(z_min),\n    \"slab2_max\": float(z_max),\n    \"material_index\": material_index,\n}\n\nprint(json.dumps(result, indent=4))\n",
+                            "contextProviders": [],
+                            "executableName": "python",
+                            "name": "extract_slab_coordinates.py",
+                            "rendered": "#!/usr/bin/env python\n# -*- coding: utf-8 -*-\n\"\"\"\nExtract z-coordinate boundaries from materials for polar VBO calculation.\n\nReads structure from pw_scf.out file using ASE and extracts z-coordinates.\n\"\"\"\nimport json\nimport os\n\nimport numpy as np\nimport ase.io\nfrom mat3ra.made.material import Material\nfrom mat3ra.made.tools.convert import from_ase\n\n# Material index: 0=Interface, 1=Left, 2=Right\nmaterial_index = int({{material_index}})\n\n# Read structure from pw_scf.out (generated by previous pw_scf calculation)\npw_scf_output = \"./pw_scf.out\"\n\nif not os.path.exists(pw_scf_output):\n    # Fallback if file doesn't exist\n    print(json.dumps({\n        \"error\": \"pw_scf.out not found\",\n        \"slab1_min\": 0.0,\n        \"slab1_max\": 20.0,\n        \"slab2_min\": 0.0,\n        \"slab2_max\": 20.0,\n        \"material_index\": material_index,\n    }, indent=4))\n    exit(0)\n\n# Read atomic structure from espresso output\natoms = ase.io.read(pw_scf_output, format=\"espresso-out\")\n\n# Convert ASE Atoms to Material using mat3ra-made\nmaterial = Material.create(from_ase(atoms))\n\n# Extract z-coordinates\ncoordinates = material.basis.coordinates\nz_coords_frac = np.array(coordinates.get_values_along_axis(axis=\"z\"))\n\n# Convert to Cartesian (Angstroms)\nc_length = material.lattice.c\nz_coords_angstrom = z_coords_frac * c_length\n\n# Extract z-range\nz_min = np.min(z_coords_angstrom)\nz_max = np.max(z_coords_angstrom)\n\nresult = {\n    \"slab1_min\": float(z_min),\n    \"slab1_max\": float(z_max),\n    \"slab2_min\": float(z_min),\n    \"slab2_max\": float(z_max),\n    \"material_index\": material_index,\n}\n\nprint(json.dumps(result, indent=4))\n",
+                            "schemaVersion": "2022.8.16"
+                        },
+                        {
+                            "applicationName": "python",
+                            "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\nmat3ra-made[tools]>=2024.11.12.0\n\n",
+                            "contextProviders": [],
+                            "executableName": "python",
+                            "name": "requirements.txt",
+                            "rendered": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\nmat3ra-made[tools]>=2024.11.12.0\n\n",
+                            "schemaVersion": "2022.8.16"
+                        }
+                    ],
+                    "next": "83a497a3-98ef-56c6-8645-2ed81aea47df"
+                },
+                {
+                    "name": "Parse Coordinate Results",
+                    "type": "assignment",
+                    "operand": "COORDS",
+                    "value": "json.loads(STDOUT)",
+                    "input": [
+                        {
+                            "name": "STDOUT",
+                            "scope": "python-extract-coords"
+                        }
+                    ],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "83a497a3-98ef-56c6-8645-2ed81aea47df",
+                    "tags": [],
+                    "head": false,
+                    "next": "2dd3de29-111a-5315-bc0c-5cbc45fab7d7",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "Set Slab1 Min Coordinate",
+                    "type": "assignment",
+                    "operand": "slab1_min",
+                    "value": "COORDS['slab1_min']",
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "2dd3de29-111a-5315-bc0c-5cbc45fab7d7",
+                    "tags": [],
+                    "head": false,
+                    "next": "9052b78f-56ab-587f-a5e0-5cd15ff81a61",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "Set Slab1 Max Coordinate",
+                    "type": "assignment",
+                    "operand": "slab1_max",
+                    "value": "COORDS['slab1_max']",
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "9052b78f-56ab-587f-a5e0-5cd15ff81a61",
+                    "tags": [],
+                    "head": false,
+                    "next": "3dc86d2e-680e-561c-a9f3-f58144656567",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "Set Slab2 Min Coordinate",
+                    "type": "assignment",
+                    "operand": "slab2_min",
+                    "value": "COORDS['slab2_min']",
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "3dc86d2e-680e-561c-a9f3-f58144656567",
+                    "tags": [],
+                    "head": false,
+                    "next": "9a3c8610-67ee-5954-aa9d-c9f6fe0b9c29",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "Set Slab2 Max Coordinate",
+                    "type": "assignment",
+                    "operand": "slab2_max",
+                    "value": "COORDS['slab2_max']",
+                    "input": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "flowchartId": "9a3c8610-67ee-5954-aa9d-c9f6fe0b9c29",
+                    "tags": [],
+                    "head": false,
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                }
+            ]
+        },
+        {
+            "_id": "0b8d0aca-ccd7-55c7-8bf9-2970792cee12",
+            "name": "Fit Polar ESP (Interface Right)",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            },
+            "properties": [],
+            "model": {
+                "type": "unknown",
+                "subtype": "unknown",
+                "method": {
+                    "type": "unknown",
+                    "subtype": "unknown",
+                    "data": {}
+                }
+            },
+            "units": [
+                {
+                    "type": "execution",
+                    "name": "Fit Linear ESP for Polar Interface",
                     "head": true,
                     "results": [],
                     "monitors": [
@@ -1931,29 +2580,31 @@
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
+                    "input": [
+                        {
+                            "name": "average_potential_profile",
+                            "scope": "global"
+                        },
+                        {
+                            "name": "slab1_min",
+                            "scope": "global"
+                        },
+                        {
+                            "name": "slab1_max",
+                            "scope": "global"
+                        },
+                        {
+                            "name": "slab2_min",
+                            "scope": "global"
+                        },
+                        {
+                            "name": "slab2_max",
+                            "scope": "global"
+                        }
+                    ],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
-                    "input": [
-                        {
-                            "applicationName": "python",
-                            "content": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ESP values by extrapolating fitted lines to the interface.         #\n#                                                                    #\n# Output format is compatible with find_extrema.pyi to enable        #\n# drop-in replacement in VBO workflows.                              #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# For non-polar interfaces, slope ≈ 0 and this reduces to flat avg. #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n{% raw %}{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}{% endraw %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10  # Exclude 10% from edges to avoid surface effects\nMIN_REGION_POINTS = 10  # Minimum points needed for linear fit\n\n\ndef detect_interface_position(y_data, x_data):\n    \"\"\"Find interface position by locating maximum gradient in ESP profile.\n    \n    Uses gradient smoothing to identify the steepest change, which indicates\n    the interface between two materials.\n    \"\"\"\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    \n    # Calculate smoothed gradient to find interface\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    \n    # Search for maximum gradient (interface) excluding margins\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    \"\"\"Determine bulk-like regions on left and right sides for linear fitting.\n    \n    Ensures regions are far enough from interface and edges to capture\n    representative bulk behavior.\n    \"\"\"\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    \n    # Left bulk region: between left margin and interface\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    \n    # Right bulk region: between interface and right margin\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    \n    # Ensure bounds are valid\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    \n    # Final fallback for edge cases\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    \n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    \"\"\"Fit linear regression to ESP data in specified region.\n    \n    Returns slope and intercept. For non-polar materials, slope ≈ 0.\n    For polar materials, slope represents internal electric field.\n    \"\"\"\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    \n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    \n    # Fallback for insufficient data: return flat line at mean\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0}\n    \n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2}\n\n\n# Main calculation: fit lines to bulk regions and extrapolate to interface\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\n\n# Extrapolate fitted lines to interface position to get ESP values\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\n\n# Output in same format as find_extrema.pyi for compatibility\nresult = {\n    \"minima\": [float(left_value_at_interface), float(right_value_at_interface)],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "fit_esp_polar.py",
-                            "rendered": "# ------------------------------------------------------------------ #\n# This script fits linear regression to macroscopically averaged ESP #\n# for polar interfaces, detecting interface position and calculating #\n# ESP values by extrapolating fitted lines to the interface.         #\n#                                                                    #\n# Output format is compatible with find_extrema.pyi to enable        #\n# drop-in replacement in VBO workflows.                              #\n#                                                                    #\n# For polar interfaces (e.g., AlN/GaN (001), GaAs (001)), the ESP    #\n# profile shows a slope due to internal electric field.              #\n# For non-polar interfaces, slope ≈ 0 and this reduces to flat avg. #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n# ------------------------------------------------------------------ #\nimport json\n\nimport numpy as np\nfrom scipy.stats import linregress\n\n\nY = np.array({{array_from_context}})\n{% if x_positions_from_context is defined %}\nX = np.array({{x_positions_from_context}})\n{% else %}\nX = np.linspace(0, 1, len(Y))\n{% endif %}\n\nN = len(Y)\nMARGIN_FRACTION = 0.10  # Exclude 10% from edges to avoid surface effects\nMIN_REGION_POINTS = 10  # Minimum points needed for linear fit\n\n\ndef detect_interface_position(y_data, x_data):\n    \"\"\"Find interface position by locating maximum gradient in ESP profile.\n    \n    Uses gradient smoothing to identify the steepest change, which indicates\n    the interface between two materials.\n    \"\"\"\n    n = len(y_data)\n    margin = max(int(n * MARGIN_FRACTION), MIN_REGION_POINTS)\n    if 2 * margin >= n:\n        return x_data[n // 2], n // 2\n    \n    # Calculate smoothed gradient to find interface\n    gradient = np.abs(np.gradient(y_data))\n    window = max(n // 20, 3)\n    smoothed = np.convolve(gradient, np.ones(window) / window, mode=\"same\")\n    \n    # Search for maximum gradient (interface) excluding margins\n    search_start = margin\n    search_end = n - margin\n    search_region = smoothed[search_start:search_end]\n    if len(search_region) == 0:\n        return x_data[n // 2], n // 2\n    interface_idx = search_start + np.argmax(search_region)\n    return x_data[interface_idx], interface_idx\n\n\ndef get_bulk_regions(n_points, interface_idx):\n    \"\"\"Determine bulk-like regions on left and right sides for linear fitting.\n    \n    Ensures regions are far enough from interface and edges to capture\n    representative bulk behavior.\n    \"\"\"\n    margin = max(int(n_points * MARGIN_FRACTION), MIN_REGION_POINTS // 2)\n    \n    # Left bulk region: between left margin and interface\n    left_start = margin\n    left_end = max(left_start + MIN_REGION_POINTS, interface_idx - margin)\n    if left_end <= left_start:\n        left_end = min(interface_idx, left_start + MIN_REGION_POINTS)\n    \n    # Right bulk region: between interface and right margin\n    right_start = min(interface_idx + margin, n_points - margin - MIN_REGION_POINTS)\n    right_end = n_points - margin\n    if right_end <= right_start:\n        right_start = max(interface_idx, right_end - MIN_REGION_POINTS)\n    \n    # Ensure bounds are valid\n    left_start = max(0, left_start)\n    left_end = min(n_points, left_end)\n    right_start = max(0, right_start)\n    right_end = min(n_points, right_end)\n    \n    # Final fallback for edge cases\n    if left_end <= left_start:\n        left_start = 0\n        left_end = min(MIN_REGION_POINTS, interface_idx)\n    if right_end <= right_start:\n        right_start = max(interface_idx, n_points - MIN_REGION_POINTS)\n        right_end = n_points\n    \n    return (left_start, left_end), (right_start, right_end)\n\n\ndef fit_linear_region(x_data, y_data, start_idx, end_idx):\n    \"\"\"Fit linear regression to ESP data in specified region.\n    \n    Returns slope and intercept. For non-polar materials, slope ≈ 0.\n    For polar materials, slope represents internal electric field.\n    \"\"\"\n    start_idx = max(0, int(start_idx))\n    end_idx = min(len(x_data), int(end_idx))\n    if end_idx <= start_idx:\n        end_idx = start_idx + MIN_REGION_POINTS\n    \n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    \n    # Fallback for insufficient data: return flat line at mean\n    if len(x_region) < 2:\n        return {\"slope\": 0.0, \"intercept\": float(np.mean(y_data)), \"r_squared\": 0.0}\n    \n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    return {\"slope\": slope, \"intercept\": intercept, \"r_squared\": r_value**2}\n\n\n# Main calculation: fit lines to bulk regions and extrapolate to interface\ninterface_x, interface_idx = detect_interface_position(Y, X)\nleft_region, right_region = get_bulk_regions(N, interface_idx)\nleft_fit = fit_linear_region(X, Y, left_region[0], left_region[1])\nright_fit = fit_linear_region(X, Y, right_region[0], right_region[1])\n\n# Extrapolate fitted lines to interface position to get ESP values\nleft_value_at_interface = left_fit[\"slope\"] * interface_x + left_fit[\"intercept\"]\nright_value_at_interface = right_fit[\"slope\"] * interface_x + right_fit[\"intercept\"]\n\n# Output in same format as find_extrema.pyi for compatibility\nresult = {\n    \"minima\": [float(left_value_at_interface), float(right_value_at_interface)],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n",
-                            "schemaVersion": "2022.8.16"
-                        },
-                        {
-                            "applicationName": "python",
-                            "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "requirements.txt",
-                            "rendered": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
-                            "schemaVersion": "2022.8.16"
-                        }
-                    ],
                     "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d"
                 },
                 {
@@ -2114,59 +2765,92 @@
             "flowchartId": "fd622b5c-5c02-594e-b582-b245c17ca9a4",
             "tags": [],
             "head": true,
-            "next": "ad3b1e4c-5965-5605-a067-dd0c59907c4b"
+            "next": "d5c2ab77-ffc6-5355-95f9-7f67a784178f"
         },
         {
-            "name": "Find ESP Values (Interface)",
+            "name": "Extract Interface Coordinates",
             "type": "subworkflow",
-            "_id": "ce26adc1-6a26-53ef-9626-5eb6a6b9ccb7",
+            "_id": "fe85317a-b21b-57a9-bb53-97f3671c5836",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "ad3b1e4c-5965-5605-a067-dd0c59907c4b",
+            "flowchartId": "d5c2ab77-ffc6-5355-95f9-7f67a784178f",
             "tags": [],
             "head": false,
-            "next": "8d5b4734-edfd-55cc-ad80-aaa72487398d"
+            "next": "67770422-0b81-5bbe-b2ba-355a5f920499"
         },
         {
-            "name": "BS + Avg ESP (interface left)",
+            "name": "Fit Polar ESP (Interface)",
             "type": "subworkflow",
-            "_id": "ba46d9b4-610f-537e-ae39-e39ce5240cda",
+            "_id": "c9192ba7-ce76-5bc7-a156-7029de146550",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "8d5b4734-edfd-55cc-ad80-aaa72487398d",
+            "flowchartId": "67770422-0b81-5bbe-b2ba-355a5f920499",
             "tags": [],
             "head": false,
-            "next": "102ec582-5b75-52f5-8b39-19ca725ed47a"
+            "next": "2eb30f49-5dcb-593c-b389-ac763e7df7aa"
         },
         {
-            "name": "Find ESP Value (Interface left)",
+            "name": "BS + Avg ESP (Interface Left)",
             "type": "subworkflow",
-            "_id": "6c303926-905c-5749-81d5-2d2964fdf09a",
+            "_id": "438d67a5-7f5f-5e02-93ee-a72cb282af06",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "102ec582-5b75-52f5-8b39-19ca725ed47a",
+            "flowchartId": "2eb30f49-5dcb-593c-b389-ac763e7df7aa",
             "tags": [],
             "head": false,
-            "next": "603c45db-93aa-54ce-a7fe-6e9b65b0037d"
+            "next": "03760b7f-0085-5dce-945f-347eb639780f"
         },
         {
-            "name": "BS + Avg ESP (interface right)",
+            "name": "Extract Left Coordinates",
             "type": "subworkflow",
-            "_id": "aa611fe8-1e6a-5e5c-976a-f64bfaaaace9",
+            "_id": "8d784c4d-93f6-5ff4-9cbc-c166c8709e93",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "603c45db-93aa-54ce-a7fe-6e9b65b0037d",
+            "flowchartId": "03760b7f-0085-5dce-945f-347eb639780f",
             "tags": [],
             "head": false,
-            "next": "e3444d35-cc41-59f5-8481-78d0c383b84e"
+            "next": "f0e75e9e-cc3e-5224-a2e2-81ba4d2ef581"
         },
         {
-            "name": "Find ESP Value (Interface right)",
+            "name": "Fit Polar ESP (Interface Left)",
             "type": "subworkflow",
-            "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
+            "_id": "a9699729-298a-5e5f-9f6e-3e7b3b694a6e",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "e3444d35-cc41-59f5-8481-78d0c383b84e",
+            "flowchartId": "f0e75e9e-cc3e-5224-a2e2-81ba4d2ef581",
+            "tags": [],
+            "head": false,
+            "next": "a86171a8-2b72-531d-a1cc-0ed3f03797af"
+        },
+        {
+            "name": "BS + Avg ESP (Interface Right)",
+            "type": "subworkflow",
+            "_id": "06555e5f-08b8-5966-91b6-5ec296bf5fdf",
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "a86171a8-2b72-531d-a1cc-0ed3f03797af",
+            "tags": [],
+            "head": false,
+            "next": "b6597e42-a6aa-5257-bf81-c7825f3b0c7c"
+        },
+        {
+            "name": "Extract Right Coordinates",
+            "type": "subworkflow",
+            "_id": "bde0534e-171c-5108-a2bc-f7a15a956e79",
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "b6597e42-a6aa-5257-bf81-c7825f3b0c7c",
+            "tags": [],
+            "head": false,
+            "next": "bf6caeb4-db41-58c5-995c-3874b728eaa6"
+        },
+        {
+            "name": "Fit Polar ESP (Interface Right)",
+            "type": "subworkflow",
+            "_id": "0b8d0aca-ccd7-55c7-8bf9-2970792cee12",
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "bf6caeb4-db41-58c5-995c-3874b728eaa6",
             "tags": [],
             "head": false,
             "next": "0e0b141a-39ca-52bc-9094-e5f96dc72f39"

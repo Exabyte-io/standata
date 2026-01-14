@@ -1,10 +1,9 @@
-# Note: this subworkflow is assumed to be used as part of the valence band offset workflow
+# Fit linear ESP for polar interfaces
+# Note: this subworkflow is assumed to be used as part of the valence band offset polar workflow
 # and is NOT self-sufficient!
-# This is a drop-in replacement for average_electrostatic_potential_find_minima that uses
-# linear regression for polar interfaces instead of finding peaks.
-# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)
 # Furthermore, this subworkflow expects the following variable(s) to exist in the global context:
-# array_from_context
+# - average_potential_profile: ESP data from average.x
+# - slab1_min, slab1_max, slab2_min, slab2_max: z-coordinate ranges for fitting
 application:
   name: python
   version: 3.10.13
@@ -12,14 +11,26 @@ method:
   name: UnknownMethod
 model:
   name: UnknownModel
-name: Find ESP Value
+name: Fit Polar ESP
 units:
   - config:
-      name: Fit ESP Linear Regions
+      name: Fit Linear ESP for Polar Interface
       execName: python
       flavorName: espresso:processing:fit_esp_polar
       flowchartId: python-fit-esp-polar
     type: executionBuilder
+    attributes:
+      input:
+        - name: average_potential_profile
+          scope: global
+        - name: slab1_min
+          scope: global
+        - name: slab1_max
+          scope: global
+        - name: slab2_min
+          scope: global
+        - name: slab2_max
+          scope: global
   - config:
       name: Set Average ESP Value
       operand: AVG_ESP

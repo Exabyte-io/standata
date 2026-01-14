@@ -112,6 +112,12 @@ export abstract class CategorizedEntityProcessor extends EntityProcessor {
             const value = lodash.get(obj, key);
             if (typeof value === "string" && value) {
                 (categorySets as any)[key].add(value);
+            } else if (Array.isArray(value)) {
+                value.forEach((v: string) => {
+                    if (typeof v === "string" && v) {
+                        (categorySets as any)[key].add(v);
+                    }
+                });
             }
         });
         if (includeTags && Array.isArray(obj?.tags)) {
@@ -127,7 +133,15 @@ export abstract class CategorizedEntityProcessor extends EntityProcessor {
     ): void {
         categoryKeys.forEach((key) => {
             const value = lodash.get(obj, key);
-            if (typeof value === "string" && value) target.add(value);
+            if (typeof value === "string" && value) {
+                target.add(value);
+            } else if (Array.isArray(value)) {
+                value.forEach((v: string) => {
+                    if (typeof v === "string" && v) {
+                        target.add(v);
+                    }
+                });
+            }
         });
         if (includeTags && Array.isArray(obj?.tags)) {
             obj.tags.forEach((t: string) => target.add(t));
