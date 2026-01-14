@@ -287,6 +287,9 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
+  - filename: espresso/valence_band_offset_polar_test.json
+    categories:
+      - espresso
   - filename: espresso/valence_band_offset_polar.json
     categories:
       - atomic_forces

@@ -19,18 +19,6 @@ units:
       flavorName: espresso:processing:fit_esp_polar
       flowchartId: python-fit-esp-polar
     type: executionBuilder
-    attributes:
-      input:
-        - name: average_potential_profile
-          scope: global
-        - name: slab1_min
-          scope: global
-        - name: slab1_max
-          scope: global
-        - name: slab2_min
-          scope: global
-        - name: slab2_max
-          scope: global
   - config:
       name: Set Average ESP Value
       operand: AVG_ESP

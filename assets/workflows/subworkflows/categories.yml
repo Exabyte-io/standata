@@ -324,6 +324,10 @@ entities:
     categories:
       - band_structure
       - espresso
+  - filename: espresso/set_polar_coordinates.json
+    categories:
+      - espresso
+      - shell
   - filename: espresso/surface_energy.json
     categories:
       - atomic_forces
@@ -384,6 +388,9 @@ entities:
       - nwchem
       - total_energy
       - total_energy_contributions
+  - filename: python/extract_slab_coordinates.json
+    categories:
+      - python
   - filename: python/ml/classification_tail.json
     categories:
       - creates-predictions-csv-during-predict-phase
@@ -413,6 +420,10 @@ entities:
   - filename: python/python_script.json
     categories:
       - python
+  - filename: python/set_material_index.json
+    categories:
+      - python
+      - shell
   - filename: shell/batch_espresso_pwscf.json
     categories:
       - shell
