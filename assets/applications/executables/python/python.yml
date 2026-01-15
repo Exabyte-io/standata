@@ -4,7 +4,6 @@ monitors:
 results:
   - file_content
   - 'workflow:pyml_predict'
-  - potential_profile
 flavors:
   hello_world:
     isDefault: true
@@ -52,7 +51,6 @@ flavors:
       - name: requirements.txt
         templateName: requirements_plot_wavefunction.txt
     results:
-      - potential_profile
       - file_content
     monitors:
       - standard_output

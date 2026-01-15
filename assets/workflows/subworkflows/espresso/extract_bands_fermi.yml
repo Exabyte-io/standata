@@ -14,7 +14,7 @@ units:
       execName: python
       flavorName: extract_bands_fermi
       name: extract_bands_fermi
-      flowchartId: extract-band-fermi
+      flowchartId: extract-bands-fermi
     type: executionBuilder
   - config:
       name: Store Band Below EF
@@ -22,7 +22,7 @@ units:
       value: "json.loads(STDOUT)['band_below_fermi']"
       input:
         - name: STDOUT
-          scope: extract-band-fermi
+          scope: extract-bands-fermi
     type: assignment
   - config:
       name: Store Band Above EF
@@ -30,7 +30,7 @@ units:
       value: "json.loads(STDOUT)['band_above_fermi']"
       input:
         - name: STDOUT
-          scope: extract-band-fermi
+          scope: extract-bands-fermi
     type: assignment
   - config:
       name: Select Band

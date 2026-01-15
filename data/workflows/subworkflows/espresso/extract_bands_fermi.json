@@ -25,7 +25,7 @@
                     "name": "standard_output"
                 }
             ],
-            "flowchartId": "extract-band-fermi",
+            "flowchartId": "extract-bands-fermi",
             "preProcessors": [],
             "postProcessors": [],
             "application": {
@@ -97,7 +97,7 @@
             "input": [
                 {
                     "name": "STDOUT",
-                    "scope": "extract-band-fermi"
+                    "scope": "extract-bands-fermi"
                 }
             ],
             "status": "idle",
@@ -124,7 +124,7 @@
             "input": [
                 {
                     "name": "STDOUT",
-                    "scope": "extract-band-fermi"
+                    "scope": "extract-bands-fermi"
                 }
             ],
             "status": "idle",

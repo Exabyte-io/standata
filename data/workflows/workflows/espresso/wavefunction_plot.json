@@ -363,7 +363,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "extract-band-fermi",
+                    "flowchartId": "extract-bands-fermi",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -435,7 +435,7 @@
                     "input": [
                         {
                             "name": "STDOUT",
-                            "scope": "extract-band-fermi"
+                            "scope": "extract-bands-fermi"
                         }
                     ],
                     "status": "idle",
@@ -462,7 +462,7 @@
                     "input": [
                         {
                             "name": "STDOUT",
-                            "scope": "extract-band-fermi"
+                            "scope": "extract-bands-fermi"
                         }
                     ],
                     "status": "idle",
@@ -602,11 +602,11 @@
                     "input": [
                         {
                             "applicationName": "espresso",
-                            "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    plot_num = 7\n    kpoint = 1\n    kband = {% raw %}{{ KBAND_VALUE }}{% endraw %}\n    lsign = .true.\n/\n&PLOT\n    iflag = 1\n    fileout = 'wf_r.dat'\n    output_format = 0\n    x0(1) = 0.0, x0(2) = 0.0, x0(3) = 0.0\n    e1(1) = 0.0, e1(2) = 0.0, e1(3) = 1.0\n    nx = 200\n/\n",
+                            "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    plot_num = 7\n    kpoint = 1\n    kband = {% raw %}{{ KBAND_VALUE default(1) }}{% endraw %}\n    lsign = .true.\n/\n&PLOT\n    iflag = 1\n    fileout = 'wf_r.dat'\n    output_format = 0\n    x0(1) = 0.0, x0(2) = 0.0, x0(3) = 0.0\n    e1(1) = 0.0, e1(2) = 0.0, e1(3) = 1.0\n    nx = 200\n/\n",
                             "contextProviders": [],
                             "executableName": "pp.x",
                             "name": "pp_wfn.in",
-                            "rendered": "&INPUTPP\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    plot_num = 7\n    kpoint = 1\n    kband = {{ KBAND_VALUE }}\n    lsign = .true.\n/\n&PLOT\n    iflag = 1\n    fileout = 'wf_r.dat'\n    output_format = 0\n    x0(1) = 0.0, x0(2) = 0.0, x0(3) = 0.0\n    e1(1) = 0.0, e1(2) = 0.0, e1(3) = 1.0\n    nx = 200\n/\n",
+                            "rendered": "&INPUTPP\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    plot_num = 7\n    kpoint = 1\n    kband = {{ KBAND_VALUE default(1) }}\n    lsign = .true.\n/\n&PLOT\n    iflag = 1\n    fileout = 'wf_r.dat'\n    output_format = 0\n    x0(1) = 0.0, x0(2) = 0.0, x0(3) = 0.0\n    e1(1) = 0.0, e1(2) = 0.0, e1(3) = 1.0\n    nx = 200\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
                     ]
@@ -626,7 +626,6 @@
                 "schemaVersion": "2022.8.16"
             },
             "properties": [
-                "potential_profile",
                 "file_content"
             ],
             "model": {
@@ -644,9 +643,6 @@
                     "name": "plot WFN",
                     "head": true,
                     "results": [
-                        {
-                            "name": "potential_profile"
-                        },
                         {
                             "name": "file_content"
                         }
@@ -693,7 +689,6 @@
                             "standard_output"
                         ],
                         "results": [
-                            "potential_profile",
                             "file_content"
                         ],
                         "name": "plot_wavefunction",

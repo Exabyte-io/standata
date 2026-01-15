@@ -312,7 +312,6 @@ entities:
     categories:
       - espresso
       - file_content
-      - potential_profile
       - python
   - filename: espresso/post_processor.json
     categories:

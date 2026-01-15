@@ -5,7 +5,6 @@
         "name": "espresso"
     },
     "properties": [
-        "potential_profile",
         "file_content"
     ],
     "model": {
@@ -23,9 +22,6 @@
             "name": "plot WFN",
             "head": true,
             "results": [
-                {
-                    "name": "potential_profile"
-                },
                 {
                     "name": "file_content"
                 }
@@ -72,7 +68,6 @@
                     "standard_output"
                 ],
                 "results": [
-                    "potential_profile",
                     "file_content"
                 ],
                 "name": "plot_wavefunction",
