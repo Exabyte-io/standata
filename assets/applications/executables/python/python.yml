@@ -62,6 +62,8 @@ flavors:
         templateName: fit_esp_polar.py
       - name: requirements.txt
         templateName: processing_requirements.txt
+    results:
+      - file_content
     monitors:
       - standard_output
     applicationName: python

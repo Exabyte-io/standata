@@ -46,6 +46,7 @@ entities:
   - filename: espresso/average_electrostatic_potential_fit_polar.json
     categories:
       - espresso
+      - file_content
       - python
   - filename: espresso/average_electrostatic_potential_via_band_structure.json
     categories:
