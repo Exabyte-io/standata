@@ -33,7 +33,7 @@
             "flowchartId": "a094e53f-3a7b-5986-a82d-6c0aeea7d1e1",
             "tags": [],
             "head": true,
-            "next": "e4a082aa-a35f-59c7-a13c-37d168c80874",
+            "next": "2ddfa931-1d20-552c-90a8-8916a4b1c492",
             "application": {
                 "name": "python",
                 "shortName": "py",
@@ -45,22 +45,71 @@
             }
         },
         {
-            "name": "Import Slab1 Min",
+            "name": "Import Slab1 Coords JSON",
+            "type": "assignment",
+            "operand": "SLAB1_COORDS",
+            "value": "json.loads(STDOUT)",
+            "input": [
+                {
+                    "name": "STDOUT",
+                    "scope": "python-extract-coords-left"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "2ddfa931-1d20-552c-90a8-8916a4b1c492",
+            "tags": [],
+            "head": false,
+            "next": "671288b8-10e5-54fb-ba81-68218614d277",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Import Slab2 Coords JSON",
+            "type": "assignment",
+            "operand": "SLAB2_COORDS",
+            "value": "json.loads(STDOUT)",
+            "input": [
+                {
+                    "name": "STDOUT",
+                    "scope": "python-extract-coords-right"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "671288b8-10e5-54fb-ba81-68218614d277",
+            "tags": [],
+            "head": false,
+            "next": "59e394c4-9df1-5b76-ac3f-44a613709d84",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Set Slab1 Min",
             "type": "assignment",
             "operand": "slab1_min",
-            "value": "slab1_min",
-            "input": [
-                {
-                    "name": "slab1_min",
-                    "scope": "extract-coords"
-                }
-            ],
+            "value": "SLAB1_COORDS['z_min']",
+            "input": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "e4a082aa-a35f-59c7-a13c-37d168c80874",
+            "flowchartId": "59e394c4-9df1-5b76-ac3f-44a613709d84",
             "tags": [],
             "head": false,
-            "next": "cbaaec65-b89d-5acd-ad82-bb272f49581d",
+            "next": "591c78a4-7672-5ec6-a2fb-4d1214e9a590",
             "application": {
                 "name": "python",
                 "shortName": "py",
@@ -72,22 +121,17 @@
             }
         },
         {
-            "name": "Import Slab1 Max",
+            "name": "Set Slab1 Max",
             "type": "assignment",
             "operand": "slab1_max",
-            "value": "slab1_max",
-            "input": [
-                {
-                    "name": "slab1_max",
-                    "scope": "extract-coords"
-                }
-            ],
+            "value": "SLAB1_COORDS['z_max']",
+            "input": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "cbaaec65-b89d-5acd-ad82-bb272f49581d",
+            "flowchartId": "591c78a4-7672-5ec6-a2fb-4d1214e9a590",
             "tags": [],
             "head": false,
-            "next": "564e20c0-d40e-5113-939d-b273ffec743a",
+            "next": "bc3aaede-37f0-5745-a9f7-8659657862e3",
             "application": {
                 "name": "python",
                 "shortName": "py",
@@ -99,22 +143,17 @@
             }
         },
         {
-            "name": "Import Slab2 Min",
+            "name": "Set Slab2 Min",
             "type": "assignment",
             "operand": "slab2_min",
-            "value": "slab2_min",
-            "input": [
-                {
-                    "name": "slab2_min",
-                    "scope": "extract-coords"
-                }
-            ],
+            "value": "SLAB2_COORDS['z_min']",
+            "input": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "564e20c0-d40e-5113-939d-b273ffec743a",
+            "flowchartId": "bc3aaede-37f0-5745-a9f7-8659657862e3",
             "tags": [],
             "head": false,
-            "next": "d3612ae8-99ea-5df1-9c28-cda4bc4e5aca",
+            "next": "179abc2f-bed1-5ac8-b321-5e5f36e5229f",
             "application": {
                 "name": "python",
                 "shortName": "py",
@@ -126,19 +165,14 @@
             }
         },
         {
-            "name": "Import Slab2 Max",
+            "name": "Set Slab2 Max",
             "type": "assignment",
             "operand": "slab2_max",
-            "value": "slab2_max",
-            "input": [
-                {
-                    "name": "slab2_max",
-                    "scope": "extract-coords"
-                }
-            ],
+            "value": "SLAB2_COORDS['z_max']",
+            "input": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "d3612ae8-99ea-5df1-9c28-cda4bc4e5aca",
+            "flowchartId": "179abc2f-bed1-5ac8-b321-5e5f36e5229f",
             "tags": [],
             "head": false,
             "next": "6270f60d-ee9e-53cf-8c61-d250bf8f7cb2",

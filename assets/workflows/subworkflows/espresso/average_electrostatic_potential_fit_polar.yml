@@ -1,7 +1,7 @@
 # Fit linear ESP for polar interfaces
 # Note: this subworkflow is assumed to be used as part of the valence band offset polar workflow
 # and is NOT self-sufficient!
-# The main workflow must override the input scopes to point to the correct extract subworkflows.
+# The main workflow must override the input scopes to point to the correct extract execution units.
 application:
   name: python
   version: 3.10.13
@@ -20,37 +20,45 @@ units:
         - name: average_potential_profile
           scope: average-electrostatic-potential
     type: assignment
+  # Import STDOUT from slab1 extract execution (Left material for Interface fit)
   - config:
-      name: Import Slab1 Min
+      name: Import Slab1 Coords JSON
+      operand: SLAB1_COORDS
+      value: "json.loads(STDOUT)"
+      input:
+        - name: STDOUT
+          scope: python-extract-coords-left
+    type: assignment
+  # Import STDOUT from slab2 extract execution (Right material for Interface fit)
+  - config:
+      name: Import Slab2 Coords JSON
+      operand: SLAB2_COORDS
+      value: "json.loads(STDOUT)"
+      input:
+        - name: STDOUT
+          scope: python-extract-coords-right
+    type: assignment
+  # Extract slab1 min/max from parsed JSON
+  - config:
+      name: Set Slab1 Min
       operand: slab1_min
-      value: "slab1_min"
-      input:
-        - name: slab1_min
-          scope: extract-coords
+      value: "SLAB1_COORDS['z_min']"
     type: assignment
   - config:
-      name: Import Slab1 Max
+      name: Set Slab1 Max
       operand: slab1_max
-      value: "slab1_max"
-      input:
-        - name: slab1_max
-          scope: extract-coords
+      value: "SLAB1_COORDS['z_max']"
     type: assignment
+  # Extract slab2 min/max from parsed JSON
   - config:
-      name: Import Slab2 Min
+      name: Set Slab2 Min
       operand: slab2_min
-      value: "slab2_min"
-      input:
-        - name: slab2_min
-          scope: extract-coords
+      value: "SLAB2_COORDS['z_min']"
     type: assignment
   - config:
-      name: Import Slab2 Max
+      name: Set Slab2 Max
       operand: slab2_max
-      value: "slab2_max"
-      input:
-        - name: slab2_max
-          scope: extract-coords
+      value: "SLAB2_COORDS['z_max']"
     type: assignment
   - config:
       name: Set Interface Part Label

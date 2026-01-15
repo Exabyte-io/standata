@@ -203,50 +203,36 @@ units:
             input:
               - name: average_potential_profile
                 scope: average-electrostatic-potential
-      # Import slab1 coords from Left extraction
+      # Import slab1 coords from Left extraction execution unit
       - index: 1
         type: assignment
         config:
           attributes:
             input:
-              - name: slab1_min
-                scope: Extract Left Coordinates
+              - name: STDOUT
+                scope: python-extract-coords-left
+      # Import slab2 coords from Right extraction execution unit
       - index: 2
         type: assignment
         config:
           attributes:
             input:
-              - name: slab1_max
-                scope: Extract Left Coordinates
-      # Import slab2 coords from Right extraction
-      - index: 3
-        type: assignment
-        config:
-          attributes:
-            input:
-              - name: slab2_min
-                scope: Extract Right Coordinates
-      - index: 4
-        type: assignment
-        config:
-          attributes:
-            input:
-              - name: slab2_max
-                scope: Extract Right Coordinates
+              - name: STDOUT
+                scope: python-extract-coords-right
       # Set interface part label
-      - index: 5
+      - index: 7
         type: assignment
         config:
           attributes:
             value: "'Interface'"
       # Set unique flowchartId for execution
-      - index: 6
+      - index: 8
         type: executionBuilder
         config:
           attributes:
             flowchartId: python-fit-esp-polar-interface
       # Set output variable name and scope
-      - index: 7
+      - index: 9
         type: assignment
         config:
           attributes:
@@ -270,49 +256,36 @@ units:
             input:
               - name: average_potential_profile
                 scope: average-electrostatic-potential-left
-      # Import all coords from Left extraction (same for both slabs)
+      # Import slab1 coords from Left extraction (same material for both slabs)
       - index: 1
         type: assignment
         config:
           attributes:
             input:
-              - name: slab1_min
-                scope: Extract Left Coordinates
+              - name: STDOUT
+                scope: python-extract-coords-left
+      # Import slab2 coords from Left extraction (same material for both slabs)
       - index: 2
         type: assignment
         config:
           attributes:
             input:
-              - name: slab1_max
-                scope: Extract Left Coordinates
-      - index: 3
-        type: assignment
-        config:
-          attributes:
-            input:
-              - name: slab2_min
-                scope: Extract Left Coordinates
-      - index: 4
-        type: assignment
-        config:
-          attributes:
-            input:
-              - name: slab2_max
-                scope: Extract Left Coordinates
+              - name: STDOUT
+                scope: python-extract-coords-left
       # Set interface part label
-      - index: 5
+      - index: 7
         type: assignment
         config:
           attributes:
             value: "'Left'"
       # Set unique flowchartId for execution
-      - index: 6
+      - index: 8
         type: executionBuilder
         config:
           attributes:
             flowchartId: python-fit-esp-polar-left
       # Set output variable name and scope
-      - index: 7
+      - index: 9
         type: assignment
         config:
           attributes:
@@ -336,49 +309,36 @@ units:
             input:
               - name: average_potential_profile
                 scope: average-electrostatic-potential-right
-      # Import all coords from Right extraction (same for both slabs)
+      # Import slab1 coords from Right extraction (same material for both slabs)
       - index: 1
         type: assignment
         config:
           attributes:
             input:
-              - name: slab1_min
-                scope: Extract Right Coordinates
+              - name: STDOUT
+                scope: python-extract-coords-right
+      # Import slab2 coords from Right extraction (same material for both slabs)
       - index: 2
         type: assignment
         config:
           attributes:
             input:
-              - name: slab1_max
-                scope: Extract Right Coordinates
-      - index: 3
-        type: assignment
-        config:
-          attributes:
-            input:
-              - name: slab2_min
-                scope: Extract Right Coordinates
-      - index: 4
-        type: assignment
-        config:
-          attributes:
-            input:
-              - name: slab2_max
-                scope: Extract Right Coordinates
+              - name: STDOUT
+                scope: python-extract-coords-right
       # Set interface part label
-      - index: 5
+      - index: 7
         type: assignment
         config:
           attributes:
             value: "'Right'"
       # Set unique flowchartId for execution
-      - index: 6
+      - index: 8
         type: executionBuilder
         config:
           attributes:
             flowchartId: python-fit-esp-polar-right
       # Set output variable name and scope
-      - index: 7
+      - index: 9
         type: assignment
         config:
           attributes:
