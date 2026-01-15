@@ -18,9 +18,166 @@
     },
     "units": [
         {
+            "name": "Import Average Potential Profile",
+            "type": "assignment",
+            "operand": "average_potential_profile",
+            "value": "average_potential_profile",
+            "input": [
+                {
+                    "name": "average_potential_profile",
+                    "scope": "average-electrostatic-potential"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "a094e53f-3a7b-5986-a82d-6c0aeea7d1e1",
+            "tags": [],
+            "head": true,
+            "next": "e4a082aa-a35f-59c7-a13c-37d168c80874",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Import Slab1 Min",
+            "type": "assignment",
+            "operand": "slab1_min",
+            "value": "slab1_min",
+            "input": [
+                {
+                    "name": "slab1_min",
+                    "scope": "extract-coords"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "e4a082aa-a35f-59c7-a13c-37d168c80874",
+            "tags": [],
+            "head": false,
+            "next": "cbaaec65-b89d-5acd-ad82-bb272f49581d",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Import Slab1 Max",
+            "type": "assignment",
+            "operand": "slab1_max",
+            "value": "slab1_max",
+            "input": [
+                {
+                    "name": "slab1_max",
+                    "scope": "extract-coords"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "cbaaec65-b89d-5acd-ad82-bb272f49581d",
+            "tags": [],
+            "head": false,
+            "next": "564e20c0-d40e-5113-939d-b273ffec743a",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Import Slab2 Min",
+            "type": "assignment",
+            "operand": "slab2_min",
+            "value": "slab2_min",
+            "input": [
+                {
+                    "name": "slab2_min",
+                    "scope": "extract-coords"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "564e20c0-d40e-5113-939d-b273ffec743a",
+            "tags": [],
+            "head": false,
+            "next": "d3612ae8-99ea-5df1-9c28-cda4bc4e5aca",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Import Slab2 Max",
+            "type": "assignment",
+            "operand": "slab2_max",
+            "value": "slab2_max",
+            "input": [
+                {
+                    "name": "slab2_max",
+                    "scope": "extract-coords"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "d3612ae8-99ea-5df1-9c28-cda4bc4e5aca",
+            "tags": [],
+            "head": false,
+            "next": "6270f60d-ee9e-53cf-8c61-d250bf8f7cb2",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Set Interface Part Label",
+            "type": "assignment",
+            "operand": "interface_part",
+            "value": "'Interface'",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "6270f60d-ee9e-53cf-8c61-d250bf8f7cb2",
+            "tags": [],
+            "head": false,
+            "next": "python-fit-esp-polar",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
             "type": "execution",
             "name": "Fit Linear ESP for Polar Interface",
-            "head": true,
+            "head": false,
             "results": [
                 {
                     "name": "file_content"
@@ -80,11 +237,11 @@
             "input": [
                 {
                     "applicationName": "python",
-                    "content": "# ------------------------------------------------------------------ #\n# Linear Fit of ESP for Polar Interface VBO Calculation              #\n# ------------------------------------------------------------------ #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n#                                                                    #\n# For polar interfaces, ESP shows linear gradient in bulk regions    #\n# due to internal electric field. We fit each slab region and use    #\n# the average value of the fit as the bulk ESP reference.            #\n#                                                                    #\n# Input: Coordinates defining slab regions (from structure data)     #\n#   - slab1_min, slab1_max: z-coordinates of first material region   #\n#   - slab2_min, slab2_max: z-coordinates of second material region  #\n#                                                                    #\n# Output: Va, Vb - average ESP values for each slab region           #\n# ------------------------------------------------------------------ #\nimport json\n\nimport matplotlib\nmatplotlib.use('Agg')  # Non-interactive backend for headless environments\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom munch import Munch\nfrom scipy.stats import linregress\n\n# Data from context: macroscopic average potential profile\n{% raw %}profile = {{average_potential_profile}}{% endraw %}\n\nX = np.array(profile.xDataArray)  # z-coordinates (angstrom)\nY = np.array(profile.yDataSeries[1])  # Macroscopic average V̄(z)\n\n# Slab region coordinates (passed from workflow, set by user based on structure)\n# These define z-coordinate ranges for fitting in each material region\n{% raw %}SLAB1_MIN = float({{slab1_min}}){% endraw %}\n{% raw %}SLAB1_MAX = float({{slab1_max}}){% endraw %}\n{% raw %}SLAB2_MIN = float({{slab2_min}}){% endraw %}\n{% raw %}SLAB2_MAX = float({{slab2_max}}){% endraw %}\n\n# Material type for labeling output files (Interface, Left, or Right)\n{% raw %}MATERIAL_TYPE = \"{{material_type}}\"{% endraw %}\n\n\ndef get_region_indices(x_data, x_min, x_max):\n    \"\"\"Get array indices corresponding to coordinate range.\"\"\"\n    mask = (x_data >= x_min) & (x_data <= x_max)\n    indices = np.where(mask)[0]\n    if len(indices) == 0:\n        return 0, len(x_data)\n    return indices[0], indices[-1] + 1\n\n\ndef fit_and_average(x_data, y_data, start_idx, end_idx):\n    \"\"\"\n    Fit linear regression to region and return average value, slope, and intercept.\n    \n    The average of the fitted line equals the mean of y-values,\n    but fitting helps smooth out oscillations and validates linearity.\n    \"\"\"\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    \n    if len(x_region) < 2:\n        avg = float(np.mean(y_region)) if len(y_region) > 0 else 0.0\n        return avg, 0.0, avg\n    \n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    \n    # Average value of linear fit over the region\n    # V_avg = (1/L) * integral(slope*x + intercept) = slope*x_mid + intercept\n    x_mid = (x_region[0] + x_region[-1]) / 2.0\n    avg_value = slope * x_mid + intercept\n    \n    return float(avg_value), float(slope), float(intercept)\n\n\n# Get indices for each slab region\nslab1_start, slab1_end = get_region_indices(X, SLAB1_MIN, SLAB1_MAX)\nslab2_start, slab2_end = get_region_indices(X, SLAB2_MIN, SLAB2_MAX)\n\n# Fit and get average ESP for each slab\nVa, slope_a, intercept_a = fit_and_average(X, Y, slab1_start, slab1_end)\nVb, slope_b, intercept_b = fit_and_average(X, Y, slab2_start, slab2_end)\n\n# Output compatible with VBO workflow (same format as find_extrema.pyi)\nresult = {\n    \"minima\": [Va, Vb],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n\n# Generate visualization plot\nplt.figure(figsize=(10, 6))\nplt.plot(X, Y, label='Macroscopic Average Potential', linewidth=2)\n\n# Highlight fitting regions\nplt.axvspan(SLAB1_MIN, SLAB1_MAX, color='red', alpha=0.2, label='Slab 1 Region')\nplt.axvspan(SLAB2_MIN, SLAB2_MAX, color='blue', alpha=0.2, label='Slab 2 Region')\n\n# Plot fitted lines\nif slab1_end > slab1_start:\n    x_fit1 = X[slab1_start:slab1_end]\n    y_fit1 = slope_a * x_fit1 + intercept_a\n    plt.plot(x_fit1, y_fit1, color='darkred', linestyle='--', linewidth=2, label='Fit Slab 1')\n\nif slab2_end > slab2_start:\n    x_fit2 = X[slab2_start:slab2_end]\n    y_fit2 = slope_b * x_fit2 + intercept_b\n    plt.plot(x_fit2, y_fit2, color='darkblue', linestyle='--', linewidth=2, label='Fit Slab 2')\n\n# Plot average ESP values\nplt.axhline(Va, color='red', linestyle=':', linewidth=2, label=f'Avg ESP Slab 1 = {Va:.3f} eV')\nplt.axhline(Vb, color='blue', linestyle=':', linewidth=2, label=f'Avg ESP Slab 2 = {Vb:.3f} eV')\n\nplt.xlabel('z-coordinate (Å)', fontsize=12)\nplt.ylabel('Macroscopic Average Potential (eV)', fontsize=12)\nplt.title(f'Polar VBO Calculation ({MATERIAL_TYPE})', fontsize=14, fontweight='bold')\nplt.legend(loc='best', fontsize=10)\nplt.grid(True, alpha=0.3)\nplt.tight_layout()\n\n# Save plot to file with material type in filename\nfilename = f'polar_vbo_fit_{MATERIAL_TYPE}.png'\nplt.savefig(filename, dpi=150, bbox_inches='tight')\nplt.close()\n",
+                    "content": "# ------------------------------------------------------------------ #\n# Linear Fit of ESP for Polar Interface VBO Calculation              #\n# ------------------------------------------------------------------ #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n#                                                                    #\n# For polar interfaces, ESP shows linear gradient in bulk regions    #\n# due to internal electric field. We fit each slab region and use    #\n# the average value of the fit as the bulk ESP reference.            #\n#                                                                    #\n# Input: Coordinates defining slab regions (from structure data)     #\n#   - slab1_min, slab1_max: z-coordinates of first material region   #\n#   - slab2_min, slab2_max: z-coordinates of second material region  #\n#                                                                    #\n# Output: Va, Vb - average ESP values for each slab region           #\n# ------------------------------------------------------------------ #\nimport json\n\nimport matplotlib\nmatplotlib.use('Agg')  # Non-interactive backend for headless environments\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom munch import Munch\nfrom scipy.stats import linregress\n\n# Data from context: macroscopic average potential profile\n{% raw %}profile = {{average_potential_profile}}{% endraw %}\n\nX = np.array(profile.xDataArray)  # z-coordinates (angstrom)\nY = np.array(profile.yDataSeries[1])  # Macroscopic average V̄(z)\n\n# Slab region coordinates (passed from workflow, set by user based on structure)\n# These define z-coordinate ranges for fitting in each material region\n{% raw %}SLAB1_MIN = float({{slab1_min}}){% endraw %}\n{% raw %}SLAB1_MAX = float({{slab1_max}}){% endraw %}\n{% raw %}SLAB2_MIN = float({{slab2_min}}){% endraw %}\n{% raw %}SLAB2_MAX = float({{slab2_max}}){% endraw %}\n\n# Interface part for labeling output files (Interface, Left, or Right)\n{% raw %}INTERFACE_PART = \"{{interface_part}}\"{% endraw %}\n\n\ndef get_region_indices(x_data, x_min, x_max):\n    \"\"\"Get array indices corresponding to coordinate range.\"\"\"\n    mask = (x_data >= x_min) & (x_data <= x_max)\n    indices = np.where(mask)[0]\n    if len(indices) == 0:\n        return 0, len(x_data)\n    return indices[0], indices[-1] + 1\n\n\ndef fit_and_average(x_data, y_data, start_idx, end_idx):\n    \"\"\"\n    Fit linear regression to region and return average value, slope, and intercept.\n    \n    The average of the fitted line equals the mean of y-values,\n    but fitting helps smooth out oscillations and validates linearity.\n    \"\"\"\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    \n    if len(x_region) < 2:\n        avg = float(np.mean(y_region)) if len(y_region) > 0 else 0.0\n        return avg, 0.0, avg\n    \n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    \n    # Average value of linear fit over the region\n    # V_avg = (1/L) * integral(slope*x + intercept) = slope*x_mid + intercept\n    x_mid = (x_region[0] + x_region[-1]) / 2.0\n    avg_value = slope * x_mid + intercept\n    \n    return float(avg_value), float(slope), float(intercept)\n\n\n# Get indices for each slab region\nslab1_start, slab1_end = get_region_indices(X, SLAB1_MIN, SLAB1_MAX)\nslab2_start, slab2_end = get_region_indices(X, SLAB2_MIN, SLAB2_MAX)\n\n# Fit and get average ESP for each slab\nVa, slope_a, intercept_a = fit_and_average(X, Y, slab1_start, slab1_end)\nVb, slope_b, intercept_b = fit_and_average(X, Y, slab2_start, slab2_end)\n\n# Output compatible with VBO workflow (same format as find_extrema.pyi)\nresult = {\n    \"minima\": [Va, Vb],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n\n# Generate visualization plot\nplt.figure(figsize=(10, 6))\nplt.plot(X, Y, label='Macroscopic Average Potential', linewidth=2)\n\n# Highlight fitting regions\nplt.axvspan(SLAB1_MIN, SLAB1_MAX, color='red', alpha=0.2, label='Slab 1 Region')\nplt.axvspan(SLAB2_MIN, SLAB2_MAX, color='blue', alpha=0.2, label='Slab 2 Region')\n\n# Plot fitted lines\nif slab1_end > slab1_start:\n    x_fit1 = X[slab1_start:slab1_end]\n    y_fit1 = slope_a * x_fit1 + intercept_a\n    plt.plot(x_fit1, y_fit1, color='darkred', linestyle='--', linewidth=2, label='Fit Slab 1')\n\nif slab2_end > slab2_start:\n    x_fit2 = X[slab2_start:slab2_end]\n    y_fit2 = slope_b * x_fit2 + intercept_b\n    plt.plot(x_fit2, y_fit2, color='darkblue', linestyle='--', linewidth=2, label='Fit Slab 2')\n\n# Plot average ESP values\nplt.axhline(Va, color='red', linestyle=':', linewidth=2, label=f'Avg ESP Slab 1 = {Va:.3f} eV')\nplt.axhline(Vb, color='blue', linestyle=':', linewidth=2, label=f'Avg ESP Slab 2 = {Vb:.3f} eV')\n\nplt.xlabel('z-coordinate (Å)', fontsize=12)\nplt.ylabel('Macroscopic Average Potential (eV)', fontsize=12)\nplt.title(f'Polar Interface VBO Calculation', fontsize=14, fontweight='bold')\nplt.legend(loc='best', fontsize=10)\nplt.grid(True, alpha=0.3)\nplt.tight_layout()\n\n# Save plot to file with interface part in filename\nfilename = f'polar_vbo_fit_{INTERFACE_PART}.png'\nplt.savefig(filename, dpi=150, bbox_inches='tight')\nplt.close()\n",
                     "contextProviders": [],
                     "executableName": "python",
                     "name": "fit_esp_polar.py",
-                    "rendered": "# ------------------------------------------------------------------ #\n# Linear Fit of ESP for Polar Interface VBO Calculation              #\n# ------------------------------------------------------------------ #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n#                                                                    #\n# For polar interfaces, ESP shows linear gradient in bulk regions    #\n# due to internal electric field. We fit each slab region and use    #\n# the average value of the fit as the bulk ESP reference.            #\n#                                                                    #\n# Input: Coordinates defining slab regions (from structure data)     #\n#   - slab1_min, slab1_max: z-coordinates of first material region   #\n#   - slab2_min, slab2_max: z-coordinates of second material region  #\n#                                                                    #\n# Output: Va, Vb - average ESP values for each slab region           #\n# ------------------------------------------------------------------ #\nimport json\n\nimport matplotlib\nmatplotlib.use('Agg')  # Non-interactive backend for headless environments\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom munch import Munch\nfrom scipy.stats import linregress\n\n# Data from context: macroscopic average potential profile\nprofile = {{average_potential_profile}}\n\nX = np.array(profile.xDataArray)  # z-coordinates (angstrom)\nY = np.array(profile.yDataSeries[1])  # Macroscopic average V̄(z)\n\n# Slab region coordinates (passed from workflow, set by user based on structure)\n# These define z-coordinate ranges for fitting in each material region\nSLAB1_MIN = float({{slab1_min}})\nSLAB1_MAX = float({{slab1_max}})\nSLAB2_MIN = float({{slab2_min}})\nSLAB2_MAX = float({{slab2_max}})\n\n# Material type for labeling output files (Interface, Left, or Right)\nMATERIAL_TYPE = \"{{material_type}}\"\n\n\ndef get_region_indices(x_data, x_min, x_max):\n    \"\"\"Get array indices corresponding to coordinate range.\"\"\"\n    mask = (x_data >= x_min) & (x_data <= x_max)\n    indices = np.where(mask)[0]\n    if len(indices) == 0:\n        return 0, len(x_data)\n    return indices[0], indices[-1] + 1\n\n\ndef fit_and_average(x_data, y_data, start_idx, end_idx):\n    \"\"\"\n    Fit linear regression to region and return average value, slope, and intercept.\n    \n    The average of the fitted line equals the mean of y-values,\n    but fitting helps smooth out oscillations and validates linearity.\n    \"\"\"\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    \n    if len(x_region) < 2:\n        avg = float(np.mean(y_region)) if len(y_region) > 0 else 0.0\n        return avg, 0.0, avg\n    \n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    \n    # Average value of linear fit over the region\n    # V_avg = (1/L) * integral(slope*x + intercept) = slope*x_mid + intercept\n    x_mid = (x_region[0] + x_region[-1]) / 2.0\n    avg_value = slope * x_mid + intercept\n    \n    return float(avg_value), float(slope), float(intercept)\n\n\n# Get indices for each slab region\nslab1_start, slab1_end = get_region_indices(X, SLAB1_MIN, SLAB1_MAX)\nslab2_start, slab2_end = get_region_indices(X, SLAB2_MIN, SLAB2_MAX)\n\n# Fit and get average ESP for each slab\nVa, slope_a, intercept_a = fit_and_average(X, Y, slab1_start, slab1_end)\nVb, slope_b, intercept_b = fit_and_average(X, Y, slab2_start, slab2_end)\n\n# Output compatible with VBO workflow (same format as find_extrema.pyi)\nresult = {\n    \"minima\": [Va, Vb],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n\n# Generate visualization plot\nplt.figure(figsize=(10, 6))\nplt.plot(X, Y, label='Macroscopic Average Potential', linewidth=2)\n\n# Highlight fitting regions\nplt.axvspan(SLAB1_MIN, SLAB1_MAX, color='red', alpha=0.2, label='Slab 1 Region')\nplt.axvspan(SLAB2_MIN, SLAB2_MAX, color='blue', alpha=0.2, label='Slab 2 Region')\n\n# Plot fitted lines\nif slab1_end > slab1_start:\n    x_fit1 = X[slab1_start:slab1_end]\n    y_fit1 = slope_a * x_fit1 + intercept_a\n    plt.plot(x_fit1, y_fit1, color='darkred', linestyle='--', linewidth=2, label='Fit Slab 1')\n\nif slab2_end > slab2_start:\n    x_fit2 = X[slab2_start:slab2_end]\n    y_fit2 = slope_b * x_fit2 + intercept_b\n    plt.plot(x_fit2, y_fit2, color='darkblue', linestyle='--', linewidth=2, label='Fit Slab 2')\n\n# Plot average ESP values\nplt.axhline(Va, color='red', linestyle=':', linewidth=2, label=f'Avg ESP Slab 1 = {Va:.3f} eV')\nplt.axhline(Vb, color='blue', linestyle=':', linewidth=2, label=f'Avg ESP Slab 2 = {Vb:.3f} eV')\n\nplt.xlabel('z-coordinate (Å)', fontsize=12)\nplt.ylabel('Macroscopic Average Potential (eV)', fontsize=12)\nplt.title(f'Polar VBO Calculation ({MATERIAL_TYPE})', fontsize=14, fontweight='bold')\nplt.legend(loc='best', fontsize=10)\nplt.grid(True, alpha=0.3)\nplt.tight_layout()\n\n# Save plot to file with material type in filename\nfilename = f'polar_vbo_fit_{MATERIAL_TYPE}.png'\nplt.savefig(filename, dpi=150, bbox_inches='tight')\nplt.close()\n",
+                    "rendered": "# ------------------------------------------------------------------ #\n# Linear Fit of ESP for Polar Interface VBO Calculation              #\n# ------------------------------------------------------------------ #\n# Reference: Choudhary & Garrity, arXiv:2401.02021 (InterMat)        #\n#                                                                    #\n# For polar interfaces, ESP shows linear gradient in bulk regions    #\n# due to internal electric field. We fit each slab region and use    #\n# the average value of the fit as the bulk ESP reference.            #\n#                                                                    #\n# Input: Coordinates defining slab regions (from structure data)     #\n#   - slab1_min, slab1_max: z-coordinates of first material region   #\n#   - slab2_min, slab2_max: z-coordinates of second material region  #\n#                                                                    #\n# Output: Va, Vb - average ESP values for each slab region           #\n# ------------------------------------------------------------------ #\nimport json\n\nimport matplotlib\nmatplotlib.use('Agg')  # Non-interactive backend for headless environments\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom munch import Munch\nfrom scipy.stats import linregress\n\n# Data from context: macroscopic average potential profile\nprofile = {{average_potential_profile}}\n\nX = np.array(profile.xDataArray)  # z-coordinates (angstrom)\nY = np.array(profile.yDataSeries[1])  # Macroscopic average V̄(z)\n\n# Slab region coordinates (passed from workflow, set by user based on structure)\n# These define z-coordinate ranges for fitting in each material region\nSLAB1_MIN = float({{slab1_min}})\nSLAB1_MAX = float({{slab1_max}})\nSLAB2_MIN = float({{slab2_min}})\nSLAB2_MAX = float({{slab2_max}})\n\n# Interface part for labeling output files (Interface, Left, or Right)\nINTERFACE_PART = \"{{interface_part}}\"\n\n\ndef get_region_indices(x_data, x_min, x_max):\n    \"\"\"Get array indices corresponding to coordinate range.\"\"\"\n    mask = (x_data >= x_min) & (x_data <= x_max)\n    indices = np.where(mask)[0]\n    if len(indices) == 0:\n        return 0, len(x_data)\n    return indices[0], indices[-1] + 1\n\n\ndef fit_and_average(x_data, y_data, start_idx, end_idx):\n    \"\"\"\n    Fit linear regression to region and return average value, slope, and intercept.\n    \n    The average of the fitted line equals the mean of y-values,\n    but fitting helps smooth out oscillations and validates linearity.\n    \"\"\"\n    x_region = x_data[start_idx:end_idx]\n    y_region = y_data[start_idx:end_idx]\n    \n    if len(x_region) < 2:\n        avg = float(np.mean(y_region)) if len(y_region) > 0 else 0.0\n        return avg, 0.0, avg\n    \n    slope, intercept, r_value, _, _ = linregress(x_region, y_region)\n    \n    # Average value of linear fit over the region\n    # V_avg = (1/L) * integral(slope*x + intercept) = slope*x_mid + intercept\n    x_mid = (x_region[0] + x_region[-1]) / 2.0\n    avg_value = slope * x_mid + intercept\n    \n    return float(avg_value), float(slope), float(intercept)\n\n\n# Get indices for each slab region\nslab1_start, slab1_end = get_region_indices(X, SLAB1_MIN, SLAB1_MAX)\nslab2_start, slab2_end = get_region_indices(X, SLAB2_MIN, SLAB2_MAX)\n\n# Fit and get average ESP for each slab\nVa, slope_a, intercept_a = fit_and_average(X, Y, slab1_start, slab1_end)\nVb, slope_b, intercept_b = fit_and_average(X, Y, slab2_start, slab2_end)\n\n# Output compatible with VBO workflow (same format as find_extrema.pyi)\nresult = {\n    \"minima\": [Va, Vb],\n    \"maxima\": [],\n}\n\nprint(json.dumps(result, indent=4))\n\n# Generate visualization plot\nplt.figure(figsize=(10, 6))\nplt.plot(X, Y, label='Macroscopic Average Potential', linewidth=2)\n\n# Highlight fitting regions\nplt.axvspan(SLAB1_MIN, SLAB1_MAX, color='red', alpha=0.2, label='Slab 1 Region')\nplt.axvspan(SLAB2_MIN, SLAB2_MAX, color='blue', alpha=0.2, label='Slab 2 Region')\n\n# Plot fitted lines\nif slab1_end > slab1_start:\n    x_fit1 = X[slab1_start:slab1_end]\n    y_fit1 = slope_a * x_fit1 + intercept_a\n    plt.plot(x_fit1, y_fit1, color='darkred', linestyle='--', linewidth=2, label='Fit Slab 1')\n\nif slab2_end > slab2_start:\n    x_fit2 = X[slab2_start:slab2_end]\n    y_fit2 = slope_b * x_fit2 + intercept_b\n    plt.plot(x_fit2, y_fit2, color='darkblue', linestyle='--', linewidth=2, label='Fit Slab 2')\n\n# Plot average ESP values\nplt.axhline(Va, color='red', linestyle=':', linewidth=2, label=f'Avg ESP Slab 1 = {Va:.3f} eV')\nplt.axhline(Vb, color='blue', linestyle=':', linewidth=2, label=f'Avg ESP Slab 2 = {Vb:.3f} eV')\n\nplt.xlabel('z-coordinate (Å)', fontsize=12)\nplt.ylabel('Macroscopic Average Potential (eV)', fontsize=12)\nplt.title(f'Polar Interface VBO Calculation', fontsize=14, fontweight='bold')\nplt.legend(loc='best', fontsize=10)\nplt.grid(True, alpha=0.3)\nplt.tight_layout()\n\n# Save plot to file with interface part in filename\nfilename = f'polar_vbo_fit_{INTERFACE_PART}.png'\nplt.savefig(filename, dpi=150, bbox_inches='tight')\nplt.close()\n",
                     "schemaVersion": "2022.8.16"
                 },
                 {

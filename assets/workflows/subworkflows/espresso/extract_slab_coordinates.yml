@@ -13,6 +13,11 @@ model:
 name: Extract Slab Coordinates
 units:
   - config:
+      name: Set Material Index
+      operand: material_index
+      value: "0"
+    type: assignment
+  - config:
       name: Extract Z-Coordinates from Material
       execName: python
       flavorName: generic:processing:extract_slab_coordinates
@@ -29,20 +34,20 @@ units:
   - config:
       name: Set Slab1 Min Coordinate
       operand: slab1_min
-      value: "COORDS['slab1_min']"
+      value: "COORDS['z_min']"
     type: assignment
   - config:
       name: Set Slab1 Max Coordinate
       operand: slab1_max
-      value: "COORDS['slab1_max']"
+      value: "COORDS['z_max']"
     type: assignment
   - config:
       name: Set Slab2 Min Coordinate
       operand: slab2_min
-      value: "COORDS['slab2_min']"
+      value: "COORDS['z_min']"
     type: assignment
   - config:
       name: Set Slab2 Max Coordinate
       operand: slab2_max
-      value: "COORDS['slab2_max']"
+      value: "COORDS['z_max']"
     type: assignment
