@@ -36,15 +36,15 @@ z_coords_frac = np.array(coordinates.get_values_along_axis(axis="z"))
 c_length = material.lattice.c
 z_coords_angstrom = z_coords_frac * c_length
 
-# Extract z-range
+# Extract z-range for this material
 z_min = np.min(z_coords_angstrom)
 z_max = np.max(z_coords_angstrom)
 
+# Return just this material's coordinates
+# The workflow will map them to slab1 (for Left) or slab2 (for Right)
 result = {
-    "slab1_min": float(z_min),
-    "slab1_max": float(z_max),
-    "slab2_min": float(z_min),
-    "slab2_max": float(z_max),
+    "z_min": float(z_min),
+    "z_max": float(z_max),
     "material_index": material_index,
 }
 

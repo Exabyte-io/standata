@@ -35,8 +35,8 @@ Y = np.array(profile.yDataSeries[1])  # Macroscopic average V̄(z)
 {% raw %}SLAB2_MIN = float({{slab2_min}}){% endraw %}
 {% raw %}SLAB2_MAX = float({{slab2_max}}){% endraw %}
 
-# Material type for labeling output files (Interface, Left, or Right)
-{% raw %}MATERIAL_TYPE = "{{material_type}}"{% endraw %}
+# Interface part for labeling output files (Interface, Left, or Right)
+{% raw %}INTERFACE_PART = "{{interface_part}}"{% endraw %}
 
 
 def get_region_indices(x_data, x_min, x_max):
@@ -113,12 +113,12 @@ plt.axhline(Vb, color='blue', linestyle=':', linewidth=2, label=f'Avg ESP Slab 2
 
 plt.xlabel('z-coordinate (Å)', fontsize=12)
 plt.ylabel('Macroscopic Average Potential (eV)', fontsize=12)
-plt.title(f'Polar VBO Calculation ({MATERIAL_TYPE})', fontsize=14, fontweight='bold')
+plt.title(f'Polar Interface VBO Calculation', fontsize=14, fontweight='bold')
 plt.legend(loc='best', fontsize=10)
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
 
-# Save plot to file with material type in filename
-filename = f'polar_vbo_fit_{MATERIAL_TYPE}.png'
+# Save plot to file with interface part in filename
+filename = f'polar_vbo_fit_{INTERFACE_PART}.png'
 plt.savefig(filename, dpi=150, bbox_inches='tight')
 plt.close()

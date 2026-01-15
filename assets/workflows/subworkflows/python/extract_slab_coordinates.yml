@@ -25,22 +25,12 @@ units:
           scope: python-extract-coords
     type: assignment
   - config:
-      name: Set Slab1 Min Coordinate
-      operand: slab1_min
-      value: "COORDS['slab1_min']"
+      name: Set Z Min Coordinate
+      operand: z_min
+      value: "COORDS['z_min']"
     type: assignment
   - config:
-      name: Set Slab1 Max Coordinate
-      operand: slab1_max
-      value: "COORDS['slab1_max']"
-    type: assignment
-  - config:
-      name: Set Slab2 Min Coordinate
-      operand: slab2_min
-      value: "COORDS['slab2_min']"
-    type: assignment
-  - config:
-      name: Set Slab2 Max Coordinate
-      operand: slab2_max
-      value: "COORDS['slab2_max']"
+      name: Set Z Max Coordinate
+      operand: z_max
+      value: "COORDS['z_max']"
     type: assignment

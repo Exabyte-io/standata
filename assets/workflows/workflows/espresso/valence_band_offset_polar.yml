@@ -80,7 +80,7 @@ units:
                 scope: Extract Right Coordinates
               - name: slab2_max
                 scope: Extract Right Coordinates
-              - name: material_type
+              - name: interface_part
                 value: "Interface"
       - index: 1
         type: assignment
@@ -146,6 +146,30 @@ units:
             input:
               - name: material_index
                 value: "1"
+      - index: 1
+        type: assignment
+        config:
+          attributes:
+            operand: slab1_min
+            value: "z_min"
+      - index: 2
+        type: assignment
+        config:
+          attributes:
+            operand: slab1_max
+            value: "z_max"
+      - index: 3
+        type: assignment
+        config:
+          attributes:
+            operand: slab2_min
+            value: "z_min"
+      - index: 4
+        type: assignment
+        config:
+          attributes:
+            operand: slab2_max
+            value: "z_max"
   - name: average_electrostatic_potential_fit_polar
     type: subworkflow
     config:
@@ -168,7 +192,7 @@ units:
                 scope: Extract Left Coordinates
               - name: slab2_max
                 scope: Extract Left Coordinates
-              - name: material_type
+              - name: interface_part
                 value: "Left"
       - index: 1
         type: assignment
@@ -234,6 +258,30 @@ units:
             input:
               - name: material_index
                 value: "2"
+      - index: 1
+        type: assignment
+        config:
+          attributes:
+            operand: slab1_min
+            value: "z_min"
+      - index: 2
+        type: assignment
+        config:
+          attributes:
+            operand: slab1_max
+            value: "z_max"
+      - index: 3
+        type: assignment
+        config:
+          attributes:
+            operand: slab2_min
+            value: "z_min"
+      - index: 4
+        type: assignment
+        config:
+          attributes:
+            operand: slab2_max
+            value: "z_max"
   - name: average_electrostatic_potential_fit_polar
     type: subworkflow
     config:
@@ -256,7 +304,7 @@ units:
                 scope: Extract Right Coordinates
               - name: slab2_max
                 scope: Extract Right Coordinates
-              - name: material_type
+              - name: interface_part
                 value: "Right"
       - index: 1
         type: assignment
