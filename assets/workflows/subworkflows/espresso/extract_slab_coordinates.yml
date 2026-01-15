@@ -14,7 +14,7 @@ name: Extract Slab Coordinates
 units:
   - config:
       name: Set Material Index
-      operand: material_index
+      operand: MATERIAL_INDEX
       value: "0"
     type: assignment
   - config:
