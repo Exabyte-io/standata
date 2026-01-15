@@ -16,13 +16,14 @@
 import json
 
 import numpy as np
+from munch import Munch
 from scipy.stats import linregress
 
 # Data from context: macroscopic average potential profile
 {% raw %}profile = {{average_potential_profile}}{% endraw %}
 
-X = np.array(profile["xDataSeries"])  # z-coordinates (angstrom)
-Y = np.array(profile["yDataSeries"][1])  # Macroscopic average V̄(z)
+X = np.array(profile.xDataArray)  # z-coordinates (angstrom)
+Y = np.array(profile.yDataSeries[1])  # Macroscopic average V̄(z)
 
 # Slab region coordinates (passed from workflow, set by user based on structure)
 # These define z-coordinate ranges for fitting in each material region

@@ -65,3 +65,11 @@ units:
         - name: average_potential_profile
           scope: average-electrostatic-potential
     type: assignment
+  - config:
+      name: Set ESP Profile to Global Scope
+      operand: average_potential_profile
+      value: average_potential_profile
+      input:
+        - name: average_potential_profile
+          scope: average-electrostatic-potential
+    type: assignment

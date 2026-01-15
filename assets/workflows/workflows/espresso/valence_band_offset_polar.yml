@@ -69,6 +69,17 @@ units:
         config:
           attributes:
             flowchartId: python-fit-esp-polar-interface
+            input:
+              - name: average_potential_profile
+                scope: average-electrostatic-potential
+              - name: slab1_min
+                scope: Extract Interface Coordinates
+              - name: slab1_max
+                scope: Extract Interface Coordinates
+              - name: slab2_min
+                scope: Extract Interface Coordinates
+              - name: slab2_max
+                scope: Extract Interface Coordinates
       - index: 1
         type: assignment
         config:
@@ -144,6 +155,17 @@ units:
         config:
           attributes:
             flowchartId: python-fit-esp-polar-left
+            input:
+              - name: average_potential_profile
+                scope: average-electrostatic-potential-left
+              - name: slab1_min
+                scope: Extract Left Coordinates
+              - name: slab1_max
+                scope: Extract Left Coordinates
+              - name: slab2_min
+                scope: Extract Left Coordinates
+              - name: slab2_max
+                scope: Extract Left Coordinates
       - index: 1
         type: assignment
         config:
@@ -219,6 +241,17 @@ units:
         config:
           attributes:
             flowchartId: python-fit-esp-polar-right
+            input:
+              - name: average_potential_profile
+                scope: average-electrostatic-potential-right
+              - name: slab1_min
+                scope: Extract Right Coordinates
+              - name: slab1_max
+                scope: Extract Right Coordinates
+              - name: slab2_min
+                scope: Extract Right Coordinates
+              - name: slab2_max
+                scope: Extract Right Coordinates
       - index: 1
         type: assignment
         config:

@@ -20,16 +20,7 @@ from mat3ra.made.tools.convert import from_ase
 pw_scf_output = "./pw_scf.out"
 
 if not os.path.exists(pw_scf_output):
-    # Fallback if file doesn't exist
-    print(json.dumps({
-        "error": "pw_scf.out not found",
-        "slab1_min": 0.0,
-        "slab1_max": 20.0,
-        "slab2_min": 0.0,
-        "slab2_max": 20.0,
-        "material_index": material_index,
-    }, indent=4))
-    exit(0)
+    raise FileNotFoundError(f"Required file '{pw_scf_output}' not found. Cannot extract slab coordinates.")
 
 # Read atomic structure from espresso output
 atoms = ase.io.read(pw_scf_output, format="espresso-out")
