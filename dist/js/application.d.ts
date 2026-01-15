@@ -909,7 +909,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                             templateName: string;
                         }[];
                         monitors: string[];
-                        postProcessors: string[];
+                        results: string[];
                     };
                     espresso_extract_kpoints: {
                         applicationName: string;

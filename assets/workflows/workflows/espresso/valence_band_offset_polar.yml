@@ -73,13 +73,15 @@ units:
               - name: average_potential_profile
                 scope: average-electrostatic-potential
               - name: slab1_min
-                scope: Extract Interface Coordinates
+                scope: Extract Left Coordinates
               - name: slab1_max
-                scope: Extract Interface Coordinates
+                scope: Extract Left Coordinates
               - name: slab2_min
-                scope: Extract Interface Coordinates
+                scope: Extract Right Coordinates
               - name: slab2_max
-                scope: Extract Interface Coordinates
+                scope: Extract Right Coordinates
+              - name: material_type
+                value: "Interface"
       - index: 1
         type: assignment
         config:
@@ -166,6 +168,8 @@ units:
                 scope: Extract Left Coordinates
               - name: slab2_max
                 scope: Extract Left Coordinates
+              - name: material_type
+                value: "Left"
       - index: 1
         type: assignment
         config:
@@ -252,6 +256,8 @@ units:
                 scope: Extract Right Coordinates
               - name: slab2_max
                 scope: Extract Right Coordinates
+              - name: material_type
+                value: "Right"
       - index: 1
         type: assignment
         config:
