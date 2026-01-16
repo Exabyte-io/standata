@@ -66,13 +66,31 @@
             "type": "assignment",
             "operand": "band_energies",
             "value": "[band_data[0] for band_data in (band_structure['yDataSeries'] if (band_structure and 'yDataSeries' in band_structure) else [])]",
-            "input": [
-                {
-                    "name": "band_structure",
-                    "scope": "init-band-structure"
-                }
-            ],
+            "input": [],
             "flowchartId": "extract-band-energies",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "normalize-band-energies",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Normalize Band Energies",
+            "type": "assignment",
+            "operand": "band_energies",
+            "value": "band_energies if band_energies else []",
+            "input": [],
+            "flowchartId": "normalize-band-energies",
             "status": "idle",
             "statusTrack": [],
             "tags": [],
@@ -94,16 +112,7 @@
             "type": "assignment",
             "operand": "indices_below_fermi",
             "value": "[i for i in range(len(band_energies)) if band_energies[i] <= fermi_energy]",
-            "input": [
-                {
-                    "name": "band_energies",
-                    "scope": "extract-band-energies"
-                },
-                {
-                    "name": "fermi_energy",
-                    "scope": "init-fermi-energy"
-                }
-            ],
+            "input": [],
             "flowchartId": "indices-below-fermi",
             "status": "idle",
             "statusTrack": [],
@@ -126,16 +135,7 @@
             "type": "assignment",
             "operand": "indices_above_fermi",
             "value": "[i for i in range(len(band_energies)) if band_energies[i] > fermi_energy]",
-            "input": [
-                {
-                    "name": "band_energies",
-                    "scope": "extract-band-energies"
-                },
-                {
-                    "name": "fermi_energy",
-                    "scope": "init-fermi-energy"
-                }
-            ],
+            "input": [],
             "flowchartId": "indices-above-fermi",
             "status": "idle",
             "statusTrack": [],
@@ -158,12 +158,7 @@
             "type": "assignment",
             "operand": "KBAND_VALUE_BELOW_EF",
             "value": "indices_below_fermi[-1] + 1 if len(indices_below_fermi) > 0 else 1",
-            "input": [
-                {
-                    "name": "indices_below_fermi",
-                    "scope": "indices-below-fermi"
-                }
-            ],
+            "input": [],
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "8771dc7f-878e-5f13-a840-a3a416854f1e",
@@ -186,16 +181,7 @@
             "type": "assignment",
             "operand": "KBAND_VALUE_ABOVE_EF",
             "value": "indices_above_fermi[0] + 1 if len(indices_above_fermi) > 0 else len(band_energies)",
-            "input": [
-                {
-                    "name": "indices_above_fermi",
-                    "scope": "indices-above-fermi"
-                },
-                {
-                    "name": "band_energies",
-                    "scope": "extract-band-energies"
-                }
-            ],
+            "input": [],
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "91e1328f-39dd-5c24-83f9-d49bfe5c620e",
@@ -218,16 +204,7 @@
             "type": "assignment",
             "operand": "VALENCE_ENERGY",
             "value": "band_energies[indices_below_fermi[-1]] if len(indices_below_fermi) > 0 else (band_energies[0] if len(band_energies) > 0 else 0.0)",
-            "input": [
-                {
-                    "name": "band_energies",
-                    "scope": "extract-band-energies"
-                },
-                {
-                    "name": "indices_below_fermi",
-                    "scope": "indices-below-fermi"
-                }
-            ],
+            "input": [],
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "9fa08d2e-0ffd-5c12-8a88-086922fb3f72",
@@ -250,16 +227,7 @@
             "type": "assignment",
             "operand": "CONDUCTION_ENERGY",
             "value": "band_energies[indices_above_fermi[0]] if len(indices_above_fermi) > 0 else (band_energies[-1] if len(band_energies) > 0 else 0.0)",
-            "input": [
-                {
-                    "name": "band_energies",
-                    "scope": "extract-band-energies"
-                },
-                {
-                    "name": "indices_above_fermi",
-                    "scope": "indices-above-fermi"
-                }
-            ],
+            "input": [],
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "f5fbd236-2453-5ecd-aaf5-49940c45888c",
@@ -282,12 +250,7 @@
             "type": "assignment",
             "operand": "TOTAL_BANDS",
             "value": "len(band_energies)",
-            "input": [
-                {
-                    "name": "band_energies",
-                    "scope": "extract-band-energies"
-                }
-            ],
+            "input": [],
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "fff25fab-985b-50c6-8b4c-db7f7adb29a8",
