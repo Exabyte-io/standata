@@ -21,6 +21,7 @@ categories:
     - total_energy_contributions
     - total_force
     - valence_band_offset
+    - wavefunction_amplitude
     - workflow:pyml_predict
     - zero_point_energy
   tags:
@@ -312,6 +313,7 @@ entities:
       - espresso
       - file_content
       - python
+      - wavefunction_amplitude
   - filename: espresso/post_processor.json
     categories:
       - espresso
