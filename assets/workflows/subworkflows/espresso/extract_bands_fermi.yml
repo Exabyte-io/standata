@@ -24,7 +24,7 @@ units:
   - config:
       name: Extract Band Energies
       operand: band_energies
-      value: "[band_data[0] for band_data in (band_structure['yDataSeries'] if 'yDataSeries' in band_structure else [])]"
+      value: "[band_data[0] for band_data in (band_structure['yDataSeries'] if (band_structure and 'yDataSeries' in band_structure) else [])]"
       flowchartId: extract-band-energies
       input:
         - name: band_structure

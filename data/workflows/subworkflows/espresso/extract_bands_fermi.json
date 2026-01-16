@@ -65,7 +65,7 @@
             "name": "Extract Band Energies",
             "type": "assignment",
             "operand": "band_energies",
-            "value": "[band_data[0] for band_data in (band_structure['yDataSeries'] if 'yDataSeries' in band_structure else [])]",
+            "value": "[band_data[0] for band_data in (band_structure['yDataSeries'] if (band_structure and 'yDataSeries' in band_structure) else [])]",
             "input": [
                 {
                     "name": "band_structure",
