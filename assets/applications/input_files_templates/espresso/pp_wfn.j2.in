@@ -3,7 +3,7 @@
     prefix = '__prefix__'
     plot_num = 7
     kpoint = 1
-    kband = {% raw %}{{ KBAND_VALUE default(1) }}{% endraw %}
+    kband = {% raw %}{{ KBAND_VALUE | default(1) }}{% endraw %}
     lsign = .true.
 /
 &PLOT

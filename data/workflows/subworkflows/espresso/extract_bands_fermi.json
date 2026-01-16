@@ -16,52 +16,6 @@
     },
     "units": [
         {
-            "name": "Init Band Structure",
-            "type": "assignment",
-            "operand": "band_structure",
-            "value": "band_structure",
-            "input": [],
-            "flowchartId": "init-band-structure",
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "head": true,
-            "next": "init-fermi-energy",
-            "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
-            "name": "Init Fermi Energy",
-            "type": "assignment",
-            "operand": "fermi_energy",
-            "value": "fermi_energy",
-            "input": [],
-            "flowchartId": "init-fermi-energy",
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "head": false,
-            "next": "extract-band-energies",
-            "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
             "name": "Extract Band Energies",
             "type": "assignment",
             "operand": "band_energies",
@@ -71,30 +25,7 @@
             "status": "idle",
             "statusTrack": [],
             "tags": [],
-            "head": false,
-            "next": "normalize-band-energies",
-            "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
-            "name": "Normalize Band Energies",
-            "type": "assignment",
-            "operand": "band_energies",
-            "value": "band_energies if band_energies else []",
-            "input": [],
-            "flowchartId": "normalize-band-energies",
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "head": false,
+            "head": true,
             "next": "indices-below-fermi",
             "application": {
                 "name": "espresso",

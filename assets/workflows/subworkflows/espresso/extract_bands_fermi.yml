@@ -10,28 +10,10 @@ model:
 name: Extract Bands Near Fermi
 units:
   - config:
-      name: Init Band Structure
-      flowchartId: init-band-structure
-      operand: band_structure
-      value: band_structure
-    type: assignment
-  - config:
-      name: Init Fermi Energy
-      flowchartId: init-fermi-energy
-      operand: fermi_energy
-      value: fermi_energy
-    type: assignment
-  - config:
       name: Extract Band Energies
       operand: band_energies
       value: "[band_data[0] for band_data in (band_structure['yDataSeries'] if (band_structure and 'yDataSeries' in band_structure) else [])]"
       flowchartId: extract-band-energies
-    type: assignment
-  - config:
-      name: Normalize Band Energies
-      operand: band_energies
-      value: "band_energies if band_energies else []"
-      flowchartId: normalize-band-energies
     type: assignment
   - config:
       name: Find Indices Below Fermi

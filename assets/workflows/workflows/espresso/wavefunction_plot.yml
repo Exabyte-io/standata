@@ -29,6 +29,13 @@ units:
               input:
                 - name: fermi_energy
                   scope: total_energy_with_bands
+        - index: 2
+          type: assignment
+          config:
+            attributes:
+              input:
+                - name: fermi_energy
+                  scope: total_energy_with_bands
 
   - name: pp_wfn
     type: subworkflow
