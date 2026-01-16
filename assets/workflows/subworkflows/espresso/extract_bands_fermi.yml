@@ -12,7 +12,9 @@ units:
   - config:
       name: Extract Band Energies
       operand: band_energies
-      value: "[band_data[0] for band_data in (band_structure['yDataSeries'] if (band_structure and 'yDataSeries' in band_structure) else [])]"
+      value: >-
+        [band_data[0] for band_data in (band_structure['yDataSeries'] if (band_structure and
+        'yDataSeries' in band_structure) else [])]
       flowchartId: extract-band-energies
     type: assignment
   - config:
@@ -40,12 +42,16 @@ units:
   - config:
       name: Store Valence Energy
       operand: VALENCE_ENERGY
-      value: "band_energies[indices_below_fermi[-1]] if len(indices_below_fermi) > 0 else (band_energies[0] if len(band_energies) > 0 else 0.0)"
+      value: >-
+        band_energies[indices_below_fermi[-1]] if len(indices_below_fermi) > 0 else
+        (band_energies[0] if len(band_energies) > 0 else 0.0)
     type: assignment
   - config:
       name: Store Conduction Energy
       operand: CONDUCTION_ENERGY
-      value: "band_energies[indices_above_fermi[0]] if len(indices_above_fermi) > 0 else (band_energies[-1] if len(band_energies) > 0 else 0.0)"
+      value: >-
+        band_energies[indices_above_fermi[0]] if len(indices_above_fermi) > 0 else
+        (band_energies[-1] if len(band_energies) > 0 else 0.0)
     type: assignment
   - config:
       name: Store Total Bands
