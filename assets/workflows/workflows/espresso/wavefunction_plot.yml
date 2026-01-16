@@ -16,21 +16,19 @@ units:
     config:
       unitConfigs:
         - index: 0
-          type: executionBuilder
+          type: assignment
           config:
             attributes:
               input:
                 - name: band_structure
                   scope: total_energy_with_bands
-                - name: fermi_energy
-                  scope: total_energy_with_bands
-        - index: 3
+        - index: 1
           type: assignment
           config:
             attributes:
               input:
-                - name: KBAND_VALUE_BELOW_EF
-                - name: KBAND_VALUE_ABOVE_EF
+                - name: fermi_energy
+                  scope: total_energy_with_bands
 
   - name: pp_wfn
     type: subworkflow

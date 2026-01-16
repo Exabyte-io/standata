@@ -34,16 +34,6 @@ flavors:
     applicationName: python
     executableName: python
 
-  extract_bands_fermi:
-    input:
-      - name: extract_bands_fermi.py
-      - name: requirements.txt
-        templateName: requirements_bands_fermi.txt
-    monitors:
-      - standard_output
-    applicationName: python
-    executableName: python
-
   plot_wavefunction:
     input:
       - name: script.py

@@ -213,7 +213,6 @@ entities:
   - filename: espresso/extract_bands_fermi.json
     categories:
       - espresso
-      - python
   - filename: espresso/fixed_cell_relaxation.json
     categories:
       - atomic_forces

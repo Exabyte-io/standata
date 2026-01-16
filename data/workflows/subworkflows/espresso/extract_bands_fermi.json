@@ -1,5 +1,5 @@
 {
-    "_id": "1bb75a6a-4c8c-5336-a24c-1963e83825bc",
+    "_id": "7e376e1f-edf6-536b-9966-d274122dc799",
     "name": "Extract Bands Near Fermi",
     "application": {
         "name": "espresso"
@@ -9,95 +9,159 @@
         "type": "unknown",
         "subtype": "unknown",
         "method": {
-            "type": "unknown",
-            "subtype": "unknown",
+            "type": "pseudopotential",
+            "subtype": "us",
             "data": {}
         }
     },
     "units": [
         {
-            "type": "execution",
-            "name": "extract_bands_fermi",
-            "head": true,
-            "results": [],
-            "monitors": [
-                {
-                    "name": "standard_output"
-                }
-            ],
-            "flowchartId": "extract-bands-fermi",
-            "preProcessors": [],
-            "postProcessors": [],
-            "application": {
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "3.10.13",
-                "schemaVersion": "2022.8.16"
-            },
-            "executable": {
-                "isDefault": true,
-                "monitors": [
-                    "standard_output"
-                ],
-                "name": "python",
-                "schemaVersion": "2022.8.16"
-            },
-            "flavor": {
-                "applicationName": "python",
-                "executableName": "python",
-                "input": [
-                    {
-                        "name": "extract_bands_fermi.py"
-                    },
-                    {
-                        "name": "requirements.txt",
-                        "templateName": "requirements_bands_fermi.txt"
-                    }
-                ],
-                "monitors": [
-                    "standard_output"
-                ],
-                "name": "extract_bands_fermi",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
-            },
+            "name": "Init Band Structure",
+            "type": "assignment",
+            "operand": "band_structure",
+            "value": "band_structure",
+            "input": [],
+            "flowchartId": "init-band-structure",
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "head": true,
+            "next": "init-fermi-energy",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Init Fermi Energy",
+            "type": "assignment",
+            "operand": "fermi_energy",
+            "value": "fermi_energy",
+            "input": [],
+            "flowchartId": "init-fermi-energy",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "extract-band-energies",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Extract Band Energies",
+            "type": "assignment",
+            "operand": "band_energies",
+            "value": "[band_data[0] for band_data in (band_structure['yDataSeries'] if 'yDataSeries' in band_structure else [])]",
             "input": [
                 {
-                    "applicationName": "python",
-                    "content": "# ---------------------------------------------------------------- #\n# Extract band indices near Fermi energy from band_structure       #\n# This script expects fermi_energy and band_structure results      #\n# ---------------------------------------------------------------- #\nimport json\n\n# The results below come as Munch objects, so we need to import Munch to handle them\nfrom munch import Munch\n\n# Data From Context\n# -----------------\n# fermi_energy: float (in eV) - from pw_scf result\n# band_structure: Munch object with band energies - from pw_bands result\n\n{% raw %}fermi_energy_value = {{ fermi_energy }}{% endraw %}\n{% raw %}band_structure_data = {{ band_structure }}{% endraw %}\n\n# Extract band energies at Gamma point (first k-point)\n# band_structure format from QE parser:\n# {\n#   \"name\": \"band_structure\",\n#   \"xDataArray\": [[kx, ky, kz], ...],  # k-points\n#   \"yDataSeries\": [[e1_k1, e1_k2, ...], [e2_k1, e2_k2, ...], ...]  # energies per band\n# }\n# yDataSeries[band_index][kpoint_index] = energy\n\n# Get energies at first k-point (Gamma, index 0) for all bands\ny_data = band_structure_data.get('yDataSeries', [])\nband_energies = [band_data[0] for band_data in y_data] if y_data else []\n\n# Find bands near Fermi energy (1-based indices as QE expects)\nvalence_bands = [(i + 1, e) for i, e in enumerate(band_energies) if e <= fermi_energy_value]\nconduction_bands = [(i + 1, e) for i, e in enumerate(band_energies) if e > fermi_energy_value]\n\nif valence_bands:\n    valence_index, valence_energy = max(valence_bands, key=lambda x: x[1])\nelse:\n    valence_index = 1\n    valence_energy = band_energies[0] if band_energies else 0.0\n\nif conduction_bands:\n    conduction_index, conduction_energy = min(conduction_bands, key=lambda x: x[1])\nelse:\n    conduction_index = len(band_energies)\n    conduction_energy = band_energies[-1] if band_energies else 0.0\n\nresult = {\n    \"band_below_fermi\": valence_index,\n    \"band_above_fermi\": conduction_index,\n    \"fermi_energy\": fermi_energy_value,\n    \"valence_energy\": valence_energy,\n    \"conduction_energy\": conduction_energy,\n    \"total_bands\": len(band_energies)\n}\n\n# Print to STDOUT for subsequent assignment unit\nprint(json.dumps(result, indent=4))\n",
-                    "contextProviders": [],
-                    "executableName": "python",
-                    "name": "extract_bands_fermi.py",
-                    "rendered": "# ---------------------------------------------------------------- #\n# Extract band indices near Fermi energy from band_structure       #\n# This script expects fermi_energy and band_structure results      #\n# ---------------------------------------------------------------- #\nimport json\n\n# The results below come as Munch objects, so we need to import Munch to handle them\nfrom munch import Munch\n\n# Data From Context\n# -----------------\n# fermi_energy: float (in eV) - from pw_scf result\n# band_structure: Munch object with band energies - from pw_bands result\n\nfermi_energy_value = {{ fermi_energy }}\nband_structure_data = {{ band_structure }}\n\n# Extract band energies at Gamma point (first k-point)\n# band_structure format from QE parser:\n# {\n#   \"name\": \"band_structure\",\n#   \"xDataArray\": [[kx, ky, kz], ...],  # k-points\n#   \"yDataSeries\": [[e1_k1, e1_k2, ...], [e2_k1, e2_k2, ...], ...]  # energies per band\n# }\n# yDataSeries[band_index][kpoint_index] = energy\n\n# Get energies at first k-point (Gamma, index 0) for all bands\ny_data = band_structure_data.get('yDataSeries', [])\nband_energies = [band_data[0] for band_data in y_data] if y_data else []\n\n# Find bands near Fermi energy (1-based indices as QE expects)\nvalence_bands = [(i + 1, e) for i, e in enumerate(band_energies) if e <= fermi_energy_value]\nconduction_bands = [(i + 1, e) for i, e in enumerate(band_energies) if e > fermi_energy_value]\n\nif valence_bands:\n    valence_index, valence_energy = max(valence_bands, key=lambda x: x[1])\nelse:\n    valence_index = 1\n    valence_energy = band_energies[0] if band_energies else 0.0\n\nif conduction_bands:\n    conduction_index, conduction_energy = min(conduction_bands, key=lambda x: x[1])\nelse:\n    conduction_index = len(band_energies)\n    conduction_energy = band_energies[-1] if band_energies else 0.0\n\nresult = {\n    \"band_below_fermi\": valence_index,\n    \"band_above_fermi\": conduction_index,\n    \"fermi_energy\": fermi_energy_value,\n    \"valence_energy\": valence_energy,\n    \"conduction_energy\": conduction_energy,\n    \"total_bands\": len(band_energies)\n}\n\n# Print to STDOUT for subsequent assignment unit\nprint(json.dumps(result, indent=4))\n",
-                    "schemaVersion": "2022.8.16"
-                },
-                {
-                    "applicationName": "python",
-                    "content": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for extract_bands_fermi unit          #\n#                                                                    #\n# ------------------------------------------------------------------ #\n\nmunch==2.5.0\n",
-                    "contextProviders": [],
-                    "executableName": "python",
-                    "name": "requirements.txt",
-                    "rendered": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for extract_bands_fermi unit          #\n#                                                                    #\n# ------------------------------------------------------------------ #\n\nmunch==2.5.0\n",
-                    "schemaVersion": "2022.8.16"
+                    "name": "band_structure",
+                    "scope": "init-band-structure"
                 }
             ],
-            "next": "8771dc7f-878e-5f13-a840-a3a416854f1e"
+            "flowchartId": "extract-band-energies",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "indices-below-fermi",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Find Indices Below Fermi",
+            "type": "assignment",
+            "operand": "indices_below_fermi",
+            "value": "[i for i in range(len(band_energies)) if band_energies[i] <= fermi_energy]",
+            "input": [
+                {
+                    "name": "band_energies",
+                    "scope": "extract-band-energies"
+                },
+                {
+                    "name": "fermi_energy",
+                    "scope": "init-fermi-energy"
+                }
+            ],
+            "flowchartId": "indices-below-fermi",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "indices-above-fermi",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Find Indices Above Fermi",
+            "type": "assignment",
+            "operand": "indices_above_fermi",
+            "value": "[i for i in range(len(band_energies)) if band_energies[i] > fermi_energy]",
+            "input": [
+                {
+                    "name": "band_energies",
+                    "scope": "extract-band-energies"
+                },
+                {
+                    "name": "fermi_energy",
+                    "scope": "init-fermi-energy"
+                }
+            ],
+            "flowchartId": "indices-above-fermi",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "8771dc7f-878e-5f13-a840-a3a416854f1e",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
         },
         {
             "name": "Store Band Below EF",
             "type": "assignment",
             "operand": "KBAND_VALUE_BELOW_EF",
-            "value": "json.loads(STDOUT)['band_below_fermi']",
+            "value": "indices_below_fermi[-1] + 1 if len(indices_below_fermi) > 0 else 1",
             "input": [
                 {
-                    "name": "STDOUT",
-                    "scope": "extract-bands-fermi"
+                    "name": "indices_below_fermi",
+                    "scope": "indices-below-fermi"
                 }
             ],
             "status": "idle",
@@ -107,12 +171,13 @@
             "head": false,
             "next": "91e1328f-39dd-5c24-83f9-d49bfe5c620e",
             "application": {
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
                 "build": "GNU",
+                "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "3.10.13",
+                "version": "6.3",
                 "schemaVersion": "2022.8.16"
             }
         },
@@ -120,11 +185,15 @@
             "name": "Store Band Above EF",
             "type": "assignment",
             "operand": "KBAND_VALUE_ABOVE_EF",
-            "value": "json.loads(STDOUT)['band_above_fermi']",
+            "value": "indices_above_fermi[0] + 1 if len(indices_above_fermi) > 0 else len(band_energies)",
             "input": [
                 {
-                    "name": "STDOUT",
-                    "scope": "extract-bands-fermi"
+                    "name": "indices_above_fermi",
+                    "scope": "indices-above-fermi"
+                },
+                {
+                    "name": "band_energies",
+                    "scope": "extract-band-energies"
                 }
             ],
             "status": "idle",
@@ -132,14 +201,107 @@
             "flowchartId": "91e1328f-39dd-5c24-83f9-d49bfe5c620e",
             "tags": [],
             "head": false,
+            "next": "9fa08d2e-0ffd-5c12-8a88-086922fb3f72",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Store Valence Energy",
+            "type": "assignment",
+            "operand": "VALENCE_ENERGY",
+            "value": "band_energies[indices_below_fermi[-1]] if len(indices_below_fermi) > 0 else (band_energies[0] if len(band_energies) > 0 else 0.0)",
+            "input": [
+                {
+                    "name": "band_energies",
+                    "scope": "extract-band-energies"
+                },
+                {
+                    "name": "indices_below_fermi",
+                    "scope": "indices-below-fermi"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "9fa08d2e-0ffd-5c12-8a88-086922fb3f72",
+            "tags": [],
+            "head": false,
+            "next": "f5fbd236-2453-5ecd-aaf5-49940c45888c",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Store Conduction Energy",
+            "type": "assignment",
+            "operand": "CONDUCTION_ENERGY",
+            "value": "band_energies[indices_above_fermi[0]] if len(indices_above_fermi) > 0 else (band_energies[-1] if len(band_energies) > 0 else 0.0)",
+            "input": [
+                {
+                    "name": "band_energies",
+                    "scope": "extract-band-energies"
+                },
+                {
+                    "name": "indices_above_fermi",
+                    "scope": "indices-above-fermi"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "f5fbd236-2453-5ecd-aaf5-49940c45888c",
+            "tags": [],
+            "head": false,
+            "next": "fff25fab-985b-50c6-8b4c-db7f7adb29a8",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Store Total Bands",
+            "type": "assignment",
+            "operand": "TOTAL_BANDS",
+            "value": "len(band_energies)",
+            "input": [
+                {
+                    "name": "band_energies",
+                    "scope": "extract-band-energies"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "fff25fab-985b-50c6-8b4c-db7f7adb29a8",
+            "tags": [],
+            "head": false,
             "next": "57a07d7d-3f68-5f31-97ad-ebe8c5593cd2",
             "application": {
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
                 "build": "GNU",
+                "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "3.10.13",
+                "version": "6.3",
                 "schemaVersion": "2022.8.16"
             }
         },
@@ -155,12 +317,13 @@
             "tags": [],
             "head": false,
             "application": {
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
                 "build": "GNU",
+                "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "3.10.13",
+                "version": "6.3",
                 "schemaVersion": "2022.8.16"
             }
         }

@@ -930,18 +930,6 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         }[];
                         monitors: string[];
                     };
-                    extract_bands_fermi: {
-                        applicationName: string;
-                        executableName: string;
-                        input: ({
-                            name: string;
-                            templateName?: undefined;
-                        } | {
-                            name: string;
-                            templateName: string;
-                        })[];
-                        monitors: string[];
-                    };
                     "generic:post_processing:plot:matplotlib": {
                         applicationName: string;
                         executableName: string;

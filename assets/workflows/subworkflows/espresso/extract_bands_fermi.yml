@@ -2,8 +2,7 @@
 # Expects fermi_energy and band_structure to be passed via unitConfigs
 # Outputs: KBAND_VALUE_BELOW_EF, KBAND_VALUE_ABOVE_EF, and KBAND_VALUE (selected)
 application:
-  name: python
-  version: 3.10.13
+  name: espresso
 method:
   name: UnknownMethod
 model:
@@ -11,26 +10,93 @@ model:
 name: Extract Bands Near Fermi
 units:
   - config:
-      execName: python
-      flavorName: extract_bands_fermi
-      name: extract_bands_fermi
-      flowchartId: extract-bands-fermi
-    type: executionBuilder
+      name: Init Band Structure
+      flowchartId: init-band-structure
+      operand: band_structure
+      value: band_structure
+    type: assignment
+  - config:
+      name: Init Fermi Energy
+      flowchartId: init-fermi-energy
+      operand: fermi_energy
+      value: fermi_energy
+    type: assignment
+  - config:
+      name: Extract Band Energies
+      operand: band_energies
+      value: "[band_data[0] for band_data in (band_structure['yDataSeries'] if 'yDataSeries' in band_structure else [])]"
+      flowchartId: extract-band-energies
+      input:
+        - name: band_structure
+          scope: init-band-structure
+    type: assignment
+  - config:
+      name: Find Indices Below Fermi
+      operand: indices_below_fermi
+      value: "[i for i in range(len(band_energies)) if band_energies[i] <= fermi_energy]"
+      flowchartId: indices-below-fermi
+      input:
+        - name: band_energies
+          scope: extract-band-energies
+        - name: fermi_energy
+          scope: init-fermi-energy
+    type: assignment
+  - config:
+      name: Find Indices Above Fermi
+      operand: indices_above_fermi
+      value: "[i for i in range(len(band_energies)) if band_energies[i] > fermi_energy]"
+      flowchartId: indices-above-fermi
+      input:
+        - name: band_energies
+          scope: extract-band-energies
+        - name: fermi_energy
+          scope: init-fermi-energy
+    type: assignment
   - config:
       name: Store Band Below EF
       operand: KBAND_VALUE_BELOW_EF
-      value: "json.loads(STDOUT)['band_below_fermi']"
+      value: "indices_below_fermi[-1] + 1 if len(indices_below_fermi) > 0 else 1"
       input:
-        - name: STDOUT
-          scope: extract-bands-fermi
+        - name: indices_below_fermi
+          scope: indices-below-fermi
     type: assignment
   - config:
       name: Store Band Above EF
       operand: KBAND_VALUE_ABOVE_EF
-      value: "json.loads(STDOUT)['band_above_fermi']"
+      value: "indices_above_fermi[0] + 1 if len(indices_above_fermi) > 0 else len(band_energies)"
       input:
-        - name: STDOUT
-          scope: extract-bands-fermi
+        - name: indices_above_fermi
+          scope: indices-above-fermi
+        - name: band_energies
+          scope: extract-band-energies
+    type: assignment
+  - config:
+      name: Store Valence Energy
+      operand: VALENCE_ENERGY
+      value: "band_energies[indices_below_fermi[-1]] if len(indices_below_fermi) > 0 else (band_energies[0] if len(band_energies) > 0 else 0.0)"
+      input:
+        - name: band_energies
+          scope: extract-band-energies
+        - name: indices_below_fermi
+          scope: indices-below-fermi
+    type: assignment
+  - config:
+      name: Store Conduction Energy
+      operand: CONDUCTION_ENERGY
+      value: "band_energies[indices_above_fermi[0]] if len(indices_above_fermi) > 0 else (band_energies[-1] if len(band_energies) > 0 else 0.0)"
+      input:
+        - name: band_energies
+          scope: extract-band-energies
+        - name: indices_above_fermi
+          scope: indices-above-fermi
+    type: assignment
+  - config:
+      name: Store Total Bands
+      operand: TOTAL_BANDS
+      value: "len(band_energies)"
+      input:
+        - name: band_energies
+          scope: extract-band-energies
     type: assignment
   - config:
       name: Select Band
