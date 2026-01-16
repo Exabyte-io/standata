@@ -1,0 +1,16 @@
+# Set material index for coordinate extraction
+application:
+  name: shell
+  version: "1.0"
+method:
+  name: UnknownMethod
+model:
+  name: UnknownModel
+name: Set Material Index
+units:
+  - config:
+      name: Set Material Index
+      operand: material_index
+      value: "0"
+    type: assignment
+

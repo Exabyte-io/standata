@@ -56,6 +56,30 @@ flavors:
     applicationName: python
     executableName: python
 
+  'espresso:processing:fit_esp_polar':
+    input:
+      - name: fit_esp_polar.py
+        templateName: fit_esp_polar.py
+      - name: requirements.txt
+        templateName: processing_requirements.txt
+    results:
+      - file_content
+    monitors:
+      - standard_output
+    applicationName: python
+    executableName: python
+
+  'generic:processing:extract_slab_coordinates':
+    input:
+      - name: extract_slab_coordinates.py
+        templateName: extract_slab_coordinates.py
+      - name: requirements.txt
+        templateName: requirements_with_made.txt
+    monitors:
+      - standard_output
+    applicationName: python
+    executableName: python
+
   'pyml:setup_variables_packages':
     input:
       - name: settings.py

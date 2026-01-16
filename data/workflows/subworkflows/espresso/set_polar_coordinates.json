@@ -1,0 +1,94 @@
+{
+    "_id": "5e5df184-ddbc-5c34-8909-c132065994a3",
+    "name": "Set Polar Slab Coordinates",
+    "application": {
+        "name": "espresso"
+    },
+    "properties": [],
+    "model": {
+        "type": "unknown",
+        "subtype": "unknown",
+        "method": {
+            "type": "unknown",
+            "subtype": "unknown",
+            "data": {}
+        }
+    },
+    "units": [
+        {
+            "name": "Set Slab1 Min (Angstrom)",
+            "type": "assignment",
+            "operand": "slab1_min",
+            "value": "0.0",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "eb27ca1f-f6a4-5d26-9ae6-96b6e71bdefb",
+            "tags": [],
+            "head": true,
+            "next": "f3a28f87-b00a-5c06-bcff-3315fc9ec2c0",
+            "application": {
+                "name": "shell",
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16",
+                "isDefault": false
+            }
+        },
+        {
+            "name": "Set Slab1 Max (Angstrom)",
+            "type": "assignment",
+            "operand": "slab1_max",
+            "value": "10.0",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "f3a28f87-b00a-5c06-bcff-3315fc9ec2c0",
+            "tags": [],
+            "head": false,
+            "next": "705bdb2c-b636-5056-be47-0ac3b8ac50f7",
+            "application": {
+                "name": "shell",
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16",
+                "isDefault": false
+            }
+        },
+        {
+            "name": "Set Slab2 Min (Angstrom)",
+            "type": "assignment",
+            "operand": "slab2_min",
+            "value": "15.0",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "705bdb2c-b636-5056-be47-0ac3b8ac50f7",
+            "tags": [],
+            "head": false,
+            "next": "54188b5d-885a-5ff6-9c55-63f5a6785e2d",
+            "application": {
+                "name": "shell",
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16",
+                "isDefault": false
+            }
+        },
+        {
+            "name": "Set Slab2 Max (Angstrom)",
+            "type": "assignment",
+            "operand": "slab2_max",
+            "value": "25.0",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "54188b5d-885a-5ff6-9c55-63f5a6785e2d",
+            "tags": [],
+            "head": false,
+            "application": {
+                "name": "shell",
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16",
+                "isDefault": false
+            }
+        }
+    ]
+}

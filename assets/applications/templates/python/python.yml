@@ -40,6 +40,24 @@
   applicationName: python
   executableName: python
 
+- content: !readFile 'input_files_templates/python/espresso/processing:fit_esp_polar.pyi'
+  name: fit_esp_polar.py
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
+- content: !readFile 'input_files_templates/python/generic/processing:extract_slab_coordinates.pyi'
+  name: extract_slab_coordinates.py
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
+- content: !readFile 'input_files_templates/python/generic/requirements_with_made.j2.txt'
+  name: requirements_with_made.txt
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
 - content: !readFile 'input_files_templates/python/generic/requirements.j2.txt'
   name: processing_requirements.txt
   contextProviders: []

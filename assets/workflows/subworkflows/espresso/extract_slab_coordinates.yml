@@ -1,0 +1,53 @@
+# Extract z-coordinate boundaries from material structure
+# for polar VBO linear fitting regions
+# Requires: material_index in context (0=Interface, 1=Left, 2=Right)
+config:
+  isMultiMaterial: true
+application:
+  name: python
+  version: 3.10.13
+method:
+  name: UnknownMethod
+model:
+  name: UnknownModel
+name: Extract Slab Coordinates
+units:
+  - config:
+      name: Set Material Index
+      operand: MATERIAL_INDEX
+      value: "0"
+    type: assignment
+  - config:
+      name: Extract Z-Coordinates from Material
+      execName: python
+      flavorName: generic:processing:extract_slab_coordinates
+      flowchartId: python-extract-coords
+    type: executionBuilder
+  - config:
+      name: Parse Coordinate Results
+      operand: COORDS
+      value: "json.loads(STDOUT)"
+      input:
+        - name: STDOUT
+          scope: python-extract-coords
+    type: assignment
+  - config:
+      name: Set Slab1 Min Coordinate
+      operand: slab1_min
+      value: "COORDS['z_min']"
+    type: assignment
+  - config:
+      name: Set Slab1 Max Coordinate
+      operand: slab1_max
+      value: "COORDS['z_max']"
+    type: assignment
+  - config:
+      name: Set Slab2 Min Coordinate
+      operand: slab2_min
+      value: "COORDS['z_min']"
+    type: assignment
+  - config:
+      name: Set Slab2 Max Coordinate
+      operand: slab2_max
+      value: "COORDS['z_max']"
+    type: assignment

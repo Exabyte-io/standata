@@ -513,6 +513,34 @@
             "flowchartId": "c6c11873-91d7-5422-8302-3dcc1ce971e9",
             "tags": [],
             "head": false,
+            "next": "30295ace-5fae-5d7e-bfa3-fb553172e9d8",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Set ESP Profile to Global Scope",
+            "type": "assignment",
+            "operand": "average_potential_profile",
+            "value": "average_potential_profile",
+            "input": [
+                {
+                    "name": "average_potential_profile",
+                    "scope": "average-electrostatic-potential"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "30295ace-5fae-5d7e-bfa3-fb553172e9d8",
+            "tags": [],
+            "head": false,
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
