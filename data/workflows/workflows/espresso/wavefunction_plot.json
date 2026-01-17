@@ -692,7 +692,7 @@
                 "schemaVersion": "2022.8.16"
             },
             "properties": [
-                "file_content"
+                "wavefunction_amplitude"
             ],
             "model": {
                 "type": "unknown",
@@ -710,7 +710,7 @@
                     "head": true,
                     "results": [
                         {
-                            "name": "file_content"
+                            "name": "wavefunction_amplitude"
                         }
                     ],
                     "monitors": [
@@ -755,7 +755,7 @@
                             "standard_output"
                         ],
                         "results": [
-                            "file_content"
+                            "wavefunction_amplitude"
                         ],
                         "name": "plot_wavefunction",
                         "schemaVersion": "2022.8.16",
