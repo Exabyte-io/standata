@@ -19,3 +19,12 @@ flavors:
       - standard_output
     applicationName: espresso
     executableName: pp.x
+
+  pp_wfn:
+    input:
+      - name: pp_wfn.in
+    results: []
+    monitors:
+      - standard_output
+    applicationName: espresso
+    executableName: pp.x
