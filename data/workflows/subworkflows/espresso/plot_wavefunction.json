@@ -5,6 +5,7 @@
         "name": "espresso"
     },
     "properties": [
+        "file_content",
         "wavefunction_amplitude"
     ],
     "model": {
@@ -22,6 +23,9 @@
             "name": "plot WFN",
             "head": true,
             "results": [
+                {
+                    "name": "file_content"
+                },
                 {
                     "name": "wavefunction_amplitude"
                 }
@@ -68,6 +72,7 @@
                     "standard_output"
                 ],
                 "results": [
+                    "file_content",
                     "wavefunction_amplitude"
                 ],
                 "name": "plot_wavefunction",

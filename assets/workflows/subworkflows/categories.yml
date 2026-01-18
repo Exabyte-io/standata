@@ -311,6 +311,7 @@ entities:
   - filename: espresso/plot_wavefunction.json
     categories:
       - espresso
+      - file_content
       - python
       - wavefunction_amplitude
   - filename: espresso/post_processor.json

@@ -41,6 +41,7 @@ flavors:
       - name: requirements.txt
         templateName: requirements_plot_wavefunction.txt
     results:
+      - file_content
       - wavefunction_amplitude
     monitors:
       - standard_output

@@ -19,6 +19,4 @@ units:
           basename: wf_r.png
           filetype: image
         - name: wavefunction_amplitude
-          basename: wf_amplitude.txt
-          filetype: text
     type: executionBuilder
