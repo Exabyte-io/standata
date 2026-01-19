@@ -39,8 +39,13 @@ ATOMIC_SPECIES
 {{ specie.X }} {{ specie.Mass_X|sprintf("%f") }} {{ specie.PseudoPot_X }}
 {% endfor %}
 ATOMIC_POSITIONS crystal
-{%- set print_constrnts = false %}{%- for position in input.ATOMIC_POSITIONS %}{% if position["if_pos(1)"] != 1 or position["if_pos(2)"] != 1 or position["if_pos(3)"] != 1 %}{%- set print_constrnts = true %}{% endif %}{%- endfor %}
-{%- for position in input.ATOMIC_POSITIONS -%}
+{%- set print_constraints = false %}
+{%- for position in input.ATOMIC_POSITIONS %}
+    {%- if position["if_pos(1)"] != 1 or position["if_pos(2)"] != 1 or position["if_pos(3)"] != 1 %}
+        {%- set print_constraints = true %}
+    {%- endif %}
+{%- endfor %}
+{% for position in input.ATOMIC_POSITIONS -%}
 {{ position.X|sprintf("%-3s") }} {{ position.x|sprintf("%14.9f") }} {{ position.y|sprintf("%14.9f") }} {{ position.z|sprintf("%14.9f") }}{% if print_constraints %} {{ position["if_pos(1)"] }} {{ position["if_pos(2)"] }} {{ position["if_pos(3)"] }}{% endif %}
 {% endfor %}
 CELL_PARAMETERS angstrom

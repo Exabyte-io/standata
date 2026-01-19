@@ -52,7 +52,7 @@ ATOMIC_SPECIES
 {{ specie.X }} {{ specie.Mass_X|sprintf("%f") }} {{ specie.PseudoPot_X }}
 {% endfor %}
 ATOMIC_POSITIONS crystal
-{%- set print_constrnts = false %}
+{%- set print_constraints = false %}
 {%- for position in input.ATOMIC_POSITIONS %}
     {%- if position["if_pos(1)"] != 1 or position["if_pos(2)"] != 1 or position["if_pos(3)"] != 1 %}
         {%- set print_constraints = true %}
