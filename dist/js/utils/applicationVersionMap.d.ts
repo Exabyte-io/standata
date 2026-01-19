@@ -8,12 +8,12 @@ export declare class ApplicationVersionsMap implements ApplicationVersionsMapTyp
     versions: ApplicationVersionInfo[];
     map: ApplicationVersionsMapType;
     constructor(config: ApplicationVersionsMapType);
-    get name(): string;
+    get name(): ApplicationSchemaBase;
     get nonVersionProperties(): {
-        name: string;
-        shortName: string;
-        summary: string;
-        isLicensed?: boolean | undefined;
+        name: ApplicationSchemaBase;
+        shortName: ApplicationSchemaBase;
+        summary: ApplicationSchemaBase;
+        isLicensed: ApplicationSchemaBase;
     };
     get versionConfigs(): ApplicationVersionInfo[];
     get versionConfigsFull(): ApplicationSchemaBase[];

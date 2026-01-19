@@ -5,7 +5,7 @@ export { PropertyStandata } from "./property";
 export {
     WorkflowStandata,
     SubworkflowStandata,
-    workflowSubforkflowMapByApplication,
+    workflowSubworkflowMapByApplication,
 } from "./workflow";
 export { ApplicationModelStandata } from "./applicationModel";
 export { ApplicationMethodStandata } from "./applicationMethod";

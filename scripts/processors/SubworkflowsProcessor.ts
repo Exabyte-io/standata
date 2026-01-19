@@ -20,41 +20,18 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         });
     }
 
-    private get workflowSubforkflowMapByApplication(): { workflows: any; subworkflows: any } {
-        const workflowSubforkflowMapByApplication = { workflows: {}, subworkflows: {} } as any;
-        workflowSubforkflowMapByApplication.workflows = {};
-        const subworkflows = this.entityMapByApplication;
-
-        const subworkflowsEntries = Object.entries(subworkflows).map(([appName, value]) => {
-            const entities = Object.entries(value).map(([key, subworkflow]) => {
-                // @ts-ignore
-                console.log("subworkflow.units", subworkflow.units);
-
-                // @ts-ignore
-                subworkflow.units = subworkflow.units.map((unit: any) => {
-                    return {
-                        ...unit,
-                        config: {
-                            monitors: [],
-                            postProcessors: [],
-                            ...unit.config,
-                        },
-                    };
-                });
-
-                return [key, subworkflow];
-            });
-            return [appName, Object.fromEntries(entities)];
-        });
-        workflowSubforkflowMapByApplication.subworkflows = Object.fromEntries(subworkflowsEntries);
-        return workflowSubforkflowMapByApplication;
+    private get workflowSubworkflowMapByApplication(): { workflows: any; subworkflows: any } {
+        const workflowSubworkflowMapByApplication = { workflows: {}, subworkflows: {} } as any;
+        workflowSubworkflowMapByApplication.workflows = {};
+        workflowSubworkflowMapByApplication.subworkflows = this.entityMapByApplication;
+        return workflowSubworkflowMapByApplication;
     }
 
     protected buildEntityConfigs(): any[] {
         this.enablePredefinedIds();
         const configs: { appName: string; safeName: string; config: any }[] = [];
         this.applications.forEach((appName) => {
-            const subworkflows = this.workflowSubforkflowMapByApplication.subworkflows[appName];
+            const subworkflows = this.workflowSubworkflowMapByApplication.subworkflows[appName];
             if (!subworkflows) return;
             Object.keys(subworkflows).forEach((subworkflowName) => {
                 const subworkflowData = subworkflows[subworkflowName];
@@ -62,7 +39,7 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
                 const subworkflow = createSubworkflowByName({
                     appName,
                     swfName: subworkflowName,
-                    workflowSubforkflowMapByApplication: this.workflowSubforkflowMapByApplication,
+                    workflowSubworkflowMapByApplication: this.workflowSubworkflowMapByApplication,
                     SubworkflowCls: Subworkflow,
                     UnitFactoryCls: UnitFactory,
                     unitBuilders: builders,

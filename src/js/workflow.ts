@@ -1,7 +1,7 @@
 import { Standata } from "./base";
 import SUBWORKFLOWS from "./runtime_data/subworkflows.json";
 import WORKFLOWS from "./runtime_data/workflows.json";
-import workflowSubforkflowMapByApplication from "./runtime_data/workflows/workflowSubforkflowMapByApplication.json";
+import workflowSubworkflowMapByApplication from "./runtime_data/workflows/workflowSubworkflowMapByApplication.json";
 
 export enum TAGS {
     RELAXATION = "variable-cell_relaxation",
@@ -32,6 +32,7 @@ abstract class BaseWorkflowStandata<T extends { name?: string }> extends Standat
         return this.findByApplication(appName).find((e) => e?.name === displayName);
     }
 
+    // NOTE: The WF/SWF returned will have only `name` inside the application object. 
     getRelaxationByApplication(appName: string): T | undefined {
         const list = this.findEntitiesByTags(TAGS.RELAXATION, appName) as T[];
         return list[0];
@@ -61,4 +62,4 @@ export class SubworkflowStandata extends BaseWorkflowStandata<StandataEntity> {
     }
 }
 
-export { workflowSubforkflowMapByApplication };
+export { workflowSubworkflowMapByApplication };

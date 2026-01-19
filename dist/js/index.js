@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.baseUiSchema = exports.methodTree = exports.modelTree = exports.filterMethodsByModel = exports.ModelMethodFilter = exports.MethodStandata = exports.ModelStandata = exports.ApplicationMethodStandata = exports.ApplicationModelStandata = exports.workflowSubforkflowMapByApplication = exports.SubworkflowStandata = exports.WorkflowStandata = exports.PropertyStandata = exports.ApplicationStandata = exports.MaterialStandata = exports.Standata = void 0;
+exports.baseUiSchema = exports.methodTree = exports.modelTree = exports.filterMethodsByModel = exports.ModelMethodFilter = exports.MethodStandata = exports.ModelStandata = exports.ApplicationMethodStandata = exports.ApplicationModelStandata = exports.workflowSubworkflowMapByApplication = exports.SubworkflowStandata = exports.WorkflowStandata = exports.PropertyStandata = exports.ApplicationStandata = exports.MaterialStandata = exports.Standata = void 0;
 var base_1 = require("./base");
 Object.defineProperty(exports, "Standata", { enumerable: true, get: function () { return base_1.Standata; } });
 var material_1 = require("./material");
@@ -15,7 +15,7 @@ Object.defineProperty(exports, "PropertyStandata", { enumerable: true, get: func
 var workflow_1 = require("./workflow");
 Object.defineProperty(exports, "WorkflowStandata", { enumerable: true, get: function () { return workflow_1.WorkflowStandata; } });
 Object.defineProperty(exports, "SubworkflowStandata", { enumerable: true, get: function () { return workflow_1.SubworkflowStandata; } });
-Object.defineProperty(exports, "workflowSubforkflowMapByApplication", { enumerable: true, get: function () { return workflow_1.workflowSubforkflowMapByApplication; } });
+Object.defineProperty(exports, "workflowSubworkflowMapByApplication", { enumerable: true, get: function () { return workflow_1.workflowSubworkflowMapByApplication; } });
 var applicationModel_1 = require("./applicationModel");
 Object.defineProperty(exports, "ApplicationModelStandata", { enumerable: true, get: function () { return applicationModel_1.ApplicationModelStandata; } });
 var applicationMethod_1 = require("./applicationMethod");

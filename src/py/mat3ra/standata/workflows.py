@@ -1,9 +1,12 @@
 from typing import Dict
 
-from .base import Standata, StandataData
+from .base import StandataData
 from .data.workflows import workflows_data
+from .workflow.base import BaseWorkflowSubworkflowStandata
 
 
-class Workflows(Standata):
+class WorkflowStandata(BaseWorkflowSubworkflowStandata):
     data_dict: Dict = workflows_data
     data: StandataData = StandataData(data_dict)
+
+

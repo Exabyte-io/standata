@@ -3,12 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.workflowSubforkflowMapByApplication = exports.SubworkflowStandata = exports.WorkflowStandata = exports.TAGS = void 0;
+exports.workflowSubworkflowMapByApplication = exports.SubworkflowStandata = exports.WorkflowStandata = exports.TAGS = void 0;
 const base_1 = require("./base");
 const subworkflows_json_1 = __importDefault(require("./runtime_data/subworkflows.json"));
 const workflows_json_1 = __importDefault(require("./runtime_data/workflows.json"));
-const workflowSubforkflowMapByApplication_json_1 = __importDefault(require("./runtime_data/workflows/workflowSubforkflowMapByApplication.json"));
-exports.workflowSubforkflowMapByApplication = workflowSubforkflowMapByApplication_json_1.default;
+const workflowSubworkflowMapByApplication_json_1 = __importDefault(require("./runtime_data/workflows/workflowSubworkflowMapByApplication.json"));
+exports.workflowSubworkflowMapByApplication = workflowSubworkflowMapByApplication_json_1.default;
 var TAGS;
 (function (TAGS) {
     TAGS["RELAXATION"] = "variable-cell_relaxation";
@@ -21,6 +21,7 @@ class BaseWorkflowStandata extends base_1.Standata {
     findByApplicationAndName(appName, displayName) {
         return this.findByApplication(appName).find((e) => (e === null || e === void 0 ? void 0 : e.name) === displayName);
     }
+    // NOTE: The WF/SWF returned will have only `name` inside the application object. 
     getRelaxationByApplication(appName) {
         const list = this.findEntitiesByTags(TAGS.RELAXATION, appName);
         return list[0];
