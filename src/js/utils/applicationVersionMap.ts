@@ -4,9 +4,9 @@ import { ApplicationSchemaBase } from "@mat3ra/esse/dist/js/types";
 import { ApplicationVersionInfo, ApplicationVersionsMapType } from "../types/application";
 
 export class ApplicationVersionsMap implements ApplicationVersionsMapType {
-    shortName?: string | undefined;
+    shortName: string;
 
-    summary?: string | undefined;
+    summary: string;
 
     isLicensed?: boolean | undefined;
 
@@ -30,7 +30,8 @@ export class ApplicationVersionsMap implements ApplicationVersionsMapType {
     }
 
     get nonVersionProperties() {
-        const { versions, defaultVersion, ...rest } = this.map;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { versions: _, defaultVersion: __, ...rest } = this.map;
         return rest;
     }
 

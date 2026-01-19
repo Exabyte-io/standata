@@ -1,0 +1,69 @@
+BEGIN
+BEGIN_PATH_INPUT
+&PATH
+  restart_mode      = 'from_scratch'
+  string_method     = 'neb',
+  nstep_path        = 50,
+  ds                = 2.D0,
+  opt_scheme        = "broyden",
+  num_of_images     = 3,
+  k_max             = 0.3D0,
+  k_min             = 0.2D0,
+  CI_scheme         = "auto",
+  path_thr          = 0.1D0,
+/
+END_PATH_INPUT
+BEGIN_ENGINE_INPUT
+&CONTROL
+    prefix = '__prefix__'
+    outdir = '{{ JOB_WORK_DIR }}/outdir'
+    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'
+/
+&SYSTEM
+    ibrav = 0
+    nat = 4
+    ntyp = 2
+    ecutwfc = 50
+    ecutrho = 200
+    occupations = 'smearing'
+    degauss = 0.03
+    nspin = 2
+    starting_magnetization = 0.5
+/
+&ELECTRONS
+    conv_thr    = 1.D-8
+    mixing_beta = 0.3
+/
+ATOMIC_SPECIES
+Fe 55.845 Fe.pbe-spn-rrkjus_psl.1.0.0.UPF
+O 15.999 O.pbe-n-rrkjus_psl.1.0.0.UPF
+
+BEGIN_POSITIONS
+FIRST_IMAGE
+ATOMIC_POSITIONS crystal
+Fe     0.000000000    0.000000000    0.000000000 0 1 1
+Fe     0.500000000    0.500000000    0.500000000 1 1 1
+O      0.250000000    0.250000000    0.250000000 1 1 1
+O      0.750000000    0.750000000    0.750000000 1 1 1
+
+INTERMEDIATE_IMAGE
+ATOMIC_POSITIONS crystal
+Fe     0.100000000    0.100000000    0.100000000
+Fe     0.300000000    0.300000000    0.300000000
+
+LAST_IMAGE
+ATOMIC_POSITIONS crystal
+Fe     0.000000000    0.000000000    0.000000000 0 1 1
+Fe     0.500000000    0.500000000    0.500000000 1 1 1
+O      0.250000000    0.250000000    0.250000000 1 1 1
+O      0.750000000    0.750000000    0.750000000 1 1 1
+
+END_POSITIONS
+CELL_PARAMETERS angstrom
+   5.000000000    0.000000000    0.000000000
+   0.000000000    5.000000000    0.000000000
+   0.000000000    0.000000000    5.000000000
+K_POINTS automatic
+4 4 4 0 0 0
+END_ENGINE_INPUT
+END

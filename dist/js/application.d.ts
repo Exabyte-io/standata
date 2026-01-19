@@ -1,12 +1,12 @@
-import type { TemplateSchema } from "@mat3ra/esse/dist/js/types";
+import type { ApplicationSchemaBase, TemplateSchema } from "@mat3ra/esse/dist/js/types";
 import { Standata } from "./base";
-import { ApplicationExecutableTree, ApplicationVersionsMapType, DefaultApplicationConfig } from "./types/application";
+import { ApplicationVersionsMapType } from "./types/application";
 export declare enum TAGS {
     DEFAULT = "default",
     DEFAULT_VERSION = "default_version",
     DEFAULT_BUILD = "default_build"
 }
-export declare class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
+export declare class ApplicationStandata extends Standata<ApplicationSchemaBase> {
     static runtimeData: {
         standataConfig: {
             categories: {
@@ -66,7 +66,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
         };
     };
     getAppDataForApplication(appName: string): ApplicationVersionsMapType;
-    getAppTreeForApplication(appName: string): ApplicationExecutableTree;
+    getAppTreeForApplication(appName: string): Record<string, import("./types/application").ExecutableTreeItem>;
     getAllAppTemplates(): TemplateSchema[];
     getAllAppTree(): {
         espresso: {
@@ -1423,11 +1423,17 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
         };
     };
     getAllApplicationNames(): string[];
-    getAllAppData(): ApplicationVersionsMapType[];
+    getAllAppData(): ApplicationSchemaBase[];
     getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[];
-    getByApplicationName(appName: string): ApplicationVersionsMapType[];
+    getByApplicationName(appName: string): ApplicationSchemaBase[];
     static getDefaultVersionForApplication(appName: string): string;
     static getDefaultBuildForApplicationAndVersion(appName: string, version: string): string;
-    getDefaultConfigByNameAndVersion(appName: string, version?: string): ApplicationVersionsMapType;
-    getDefaultConfig(): DefaultApplicationConfig;
+    getDefaultConfigByNameAndVersion(appName: string, version?: string): ApplicationSchemaBase;
+    getDefaultConfig(): {
+        name: string;
+        shortName: string;
+        version: string;
+        summary: string;
+        build: string;
+    };
 }

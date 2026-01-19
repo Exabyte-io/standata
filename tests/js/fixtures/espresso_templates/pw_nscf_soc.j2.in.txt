@@ -1,0 +1,50 @@
+&CONTROL
+    calculation = 'nscf'
+    title = ''
+    verbosity = 'low'
+    restart_mode = 'from_scratch'
+    wf_collect = .true.
+    tstress = .true.
+    tprnfor = .true.
+    outdir = '{{ JOB_WORK_DIR }}/outdir'
+    wfcdir = '{{ JOB_WORK_DIR }}/outdir'
+    prefix = '__prefix__'
+    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'
+/
+&SYSTEM
+    ibrav = 0
+    nat = 4
+    ntyp = 2
+    ecutwfc = 50
+    ecutrho = 200
+    occupations = 'smearing'
+    degauss = 0.005
+    noncolin = .true.
+    lspinorb = .true.
+/
+&ELECTRONS
+    diagonalization = 'david'
+    diago_david_ndim = 4
+    diago_full_acc = .true.
+    mixing_beta = 0.3
+/
+&IONS
+/
+&CELL
+/
+ATOMIC_SPECIES
+Fe 55.845 Fe.pbe-spn-rrkjus_psl.1.0.0.UPF
+O 15.999 O.pbe-n-rrkjus_psl.1.0.0.UPF
+
+ATOMIC_POSITIONS crystal
+Fe     0.000000000    0.000000000    0.000000000
+Fe     0.500000000    0.500000000    0.500000000
+O      0.250000000    0.250000000    0.250000000
+O      0.750000000    0.750000000    0.750000000
+
+CELL_PARAMETERS angstrom
+   5.000000000    0.000000000    0.000000000
+   0.000000000    5.000000000    0.000000000
+   0.000000000    0.000000000    5.000000000
+K_POINTS automatic
+4 4 4 0 0 0

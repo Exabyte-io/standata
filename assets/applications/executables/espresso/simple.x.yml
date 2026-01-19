@@ -1,5 +1,5 @@
 monitors:
-  - standard_output
+  - name: standard_output
 results: []
 flavors:
   simple:
@@ -7,6 +7,6 @@ flavors:
       - name: simple.in
     results: []
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: simple.x

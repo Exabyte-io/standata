@@ -1,19 +1,19 @@
 monitors:
-  - standard_output
+  - name: standard_output
 results:
-  - hubbard_u
-  - hubbard_v_nn
-  - hubbard_v
+  - name: hubbard_u
+  - name: hubbard_v_nn
+  - name: hubbard_v
 flavors:
   hp:
     input:
       - name: hp.in
     results:
-      - hubbard_u
-      - hubbard_v_nn
-      - hubbard_v
+      - name: hubbard_u
+      - name: hubbard_v_nn
+      - name: hubbard_v
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: hp.x
 supportedApplicationVersions:
