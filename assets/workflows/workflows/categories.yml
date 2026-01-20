@@ -322,6 +322,18 @@ entities:
       - total_energy
       - total_force
       - variable-cell_relaxation
+  - filename: espresso/wavefunction_amplitude.json
+    categories:
+      - atomic_forces
+      - band_structure
+      - espresso
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - wfn_plot
   - filename: espresso/wavefunction_plot.json
     categories:
       - atomic_forces

@@ -1,4 +1,4 @@
-name: Wavefunction Plot
+name: Wavefunction Amplitude
 
 # To plot a different band, edit the workflow in the UI:
 #   1. Open "Extract Bands Near Fermi" unit
