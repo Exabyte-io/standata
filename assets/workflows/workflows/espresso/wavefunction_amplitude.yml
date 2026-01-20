@@ -25,7 +25,6 @@ units:
 
   - name: plot_wavefunction
     type: subworkflow
-    config: {}
 
 tags:
   - wfn

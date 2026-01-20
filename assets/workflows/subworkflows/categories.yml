@@ -316,9 +316,6 @@ entities:
     categories:
       - espresso
       - shell
-  - filename: espresso/pp_wfn.json
-    categories:
-      - espresso
   - filename: espresso/pre_processor.json
     categories:
       - espresso
