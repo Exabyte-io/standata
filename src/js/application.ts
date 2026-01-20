@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import type { ApplicationSchemaBase, TemplateSchema } from "@mat3ra/esse/dist/js/types";
+import type { ApplicationSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
 
 import { Standata } from "./base";
 import APPLICATIONS from "./runtime_data/applications.json";
@@ -23,7 +23,7 @@ export enum TAGS {
     DEFAULT_BUILD = "default_build",
 }
 
-export class ApplicationStandata extends Standata<ApplicationSchemaBase> {
+export class ApplicationStandata extends Standata<ApplicationSchema> {
     static runtimeData = APPLICATIONS;
 
     getAppDataForApplication(appName: string): ApplicationVersionsMapType {

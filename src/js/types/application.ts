@@ -1,14 +1,14 @@
-import { ApplicationSchemaBase, ExecutableSchema, FlavorSchema } from "@mat3ra/esse/dist/js/types";
+import { ApplicationSchema, ExecutableSchema, FlavorSchema } from "@mat3ra/esse/dist/js/types";
 
 type OptionalExecutableSchema = Partial<ExecutableSchema>;
 
 export type ApplicationVersionInfo = Pick<
-    ApplicationSchemaBase,
+    ApplicationSchema,
     "isDefault" | "build" | "hasAdvancedComputeOptions" | "version"
 >;
 
 export type ApplicationVersionsMapType = Pick<
-    ApplicationSchemaBase,
+    ApplicationSchema,
     "name" | "shortName" | "summary" | "isLicensed"
 > & {
     // TODO: defaultVersion should come from ESSE
@@ -30,7 +30,7 @@ export type ExecutableTreeItem = Pick<
     "hasAdvancedComputeOptions" | "isDefault" | "monitors" | "results"
 > &
     Pick<OptionalExecutableSchema, "postProcessors"> & {
-        supportedApplicationVersions?: ApplicationSchemaBase["version"][];
+        supportedApplicationVersions?: ApplicationSchema["version"][];
         flavors?: Record<string, Flavor>;
         [key: string]: any;
     };

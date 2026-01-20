@@ -1,4 +1,4 @@
-import { ApplicationSchemaBase, ExecutableSchema } from "@mat3ra/esse/dist/js/types";
+import { ApplicationSchema, ExecutableSchema } from "@mat3ra/esse/dist/js/types";
 import { ApplicationExecutableTree } from "./application";
 export type FilterTree = ApplicationExecutableTree;
 export interface FilterObjectPath {
@@ -9,7 +9,7 @@ export interface FilterObjectRegex {
     defaultPath?: string;
 }
 export type FilterObject = FilterObjectPath | FilterObjectRegex;
-export interface FilterObjectsParams extends Partial<Pick<ApplicationSchemaBase, "name" | "version" | "build">> {
+export interface FilterObjectsParams extends Partial<Pick<ApplicationSchema, "name" | "version" | "build">> {
     filterTree: FilterTree;
     executable?: ExecutableSchema["name"];
     flavor?: string;
@@ -24,14 +24,14 @@ export interface FilterEntityListParams {
 }
 export interface ApplicationModelParametersInterface extends Omit<FilterObjectsParams, "filterTree"> {
     modelList: any[];
-    name: Required<ApplicationSchemaBase>["name"];
+    name: Required<ApplicationSchema>["name"];
 }
-export type ModelMethodFilterTree = Record<Required<ApplicationSchemaBase>["name"], Record<Required<ApplicationSchemaBase>["version"], Record<Required<ApplicationSchemaBase>["build"], Record<ExecutableSchema["name"], Record<string, FilterObject[]>> | string>>>;
+export type ModelMethodFilterTree = Record<Required<ApplicationSchema>["name"], Record<Required<ApplicationSchema>["version"], Record<Required<ApplicationSchema>["build"], Record<ExecutableSchema["name"], Record<string, FilterObject[]>> | string>>>;
 export interface ModelMethodMapByApplication {
     models: ModelMethodFilterTree;
     methods: ModelMethodFilterTree;
 }
 export interface ApplicationMethodParametersInterface extends Omit<FilterObjectsParams, "filterTree"> {
     methodList: any[];
-    name: Required<ApplicationSchemaBase>["name"];
+    name: Required<ApplicationSchema>["name"];
 }

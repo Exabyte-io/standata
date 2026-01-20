@@ -18,7 +18,7 @@ var TAGS;
     TAGS["DEFAULT"] = "default";
     TAGS["DEFAULT_VERSION"] = "default_version";
     TAGS["DEFAULT_BUILD"] = "default_build";
-})(TAGS = exports.TAGS || (exports.TAGS = {}));
+})(TAGS || (exports.TAGS = TAGS = {}));
 class ApplicationStandata extends base_1.Standata {
     getAppDataForApplication(appName) {
         const applicationVersionsMap = APP_VERSIONS[appName];

@@ -1,4 +1,4 @@
-import { ApplicationSchemaBase } from "@mat3ra/esse/dist/js/types";
+import { ApplicationSchema } from "@mat3ra/esse/dist/js/types";
 import { ApplicationVersionInfo, ApplicationVersionsMapType } from "../types/application";
 export declare class ApplicationVersionsMap implements ApplicationVersionsMapType {
     shortName: string;
@@ -8,14 +8,14 @@ export declare class ApplicationVersionsMap implements ApplicationVersionsMapTyp
     versions: ApplicationVersionInfo[];
     map: ApplicationVersionsMapType;
     constructor(config: ApplicationVersionsMapType);
-    get name(): ApplicationSchemaBase;
+    get name(): string;
     get nonVersionProperties(): {
-        name: ApplicationSchemaBase;
-        shortName: ApplicationSchemaBase;
-        summary: ApplicationSchemaBase;
-        isLicensed: ApplicationSchemaBase;
+        name: string;
+        shortName: string;
+        summary: string;
+        isLicensed?: boolean | undefined;
     };
     get versionConfigs(): ApplicationVersionInfo[];
-    get versionConfigsFull(): ApplicationSchemaBase[];
-    getSlugForVersionConfig(versionConfigFull: ApplicationSchemaBase): string;
+    get versionConfigsFull(): ApplicationSchema[];
+    getSlugForVersionConfig(versionConfigFull: ApplicationSchema): string;
 }

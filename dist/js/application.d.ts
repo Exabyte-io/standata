@@ -1,4 +1,4 @@
-import type { ApplicationSchemaBase, TemplateSchema } from "@mat3ra/esse/dist/js/types";
+import type { ApplicationSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
 import { Standata } from "./base";
 import { ApplicationVersionsMapType } from "./types/application";
 export declare enum TAGS {
@@ -6,7 +6,7 @@ export declare enum TAGS {
     DEFAULT_VERSION = "default_version",
     DEFAULT_BUILD = "default_build"
 }
-export declare class ApplicationStandata extends Standata<ApplicationSchemaBase> {
+export declare class ApplicationStandata extends Standata<ApplicationSchema> {
     static runtimeData: {
         filesMapByName: {
             "espresso/espresso_gnu_6.3.json": {
@@ -1422,18 +1422,18 @@ export declare class ApplicationStandata extends Standata<ApplicationSchemaBase>
             };
         };
     };
-    getAllApplicationNames(): any[];
-    getAllAppData(): ApplicationSchemaBase[];
+    getAllApplicationNames(): string[];
+    getAllAppData(): ApplicationSchema[];
     getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[];
-    getByApplicationName(appName: string): ApplicationSchemaBase[];
+    getByApplicationName(appName: string): ApplicationSchema[];
     static getDefaultVersionForApplication(appName: string): string;
     static getDefaultBuildForApplicationAndVersion(appName: string, version: string): string;
-    getDefaultConfigByNameAndVersion(appName: string, version?: string): ApplicationSchemaBase;
+    getDefaultConfigByNameAndVersion(appName: string, version?: string): ApplicationSchema;
     getDefaultConfig(): {
-        name: ApplicationSchemaBase;
-        shortName: ApplicationSchemaBase;
-        version: ApplicationSchemaBase;
-        summary: ApplicationSchemaBase;
-        build: ApplicationSchemaBase;
+        name: string;
+        shortName: string;
+        version: string;
+        summary: string;
+        build: string;
     };
 }
