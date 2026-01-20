@@ -2,8 +2,8 @@
     "name": "Wavefunction Amplitude",
     "subworkflows": [
         {
-            "_id": "109ac366-8f6d-56d5-9b45-6f665f13a511",
-            "name": "Total Energy with Bands",
+            "_id": "6a670ac8-6c12-5285-a6f8-9bf579fc88ee",
+            "name": "Wavefunction Amplitude",
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -21,8 +21,7 @@
                 "stress_tensor",
                 "total_energy",
                 "total_energy_contributions",
-                "total_force",
-                "band_structure"
+                "total_force"
             ],
             "model": {
                 "type": "dft",
@@ -74,7 +73,7 @@
                             "name": "convergence_electronic"
                         }
                     ],
-                    "flowchartId": "pw-scf-total-energy",
+                    "flowchartId": "pw-scf",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -150,91 +149,6 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "pw-bands-total-energy"
-                },
-                {
-                    "type": "execution",
-                    "name": "pw_bands",
-                    "head": false,
-                    "results": [
-                        {
-                            "name": "band_structure"
-                        }
-                    ],
-                    "monitors": [
-                        {
-                            "name": "standard_output"
-                        }
-                    ],
-                    "flowchartId": "pw-bands-total-energy",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "executable": {
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
-                        ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
-                        ],
-                        "name": "pw.x",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "flavor": {
-                        "applicationName": "espresso",
-                        "executableName": "pw.x",
-                        "input": [
-                            {
-                                "name": "pw_bands.in"
-                            }
-                        ],
-                        "monitors": [
-                            "standard_output"
-                        ],
-                        "results": [
-                            "band_structure"
-                        ],
-                        "name": "pw_bands",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "input": [
-                        {
-                            "applicationName": "espresso",
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KPathFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_bands.in",
-                            "rendered": "&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal_b\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n",
-                            "schemaVersion": "2022.8.16"
-                        }
-                    ],
                     "next": "18a26058-7d37-57ac-a685-335862dbf4db"
                 },
                 {
@@ -245,7 +159,7 @@
                     "input": [
                         {
                             "name": "band_structure",
-                            "scope": "pw-bands-total-energy"
+                            "scope": "pw-scf"
                         }
                     ],
                     "status": "idle",
@@ -273,7 +187,7 @@
                     "input": [
                         {
                             "name": "fermi_energy",
-                            "scope": "pw-scf-total-energy"
+                            "scope": "pw-scf"
                         }
                     ],
                     "status": "idle",
@@ -281,6 +195,7 @@
                     "flowchartId": "7d103bf9-40b8-5f90-8934-bbcb6c7b9802",
                     "tags": [],
                     "head": false,
+                    "next": "extract-band-energies",
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -291,77 +206,7 @@
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
-                }
-            ]
-        },
-        {
-            "unitConfigs": [
-                {
-                    "index": 0,
-                    "type": "assignment",
-                    "config": {
-                        "attributes": {
-                            "input": [
-                                {
-                                    "name": "band_structure",
-                                    "scope": "total_energy_with_bands"
-                                }
-                            ]
-                        }
-                    }
                 },
-                {
-                    "index": 1,
-                    "type": "assignment",
-                    "config": {
-                        "attributes": {
-                            "input": [
-                                {
-                                    "name": "fermi_energy",
-                                    "scope": "total_energy_with_bands"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "index": 2,
-                    "type": "assignment",
-                    "config": {
-                        "attributes": {
-                            "input": [
-                                {
-                                    "name": "fermi_energy",
-                                    "scope": "total_energy_with_bands"
-                                }
-                            ]
-                        }
-                    }
-                }
-            ],
-            "_id": "7e376e1f-edf6-536b-9966-d274122dc799",
-            "name": "Extract Bands Near Fermi",
-            "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            },
-            "properties": [],
-            "model": {
-                "type": "unknown",
-                "subtype": "unknown",
-                "method": {
-                    "type": "pseudopotential",
-                    "subtype": "us",
-                    "data": {}
-                }
-            },
-            "units": [
                 {
                     "name": "Extract Band Energies",
                     "type": "assignment",
@@ -372,7 +217,7 @@
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
-                    "head": true,
+                    "head": false,
                     "next": "indices-below-fermi",
                     "application": {
                         "name": "espresso",
@@ -557,6 +402,7 @@
                     "flowchartId": "57a07d7d-3f68-5f31-97ad-ebe8c5593cd2",
                     "tags": [],
                     "head": false,
+                    "next": "pp-wfn",
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -567,58 +413,11 @@
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
-                }
-            ]
-        },
-        {
-            "unitConfigs": [
-                {
-                    "index": 0,
-                    "type": "executionBuilder",
-                    "config": {
-                        "attributes": {
-                            "input": [
-                                {
-                                    "name": "KBAND_VALUE",
-                                    "scope": "extract_bands_fermi"
-                                }
-                            ]
-                        }
-                    }
-                }
-            ],
-            "_id": "7edc20aa-d533-57d8-b8a0-1e504ceb19fd",
-            "name": "PP Wavefunction",
-            "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            },
-            "properties": [],
-            "model": {
-                "type": "dft",
-                "subtype": "gga",
-                "method": {
-                    "type": "pseudopotential",
-                    "subtype": "us",
-                    "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
-            },
-            "units": [
                 {
                     "type": "execution",
                     "name": "pp_wfn",
-                    "head": true,
+                    "head": false,
                     "results": [],
                     "monitors": [
                         {
@@ -795,36 +594,14 @@
     ],
     "units": [
         {
-            "name": "Total Energy with Bands",
+            "name": "Wavefunction Amplitude",
             "type": "subworkflow",
-            "_id": "109ac366-8f6d-56d5-9b45-6f665f13a511",
+            "_id": "6a670ac8-6c12-5285-a6f8-9bf579fc88ee",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "84f1102e-5cbf-54ce-bc09-48bced817f9f",
+            "flowchartId": "36467db9-279f-52a3-a6ef-ffdc26d875ed",
             "tags": [],
             "head": true,
-            "next": "8c691f3c-556e-5f4c-8db4-46d6f08d6c9b"
-        },
-        {
-            "name": "Extract Bands Near Fermi",
-            "type": "subworkflow",
-            "_id": "7e376e1f-edf6-536b-9966-d274122dc799",
-            "status": "idle",
-            "statusTrack": [],
-            "flowchartId": "8c691f3c-556e-5f4c-8db4-46d6f08d6c9b",
-            "tags": [],
-            "head": false,
-            "next": "b26bb41f-0237-51db-9e59-16c157c8dd03"
-        },
-        {
-            "name": "PP Wavefunction",
-            "type": "subworkflow",
-            "_id": "7edc20aa-d533-57d8-b8a0-1e504ceb19fd",
-            "status": "idle",
-            "statusTrack": [],
-            "flowchartId": "b26bb41f-0237-51db-9e59-16c157c8dd03",
-            "tags": [],
-            "head": false,
             "next": "4ce49281-e731-550e-af66-6d2408db8237"
         },
         {
@@ -840,7 +617,6 @@
     ],
     "properties": [
         "atomic_forces",
-        "band_structure",
         "fermi_energy",
         "pressure",
         "stress_tensor",
@@ -848,11 +624,12 @@
         "total_energy_contributions",
         "total_force"
     ],
-    "_id": "9f523214-605f-5eed-8b58-2e2d8fbc18e3",
+    "_id": "9d04524a-d30e-5479-b835-7877f81e2412",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
     "tags": [
+        "wfn",
         "wfn_plot"
     ],
     "application": {

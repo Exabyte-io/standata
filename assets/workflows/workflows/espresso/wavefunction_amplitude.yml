@@ -1,57 +1,32 @@
 name: Wavefunction Amplitude
 
 # To plot a different band, edit the workflow in the UI:
-#   1. Open "Extract Bands Near Fermi" unit
-#   2. Find the "Select Band" assignment (last unit)
+#   1. Open "Wavefunction Amplitude" subworkflow unit
+#   2. Find the "Select Band" assignment (last assignment unit before pp_wfn)
 #   3. Change the value:
 #      - 'KBAND_VALUE_BELOW_EF' → valence band (VBM, highest occupied)
 #      - 'KBAND_VALUE_ABOVE_EF' → conduction band (CBM, lowest unoccupied)
 
+properties:
+  - atomic_forces
+  - band_structure
+  - fermi_energy
+  - file_content
+  - pressure
+  - stress_tensor
+  - total_energy
+  - total_energy_contributions
+  - total_force
+  - wavefunction_amplitude
+
 units:
-  - name: total_energy_with_bands
+  - name: wavefunction_amplitude
     type: subworkflow
-
-  - name: extract_bands_fermi
-    type: subworkflow
-    config:
-      unitConfigs:
-        - index: 0
-          type: assignment
-          config:
-            attributes:
-              input:
-                - name: band_structure
-                  scope: total_energy_with_bands
-        - index: 1
-          type: assignment
-          config:
-            attributes:
-              input:
-                - name: fermi_energy
-                  scope: total_energy_with_bands
-        - index: 2
-          type: assignment
-          config:
-            attributes:
-              input:
-                - name: fermi_energy
-                  scope: total_energy_with_bands
-
-  - name: pp_wfn
-    type: subworkflow
-    config:
-      unitConfigs:
-        - index: 0
-          type: executionBuilder
-          config:
-            attributes:
-              input:
-                - name: KBAND_VALUE
-                  scope: extract_bands_fermi
 
   - name: plot_wavefunction
     type: subworkflow
     config: {}
 
 tags:
+  - wfn
   - wfn_plot

@@ -31,6 +31,7 @@ categories:
     - remove-all-results
     - set-io-unit-filenames
     - variable-cell_relaxation
+    - wfn
     - wfn_plot
   application:
     - espresso
@@ -388,6 +389,18 @@ entities:
       - total_energy
       - total_force
       - variable-cell_relaxation
+  - filename: espresso/wavefunction_amplitude.json
+    categories:
+      - atomic_forces
+      - espresso
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - wfn
+      - wfn_plot
   - filename: espresso/zero_point_energy.json
     categories:
       - atomic_forces

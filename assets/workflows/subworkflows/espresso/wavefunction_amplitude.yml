@@ -1,14 +1,48 @@
-# Note: This subworkflow extracts band indices near Fermi energy
-# Expects fermi_energy and band_structure to be passed via unitConfigs
-# Outputs: KBAND_VALUE_BELOW_EF, KBAND_VALUE_ABOVE_EF, and KBAND_VALUE (selected)
 application:
   name: espresso
+  version: '6.3'
 method:
-  name: UnknownMethod
+  name: PseudopotentialMethod
 model:
-  name: UnknownModel
-name: Extract Bands Near Fermi
+  name: DFTModel
+name: Wavefunction Amplitude
+properties:
+  - atomic_forces
+  - fermi_energy
+  - pressure
+  - stress_tensor
+  - total_energy
+  - total_energy_contributions
+  - total_force
+  - band_structure
+  - wavefunction_amplitude
 units:
+  - config:
+      execName: pw.x
+      flavorName: pw_scf
+      name: pw_scf
+      flowchartId: pw-scf
+      results:
+        - name: band_structure
+    functions:
+      head: true
+    type: executionBuilder
+  - config:
+      name: assignment BS
+      operand: band_structure
+      value: band_structure
+      input:
+        - name: band_structure
+          scope: pw-scf
+    type: assignment
+  - config:
+      name: assignment FE
+      operand: fermi_energy
+      value: fermi_energy
+      input:
+        - name: fermi_energy
+          scope: pw-scf
+    type: assignment
   - config:
       name: Extract Band Energies
       operand: band_energies
@@ -63,3 +97,15 @@ units:
       operand: KBAND_VALUE
       value: "KBAND_VALUE_BELOW_EF"
     type: assignment
+  - config:
+      execName: pp.x
+      flavorName: pp_wfn
+      name: pp_wfn
+      flowchartId: pp-wfn
+      input:
+        - name: KBAND_VALUE
+    type: executionBuilder
+tags:
+  - wfn
+  - wfn_plot
+

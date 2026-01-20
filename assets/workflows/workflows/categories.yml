@@ -24,6 +24,7 @@ categories:
   tags:
     - default
     - variable-cell_relaxation
+    - wfn
     - wfn_plot
   application:
     - espresso
@@ -325,7 +326,6 @@ entities:
   - filename: espresso/wavefunction_amplitude.json
     categories:
       - atomic_forces
-      - band_structure
       - espresso
       - fermi_energy
       - pressure
@@ -333,6 +333,7 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
+      - wfn
       - wfn_plot
   - filename: espresso/wavefunction_plot.json
     categories:
