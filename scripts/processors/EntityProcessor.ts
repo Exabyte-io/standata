@@ -7,7 +7,12 @@ import * as path from "path";
 
 import { BUILD_CONFIG } from "../../build-config";
 import { RuntimeData, StandataConfig } from "../../src/js/types/standata";
-import { encodeDataAsURLPath, readYAMLFileResolved, resolveFromRoot } from "../utils";
+import {
+    encodeDataAsURLPath,
+    findJsonFilesRecursively,
+    readYAMLFileResolved,
+    resolveFromRoot,
+} from "../utils";
 
 export interface EntityProcessorOptions {
     rootDir: string;
@@ -156,7 +161,7 @@ export abstract class EntityProcessor {
         if (!fs.existsSync(dataDir)) return;
 
         console.log(`  Cleaning ${dataDir}...`);
-        const files = serverUtils.file.getFilesInDirectory(dataDir, [".json"]);
+        const files = findJsonFilesRecursively(dataDir);
         files.forEach((file: string) => {
             fs.unlinkSync(file);
         });
