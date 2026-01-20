@@ -8,7 +8,6 @@ model:
 name: Plot Wavefunction
 properties:
   - file_content
-  - wavefunction_amplitude
 units:
   - config:
       execName: python
@@ -18,5 +17,5 @@ units:
         - name: file_content
           basename: wf_r.png
           filetype: image
-        - name: wavefunction_amplitude
     type: executionBuilder
+
