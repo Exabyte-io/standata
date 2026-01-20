@@ -28,13 +28,13 @@
   applicationName: python
   executableName: python
 
-- content: !readFile 'input_files_templates/python/espresso/plot_wavefunction.pyi'
+- content: !readFile 'input_files_templates/python/plot_wavefunction.pyi'
   name: plot_wavefunction.py
   contextProviders: []
   applicationName: python
   executableName: python
 
-- content: !readFile 'input_files_templates/python/espresso/requirements_plot_wavefunction.j2.txt'
+- content: !readFile 'input_files_templates/python/requirements_plot_wavefunction.j2.txt'
   name: requirements_plot_wavefunction.txt
   contextProviders: []
   applicationName: python

@@ -47,3 +47,4 @@ wavefunction_data = {
 
 # Print JSON to STDOUT (will be captured as potential_profile result)
 print(json.dumps(wavefunction_data, indent=2))
+
