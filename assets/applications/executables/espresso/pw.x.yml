@@ -1,44 +1,44 @@
 isDefault: true
 hasAdvancedComputeOptions: true
 postProcessors:
-  - remove_non_zero_weight_kpoints
+  - name: remove_non_zero_weight_kpoints
 monitors:
-  - standard_output
-  - convergence_ionic
-  - convergence_electronic
+  - name: standard_output
+  - name: convergence_ionic
+  - name: convergence_electronic
 results:
-  - atomic_forces
-  - band_gaps
-  - band_structure
-  - charge_density_profile
-  - density_of_states
-  - fermi_energy
-  - final_structure
-  - magnetic_moments
-  - potential_profile
-  - pressure
-  - reaction_energy_barrier
-  - reaction_energy_profile
-  - stress_tensor
-  - total_energy
-  - total_energy_contributions
-  - total_force
+  - name: atomic_forces
+  - name: band_gaps
+  - name: band_structure
+  - name: charge_density_profile
+  - name: density_of_states
+  - name: fermi_energy
+  - name: final_structure
+  - name: magnetic_moments
+  - name: potential_profile
+  - name: pressure
+  - name: reaction_energy_barrier
+  - name: reaction_energy_profile
+  - name: stress_tensor
+  - name: total_energy
+  - name: total_energy_contributions
+  - name: total_force
 flavors:
   pw_scf:
     isDefault: true
     input:
       - name: pw_scf.in
     results:
-      - atomic_forces
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
 
@@ -46,16 +46,16 @@ flavors:
     input:
       - name: pw_scf_bands_hse.in
     results:
-      - total_energy
-      - total_energy_contributions
-      - pressure
-      - fermi_energy
-      - atomic_forces
-      - total_force
-      - stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: pressure
+      - name: fermi_energy
+      - name: atomic_forces
+      - name: total_force
+      - name: stress_tensor
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
 
@@ -63,17 +63,17 @@ flavors:
     input:
       - name: pw_scf_hse.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
 
@@ -81,15 +81,15 @@ flavors:
     input:
       - name: pw_scf_kpt_conv.in
     results:
-      - total_energy
-      - fermi_energy
-      - pressure
-      - atomic_forces
-      - total_force
-      - stress_tensor
+      - name: total_energy
+      - name: fermi_energy
+      - name: pressure
+      - name: atomic_forces
+      - name: total_force
+      - name: stress_tensor
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
 
@@ -97,17 +97,17 @@ flavors:
     input:
       - name: pw_scf_dft_u.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -118,17 +118,17 @@ flavors:
     input:
       - name: pw_scf_dft_v.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -139,17 +139,17 @@ flavors:
     input:
       - name: pw_scf_dft_j.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -160,17 +160,17 @@ flavors:
     input:
       - name: pw_scf_dft_u_legacy.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -189,16 +189,16 @@ flavors:
     input:
       - name: pw_scf_magn.in
     results:
-      - atomic_forces
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
 
@@ -206,16 +206,16 @@ flavors:
     input:
       - name: pw_scf_soc.in
     results:
-      - atomic_forces
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
 
@@ -223,17 +223,17 @@ flavors:
     input:
       - name: pw_scf_dft_u_magn.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -244,17 +244,17 @@ flavors:
     input:
       - name: pw_scf_dft_u_soc.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -265,17 +265,17 @@ flavors:
     input:
       - name: pw_scf_dft_v_magn.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -286,17 +286,17 @@ flavors:
     input:
       - name: pw_scf_dft_j_magn.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -307,17 +307,17 @@ flavors:
     input:
       - name: pw_scf_dft_u_magn_legacy.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -333,17 +333,17 @@ flavors:
     input:
       - name: pw_scf_dft_u_soc_legacy.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -362,18 +362,18 @@ flavors:
     input:
       - name: pw_esm.in
     results:
-      - total_energy
-      - total_energy_contributions
-      - pressure
-      - fermi_energy
-      - atomic_forces
-      - total_force
-      - stress_tensor
-      - potential_profile
-      - charge_density_profile
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: pressure
+      - name: fermi_energy
+      - name: atomic_forces
+      - name: total_force
+      - name: stress_tensor
+      - name: potential_profile
+      - name: charge_density_profile
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
 
@@ -381,18 +381,18 @@ flavors:
     input:
       - name: pw_esm_relax.in
     results:
-      - total_energy
-      - total_energy_contributions
-      - pressure
-      - fermi_energy
-      - atomic_forces
-      - total_force
-      - stress_tensor
-      - potential_profile
-      - charge_density_profile
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: pressure
+      - name: fermi_energy
+      - name: atomic_forces
+      - name: total_force
+      - name: stress_tensor
+      - name: potential_profile
+      - name: charge_density_profile
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
 
@@ -400,10 +400,10 @@ flavors:
     input:
       - name: pw_nscf.in
     results:
-      - fermi_energy
-      - band_gaps
+      - name: fermi_energy
+      - name: band_gaps
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
 
@@ -411,10 +411,10 @@ flavors:
     input:
       - name: pw_nscf_magn.in
     results:
-      - fermi_energy
-      - band_gaps
+      - name: fermi_energy
+      - name: band_gaps
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
 
@@ -422,10 +422,10 @@ flavors:
     input:
       - name: pw_nscf_soc.in
     results:
-      - fermi_energy
-      - band_gaps
+      - name: fermi_energy
+      - name: band_gaps
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
 
@@ -433,10 +433,10 @@ flavors:
     input:
       - name: pw_nscf_dft_u_magn.in
     results:
-      - fermi_energy
-      - band_gaps
+      - name: fermi_energy
+      - name: band_gaps
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -447,10 +447,10 @@ flavors:
     input:
       - name: pw_nscf_dft_v_magn.in
     results:
-      - fermi_energy
-      - band_gaps
+      - name: fermi_energy
+      - name: band_gaps
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -461,10 +461,10 @@ flavors:
     input:
       - name: pw_nscf_dft_j_magn.in
     results:
-      - fermi_energy
-      - band_gaps
+      - name: fermi_energy
+      - name: band_gaps
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -475,17 +475,17 @@ flavors:
     input:
       - name: pw_nscf_dft_u_magn_legacy.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -504,10 +504,10 @@ flavors:
     input:
       - name: pw_nscf_dft_u_soc.in
     results:
-      - fermi_energy
-      - band_gaps
+      - name: fermi_energy
+      - name: band_gaps
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -518,17 +518,17 @@ flavors:
     input:
       - name: pw_nscf_dft_u_soc_legacy.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -547,9 +547,9 @@ flavors:
     input:
       - name: pw_bands.in
     results:
-      - band_structure
+      - name: band_structure
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
 
@@ -557,9 +557,9 @@ flavors:
     input:
       - name: pw_bands_magn.in
     results:
-      - band_structure
+      - name: band_structure
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
 
@@ -567,9 +567,9 @@ flavors:
     input:
       - name: pw_bands_soc.in
     results:
-      - band_structure
+      - name: band_structure
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
 
@@ -577,9 +577,9 @@ flavors:
     input:
       - name: pw_bands_dft_u_magn.in
     results:
-      - band_structure
+      - name: band_structure
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -590,9 +590,9 @@ flavors:
     input:
       - name: pw_bands_dft_v_magn.in
     results:
-      - band_structure
+      - name: band_structure
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -603,9 +603,9 @@ flavors:
     input:
       - name: pw_bands_dft_j_magn.in
     results:
-      - band_structure
+      - name: band_structure
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -616,9 +616,9 @@ flavors:
     input:
       - name: pw_bands_dft_u_magn_legacy.in
     results:
-      - band_structure
+      - name: band_structure
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -637,9 +637,9 @@ flavors:
     input:
       - name: pw_bands_dft_u_soc.in
     results:
-      - band_structure
+      - name: band_structure
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -650,9 +650,9 @@ flavors:
     input:
       - name: pw_bands_dft_u_soc_legacy.in
     results:
-      - band_structure
+      - name: band_structure
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pw.x
     supportedApplicationVersions:
@@ -671,17 +671,17 @@ flavors:
     input:
       - name: pw_relax.in
     monitors:
-      - standard_output
-      - convergence_electronic
-      - convergence_ionic
+      - name: standard_output
+      - name: convergence_electronic
+      - name: convergence_ionic
     results:
-      - total_energy
-      - fermi_energy
-      - pressure
-      - atomic_forces
-      - total_force
-      - stress_tensor
-      - final_structure
+      - name: total_energy
+      - name: fermi_energy
+      - name: pressure
+      - name: atomic_forces
+      - name: total_force
+      - name: stress_tensor
+      - name: final_structure
     applicationName: espresso
     executableName: pw.x
 
@@ -689,17 +689,17 @@ flavors:
     input:
       - name: pw_vc_relax.in
     monitors:
-      - standard_output
-      - convergence_electronic
-      - convergence_ionic
+      - name: standard_output
+      - name: convergence_electronic
+      - name: convergence_ionic
     results:
-      - total_energy
-      - fermi_energy
-      - pressure
-      - atomic_forces
-      - total_force
-      - stress_tensor
-      - final_structure
+      - name: total_energy
+      - name: fermi_energy
+      - name: pressure
+      - name: atomic_forces
+      - name: total_force
+      - name: stress_tensor
+      - name: final_structure
     applicationName: espresso
     executableName: pw.x
 
@@ -707,16 +707,16 @@ flavors:
     input:
       - name: pw_md.in
     results:
-      - atomic_forces
-      - band_gaps
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
+      - name: atomic_forces
+      - name: band_gaps
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: total_force
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x

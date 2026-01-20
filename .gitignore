@@ -175,3 +175,5 @@ node_modules/
 by_category
 
 .python-version
+
+.vscode/

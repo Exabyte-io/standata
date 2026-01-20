@@ -1,12 +1,12 @@
-import type { TemplateSchema } from "@mat3ra/esse/dist/js/types";
+import type { ApplicationSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
 import { Standata } from "./base";
-import { ApplicationExecutableTree, ApplicationVersionsMapType, DefaultApplicationConfig } from "./types/application";
+import { ApplicationVersionsMapType } from "./types/application";
 export declare enum TAGS {
     DEFAULT = "default",
     DEFAULT_VERSION = "default_version",
     DEFAULT_BUILD = "default_build"
 }
-export declare class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
+export declare class ApplicationStandata extends Standata<ApplicationSchema> {
     static runtimeData: {
         filesMapByName: {
             "espresso/espresso_gnu_6.3.json": {
@@ -66,7 +66,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
         };
     };
     getAppDataForApplication(appName: string): ApplicationVersionsMapType;
-    getAppTreeForApplication(appName: string): ApplicationExecutableTree;
+    getAppTreeForApplication(appName: string): Record<string, import("./types/application").ExecutableTreeItem>;
     getAllAppTemplates(): TemplateSchema[];
     getAllAppTree(): {
         espresso: {
@@ -1423,11 +1423,17 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
         };
     };
     getAllApplicationNames(): string[];
-    getAllAppData(): ApplicationVersionsMapType[];
+    getAllAppData(): ApplicationSchema[];
     getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[];
-    getByApplicationName(appName: string): ApplicationVersionsMapType[];
+    getByApplicationName(appName: string): ApplicationSchema[];
     static getDefaultVersionForApplication(appName: string): string;
     static getDefaultBuildForApplicationAndVersion(appName: string, version: string): string;
-    getDefaultConfigByNameAndVersion(appName: string, version?: string): ApplicationVersionsMapType;
-    getDefaultConfig(): DefaultApplicationConfig;
+    getDefaultConfigByNameAndVersion(appName: string, version?: string): ApplicationSchema;
+    getDefaultConfig(): {
+        name: string;
+        shortName: string;
+        version: string;
+        summary: string;
+        build: string;
+    };
 }

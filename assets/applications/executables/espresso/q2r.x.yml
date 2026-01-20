@@ -1,5 +1,5 @@
 monitors:
-  - standard_output
+  - name: standard_output
 results: []
 flavors:
   q2r:
@@ -7,6 +7,6 @@ flavors:
       - name: q2r.in
     results: []
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: q2r.x

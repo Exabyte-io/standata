@@ -1,13 +1,13 @@
 monitors:
-  - standard_output
+  - name: standard_output
 results:
-  - band_structure
+  - name: band_structure
 flavors:
   bands:
     input:
       - name: bands.in
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: bands.x
 
@@ -15,7 +15,7 @@ flavors:
     input:
       - name: bands_spin_up.in
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: bands.x
 
@@ -23,6 +23,6 @@ flavors:
     input:
       - name: bands_spin_dn.in
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: bands.x
