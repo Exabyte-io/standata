@@ -311,7 +311,6 @@ entities:
       - espresso
       - file_content
       - python
-      - wavefunction_amplitude
   - filename: espresso/post_processor.json
     categories:
       - espresso
@@ -381,6 +380,7 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
+      - wavefunction_amplitude
       - wfn
       - wfn_plot
   - filename: espresso/zero_point_energy.json

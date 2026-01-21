@@ -20,6 +20,7 @@ categories:
     - total_energy
     - total_energy_contributions
     - total_force
+    - wavefunction_amplitude
     - zero_point_energy
   tags:
     - default
@@ -333,6 +334,7 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
+      - wavefunction_amplitude
       - wfn
       - wfn_plot
   - filename: espresso/zero_point_energy.json

@@ -105,6 +105,9 @@ units:
       input:
         - name: KBAND_VALUE
     type: executionBuilder
+    attributes:
+      results:
+        - name: wavefunction_amplitude
 tags:
   - wfn
   - wfn_plot

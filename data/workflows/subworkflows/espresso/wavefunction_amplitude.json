@@ -11,7 +11,8 @@
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force"
+        "total_force",
+        "wavefunction_amplitude"
     ],
     "model": {
         "type": "dft",
@@ -408,7 +409,11 @@
             "type": "execution",
             "name": "pp_wfn",
             "head": false,
-            "results": [],
+            "results": [
+                {
+                    "name": "wavefunction_amplitude"
+                }
+            ],
             "monitors": [
                 {
                     "name": "standard_output"
@@ -446,7 +451,9 @@
                 "monitors": [
                     "standard_output"
                 ],
-                "results": [],
+                "results": [
+                    "wavefunction_amplitude"
+                ],
                 "name": "pp_wfn",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false

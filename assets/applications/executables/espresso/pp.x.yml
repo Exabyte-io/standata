@@ -23,7 +23,8 @@ flavors:
   pp_wfn:
     input:
       - name: pp_wfn.in
-    results: []
+    results:
+      - wavefunction_amplitude
     monitors:
       - standard_output
     applicationName: espresso

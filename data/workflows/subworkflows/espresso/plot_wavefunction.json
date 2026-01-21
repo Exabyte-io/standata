@@ -5,8 +5,7 @@
         "name": "espresso"
     },
     "properties": [
-        "file_content",
-        "wavefunction_amplitude"
+        "file_content"
     ],
     "model": {
         "type": "unknown",
@@ -25,9 +24,6 @@
             "results": [
                 {
                     "name": "file_content"
-                },
-                {
-                    "name": "wavefunction_amplitude"
                 }
             ],
             "monitors": [
@@ -72,8 +68,7 @@
                     "standard_output"
                 ],
                 "results": [
-                    "file_content",
-                    "wavefunction_amplitude"
+                    "file_content"
                 ],
                 "name": "plot_wavefunction",
                 "schemaVersion": "2022.8.16",
