@@ -11,6 +11,6 @@
     fileout = 'wf_r.dat'
     output_format = 0
     x0(1) = 0.0, x0(2) = 0.0, x0(3) = 0.0
-    e1(1) = 0.0, e1(2) = 0.0, e1(3) = 1.0
+    e1(1) = 0.0, e1(2) = 0.0, e1(3) = {{material.lattice.c/material.lattice.a}}
     nx = 200
 /

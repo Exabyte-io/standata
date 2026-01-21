@@ -373,6 +373,7 @@ entities:
   - filename: espresso/wavefunction_amplitude.json
     categories:
       - atomic_forces
+      - band_structure
       - espresso
       - fermi_energy
       - pressure

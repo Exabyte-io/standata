@@ -22,11 +22,19 @@ units:
       flavorName: pw_scf
       name: pw_scf
       flowchartId: pw-scf
-      results:
-        - name: band_structure
     functions:
       head: true
     type: executionBuilder
+    attributes:
+      results:
+        - name: atomic_forces
+        - name: band_structure
+        - name: fermi_energy
+        - name: pressure
+        - name: stress_tensor
+        - name: total_energy
+        - name: total_energy_contributions
+        - name: total_force
   - config:
       name: assignment BS
       operand: band_structure
