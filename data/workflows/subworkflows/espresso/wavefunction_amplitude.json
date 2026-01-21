@@ -6,6 +6,7 @@
     },
     "properties": [
         "atomic_forces",
+        "band_structure",
         "fermi_energy",
         "pressure",
         "stress_tensor",
@@ -36,6 +37,9 @@
             "results": [
                 {
                     "name": "atomic_forces"
+                },
+                {
+                    "name": "band_structure"
                 },
                 {
                     "name": "fermi_energy"
@@ -140,70 +144,19 @@
                     "schemaVersion": "2022.8.16"
                 }
             ],
-            "next": "18a26058-7d37-57ac-a685-335862dbf4db"
-        },
-        {
-            "name": "assignment BS",
-            "type": "assignment",
-            "operand": "band_structure",
-            "value": "band_structure",
-            "input": [
-                {
-                    "name": "band_structure",
-                    "scope": "pw-scf"
-                }
-            ],
-            "status": "idle",
-            "statusTrack": [],
-            "flowchartId": "18a26058-7d37-57ac-a685-335862dbf4db",
-            "tags": [],
-            "head": false,
-            "next": "7d103bf9-40b8-5f90-8934-bbcb6c7b9802",
-            "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
-            "name": "assignment FE",
-            "type": "assignment",
-            "operand": "fermi_energy",
-            "value": "fermi_energy",
-            "input": [
-                {
-                    "name": "fermi_energy",
-                    "scope": "pw-scf"
-                }
-            ],
-            "status": "idle",
-            "statusTrack": [],
-            "flowchartId": "7d103bf9-40b8-5f90-8934-bbcb6c7b9802",
-            "tags": [],
-            "head": false,
-            "next": "extract-band-energies",
-            "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            }
+            "next": "extract-band-energies"
         },
         {
             "name": "Extract Band Energies",
             "type": "assignment",
             "operand": "band_energies",
             "value": "[band_data[0] for band_data in (band_structure['yDataSeries'] if (band_structure and 'yDataSeries' in band_structure) else [])]",
-            "input": [],
+            "input": [
+                {
+                    "name": "band_structure",
+                    "scope": "pw-scf"
+                }
+            ],
             "flowchartId": "extract-band-energies",
             "status": "idle",
             "statusTrack": [],
@@ -226,31 +179,13 @@
             "type": "assignment",
             "operand": "indices_below_fermi",
             "value": "[i for i in range(len(band_energies)) if band_energies[i] <= fermi_energy]",
-            "input": [],
+            "input": [
+                {
+                    "name": "fermi_energy",
+                    "scope": "pw-scf"
+                }
+            ],
             "flowchartId": "indices-below-fermi",
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "head": false,
-            "next": "indices-above-fermi",
-            "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
-            "name": "Find Indices Above Fermi",
-            "type": "assignment",
-            "operand": "indices_above_fermi",
-            "value": "[i for i in range(len(band_energies)) if band_energies[i] > fermi_energy]",
-            "input": [],
-            "flowchartId": "indices-above-fermi",
             "status": "idle",
             "statusTrack": [],
             "tags": [],
@@ -276,98 +211,6 @@
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "8771dc7f-878e-5f13-a840-a3a416854f1e",
-            "tags": [],
-            "head": false,
-            "next": "91e1328f-39dd-5c24-83f9-d49bfe5c620e",
-            "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
-            "name": "Store Band Above EF",
-            "type": "assignment",
-            "operand": "KBAND_VALUE_ABOVE_EF",
-            "value": "indices_above_fermi[0] + 1 if len(indices_above_fermi) > 0 else len(band_energies)",
-            "input": [],
-            "status": "idle",
-            "statusTrack": [],
-            "flowchartId": "91e1328f-39dd-5c24-83f9-d49bfe5c620e",
-            "tags": [],
-            "head": false,
-            "next": "9fa08d2e-0ffd-5c12-8a88-086922fb3f72",
-            "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
-            "name": "Store Valence Energy",
-            "type": "assignment",
-            "operand": "VALENCE_ENERGY",
-            "value": "band_energies[indices_below_fermi[-1]] if len(indices_below_fermi) > 0 else (band_energies[0] if len(band_energies) > 0 else 0.0)",
-            "input": [],
-            "status": "idle",
-            "statusTrack": [],
-            "flowchartId": "9fa08d2e-0ffd-5c12-8a88-086922fb3f72",
-            "tags": [],
-            "head": false,
-            "next": "f5fbd236-2453-5ecd-aaf5-49940c45888c",
-            "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
-            "name": "Store Conduction Energy",
-            "type": "assignment",
-            "operand": "CONDUCTION_ENERGY",
-            "value": "band_energies[indices_above_fermi[0]] if len(indices_above_fermi) > 0 else (band_energies[-1] if len(band_energies) > 0 else 0.0)",
-            "input": [],
-            "status": "idle",
-            "statusTrack": [],
-            "flowchartId": "f5fbd236-2453-5ecd-aaf5-49940c45888c",
-            "tags": [],
-            "head": false,
-            "next": "fff25fab-985b-50c6-8b4c-db7f7adb29a8",
-            "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
-            "name": "Store Total Bands",
-            "type": "assignment",
-            "operand": "TOTAL_BANDS",
-            "value": "len(band_energies)",
-            "input": [],
-            "status": "idle",
-            "statusTrack": [],
-            "flowchartId": "fff25fab-985b-50c6-8b4c-db7f7adb29a8",
             "tags": [],
             "head": false,
             "next": "57a07d7d-3f68-5f31-97ad-ebe8c5593cd2",
@@ -464,11 +307,11 @@
             "input": [
                 {
                     "applicationName": "espresso",
-                    "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    plot_num = 7\n    kpoint = 1\n    kband = {% raw %}{{ KBAND_VALUE | default(1) }}{% endraw %}\n    lsign = .true.\n/\n&PLOT\n    iflag = 1\n    fileout = 'wf_r.dat'\n    output_format = 0\n    x0(1) = 0.0, x0(2) = 0.0, x0(3) = 0.0\n    e1(1) = 0.0, e1(2) = 0.0, e1(3) = 1.0\n    nx = 200\n/\n",
+                    "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    plot_num = 7\n    kpoint = 1\n    kband = {% raw %}{{ KBAND_VALUE | default(1) }}{% endraw %}\n    lsign = .true.\n/\n&PLOT\n    iflag = 1\n    fileout = 'wf_r.dat'\n    output_format = 0\n    x0(1) = 0.0, x0(2) = 0.0, x0(3) = 0.0\n    e1(1) = 0.0, e1(2) = 0.0, e1(3) = {{material.lattice.c/material.lattice.a}}\n    nx = 200\n/\n",
                     "contextProviders": [],
                     "executableName": "pp.x",
                     "name": "pp_wfn.in",
-                    "rendered": "&INPUTPP\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    plot_num = 7\n    kpoint = 1\n    kband = {{ KBAND_VALUE | default(1) }}\n    lsign = .true.\n/\n&PLOT\n    iflag = 1\n    fileout = 'wf_r.dat'\n    output_format = 0\n    x0(1) = 0.0, x0(2) = 0.0, x0(3) = 0.0\n    e1(1) = 0.0, e1(2) = 0.0, e1(3) = 1.0\n    nx = 200\n/\n",
+                    "rendered": "&INPUTPP\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    plot_num = 7\n    kpoint = 1\n    kband = {{ KBAND_VALUE | default(1) }}\n    lsign = .true.\n/\n&PLOT\n    iflag = 1\n    fileout = 'wf_r.dat'\n    output_format = 0\n    x0(1) = 0.0, x0(2) = 0.0, x0(3) = 0.0\n    e1(1) = 0.0, e1(2) = 0.0, e1(3) = NaN\n    nx = 200\n/\n",
                     "schemaVersion": "2022.8.16"
                 }
             ]
