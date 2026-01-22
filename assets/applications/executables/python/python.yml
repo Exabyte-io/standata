@@ -41,7 +41,9 @@ flavors:
       - name: requirements.txt
         templateName: requirements_plot_wavefunction.txt
     results:
-      - file_content
+      - name: file_content
+        filetype: image
+        basename: "wf_r.png"
     monitors:
       - standard_output
     applicationName: python
