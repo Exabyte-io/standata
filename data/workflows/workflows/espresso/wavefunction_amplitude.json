@@ -404,7 +404,9 @@
                             "standard_output"
                         ],
                         "results": [
-                            "file_content"
+                            {
+                                "name": "file_content"
+                            }
                         ],
                         "name": "plot_wavefunction",
                         "schemaVersion": "2022.8.16",
