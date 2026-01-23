@@ -9,13 +9,14 @@ name: Plot Wavefunction
 properties:
   - file_content
 units:
-  - config:
-      execName: python
-      flavorName: plot_wavefunction
-      name: plot WFN
+  - attributes:
       results:
         - name: file_content
           basename: "wf_r.png"
           filetype: "image"
+    config:
+      execName: python
+      flavorName: plot_wavefunction
+      name: plot WFN
     type: executionBuilder
 
