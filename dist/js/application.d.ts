@@ -969,7 +969,11 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                             templateName: string;
                         }[];
                         monitors: string[];
-                        results: string[];
+                        results: {
+                            basename: string;
+                            filetype: string;
+                            name: string;
+                        }[];
                     };
                     "pyml:custom": {
                         applicationName: string;

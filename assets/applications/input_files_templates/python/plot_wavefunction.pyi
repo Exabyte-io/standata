@@ -3,8 +3,6 @@
 #  And saves static                                                #
 # ---------------------------------------------------------------- #
 
-import json
-
 import matplotlib
 import numpy as np
 
@@ -22,7 +20,7 @@ psi_amplitude = np.abs(psi_r)
 # Create static PNG plot
 fig, ax = plt.subplots(figsize=(10, 6))
 ax.plot(z, psi_amplitude, 'b-', linewidth=2)
-ax.set_xlabel('Position z (Å)', fontsize=12)
+ax.set_xlabel('Position z (alat)', fontsize=12)
 ax.set_ylabel('Wavefunction amplitude |ψ| (a.u.)', fontsize=12)
 ax.set_title('Wavefunction along z-axis', fontsize=14)
 ax.grid(True, alpha=0.3)

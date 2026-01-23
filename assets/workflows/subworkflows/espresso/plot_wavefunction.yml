@@ -15,7 +15,7 @@ units:
       name: plot WFN
       results:
         - name: file_content
-          basename: wf_r.png
-          filetype: image
+          basename: "wf_r.png"
+          filetype: "image"
     type: executionBuilder
 
