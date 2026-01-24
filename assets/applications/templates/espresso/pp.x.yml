@@ -9,3 +9,9 @@
   contextProviders: []
   applicationName: espresso
   executableName: pp.x
+
+- content: !readFile 'input_files_templates/espresso/pp_wfn.j2.in'
+  name: pp_wfn.in
+  contextProviders: []
+  applicationName: espresso
+  executableName: pp.x

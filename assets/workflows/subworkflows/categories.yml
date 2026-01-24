@@ -21,6 +21,7 @@ categories:
     - total_energy_contributions
     - total_force
     - valence_band_offset
+    - wavefunction_amplitude
     - workflow:pyml_predict
     - zero_point_energy
   tags:
@@ -30,6 +31,8 @@ categories:
     - remove-all-results
     - set-io-unit-filenames
     - variable-cell_relaxation
+    - wfn
+    - wfn_plot
   application:
     - espresso
     - nwchem
@@ -303,6 +306,11 @@ entities:
       - espresso
       - phonon_dispersions
       - phonon_dos
+  - filename: espresso/plot_wavefunction.json
+    categories:
+      - espresso
+      - file_content
+      - python
   - filename: espresso/post_processor.json
     categories:
       - espresso
@@ -362,6 +370,20 @@ entities:
       - total_energy
       - total_force
       - variable-cell_relaxation
+  - filename: espresso/wavefunction_amplitude.json
+    categories:
+      - atomic_forces
+      - band_structure
+      - espresso
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - wavefunction_amplitude
+      - wfn
+      - wfn_plot
   - filename: espresso/zero_point_energy.json
     categories:
       - atomic_forces

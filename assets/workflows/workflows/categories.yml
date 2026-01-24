@@ -20,10 +20,13 @@ categories:
     - total_energy
     - total_energy_contributions
     - total_force
+    - wavefunction_amplitude
     - zero_point_energy
   tags:
     - default
     - variable-cell_relaxation
+    - wfn
+    - wfn_plot
   application:
     - espresso
     - nwchem
@@ -321,6 +324,20 @@ entities:
       - total_energy
       - total_force
       - variable-cell_relaxation
+  - filename: espresso/wavefunction_amplitude.json
+    categories:
+      - atomic_forces
+      - band_structure
+      - espresso
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+      - wavefunction_amplitude
+      - wfn
+      - wfn_plot
   - filename: espresso/zero_point_energy.json
     categories:
       - atomic_forces
