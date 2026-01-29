@@ -30,6 +30,11 @@ units:
           attributes:
             name: Set Material Index (Interface)
             value: "0"
+      - index: 1
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: pw-scf-interface
       - index: 2
         type: executionBuilder
         config:
@@ -87,6 +92,11 @@ units:
           attributes:
             name: Set Material Index (Interface left)
             value: "1"
+      - index: 1
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: pw-scf-left
       - index: 2
         type: executionBuilder
         config:
@@ -149,6 +159,11 @@ units:
           attributes:
             name: Set Material Index (Interface right)
             value: "2"
+      - index: 1
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: pw-scf-right
       - index: 2
         type: executionBuilder
         config:
