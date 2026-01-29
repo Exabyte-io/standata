@@ -30,17 +30,49 @@ units:
           attributes:
             name: Set Material Index (Interface)
             value: "0"
+      - index: 2
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: pw-bands-calculate-band-gap-interface
+      - index: 3
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: band_gaps
+                scope: pw-bands-calculate-band-gap-interface
+      - index: 7
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: average-electrostatic-potential-interface
+      - index: 8
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: average_potential_profile
+                scope: average-electrostatic-potential-interface
   - name: average_electrostatic_potential_find_minima
     type: subworkflow
     config:
       attributes:
         name: Find ESP Values (Interface)
     unitConfigs:
+      - index: 0
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: python-find-extrema-interface
       - index: 1
         type: assignment
         config:
           attributes:
             operand: AVG_ESP_INTERFACE
+            input:
+              - name: STDOUT
+                scope: python-find-extrema-interface
 
   # interface-left-related subworkflows
   - name: average_electrostatic_potential_via_band_structure
