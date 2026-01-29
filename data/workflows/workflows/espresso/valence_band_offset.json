@@ -52,7 +52,7 @@
                     "flowchartId": "0f21d8c4-ab32-53ba-b40d-fc9b6608e1b9",
                     "tags": [],
                     "head": true,
-                    "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
+                    "next": "pw-scf-interface",
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -99,7 +99,7 @@
                             "name": "convergence_electronic"
                         }
                     ],
-                    "flowchartId": "9fc7a088-5533-5f70-bb33-f676ec65f565",
+                    "flowchartId": "pw-scf-interface",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -175,7 +175,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "pw-bands-calculate-band-gap"
+                    "next": "pw-bands-calculate-band-gap-interface"
                 },
                 {
                     "type": "execution",
@@ -191,7 +191,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "pw-bands-calculate-band-gap",
+                    "flowchartId": "pw-bands-calculate-band-gap-interface",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -270,7 +270,7 @@
                     "input": [
                         {
                             "name": "band_gaps",
-                            "scope": "pw-bands-calculate-band-gap"
+                            "scope": "pw-bands-calculate-band-gap-interface"
                         }
                     ],
                     "status": "idle",
@@ -436,7 +436,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "average-electrostatic-potential"
+                    "next": "average-electrostatic-potential-interface"
                 },
                 {
                     "type": "execution",
@@ -452,7 +452,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "average-electrostatic-potential",
+                    "flowchartId": "average-electrostatic-potential-interface",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -515,7 +515,7 @@
                     "input": [
                         {
                             "name": "average_potential_profile",
-                            "scope": "average-electrostatic-potential"
+                            "scope": "average-electrostatic-potential-interface"
                         }
                     ],
                     "status": "idle",
@@ -569,7 +569,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "python-find-extrema",
+                    "flowchartId": "python-find-extrema-interface",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -642,7 +642,7 @@
                     "input": [
                         {
                             "name": "STDOUT",
-                            "scope": "python-find-extrema"
+                            "scope": "python-find-extrema-interface"
                         }
                     ],
                     "status": "idle",
@@ -713,7 +713,7 @@
                     "flowchartId": "0bd31760-f6e4-5826-b282-882c06c97f94",
                     "tags": [],
                     "head": true,
-                    "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
+                    "next": "pw-scf-left",
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -760,7 +760,7 @@
                             "name": "convergence_electronic"
                         }
                     ],
-                    "flowchartId": "9fc7a088-5533-5f70-bb33-f676ec65f565",
+                    "flowchartId": "pw-scf-left",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -1374,7 +1374,7 @@
                     "flowchartId": "a05809d1-cc0d-5a0b-bf5e-d43b90a6ac4b",
                     "tags": [],
                     "head": true,
-                    "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
+                    "next": "pw-scf-right",
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -1421,7 +1421,7 @@
                             "name": "convergence_electronic"
                         }
                     ],
-                    "flowchartId": "9fc7a088-5533-5f70-bb33-f676ec65f565",
+                    "flowchartId": "pw-scf-right",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
