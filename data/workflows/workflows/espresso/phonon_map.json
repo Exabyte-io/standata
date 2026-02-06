@@ -2,8 +2,8 @@
     "name": "Phonon Map",
     "subworkflows": [
         {
-            "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
-            "name": "Preliminary SCF Calculation",
+            "_id": "f52b8039-83d0-5485-a1f1-0bc37cb01ed3",
+            "name": "pw-scf",
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -673,12 +673,12 @@
     ],
     "units": [
         {
-            "name": "Preliminary SCF Calculation",
+            "name": "pw-scf",
             "type": "subworkflow",
-            "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
+            "_id": "f52b8039-83d0-5485-a1f1-0bc37cb01ed3",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "b6a2b27a-0fec-5e0e-8974-073ee9d2ad83",
+            "flowchartId": "d270b789-fb67-573c-a566-9f09fdacea23",
             "tags": [],
             "head": true,
             "next": "4bb74dfb-46a6-5bf4-a477-5d374dc2e271"
@@ -743,7 +743,7 @@
         "total_energy_contributions",
         "total_force"
     ],
-    "_id": "23b9058b-884c-52d4-82a8-ee162b9761e0",
+    "_id": "bbf7f87c-d201-537e-8c0f-00dca0cbb7ec",
     "workflows": [
         {
             "name": "pre-processor",
