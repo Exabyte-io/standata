@@ -35,7 +35,7 @@
         "@mat3ra/utils": "^2025.12.2-0",
         "@mat3ra/code": "^2025.8.7-0",
         "@mat3ra/tsconfig": "^2024.6.3-0",
-        "@mat3ra/esse": "^2025.11.19-0",
+        "@mat3ra/esse": "2025.11.26-0",
         "@mat3ra/standata": "file:./",
         "@types/chai": "^4.3.5",
         "@types/js-yaml": "^4.0.5",

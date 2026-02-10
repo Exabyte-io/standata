@@ -1,0 +1,14 @@
+isDefault: true
+monitors:
+  - standard_output
+results: []
+flavors:
+  emin:
+    isDefault: true
+    input:
+      - name: in.emin
+    results: []
+    monitors:
+      - standard_output
+    applicationName: lammps
+    executableName: lmp
