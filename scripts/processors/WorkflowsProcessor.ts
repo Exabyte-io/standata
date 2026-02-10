@@ -64,7 +64,7 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         return configs;
     }
 
-    protected writeWorkflowSubworkflowMapByApplication(): void {
+    protected writeworkflowSubworkflowMapByApplication(): void {
         serverUtils.json.writeJSONFileSync(
             path.resolve(
                 this.resolvedPaths.buildDir,
@@ -75,7 +75,7 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
     }
 
     public writeBuildDirectoryContent(): void {
-        this.writeWorkflowSubworkflowMapByApplication();
+        this.writeworkflowSubworkflowMapByApplication();
         super.writeDataDirectoryContent();
     }
 }

@@ -21,6 +21,7 @@ class BaseWorkflowStandata extends base_1.Standata {
     findByApplicationAndName(appName, displayName) {
         return this.findByApplication(appName).find((e) => (e === null || e === void 0 ? void 0 : e.name) === displayName);
     }
+    // NOTE: The WF/SWF returned will have only `name` inside the application object. 
     getRelaxationByApplication(appName) {
         const list = this.findEntitiesByTags(TAGS.RELAXATION, appName);
         return list[0];

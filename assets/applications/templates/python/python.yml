@@ -28,6 +28,18 @@
   applicationName: python
   executableName: python
 
+- content: !readFile 'input_files_templates/python/plot_wavefunction.pyi'
+  name: plot_wavefunction.py
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
+- content: !readFile 'input_files_templates/python/requirements_plot_wavefunction.j2.txt'
+  name: requirements_plot_wavefunction.txt
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
 - content: !readFile 'input_files_templates/python/espresso_extract_kpoints.pyi'
   name: espresso_extract_kpoints.py
   contextProviders: []
