@@ -5,5 +5,12 @@
     "version": "6.3",
     "isDefault": true,
     "build": "GNU",
-    "hasAdvancedComputeOptions": true
+    "hasAdvancedComputeOptions": true,
+    "module_name": "6.3-gnu",
+    "image_name": "espresso",
+    "image_tag": "6.3-gnu-0",
+    "bio": "Quantum ESPRESSO 6.3 (GCC 11.5.0, OpenMPI 4.1.1 and OpenBLAS)",
+    "dependencies": [
+        "mpi/ompi-4.1.1"
+    ]
 }

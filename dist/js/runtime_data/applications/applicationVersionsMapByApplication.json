@@ -1,1 +1,50 @@
-{"espresso":{"defaultVersion":"6.3","name":"espresso","shortName":"qe","summary":"Quantum ESPRESSO","versions":[{"build":"GNU","hasAdvancedComputeOptions":true,"isDefault":true,"version":"6.3"}]},"nwchem":{"defaultVersion":"7.0.2","name":"nwchem","shortName":"nwchem","summary":"NWChem","versions":[{"build":"GNU","isDefault":true,"version":"7.0.2"}]},"python":{"defaultVersion":"3.10.13","name":"python","shortName":"py","summary":"Python Script","versions":[{"build":"GNU","isDefault":true,"version":"3.10.13"}]},"shell":{"defaultVersion":"5.1.8","name":"shell","shortName":"sh","summary":"Shell Script","versions":[{"build":"GNU","isDefault":true,"version":"5.1.8"}]},"vasp":{"defaultVersion":"5.4.4","isLicensed":true,"name":"vasp","shortName":"vasp","summary":"Vienna Ab-initio Simulation Package","versions":[{"build":"GNU","isDefault":true,"version":"5.4.4"}]}}
+{
+    "espresso": {
+        "defaultVersion": "6.3",
+        "name": "espresso",
+        "shortName": "qe",
+        "summary": "Quantum ESPRESSO",
+        "versions": [
+            {
+                "bio": "Quantum ESPRESSO 6.3 (GCC 11.5.0, OpenMPI 4.1.1 and OpenBLAS)",
+                "build": "GNU",
+                "dependencies": ["mpi/ompi-4.1.1"],
+                "hasAdvancedComputeOptions": true,
+                "image_name": "espresso",
+                "image_tag": "6.3-gnu-0",
+                "isDefault": true,
+                "module_name": "6.3-gnu",
+                "version": "6.3"
+            }
+        ]
+    },
+    "nwchem": {
+        "defaultVersion": "7.0.2",
+        "name": "nwchem",
+        "shortName": "nwchem",
+        "summary": "NWChem",
+        "versions": [{ "build": "GNU", "isDefault": true, "version": "7.0.2" }]
+    },
+    "python": {
+        "defaultVersion": "3.10.13",
+        "name": "python",
+        "shortName": "py",
+        "summary": "Python Script",
+        "versions": [{ "build": "GNU", "isDefault": true, "version": "3.10.13" }]
+    },
+    "shell": {
+        "defaultVersion": "5.1.8",
+        "name": "shell",
+        "shortName": "sh",
+        "summary": "Shell Script",
+        "versions": [{ "build": "GNU", "isDefault": true, "version": "5.1.8" }]
+    },
+    "vasp": {
+        "defaultVersion": "5.4.4",
+        "isLicensed": true,
+        "name": "vasp",
+        "shortName": "vasp",
+        "summary": "Vienna Ab-initio Simulation Package",
+        "versions": [{ "build": "GNU", "isDefault": true, "version": "5.4.4" }]
+    }
+}
