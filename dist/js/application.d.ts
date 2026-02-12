@@ -13,6 +13,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 bio: string;
                 build: string;
                 dependencies: string[];
+                environment_variables: {};
                 hasAdvancedComputeOptions: boolean;
                 image_name: string;
                 image_tag: string;

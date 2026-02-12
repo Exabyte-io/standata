@@ -78,6 +78,7 @@
                 "dependencies": [
                     "mpi/ompi-4.1.1"
                 ],
+                "environment_variables": {},
                 "hasAdvancedComputeOptions": true,
                 "image_name": "espresso",
                 "image_tag": "6.3-gnu-0",
@@ -180,6 +181,7 @@
                 "dependencies": [
                     "mpi/ompi-4.1.1"
                 ],
+                "environment_variables": {},
                 "hasAdvancedComputeOptions": true,
                 "image_name": "espresso",
                 "image_tag": "6.3-gnu-0",
@@ -273,6 +275,7 @@
                 "dependencies": [
                     "mpi/ompi-4.1.1"
                 ],
+                "environment_variables": {},
                 "hasAdvancedComputeOptions": true,
                 "image_name": "espresso",
                 "image_tag": "6.3-gnu-0",
