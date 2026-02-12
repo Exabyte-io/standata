@@ -10,9 +10,14 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
     static runtimeData: {
         filesMapByName: {
             "espresso/espresso_gnu_6.3.json": {
+                bio: string;
                 build: string;
+                dependencies: string[];
                 hasAdvancedComputeOptions: boolean;
+                image_name: string;
+                image_tag: string;
                 isDefault: boolean;
+                module_name: string;
                 name: string;
                 shortName: string;
                 summary: string;
