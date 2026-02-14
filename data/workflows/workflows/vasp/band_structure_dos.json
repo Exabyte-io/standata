@@ -10,7 +10,15 @@
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
                 "build": "GNU",
+                "bio": "VASP 5.4.4 (GCC 11.5.0, OpenMPI 4.1.1, OpenBLAS, FFTW, ScaLAPACK)",
+                "dependencies": [
+                    "mpi/ompi-4.1.1"
+                ],
+                "environment_variables": {},
+                "image_name": "vasp",
+                "image_tag": "5.4.4-gnu-0",
                 "isDefault": true,
+                "module_name": "5.4.4-gnu",
                 "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
@@ -87,7 +95,15 @@
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
+                        "bio": "VASP 5.4.4 (GCC 11.5.0, OpenMPI 4.1.1, OpenBLAS, FFTW, ScaLAPACK)",
+                        "dependencies": [
+                            "mpi/ompi-4.1.1"
+                        ],
+                        "environment_variables": {},
+                        "image_name": "vasp",
+                        "image_tag": "5.4.4-gnu-0",
                         "isDefault": true,
+                        "module_name": "5.4.4-gnu",
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
                     },
@@ -212,7 +228,15 @@
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
+                        "bio": "VASP 5.4.4 (GCC 11.5.0, OpenMPI 4.1.1, OpenBLAS, FFTW, ScaLAPACK)",
+                        "dependencies": [
+                            "mpi/ompi-4.1.1"
+                        ],
+                        "environment_variables": {},
+                        "image_name": "vasp",
+                        "image_tag": "5.4.4-gnu-0",
                         "isDefault": true,
+                        "module_name": "5.4.4-gnu",
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
                     },

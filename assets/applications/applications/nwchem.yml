@@ -6,3 +6,12 @@ versions:
   - version: '7.0.2'
     isDefault: true
     build: GNU
+    module_name: '7.0.2-gnu'
+    image_name: 'nwchem'
+    image_tag: '7.0.2-gnu-0'
+    bio: 'NWChem 7.0.2 (GCC 11.5.0, OpenMPI 4.1.1, OpenBLAS)'
+    dependencies:
+      - 'mpi/ompi-4.1.1'
+    environment_variables:
+      APPTAINERENV_NWCHEM_BASIS_LIBRARY: '/opt/nwchem-7.0.2/data/libraries/'
+      NWCHEMRC_PATH: '/opt/nwchem-7.0.2/data/default.nwchemrc'
