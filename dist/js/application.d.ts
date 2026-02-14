@@ -25,8 +25,17 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 version: string;
             };
             "nwchem/nwchem_gnu_7.0.2.json": {
+                bio: string;
                 build: string;
+                dependencies: string[];
+                environment_variables: {
+                    APPTAINERENV_NWCHEM_BASIS_LIBRARY: string;
+                    NWCHEMRC_PATH: string;
+                };
+                image_name: string;
+                image_tag: string;
                 isDefault: boolean;
+                module_name: string;
                 name: string;
                 shortName: string;
                 summary: string;
@@ -49,9 +58,15 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 version: string;
             };
             "vasp/vasp_gnu_5.4.4.json": {
+                bio: string;
                 build: string;
+                dependencies: string[];
+                environment_variables: {};
+                image_name: string;
+                image_tag: string;
                 isDefault: boolean;
                 isLicensed: boolean;
+                module_name: string;
                 name: string;
                 shortName: string;
                 summary: string;
