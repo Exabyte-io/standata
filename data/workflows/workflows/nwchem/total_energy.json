@@ -9,7 +9,18 @@
                 "shortName": "nwchem",
                 "summary": "NWChem",
                 "build": "GNU",
+                "bio": "NWChem 7.0.2 (GCC 11.5.0, OpenMPI 4.1.1, OpenBLAS)",
+                "dependencies": [
+                    "mpi/ompi-4.1.1"
+                ],
+                "environment_variables": {
+                    "APPTAINERENV_NWCHEM_BASIS_LIBRARY": "/opt/nwchem-7.0.2/data/libraries/",
+                    "NWCHEMRC_PATH": "/opt/nwchem-7.0.2/data/default.nwchemrc"
+                },
+                "image_name": "nwchem",
+                "image_tag": "7.0.2-gnu-0",
                 "isDefault": true,
+                "module_name": "7.0.2-gnu",
                 "version": "7.0.2",
                 "schemaVersion": "2022.8.16"
             },
@@ -57,7 +68,18 @@
                         "shortName": "nwchem",
                         "summary": "NWChem",
                         "build": "GNU",
+                        "bio": "NWChem 7.0.2 (GCC 11.5.0, OpenMPI 4.1.1, OpenBLAS)",
+                        "dependencies": [
+                            "mpi/ompi-4.1.1"
+                        ],
+                        "environment_variables": {
+                            "APPTAINERENV_NWCHEM_BASIS_LIBRARY": "/opt/nwchem-7.0.2/data/libraries/",
+                            "NWCHEMRC_PATH": "/opt/nwchem-7.0.2/data/default.nwchemrc"
+                        },
+                        "image_name": "nwchem",
+                        "image_tag": "7.0.2-gnu-0",
                         "isDefault": true,
+                        "module_name": "7.0.2-gnu",
                         "version": "7.0.2",
                         "schemaVersion": "2022.8.16"
                     },

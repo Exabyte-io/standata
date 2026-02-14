@@ -76,8 +76,16 @@
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
                 "build": "GNU",
+                "bio": "Quantum ESPRESSO 6.3 (GCC 11.5.0, OpenMPI 4.1.1 and OpenBLAS)",
+                "dependencies": [
+                    "mpi/ompi-4.1.1"
+                ],
+                "environment_variables": {},
                 "hasAdvancedComputeOptions": true,
+                "image_name": "espresso",
+                "image_tag": "6.3-gnu-0",
                 "isDefault": true,
+                "module_name": "6.3-gnu",
                 "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
@@ -168,8 +176,16 @@
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
                 "build": "GNU",
+                "bio": "Quantum ESPRESSO 6.3 (GCC 11.5.0, OpenMPI 4.1.1 and OpenBLAS)",
+                "dependencies": [
+                    "mpi/ompi-4.1.1"
+                ],
+                "environment_variables": {},
                 "hasAdvancedComputeOptions": true,
+                "image_name": "espresso",
+                "image_tag": "6.3-gnu-0",
                 "isDefault": true,
+                "module_name": "6.3-gnu",
                 "version": "6.3",
                 "schemaVersion": "2022.8.16"
             }
@@ -196,8 +212,16 @@
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
                 "build": "GNU",
+                "bio": "Quantum ESPRESSO 6.3 (GCC 11.5.0, OpenMPI 4.1.1 and OpenBLAS)",
+                "dependencies": [
+                    "mpi/ompi-4.1.1"
+                ],
+                "environment_variables": {},
                 "hasAdvancedComputeOptions": true,
+                "image_name": "espresso",
+                "image_tag": "6.3-gnu-0",
                 "isDefault": true,
+                "module_name": "6.3-gnu",
                 "version": "6.3",
                 "schemaVersion": "2022.8.16"
             }
@@ -219,8 +243,16 @@
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
                 "build": "GNU",
+                "bio": "Quantum ESPRESSO 6.3 (GCC 11.5.0, OpenMPI 4.1.1 and OpenBLAS)",
+                "dependencies": [
+                    "mpi/ompi-4.1.1"
+                ],
+                "environment_variables": {},
                 "hasAdvancedComputeOptions": true,
+                "image_name": "espresso",
+                "image_tag": "6.3-gnu-0",
                 "isDefault": true,
+                "module_name": "6.3-gnu",
                 "version": "6.3",
                 "schemaVersion": "2022.8.16"
             }
@@ -242,8 +274,16 @@
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
                 "build": "GNU",
+                "bio": "Quantum ESPRESSO 6.3 (GCC 11.5.0, OpenMPI 4.1.1 and OpenBLAS)",
+                "dependencies": [
+                    "mpi/ompi-4.1.1"
+                ],
+                "environment_variables": {},
                 "hasAdvancedComputeOptions": true,
+                "image_name": "espresso",
+                "image_tag": "6.3-gnu-0",
                 "isDefault": true,
+                "module_name": "6.3-gnu",
                 "version": "6.3",
                 "schemaVersion": "2022.8.16"
             }
@@ -270,8 +310,16 @@
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
                 "build": "GNU",
+                "bio": "Quantum ESPRESSO 6.3 (GCC 11.5.0, OpenMPI 4.1.1 and OpenBLAS)",
+                "dependencies": [
+                    "mpi/ompi-4.1.1"
+                ],
+                "environment_variables": {},
                 "hasAdvancedComputeOptions": true,
+                "image_name": "espresso",
+                "image_tag": "6.3-gnu-0",
                 "isDefault": true,
+                "module_name": "6.3-gnu",
                 "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
