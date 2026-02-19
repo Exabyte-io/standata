@@ -4,6 +4,15 @@ import { builders, createSubworkflowByName, Subworkflow, UnitFactory } from "@ma
 import { BUILD_CONFIG } from "../../build-config";
 import { BaseWorkflowSubworkflowProcessor } from "./BaseWorkflowSubworkflowProcessor";
 
+const SUBWORKFLOW_FILTER_KEYS = [
+    "module_name",
+    "image_name",
+    "image_tag",
+    "bio",
+    "dependencies",
+    "environment_variables",
+];
+
 export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
     public static defaultCategoryKeys = ["properties", "isMultimaterial", "tags", "application"];
 
@@ -50,6 +59,10 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
                     appName,
                     subworkflow,
                 );
+                const application = config.config.application;
+                if (application && typeof application === "object") {
+                    SUBWORKFLOW_FILTER_KEYS.forEach((key) => delete application[key]);
+                }
                 configs.push(config);
             });
         });
