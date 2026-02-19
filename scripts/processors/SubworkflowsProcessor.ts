@@ -59,9 +59,15 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
                     appName,
                     subworkflow,
                 );
-                const application = config.config.application;
-                if (application && typeof application === "object") {
-                    SUBWORKFLOW_FILTER_KEYS.forEach((key) => delete application[key]);
+                const removeFilterKeysFromApplication = (appObj: any) => {
+                    if (appObj && typeof appObj === "object") {
+                        SUBWORKFLOW_FILTER_KEYS.forEach((key) => delete appObj[key]);
+                    }
+                };
+                removeFilterKeysFromApplication(config.config.application);
+                const units = config.config.units;
+                if (Array.isArray(units)) {
+                    units.forEach((unit: any) => removeFilterKeysFromApplication(unit?.application));
                 }
                 configs.push(config);
             });
