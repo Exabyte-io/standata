@@ -1,14 +1,14 @@
 monitors:
-  - standard_output
+  - name: standard_output
 results:
-  - dielectric_tensor
+  - name: dielectric_tensor
 flavors:
   dielectric_tensor:
     input:
       - name: epsilon.in
     results:
-      - dielectric_tensor
+      - name: dielectric_tensor
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: epsilon.x

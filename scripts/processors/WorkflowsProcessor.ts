@@ -1,6 +1,6 @@
 import serverUtils from "@mat3ra/utils/server";
 // @ts-ignore
-import { builders, Subworkflow, UnitFactory, Workflow, createWorkflow } from "@mat3ra/wode";
+import { builders, createWorkflow, Subworkflow, UnitFactory, Workflow } from "@mat3ra/wode";
 import * as path from "path";
 
 import { BUILD_CONFIG } from "../../build-config";

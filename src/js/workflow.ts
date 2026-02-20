@@ -21,25 +21,25 @@ type WorkflowStandataRuntimeData = {
     filesMapByName: Record<string, unknown>;
 };
 
-abstract class BaseWorkflowStandata<T extends { name?: string }> extends Standata {
+abstract class BaseWorkflowStandata<T extends { name?: string }> extends Standata<T> {
     static runtimeData: WorkflowStandataRuntimeData;
 
     findByApplication(appName: string): T[] {
-        return this.findEntitiesByTags(appName) as T[];
+        return this.findEntitiesByTags(appName);
     }
 
     findByApplicationAndName(appName: string, displayName: string): T | undefined {
         return this.findByApplication(appName).find((e) => e?.name === displayName);
     }
 
-    // NOTE: The WF/SWF returned will have only `name` inside the application object. 
+    // NOTE: The WF/SWF returned will have only `name` inside the application object.
     getRelaxationByApplication(appName: string): T | undefined {
-        const list = this.findEntitiesByTags(TAGS.RELAXATION, appName) as T[];
+        const list = this.findEntitiesByTags(TAGS.RELAXATION, appName);
         return list[0];
     }
 
     getDefault(): T {
-        const list = this.findEntitiesByTags(TAGS.DEFAULT) as T[];
+        const list = this.findEntitiesByTags(TAGS.DEFAULT);
         if (list.length > 1) console.error("Multiple default workflows found");
         if (list.length === 0) console.error("No default workflow found");
         return list[0];

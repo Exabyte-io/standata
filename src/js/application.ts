@@ -1,4 +1,5 @@
-import type { ApplicationSchemaBase, TemplateSchema } from "@mat3ra/esse/dist/js/types";
+/* eslint-disable class-methods-use-this */
+import type { ApplicationSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
 
 import { Standata } from "./base";
 import APPLICATIONS from "./runtime_data/applications.json";
@@ -9,11 +10,12 @@ import {
     ApplicationExecutableTree,
     ApplicationVersionsMapByApplicationType,
     ApplicationVersionsMapType,
-    DefaultApplicationConfig,
 } from "./types/application";
 import { ApplicationVersionsMap } from "./utils/applicationVersionMap";
 
 const TEMPLATES_LIST = TEMPLATES_LIST_RAW as TemplateSchema[];
+const APP_VERSIONS = APPLICATION_VERSIONS_MAP as ApplicationVersionsMapByApplicationType;
+const EXECUTABLE_FLAVOR = EXECUTABLE_FLAVOR_MAP as ApplicationExecutableTree;
 
 export enum TAGS {
     DEFAULT = "default",
@@ -21,37 +23,34 @@ export enum TAGS {
     DEFAULT_BUILD = "default_build",
 }
 
-export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
+export class ApplicationStandata extends Standata<ApplicationSchema> {
     static runtimeData = APPLICATIONS;
 
-    // eslint-disable-next-line class-methods-use-this
     getAppDataForApplication(appName: string): ApplicationVersionsMapType {
-        const applicationVersionsMap = (
-            APPLICATION_VERSIONS_MAP as ApplicationVersionsMapByApplicationType
-        )[appName];
+        const applicationVersionsMap = APP_VERSIONS[appName];
+
         if (!applicationVersionsMap) {
             throw new Error(`Application ${appName} not found`);
         }
         return applicationVersionsMap;
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    getAppTreeForApplication(appName: string): ApplicationExecutableTree {
+    getAppTreeForApplication(appName: string) {
         // TODO: Convert to use this.findEntitiesByTags() when tree data is in Standata format
-        const executableData = EXECUTABLE_FLAVOR_MAP as any;
+        const executableData = EXECUTABLE_FLAVOR;
+
         if (!(appName in executableData)) {
             throw new Error(`${appName} is not a known application with executable tree.`);
         }
-        return executableData[appName] as ApplicationExecutableTree;
+
+        return executableData[appName];
     }
 
-    // eslint-disable-next-line class-methods-use-this
     getAllAppTemplates(): TemplateSchema[] {
         // TODO: Convert to use this.getAll() when template data is in Standata format
         return TEMPLATES_LIST;
     }
 
-    // eslint-disable-next-line class-methods-use-this
     getAllAppTree() {
         // TODO: Convert to use this.getAll() when tree data is in Standata format
         return EXECUTABLE_FLAVOR_MAP;
@@ -69,7 +68,6 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
         return this.getAll();
     }
 
-    // eslint-disable-next-line class-methods-use-this
     getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[] {
         // TODO: Convert to use this.findEntitiesByTags() when template data is in Standata format
         const templates = TEMPLATES_LIST;
@@ -93,16 +91,12 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
     }
 
     static getDefaultVersionForApplication(appName: string) {
-        const applicationVersionsMap = new ApplicationVersionsMap(
-            (APPLICATION_VERSIONS_MAP as ApplicationVersionsMapByApplicationType)[appName],
-        );
+        const applicationVersionsMap = new ApplicationVersionsMap(APP_VERSIONS[appName]);
         return applicationVersionsMap.defaultVersion;
     }
 
     static getDefaultBuildForApplicationAndVersion(appName: string, version: string): string {
-        const applicationVersionsMap = new ApplicationVersionsMap(
-            (APPLICATION_VERSIONS_MAP as ApplicationVersionsMapByApplicationType)[appName],
-        );
+        const applicationVersionsMap = new ApplicationVersionsMap(APP_VERSIONS[appName]);
         const versionConfig = applicationVersionsMap.versionConfigs.find(
             (config) => config.version === version && config.isDefault,
         );
@@ -118,10 +112,7 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
     }
 
     // TODO: move to parent class Standata, name and generic parameters
-    getDefaultConfigByNameAndVersion(
-        appName: string,
-        version?: string,
-    ): ApplicationVersionsMapType {
+    getDefaultConfigByNameAndVersion(appName: string, version?: string) {
         const tags = [TAGS.DEFAULT_BUILD];
         let versionToUse = version;
         if (!versionToUse) {
@@ -129,7 +120,7 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
             versionToUse = ApplicationStandata.getDefaultVersionForApplication(appName);
         }
         const allEntriesWithTags = this.findEntitiesByTags(...tags);
-        const allEntriesWithTagsForNameAndVersion = allEntriesWithTags.filter((entity: any) => {
+        const allEntriesWithTagsForNameAndVersion = allEntriesWithTags.filter((entity) => {
             return entity.name === appName && entity.version === versionToUse;
         });
         if (allEntriesWithTagsForNameAndVersion.length > 1) {
@@ -144,9 +135,9 @@ export class ApplicationStandata extends Standata<ApplicationVersionsMapType> {
         return allEntriesWithTagsForNameAndVersion[0];
     }
 
-    getDefaultConfig(): DefaultApplicationConfig {
+    getDefaultConfig() {
         const fullConfig = this.findEntitiesByTags(TAGS.DEFAULT)[0];
-        const { name, shortName, version, summary, build } = fullConfig as ApplicationSchemaBase;
+        const { name, shortName, version, summary, build } = fullConfig;
         return { name, shortName, version, summary, build };
     }
 }
