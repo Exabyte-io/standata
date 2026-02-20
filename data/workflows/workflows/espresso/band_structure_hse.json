@@ -1,5 +1,6 @@
 {
     "name": "Band Structure - HSE",
+    "_id": "23b9058b-884c-52d4-82a8-ee162b9761e0",
     "subworkflows": [
         {
             "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
@@ -31,11 +32,7 @@
                     "subtype": "us",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -76,6 +73,9 @@
                     "flowchartId": "9fc7a088-5533-5f70-bb33-f676ec65f565",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -87,20 +87,55 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [
+                            {
+                                "name": "remove_non_zero_weight_kpoints"
+                            }
+                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
-                        ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "name": "pw_scf",
+                        "results": [
+                            {
+                                "name": "atomic_forces"
+                            },
+                            {
+                                "name": "fermi_energy"
+                            },
+                            {
+                                "name": "pressure"
+                            },
+                            {
+                                "name": "stress_tensor"
+                            },
+                            {
+                                "name": "total_energy"
+                            },
+                            {
+                                "name": "total_energy_contributions"
+                            },
+                            {
+                                "name": "total_force"
+                            }
+                        ],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -110,47 +145,46 @@
                         ],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_electronic"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
-                        "name": "pw_scf",
                         "schemaVersion": "2022.8.16"
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KGridFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_scf.in",
-                            "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "KGridFormDataManager"
+                                    },
+                                    {
+                                        "name": "QEPWXInputDataManager"
+                                    },
+                                    {
+                                        "name": "PlanewaveCutoffDataManager"
+                                    }
+                                ],
+                                "executableName": "pw.x",
+                                "name": "pw_scf.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
-                    ]
+                    ],
+                    "context": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "a2785cc5-2427-5c7a-b30f-7077475b948c",
@@ -188,6 +222,9 @@
                     "flowchartId": "a716b133-2d04-50b5-b497-100265e3fa24",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "python",
                         "shortName": "py",
@@ -198,14 +235,22 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "name": "espresso_extract_kpoints",
+                        "results": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "python",
                         "executableName": "python",
                         "input": [
@@ -218,37 +263,46 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "name": "espresso_extract_kpoints",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "python",
-                            "content": "import json\nimport re\n\ndouble_regex = r'[-+]?\\d*\\.\\d+(?:[eE][-+]?\\d+)?'\nregex = r\"\\s+k\\(\\s+\\d*\\)\\s+=\\s+\\(\\s+({0})\\s+({0})\\s+({0})\\),\\s+wk\\s+=\\s+({0}).+?\\n\".format(double_regex)\n\nwith open(\"pw_scf.out\") as f:\n    text = f.read()\n\npattern = re.compile(regex, re.I | re.MULTILINE)\nmatch = pattern.findall(text[text.rfind(\" cryst. coord.\"):])\nkpoints = [{\"coordinates\": list(map(float, m[:3])), \"weight\": float(m[3])} for m in match]\nprint(json.dumps({\"name\": \"KPOINTS\", \"value\": kpoints, \"scope\": \"global\"}, indent=4))\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "espresso_extract_kpoints.py",
-                            "rendered": "import json\nimport re\n\ndouble_regex = r'[-+]?\\d*\\.\\d+(?:[eE][-+]?\\d+)?'\nregex = r\"\\s+k\\(\\s+\\d*\\)\\s+=\\s+\\(\\s+({0})\\s+({0})\\s+({0})\\),\\s+wk\\s+=\\s+({0}).+?\\n\".format(double_regex)\n\nwith open(\"pw_scf.out\") as f:\n    text = f.read()\n\npattern = re.compile(regex, re.I | re.MULTILINE)\nmatch = pattern.findall(text[text.rfind(\" cryst. coord.\"):])\nkpoints = [{\"coordinates\": list(map(float, m[:3])), \"weight\": float(m[3])} for m in match]\nprint(json.dumps({\"name\": \"KPOINTS\", \"value\": kpoints, \"scope\": \"global\"}, indent=4))\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "python",
+                                "content": "import json\nimport re\n\ndouble_regex = r'[-+]?\\d*\\.\\d+(?:[eE][-+]?\\d+)?'\nregex = r\"\\s+k\\(\\s+\\d*\\)\\s+=\\s+\\(\\s+({0})\\s+({0})\\s+({0})\\),\\s+wk\\s+=\\s+({0}).+?\\n\".format(double_regex)\n\nwith open(\"pw_scf.out\") as f:\n    text = f.read()\n\npattern = re.compile(regex, re.I | re.MULTILINE)\nmatch = pattern.findall(text[text.rfind(\" cryst. coord.\"):])\nkpoints = [{\"coordinates\": list(map(float, m[:3])), \"weight\": float(m[3])} for m in match]\nprint(json.dumps({\"name\": \"KPOINTS\", \"value\": kpoints, \"scope\": \"global\"}, indent=4))\n",
+                                "contextProviders": [],
+                                "executableName": "python",
+                                "name": "espresso_extract_kpoints.py",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         },
                         {
-                            "applicationName": "python",
-                            "content": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Example Python package requirements for the Mat3ra platform       #\n#                                                                    #\n#  Will be used as follows:                                          #\n#                                                                    #\n#    1. A runtime directory for this calculation is created          #\n#    2. This list is used to populate a Python virtual environment   #\n#    3. The virtual environment is activated                         #\n#    4. The Python process running the script included within this   #\n#       job is started                                               #\n#                                                                    #\n#  For more information visit:                                       #\n#   - https://pip.pypa.io/en/stable/reference/pip_install            #\n#   - https://virtualenv.pypa.io/en/stable/                          #\n#                                                                    #\n#  Please add any packages required for this unit below following    #\n#  the requirements.txt specification:                               #\n#  https://pip.pypa.io/en/stable/reference/requirements-file-format/ #\n# ------------------------------------------------------------------ #\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "requirements.txt",
-                            "rendered": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Example Python package requirements for the Mat3ra platform       #\n#                                                                    #\n#  Will be used as follows:                                          #\n#                                                                    #\n#    1. A runtime directory for this calculation is created          #\n#    2. This list is used to populate a Python virtual environment   #\n#    3. The virtual environment is activated                         #\n#    4. The Python process running the script included within this   #\n#       job is started                                               #\n#                                                                    #\n#  For more information visit:                                       #\n#   - https://pip.pypa.io/en/stable/reference/pip_install            #\n#   - https://virtualenv.pypa.io/en/stable/                          #\n#                                                                    #\n#  Please add any packages required for this unit below following    #\n#  the requirements.txt specification:                               #\n#  https://pip.pypa.io/en/stable/reference/requirements-file-format/ #\n# ------------------------------------------------------------------ #\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "python",
+                                "content": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Example Python package requirements for the Mat3ra platform       #\n#                                                                    #\n#  Will be used as follows:                                          #\n#                                                                    #\n#    1. A runtime directory for this calculation is created          #\n#    2. This list is used to populate a Python virtual environment   #\n#    3. The virtual environment is activated                         #\n#    4. The Python process running the script included within this   #\n#       job is started                                               #\n#                                                                    #\n#  For more information visit:                                       #\n#   - https://pip.pypa.io/en/stable/reference/pip_install            #\n#   - https://virtualenv.pypa.io/en/stable/                          #\n#                                                                    #\n#  Please add any packages required for this unit below following    #\n#  the requirements.txt specification:                               #\n#  https://pip.pypa.io/en/stable/reference/requirements-file-format/ #\n# ------------------------------------------------------------------ #\n",
+                                "contextProviders": [],
+                                "executableName": "python",
+                                "name": "requirements.txt",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
-                    ]
+                    ],
+                    "context": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "e47ca302-96f2-5726-9b4c-f34cdfaa7f72",
@@ -264,27 +318,23 @@
                 "schemaVersion": "2022.8.16"
             },
             "properties": [
+                "atomic_forces",
+                "fermi_energy",
+                "pressure",
+                "stress_tensor",
                 "total_energy",
                 "total_energy_contributions",
-                "pressure",
-                "fermi_energy",
-                "atomic_forces",
-                "total_force",
-                "stress_tensor"
+                "total_force"
             ],
             "model": {
                 "type": "dft",
                 "subtype": "hybrid",
+                "functional": "hse06",
                 "method": {
                     "type": "pseudopotential",
                     "subtype": "us",
                     "data": {}
-                },
-                "functional": {
-                    "slug": "hse06"
-                },
-                "refiners": [],
-                "modifiers": []
+                }
             },
             "units": [
                 {
@@ -325,6 +375,9 @@
                     "flowchartId": "08bd7e4a-2454-53b7-8cc9-9a95975f7e6f",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -336,20 +389,55 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [
+                            {
+                                "name": "remove_non_zero_weight_kpoints"
+                            }
+                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
-                        ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "name": "pw_scf_bands_hse",
+                        "results": [
+                            {
+                                "name": "total_energy"
+                            },
+                            {
+                                "name": "total_energy_contributions"
+                            },
+                            {
+                                "name": "pressure"
+                            },
+                            {
+                                "name": "fermi_energy"
+                            },
+                            {
+                                "name": "atomic_forces"
+                            },
+                            {
+                                "name": "total_force"
+                            },
+                            {
+                                "name": "stress_tensor"
+                            }
+                        ],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -358,50 +446,47 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output",
-                            "convergence_electronic"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
-                        "results": [
-                            "total_energy",
-                            "total_energy_contributions",
-                            "pressure",
-                            "fermi_energy",
-                            "atomic_forces",
-                            "total_force",
-                            "stress_tensor"
-                        ],
-                        "name": "pw_scf_bands_hse",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n    input_dft = 'hse',\n    {% for d in qgrid.dimensions -%}\n    nqx{{loop.index}} = {{d}}\n    {% endfor %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS crystal\n{{ '{{' }} {{ explicitKPath.length }} {% raw %} + KPOINTS|length {% endraw %}  {{ '}}' }}\n{% raw %}\n{% for point in KPOINTS -%}\n    {% for d in point.coordinates %}{{ \"%14.9f\"|format(d) }} {% endfor -%}{{ point.weight }}\n{% endfor %}\n{% endraw %}\n{% for point in explicitKPath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}0.0000001\n{% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                },
-                                {
-                                    "name": "QGridFormDataManager"
-                                },
-                                {
-                                    "name": "ExplicitKPathFormDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_scf_bands_hse.in",
-                            "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n    input_dft = 'hse',\n    nqx1 = 1\n    nqx2 = 1\n    nqx3 = 1\n    \n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal\n{{ 101  + KPOINTS|length   }}\n\n{% for point in KPOINTS -%}\n    {% for d in point.coordinates %}{{ \"%14.9f\"|format(d) }} {% endfor -%}{{ point.weight }}\n{% endfor %}\n\n   0.000000000    0.000000000    0.000000000 0.0000001\n   0.050000000    0.000000000    0.050000000 0.0000001\n   0.100000000    0.000000000    0.100000000 0.0000001\n   0.150000000    0.000000000    0.150000000 0.0000001\n   0.200000000    0.000000000    0.200000000 0.0000001\n   0.250000000    0.000000000    0.250000000 0.0000001\n   0.300000000    0.000000000    0.300000000 0.0000001\n   0.350000000    0.000000000    0.350000000 0.0000001\n   0.400000000    0.000000000    0.400000000 0.0000001\n   0.450000000    0.000000000    0.450000000 0.0000001\n   0.500000000    0.000000000    0.500000000 0.0000001\n   0.500000000    0.025000000    0.525000000 0.0000001\n   0.500000000    0.050000000    0.550000000 0.0000001\n   0.500000000    0.075000000    0.575000000 0.0000001\n   0.500000000    0.100000000    0.600000000 0.0000001\n   0.500000000    0.125000000    0.625000000 0.0000001\n   0.500000000    0.150000000    0.650000000 0.0000001\n   0.500000000    0.175000000    0.675000000 0.0000001\n   0.500000000    0.200000000    0.700000000 0.0000001\n   0.500000000    0.225000000    0.725000000 0.0000001\n   0.500000000    0.250000000    0.750000000 0.0000001\n   0.487500000    0.262500000    0.750000000 0.0000001\n   0.475000000    0.275000000    0.750000000 0.0000001\n   0.462500000    0.287500000    0.750000000 0.0000001\n   0.450000000    0.300000000    0.750000000 0.0000001\n   0.437500000    0.312500000    0.750000000 0.0000001\n   0.425000000    0.325000000    0.750000000 0.0000001\n   0.412500000    0.337500000    0.750000000 0.0000001\n   0.400000000    0.350000000    0.750000000 0.0000001\n   0.387500000    0.362500000    0.750000000 0.0000001\n   0.375000000    0.375000000    0.750000000 0.0000001\n   0.337500000    0.337500000    0.675000000 0.0000001\n   0.300000000    0.300000000    0.600000000 0.0000001\n   0.262500000    0.262500000    0.525000000 0.0000001\n   0.225000000    0.225000000    0.450000000 0.0000001\n   0.187500000    0.187500000    0.375000000 0.0000001\n   0.150000000    0.150000000    0.300000000 0.0000001\n   0.112500000    0.112500000    0.225000000 0.0000001\n   0.075000000    0.075000000    0.150000000 0.0000001\n   0.037500000    0.037500000    0.075000000 0.0000001\n   0.000000000    0.000000000    0.000000000 0.0000001\n   0.050000000    0.050000000    0.050000000 0.0000001\n   0.100000000    0.100000000    0.100000000 0.0000001\n   0.150000000    0.150000000    0.150000000 0.0000001\n   0.200000000    0.200000000    0.200000000 0.0000001\n   0.250000000    0.250000000    0.250000000 0.0000001\n   0.300000000    0.300000000    0.300000000 0.0000001\n   0.350000000    0.350000000    0.350000000 0.0000001\n   0.400000000    0.400000000    0.400000000 0.0000001\n   0.450000000    0.450000000    0.450000000 0.0000001\n   0.500000000    0.500000000    0.500000000 0.0000001\n   0.512500000    0.475000000    0.512500000 0.0000001\n   0.525000000    0.450000000    0.525000000 0.0000001\n   0.537500000    0.425000000    0.537500000 0.0000001\n   0.550000000    0.400000000    0.550000000 0.0000001\n   0.562500000    0.375000000    0.562500000 0.0000001\n   0.575000000    0.350000000    0.575000000 0.0000001\n   0.587500000    0.325000000    0.587500000 0.0000001\n   0.600000000    0.300000000    0.600000000 0.0000001\n   0.612500000    0.275000000    0.612500000 0.0000001\n   0.625000000    0.250000000    0.625000000 0.0000001\n   0.612500000    0.250000000    0.637500000 0.0000001\n   0.600000000    0.250000000    0.650000000 0.0000001\n   0.587500000    0.250000000    0.662500000 0.0000001\n   0.575000000    0.250000000    0.675000000 0.0000001\n   0.562500000    0.250000000    0.687500000 0.0000001\n   0.550000000    0.250000000    0.700000000 0.0000001\n   0.537500000    0.250000000    0.712500000 0.0000001\n   0.525000000    0.250000000    0.725000000 0.0000001\n   0.512500000    0.250000000    0.737500000 0.0000001\n   0.500000000    0.250000000    0.750000000 0.0000001\n   0.500000000    0.275000000    0.725000000 0.0000001\n   0.500000000    0.300000000    0.700000000 0.0000001\n   0.500000000    0.325000000    0.675000000 0.0000001\n   0.500000000    0.350000000    0.650000000 0.0000001\n   0.500000000    0.375000000    0.625000000 0.0000001\n   0.500000000    0.400000000    0.600000000 0.0000001\n   0.500000000    0.425000000    0.575000000 0.0000001\n   0.500000000    0.450000000    0.550000000 0.0000001\n   0.500000000    0.475000000    0.525000000 0.0000001\n   0.500000000    0.500000000    0.500000000 0.0000001\n   0.512500000    0.475000000    0.512500000 0.0000001\n   0.525000000    0.450000000    0.525000000 0.0000001\n   0.537500000    0.425000000    0.537500000 0.0000001\n   0.550000000    0.400000000    0.550000000 0.0000001\n   0.562500000    0.375000000    0.562500000 0.0000001\n   0.575000000    0.350000000    0.575000000 0.0000001\n   0.587500000    0.325000000    0.587500000 0.0000001\n   0.600000000    0.300000000    0.600000000 0.0000001\n   0.612500000    0.275000000    0.612500000 0.0000001\n   0.625000000    0.250000000    0.625000000 0.0000001\n   0.612500000    0.225000000    0.612500000 0.0000001\n   0.600000000    0.200000000    0.600000000 0.0000001\n   0.587500000    0.175000000    0.587500000 0.0000001\n   0.575000000    0.150000000    0.575000000 0.0000001\n   0.562500000    0.125000000    0.562500000 0.0000001\n   0.550000000    0.100000000    0.550000000 0.0000001\n   0.537500000    0.075000000    0.537500000 0.0000001\n   0.525000000    0.050000000    0.525000000 0.0000001\n   0.512500000    0.025000000    0.512500000 0.0000001\n   0.500000000    0.000000000    0.500000000 0.0000001\n\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n    input_dft = 'hse',\n    {% for d in qgrid.dimensions -%}\n    nqx{{loop.index}} = {{d}}\n    {% endfor %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS crystal\n{{ '{{' }} {{ explicitKPath.length }} {% raw %} + KPOINTS|length {% endraw %}  {{ '}}' }}\n{% raw %}\n{% for point in KPOINTS -%}\n    {% for d in point.coordinates %}{{ \"%14.9f\"|format(d) }} {% endfor -%}{{ point.weight }}\n{% endfor %}\n{% endraw %}\n{% for point in explicitKPath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}0.0000001\n{% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "QEPWXInputDataManager"
+                                    },
+                                    {
+                                        "name": "PlanewaveCutoffDataManager"
+                                    },
+                                    {
+                                        "name": "QGridFormDataManager"
+                                    },
+                                    {
+                                        "name": "ExplicitKPathFormDataManager"
+                                    }
+                                ],
+                                "executableName": "pw.x",
+                                "name": "pw_scf_bands_hse.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2"
+                    "context": [],
+                    "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -416,6 +501,9 @@
                     "flowchartId": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -427,14 +515,22 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "name": "bands",
+                        "results": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "bands.x",
                         "input": [
@@ -443,62 +539,78 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "name": "bands",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
-                            "contextProviders": [],
-                            "executableName": "bands.x",
-                            "name": "bands.in",
-                            "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
+                                "contextProviders": [],
+                                "executableName": "bands.x",
+                                "name": "bands.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
-                    ]
+                    ],
+                    "context": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         }
     ],
     "units": [
         {
-            "name": "Preliminary SCF Calculation",
-            "type": "subworkflow",
             "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
-            "status": "idle",
-            "statusTrack": [],
+            "type": "subworkflow",
+            "name": "Preliminary SCF Calculation",
+            "preProcessors": [],
+            "postProcessors": [],
+            "monitors": [],
+            "results": [],
             "flowchartId": "b6a2b27a-0fec-5e0e-8974-073ee9d2ad83",
-            "tags": [],
-            "head": true,
-            "next": "65789b0a-cfe2-5062-a53e-89f71112fb57"
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
+            "type": "subworkflow",
             "name": "Extract KPOINTS",
-            "type": "subworkflow",
-            "_id": "a2785cc5-2427-5c7a-b30f-7077475b948c",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "65789b0a-cfe2-5062-a53e-89f71112fb57",
             "tags": [],
-            "head": false,
-            "next": "8f4c63a3-a06a-5f73-88d7-a57d7958b91d"
+            "_id": "a2785cc5-2427-5c7a-b30f-7077475b948c",
+            "flowchartId": "65789b0a-cfe2-5062-a53e-89f71112fb57",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
-            "name": "Main HSE Run",
             "type": "subworkflow",
-            "_id": "e47ca302-96f2-5726-9b4c-f34cdfaa7f72",
+            "name": "Main HSE Run",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "8f4c63a3-a06a-5f73-88d7-a57d7958b91d",
             "tags": [],
-            "head": false
+            "_id": "e47ca302-96f2-5726-9b4c-f34cdfaa7f72",
+            "flowchartId": "8f4c63a3-a06a-5f73-88d7-a57d7958b91d",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [
@@ -510,7 +622,6 @@
         "total_energy_contributions",
         "total_force"
     ],
-    "_id": "23b9058b-884c-52d4-82a8-ee162b9761e0",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

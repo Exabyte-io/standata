@@ -1,5 +1,6 @@
 {
     "name": "Variable-cell Relaxation",
+    "_id": "c45dcef1-d16b-59d1-9318-cedd0b1acf08",
     "subworkflows": [
         {
             "systemName": "espresso-variable-cell-relaxation",
@@ -16,13 +17,13 @@
                 "schemaVersion": "2022.8.16"
             },
             "properties": [
-                "total_energy",
-                "fermi_energy",
-                "pressure",
                 "atomic_forces",
-                "total_force",
+                "fermi_energy",
+                "final_structure",
+                "pressure",
                 "stress_tensor",
-                "final_structure"
+                "total_energy",
+                "total_force"
             ],
             "model": {
                 "type": "dft",
@@ -32,11 +33,7 @@
                     "subtype": "us",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -80,6 +77,9 @@
                     "flowchartId": "e1bd0870-6245-5fc2-a50d-48cabc356ac8",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -91,20 +91,55 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [
+                            {
+                                "name": "remove_non_zero_weight_kpoints"
+                            }
+                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
-                        ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "name": "pw_vc-relax",
+                        "results": [
+                            {
+                                "name": "total_energy"
+                            },
+                            {
+                                "name": "fermi_energy"
+                            },
+                            {
+                                "name": "pressure"
+                            },
+                            {
+                                "name": "atomic_forces"
+                            },
+                            {
+                                "name": "total_force"
+                            },
+                            {
+                                "name": "stress_tensor"
+                            },
+                            {
+                                "name": "final_structure"
+                            }
+                        ],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -113,61 +148,64 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output",
-                            "convergence_electronic",
-                            "convergence_ionic"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            }
                         ],
-                        "results": [
-                            "total_energy",
-                            "fermi_energy",
-                            "pressure",
-                            "atomic_forces",
-                            "total_force",
-                            "stress_tensor",
-                            "final_structure"
-                        ],
-                        "name": "pw_vc-relax",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&CONTROL\n    calculation = 'vc-relax'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KGridFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_vc_relax.in",
-                            "rendered": "&CONTROL\n    calculation = 'vc-relax'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&CONTROL\n    calculation = 'vc-relax'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "KGridFormDataManager"
+                                    },
+                                    {
+                                        "name": "QEPWXInputDataManager"
+                                    },
+                                    {
+                                        "name": "PlanewaveCutoffDataManager"
+                                    }
+                                ],
+                                "executableName": "pw.x",
+                                "name": "pw_vc_relax.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
-                    ]
+                    ],
+                    "context": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         }
     ],
     "units": [
         {
-            "name": "Variable-cell Relaxation",
-            "type": "subworkflow",
             "_id": "58709c44-47f6-5fbf-bf2e-358b9d98f75d",
-            "status": "idle",
-            "statusTrack": [],
+            "type": "subworkflow",
+            "name": "Variable-cell Relaxation",
+            "preProcessors": [],
+            "postProcessors": [],
+            "monitors": [],
+            "results": [],
             "flowchartId": "8f6e9590-6a87-584b-abd7-1fb98253054c",
-            "tags": [],
-            "head": true
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [
@@ -179,7 +217,6 @@
         "total_energy",
         "total_force"
     ],
-    "_id": "c45dcef1-d16b-59d1-9318-cedd0b1acf08",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

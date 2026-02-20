@@ -1,12 +1,11 @@
-// @ts-ignore
-import { builders, createSubworkflowByName, Subworkflow, UnitFactory } from "@mat3ra/wode";
-
 import { BUILD_CONFIG } from "../../build-config";
 import { BaseWorkflowSubworkflowProcessor } from "./BaseWorkflowSubworkflowProcessor";
+import type { WorkflowEntityConfig } from "./types";
+import createSubworkflow, { type SubworkflowData } from "./utils/createSubworkflow";
 
-export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
-    public static defaultCategoryKeys = ["properties", "isMultimaterial", "tags", "application"];
+const defaultCategoryKeys = ["properties", "isMultimaterial", "tags", "application"] as const;
 
+export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor<SubworkflowData> {
     constructor(rootDir: string) {
         super({
             rootDir,
@@ -16,34 +15,31 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
             buildDir: BUILD_CONFIG.subworkflows.build.path,
             excludedAssetFiles: [BUILD_CONFIG.subworkflows.assets.categories],
             categoriesRelativePath: BUILD_CONFIG.subworkflows.assets.categories,
-            categoryKeys: SubworkflowsProcessor.defaultCategoryKeys,
+            categoryKeys: defaultCategoryKeys,
         });
     }
 
-    private get workflowSubworkflowMapByApplication(): { workflows: any; subworkflows: any } {
-        const workflowSubworkflowMapByApplication = { workflows: {}, subworkflows: {} } as any;
-        workflowSubworkflowMapByApplication.workflows = {};
-        workflowSubworkflowMapByApplication.subworkflows = this.entityMapByApplication;
-        return workflowSubworkflowMapByApplication;
+    private get workflowSubworkflowMapByApplication() {
+        return {
+            workflows: {},
+            subworkflows: this.entityMapByApplication,
+        };
     }
 
-    protected buildEntityConfigs(): any[] {
-        this.enablePredefinedIds();
-        const configs: { appName: string; safeName: string; config: any }[] = [];
+    protected buildEntityConfigs() {
+        const configs: WorkflowEntityConfig[] = [];
+        const map = this.workflowSubworkflowMapByApplication;
+
         this.applications.forEach((appName) => {
-            const subworkflows = this.workflowSubworkflowMapByApplication.subworkflows[appName];
-            if (!subworkflows) return;
+            const subworkflows = map.subworkflows[appName];
+
+            if (!subworkflows) {
+                return;
+            }
+
             Object.keys(subworkflows).forEach((subworkflowName) => {
                 const subworkflowData = subworkflows[subworkflowName];
-                // @ts-ignore
-                const subworkflow = createSubworkflowByName({
-                    appName,
-                    swfName: subworkflowName,
-                    workflowSubworkflowMapByApplication: this.workflowSubworkflowMapByApplication,
-                    SubworkflowCls: Subworkflow,
-                    UnitFactoryCls: UnitFactory,
-                    unitBuilders: builders,
-                });
+                const subworkflow = createSubworkflow(subworkflowData);
                 const config = this.buildConfigFromEntityData(
                     subworkflowData,
                     subworkflowName,
@@ -53,6 +49,7 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
                 configs.push(config);
             });
         });
+
         return configs;
     }
 }

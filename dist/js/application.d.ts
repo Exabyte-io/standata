@@ -1,11 +1,25 @@
-import type { ApplicationSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
+import type { ApplicationSchema, FlavorSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
 import { Standata } from "./base";
-import { ApplicationVersionsMapType } from "./types/application";
 export declare enum TAGS {
     DEFAULT = "default",
     DEFAULT_VERSION = "default_version",
     DEFAULT_BUILD = "default_build"
 }
+export type ApplicationConfig = {
+    name: string;
+    version?: string;
+    build?: string;
+};
+type ApplicationVersion = {
+    [build: string]: ApplicationSchema;
+};
+type ApplicationTreeItem = {
+    defaultVersion: string;
+    versions: {
+        [version: string]: ApplicationVersion;
+    };
+};
+type ApplicationTree = Record<string, ApplicationTreeItem>;
 export declare class ApplicationStandata extends Standata<ApplicationSchema> {
     static runtimeData: {
         filesMapByName: {
@@ -65,8 +79,8 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
             }[];
         };
     };
-    getAppDataForApplication(appName: string): ApplicationVersionsMapType;
-    getAppTreeForApplication(appName: string): Record<string, import("./types/application").ExecutableTreeItem>;
+    private getAppDataForApplication;
+    private getAppTreeForApplication;
     getAllAppTemplates(): TemplateSchema[];
     getAllAppTree(): {
         espresso: {
@@ -78,11 +92,15 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
             "average.x": {
@@ -93,7 +111,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                     average_potential: {
@@ -102,12 +122,20 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                 };
-                monitors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
             "bands.x": {
                 flavors: {
@@ -117,7 +145,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     bands_spin_dn: {
                         applicationName: string;
@@ -125,7 +155,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     bands_spin_up: {
                         applicationName: string;
@@ -133,11 +165,17 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                 };
-                monitors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
             "cp.x": {
                 flavors: {
@@ -148,7 +186,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                         }[];
                         isDefault: boolean;
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                     cp_wf: {
@@ -157,11 +197,15 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
             "dos.x": {
@@ -172,12 +216,20 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                 };
-                monitors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
             "dynmat.x": {
                 flavors: {
@@ -187,11 +239,15 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
             "epsilon.x": {
@@ -202,12 +258,20 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                 };
-                monitors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
             "gw.x": {
                 flavors: {
@@ -217,8 +281,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     gw_bands_plasmon_pole: {
                         applicationName: string;
@@ -226,12 +294,20 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                 };
-                monitors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
             "gww.x": {
                 flavors: {
@@ -241,11 +317,15 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
             "head.x": {
@@ -256,11 +336,15 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
             "hp.x": {
@@ -271,12 +355,20 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                 };
-                monitors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
                 supportedApplicationVersions: string[];
             };
             "matdyn.x": {
@@ -287,8 +379,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     matdyn_path: {
                         applicationName: string;
@@ -296,12 +392,20 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                 };
-                monitors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
             "neb.x": {
                 flavors: {
@@ -312,12 +416,20 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                         }[];
                         isMultiMaterial: boolean;
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                 };
-                monitors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
             "ph.x": {
                 flavors: {
@@ -327,8 +439,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     ph_grid: {
                         applicationName: string;
@@ -336,8 +452,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     ph_grid_restart: {
                         applicationName: string;
@@ -345,7 +465,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                     ph_init_qpoints: {
@@ -354,7 +476,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                     ph_path: {
@@ -363,8 +487,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     ph_single_irr_qpt: {
                         applicationName: string;
@@ -372,12 +500,18 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
-                monitors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
             "pp.x": {
                 flavors: {
@@ -387,7 +521,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                     pp_electrostatic_potential: {
@@ -396,7 +532,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                     pp_wfn: {
@@ -405,11 +543,17 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                 };
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
             "projwfc.x": {
@@ -420,12 +564,20 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                 };
-                monitors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
             "pw.x": {
                 flavors: {
@@ -435,8 +587,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pw_bands_dft_u+j_magn": {
                         applicationName: string;
@@ -444,8 +600,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     "pw_bands_dft_u+v_magn": {
@@ -454,8 +614,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_bands_dft_u_magn: {
@@ -464,8 +628,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_bands_dft_u_magn_legacy: {
@@ -474,8 +642,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_bands_dft_u_soc: {
@@ -484,8 +656,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_bands_dft_u_soc_legacy: {
@@ -494,8 +670,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_bands_magn: {
@@ -504,8 +684,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     pw_bands_soc: {
                         applicationName: string;
@@ -513,8 +697,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     pw_esm: {
                         applicationName: string;
@@ -522,8 +710,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     pw_esm_relax: {
                         applicationName: string;
@@ -531,8 +723,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     pw_md: {
                         applicationName: string;
@@ -540,8 +736,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     pw_nscf: {
                         applicationName: string;
@@ -549,8 +749,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pw_nscf_dft_u+j_magn": {
                         applicationName: string;
@@ -558,8 +762,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     "pw_nscf_dft_u+v_magn": {
@@ -568,8 +776,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_nscf_dft_u_magn: {
@@ -578,8 +790,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_nscf_dft_u_magn_legacy: {
@@ -588,8 +804,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_nscf_dft_u_soc: {
@@ -598,8 +818,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_nscf_dft_u_soc_legacy: {
@@ -608,8 +832,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_nscf_magn: {
@@ -618,8 +846,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     pw_nscf_soc: {
                         applicationName: string;
@@ -627,8 +859,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     pw_relax: {
                         applicationName: string;
@@ -636,8 +872,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     pw_scf: {
                         applicationName: string;
@@ -646,8 +886,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                         }[];
                         isDefault: boolean;
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     pw_scf_bands_hse: {
                         applicationName: string;
@@ -655,8 +899,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     pw_scf_dft_u: {
                         applicationName: string;
@@ -664,8 +912,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     "pw_scf_dft_u+j": {
@@ -674,8 +926,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     "pw_scf_dft_u+j_magn": {
@@ -684,8 +940,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     "pw_scf_dft_u+v": {
@@ -694,8 +954,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     "pw_scf_dft_u+v_magn": {
@@ -704,8 +968,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_scf_dft_u_legacy: {
@@ -714,8 +982,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_scf_dft_u_magn: {
@@ -724,8 +996,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_scf_dft_u_magn_legacy: {
@@ -734,8 +1010,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_scf_dft_u_soc: {
@@ -744,8 +1024,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_scf_dft_u_soc_legacy: {
@@ -754,8 +1038,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                         supportedApplicationVersions: string[];
                     };
                     pw_scf_hse: {
@@ -764,8 +1052,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     pw_scf_kpt_conv: {
                         applicationName: string;
@@ -773,8 +1065,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     pw_scf_magn: {
                         applicationName: string;
@@ -782,8 +1078,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     pw_scf_soc: {
                         applicationName: string;
@@ -791,8 +1091,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pw_vc-relax": {
                         applicationName: string;
@@ -800,15 +1104,25 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                 };
                 hasAdvancedComputeOptions: boolean;
                 isDefault: boolean;
-                monitors: string[];
-                postProcessors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                postProcessors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
             "pw4gww.x": {
                 flavors: {
@@ -818,11 +1132,15 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
             "q2r.x": {
@@ -833,11 +1151,15 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
             "simple.x": {
@@ -848,11 +1170,15 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
             "simple_bse.x": {
@@ -863,11 +1189,15 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
             "simple_ip.x": {
@@ -878,11 +1208,15 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
         };
@@ -896,15 +1230,25 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                         }[];
                         isDefault: boolean;
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                 };
                 hasAdvancedComputeOptions: boolean;
                 isDefault: boolean;
-                monitors: string[];
-                postProcessors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                postProcessors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
         };
         python: {
@@ -920,7 +1264,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         })[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     espresso_xml_get_qpt_irr: {
                         applicationName: string;
@@ -928,7 +1274,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     "generic:post_processing:plot:matplotlib": {
                         applicationName: string;
@@ -937,7 +1285,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     "generic:processing:find_extrema:scipy": {
                         applicationName: string;
@@ -946,7 +1296,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     hello_world: {
                         applicationName: string;
@@ -959,7 +1311,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             templateName?: undefined;
                         })[];
                         isDefault: boolean;
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     plot_wavefunction: {
                         applicationName: string;
@@ -968,7 +1322,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: {
                             basename: string;
                             filetype: string;
@@ -982,7 +1338,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     "pyml:data_input:read_csv:pandas": {
                         applicationName: string;
@@ -991,7 +1349,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     "pyml:data_input:train_test_split:sklearn": {
                         applicationName: string;
@@ -1000,7 +1360,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     "pyml:model:adaboosted_trees_regression:sklearn": {
                         applicationName: string;
@@ -1009,8 +1371,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:model:bagged_trees_regression:sklearn": {
                         applicationName: string;
@@ -1019,8 +1385,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:model:extreme_gradboosted_trees_classification:sklearn": {
                         applicationName: string;
@@ -1029,8 +1399,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:model:extreme_gradboosted_trees_regression:sklearn": {
                         applicationName: string;
@@ -1039,8 +1413,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:model:gradboosted_trees_classification:sklearn": {
                         applicationName: string;
@@ -1049,8 +1427,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:model:gradboosted_trees_regression:sklearn": {
                         applicationName: string;
@@ -1059,8 +1441,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:model:k_means_clustering:sklearn": {
                         applicationName: string;
@@ -1069,8 +1455,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:model:kernel_ridge_regression:sklearn": {
                         applicationName: string;
@@ -1079,8 +1469,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:model:lasso_regression:sklearn": {
                         applicationName: string;
@@ -1089,8 +1483,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:model:multilayer_perceptron:sklearn": {
                         applicationName: string;
@@ -1099,8 +1497,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:model:random_forest_classification:sklearn": {
                         applicationName: string;
@@ -1109,8 +1511,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:model:random_forest_regression:sklearn": {
                         applicationName: string;
@@ -1119,8 +1525,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:model:ridge_regression:sklearn": {
                         applicationName: string;
@@ -1129,8 +1539,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:post_processing:parity_plot:matplotlib": {
                         applicationName: string;
@@ -1139,8 +1553,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:post_processing:pca_2d_clusters:matplotlib": {
                         applicationName: string;
@@ -1149,8 +1567,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:post_processing:roc_curve:sklearn": {
                         applicationName: string;
@@ -1159,8 +1581,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     "pyml:pre_processing:min_max_scaler:sklearn": {
                         applicationName: string;
@@ -1169,7 +1595,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     "pyml:pre_processing:remove_duplicates:pandas": {
                         applicationName: string;
@@ -1178,7 +1606,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     "pyml:pre_processing:remove_missing:pandas": {
                         applicationName: string;
@@ -1187,7 +1617,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     "pyml:pre_processing:standardization:sklearn": {
                         applicationName: string;
@@ -1196,7 +1628,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     "pyml:setup_variables_packages": {
                         applicationName: string;
@@ -1205,12 +1639,18 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                 };
                 isDefault: boolean;
-                monitors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
         };
         shell: {
@@ -1223,7 +1663,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                         }[];
                         isMultiMaterial: boolean;
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     espresso_collect_dynmat: {
                         applicationName: string;
@@ -1231,7 +1673,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     espresso_link_outdir_save: {
                         applicationName: string;
@@ -1239,7 +1683,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     hello_world: {
                         applicationName: string;
@@ -1248,7 +1694,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                         }[];
                         isDefault: boolean;
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     job_espresso_pw_scf: {
                         applicationName: string;
@@ -1256,12 +1704,18 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                 };
                 isDefault: boolean;
-                monitors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
         };
         vasp: {
@@ -1274,8 +1728,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                         }[];
                         isDefault: boolean;
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_bands: {
                         applicationName: string;
@@ -1284,8 +1742,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_bands_hse: {
                         applicationName: string;
@@ -1295,8 +1757,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             templateName: string;
                         }[];
                         isDefault: boolean;
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_hse: {
                         applicationName: string;
@@ -1309,8 +1775,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             templateName?: undefined;
                         })[];
                         isDefault: boolean;
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_kpt_conv: {
                         applicationName: string;
@@ -1319,8 +1789,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_neb: {
                         applicationName: string;
@@ -1330,8 +1804,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             templateName: string;
                         }[];
                         isMultiMaterial: boolean;
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_neb_final: {
                         applicationName: string;
@@ -1344,8 +1822,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             templateName?: undefined;
                         })[];
                         isMultiMaterial: boolean;
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_neb_initial: {
                         applicationName: string;
@@ -1358,8 +1840,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             templateName?: undefined;
                         })[];
                         isMultiMaterial: boolean;
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_nscf: {
                         applicationName: string;
@@ -1368,8 +1854,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_nscf_hse: {
                         applicationName: string;
@@ -1379,8 +1869,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             templateName: string;
                         }[];
                         isDefault: boolean;
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_relax: {
                         applicationName: string;
@@ -1389,9 +1883,15 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        postProcessors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        postProcessors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_symprec: {
                         applicationName: string;
@@ -1403,8 +1903,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName?: undefined;
                         })[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_vc_relax: {
                         applicationName: string;
@@ -1413,9 +1917,15 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        postProcessors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        postProcessors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_vc_relax_conv: {
                         applicationName: string;
@@ -1424,8 +1934,12 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                     vasp_zpe: {
                         applicationName: string;
@@ -1434,23 +1948,33 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
-                        results: string[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
                     };
                 };
                 isDefault: boolean;
-                monitors: string[];
-                postProcessors: string[];
-                results: string[];
+                monitors: {
+                    name: string;
+                }[];
+                postProcessors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
             };
         };
     };
-    getAllApplicationNames(): string[];
+    private getAllApplicationNames;
     getAllAppData(): ApplicationSchema[];
     getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[];
     getByApplicationName(appName: string): ApplicationSchema[];
     static getDefaultVersionForApplication(appName: string): string;
-    static getDefaultBuildForApplicationAndVersion(appName: string, version: string): string;
+    static getDefaultBuildForApplicationAndVersion(appName: string, version: string): string | null;
     getDefaultConfigByNameAndVersion(appName: string, version?: string): ApplicationSchema;
     getDefaultConfig(): {
         name: string;
@@ -1459,4 +1983,69 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
         summary: string;
         build: string;
     };
+    private applicationsTree?;
+    private applications?;
+    getApplicationsTree(): ApplicationTree;
+    getApplications(): ApplicationSchema[];
+    getApplicationTreeItem(appName: string): ApplicationTreeItem;
+    getApplication({ name, version, build }: ApplicationConfig): ApplicationSchema;
+    getExecutableByName(appName: string, execName?: string): {
+        name: string;
+        isDefault?: boolean | undefined;
+        hasAdvancedComputeOptions?: boolean | undefined;
+        monitors: {
+            name: string;
+        }[];
+        results: {
+            name: string;
+        }[];
+        postProcessors: {
+            name: string;
+        }[];
+        flavors: Record<string, Pick<FlavorSchema, "isDefault" | "input" | "monitors" | "applicationName" | "executableName"> & Pick<Partial<FlavorSchema>, "results">>;
+        supportedApplicationVersions?: string[] | undefined;
+        preProcessors: never[];
+        applicationId: never[];
+    };
+    getExecutableAndFlavorByName(appName: string, execName?: string, flavorName?: string): {
+        executable: {
+            name: string;
+            isDefault?: boolean | undefined;
+            hasAdvancedComputeOptions?: boolean | undefined;
+            monitors: {
+                name: string;
+            }[];
+            results: {
+                name: string;
+            }[];
+            postProcessors: {
+                name: string;
+            }[];
+            flavors: Record<string, Pick<FlavorSchema, "isDefault" | "input" | "monitors" | "applicationName" | "executableName"> & Pick<Partial<FlavorSchema>, "results">>;
+            supportedApplicationVersions?: string[] | undefined;
+            preProcessors: never[];
+            applicationId: never[];
+        };
+        flavor: {
+            isDefault?: boolean | undefined;
+            input: {
+                templateId?: string | undefined;
+                templateName?: string | undefined;
+                name?: string | undefined;
+            }[];
+            monitors: {
+                name: string;
+            }[];
+            applicationName?: string | undefined;
+            executableName?: string | undefined;
+            results: {
+                name: string;
+            }[];
+            name: string;
+            preProcessors: never[];
+            postProcessors: never[];
+        };
+    };
+    getInput(flavor: FlavorSchema): TemplateSchema[];
 }
+export {};

@@ -1,5 +1,6 @@
 {
     "name": "Valence Band Offset (2D)",
+    "_id": "d8e08cac-7747-50aa-b925-41f214d722c6",
     "subworkflows": [
         {
             "isMultiMaterial": true,
@@ -17,14 +18,14 @@
             },
             "properties": [
                 "atomic_forces",
+                "average_potential_profile",
+                "band_gaps",
                 "fermi_energy",
                 "pressure",
                 "stress_tensor",
                 "total_energy",
                 "total_energy_contributions",
-                "total_force",
-                "band_gaps",
-                "average_potential_profile"
+                "total_force"
             ],
             "model": {
                 "type": "dft",
@@ -34,11 +35,7 @@
                     "subtype": "us",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -47,22 +44,18 @@
                     "operand": "MATERIAL_INDEX",
                     "value": "0",
                     "input": [],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "0f21d8c4-ab32-53ba-b40d-fc9b6608e1b9",
                     "tags": [],
+                    "flowchartId": "0f21d8c4-ab32-53ba-b40d-fc9b6608e1b9",
                     "head": true,
                     "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -102,6 +95,9 @@
                     "flowchartId": "9fc7a088-5533-5f70-bb33-f676ec65f565",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -113,20 +109,55 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [
+                            {
+                                "name": "remove_non_zero_weight_kpoints"
+                            }
+                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
-                        ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "name": "pw_scf",
+                        "results": [
+                            {
+                                "name": "atomic_forces"
+                            },
+                            {
+                                "name": "fermi_energy"
+                            },
+                            {
+                                "name": "pressure"
+                            },
+                            {
+                                "name": "stress_tensor"
+                            },
+                            {
+                                "name": "total_energy"
+                            },
+                            {
+                                "name": "total_energy_contributions"
+                            },
+                            {
+                                "name": "total_force"
+                            }
+                        ],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -136,46 +167,43 @@
                         ],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_electronic"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
-                        "name": "pw_scf",
                         "schemaVersion": "2022.8.16"
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KGridFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_scf.in",
-                            "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "KGridFormDataManager"
+                                    },
+                                    {
+                                        "name": "QEPWXInputDataManager"
+                                    },
+                                    {
+                                        "name": "PlanewaveCutoffDataManager"
+                                    }
+                                ],
+                                "executableName": "pw.x",
+                                "name": "pw_scf.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "pw-bands-calculate-band-gap"
+                    "context": [],
+                    "next": "pw-bands-calculate-band-gap",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -194,6 +222,9 @@
                     "flowchartId": "pw-bands-calculate-band-gap",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -205,20 +236,37 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [
+                            {
+                                "name": "remove_non_zero_weight_kpoints"
+                            }
+                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
-                        ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "name": "pw_bands",
+                        "results": [
+                            {
+                                "name": "band_structure"
+                            }
+                        ],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -227,40 +275,41 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "results": [
-                            "band_structure"
-                        ],
-                        "name": "pw_bands",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KPathFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_bands.in",
-                            "rendered": "&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal_b\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "KPathFormDataManager"
+                                    },
+                                    {
+                                        "name": "QEPWXInputDataManager"
+                                    },
+                                    {
+                                        "name": "PlanewaveCutoffDataManager"
+                                    }
+                                ],
+                                "executableName": "pw.x",
+                                "name": "pw_bands.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "a667d9fd-35d5-5897-be0e-fa0247233649"
+                    "context": [],
+                    "next": "a667d9fd-35d5-5897-be0e-fa0247233649",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Select indirect band gap",
@@ -273,22 +322,18 @@
                             "scope": "pw-bands-calculate-band-gap"
                         }
                     ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "a667d9fd-35d5-5897-be0e-fa0247233649",
                     "tags": [],
+                    "flowchartId": "a667d9fd-35d5-5897-be0e-fa0247233649",
                     "head": false,
                     "next": "08819369-b541-5b51-8a40-0ee135039482",
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Valence Band Maximum",
@@ -296,22 +341,18 @@
                     "operand": "VBM",
                     "value": "BAND_GAP_INDIRECT['eigenvalueValence']",
                     "input": [],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "08819369-b541-5b51-8a40-0ee135039482",
                     "tags": [],
+                    "flowchartId": "08819369-b541-5b51-8a40-0ee135039482",
                     "head": false,
                     "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -326,6 +367,9 @@
                     "flowchartId": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -337,14 +381,22 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "name": "bands",
+                        "results": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "bands.x",
                         "input": [
@@ -353,27 +405,31 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "name": "bands",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
-                            "contextProviders": [],
-                            "executableName": "bands.x",
-                            "name": "bands.in",
-                            "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
+                                "contextProviders": [],
+                                "executableName": "bands.x",
+                                "name": "bands.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "9ed927b1-3d84-5730-a6a8-1b1cfba39bde"
+                    "context": [],
+                    "next": "9ed927b1-3d84-5730-a6a8-1b1cfba39bde",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -388,6 +444,9 @@
                     "flowchartId": "9ed927b1-3d84-5730-a6a8-1b1cfba39bde",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -399,14 +458,22 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "name": "pp_electrostatic_potential",
+                        "results": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pp.x",
                         "input": [
@@ -415,28 +482,31 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "results": [],
-                        "name": "pp_electrostatic_potential",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    filplot = 'pp.dat'\n    plot_num = 11\n/\n",
-                            "contextProviders": [],
-                            "executableName": "pp.x",
-                            "name": "pp_electrostatic_potential.in",
-                            "rendered": "&INPUTPP\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    filplot = 'pp.dat'\n    plot_num = 11\n/\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    filplot = 'pp.dat'\n    plot_num = 11\n/\n",
+                                "contextProviders": [],
+                                "executableName": "pp.x",
+                                "name": "pp_electrostatic_potential.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "average-electrostatic-potential"
+                    "context": [],
+                    "next": "average-electrostatic-potential",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -455,6 +525,9 @@
                     "flowchartId": "average-electrostatic-potential",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -466,14 +539,26 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "average.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "name": "average_potential",
+                        "results": [
+                            {
+                                "name": "average_potential_profile"
+                            }
+                        ],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "average.x",
                         "input": [
@@ -482,30 +567,31 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "results": [
-                            "average_potential_profile"
-                        ],
-                        "name": "average_potential",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "1\npp.dat\n1.0\n3000\n3\n3.0000\n",
-                            "contextProviders": [],
-                            "executableName": "average.x",
-                            "name": "average.in",
-                            "rendered": "1\npp.dat\n1.0\n3000\n3\n3.0000\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "1\npp.dat\n1.0\n3000\n3\n3.0000\n",
+                                "contextProviders": [],
+                                "executableName": "average.x",
+                                "name": "average.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "c6c11873-91d7-5422-8302-3dcc1ce971e9"
+                    "context": [],
+                    "next": "c6c11873-91d7-5422-8302-3dcc1ce971e9",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Macroscopically Averaged ESP Data",
@@ -518,23 +604,21 @@
                             "scope": "average-electrostatic-potential"
                         }
                     ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "c6c11873-91d7-5422-8302-3dcc1ce971e9",
                     "tags": [],
+                    "flowchartId": "c6c11873-91d7-5422-8302-3dcc1ce971e9",
                     "head": false,
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "ce26adc1-6a26-53ef-9626-5eb6a6b9ccb7",
@@ -572,6 +656,9 @@
                     "flowchartId": "python-find-extrema",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "python",
                         "shortName": "py",
@@ -582,14 +669,22 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "name": "generic:processing:find_extrema:scipy",
+                        "results": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "python",
                         "executableName": "python",
                         "input": [
@@ -603,36 +698,43 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "name": "generic:processing:find_extrema:scipy",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "python",
-                            "content": "# ----------------------------------------------------------- #\n# This script aims to determine extrema for a given array.    #\n# Please adjust the parameters according to your data.        #\n# Note: This template expects the array to be defined in the  #\n# context as 'array_from_context' (see details below).        #\n# ----------------------------------------------------------- #\nimport json\n\nimport numpy as np\nfrom munch import Munch\nfrom scipy.signal import find_peaks\n\n# Data From Context\n# -----------------\n# The array 'array_from_context' is a 1D list (float or int) that has to be defined in\n# a preceding assignment unit in order to be extracted from the context.\n# Example: [0.0, 1.0, 4.0, 3.0]\n# Upon rendering the following Jinja template the extracted array will be inserted.\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n\n# Settings\n# --------\nprominence = 0.3  # required prominence in the unit of the data array\n\n# Find Extrema\n# ------------\nmax_indices, _ = find_peaks(Y, prominence=prominence)\nmin_indices, _ = find_peaks(-1 * Y, prominence=prominence)\n\nresult = {\n    \"maxima\": Y[max_indices].tolist(),\n    \"minima\": Y[min_indices].tolist(),\n}\n\n# print final values to standard output (STDOUT),\n# so that they can be read by a subsequent assignment unit (using value=STDOUT)\nprint(json.dumps(result, indent=4))\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "find_extrema.py",
-                            "rendered": "# ----------------------------------------------------------- #\n# This script aims to determine extrema for a given array.    #\n# Please adjust the parameters according to your data.        #\n# Note: This template expects the array to be defined in the  #\n# context as 'array_from_context' (see details below).        #\n# ----------------------------------------------------------- #\nimport json\n\nimport numpy as np\nfrom munch import Munch\nfrom scipy.signal import find_peaks\n\n# Data From Context\n# -----------------\n# The array 'array_from_context' is a 1D list (float or int) that has to be defined in\n# a preceding assignment unit in order to be extracted from the context.\n# Example: [0.0, 1.0, 4.0, 3.0]\n# Upon rendering the following Jinja template the extracted array will be inserted.\nY = np.array({{array_from_context}})\n\n# Settings\n# --------\nprominence = 0.3  # required prominence in the unit of the data array\n\n# Find Extrema\n# ------------\nmax_indices, _ = find_peaks(Y, prominence=prominence)\nmin_indices, _ = find_peaks(-1 * Y, prominence=prominence)\n\nresult = {\n    \"maxima\": Y[max_indices].tolist(),\n    \"minima\": Y[min_indices].tolist(),\n}\n\n# print final values to standard output (STDOUT),\n# so that they can be read by a subsequent assignment unit (using value=STDOUT)\nprint(json.dumps(result, indent=4))\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "python",
+                                "content": "# ----------------------------------------------------------- #\n# This script aims to determine extrema for a given array.    #\n# Please adjust the parameters according to your data.        #\n# Note: This template expects the array to be defined in the  #\n# context as 'array_from_context' (see details below).        #\n# ----------------------------------------------------------- #\nimport json\n\nimport numpy as np\nfrom munch import Munch\nfrom scipy.signal import find_peaks\n\n# Data From Context\n# -----------------\n# The array 'array_from_context' is a 1D list (float or int) that has to be defined in\n# a preceding assignment unit in order to be extracted from the context.\n# Example: [0.0, 1.0, 4.0, 3.0]\n# Upon rendering the following Jinja template the extracted array will be inserted.\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n\n# Settings\n# --------\nprominence = 0.3  # required prominence in the unit of the data array\n\n# Find Extrema\n# ------------\nmax_indices, _ = find_peaks(Y, prominence=prominence)\nmin_indices, _ = find_peaks(-1 * Y, prominence=prominence)\n\nresult = {\n    \"maxima\": Y[max_indices].tolist(),\n    \"minima\": Y[min_indices].tolist(),\n}\n\n# print final values to standard output (STDOUT),\n# so that they can be read by a subsequent assignment unit (using value=STDOUT)\nprint(json.dumps(result, indent=4))\n",
+                                "contextProviders": [],
+                                "executableName": "python",
+                                "name": "find_extrema.py",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         },
                         {
-                            "applicationName": "python",
-                            "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "requirements.txt",
-                            "rendered": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "python",
+                                "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
+                                "contextProviders": [],
+                                "executableName": "python",
+                                "name": "requirements.txt",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d"
+                    "context": [],
+                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Average ESP Value",
@@ -645,22 +747,21 @@
                             "scope": "python-find-extrema"
                         }
                     ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
                     "tags": [],
+                    "flowchartId": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
                     "head": false,
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "isMultiMaterial": true,
@@ -678,14 +779,14 @@
             },
             "properties": [
                 "atomic_forces",
+                "average_potential_profile",
+                "band_gaps",
                 "fermi_energy",
                 "pressure",
                 "stress_tensor",
                 "total_energy",
                 "total_energy_contributions",
-                "total_force",
-                "band_gaps",
-                "average_potential_profile"
+                "total_force"
             ],
             "model": {
                 "type": "dft",
@@ -695,11 +796,7 @@
                     "subtype": "us",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -708,22 +805,18 @@
                     "operand": "MATERIAL_INDEX",
                     "value": "1",
                     "input": [],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "0bd31760-f6e4-5826-b282-882c06c97f94",
                     "tags": [],
+                    "flowchartId": "0bd31760-f6e4-5826-b282-882c06c97f94",
                     "head": true,
                     "next": "3e6d3a1e-8d6c-5d5f-9a97-ffc0b895ef08",
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -763,6 +856,9 @@
                     "flowchartId": "3e6d3a1e-8d6c-5d5f-9a97-ffc0b895ef08",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -774,20 +870,55 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [
+                            {
+                                "name": "remove_non_zero_weight_kpoints"
+                            }
+                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
-                        ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "name": "pw_scf",
+                        "results": [
+                            {
+                                "name": "atomic_forces"
+                            },
+                            {
+                                "name": "fermi_energy"
+                            },
+                            {
+                                "name": "pressure"
+                            },
+                            {
+                                "name": "stress_tensor"
+                            },
+                            {
+                                "name": "total_energy"
+                            },
+                            {
+                                "name": "total_energy_contributions"
+                            },
+                            {
+                                "name": "total_force"
+                            }
+                        ],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -797,46 +928,43 @@
                         ],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_electronic"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
-                        "name": "pw_scf",
                         "schemaVersion": "2022.8.16"
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KGridFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_scf.in",
-                            "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "KGridFormDataManager"
+                                    },
+                                    {
+                                        "name": "QEPWXInputDataManager"
+                                    },
+                                    {
+                                        "name": "PlanewaveCutoffDataManager"
+                                    }
+                                ],
+                                "executableName": "pw.x",
+                                "name": "pw_scf.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "pw-bands-calculate-band-gap-left"
+                    "context": [],
+                    "next": "pw-bands-calculate-band-gap-left",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -855,6 +983,9 @@
                     "flowchartId": "pw-bands-calculate-band-gap-left",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -866,20 +997,37 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [
+                            {
+                                "name": "remove_non_zero_weight_kpoints"
+                            }
+                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
-                        ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "name": "pw_bands",
+                        "results": [
+                            {
+                                "name": "band_structure"
+                            }
+                        ],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -888,40 +1036,41 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "results": [
-                            "band_structure"
-                        ],
-                        "name": "pw_bands",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KPathFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_bands.in",
-                            "rendered": "&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal_b\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "KPathFormDataManager"
+                                    },
+                                    {
+                                        "name": "QEPWXInputDataManager"
+                                    },
+                                    {
+                                        "name": "PlanewaveCutoffDataManager"
+                                    }
+                                ],
+                                "executableName": "pw.x",
+                                "name": "pw_bands.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "a667d9fd-35d5-5897-be0e-fa0247233649"
+                    "context": [],
+                    "next": "a667d9fd-35d5-5897-be0e-fa0247233649",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Select indirect band gap",
@@ -934,22 +1083,18 @@
                             "scope": "pw-bands-calculate-band-gap-left"
                         }
                     ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "a667d9fd-35d5-5897-be0e-fa0247233649",
                     "tags": [],
+                    "flowchartId": "a667d9fd-35d5-5897-be0e-fa0247233649",
                     "head": false,
                     "next": "08819369-b541-5b51-8a40-0ee135039482",
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Valence Band Maximum",
@@ -957,22 +1102,18 @@
                     "operand": "VBM_LEFT",
                     "value": "BAND_GAP_INDIRECT['eigenvalueValence']",
                     "input": [],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "08819369-b541-5b51-8a40-0ee135039482",
                     "tags": [],
+                    "flowchartId": "08819369-b541-5b51-8a40-0ee135039482",
                     "head": false,
                     "next": "dfc4f1c5-5856-588a-99df-6d5fb46bb429",
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -987,6 +1128,9 @@
                     "flowchartId": "dfc4f1c5-5856-588a-99df-6d5fb46bb429",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -998,14 +1142,22 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "name": "bands",
+                        "results": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "bands.x",
                         "input": [
@@ -1014,27 +1166,31 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "name": "bands",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
-                            "contextProviders": [],
-                            "executableName": "bands.x",
-                            "name": "bands.in",
-                            "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
+                                "contextProviders": [],
+                                "executableName": "bands.x",
+                                "name": "bands.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "b1bb2b3e-3197-5bcd-85b0-959cc357c8d3"
+                    "context": [],
+                    "next": "b1bb2b3e-3197-5bcd-85b0-959cc357c8d3",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1049,6 +1205,9 @@
                     "flowchartId": "b1bb2b3e-3197-5bcd-85b0-959cc357c8d3",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -1060,14 +1219,22 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "name": "pp_electrostatic_potential",
+                        "results": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pp.x",
                         "input": [
@@ -1076,28 +1243,31 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "results": [],
-                        "name": "pp_electrostatic_potential",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    filplot = 'pp.dat'\n    plot_num = 11\n/\n",
-                            "contextProviders": [],
-                            "executableName": "pp.x",
-                            "name": "pp_electrostatic_potential.in",
-                            "rendered": "&INPUTPP\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    filplot = 'pp.dat'\n    plot_num = 11\n/\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    filplot = 'pp.dat'\n    plot_num = 11\n/\n",
+                                "contextProviders": [],
+                                "executableName": "pp.x",
+                                "name": "pp_electrostatic_potential.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "average-electrostatic-potential-left"
+                    "context": [],
+                    "next": "average-electrostatic-potential-left",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1116,6 +1286,9 @@
                     "flowchartId": "average-electrostatic-potential-left",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -1127,14 +1300,26 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "average.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "name": "average_potential",
+                        "results": [
+                            {
+                                "name": "average_potential_profile"
+                            }
+                        ],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "average.x",
                         "input": [
@@ -1143,30 +1328,31 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "results": [
-                            "average_potential_profile"
-                        ],
-                        "name": "average_potential",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "1\npp.dat\n1.0\n3000\n3\n3.0000\n",
-                            "contextProviders": [],
-                            "executableName": "average.x",
-                            "name": "average.in",
-                            "rendered": "1\npp.dat\n1.0\n3000\n3\n3.0000\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "1\npp.dat\n1.0\n3000\n3\n3.0000\n",
+                                "contextProviders": [],
+                                "executableName": "average.x",
+                                "name": "average.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "c6c11873-91d7-5422-8302-3dcc1ce971e9"
+                    "context": [],
+                    "next": "c6c11873-91d7-5422-8302-3dcc1ce971e9",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Macroscopically Averaged ESP Data",
@@ -1179,23 +1365,21 @@
                             "scope": "average-electrostatic-potential-left"
                         }
                     ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "c6c11873-91d7-5422-8302-3dcc1ce971e9",
                     "tags": [],
+                    "flowchartId": "c6c11873-91d7-5422-8302-3dcc1ce971e9",
                     "head": false,
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "6c303926-905c-5749-81d5-2d2964fdf09a",
@@ -1233,6 +1417,9 @@
                     "flowchartId": "python-find-extrema-left",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "python",
                         "shortName": "py",
@@ -1243,14 +1430,22 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "name": "generic:processing:find_extrema:scipy",
+                        "results": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "python",
                         "executableName": "python",
                         "input": [
@@ -1264,36 +1459,43 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "name": "generic:processing:find_extrema:scipy",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "python",
-                            "content": "# ----------------------------------------------------------- #\n# This script aims to determine extrema for a given array.    #\n# Please adjust the parameters according to your data.        #\n# Note: This template expects the array to be defined in the  #\n# context as 'array_from_context' (see details below).        #\n# ----------------------------------------------------------- #\nimport json\n\nimport numpy as np\nfrom munch import Munch\nfrom scipy.signal import find_peaks\n\n# Data From Context\n# -----------------\n# The array 'array_from_context' is a 1D list (float or int) that has to be defined in\n# a preceding assignment unit in order to be extracted from the context.\n# Example: [0.0, 1.0, 4.0, 3.0]\n# Upon rendering the following Jinja template the extracted array will be inserted.\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n\n# Settings\n# --------\nprominence = 0.3  # required prominence in the unit of the data array\n\n# Find Extrema\n# ------------\nmax_indices, _ = find_peaks(Y, prominence=prominence)\nmin_indices, _ = find_peaks(-1 * Y, prominence=prominence)\n\nresult = {\n    \"maxima\": Y[max_indices].tolist(),\n    \"minima\": Y[min_indices].tolist(),\n}\n\n# print final values to standard output (STDOUT),\n# so that they can be read by a subsequent assignment unit (using value=STDOUT)\nprint(json.dumps(result, indent=4))\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "find_extrema.py",
-                            "rendered": "# ----------------------------------------------------------- #\n# This script aims to determine extrema for a given array.    #\n# Please adjust the parameters according to your data.        #\n# Note: This template expects the array to be defined in the  #\n# context as 'array_from_context' (see details below).        #\n# ----------------------------------------------------------- #\nimport json\n\nimport numpy as np\nfrom munch import Munch\nfrom scipy.signal import find_peaks\n\n# Data From Context\n# -----------------\n# The array 'array_from_context' is a 1D list (float or int) that has to be defined in\n# a preceding assignment unit in order to be extracted from the context.\n# Example: [0.0, 1.0, 4.0, 3.0]\n# Upon rendering the following Jinja template the extracted array will be inserted.\nY = np.array({{array_from_context}})\n\n# Settings\n# --------\nprominence = 0.3  # required prominence in the unit of the data array\n\n# Find Extrema\n# ------------\nmax_indices, _ = find_peaks(Y, prominence=prominence)\nmin_indices, _ = find_peaks(-1 * Y, prominence=prominence)\n\nresult = {\n    \"maxima\": Y[max_indices].tolist(),\n    \"minima\": Y[min_indices].tolist(),\n}\n\n# print final values to standard output (STDOUT),\n# so that they can be read by a subsequent assignment unit (using value=STDOUT)\nprint(json.dumps(result, indent=4))\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "python",
+                                "content": "# ----------------------------------------------------------- #\n# This script aims to determine extrema for a given array.    #\n# Please adjust the parameters according to your data.        #\n# Note: This template expects the array to be defined in the  #\n# context as 'array_from_context' (see details below).        #\n# ----------------------------------------------------------- #\nimport json\n\nimport numpy as np\nfrom munch import Munch\nfrom scipy.signal import find_peaks\n\n# Data From Context\n# -----------------\n# The array 'array_from_context' is a 1D list (float or int) that has to be defined in\n# a preceding assignment unit in order to be extracted from the context.\n# Example: [0.0, 1.0, 4.0, 3.0]\n# Upon rendering the following Jinja template the extracted array will be inserted.\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n\n# Settings\n# --------\nprominence = 0.3  # required prominence in the unit of the data array\n\n# Find Extrema\n# ------------\nmax_indices, _ = find_peaks(Y, prominence=prominence)\nmin_indices, _ = find_peaks(-1 * Y, prominence=prominence)\n\nresult = {\n    \"maxima\": Y[max_indices].tolist(),\n    \"minima\": Y[min_indices].tolist(),\n}\n\n# print final values to standard output (STDOUT),\n# so that they can be read by a subsequent assignment unit (using value=STDOUT)\nprint(json.dumps(result, indent=4))\n",
+                                "contextProviders": [],
+                                "executableName": "python",
+                                "name": "find_extrema.py",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         },
                         {
-                            "applicationName": "python",
-                            "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "requirements.txt",
-                            "rendered": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "python",
+                                "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
+                                "contextProviders": [],
+                                "executableName": "python",
+                                "name": "requirements.txt",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d"
+                    "context": [],
+                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Average ESP Value",
@@ -1306,22 +1508,21 @@
                             "scope": "python-find-extrema-left"
                         }
                     ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
                     "tags": [],
+                    "flowchartId": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
                     "head": false,
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "isMultiMaterial": true,
@@ -1339,14 +1540,14 @@
             },
             "properties": [
                 "atomic_forces",
+                "average_potential_profile",
+                "band_gaps",
                 "fermi_energy",
                 "pressure",
                 "stress_tensor",
                 "total_energy",
                 "total_energy_contributions",
-                "total_force",
-                "band_gaps",
-                "average_potential_profile"
+                "total_force"
             ],
             "model": {
                 "type": "dft",
@@ -1356,11 +1557,7 @@
                     "subtype": "us",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -1369,22 +1566,18 @@
                     "operand": "MATERIAL_INDEX",
                     "value": "2",
                     "input": [],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "a05809d1-cc0d-5a0b-bf5e-d43b90a6ac4b",
                     "tags": [],
+                    "flowchartId": "a05809d1-cc0d-5a0b-bf5e-d43b90a6ac4b",
                     "head": true,
                     "next": "b89d6348-3915-5c24-9fbb-350bc98ac708",
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1424,6 +1617,9 @@
                     "flowchartId": "b89d6348-3915-5c24-9fbb-350bc98ac708",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -1435,20 +1631,55 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [
+                            {
+                                "name": "remove_non_zero_weight_kpoints"
+                            }
+                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
-                        ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "name": "pw_scf",
+                        "results": [
+                            {
+                                "name": "atomic_forces"
+                            },
+                            {
+                                "name": "fermi_energy"
+                            },
+                            {
+                                "name": "pressure"
+                            },
+                            {
+                                "name": "stress_tensor"
+                            },
+                            {
+                                "name": "total_energy"
+                            },
+                            {
+                                "name": "total_energy_contributions"
+                            },
+                            {
+                                "name": "total_force"
+                            }
+                        ],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -1458,46 +1689,43 @@
                         ],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_electronic"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
-                        "results": [
-                            "atomic_forces",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
-                        ],
-                        "name": "pw_scf",
                         "schemaVersion": "2022.8.16"
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KGridFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_scf.in",
-                            "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "KGridFormDataManager"
+                                    },
+                                    {
+                                        "name": "QEPWXInputDataManager"
+                                    },
+                                    {
+                                        "name": "PlanewaveCutoffDataManager"
+                                    }
+                                ],
+                                "executableName": "pw.x",
+                                "name": "pw_scf.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "pw-bands-calculate-band-gap-right"
+                    "context": [],
+                    "next": "pw-bands-calculate-band-gap-right",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1516,6 +1744,9 @@
                     "flowchartId": "pw-bands-calculate-band-gap-right",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -1527,20 +1758,37 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [
+                            {
+                                "name": "remove_non_zero_weight_kpoints"
+                            }
+                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
-                        ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "name": "pw_bands",
+                        "results": [
+                            {
+                                "name": "band_structure"
+                            }
+                        ],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -1549,40 +1797,41 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "results": [
-                            "band_structure"
-                        ],
-                        "name": "pw_bands",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KPathFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_bands.in",
-                            "rendered": "&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal_b\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "KPathFormDataManager"
+                                    },
+                                    {
+                                        "name": "QEPWXInputDataManager"
+                                    },
+                                    {
+                                        "name": "PlanewaveCutoffDataManager"
+                                    }
+                                ],
+                                "executableName": "pw.x",
+                                "name": "pw_bands.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "a667d9fd-35d5-5897-be0e-fa0247233649"
+                    "context": [],
+                    "next": "a667d9fd-35d5-5897-be0e-fa0247233649",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Select indirect band gap",
@@ -1595,22 +1844,18 @@
                             "scope": "pw-bands-calculate-band-gap-right"
                         }
                     ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "a667d9fd-35d5-5897-be0e-fa0247233649",
                     "tags": [],
+                    "flowchartId": "a667d9fd-35d5-5897-be0e-fa0247233649",
                     "head": false,
                     "next": "08819369-b541-5b51-8a40-0ee135039482",
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Valence Band Maximum",
@@ -1618,22 +1863,18 @@
                     "operand": "VBM_RIGHT",
                     "value": "BAND_GAP_INDIRECT['eigenvalueValence']",
                     "input": [],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "08819369-b541-5b51-8a40-0ee135039482",
                     "tags": [],
+                    "flowchartId": "08819369-b541-5b51-8a40-0ee135039482",
                     "head": false,
                     "next": "bc3f514c-4bed-521b-85a3-4e0edfdc3585",
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1648,6 +1889,9 @@
                     "flowchartId": "bc3f514c-4bed-521b-85a3-4e0edfdc3585",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -1659,14 +1903,22 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "name": "bands",
+                        "results": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "bands.x",
                         "input": [
@@ -1675,27 +1927,31 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "name": "bands",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
-                            "contextProviders": [],
-                            "executableName": "bands.x",
-                            "name": "bands.in",
-                            "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
+                                "contextProviders": [],
+                                "executableName": "bands.x",
+                                "name": "bands.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "28bb682d-d287-5beb-8a67-826449c474ee"
+                    "context": [],
+                    "next": "28bb682d-d287-5beb-8a67-826449c474ee",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1710,6 +1966,9 @@
                     "flowchartId": "28bb682d-d287-5beb-8a67-826449c474ee",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -1721,14 +1980,22 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "name": "pp_electrostatic_potential",
+                        "results": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pp.x",
                         "input": [
@@ -1737,28 +2004,31 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "results": [],
-                        "name": "pp_electrostatic_potential",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    filplot = 'pp.dat'\n    plot_num = 11\n/\n",
-                            "contextProviders": [],
-                            "executableName": "pp.x",
-                            "name": "pp_electrostatic_potential.in",
-                            "rendered": "&INPUTPP\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    filplot = 'pp.dat'\n    plot_num = 11\n/\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    filplot = 'pp.dat'\n    plot_num = 11\n/\n",
+                                "contextProviders": [],
+                                "executableName": "pp.x",
+                                "name": "pp_electrostatic_potential.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "average-electrostatic-potential-right"
+                    "context": [],
+                    "next": "average-electrostatic-potential-right",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1777,6 +2047,9 @@
                     "flowchartId": "average-electrostatic-potential-right",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -1788,14 +2061,26 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "average.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "name": "average_potential",
+                        "results": [
+                            {
+                                "name": "average_potential_profile"
+                            }
+                        ],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "average.x",
                         "input": [
@@ -1804,30 +2089,31 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "results": [
-                            "average_potential_profile"
-                        ],
-                        "name": "average_potential",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "1\npp.dat\n1.0\n3000\n3\n3.0000\n",
-                            "contextProviders": [],
-                            "executableName": "average.x",
-                            "name": "average.in",
-                            "rendered": "1\npp.dat\n1.0\n3000\n3\n3.0000\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "1\npp.dat\n1.0\n3000\n3\n3.0000\n",
+                                "contextProviders": [],
+                                "executableName": "average.x",
+                                "name": "average.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "c6c11873-91d7-5422-8302-3dcc1ce971e9"
+                    "context": [],
+                    "next": "c6c11873-91d7-5422-8302-3dcc1ce971e9",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Macroscopically Averaged ESP Data",
@@ -1840,23 +2126,21 @@
                             "scope": "average-electrostatic-potential-right"
                         }
                     ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "c6c11873-91d7-5422-8302-3dcc1ce971e9",
                     "tags": [],
+                    "flowchartId": "c6c11873-91d7-5422-8302-3dcc1ce971e9",
                     "head": false,
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
@@ -1894,6 +2178,9 @@
                     "flowchartId": "python-find-extrema-right",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "python",
                         "shortName": "py",
@@ -1904,14 +2191,22 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "name": "generic:processing:find_extrema:scipy",
+                        "results": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "applicationName": "python",
                         "executableName": "python",
                         "input": [
@@ -1925,36 +2220,43 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "name": "generic:processing:find_extrema:scipy",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "python",
-                            "content": "# ----------------------------------------------------------- #\n# This script aims to determine extrema for a given array.    #\n# Please adjust the parameters according to your data.        #\n# Note: This template expects the array to be defined in the  #\n# context as 'array_from_context' (see details below).        #\n# ----------------------------------------------------------- #\nimport json\n\nimport numpy as np\nfrom munch import Munch\nfrom scipy.signal import find_peaks\n\n# Data From Context\n# -----------------\n# The array 'array_from_context' is a 1D list (float or int) that has to be defined in\n# a preceding assignment unit in order to be extracted from the context.\n# Example: [0.0, 1.0, 4.0, 3.0]\n# Upon rendering the following Jinja template the extracted array will be inserted.\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n\n# Settings\n# --------\nprominence = 0.3  # required prominence in the unit of the data array\n\n# Find Extrema\n# ------------\nmax_indices, _ = find_peaks(Y, prominence=prominence)\nmin_indices, _ = find_peaks(-1 * Y, prominence=prominence)\n\nresult = {\n    \"maxima\": Y[max_indices].tolist(),\n    \"minima\": Y[min_indices].tolist(),\n}\n\n# print final values to standard output (STDOUT),\n# so that they can be read by a subsequent assignment unit (using value=STDOUT)\nprint(json.dumps(result, indent=4))\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "find_extrema.py",
-                            "rendered": "# ----------------------------------------------------------- #\n# This script aims to determine extrema for a given array.    #\n# Please adjust the parameters according to your data.        #\n# Note: This template expects the array to be defined in the  #\n# context as 'array_from_context' (see details below).        #\n# ----------------------------------------------------------- #\nimport json\n\nimport numpy as np\nfrom munch import Munch\nfrom scipy.signal import find_peaks\n\n# Data From Context\n# -----------------\n# The array 'array_from_context' is a 1D list (float or int) that has to be defined in\n# a preceding assignment unit in order to be extracted from the context.\n# Example: [0.0, 1.0, 4.0, 3.0]\n# Upon rendering the following Jinja template the extracted array will be inserted.\nY = np.array({{array_from_context}})\n\n# Settings\n# --------\nprominence = 0.3  # required prominence in the unit of the data array\n\n# Find Extrema\n# ------------\nmax_indices, _ = find_peaks(Y, prominence=prominence)\nmin_indices, _ = find_peaks(-1 * Y, prominence=prominence)\n\nresult = {\n    \"maxima\": Y[max_indices].tolist(),\n    \"minima\": Y[min_indices].tolist(),\n}\n\n# print final values to standard output (STDOUT),\n# so that they can be read by a subsequent assignment unit (using value=STDOUT)\nprint(json.dumps(result, indent=4))\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "python",
+                                "content": "# ----------------------------------------------------------- #\n# This script aims to determine extrema for a given array.    #\n# Please adjust the parameters according to your data.        #\n# Note: This template expects the array to be defined in the  #\n# context as 'array_from_context' (see details below).        #\n# ----------------------------------------------------------- #\nimport json\n\nimport numpy as np\nfrom munch import Munch\nfrom scipy.signal import find_peaks\n\n# Data From Context\n# -----------------\n# The array 'array_from_context' is a 1D list (float or int) that has to be defined in\n# a preceding assignment unit in order to be extracted from the context.\n# Example: [0.0, 1.0, 4.0, 3.0]\n# Upon rendering the following Jinja template the extracted array will be inserted.\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n\n# Settings\n# --------\nprominence = 0.3  # required prominence in the unit of the data array\n\n# Find Extrema\n# ------------\nmax_indices, _ = find_peaks(Y, prominence=prominence)\nmin_indices, _ = find_peaks(-1 * Y, prominence=prominence)\n\nresult = {\n    \"maxima\": Y[max_indices].tolist(),\n    \"minima\": Y[min_indices].tolist(),\n}\n\n# print final values to standard output (STDOUT),\n# so that they can be read by a subsequent assignment unit (using value=STDOUT)\nprint(json.dumps(result, indent=4))\n",
+                                "contextProviders": [],
+                                "executableName": "python",
+                                "name": "find_extrema.py",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         },
                         {
-                            "applicationName": "python",
-                            "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "requirements.txt",
-                            "rendered": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "python",
+                                "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
+                                "contextProviders": [],
+                                "executableName": "python",
+                                "name": "requirements.txt",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d"
+                    "context": [],
+                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Average ESP Value",
@@ -1967,22 +2269,21 @@
                             "scope": "python-find-extrema-right"
                         }
                     ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
                     "tags": [],
+                    "flowchartId": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
                     "head": false,
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "1b70e606-a7ee-599e-89e0-91a7dc5faa4a",
@@ -2015,21 +2316,18 @@
                     "operand": "VBM_DIFF",
                     "value": "VBM_LEFT - VBM_RIGHT",
                     "input": [],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "bd4eaa98-b001-5694-87ef-ec77540502ab",
                     "tags": [],
+                    "flowchartId": "bd4eaa98-b001-5694-87ef-ec77540502ab",
                     "head": true,
                     "next": "2626f7bb-d392-5fd4-ab71-329b508de347",
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Difference of macroscopically averaged ESP in bulk",
@@ -2037,21 +2335,18 @@
                     "operand": "AVG_ESP_DIFF",
                     "value": "AVG_ESP_LEFT[0] - AVG_ESP_RIGHT[0]",
                     "input": [],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "2626f7bb-d392-5fd4-ab71-329b508de347",
                     "tags": [],
+                    "flowchartId": "2626f7bb-d392-5fd4-ab71-329b508de347",
                     "head": false,
                     "next": "b7307787-53e2-599b-ad12-d627b04074b4",
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Lineup of macroscopically averaged ESP in interface",
@@ -2059,21 +2354,18 @@
                     "operand": "ESP_LINEUP",
                     "value": "np.abs(AVG_ESP_INTERFACE[0] - AVG_ESP_INTERFACE[1])",
                     "input": [],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "b7307787-53e2-599b-ad12-d627b04074b4",
                     "tags": [],
+                    "flowchartId": "b7307787-53e2-599b-ad12-d627b04074b4",
                     "head": false,
                     "next": "197f4b4d-cb7b-57be-a885-d44cb1f61905",
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Valence Band Offset",
@@ -2086,100 +2378,124 @@
                             "name": "valence_band_offset"
                         }
                     ],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "197f4b4d-cb7b-57be-a885-d44cb1f61905",
                     "tags": [],
+                    "flowchartId": "197f4b4d-cb7b-57be-a885-d44cb1f61905",
                     "head": false,
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         }
     ],
     "units": [
         {
-            "name": "BS + Avg ESP (Interface)",
-            "type": "subworkflow",
             "_id": "9c65d03e-6a30-58f3-947a-f174342be0c3",
-            "status": "idle",
-            "statusTrack": [],
+            "type": "subworkflow",
+            "name": "BS + Avg ESP (Interface)",
+            "preProcessors": [],
+            "postProcessors": [],
+            "monitors": [],
+            "results": [],
             "flowchartId": "fd622b5c-5c02-594e-b582-b245c17ca9a4",
-            "tags": [],
-            "head": true,
-            "next": "ad3b1e4c-5965-5605-a067-dd0c59907c4b"
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
+            "type": "subworkflow",
             "name": "Find ESP Values (Interface)",
-            "type": "subworkflow",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "_id": "ce26adc1-6a26-53ef-9626-5eb6a6b9ccb7",
-            "status": "idle",
-            "statusTrack": [],
             "flowchartId": "ad3b1e4c-5965-5605-a067-dd0c59907c4b",
-            "tags": [],
-            "head": false,
-            "next": "8d5b4734-edfd-55cc-ad80-aaa72487398d"
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
+            "type": "subworkflow",
             "name": "BS + Avg ESP (interface left)",
-            "type": "subworkflow",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "_id": "ba46d9b4-610f-537e-ae39-e39ce5240cda",
-            "status": "idle",
-            "statusTrack": [],
             "flowchartId": "8d5b4734-edfd-55cc-ad80-aaa72487398d",
-            "tags": [],
-            "head": false,
-            "next": "102ec582-5b75-52f5-8b39-19ca725ed47a"
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
+            "type": "subworkflow",
             "name": "Find ESP Value (Interface left)",
-            "type": "subworkflow",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "_id": "6c303926-905c-5749-81d5-2d2964fdf09a",
-            "status": "idle",
-            "statusTrack": [],
             "flowchartId": "102ec582-5b75-52f5-8b39-19ca725ed47a",
-            "tags": [],
-            "head": false,
-            "next": "603c45db-93aa-54ce-a7fe-6e9b65b0037d"
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
+            "type": "subworkflow",
             "name": "BS + Avg ESP (interface right)",
-            "type": "subworkflow",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "_id": "aa611fe8-1e6a-5e5c-976a-f64bfaaaace9",
-            "status": "idle",
-            "statusTrack": [],
             "flowchartId": "603c45db-93aa-54ce-a7fe-6e9b65b0037d",
-            "tags": [],
-            "head": false,
-            "next": "e3444d35-cc41-59f5-8481-78d0c383b84e"
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
+            "type": "subworkflow",
             "name": "Find ESP Value (Interface right)",
-            "type": "subworkflow",
-            "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "e3444d35-cc41-59f5-8481-78d0c383b84e",
             "tags": [],
-            "head": false,
-            "next": "0e0b141a-39ca-52bc-9094-e5f96dc72f39"
+            "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
+            "flowchartId": "e3444d35-cc41-59f5-8481-78d0c383b84e",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
-            "name": "Calculate VBO",
             "type": "subworkflow",
-            "_id": "1b70e606-a7ee-599e-89e0-91a7dc5faa4a",
+            "name": "Calculate VBO",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "0e0b141a-39ca-52bc-9094-e5f96dc72f39",
             "tags": [],
-            "head": false
+            "_id": "1b70e606-a7ee-599e-89e0-91a7dc5faa4a",
+            "flowchartId": "0e0b141a-39ca-52bc-9094-e5f96dc72f39",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [
@@ -2193,7 +2509,6 @@
         "total_energy_contributions",
         "total_force"
     ],
-    "_id": "d8e08cac-7747-50aa-b925-41f214d722c6",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

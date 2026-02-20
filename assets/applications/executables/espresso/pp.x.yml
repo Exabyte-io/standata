@@ -24,8 +24,8 @@ flavors:
     input:
       - name: pp_wfn.in
     results:
-      - wavefunction_amplitude
+      - name: wavefunction_amplitude
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: pp.x

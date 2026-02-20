@@ -1,35 +1,40 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable class-methods-use-this */
 import { Utils } from "@mat3ra/utils";
-// eslint-disable-next-line import/no-extraneous-dependencies
-// @ts-ignore
 import serverUtils from "@mat3ra/utils/server";
-// @ts-ignore
-import { builders, Subworkflow, UnitFactory, Workflow } from "@mat3ra/wode";
 import path from "path";
 
 import { BUILD_CONFIG } from "../../build-config";
 import { loadYAMLFilesAsMap, readYAMLFileResolved } from "../utils";
 import { CategorizedEntityProcessor } from "./CategorizedEntityProcessor";
-import { AssetRecord, EntityProcessorOptions } from "./EntityProcessor";
+import { EntityProcessorOptions } from "./EntityProcessor";
+import type {
+    CategorySets,
+    EntityMapByApplication,
+    WorkflowEntityConfig,
+    WorkflowEntityData,
+} from "./types";
 
-export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntityProcessor {
+export abstract class BaseWorkflowSubworkflowProcessor<
+    T extends object = object,
+> extends CategorizedEntityProcessor {
     protected applications: string[] = [];
 
-    public entityMapByApplication: Record<string, any>;
+    public entityMapByApplication: EntityMapByApplication<T>;
 
-    public entityConfigs: object[];
+    public entityConfigs: WorkflowEntityConfig[];
 
     constructor(options: EntityProcessorOptions) {
         super(options);
         this.entityMapByApplication = {};
         this.entityConfigs = [];
-        this.applications = this.getApplicationSListFromYAML();
+        this.applications = this.getApplicationsListFromYAML();
     }
 
-    protected getApplicationSListFromYAML(): string[] {
+    private getApplicationsListFromYAML(): string[] {
         const appsPath = `${BUILD_CONFIG.applications.assets.path}/applications/application_data.yml`;
         const resolvedAppsPath = path.resolve(__dirname, "../../", appsPath);
-        const appsYAML: any = readYAMLFileResolved(resolvedAppsPath);
+        const appsYAML = readYAMLFileResolved(resolvedAppsPath);
+
         return Object.keys(appsYAML);
     }
 
@@ -38,46 +43,58 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
             includeUnits: true,
             includeTags: true,
             includeEntitiesMap: true,
-        };
+        } as const;
     }
 
     public addCategoriesFromObject(
-        obj: any,
+        obj: Record<string, unknown>,
         categoryKeys: string[],
         includeTags: boolean,
-        categorySets: Record<string, Set<string>>,
+        categorySets: CategorySets,
     ): void {
         categoryKeys.forEach((key) => {
-            let value = (obj as any)[key];
-            if (key === "application" && value && typeof value === "object" && value.name) {
-                value = value.name;
+            let value = obj[key];
+            if (
+                key === "application" &&
+                value &&
+                typeof value === "object" &&
+                value !== null &&
+                "name" in value
+            ) {
+                value = (value as { name: string }).name;
             }
             if (Array.isArray(value)) {
-                value.forEach((v: string) => {
-                    if (typeof v === "string" && v) (categorySets as any)[key].add(v);
+                value.forEach((v: unknown) => {
+                    if (typeof v === "string" && v) categorySets[key].add(v);
                 });
             } else if (typeof value === "string" && value) {
-                (categorySets as any)[key].add(value);
+                categorySets[key].add(value);
             }
         });
         if (includeTags && Array.isArray(obj?.tags)) {
-            obj.tags.forEach((t: string) => (categorySets as any).tags.add(t));
+            (obj.tags as string[]).forEach((t) => categorySets.tags.add(t));
         }
     }
 
     public addCategoriesToSet(
-        obj: any,
+        obj: Record<string, unknown>,
         categoryKeys: string[],
         includeTags: boolean,
         target: Set<string>,
     ): void {
         categoryKeys.forEach((key) => {
-            let value = (obj as any)[key];
-            if (key === "application" && value && typeof value === "object" && value.name) {
-                value = value.name;
+            let value = obj[key];
+            if (
+                key === "application" &&
+                value &&
+                typeof value === "object" &&
+                value !== null &&
+                "name" in value
+            ) {
+                value = (value as { name: string }).name;
             }
             if (Array.isArray(value)) {
-                value.forEach((v: string) => {
+                value.forEach((v: unknown) => {
                     if (typeof v === "string" && v) target.add(v);
                 });
             } else if (typeof value === "string" && value) {
@@ -85,14 +102,14 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
             }
         });
         if (includeTags && Array.isArray(obj?.tags)) {
-            obj.tags.forEach((t: string) => target.add(t));
+            (obj.tags as string[]).forEach((t) => target.add(t));
         }
     }
 
     public setEntityMapByApplication() {
         this.applications.forEach((name) => {
             const pathForName = `${this.resolvedPaths.assetsDir}/${name}`;
-            this.entityMapByApplication[name] = loadYAMLFilesAsMap(pathForName);
+            this.entityMapByApplication[name] = loadYAMLFilesAsMap<T>(pathForName);
         });
     }
 
@@ -101,68 +118,36 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
     }
 
     protected buildConfigFromEntityData(
-        entityData: any,
-        entityKey: string,
+        entityData: WorkflowEntityData<T>,
+        entityName: string,
         appName: string,
-        entity: any,
-    ): { appName: string; safeName: string; config: any; tags?: any[] } {
-        const entityName = entity.prop ? entity.prop("name") : entityKey;
-        const pathInSource = entityData?.__path__;
+        entity: object,
+    ): WorkflowEntityConfig {
+        const pathInSource = entityData.__path__;
         const safeName = this.getSafeNameFromPath(pathInSource, entityName);
         const tags = entityData?.tags;
-        const hasTags = tags && Array.isArray(tags) && tags.length > 0;
+        const hasTags = Array.isArray(tags) && tags.length > 0;
+
         return {
             appName,
             safeName,
-            config: entity.toJSON(),
+            config: entity,
             ...(hasTags ? { tags } : {}),
         };
     }
 
-    protected abstract buildEntityConfigs(): object[];
+    protected abstract buildEntityConfigs(): WorkflowEntityConfig[];
 
-    public readAssets(): AssetRecord[] {
+    public readAssets() {
         this.setEntityMapByApplication();
         // read assets to be able to run buildEntityConfigs
         super.readAssets();
         this.entityConfigs = this.buildEntityConfigs();
-        return this.assets;
-    }
-
-    protected enablePredefinedIds(): void {
-        const WorkflowCls = Workflow as any;
-        WorkflowCls.usePredefinedIds = true;
-
-        const SubworkflowCls = Subworkflow as any;
-        SubworkflowCls.usePredefinedIds = true;
-
-        this.enablePredefinedIdsForBuilders();
-        this.enablePredefinedIdsForUnits();
-    }
-
-    private enablePredefinedIdsForBuilders(): void {
-        (builders as any).UnitConfigBuilder.usePredefinedIds = true;
-        (builders as any).AssignmentUnitConfigBuilder.usePredefinedIds = true;
-        (builders as any).AssertionUnitConfigBuilder.usePredefinedIds = true;
-        (builders as any).ExecutionUnitConfigBuilder.usePredefinedIds = true;
-        (builders as any).IOUnitConfigBuilder.usePredefinedIds = true;
-    }
-
-    private enablePredefinedIdsForUnits(): void {
-        (UnitFactory as any).BaseUnit.usePredefinedIds = true;
-        (UnitFactory as any).AssignmentUnit.usePredefinedIds = true;
-        (UnitFactory as any).AssertionUnit.usePredefinedIds = true;
-        (UnitFactory as any).ExecutionUnit.usePredefinedIds = true;
-        (UnitFactory as any).IOUnit.usePredefinedIds = true;
-        (UnitFactory as any).SubworkflowUnit.usePredefinedIds = true;
-        (UnitFactory as any).ConditionUnit.usePredefinedIds = true;
-        (UnitFactory as any).MapUnit.usePredefinedIds = true;
-        (UnitFactory as any).ProcessingUnit.usePredefinedIds = true;
     }
 
     private writeEntityConfigs(dirPath: string, minified = true): void {
-        this.entityConfigs.forEach((entityConfig: any) => {
-            const entityName = (entityConfig as any).safeName;
+        this.entityConfigs.forEach((entityConfig) => {
+            const entityName = entityConfig.safeName;
             const targetPath = `${dirPath}/${entityConfig.appName}/${entityName}.json`;
             const dataToWrite = {
                 ...entityConfig.config,

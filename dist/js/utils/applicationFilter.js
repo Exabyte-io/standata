@@ -5,7 +5,7 @@ var FilterMode;
 (function (FilterMode) {
     FilterMode["ANY_MATCH"] = "ANY";
     FilterMode["ALL_MATCH"] = "ALL";
-})(FilterMode || (exports.FilterMode = FilterMode = {}));
+})(FilterMode = exports.FilterMode || (exports.FilterMode = {}));
 function safelyGet(obj, ...args) {
     let current = obj;
     // We use for instead of forEach to allow early return on undefined
