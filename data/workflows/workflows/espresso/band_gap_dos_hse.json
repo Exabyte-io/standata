@@ -155,7 +155,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "3c8ffaf7-d01d-57e3-a0ae-118b3ecfc651"
+                    "next": "3c8ffaf7-d01d-57e3-a0ae-118b3ecfc651",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -223,9 +225,12 @@
                             "rendered": "&PROJWFC\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    degauss = 0.01\n    deltaE = 0.05\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         }
     ],
     "units": [
@@ -237,7 +242,9 @@
             "statusTrack": [],
             "flowchartId": "f7a0860d-6f9e-59e3-b600-07bbf986998a",
             "tags": [],
-            "head": true
+            "head": true,
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [

@@ -150,7 +150,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "d618df45-5af3-5da5-8882-d74a27e00b04"
+                    "next": "d618df45-5af3-5da5-8882-d74a27e00b04",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -235,7 +237,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2"
+                    "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -296,9 +300,12 @@
                             "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         }
     ],
     "units": [
@@ -310,7 +317,9 @@
             "statusTrack": [],
             "flowchartId": "c573187f-a8bb-5084-9fcf-1560bf4a7786",
             "tags": [],
-            "head": true
+            "head": true,
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [

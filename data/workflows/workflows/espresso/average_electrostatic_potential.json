@@ -150,7 +150,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "9ed927b1-3d84-5730-a6a8-1b1cfba39bde"
+                    "next": "9ed927b1-3d84-5730-a6a8-1b1cfba39bde",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -213,7 +215,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "average-electrostatic-potential"
+                    "next": "average-electrostatic-potential",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -281,9 +285,12 @@
                             "rendered": "1\npp.dat\n1.0\n3000\n3\n3.0000\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         }
     ],
     "units": [
@@ -295,7 +302,9 @@
             "statusTrack": [],
             "flowchartId": "88861e21-1e6d-557d-b080-eafe3511872f",
             "tags": [],
-            "head": true
+            "head": true,
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [

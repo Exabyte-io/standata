@@ -1,4 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { validateAndClean } from "@mat3ra/esse/dist/js/utils/ajv";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Utils } from "@mat3ra/utils";
 // eslint-disable-next-line import/no-extraneous-dependencies
 // @ts-ignore
@@ -11,6 +13,10 @@ import { BUILD_CONFIG } from "../../build-config";
 import { loadYAMLFilesAsMap, readYAMLFileResolved } from "../utils";
 import { CategorizedEntityProcessor } from "./CategorizedEntityProcessor";
 import { AssetRecord, EntityProcessorOptions } from "./EntityProcessor";
+
+function loadWorkflowSchema(): any {
+    return require("@mat3ra/esse/dist/js/schema/workflow.json");
+}
 
 export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntityProcessor {
     protected applications: string[] = [];
@@ -194,7 +200,12 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
         (UnitFactory as any).ProcessingUnit.usePredefinedIds = true;
     }
 
+    private getWorkflowSchema(): any | null {
+        return this.options.entityNamePlural === "workflows" ? loadWorkflowSchema() : null;
+    }
+
     private writeEntityConfigs(dirPath: string, minified = true): void {
+        const schema = this.getWorkflowSchema();
         this.entityConfigs.forEach((entityConfig: any) => {
             const entityName = (entityConfig as any).safeName;
             const targetPath = `${dirPath}/${entityConfig.appName}/${entityName}.json`;
@@ -203,6 +214,13 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
                 ...(entityConfig.tags ? { tags: entityConfig.tags } : {}),
                 ...(entityConfig.appName ? { application: { name: entityConfig.appName } } : {}),
             };
+            if (schema) {
+                const result = validateAndClean(dataToWrite, schema, { coerceTypes: false });
+                if (!result.isValid && result.errors?.length) {
+                    const errMsg = result.errors.map((e: any) => `${e.instancePath ?? ""} ${e.message}`).join("; ");
+                    throw new Error(`workflows validation failed for ${entityConfig.appName}/${entityName}: ${errMsg}`);
+                }
+            }
             const spaces = minified
                 ? BUILD_CONFIG.buildJSONFormat.spaces
                 : BUILD_CONFIG.dataJSONFormat.spaces;

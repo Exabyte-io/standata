@@ -149,7 +149,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "e1a6e1e9-7994-5cd0-98d7-ae8909a10061"
+                    "next": "e1a6e1e9-7994-5cd0-98d7-ae8909a10061",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -211,9 +213,12 @@
                             "rendered": "&INPUTPP\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    filplot = 'pp.dat'\n    plot_num = 0\n/\n&PLOT\n    iflag = 3\n    output_format = 5\n    fileout ='density.xsf'\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         }
     ],
     "units": [
@@ -225,7 +230,9 @@
             "statusTrack": [],
             "flowchartId": "79e421a1-18aa-5c27-b8a8-9a769c1a89a0",
             "tags": [],
-            "head": true
+            "head": true,
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [

@@ -148,9 +148,12 @@
                             "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         },
         {
             "_id": "a2785cc5-2427-5c7a-b30f-7077475b948c",
@@ -246,9 +249,12 @@
                             "rendered": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Example Python package requirements for the Mat3ra platform       #\n#                                                                    #\n#  Will be used as follows:                                          #\n#                                                                    #\n#    1. A runtime directory for this calculation is created          #\n#    2. This list is used to populate a Python virtual environment   #\n#    3. The virtual environment is activated                         #\n#    4. The Python process running the script included within this   #\n#       job is started                                               #\n#                                                                    #\n#  For more information visit:                                       #\n#   - https://pip.pypa.io/en/stable/reference/pip_install            #\n#   - https://virtualenv.pypa.io/en/stable/                          #\n#                                                                    #\n#  Please add any packages required for this unit below following    #\n#  the requirements.txt specification:                               #\n#  https://pip.pypa.io/en/stable/reference/requirements-file-format/ #\n# ------------------------------------------------------------------ #\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         },
         {
             "_id": "e47ca302-96f2-5726-9b4c-f34cdfaa7f72",
@@ -401,7 +407,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2"
+                    "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -462,9 +470,12 @@
                             "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         }
     ],
     "units": [
@@ -477,7 +488,9 @@
             "flowchartId": "b6a2b27a-0fec-5e0e-8974-073ee9d2ad83",
             "tags": [],
             "head": true,
-            "next": "65789b0a-cfe2-5062-a53e-89f71112fb57"
+            "next": "65789b0a-cfe2-5062-a53e-89f71112fb57",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Extract KPOINTS",
@@ -488,7 +501,9 @@
             "flowchartId": "65789b0a-cfe2-5062-a53e-89f71112fb57",
             "tags": [],
             "head": false,
-            "next": "8f4c63a3-a06a-5f73-88d7-a57d7958b91d"
+            "next": "8f4c63a3-a06a-5f73-88d7-a57d7958b91d",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Main HSE Run",
@@ -498,7 +513,9 @@
             "statusTrack": [],
             "flowchartId": "8f4c63a3-a06a-5f73-88d7-a57d7958b91d",
             "tags": [],
-            "head": false
+            "head": false,
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [

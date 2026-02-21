@@ -74,7 +74,9 @@
                     },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "slab",
@@ -106,7 +108,9 @@
                     },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "io-bulk",
@@ -144,7 +148,9 @@
                     },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "bulk",
@@ -176,7 +182,9 @@
                     },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assert-bulk",
@@ -202,7 +210,9 @@
                     },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "io-e-bulk",
@@ -240,7 +250,9 @@
                     },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "e-bulk",
@@ -272,7 +284,9 @@
                     },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assert-e-bulk",
@@ -298,7 +312,9 @@
                     },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "surface",
@@ -325,7 +341,9 @@
                     },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "n-bulk",
@@ -352,7 +370,9 @@
                     },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "n-slab",
@@ -379,7 +399,9 @@
                     },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -523,7 +545,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "fcd88119-817c-5ac1-a430-ba892ac743eb"
+                    "next": "fcd88119-817c-5ac1-a430-ba892ac743eb",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "e-slab",
@@ -555,7 +579,9 @@
                     },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "surface-energy",
@@ -585,9 +611,12 @@
                     },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         }
     ],
     "units": [
@@ -599,7 +628,9 @@
             "statusTrack": [],
             "flowchartId": "d81dc9ce-bb50-5bc6-af1d-e5ede03bb0a6",
             "tags": [],
-            "head": true
+            "head": true,
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [

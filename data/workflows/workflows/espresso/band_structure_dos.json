@@ -153,7 +153,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "d618df45-5af3-5da5-8882-d74a27e00b04"
+                    "next": "d618df45-5af3-5da5-8882-d74a27e00b04",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -238,7 +240,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2"
+                    "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -300,7 +304,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "7b4c726e-3c46-501a-9a3a-ca19e06de5f0"
+                    "next": "7b4c726e-3c46-501a-9a3a-ca19e06de5f0",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -389,7 +395,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "3c8ffaf7-d01d-57e3-a0ae-118b3ecfc651"
+                    "next": "3c8ffaf7-d01d-57e3-a0ae-118b3ecfc651",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -457,9 +465,12 @@
                             "rendered": "&PROJWFC\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    degauss = 0.01\n    deltaE = 0.05\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         }
     ],
     "units": [
@@ -471,7 +482,9 @@
             "statusTrack": [],
             "flowchartId": "8a098bb9-73b1-5e84-bfc7-b783e02d0f53",
             "tags": [],
-            "head": true
+            "head": true,
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [

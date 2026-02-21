@@ -62,7 +62,9 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -175,7 +177,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "pw-bands-calculate-band-gap"
+                    "next": "pw-bands-calculate-band-gap",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -260,7 +264,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "a667d9fd-35d5-5897-be0e-fa0247233649"
+                    "next": "a667d9fd-35d5-5897-be0e-fa0247233649",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Select indirect band gap",
@@ -288,7 +294,9 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Valence Band Maximum",
@@ -311,7 +319,9 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -373,7 +383,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "9ed927b1-3d84-5730-a6a8-1b1cfba39bde"
+                    "next": "9ed927b1-3d84-5730-a6a8-1b1cfba39bde",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -436,7 +448,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "average-electrostatic-potential"
+                    "next": "average-electrostatic-potential",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -505,7 +519,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "c6c11873-91d7-5422-8302-3dcc1ce971e9"
+                    "next": "c6c11873-91d7-5422-8302-3dcc1ce971e9",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Macroscopically Averaged ESP Data",
@@ -532,9 +548,12 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         },
         {
             "_id": "ce26adc1-6a26-53ef-9626-5eb6a6b9ccb7",
@@ -632,7 +651,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d"
+                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Average ESP Value",
@@ -658,9 +679,12 @@
                         "isDefault": true,
                         "version": "3.10.13",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         },
         {
             "isMultiMaterial": true,
@@ -723,7 +747,9 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -836,7 +862,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "pw-bands-calculate-band-gap-left"
+                    "next": "pw-bands-calculate-band-gap-left",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -921,7 +949,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "a667d9fd-35d5-5897-be0e-fa0247233649"
+                    "next": "a667d9fd-35d5-5897-be0e-fa0247233649",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Select indirect band gap",
@@ -949,7 +979,9 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Valence Band Maximum",
@@ -972,7 +1004,9 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1034,7 +1068,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "b1bb2b3e-3197-5bcd-85b0-959cc357c8d3"
+                    "next": "b1bb2b3e-3197-5bcd-85b0-959cc357c8d3",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1097,7 +1133,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "average-electrostatic-potential-left"
+                    "next": "average-electrostatic-potential-left",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1166,7 +1204,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "c6c11873-91d7-5422-8302-3dcc1ce971e9"
+                    "next": "c6c11873-91d7-5422-8302-3dcc1ce971e9",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Macroscopically Averaged ESP Data",
@@ -1193,9 +1233,12 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         },
         {
             "_id": "6c303926-905c-5749-81d5-2d2964fdf09a",
@@ -1293,7 +1336,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d"
+                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Average ESP Value",
@@ -1319,9 +1364,12 @@
                         "isDefault": true,
                         "version": "3.10.13",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         },
         {
             "isMultiMaterial": true,
@@ -1384,7 +1432,9 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1497,7 +1547,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "pw-bands-calculate-band-gap-right"
+                    "next": "pw-bands-calculate-band-gap-right",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1582,7 +1634,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "a667d9fd-35d5-5897-be0e-fa0247233649"
+                    "next": "a667d9fd-35d5-5897-be0e-fa0247233649",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Select indirect band gap",
@@ -1610,7 +1664,9 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Valence Band Maximum",
@@ -1633,7 +1689,9 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1695,7 +1753,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "28bb682d-d287-5beb-8a67-826449c474ee"
+                    "next": "28bb682d-d287-5beb-8a67-826449c474ee",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1758,7 +1818,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "average-electrostatic-potential-right"
+                    "next": "average-electrostatic-potential-right",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1827,7 +1889,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "c6c11873-91d7-5422-8302-3dcc1ce971e9"
+                    "next": "c6c11873-91d7-5422-8302-3dcc1ce971e9",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Macroscopically Averaged ESP Data",
@@ -1854,9 +1918,12 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         },
         {
             "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
@@ -1954,7 +2021,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d"
+                    "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Set Average ESP Value",
@@ -1980,9 +2049,12 @@
                         "isDefault": true,
                         "version": "3.10.13",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         },
         {
             "_id": "1b70e606-a7ee-599e-89e0-91a7dc5faa4a",
@@ -2029,7 +2101,9 @@
                         "isDefault": true,
                         "version": "3.10.13",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Difference of macroscopically averaged ESP in bulk",
@@ -2051,7 +2125,9 @@
                         "isDefault": true,
                         "version": "3.10.13",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Lineup of macroscopically averaged ESP in interface",
@@ -2073,7 +2149,9 @@
                         "isDefault": true,
                         "version": "3.10.13",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Valence Band Offset",
@@ -2099,9 +2177,12 @@
                         "isDefault": true,
                         "version": "3.10.13",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         }
     ],
     "units": [
@@ -2114,7 +2195,9 @@
             "flowchartId": "fd622b5c-5c02-594e-b582-b245c17ca9a4",
             "tags": [],
             "head": true,
-            "next": "ad3b1e4c-5965-5605-a067-dd0c59907c4b"
+            "next": "ad3b1e4c-5965-5605-a067-dd0c59907c4b",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Find ESP Values (Interface)",
@@ -2125,7 +2208,9 @@
             "flowchartId": "ad3b1e4c-5965-5605-a067-dd0c59907c4b",
             "tags": [],
             "head": false,
-            "next": "8d5b4734-edfd-55cc-ad80-aaa72487398d"
+            "next": "8d5b4734-edfd-55cc-ad80-aaa72487398d",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "BS + Avg ESP (interface left)",
@@ -2136,7 +2221,9 @@
             "flowchartId": "8d5b4734-edfd-55cc-ad80-aaa72487398d",
             "tags": [],
             "head": false,
-            "next": "102ec582-5b75-52f5-8b39-19ca725ed47a"
+            "next": "102ec582-5b75-52f5-8b39-19ca725ed47a",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Find ESP Value (Interface left)",
@@ -2147,7 +2234,9 @@
             "flowchartId": "102ec582-5b75-52f5-8b39-19ca725ed47a",
             "tags": [],
             "head": false,
-            "next": "603c45db-93aa-54ce-a7fe-6e9b65b0037d"
+            "next": "603c45db-93aa-54ce-a7fe-6e9b65b0037d",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "BS + Avg ESP (interface right)",
@@ -2158,7 +2247,9 @@
             "flowchartId": "603c45db-93aa-54ce-a7fe-6e9b65b0037d",
             "tags": [],
             "head": false,
-            "next": "e3444d35-cc41-59f5-8481-78d0c383b84e"
+            "next": "e3444d35-cc41-59f5-8481-78d0c383b84e",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Find ESP Value (Interface right)",
@@ -2169,7 +2260,9 @@
             "flowchartId": "e3444d35-cc41-59f5-8481-78d0c383b84e",
             "tags": [],
             "head": false,
-            "next": "0e0b141a-39ca-52bc-9094-e5f96dc72f39"
+            "next": "0e0b141a-39ca-52bc-9094-e5f96dc72f39",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Calculate VBO",
@@ -2179,7 +2272,9 @@
             "statusTrack": [],
             "flowchartId": "0e0b141a-39ca-52bc-9094-e5f96dc72f39",
             "tags": [],
-            "head": false
+            "head": false,
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [

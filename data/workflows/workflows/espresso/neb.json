@@ -117,9 +117,12 @@
                             "rendered": "BEGIN\nBEGIN_PATH_INPUT\n&PATH\n  restart_mode      = 'from_scratch'\n  string_method     = 'neb',\n  nstep_path        = 50,\n  ds                = 2.D0,\n  opt_scheme        = \"broyden\",\n  num_of_images     = 3,\n  k_max             = 0.3D0,\n  k_min             = 0.2D0,\n  CI_scheme         = \"auto\",\n  path_thr          = 0.1D0,\n/\nEND_PATH_INPUT\nBEGIN_ENGINE_INPUT\n&CONTROL\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.03\n    nspin = 2\n    starting_magnetization = 0.5\n/\n&ELECTRONS\n    conv_thr    = 1.D-8\n    mixing_beta = 0.3\n/\nATOMIC_SPECIES\nSi 28.0855 \nBEGIN_POSITIONS\nFIRST_IMAGE\nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nLAST_IMAGE\nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nEND_POSITIONS\nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \nEND_ENGINE_INPUT\nEND\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         }
     ],
     "units": [
@@ -131,7 +134,9 @@
             "statusTrack": [],
             "flowchartId": "134c70e2-aeaf-543d-aded-1585cd71b800",
             "tags": [],
-            "head": true
+            "head": true,
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [

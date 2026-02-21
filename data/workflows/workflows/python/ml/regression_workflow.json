@@ -46,7 +46,9 @@
                         "isDefault": true,
                         "version": "3.10.13",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Fetch Dataset",
@@ -79,7 +81,9 @@
                         "isDefault": true,
                         "version": "3.10.13",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Train or Predict?",
@@ -111,7 +115,9 @@
                         "isDefault": true,
                         "version": "3.10.13",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Fetch Trained Model as file",
@@ -146,7 +152,9 @@
                         "isDefault": true,
                         "version": "3.10.13",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "End Setup",
@@ -167,9 +175,12 @@
                         "isDefault": true,
                         "version": "3.10.13",
                         "schemaVersion": "2022.8.16"
-                    }
+                    },
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         },
         {
             "_id": "30acc5cd-54e6-5f05-aafd-413ee8a69aa1",
@@ -275,7 +286,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "cb69ea2a-7efc-56b4-8bbe-0de1e70c49e3"
+                    "next": "cb69ea2a-7efc-56b4-8bbe-0de1e70c49e3",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -350,7 +363,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "7fff5212-6c6d-586b-9997-4d4485e09383"
+                    "next": "7fff5212-6c6d-586b-9997-4d4485e09383",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -429,7 +444,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "799de7dc-9394-571b-8e0d-3ff876a3df02"
+                    "next": "799de7dc-9394-571b-8e0d-3ff876a3df02",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -504,7 +521,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "8dfc61c3-067d-5ea8-bd26-7296628d707a"
+                    "next": "8dfc61c3-067d-5ea8-bd26-7296628d707a",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -589,7 +608,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "1ca76a49-a3c7-5fa2-b693-538b599ecd7c"
+                    "next": "1ca76a49-a3c7-5fa2-b693-538b599ecd7c",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -597,8 +618,6 @@
                     "head": false,
                     "results": [
                         {
-                            "basename": "my_parity_plot.png",
-                            "filetype": "image",
                             "name": "file_content"
                         }
                     ],
@@ -678,9 +697,12 @@
                             "rendered": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\nmatplotlib\nnumpy\nscikit-learn\nxgboost\npandas\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         }
     ],
     "units": [
@@ -693,7 +715,9 @@
             "flowchartId": "5b51df93-15dd-5440-90fd-a3ffa264b7d8",
             "tags": [],
             "head": true,
-            "next": "90738aae-daac-599f-913f-29fb6acdff00"
+            "next": "90738aae-daac-599f-913f-29fb6acdff00",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Machine Learning",
@@ -703,7 +727,9 @@
             "statusTrack": [],
             "flowchartId": "90738aae-daac-599f-913f-29fb6acdff00",
             "tags": [],
-            "head": false
+            "head": false,
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [],

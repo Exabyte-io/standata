@@ -150,7 +150,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "107595d1-490f-53a2-8432-7f8a12f14d96"
+                    "next": "107595d1-490f-53a2-8432-7f8a12f14d96",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -218,9 +220,12 @@
                             "rendered": "&INPUTPH\n    tr2_ph = 1.0d-12\n    asr = .true.\n    search_sym = .false.\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n/\n0 0 0\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         }
     ],
     "units": [
@@ -232,7 +237,9 @@
             "statusTrack": [],
             "flowchartId": "d906bd20-eb92-5a01-a0e2-c81a2d9b2a41",
             "tags": [],
-            "head": true
+            "head": true,
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [

@@ -153,7 +153,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "ea06c333-0cc7-51d4-bd98-cc53fa0844d1"
+                    "next": "ea06c333-0cc7-51d4-bd98-cc53fa0844d1",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -241,7 +243,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "a8e4de4b-1f55-50e8-a712-ce0b37c04752"
+                    "next": "a8e4de4b-1f55-50e8-a712-ce0b37c04752",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -303,7 +307,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "fd937050-a3f3-5d4d-bb50-d150a93ea5e0"
+                    "next": "fd937050-a3f3-5d4d-bb50-d150a93ea5e0",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -364,9 +370,12 @@
                             "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands_dn.dat'\n    spin_component = 2\n    no_overlap = .true.\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         }
     ],
     "units": [
@@ -378,7 +387,9 @@
             "statusTrack": [],
             "flowchartId": "41e70bc1-ba00-5871-9289-4d57c7b79452",
             "tags": [],
-            "head": true
+            "head": true,
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [

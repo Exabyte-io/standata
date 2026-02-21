@@ -195,7 +195,9 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "e65a17ce-10c8-5710-ad4d-fb3d42434091"
+                    "next": "e65a17ce-10c8-5710-ad4d-fb3d42434091",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -345,9 +347,12 @@
                             "rendered": "Silicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         },
         {
             "isMultiMaterial": true,
@@ -435,9 +440,12 @@
                             "rendered": "#!/bin/bash\n\n# ------------------------------------------------------------------ #\n#  This script prepares necessary directories to run VASP NEB\n#  calculation. It puts initial POSCAR into directory 00, final into 0N\n#  and intermediate images in 01 to 0(N-1). It is assumed that SCF\n#  calculations for initial and final structures are already done in\n#  previous subworkflows and their standard outputs are written into\n#  \"vasp_neb_initial.out\" and \"vasp_neb_final.out\" files respectively.\n#  These outputs are here copied into initial (00) and final (0N)\n#  directories to calculate the reaction energy profile.\n# ------------------------------------------------------------------ #\n\n\ncd {{ JOB_WORK_DIR }}\n\n\n# Prepare First Directory\nmkdir -p 00\ncat > 00/POSCAR <<EOF\nSilicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\nEOF\ncp vasp_neb_initial.out 00/stdout\ncp CONTCAR 00/CONTCAR\n\n# Prepare Last Directory\nmkdir -p 01\ncat > 01/POSCAR <<EOF\nSilicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\nEOF\ncp CONTCAR 01/CONTCAR\ncp vasp_neb_final.out 01/stdout\n\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         },
         {
             "isMultiMaterial": true,
@@ -577,9 +585,12 @@
                             "rendered": "Automatic mesh\n0\nGamma\n  2 2 2 \n  0 0 0 \n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "isDraft": false
         }
     ],
     "units": [
@@ -592,7 +603,9 @@
             "flowchartId": "427b4671-7c37-50f7-82c8-4d781b846fd8",
             "tags": [],
             "head": true,
-            "next": "8dd252f2-99c2-50c6-8a81-fa5881141985"
+            "next": "8dd252f2-99c2-50c6-8a81-fa5881141985",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Prepare Directories",
@@ -603,7 +616,9 @@
             "flowchartId": "8dd252f2-99c2-50c6-8a81-fa5881141985",
             "tags": [],
             "head": false,
-            "next": "134c70e2-aeaf-543d-aded-1585cd71b800"
+            "next": "134c70e2-aeaf-543d-aded-1585cd71b800",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Nudged Elastic Band (NEB)",
@@ -613,7 +628,9 @@
             "statusTrack": [],
             "flowchartId": "134c70e2-aeaf-543d-aded-1585cd71b800",
             "tags": [],
-            "head": false
+            "head": false,
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [
