@@ -35,7 +35,7 @@
         "@mat3ra/utils": "^2025.12.2-0",
         "@mat3ra/code": "^2025.8.7-0",
         "@mat3ra/tsconfig": "^2024.6.3-0",
-        "@mat3ra/esse": "git+https://github.com/Exabyte-io/esse.git#e616a5b762fb067a0144807dded69bd387ecd2e5",
+        "@mat3ra/esse": "git+https://github.com/Exabyte-io/esse.git#124fc66d92d6b44d03670c1bf27d0d9d2d4e8096",
         "@mat3ra/standata": "file:./",
         "@types/chai": "^4.3.5",
         "@types/js-yaml": "^4.0.5",

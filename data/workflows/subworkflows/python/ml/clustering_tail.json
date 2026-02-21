@@ -37,7 +37,8 @@
                 "summary": "Python Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "3.10.13"
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
             },
             "executable": {
                 "isDefault": true,
@@ -116,7 +117,8 @@
                 "summary": "Python Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "3.10.13"
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
             },
             "executable": {
                 "isDefault": true,
@@ -190,7 +192,8 @@
                 "summary": "Python Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "3.10.13"
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
             },
             "executable": {
                 "isDefault": true,
@@ -268,7 +271,8 @@
                 "summary": "Python Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "3.10.13"
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
             },
             "executable": {
                 "isDefault": true,
@@ -346,7 +350,8 @@
                 "summary": "Python Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "3.10.13"
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
             },
             "executable": {
                 "isDefault": true,
@@ -446,7 +451,8 @@
                 "summary": "Python Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "3.10.13"
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
             },
             "executable": {
                 "isDefault": true,

@@ -11,7 +11,8 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3"
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
             },
             "properties": [
                 "atomic_forces",
@@ -82,7 +83,8 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3"
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
                     },
                     "executable": {
                         "hasAdvancedComputeOptions": true,
@@ -162,7 +164,8 @@
                 "summary": "Python Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "3.10.13"
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
             },
             "properties": [],
             "model": {
@@ -194,7 +197,8 @@
                         "summary": "Python Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "3.10.13"
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
                     },
                     "executable": {
                         "isDefault": true,
@@ -262,7 +266,8 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3"
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
             },
             "properties": [
                 "total_energy",
@@ -333,7 +338,8 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3"
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
                     },
                     "executable": {
                         "hasAdvancedComputeOptions": true,
@@ -425,7 +431,8 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3"
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
                     },
                     "executable": {
                         "monitors": [

@@ -11,7 +11,8 @@
                 "summary": "Vienna Ab-initio Simulation Package",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "5.4.4"
+                "version": "5.4.4",
+                "schemaVersion": "2022.8.16"
             },
             "properties": [
                 "total_energy",
@@ -68,7 +69,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -101,7 +103,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -140,7 +143,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -173,7 +177,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -200,7 +205,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -239,7 +245,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -272,7 +279,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -299,7 +307,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -327,7 +336,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -355,7 +365,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -383,7 +394,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -436,7 +448,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "executable": {
                         "isDefault": true,
@@ -561,7 +574,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -592,7 +606,8 @@
                         "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4"
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
                     },
                     "status": "idle",
                     "statusTrack": [],

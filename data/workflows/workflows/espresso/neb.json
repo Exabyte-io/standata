@@ -12,7 +12,8 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3"
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
             },
             "properties": [
                 "reaction_energy_barrier",
@@ -60,7 +61,8 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3"
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
                     },
                     "executable": {
                         "monitors": [
