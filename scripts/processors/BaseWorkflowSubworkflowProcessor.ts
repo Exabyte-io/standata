@@ -106,40 +106,6 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
         return pathInSource || Utils.str.createSafeFilename(fallbackName);
     }
 
-    protected static readonly APPLICATION_FILTER_KEYS = [
-        "module_name",
-        "image_name",
-        "image_tag",
-        "bio",
-        "dependencies",
-        "environment_variables",
-    ];
-
-    /** Removes application filter keys from config.config.application, units[].application, and subworkflows[].application (and their units). */
-    protected removeApplicationFilterKeysFromConfig(config: { config: any }): void {
-        const removeFrom = (appObj: any) => {
-            if (appObj && typeof appObj === "object") {
-                BaseWorkflowSubworkflowProcessor.APPLICATION_FILTER_KEYS.forEach((key) =>
-                    delete appObj[key],
-                );
-            }
-        };
-        const cleanUnits = (units: any[]) => {
-            if (Array.isArray(units)) {
-                units.forEach((unit: any) => removeFrom(unit?.application));
-            }
-        };
-        removeFrom(config.config?.application);
-        cleanUnits(config.config?.units);
-        const subworkflows = config.config?.subworkflows;
-        if (Array.isArray(subworkflows)) {
-            subworkflows.forEach((swf: any) => {
-                removeFrom(swf?.application);
-                cleanUnits(swf?.units);
-            });
-        }
-    }
-
     protected buildConfigFromEntityData(
         entityData: any,
         entityKey: string,

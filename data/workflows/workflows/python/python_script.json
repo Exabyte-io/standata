@@ -10,8 +10,7 @@
                 "summary": "Python Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "3.10.13",
-                "schemaVersion": "2022.8.16"
+                "version": "3.10.13"
             },
             "properties": [],
             "model": {
@@ -43,8 +42,7 @@
                         "summary": "Python Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
+                        "version": "3.10.13"
                     },
                     "executable": {
                         "isDefault": true,

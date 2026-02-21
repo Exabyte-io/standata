@@ -34,8 +34,7 @@
                 "summary": "Shell Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
+                "version": "5.1.8"
             },
             "executable": {
                 "isDefault": true,

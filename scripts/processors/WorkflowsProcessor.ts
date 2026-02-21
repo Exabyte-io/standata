@@ -58,7 +58,6 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
                     appName,
                     workflow,
                 );
-                this.removeApplicationFilterKeysFromConfig(config);
                 configs.push(config);
             });
         });

@@ -49,8 +49,7 @@
                 "summary": "NWChem",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "7.0.2",
-                "schemaVersion": "2022.8.16"
+                "version": "7.0.2"
             },
             "executable": {
                 "hasAdvancedComputeOptions": false,

@@ -50,8 +50,7 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
+                "version": "6.3"
             }
         },
         {
@@ -99,8 +98,7 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
+                "version": "6.3"
             },
             "executable": {
                 "hasAdvancedComputeOptions": true,
@@ -191,8 +189,7 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
+                "version": "6.3"
             },
             "executable": {
                 "hasAdvancedComputeOptions": true,
@@ -276,8 +273,7 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
+                "version": "6.3"
             }
         },
         {
@@ -299,8 +295,7 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
+                "version": "6.3"
             }
         },
         {
@@ -323,8 +318,7 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
+                "version": "6.3"
             },
             "executable": {
                 "monitors": [
@@ -385,8 +379,7 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
+                "version": "6.3"
             },
             "executable": {
                 "monitors": [
@@ -452,8 +445,7 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
+                "version": "6.3"
             },
             "executable": {
                 "monitors": [
@@ -520,8 +512,7 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
+                "version": "6.3"
             }
         }
     ]

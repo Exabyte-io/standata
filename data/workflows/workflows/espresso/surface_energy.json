@@ -11,8 +11,7 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
+                "version": "6.3"
             },
             "properties": [
                 "atomic_forces",
@@ -69,8 +68,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -103,8 +101,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -143,8 +140,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -177,8 +173,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -205,8 +200,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -245,8 +239,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -279,8 +272,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -307,8 +299,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -336,8 +327,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -365,8 +355,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -394,8 +383,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -448,8 +436,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "executable": {
                         "hasAdvancedComputeOptions": true,
@@ -543,8 +530,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "status": "idle",
                     "statusTrack": [],
@@ -575,8 +561,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "status": "idle",
                     "statusTrack": [],

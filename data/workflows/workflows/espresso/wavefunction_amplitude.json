@@ -11,8 +11,7 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
+                "version": "6.3"
             },
             "properties": [
                 "atomic_forces",
@@ -88,8 +87,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "executable": {
                         "hasAdvancedComputeOptions": true,
@@ -182,8 +180,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
@@ -212,8 +209,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
@@ -237,8 +233,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
@@ -262,8 +257,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
@@ -292,8 +286,7 @@
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
+                        "version": "6.3"
                     },
                     "executable": {
                         "monitors": [
@@ -350,8 +343,7 @@
                 "summary": "Python Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "3.10.13",
-                "schemaVersion": "2022.8.16"
+                "version": "3.10.13"
             },
             "properties": [
                 "file_content"
@@ -389,8 +381,7 @@
                         "summary": "Python Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
+                        "version": "3.10.13"
                     },
                     "executable": {
                         "isDefault": true,
