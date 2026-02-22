@@ -597,6 +597,8 @@
                     "head": false,
                     "results": [
                         {
+                            "basename": "my_roc_plot.png",
+                            "filetype": "image",
                             "name": "file_content"
                         }
                     ],

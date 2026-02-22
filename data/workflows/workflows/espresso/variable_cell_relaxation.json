@@ -2,6 +2,7 @@
     "name": "Variable-cell Relaxation",
     "subworkflows": [
         {
+            "systemName": "espresso-variable-cell-relaxation",
             "_id": "58709c44-47f6-5fbf-bf2e-358b9d98f75d",
             "name": "Variable-cell Relaxation",
             "application": {
