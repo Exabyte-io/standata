@@ -152,9 +152,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "3b230ec3-0791-52f7-a4db-625390b8718f",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    "next": "3b230ec3-0791-52f7-a4db-625390b8718f"
                 },
                 {
                     "name": "Set No-Symmetry Flag",
@@ -177,9 +175,7 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 },
                 {
                     "type": "execution",
@@ -268,9 +264,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "8c2ec8bd-cdbf-54a0-a217-64a7a26eaebb",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    "next": "8c2ec8bd-cdbf-54a0-a217-64a7a26eaebb"
                 },
                 {
                     "type": "execution",
@@ -338,12 +332,9 @@
                             "rendered": "&inputpp\n    calculation = \"eps\"\n    prefix = \"__prefix__\"\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n/\n\n&energy_grid\n    smeartype = \"gauss\"\n    intersmear = 0.2\n    intrasmear = 0.0\n    wmin =  0.0\n    wmax = 30.0\n    nw = 500\n    shift = 0.0\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ],
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    ]
                 }
-            ],
-            "isDraft": false
+            ]
         }
     ],
     "units": [
@@ -355,9 +346,7 @@
             "statusTrack": [],
             "flowchartId": "8408f3c4-1c42-5ffe-bc29-bee11b5a6a05",
             "tags": [],
-            "head": true,
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
+            "head": true
         }
     ],
     "properties": [

@@ -109,12 +109,9 @@
                             "rendered": " start nwchem\n title \"Test\"\n charge 0\n geometry units au noautosym\n Si     0.000000000    0.000000000    0.000000000 \nSi     1.116306745    0.789348070    1.933500000 \n end\n basis\n   * library 6-31G\n end\n dft\n xc B3LYP\n mult 1\n end\n task dft energy\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ],
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    ]
                 }
-            ],
-            "isDraft": false
+            ]
         }
     ],
     "units": [
@@ -126,9 +123,7 @@
             "statusTrack": [],
             "flowchartId": "6059d61a-6a92-5657-9130-02208639aff8",
             "tags": [],
-            "head": true,
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
+            "head": true
         }
     ],
     "properties": [

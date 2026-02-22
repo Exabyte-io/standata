@@ -152,9 +152,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "7b4c726e-3c46-501a-9a3a-ca19e06de5f0",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    "next": "7b4c726e-3c46-501a-9a3a-ca19e06de5f0"
                 },
                 {
                     "type": "execution",
@@ -243,9 +241,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "3c8ffaf7-d01d-57e3-a0ae-118b3ecfc651",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    "next": "3c8ffaf7-d01d-57e3-a0ae-118b3ecfc651"
                 },
                 {
                     "type": "execution",
@@ -313,12 +309,9 @@
                             "rendered": "&PROJWFC\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    degauss = 0.01\n    deltaE = 0.05\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ],
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    ]
                 }
-            ],
-            "isDraft": false
+            ]
         }
     ],
     "units": [
@@ -330,9 +323,7 @@
             "statusTrack": [],
             "flowchartId": "3e64fdb4-ab5b-52a0-a1d5-51343c49481c",
             "tags": [],
-            "head": true,
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
+            "head": true
         }
     ],
     "properties": [

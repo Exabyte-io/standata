@@ -181,7 +181,7 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
                 ...(entityConfig.appName ? { application: { name: entityConfig.appName } } : {}),
             };
             if (schema) {
-                const result = validateAndClean(dataToWrite, schema, { coerceTypes: false });
+                const result = validateAndClean(dataToWrite, schema, { coerceTypes: false, useDefaults: false });
                 if (!result.isValid && result.errors?.length) {
                     const errMsg = result.errors.map((e: any) => `${e.instancePath ?? ""} ${e.message}`).join("; ");
                     throw new Error(`workflows validation failed for ${entityConfig.appName}/${entityName}: ${errMsg}`);

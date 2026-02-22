@@ -59,9 +59,7 @@
                         "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 },
                 {
                     "name": "Init increment",
@@ -84,9 +82,7 @@
                         "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 },
                 {
                     "name": "Init result",
@@ -109,9 +105,7 @@
                         "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 },
                 {
                     "name": "Init parameter",
@@ -134,9 +128,7 @@
                         "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 },
                 {
                     "type": "execution",
@@ -282,9 +274,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "store-result",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    "next": "store-result"
                 },
                 {
                     "name": "store result",
@@ -312,9 +302,7 @@
                         "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 },
                 {
                     "name": "check convergence",
@@ -342,9 +330,7 @@
                         "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 },
                 {
                     "name": "update result",
@@ -372,9 +358,7 @@
                         "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 },
                 {
                     "name": "increment parameter",
@@ -406,9 +390,7 @@
                         "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 },
                 {
                     "name": "exit",
@@ -435,12 +417,9 @@
                         "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 }
-            ],
-            "isDraft": false
+            ]
         }
     ],
     "units": [
@@ -452,9 +431,7 @@
             "statusTrack": [],
             "flowchartId": "a34eec2c-cdb2-537d-88c0-ed1d7b205879",
             "tags": [],
-            "head": true,
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
+            "head": true
         }
     ],
     "properties": [

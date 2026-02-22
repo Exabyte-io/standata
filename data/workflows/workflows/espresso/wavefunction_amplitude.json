@@ -154,9 +154,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "extract-band-energies",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    "next": "extract-band-energies"
                 },
                 {
                     "name": "Extract Band Energies",
@@ -184,9 +182,7 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 },
                 {
                     "name": "Find Indices Below Fermi",
@@ -214,9 +210,7 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 },
                 {
                     "name": "Store Band Below EF",
@@ -239,9 +233,7 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 },
                 {
                     "name": "Select Band",
@@ -264,9 +256,7 @@
                         "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    }
                 },
                 {
                     "type": "execution",
@@ -334,12 +324,9 @@
                             "rendered": "&INPUTPP\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    plot_num = 7\n    kpoint = 1\n    kband = {{ KBAND_VALUE | default(1) }}\n    lsign = .true.\n/\n&PLOT\n    iflag = 1\n    fileout = 'wf_r.dat'\n    output_format = 0\n    x0(1) = 0.0, x0(2) = 0.0, x0(3) = 0.0\n    e1(1) = 0.0, e1(2) = 0.0, e1(3) = NaN\n    nx = 200\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ],
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    ]
                 }
-            ],
-            "isDraft": false
+            ]
         },
         {
             "_id": "e4ec581f-1cb3-5036-b698-999a96711559",
@@ -447,12 +434,9 @@
                             "rendered": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for plot_wavefunction unit            #\n#                                                                    #\n# ------------------------------------------------------------------ #\n\nnumpy<2\nmatplotlib\n\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ],
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    ]
                 }
-            ],
-            "isDraft": false
+            ]
         }
     ],
     "units": [
@@ -465,9 +449,7 @@
             "flowchartId": "36467db9-279f-52a3-a6ef-ffdc26d875ed",
             "tags": [],
             "head": true,
-            "next": "4ce49281-e731-550e-af66-6d2408db8237",
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
+            "next": "4ce49281-e731-550e-af66-6d2408db8237"
         },
         {
             "name": "Plot Wavefunction",
@@ -477,9 +459,7 @@
             "statusTrack": [],
             "flowchartId": "4ce49281-e731-550e-af66-6d2408db8237",
             "tags": [],
-            "head": false,
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
+            "head": false
         }
     ],
     "properties": [

@@ -150,9 +150,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "13bcafce-56ef-5b47-b079-317495eb6933",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    "next": "13bcafce-56ef-5b47-b079-317495eb6933"
                 },
                 {
                     "type": "execution",
@@ -225,9 +223,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "3b4507a7-9244-540b-abe0-66bceab700f5",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    "next": "3b4507a7-9244-540b-abe0-66bceab700f5"
                 },
                 {
                     "type": "execution",
@@ -290,9 +286,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "8fe6a24b-c994-55a2-a448-88657292e8c2",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    "next": "8fe6a24b-c994-55a2-a448-88657292e8c2"
                 },
                 {
                     "type": "execution",
@@ -364,12 +358,9 @@
                             "rendered": "&INPUT\n    asr = 'simple'\n    flfrc = 'force_constants.fc'\n    flfrq = 'frequencies.freq'\n    dos = .true.\n    fldos = 'phonon_dos.out'\n    deltaE = 1.d0\n    nk1 = 3\n    nk2 = 3\n    nk3 = 3\n    \n /\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ],
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    ]
                 }
-            ],
-            "isDraft": false
+            ]
         }
     ],
     "units": [
@@ -381,9 +372,7 @@
             "statusTrack": [],
             "flowchartId": "1954e749-1d37-50e6-8ae7-7292f5ef59c0",
             "tags": [],
-            "head": true,
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
+            "head": true
         }
     ],
     "properties": [

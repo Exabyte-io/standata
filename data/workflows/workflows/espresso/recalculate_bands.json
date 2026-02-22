@@ -115,9 +115,7 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2"
                 },
                 {
                     "type": "execution",
@@ -178,12 +176,9 @@
                             "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
-                    ],
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
+                    ]
                 }
-            ],
-            "isDraft": false
+            ]
         }
     ],
     "units": [
@@ -195,9 +190,7 @@
             "statusTrack": [],
             "flowchartId": "e8b72a45-765e-565f-ab17-c91a21aec09d",
             "tags": [],
-            "head": true,
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
+            "head": true
         }
     ],
     "properties": [
