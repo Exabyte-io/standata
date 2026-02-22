@@ -10,32 +10,36 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
     static runtimeData: {
         filesMapByName: {
             "espresso/espresso_gnu_6.3.json": {
-                bio: string;
                 build: string;
-                dependencies: string[];
-                environment_variables: {};
+                build_config: {
+                    bio: string;
+                    dependencies: string[];
+                    environment_variables: {};
+                    image_name: string;
+                    image_tag: string;
+                    module_name: string;
+                };
                 hasAdvancedComputeOptions: boolean;
-                image_name: string;
-                image_tag: string;
                 isDefault: boolean;
-                module_name: string;
                 name: string;
                 shortName: string;
                 summary: string;
                 version: string;
             };
             "nwchem/nwchem_gnu_7.0.2.json": {
-                bio: string;
                 build: string;
-                dependencies: string[];
-                environment_variables: {
-                    APPTAINERENV_NWCHEM_BASIS_LIBRARY: string;
-                    NWCHEMRC_PATH: string;
+                build_config: {
+                    bio: string;
+                    dependencies: string[];
+                    environment_variables: {
+                        APPTAINERENV_NWCHEM_BASIS_LIBRARY: string;
+                        NWCHEMRC_PATH: string;
+                    };
+                    image_name: string;
+                    image_tag: string;
+                    module_name: string;
                 };
-                image_name: string;
-                image_tag: string;
                 isDefault: boolean;
-                module_name: string;
                 name: string;
                 shortName: string;
                 summary: string;
@@ -58,15 +62,17 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 version: string;
             };
             "vasp/vasp_gnu_5.4.4.json": {
-                bio: string;
                 build: string;
-                dependencies: string[];
-                environment_variables: {};
-                image_name: string;
-                image_tag: string;
+                build_config: {
+                    bio: string;
+                    dependencies: string[];
+                    environment_variables: {};
+                    image_name: string;
+                    image_tag: string;
+                    module_name: string;
+                };
                 isDefault: boolean;
                 isLicensed: boolean;
-                module_name: string;
                 name: string;
                 shortName: string;
                 summary: string;
