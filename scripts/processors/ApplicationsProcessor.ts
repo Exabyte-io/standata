@@ -1,14 +1,15 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+import { ApplicationSchema } from "@mat3ra/esse/dist/js/types";
 import { Utils } from "@mat3ra/utils";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
 import * as path from "path";
 
 import { BUILD_CONFIG } from "../../build-config";
-import { ApplicationVersionsMapType } from "../../src/js/types/application";
+import { ApplicationVersionsMapByApplicationType } from "../../src/js/types/application";
 import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
 import { buildJSONFromYAMLInDir, loadYAMLTree, resolveFromRoot } from "../utils";
 import { EntityProcessor } from "./EntityProcessor";
+
+type ApplicationVersionsMapType = ApplicationVersionsMapByApplicationType;
 
 export class ApplicationsProcessor extends EntityProcessor {
     constructor(rootDir: string) {
@@ -22,11 +23,11 @@ export class ApplicationsProcessor extends EntityProcessor {
         });
     }
 
-    private cleanApplicationData: Record<string, ApplicationVersionsMapType> = {} as any;
+    private cleanApplicationData: Record<string, ApplicationVersionsMapType> = {};
 
-    private modelFilterTree: Record<string, any> = {};
+    private modelFilterTree: Record<string, unknown> = {};
 
-    private methodFilterTree: Record<string, any> = {};
+    private methodFilterTree: Record<string, unknown> = {};
 
     public readAssets() {
         const sourcesRoot = resolveFromRoot(
@@ -44,14 +45,16 @@ export class ApplicationsProcessor extends EntityProcessor {
             string,
             Record<string, ApplicationVersionsMapType>
         >;
-        const clean = (Utils.object.flattenNestedObjects as any)(nestedApplicationData);
+        const clean = Utils.object.flattenNestedObjects(nestedApplicationData) as Record<
+            string,
+            ApplicationVersionsMapType
+        >;
 
         this.cleanApplicationData = clean;
         this.modelFilterTree = loadYAMLTree(modelAssetPath);
         this.methodFilterTree = loadYAMLTree(methodAssetPath);
 
         this.assets = [];
-        return this.assets;
     }
 
     public writeBuildDirectoryContent(): void {
@@ -99,12 +102,12 @@ export class ApplicationsProcessor extends EntityProcessor {
         appNames.forEach((appName) => {
             const applicationDataForVersions = this.cleanApplicationData[appName];
             const appVersionsMap = new ApplicationVersionsMap(applicationDataForVersions);
-            const { versionConfigsFull } = appVersionsMap as any;
+            const { versionConfigsFull } = appVersionsMap;
 
             const appDir = path.resolve(this.resolvedPaths.dataDir, appName);
             serverUtils.file.createDirIfNotExistsSync(appDir);
-            versionConfigsFull.forEach((versionConfigFull: any) => {
-                const fileName = (appVersionsMap as any).getSlugForVersionConfig(versionConfigFull);
+            versionConfigsFull.forEach((versionConfigFull: ApplicationSchema) => {
+                const fileName = appVersionsMap.getSlugForVersionConfig(versionConfigFull);
                 const filePath = path.resolve(appDir, fileName);
                 serverUtils.json.writeJSONFileSync(filePath, versionConfigFull, {
                     spaces: BUILD_CONFIG.dataJSONFormat.spaces,

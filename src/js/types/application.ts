@@ -1,38 +1,40 @@
 import { ApplicationSchema, ExecutableSchema, FlavorSchema } from "@mat3ra/esse/dist/js/types";
 
-type OptionalExecutableSchema = Partial<ExecutableSchema>;
+type VersionFields = "isDefault" | "build" | "hasAdvancedComputeOptions" | "version";
+type ApplicationFields = "name" | "shortName" | "summary" | "isLicensed";
 
-export type ApplicationVersionInfo = Pick<
-    ApplicationSchema,
-    "isDefault" | "build" | "hasAdvancedComputeOptions" | "version"
->;
+export type ApplicationVersion = Pick<ApplicationSchema, VersionFields>;
 
-export type ApplicationVersionsMapType = Pick<
-    ApplicationSchema,
-    "name" | "shortName" | "summary" | "isLicensed"
-> & {
+export type ApplicationConfigItem = Pick<ApplicationSchema, ApplicationFields> & {
     // TODO: defaultVersion should come from ESSE
     defaultVersion: string;
-    versions: ApplicationVersionInfo[];
+    versions: ApplicationVersion[];
 };
 
 export type ApplicationVersionsMapByApplicationType = {
-    [key: string]: ApplicationVersionsMapType;
+    [key: string]: ApplicationConfigItem;
 };
 
 type OptionalFlavorSchema = Partial<FlavorSchema>;
+type RequiredFlavorFields =
+    | "input"
+    | "monitors"
+    | "applicationName"
+    | "executableName"
+    | "isDefault";
+type OptionalFlavorFields = "results";
 
-type Flavor = Pick<FlavorSchema, "input" | "monitors" | "applicationName" | "executableName"> &
-    Pick<OptionalFlavorSchema, "results">;
+type FlavorConfig = Pick<FlavorSchema, RequiredFlavorFields> &
+    Pick<OptionalFlavorSchema, OptionalFlavorFields>;
 
-export type ExecutableTreeItem = Pick<
-    ExecutableSchema,
-    "hasAdvancedComputeOptions" | "isDefault" | "monitors" | "results"
-> &
-    Pick<OptionalExecutableSchema, "postProcessors"> & {
+type OptionalExecutableSchema = Partial<ExecutableSchema>;
+type RequiredExecutableFields = "hasAdvancedComputeOptions" | "isDefault" | "monitors" | "results";
+type OptionalExecutableFields = "postProcessors";
+
+export type ExecutableTreeItem = Pick<ExecutableSchema, RequiredExecutableFields> &
+    Pick<OptionalExecutableSchema, OptionalExecutableFields> & {
+        flavors: Record<string, FlavorConfig>;
         supportedApplicationVersions?: ApplicationSchema["version"][];
-        flavors?: Record<string, Flavor>;
-        [key: string]: any;
     };
 
 export type ApplicationExecutableTree = Record<string, Record<string, ExecutableTreeItem>>;

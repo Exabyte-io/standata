@@ -9,7 +9,6 @@ const applications_json_1 = __importDefault(require("./runtime_data/applications
 const applicationVersionsMapByApplication_json_1 = __importDefault(require("./runtime_data/applications/applicationVersionsMapByApplication.json"));
 const executableFlavorMapByApplication_json_1 = __importDefault(require("./runtime_data/applications/executableFlavorMapByApplication.json"));
 const templatesList_json_1 = __importDefault(require("./runtime_data/applications/templatesList.json"));
-const applicationVersionMap_1 = require("./utils/applicationVersionMap");
 const TEMPLATES_LIST = templatesList_json_1.default;
 const APP_VERSIONS = applicationVersionsMapByApplication_json_1.default;
 const EXECUTABLE_FLAVOR = executableFlavorMapByApplication_json_1.default;
@@ -18,7 +17,7 @@ var TAGS;
     TAGS["DEFAULT"] = "default";
     TAGS["DEFAULT_VERSION"] = "default_version";
     TAGS["DEFAULT_BUILD"] = "default_build";
-})(TAGS || (exports.TAGS = TAGS = {}));
+})(TAGS = exports.TAGS || (exports.TAGS = {}));
 class ApplicationStandata extends base_1.Standata {
     getAppDataForApplication(appName) {
         const applicationVersionsMap = APP_VERSIONS[appName];
@@ -33,7 +32,19 @@ class ApplicationStandata extends base_1.Standata {
         if (!(appName in executableData)) {
             throw new Error(`${appName} is not a known application with executable tree.`);
         }
-        return executableData[appName];
+        const appTree = executableData[appName];
+        return Object.fromEntries(Object.entries(appTree).map(([name, exec]) => {
+            return [
+                name,
+                {
+                    preProcessors: [],
+                    postProcessors: [],
+                    applicationId: [],
+                    ...exec,
+                    name,
+                },
+            ];
+        }));
     }
     getAllAppTemplates() {
         // TODO: Convert to use this.getAll() when template data is in Standata format
@@ -72,19 +83,14 @@ class ApplicationStandata extends base_1.Standata {
         return allEntities.filter((entity) => entity.name === appName);
     }
     static getDefaultVersionForApplication(appName) {
-        const applicationVersionsMap = new applicationVersionMap_1.ApplicationVersionsMap(APP_VERSIONS[appName]);
-        return applicationVersionsMap.defaultVersion;
+        return APP_VERSIONS[appName].defaultVersion;
     }
     static getDefaultBuildForApplicationAndVersion(appName, version) {
-        const applicationVersionsMap = new applicationVersionMap_1.ApplicationVersionsMap(APP_VERSIONS[appName]);
-        const versionConfig = applicationVersionsMap.versionConfigs.find((config) => config.version === version && config.isDefault);
-        if (!versionConfig) {
-            throw new Error(`No default build found for ${appName} with version ${version}`);
-        }
-        if (!versionConfig.build) {
-            throw new Error(`No build specified for default config of ${appName} with version ${version}`);
-        }
-        return versionConfig.build;
+        var _a;
+        const versionConfig = APP_VERSIONS[appName].versions.find((config) => {
+            return config.version === version && config.isDefault;
+        });
+        return (_a = versionConfig === null || versionConfig === void 0 ? void 0 : versionConfig.build) !== null && _a !== void 0 ? _a : null;
     }
     // TODO: move to parent class Standata, name and generic parameters
     getDefaultConfigByNameAndVersion(appName, version) {
@@ -110,6 +116,102 @@ class ApplicationStandata extends base_1.Standata {
         const fullConfig = this.findEntitiesByTags(TAGS.DEFAULT)[0];
         const { name, shortName, version, summary, build } = fullConfig;
         return { name, shortName, version, summary, build };
+    }
+    getApplicationsTree() {
+        if (this.applicationsTree) {
+            return this.applicationsTree;
+        }
+        const applicationNames = this.getAllApplicationNames();
+        this.applicationsTree = applicationNames.reduce((tree, appName) => {
+            const { versions, defaultVersion, ...appData } = this.getAppDataForApplication(appName);
+            return {
+                ...tree,
+                [appName]: {
+                    defaultVersion,
+                    versions: versions.reduce((acc, versionInfo) => {
+                        return {
+                            ...acc,
+                            [versionInfo.version]: {
+                                ...acc[versionInfo.version],
+                                [versionInfo.build]: {
+                                    ...appData,
+                                    ...versionInfo,
+                                },
+                            },
+                        };
+                    }, {}),
+                },
+            };
+        }, {});
+        return this.applicationsTree;
+    }
+    getApplications() {
+        if (this.applications) {
+            return this.applications;
+        }
+        const tree = this.getApplicationsTree();
+        this.applications = Object.values(tree).flatMap((appTreeItem) => {
+            return Object.values(appTreeItem.versions).flatMap((version) => {
+                return Object.values(version).flat();
+            });
+        });
+        return this.applications;
+    }
+    getApplicationTreeItem(appName) {
+        const tree = this.getApplicationsTree();
+        const app = tree[appName];
+        if (!app) {
+            throw new Error(`Application ${appName} not found`);
+        }
+        return app;
+    }
+    getApplication({ name, version, build }) {
+        const appTreeItem = this.getApplicationTreeItem(name);
+        const { defaultVersion } = appTreeItem;
+        const appVersion = appTreeItem.versions[version || defaultVersion];
+        const application = build
+            ? appVersion[build]
+            : Object.values(appVersion).find((build) => build.isDefault);
+        if (!application) {
+            throw new Error(`Application ${name} not found with version ${version} and build ${build}`);
+        }
+        return application;
+    }
+    getExecutableByName(appName, execName) {
+        const appTree = this.getAppTreeForApplication(appName);
+        const config = execName && appTree[execName]
+            ? appTree[execName]
+            : Object.values(appTree).find((exec) => exec.isDefault);
+        if (!config) {
+            throw new Error(`Executable ${execName} not found for application ${appName}`);
+        }
+        return config;
+    }
+    getExecutableAndFlavorByName(appName, execName, flavorName) {
+        const executable = this.getExecutableByName(appName, execName);
+        const flavor = Object.entries(executable.flavors)
+            .map(([name, flavor]) => {
+            return { name, results: [], preProcessors: [], postProcessors: [], ...flavor };
+        })
+            .find(({ name, isDefault }) => {
+            return flavorName ? name === flavorName : isDefault;
+        });
+        if (!flavor) {
+            throw new Error(`Flavor ${flavorName} not found for executable ${execName} in application ${appName}`);
+        }
+        return { executable, flavor };
+    }
+    getInput(flavor) {
+        const appName = flavor.applicationName || "";
+        const execName = flavor.executableName || "";
+        return flavor.input.map((input) => {
+            const inputName = input.templateName || input.name;
+            const filtered = this.getTemplatesByName(appName, execName, inputName);
+            if (filtered.length !== 1) {
+                console.log(`found ${filtered.length} templates for app=${appName} exec=${execName} name=${inputName} expected 1`);
+            }
+            return { ...filtered[0], name: input.name || "" };
+        });
     }
 }
 exports.ApplicationStandata = ApplicationStandata;

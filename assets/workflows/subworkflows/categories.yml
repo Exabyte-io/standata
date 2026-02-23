@@ -17,6 +17,7 @@ categories:
     - reaction_energy_barrier
     - reaction_energy_profile
     - stress_tensor
+    - surface_energy
     - total_energy
     - total_energy_contributions
     - total_force
@@ -211,7 +212,6 @@ entities:
   - filename: espresso/espresso_xml_get_qpt_irr.json
     categories:
       - espresso
-      - python
   - filename: espresso/fixed_cell_relaxation.json
     categories:
       - atomic_forces
@@ -340,6 +340,7 @@ entities:
       - fermi_energy
       - pressure
       - stress_tensor
+      - surface_energy
       - total_energy
       - total_energy_contributions
       - total_force
@@ -357,7 +358,6 @@ entities:
   - filename: espresso/valence_band_offset_calc_from_previous_esp_vbm.json
     categories:
       - espresso
-      - python
       - valence_band_offset
   - filename: espresso/variable_cell_relaxation.json
     categories:
@@ -529,6 +529,7 @@ entities:
       - fermi_energy
       - pressure
       - stress_tensor
+      - surface_energy
       - total_energy
       - total_energy_contributions
       - total_force

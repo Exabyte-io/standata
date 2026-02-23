@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import type { ApplicationSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
+import type { ApplicationSchema, FlavorSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
 
 import { Standata } from "./base";
 import APPLICATIONS from "./runtime_data/applications.json";
@@ -9,9 +9,7 @@ import TEMPLATES_LIST_RAW from "./runtime_data/applications/templatesList.json";
 import {
     ApplicationExecutableTree,
     ApplicationVersionsMapByApplicationType,
-    ApplicationVersionsMapType,
 } from "./types/application";
-import { ApplicationVersionsMap } from "./utils/applicationVersionMap";
 
 const TEMPLATES_LIST = TEMPLATES_LIST_RAW as TemplateSchema[];
 const APP_VERSIONS = APPLICATION_VERSIONS_MAP as ApplicationVersionsMapByApplicationType;
@@ -23,10 +21,29 @@ export enum TAGS {
     DEFAULT_BUILD = "default_build",
 }
 
+export type ApplicationConfig = {
+    name: string;
+    version?: string;
+    build?: string;
+};
+
+type ApplicationVersion = {
+    [build: string]: ApplicationSchema;
+};
+
+type ApplicationTreeItem = {
+    defaultVersion: string;
+    versions: {
+        [version: string]: ApplicationVersion;
+    };
+};
+
+type ApplicationTree = Record<string, ApplicationTreeItem>;
+
 export class ApplicationStandata extends Standata<ApplicationSchema> {
     static runtimeData = APPLICATIONS;
 
-    getAppDataForApplication(appName: string): ApplicationVersionsMapType {
+    private getAppDataForApplication(appName: string) {
         const applicationVersionsMap = APP_VERSIONS[appName];
 
         if (!applicationVersionsMap) {
@@ -35,7 +52,7 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         return applicationVersionsMap;
     }
 
-    getAppTreeForApplication(appName: string) {
+    private getAppTreeForApplication(appName: string) {
         // TODO: Convert to use this.findEntitiesByTags() when tree data is in Standata format
         const executableData = EXECUTABLE_FLAVOR;
 
@@ -43,7 +60,22 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
             throw new Error(`${appName} is not a known application with executable tree.`);
         }
 
-        return executableData[appName];
+        const appTree = executableData[appName];
+
+        return Object.fromEntries(
+            Object.entries(appTree).map(([name, exec]) => {
+                return [
+                    name,
+                    {
+                        preProcessors: [],
+                        postProcessors: [],
+                        applicationId: [],
+                        ...exec,
+                        name,
+                    },
+                ];
+            }),
+        );
     }
 
     getAllAppTemplates(): TemplateSchema[] {
@@ -57,7 +89,7 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
     }
 
     // TODO: move to parent class Standata
-    getAllApplicationNames() {
+    private getAllApplicationNames() {
         const allApps = this.getAll();
         const uniqueNames = new Set(allApps.map((app) => app.name));
         return Array.from(uniqueNames);
@@ -91,24 +123,14 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
     }
 
     static getDefaultVersionForApplication(appName: string) {
-        const applicationVersionsMap = new ApplicationVersionsMap(APP_VERSIONS[appName]);
-        return applicationVersionsMap.defaultVersion;
+        return APP_VERSIONS[appName].defaultVersion;
     }
 
-    static getDefaultBuildForApplicationAndVersion(appName: string, version: string): string {
-        const applicationVersionsMap = new ApplicationVersionsMap(APP_VERSIONS[appName]);
-        const versionConfig = applicationVersionsMap.versionConfigs.find(
-            (config) => config.version === version && config.isDefault,
-        );
-        if (!versionConfig) {
-            throw new Error(`No default build found for ${appName} with version ${version}`);
-        }
-        if (!versionConfig.build) {
-            throw new Error(
-                `No build specified for default config of ${appName} with version ${version}`,
-            );
-        }
-        return versionConfig.build;
+    static getDefaultBuildForApplicationAndVersion(appName: string, version: string) {
+        const versionConfig = APP_VERSIONS[appName].versions.find((config) => {
+            return config.version === version && config.isDefault;
+        });
+        return versionConfig?.build ?? null;
     }
 
     // TODO: move to parent class Standata, name and generic parameters
@@ -139,5 +161,143 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         const fullConfig = this.findEntitiesByTags(TAGS.DEFAULT)[0];
         const { name, shortName, version, summary, build } = fullConfig;
         return { name, shortName, version, summary, build };
+    }
+
+    private applicationsTree?: ApplicationTree;
+
+    private applications?: ApplicationSchema[];
+
+    public getApplicationsTree() {
+        if (this.applicationsTree) {
+            return this.applicationsTree;
+        }
+
+        const applicationNames = this.getAllApplicationNames();
+
+        this.applicationsTree = applicationNames.reduce((tree, appName) => {
+            const { versions, defaultVersion, ...appData } = this.getAppDataForApplication(appName);
+
+            return {
+                ...tree,
+                [appName]: {
+                    defaultVersion,
+                    versions: versions.reduce<ApplicationTreeItem["versions"]>(
+                        (acc, versionInfo) => {
+                            return {
+                                ...acc,
+                                [versionInfo.version]: {
+                                    ...acc[versionInfo.version],
+                                    [versionInfo.build]: {
+                                        ...appData,
+                                        ...versionInfo,
+                                    },
+                                },
+                            };
+                        },
+                        {},
+                    ),
+                },
+            };
+        }, {});
+
+        return this.applicationsTree;
+    }
+
+    public getApplications() {
+        if (this.applications) {
+            return this.applications;
+        }
+
+        const tree = this.getApplicationsTree();
+
+        this.applications = Object.values(tree).flatMap((appTreeItem) => {
+            return Object.values(appTreeItem.versions).flatMap((version) => {
+                return Object.values(version).flat();
+            });
+        });
+
+        return this.applications;
+    }
+
+    public getApplicationTreeItem(appName: string) {
+        const tree = this.getApplicationsTree();
+        const app = tree[appName];
+
+        if (!app) {
+            throw new Error(`Application ${appName} not found`);
+        }
+
+        return app;
+    }
+
+    public getApplication({ name, version, build }: ApplicationConfig) {
+        const appTreeItem = this.getApplicationTreeItem(name);
+        const { defaultVersion } = appTreeItem;
+        const appVersion = appTreeItem.versions[version || defaultVersion];
+
+        const application = build
+            ? appVersion[build]
+            : Object.values(appVersion).find((build) => build.isDefault);
+
+        if (!application) {
+            throw new Error(
+                `Application ${name} not found with version ${version} and build ${build}`,
+            );
+        }
+
+        return application;
+    }
+
+    getExecutableByName(appName: string, execName?: string) {
+        const appTree = this.getAppTreeForApplication(appName);
+
+        const config =
+            execName && appTree[execName]
+                ? appTree[execName]
+                : Object.values(appTree).find((exec) => exec.isDefault);
+
+        if (!config) {
+            throw new Error(`Executable ${execName} not found for application ${appName}`);
+        }
+
+        return config;
+    }
+
+    getExecutableAndFlavorByName(appName: string, execName?: string, flavorName?: string) {
+        const executable = this.getExecutableByName(appName, execName);
+        const flavor = Object.entries(executable.flavors)
+            .map(([name, flavor]) => {
+                return { name, results: [], preProcessors: [], postProcessors: [], ...flavor };
+            })
+            .find(({ name, isDefault }) => {
+                return flavorName ? name === flavorName : isDefault;
+            });
+
+        if (!flavor) {
+            throw new Error(
+                `Flavor ${flavorName} not found for executable ${execName} in application ${appName}`,
+            );
+        }
+
+        return { executable, flavor };
+    }
+
+    getInput(flavor: FlavorSchema): TemplateSchema[] {
+        const appName = flavor.applicationName || "";
+        const execName = flavor.executableName || "";
+
+        return flavor.input.map((input): TemplateSchema => {
+            const inputName = input.templateName || input.name;
+
+            const filtered = this.getTemplatesByName(appName, execName, inputName);
+
+            if (filtered.length !== 1) {
+                console.log(
+                    `found ${filtered.length} templates for app=${appName} exec=${execName} name=${inputName} expected 1`,
+                );
+            }
+
+            return { ...filtered[0], name: input.name || "" };
+        });
     }
 }

@@ -13,11 +13,7 @@
             "subtype": "us",
             "data": {}
         },
-        "functional": {
-            "slug": "pbe"
-        },
-        "refiners": [],
-        "modifiers": []
+        "functional": "pbe"
     },
     "units": [
         {
@@ -33,6 +29,9 @@
             "flowchartId": "b8ea6a33-38f3-5434-b17e-b5eae8fff9fc",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -44,14 +43,22 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
+                "preProcessors": [],
+                "postProcessors": [],
                 "monitors": [
-                    "standard_output"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
                 "name": "ph.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
             "flavor": {
+                "name": "ph_init_qpoints",
+                "results": [],
+                "preProcessors": [],
+                "postProcessors": [],
                 "applicationName": "espresso",
                 "executableName": "ph.x",
                 "input": [
@@ -60,31 +67,36 @@
                     }
                 ],
                 "monitors": [
-                    "standard_output"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
-                "results": [],
-                "name": "ph_init_qpoints",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "espresso",
-                    "content": "&INPUTPH\n    tr2_ph = 1.0d-18,\n    recover = .false.\n    start_irr = 0\n    last_irr = 0\n    ldisp = .true.\n    fildyn = 'dyn0'\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
-                    "contextProviders": [
-                        {
-                            "name": "QGridFormDataManager"
-                        }
-                    ],
-                    "executableName": "ph.x",
-                    "name": "ph_init_qpoints.in",
-                    "rendered": "&INPUTPH\n    tr2_ph = 1.0d-18,\n    recover = .false.\n    start_irr = 0\n    last_irr = 0\n    ldisp = .true.\n    fildyn = 'dyn0'\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    nq1 = 1\n    nq2 = 1\n    nq3 = 1\n    \n/\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "espresso",
+                        "content": "&INPUTPH\n    tr2_ph = 1.0d-18,\n    recover = .false.\n    start_irr = 0\n    last_irr = 0\n    ldisp = .true.\n    fildyn = 'dyn0'\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
+                        "contextProviders": [
+                            {
+                                "name": "QGridFormDataManager"
+                            }
+                        ],
+                        "executableName": "ph.x",
+                        "name": "ph_init_qpoints.in",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
-            ]
+            ],
+            "context": [],
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }
