@@ -1,6 +1,6 @@
 {
-    "name": "Python ML Train Regression",
     "_id": "f447c6df-3b7b-5b8e-a0cc-1a743847ceed",
+    "name": "Python ML Train Regression",
     "subworkflows": [
         {
             "_id": "03e3f15b-2b22-5bb4-8bfd-6839d28a1ba9",
@@ -782,13 +782,16 @@
     ],
     "units": [
         {
-            "_id": "03e3f15b-2b22-5bb4-8bfd-6839d28a1ba9",
             "type": "subworkflow",
             "name": "Set Up the Job",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "03e3f15b-2b22-5bb4-8bfd-6839d28a1ba9",
             "flowchartId": "5b51df93-15dd-5440-90fd-a3ffa264b7d8",
             "schemaVersion": "2022.8.16",
             "isDefault": false
@@ -809,8 +812,12 @@
             "isDefault": false
         }
     ],
-    "properties": [],
+    "properties": [
+        "file_content",
+        "workflow:pyml_predict"
+    ],
     "workflows": [],
+    "isUsingDataset": true,
     "schemaVersion": "2022.8.16",
     "isDefault": false,
     "application": {

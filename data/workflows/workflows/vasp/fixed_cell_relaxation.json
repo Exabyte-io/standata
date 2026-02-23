@@ -1,6 +1,6 @@
 {
-    "name": "Fixed-cell Relaxation",
     "_id": "cb69418c-2f6c-551d-af81-0cf20ec1113d",
+    "name": "Fixed-cell Relaxation",
     "subworkflows": [
         {
             "_id": "db6cc94b-2f26-5688-ba97-80b11567b549",
@@ -246,13 +246,16 @@
     ],
     "units": [
         {
-            "_id": "db6cc94b-2f26-5688-ba97-80b11567b549",
             "type": "subworkflow",
             "name": "Fixed-cell Relaxation",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "db6cc94b-2f26-5688-ba97-80b11567b549",
             "flowchartId": "0de8c4c8-b722-5cd2-ae68-b484262e0a01",
             "schemaVersion": "2022.8.16",
             "isDefault": false

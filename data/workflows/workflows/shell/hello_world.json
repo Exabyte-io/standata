@@ -1,6 +1,6 @@
 {
-    "name": "Shell Script",
     "_id": "d2fd444c-06b4-5d66-baeb-449c680ae1bf",
+    "name": "Shell Script",
     "subworkflows": [
         {
             "_id": "ce33d4cf-e0d2-5020-854d-9ea1fe5c8512",
@@ -107,13 +107,16 @@
     ],
     "units": [
         {
-            "_id": "ce33d4cf-e0d2-5020-854d-9ea1fe5c8512",
             "type": "subworkflow",
             "name": "Shell Hello World",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "ce33d4cf-e0d2-5020-854d-9ea1fe5c8512",
             "flowchartId": "319307c2-bf22-5bf2-b4e9-a4cdf671b786",
             "schemaVersion": "2022.8.16",
             "isDefault": false

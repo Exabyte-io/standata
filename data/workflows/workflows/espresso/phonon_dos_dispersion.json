@@ -1,6 +1,6 @@
 {
-    "name": "Phonon Density of States + Dispersions",
     "_id": "cd3ab6a3-a56c-5626-b527-cfe002c30472",
+    "name": "Phonon Density of States + Dispersions",
     "subworkflows": [
         {
             "_id": "291d25cd-378a-5be7-9d85-c8013a4b165b",
@@ -535,13 +535,16 @@
     ],
     "units": [
         {
-            "_id": "291d25cd-378a-5be7-9d85-c8013a4b165b",
             "type": "subworkflow",
             "name": "Phonon Density of States + Dispersions",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "291d25cd-378a-5be7-9d85-c8013a4b165b",
             "flowchartId": "7897ed9a-6b48-5a79-a50e-28797f3912a5",
             "schemaVersion": "2022.8.16",
             "isDefault": false

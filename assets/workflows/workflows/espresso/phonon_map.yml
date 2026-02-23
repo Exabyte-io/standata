@@ -1,22 +1,19 @@
 name: Phonon Map
 units:
-  - name: phononMap
+  - name: pw_scf
+    type: subworkflow
+  - name: ph_init_qpoints
+    type: subworkflow
+  - name: espresso_xml_get_qpt_irr
+    type: subworkflow
+  - name: phonon_map_workflow
     type: workflow
-    units:
-      - name: pw_scf
-        type: subworkflow
-      - name: ph_init_qpoints
-        type: subworkflow
-      - name: espresso_xml_get_qpt_irr
-        type: subworkflow
-  - config:
+    config:
       functions:
         setDefaultCompute: null
       input:
         name: Q_POINTS
       mapUnit: true
-    name: phonon_map_workflow
-    type: workflow
     units:
       - name: pre_processor
         type: subworkflow

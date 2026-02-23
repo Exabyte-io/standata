@@ -1,6 +1,6 @@
 {
-    "name": "Python Script",
     "_id": "de816646-766b-5f97-b468-0937d4381440",
+    "name": "Python Script",
     "subworkflows": [
         {
             "_id": "64a079ba-7a12-57b7-ac06-310b2bf8d354",
@@ -123,13 +123,16 @@
     ],
     "units": [
         {
-            "_id": "64a079ba-7a12-57b7-ac06-310b2bf8d354",
             "type": "subworkflow",
             "name": "Python Script",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "64a079ba-7a12-57b7-ac06-310b2bf8d354",
             "flowchartId": "c50e28b2-a0c5-5324-8b6f-e99b5a546bd8",
             "schemaVersion": "2022.8.16",
             "isDefault": false

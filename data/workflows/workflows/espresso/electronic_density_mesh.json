@@ -1,6 +1,6 @@
 {
-    "name": "Electronic Density Mesh",
     "_id": "67b8445c-14ea-5efb-acbf-7dd7bd9df4b4",
+    "name": "Electronic Density Mesh",
     "subworkflows": [
         {
             "_id": "e2749c5a-fcd9-589c-819b-8b88c5c90924",
@@ -266,13 +266,16 @@
     ],
     "units": [
         {
-            "_id": "e2749c5a-fcd9-589c-819b-8b88c5c90924",
             "type": "subworkflow",
             "name": "Electronic Density Mesh",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "e2749c5a-fcd9-589c-819b-8b88c5c90924",
             "flowchartId": "79e421a1-18aa-5c27-b8a8-9a769c1a89a0",
             "schemaVersion": "2022.8.16",
             "isDefault": false

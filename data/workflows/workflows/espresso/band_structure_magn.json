@@ -1,6 +1,6 @@
 {
-    "name": "Bandstructure with spin magnetism - QE",
     "_id": "f2767e1a-fce7-578f-b627-8806d3cd59de",
+    "name": "Bandstructure with spin magnetism - QE",
     "subworkflows": [
         {
             "_id": "354942f1-9f3d-57a9-b5ae-6bdf5b3a60af",
@@ -456,13 +456,16 @@
     ],
     "units": [
         {
-            "_id": "354942f1-9f3d-57a9-b5ae-6bdf5b3a60af",
             "type": "subworkflow",
             "name": "Bandstructure with spin magnetism",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "354942f1-9f3d-57a9-b5ae-6bdf5b3a60af",
             "flowchartId": "41e70bc1-ba00-5871-9289-4d57c7b79452",
             "schemaVersion": "2022.8.16",
             "isDefault": false

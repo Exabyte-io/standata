@@ -1,6 +1,6 @@
 {
-    "name": "Band Structure",
     "_id": "25b0ad08-87bb-5400-bea4-acd5fe2163c0",
+    "name": "Band Structure",
     "subworkflows": [
         {
             "_id": "cd6e3d59-5544-56ac-878b-fd8716a09768",
@@ -385,13 +385,16 @@
     ],
     "units": [
         {
-            "_id": "cd6e3d59-5544-56ac-878b-fd8716a09768",
             "type": "subworkflow",
             "name": "Band Structure",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "cd6e3d59-5544-56ac-878b-fd8716a09768",
             "flowchartId": "c573187f-a8bb-5084-9fcf-1560bf4a7786",
             "schemaVersion": "2022.8.16",
             "isDefault": false

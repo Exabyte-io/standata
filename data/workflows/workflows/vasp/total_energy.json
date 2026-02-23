@@ -1,6 +1,6 @@
 {
-    "name": "Total Energy",
     "_id": "7a65612a-d06b-5c80-bb24-55e2b969a262",
+    "name": "Total Energy",
     "subworkflows": [
         {
             "_id": "1cd988fa-03f2-5b8c-aa72-8d7e50554988",
@@ -229,13 +229,16 @@
     ],
     "units": [
         {
-            "_id": "1cd988fa-03f2-5b8c-aa72-8d7e50554988",
             "type": "subworkflow",
             "name": "Total Energy",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "1cd988fa-03f2-5b8c-aa72-8d7e50554988",
             "flowchartId": "6059d61a-6a92-5657-9130-02208639aff8",
             "schemaVersion": "2022.8.16",
             "isDefault": false

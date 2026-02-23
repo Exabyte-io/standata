@@ -1,6 +1,6 @@
 {
-    "name": "Phonon Map",
     "_id": "bbf7f87c-d201-537e-8c0f-00dca0cbb7ec",
+    "name": "Phonon Map",
     "subworkflows": [
         {
             "_id": "f52b8039-83d0-5485-a1f1-0bc37cb01ed3",
@@ -691,13 +691,16 @@
     ],
     "units": [
         {
-            "_id": "f52b8039-83d0-5485-a1f1-0bc37cb01ed3",
             "type": "subworkflow",
             "name": "pw-scf",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "f52b8039-83d0-5485-a1f1-0bc37cb01ed3",
             "flowchartId": "d270b789-fb67-573c-a566-9f09fdacea23",
             "schemaVersion": "2022.8.16",
             "isDefault": false
@@ -749,7 +752,7 @@
             "status": "idle",
             "statusTrack": [],
             "tags": [],
-            "workflowId": "b58b7b6b-19b6-4fc2-b655-c3f380b70f5a",
+            "workflowId": "3c30219d-b8d7-4206-a4af-845815342935",
             "flowchartId": "24e3c1f0-8090-512e-9727-8770071d17c8",
             "schemaVersion": "2022.8.16",
             "isDefault": false
@@ -777,7 +780,9 @@
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force"
+        "total_force",
+        "phonon_dispersions",
+        "phonon_dos"
     ],
     "workflows": [
         {
@@ -1100,13 +1105,16 @@
             ],
             "units": [
                 {
-                    "_id": "03f3a8a3-1fd0-5007-925f-fba78be63a51",
                     "type": "subworkflow",
                     "name": "pre-processor",
+                    "results": [],
+                    "monitors": [],
                     "preProcessors": [],
                     "postProcessors": [],
-                    "monitors": [],
-                    "results": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "_id": "03f3a8a3-1fd0-5007-925f-fba78be63a51",
                     "flowchartId": "e9a790f4-dec6-52c1-b951-014f0ff01cb4"
                 },
                 {

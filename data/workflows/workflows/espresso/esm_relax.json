@@ -1,6 +1,6 @@
 {
-    "name": "Effective Screening Medium (ESM) Relax",
     "_id": "059da61f-b061-5626-92c4-c103c28b737e",
+    "name": "Effective Screening Medium (ESM) Relax",
     "subworkflows": [
         {
             "_id": "69728792-afeb-50aa-9b4e-6974a90f676a",
@@ -206,13 +206,16 @@
     ],
     "units": [
         {
-            "_id": "69728792-afeb-50aa-9b4e-6974a90f676a",
             "type": "subworkflow",
             "name": "Effective Screening Medium (ESM) Relax",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "69728792-afeb-50aa-9b4e-6974a90f676a",
             "flowchartId": "f0733dc9-f3ad-5a1c-82fc-515edc0276b6",
             "schemaVersion": "2022.8.16",
             "isDefault": false

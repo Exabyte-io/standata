@@ -1,6 +1,6 @@
 {
-    "name": "Band Structure - HSE",
     "_id": "23b9058b-884c-52d4-82a8-ee162b9761e0",
+    "name": "Band Structure - HSE",
     "subworkflows": [
         {
             "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
@@ -571,13 +571,16 @@
     ],
     "units": [
         {
-            "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
             "type": "subworkflow",
             "name": "Preliminary SCF Calculation",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
             "flowchartId": "b6a2b27a-0fec-5e0e-8974-073ee9d2ad83",
             "schemaVersion": "2022.8.16",
             "isDefault": false

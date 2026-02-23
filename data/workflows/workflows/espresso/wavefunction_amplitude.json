@@ -1,6 +1,6 @@
 {
-    "name": "Wavefunction Amplitude",
     "_id": "196d364a-5a30-549b-a898-8b9704b50ff1",
+    "name": "Wavefunction Amplitude",
     "subworkflows": [
         {
             "_id": "6a670ac8-6c12-5285-a6f8-9bf579fc88ee",
@@ -494,13 +494,16 @@
     ],
     "units": [
         {
-            "_id": "6a670ac8-6c12-5285-a6f8-9bf579fc88ee",
             "type": "subworkflow",
             "name": "Wavefunction Amplitude",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "6a670ac8-6c12-5285-a6f8-9bf579fc88ee",
             "flowchartId": "36467db9-279f-52a3-a6ef-ffdc26d875ed",
             "schemaVersion": "2022.8.16",
             "isDefault": false
@@ -530,7 +533,8 @@
         "total_energy",
         "total_energy_contributions",
         "total_force",
-        "wavefunction_amplitude"
+        "wavefunction_amplitude",
+        "file_content"
     ],
     "workflows": [],
     "schemaVersion": "2022.8.16",

@@ -1,6 +1,6 @@
 {
-    "name": "K-point Convergence",
     "_id": "e8141224-dcea-576b-a556-80f65ab2e230",
+    "name": "K-point Convergence",
     "subworkflows": [
         {
             "_id": "ff6a8fbc-2202-5786-9a26-67c843417d0b",
@@ -376,13 +376,16 @@
     ],
     "units": [
         {
-            "_id": "ff6a8fbc-2202-5786-9a26-67c843417d0b",
             "type": "subworkflow",
             "name": "K-point Convergence",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "ff6a8fbc-2202-5786-9a26-67c843417d0b",
             "flowchartId": "a34eec2c-cdb2-537d-88c0-ed1d7b205879",
             "schemaVersion": "2022.8.16",
             "isDefault": false

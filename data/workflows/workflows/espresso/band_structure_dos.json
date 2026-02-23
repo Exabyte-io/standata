@@ -1,6 +1,6 @@
 {
-    "name": "Band Structure + Density of States",
     "_id": "fbf81b2c-0a99-5062-98e5-9f41b8fba8d5",
+    "name": "Band Structure + Density of States",
     "subworkflows": [
         {
             "_id": "fa594399-6b98-5d79-986c-0713601dc06c",
@@ -572,13 +572,16 @@
     ],
     "units": [
         {
-            "_id": "fa594399-6b98-5d79-986c-0713601dc06c",
             "type": "subworkflow",
             "name": "Band Structure + Density of States",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "fa594399-6b98-5d79-986c-0713601dc06c",
             "flowchartId": "8a098bb9-73b1-5e84-bfc7-b783e02d0f53",
             "schemaVersion": "2022.8.16",
             "isDefault": false

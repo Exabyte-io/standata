@@ -1,6 +1,6 @@
 {
-    "name": "Full Frequency GW Band Structure + Band Gap",
     "_id": "500f379f-bc9d-5f6f-8780-e28570f1ed3f",
+    "name": "Full Frequency GW Band Structure + Band Gap",
     "subworkflows": [
         {
             "_id": "46bcdcc8-628e-518e-b8c3-9bf38d7a2aef",
@@ -300,13 +300,16 @@
     ],
     "units": [
         {
-            "_id": "46bcdcc8-628e-518e-b8c3-9bf38d7a2aef",
             "type": "subworkflow",
             "name": "Full Frequency GW Band Structure + Band Gap",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "46bcdcc8-628e-518e-b8c3-9bf38d7a2aef",
             "flowchartId": "b1748925-1c8e-5c73-a8ff-ec4da33a49ce",
             "schemaVersion": "2022.8.16",
             "isDefault": false

@@ -1,6 +1,6 @@
 {
-    "name": "Surface Energy",
     "_id": "24b4e6d1-0846-55dd-ae27-624bab5057b4",
+    "name": "Surface Energy",
     "subworkflows": [
         {
             "_id": "257d53c6-c3b6-564c-95ce-dd0514d26c63",
@@ -231,13 +231,16 @@
     ],
     "units": [
         {
-            "_id": "257d53c6-c3b6-564c-95ce-dd0514d26c63",
             "type": "subworkflow",
             "name": "Surface Energy",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "257d53c6-c3b6-564c-95ce-dd0514d26c63",
             "flowchartId": "d81dc9ce-bb50-5bc6-af1d-e5ede03bb0a6",
             "schemaVersion": "2022.8.16",
             "isDefault": false

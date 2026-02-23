@@ -1,6 +1,6 @@
 {
-    "name": "Band Gap",
     "_id": "1a358471-0a73-5fcb-ad3c-7a8079029c86",
+    "name": "Band Gap",
     "subworkflows": [
         {
             "_id": "e65f2461-5f5c-5a51-8c48-88ad37bff100",
@@ -391,13 +391,16 @@
     ],
     "units": [
         {
-            "_id": "e65f2461-5f5c-5a51-8c48-88ad37bff100",
             "type": "subworkflow",
             "name": "Band Gap",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "e65f2461-5f5c-5a51-8c48-88ad37bff100",
             "flowchartId": "db3b83ea-0ef5-594c-89a8-bde38dbc6105",
             "schemaVersion": "2022.8.16",
             "isDefault": false

@@ -1,6 +1,6 @@
 {
-    "name": "Nudged Elastic Band (NEB)",
     "_id": "2973908e-21ae-5424-afc9-ccb3fde477d8",
+    "name": "Nudged Elastic Band (NEB)",
     "subworkflows": [
         {
             "isMultiMaterial": true,
@@ -730,13 +730,16 @@
     ],
     "units": [
         {
-            "_id": "792e8c42-86ce-5f01-812a-66378ec4f379",
             "type": "subworkflow",
             "name": "Initial/Final Total Energies",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "792e8c42-86ce-5f01-812a-66378ec4f379",
             "flowchartId": "427b4671-7c37-50f7-82c8-4d781b846fd8",
             "schemaVersion": "2022.8.16",
             "isDefault": false
@@ -779,7 +782,9 @@
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force"
+        "total_force",
+        "reaction_energy_barrier",
+        "reaction_energy_profile"
     ],
     "workflows": [],
     "schemaVersion": "2022.8.16",

@@ -1,6 +1,6 @@
 {
-    "name": "Plasmon-Pole GW Band Structure + Band Gap",
     "_id": "dc9cba26-070a-57dd-aaa8-6de7bb714807",
+    "name": "Plasmon-Pole GW Band Structure + Band Gap",
     "subworkflows": [
         {
             "_id": "72b79a87-8eef-5fe2-9d6c-6c9c256dd56c",
@@ -300,13 +300,16 @@
     ],
     "units": [
         {
-            "_id": "72b79a87-8eef-5fe2-9d6c-6c9c256dd56c",
             "type": "subworkflow",
             "name": "Plasmon-Pole GW Band Structure + Band Gap",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "72b79a87-8eef-5fe2-9d6c-6c9c256dd56c",
             "flowchartId": "911d4cc1-cde5-5097-a7be-0e11f73113a7",
             "schemaVersion": "2022.8.16",
             "isDefault": false

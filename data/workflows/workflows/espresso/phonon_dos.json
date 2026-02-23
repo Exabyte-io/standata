@@ -1,6 +1,6 @@
 {
-    "name": "Phonon Density of States",
     "_id": "840eb771-6cc0-5141-9a37-9c2eef74aa20",
+    "name": "Phonon Density of States",
     "subworkflows": [
         {
             "_id": "2232051b-9f2a-5a48-9b4d-6231eb6e8297",
@@ -445,13 +445,16 @@
     ],
     "units": [
         {
-            "_id": "2232051b-9f2a-5a48-9b4d-6231eb6e8297",
             "type": "subworkflow",
             "name": "Phonon Density of States",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "2232051b-9f2a-5a48-9b4d-6231eb6e8297",
             "flowchartId": "1954e749-1d37-50e6-8ae7-7292f5ef59c0",
             "schemaVersion": "2022.8.16",
             "isDefault": false

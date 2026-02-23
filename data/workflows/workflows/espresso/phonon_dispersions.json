@@ -1,6 +1,6 @@
 {
-    "name": "Phonon Dispersions",
     "_id": "8623c689-9ba3-5454-a3c8-0c6c49c402b4",
+    "name": "Phonon Dispersions",
     "subworkflows": [
         {
             "_id": "bfb69b48-8fbf-5a0d-8949-448f20754766",
@@ -446,13 +446,16 @@
     ],
     "units": [
         {
-            "_id": "bfb69b48-8fbf-5a0d-8949-448f20754766",
             "type": "subworkflow",
             "name": "Phonon Dispersions",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "bfb69b48-8fbf-5a0d-8949-448f20754766",
             "flowchartId": "2cd13237-d089-5d5e-8372-1db8bb8e383f",
             "schemaVersion": "2022.8.16",
             "isDefault": false

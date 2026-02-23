@@ -24,15 +24,15 @@ export function validateData<T extends object>(data: T, schemaId: string): T {
     return data;
 }
 
-export function generateDefaultWorkflowId() {
+export function generateDefaultWorkflowId(): string {
     return Utils.uuid.getUUID();
 }
 
-export function generateFlowChartId(unitName: string) {
+export function generateFlowChartId(unitName: string): string {
     return Utils.uuid.getUUIDFromNamespace(`flowchart-${unitName}`);
 }
 
-export function generateBuilderFlowChartId(seed: string, cache: string[] = []) {
+export function generateBuilderFlowChartId(seed: string, cache: string[] = []): string {
     const countInCache = cache.filter((s) => s === seed).length;
     cache.push(seed);
 
@@ -41,7 +41,7 @@ export function generateBuilderFlowChartId(seed: string, cache: string[] = []) {
     return Utils.uuid.getUUIDFromNamespace(seedWithSuffix);
 }
 
-export function generateWorkflowId(subworkflow: SubworkflowSchema) {
+export function generateWorkflowId(subworkflow: SubworkflowSchema): string {
     const { name, properties, application } = subworkflow;
     const propsInfo = properties?.length ? properties.sort().join(",") : "";
     const swInfo = [subworkflow].map((sw) => sw.name || "unknown").join(",");
@@ -57,7 +57,7 @@ export function generateSubworkflowId(
     application?: ApplicationSchema,
     model?: BaseModel,
     method?: BaseMethod,
-) {
+): string {
     const appName = application?.name || "";
     const modelInfo = model ? `${model.type}-${model.subtype || ""}` : "";
     const methodInfo = method ? `${method.type}-${method.subtype || ""}` : "";

@@ -1,6 +1,6 @@
 {
-    "name": "Recalculate Bands",
     "_id": "42b2b964-8ccc-5b36-9e33-41a954abc2ba",
+    "name": "Recalculate Bands",
     "subworkflows": [
         {
             "_id": "64551dfb-e529-5d8d-9092-ff268f4da134",
@@ -218,13 +218,16 @@
     ],
     "units": [
         {
-            "_id": "64551dfb-e529-5d8d-9092-ff268f4da134",
             "type": "subworkflow",
             "name": "Recalculate Bands",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "64551dfb-e529-5d8d-9092-ff268f4da134",
             "flowchartId": "e8b72a45-765e-565f-ab17-c91a21aec09d",
             "schemaVersion": "2022.8.16",
             "isDefault": false

@@ -1,6 +1,6 @@
 {
-    "name": "Variable-cell Relaxation",
     "_id": "6edf0e69-36dd-5206-a331-320becf75266",
+    "name": "Variable-cell Relaxation",
     "subworkflows": [
         {
             "systemName": "vasp-variable-cell-relaxation",
@@ -247,13 +247,16 @@
     ],
     "units": [
         {
-            "_id": "542f7e87-cf65-5579-952c-ddd9611ac558",
             "type": "subworkflow",
             "name": "Variable-cell Relaxation",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "542f7e87-cf65-5579-952c-ddd9611ac558",
             "flowchartId": "8f6e9590-6a87-584b-abd7-1fb98253054c",
             "schemaVersion": "2022.8.16",
             "isDefault": false

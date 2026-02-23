@@ -1,6 +1,6 @@
 {
-    "name": "Band Gap + DoS - HSE",
     "_id": "ab28e7cf-a363-5223-ae0b-a60c82bb4f9a",
+    "name": "Band Gap + DoS - HSE",
     "subworkflows": [
         {
             "_id": "f1341a29-777d-5ca3-8933-78a5e0d3f6f2",
@@ -282,13 +282,16 @@
     ],
     "units": [
         {
-            "_id": "f1341a29-777d-5ca3-8933-78a5e0d3f6f2",
             "type": "subworkflow",
             "name": "HSE Band Gap",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "f1341a29-777d-5ca3-8933-78a5e0d3f6f2",
             "flowchartId": "f7a0860d-6f9e-59e3-b600-07bbf986998a",
             "schemaVersion": "2022.8.16",
             "isDefault": false

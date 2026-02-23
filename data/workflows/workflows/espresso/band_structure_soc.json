@@ -1,6 +1,6 @@
 {
-    "name": "Bandstructure with SOC - QE",
     "_id": "b4587b15-eb6f-5316-8497-a79f321b3c76",
+    "name": "Bandstructure with SOC - QE",
     "subworkflows": [
         {
             "_id": "153b4a88-5d56-553f-b7d3-40df96968eb4",
@@ -381,13 +381,16 @@
     ],
     "units": [
         {
-            "_id": "153b4a88-5d56-553f-b7d3-40df96968eb4",
             "type": "subworkflow",
             "name": "Bandstructure with SOC",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "153b4a88-5d56-553f-b7d3-40df96968eb4",
             "flowchartId": "872d54a6-679c-5af5-a153-72709fcf46df",
             "schemaVersion": "2022.8.16",
             "isDefault": false

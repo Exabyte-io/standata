@@ -1,6 +1,6 @@
 {
-    "name": "Density of States",
     "_id": "e930440a-1624-5eb9-b83b-dbe1421b4f5e",
+    "name": "Density of States",
     "subworkflows": [
         {
             "_id": "2cf317f3-3306-5a96-bc9b-e9103ebcd5be",
@@ -388,13 +388,16 @@
     ],
     "units": [
         {
-            "_id": "2cf317f3-3306-5a96-bc9b-e9103ebcd5be",
             "type": "subworkflow",
             "name": "Density of States",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "2cf317f3-3306-5a96-bc9b-e9103ebcd5be",
             "flowchartId": "3e64fdb4-ab5b-52a0-a1d5-51343c49481c",
             "schemaVersion": "2022.8.16",
             "isDefault": false

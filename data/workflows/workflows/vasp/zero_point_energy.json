@@ -1,6 +1,6 @@
 {
-    "name": "Zero Point Energy",
     "_id": "f25b44b7-74ba-59ca-b86a-abcc53530e5f",
+    "name": "Zero Point Energy",
     "subworkflows": [
         {
             "_id": "2667054e-3c04-50a9-bd95-55c530d727c9",
@@ -238,13 +238,16 @@
     ],
     "units": [
         {
-            "_id": "2667054e-3c04-50a9-bd95-55c530d727c9",
             "type": "subworkflow",
             "name": "Zero Point Energy",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "2667054e-3c04-50a9-bd95-55c530d727c9",
             "flowchartId": "d906bd20-eb92-5a01-a0e2-c81a2d9b2a41",
             "schemaVersion": "2022.8.16",
             "isDefault": false

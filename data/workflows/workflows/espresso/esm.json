@@ -1,6 +1,6 @@
 {
-    "name": "Effective Screening Medium (ESM)",
     "_id": "1f17c10d-9554-5f41-994e-fee3fc0d22a7",
+    "name": "Effective Screening Medium (ESM)",
     "subworkflows": [
         {
             "_id": "0de669f6-a455-5dae-b331-19dc85f7090f",
@@ -206,13 +206,16 @@
     ],
     "units": [
         {
-            "_id": "0de669f6-a455-5dae-b331-19dc85f7090f",
             "type": "subworkflow",
             "name": "Effective Screening Medium (ESM)",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "0de669f6-a455-5dae-b331-19dc85f7090f",
             "flowchartId": "e7893fdf-0515-58a0-a9e1-0393bdc57d33",
             "schemaVersion": "2022.8.16",
             "isDefault": false

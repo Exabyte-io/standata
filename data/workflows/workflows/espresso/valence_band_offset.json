@@ -1,6 +1,6 @@
 {
-    "name": "Valence Band Offset (2D)",
     "_id": "d8e08cac-7747-50aa-b925-41f214d722c6",
+    "name": "Valence Band Offset (2D)",
     "subworkflows": [
         {
             "isMultiMaterial": true,
@@ -2396,13 +2396,16 @@
     ],
     "units": [
         {
-            "_id": "9c65d03e-6a30-58f3-947a-f174342be0c3",
             "type": "subworkflow",
             "name": "BS + Avg ESP (Interface)",
+            "results": [],
+            "monitors": [],
             "preProcessors": [],
             "postProcessors": [],
-            "monitors": [],
-            "results": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "9c65d03e-6a30-58f3-947a-f174342be0c3",
             "flowchartId": "fd622b5c-5c02-594e-b582-b245c17ca9a4",
             "schemaVersion": "2022.8.16",
             "isDefault": false
@@ -2507,7 +2510,8 @@
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force"
+        "total_force",
+        "valence_band_offset"
     ],
     "workflows": [],
     "schemaVersion": "2022.8.16",
