@@ -69,7 +69,7 @@
         "build:materials": "ts-node scripts/materials/build_materials.ts",
         "build:properties": "ts-node scripts/properties/build_properties.ts",
         "build:workflows": "ts-node scripts/workflows/build_workflows.ts",
-        "build:applications": "ts-node scripts/applications/build_applications.ts",
+        "build:applications": "ts-node scripts/applications/build_applications.ts && ts-node scripts/applications/build_executable_flavor_map_by_application.ts",
         "build:models": "ts-node scripts/models/build_models.ts",
         "build:methods": "ts-node scripts/methods/build_methods.ts",
         "build:model-method-map": "ts-node scripts/models/build_model_method_map.ts",
