@@ -1,5 +1,6 @@
-from mat3ra.standata.data.applications import applications_data
 from mat3ra.standata.applications import ApplicationStandata
+from mat3ra.standata.data.applications import applications_data
+from mat3ra.standata.data.executable_flavor_map_by_application import executable_flavor_map_by_application_data
 
 
 def test_get_by_name():
@@ -42,6 +43,7 @@ def test_list_all():
     assert applications["espresso"][0]["version"] == "6.3"
     assert applications["espresso"][0]["build"] == "GNU"
 
+
 def test_get_as_list():
     applications_list = ApplicationStandata.get_as_list()
     assert isinstance(applications_list, list)
@@ -49,3 +51,18 @@ def test_get_as_list():
     assert isinstance(applications_list[0], dict)
     assert applications_list[0]["name"] == "espresso"
 
+
+def test_executable_flavor_map_by_application_has_espresso_pw_x():
+    assert "espresso" in executable_flavor_map_by_application_data
+    assert "pw.x" in executable_flavor_map_by_application_data["espresso"]
+    assert "flavors" in executable_flavor_map_by_application_data["espresso"]["pw.x"]
+
+
+def test_application_standata_get_app_tree_for_application():
+    tree = ApplicationStandata.get_app_tree_for_application("espresso")
+    assert "pw.x" in tree
+
+
+def test_application_standata_get_all_app_tree():
+    tree = ApplicationStandata.get_all_app_tree()
+    assert "espresso" in tree

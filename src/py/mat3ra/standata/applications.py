@@ -1,13 +1,27 @@
 from collections import defaultdict
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from .base import Standata, StandataData
 from .data.applications import applications_data
+from .data.executable_flavor_map_by_application import (
+    executable_flavor_map_by_application_data as EXECUTABLE_FLAVOR_MAP_BY_APPLICATION,
+)
 
 
 class ApplicationStandata(Standata):
     data_dict: Dict = applications_data
     data: StandataData = StandataData(data_dict)
+
+    @classmethod
+    def get_app_tree_for_application(cls, app_name: str) -> Dict[str, Any]:
+        executable_data = EXECUTABLE_FLAVOR_MAP_BY_APPLICATION
+        if app_name not in executable_data:
+            raise ValueError(f"{app_name} is not a known application with executable tree.")
+        return executable_data[app_name]
+
+    @classmethod
+    def get_all_app_tree(cls) -> Dict[str, Any]:
+        return EXECUTABLE_FLAVOR_MAP_BY_APPLICATION
 
     @classmethod
     def list_all(cls) -> Dict[str, List[dict]]:
@@ -33,5 +47,3 @@ class ApplicationStandata(Standata):
 
         print("\n".join(lines))
         return dict(grouped)
-
-
