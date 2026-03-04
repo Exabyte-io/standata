@@ -152,3 +152,8 @@ export const BUILD_CONFIG = {
         sortKeys: false,
     },
 };
+
+export const EXCLUDE_KEYS_FROM_SORTING = [
+    "SOFTWARE_LIBRARIES_PATH",
+    "SOFTWARE_COMPILERS_PATH",
+];
