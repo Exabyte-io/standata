@@ -9,8 +9,8 @@
                 "shortName": "py",
                 "summary": "Python Script",
                 "build": "GNU",
-                "version": "3.10.13",
                 "isDefault": true,
+                "version": "3.10.13",
                 "schemaVersion": "2022.8.16"
             },
             "properties": [],
@@ -42,8 +42,8 @@
                         "shortName": "py",
                         "summary": "Python Script",
                         "build": "GNU",
-                        "version": "3.10.13",
                         "isDefault": true,
+                        "version": "3.10.13",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
@@ -55,7 +55,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "isDefault": true,
+                        "applicationName": "python",
+                        "executableName": "python",
                         "input": [
                             {
                                 "name": "script.py",
@@ -65,11 +66,10 @@
                                 "name": "requirements.txt"
                             }
                         ],
+                        "isDefault": true,
                         "monitors": [
                             "standard_output"
                         ],
-                        "applicationName": "python",
-                        "executableName": "python",
                         "name": "hello_world",
                         "schemaVersion": "2022.8.16"
                     },
@@ -78,20 +78,20 @@
                     "tags": [],
                     "input": [
                         {
-                            "content": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example python script for Exabyte.io platform.                  #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport numpy as np\n\npi_value = np.pi\nprint(pi_value)\n",
-                            "name": "script.py",
-                            "contextProviders": [],
                             "applicationName": "python",
+                            "content": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example python script for Exabyte.io platform.                  #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport numpy as np\n\npi_value = np.pi\nprint(pi_value)\n",
+                            "contextProviders": [],
                             "executableName": "python",
+                            "name": "script.py",
                             "rendered": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example python script for Exabyte.io platform.                  #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport numpy as np\n\npi_value = np.pi\nprint(pi_value)\n",
                             "schemaVersion": "2022.8.16"
                         },
                         {
-                            "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n#  Adjust the list to include your preferred packages.              #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\nnumpy<2\n",
-                            "name": "requirements.txt",
-                            "contextProviders": [],
                             "applicationName": "python",
+                            "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n#  Adjust the list to include your preferred packages.              #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\nnumpy<2\n",
+                            "contextProviders": [],
                             "executableName": "python",
+                            "name": "requirements.txt",
                             "rendered": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n#  Adjust the list to include your preferred packages.              #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\nnumpy<2\n",
                             "schemaVersion": "2022.8.16"
                         }

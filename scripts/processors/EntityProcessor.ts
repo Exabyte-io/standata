@@ -24,6 +24,7 @@ export interface EntityProcessorOptions {
     categoryKeys?: string[];
     excludedAssetFiles?: string[];
     areKeysSorted?: boolean;
+    excludeKeys?: string[];
 }
 
 export type AssetRecord = {
@@ -214,7 +215,9 @@ export abstract class EntityProcessor {
             const destinationPath = path.resolve(destinationBaseDir, relativePath);
             serverUtils.file.createDirIfNotExistsSync(path.dirname(destinationPath));
             const content = serverUtils.json.readJSONFileSync(filePath);
-            const finalContent = shouldSort ? Utils.object.sortKeysDeepForObject(content) : content;
+            const finalContent = shouldSort
+                ? Utils.object.sortKeysDeepForObject(content, this.options.excludeKeys)
+                : content;
             serverUtils.json.writeJSONFileSync(destinationPath, finalContent, {
                 spaces: BUILD_CONFIG.buildJSONFormat.spaces,
             });
@@ -274,8 +277,15 @@ export abstract class EntityProcessor {
         return runtimeDataConfig;
     }
 
-    static createJsRuntimeFile(content: object, fullPath: string, areKeysSorted = true): void {
-        const finalContent = areKeysSorted ? Utils.object.sortKeysDeepForObject(content) : content;
+    static createJsRuntimeFile(
+        content: object,
+        fullPath: string,
+        areKeysSorted = true,
+        excludeKeys?: string[],
+    ): void {
+        const finalContent = areKeysSorted
+            ? Utils.object.sortKeysDeepForObject(content, excludeKeys)
+            : content;
         serverUtils.json.writeJSONFileSync(fullPath, finalContent, { spaces: 0 });
         console.log(`Written JS runtime data to "${fullPath}"`);
     }
@@ -294,6 +304,7 @@ export abstract class EntityProcessor {
             runtimeData,
             this.runtimeDataJsPath,
             this.options.areKeysSorted,
+            this.options.excludeKeys,
         );
         this.createPythonRuntimeModule(runtimeData, this.runtimeDataPyPath);
     }

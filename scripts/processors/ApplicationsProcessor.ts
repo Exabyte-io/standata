@@ -19,7 +19,8 @@ export class ApplicationsProcessor extends EntityProcessor {
             dataDir: BUILD_CONFIG.applications.data.path,
             buildDir: BUILD_CONFIG.applications.build.path,
             categoriesRelativePath: BUILD_CONFIG.applications.assets.categories,
-            areKeysSorted: false,
+            areKeysSorted: true,
+            excludeKeys: ["SOFTWARE_LIBRARIES_PATH", "SOFTWARE_COMPILERS_PATH"],
         });
     }
 

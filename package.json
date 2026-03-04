@@ -32,7 +32,7 @@
         "@mat3ra/ade": "2025.11.19-0",
         "@mat3ra/wode": "2026.2.9-0",
         "@mat3ra/mode": "2025.12.25-0",
-        "@mat3ra/utils": "^2025.12.2-0",
+        "@mat3ra/utils": "git+https://github.com/Exabyte-io/utils.git#2a697c2434827bf6b1a1deb993085613b378ee7e",
         "@mat3ra/code": "^2025.8.7-0",
         "@mat3ra/tsconfig": "^2024.6.3-0",
         "@mat3ra/esse": "git+https://github.com/Exabyte-io/esse.git#297d370d64318ab80d44871d683f240430a44acb",

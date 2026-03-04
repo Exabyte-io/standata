@@ -33,8 +33,8 @@
                 "shortName": "sh",
                 "summary": "Shell Script",
                 "build": "GNU",
-                "version": "5.1.8",
                 "isDefault": true,
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
@@ -46,17 +46,17 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "isDefault": true,
+                "applicationName": "shell",
+                "executableName": "sh",
                 "input": [
                     {
                         "name": "hello_world.sh"
                     }
                 ],
+                "isDefault": true,
                 "monitors": [
                     "standard_output"
                 ],
-                "applicationName": "shell",
-                "executableName": "sh",
                 "name": "hello_world",
                 "schemaVersion": "2022.8.16"
             },
@@ -65,11 +65,11 @@
             "tags": [],
             "input": [
                 {
-                    "content": "#!/bin/bash\n# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example shell script for Exabyte.io platform.                   #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. shebang line is read from the first line above             #\n#    2. based on shebang one of the shell types is selected:       #\n#       - /bin/bash                                                #\n#       - /bin/csh                                                 #\n#       - /bin/tclsh                                               #\n#       - /bin/tcsh                                                #\n#       - /bin/zsh                                                 #\n#    3. runtime directory for this calculation is created          #\n#    4. the content of the script is executed                      #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\necho \"Hello world!\"\n",
-                    "name": "hello_world.sh",
-                    "contextProviders": [],
                     "applicationName": "shell",
+                    "content": "#!/bin/bash\n# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example shell script for Exabyte.io platform.                   #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. shebang line is read from the first line above             #\n#    2. based on shebang one of the shell types is selected:       #\n#       - /bin/bash                                                #\n#       - /bin/csh                                                 #\n#       - /bin/tclsh                                               #\n#       - /bin/tcsh                                                #\n#       - /bin/zsh                                                 #\n#    3. runtime directory for this calculation is created          #\n#    4. the content of the script is executed                      #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\necho \"Hello world!\"\n",
+                    "contextProviders": [],
                     "executableName": "sh",
+                    "name": "hello_world.sh",
                     "rendered": "#!/bin/bash\n# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example shell script for Exabyte.io platform.                   #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. shebang line is read from the first line above             #\n#    2. based on shebang one of the shell types is selected:       #\n#       - /bin/bash                                                #\n#       - /bin/csh                                                 #\n#       - /bin/tclsh                                               #\n#       - /bin/tcsh                                                #\n#       - /bin/zsh                                                 #\n#    3. runtime directory for this calculation is created          #\n#    4. the content of the script is executed                      #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\necho \"Hello world!\"\n",
                     "schemaVersion": "2022.8.16"
                 }
