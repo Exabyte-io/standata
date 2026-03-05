@@ -59,10 +59,10 @@ def test_executable_flavor_map_by_application_has_espresso_pw_x():
 
 
 def test_application_standata_get_app_tree_for_application():
-    tree = ApplicationStandata.get_app_tree_for_application("espresso")
+    tree = ApplicationStandata.get_executable_flavor_map_by_application_name("espresso")
     assert "pw.x" in tree
 
 
 def test_application_standata_get_all_app_tree():
-    tree = ApplicationStandata.get_all_app_tree()
+    tree = ApplicationStandata.get_executable_flavor_map()
     assert "espresso" in tree

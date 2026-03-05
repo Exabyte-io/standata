@@ -3,9 +3,7 @@ from typing import Any, Dict, List
 
 from .base import Standata, StandataData
 from .data.applications import applications_data
-from .data.executable_flavor_map_by_application import (
-    executable_flavor_map_by_application_data as EXECUTABLE_FLAVOR_MAP_BY_APPLICATION,
-)
+from .data.executable_flavor_map_by_application import executable_flavor_map_by_application_data
 
 
 class ApplicationStandata(Standata):
@@ -13,15 +11,15 @@ class ApplicationStandata(Standata):
     data: StandataData = StandataData(data_dict)
 
     @classmethod
-    def get_app_tree_for_application(cls, app_name: str) -> Dict[str, Any]:
-        executable_data = EXECUTABLE_FLAVOR_MAP_BY_APPLICATION
+    def get_executable_flavor_map_by_application_name(cls, app_name: str) -> Dict[str, Any]:
+        executable_data = executable_flavor_map_by_application_data
         if app_name not in executable_data:
             raise ValueError(f"{app_name} is not a known application with executable tree.")
         return executable_data[app_name]
 
     @classmethod
-    def get_all_app_tree(cls) -> Dict[str, Any]:
-        return EXECUTABLE_FLAVOR_MAP_BY_APPLICATION
+    def get_executable_flavor_map(cls) -> Dict[str, Any]:
+        return executable_flavor_map_by_application_data
 
     @classmethod
     def list_all(cls) -> Dict[str, List[dict]]:
