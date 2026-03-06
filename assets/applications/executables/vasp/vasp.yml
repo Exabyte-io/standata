@@ -1,30 +1,30 @@
 isDefault: true
 postProcessors:
-  - error_handler
-  - prepare_restart
-  - remove_non_zero_weight_kpoints
+  - name: error_handler
+  - name: prepare_restart
+  - name: remove_non_zero_weight_kpoints
 monitors:
-  - standard_output
-  - convergence_ionic
-  - convergence_electronic
+  - name: standard_output
+  - name: convergence_ionic
+  - name: convergence_electronic
 results:
-  - atomic_forces
-  - band_gaps
-  - band_structure
-  - density_of_states
-  - fermi_energy
-  - pressure
-  - stress_tensor
-  - total_energy
-  - total_energy_contributions
-  - total_force
-  - zero_point_energy
-  - final_structure
-  - magnetic_moments
-  - reaction_energy_barrier
-  - reaction_energy_profile
-  - potential_profile
-  - charge_density_profile
+  - name: atomic_forces
+  - name: band_gaps
+  - name: band_structure
+  - name: density_of_states
+  - name: fermi_energy
+  - name: pressure
+  - name: stress_tensor
+  - name: total_energy
+  - name: total_energy_contributions
+  - name: total_force
+  - name: zero_point_energy
+  - name: final_structure
+  - name: magnetic_moments
+  - name: reaction_energy_barrier
+  - name: reaction_energy_profile
+  - name: potential_profile
+  - name: charge_density_profile
 flavors:
   vasp:
     isDefault: true
@@ -33,16 +33,16 @@ flavors:
       - name: KPOINTS
       - name: POSCAR
     results:
-      - total_energy
-      - total_energy_contributions
-      - pressure
-      - fermi_energy
-      - atomic_forces
-      - total_force
-      - stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: pressure
+      - name: fermi_energy
+      - name: atomic_forces
+      - name: total_force
+      - name: stress_tensor
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: vasp
     executableName: vasp
 
@@ -53,16 +53,16 @@ flavors:
       - name: KPOINTS
       - name: POSCAR
     results:
-      - total_energy
-      - total_energy_contributions
-      - pressure
-      - fermi_energy
-      - atomic_forces
-      - total_force
-      - stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: pressure
+      - name: fermi_energy
+      - name: atomic_forces
+      - name: total_force
+      - name: stress_tensor
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: vasp
     executableName: vasp
 
@@ -75,10 +75,10 @@ flavors:
       - name: POSCAR
         templateName: ''
     results:
-      - band_structure
+      - name: band_structure
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: vasp
     executableName: vasp
 
@@ -91,11 +91,11 @@ flavors:
       - name: POSCAR
         templateName: POSCAR
     results:
-      - band_gaps
-      - fermi_energy
+      - name: band_gaps
+      - name: fermi_energy
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: vasp
     executableName: vasp
 
@@ -107,16 +107,16 @@ flavors:
       - name: KPOINTS
       - name: POSCAR
     results:
-      - total_energy
-      - total_energy_contributions
-      - pressure
-      - fermi_energy
-      - atomic_forces
-      - total_force
-      - stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: pressure
+      - name: fermi_energy
+      - name: atomic_forces
+      - name: total_force
+      - name: stress_tensor
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: vasp
     executableName: vasp
 
@@ -130,10 +130,10 @@ flavors:
       - name: POSCAR
         templateName: ''
     results:
-      - band_structure
+      - name: band_structure
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: vasp
     executableName: vasp
 
@@ -147,11 +147,11 @@ flavors:
       - name: POSCAR
         templateName: POSCAR
     results:
-      - band_gaps
-      - fermi_energy
+      - name: band_gaps
+      - name: fermi_energy
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: vasp
     executableName: vasp
 
@@ -164,19 +164,19 @@ flavors:
       - name: POSCAR
         templateName: POSCAR
     results:
-      - total_energy
-      - atomic_forces
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_force
-      - final_structure
+      - name: total_energy
+      - name: atomic_forces
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_force
+      - name: final_structure
     monitors:
-      - standard_output
-      - convergence_electronic
-      - convergence_ionic
+      - name: standard_output
+      - name: convergence_electronic
+      - name: convergence_ionic
     postProcessors:
-      - prepare_restart
+      - name: prepare_restart
     applicationName: vasp
     executableName: vasp
 
@@ -189,19 +189,19 @@ flavors:
       - name: POSCAR
         templateName: POSCAR
     results:
-      - total_energy
-      - atomic_forces
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - total_force
-      - final_structure
+      - name: total_energy
+      - name: atomic_forces
+      - name: fermi_energy
+      - name: pressure
+      - name: stress_tensor
+      - name: total_force
+      - name: final_structure
     monitors:
-      - standard_output
-      - convergence_electronic
-      - convergence_ionic
+      - name: standard_output
+      - name: convergence_electronic
+      - name: convergence_ionic
     postProcessors:
-      - prepare_restart
+      - name: prepare_restart
     applicationName: vasp
     executableName: vasp
 
@@ -214,17 +214,17 @@ flavors:
       - name: POSCAR
         templateName: POSCAR
     results:
-      - total_energy
-      - fermi_energy
-      - pressure
-      - atomic_forces
-      - stress_tensor
-      - total_force
-      - zero_point_energy
+      - name: total_energy
+      - name: fermi_energy
+      - name: pressure
+      - name: atomic_forces
+      - name: stress_tensor
+      - name: total_force
+      - name: zero_point_energy
     monitors:
-      - standard_output
-      - convergence_electronic
-      - convergence_ionic
+      - name: standard_output
+      - name: convergence_electronic
+      - name: convergence_ionic
     applicationName: vasp
     executableName: vasp
 
@@ -238,16 +238,16 @@ flavors:
       - name: POSCAR
         templateName: POSCAR
     results:
-      - total_energy
-      - total_energy_contributions
-      - pressure
-      - fermi_energy
-      - atomic_forces
-      - total_force
-      - stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: pressure
+      - name: fermi_energy
+      - name: atomic_forces
+      - name: total_force
+      - name: stress_tensor
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: vasp
     executableName: vasp
 
@@ -260,17 +260,17 @@ flavors:
       - name: POSCAR
         templateName: POSCAR
     results:
-      - total_energy
-      - total_energy_contributions
-      - pressure
-      - fermi_energy
-      - atomic_forces
-      - total_force
-      - stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: pressure
+      - name: fermi_energy
+      - name: atomic_forces
+      - name: total_force
+      - name: stress_tensor
     monitors:
-      - standard_output
-      - convergence_electronic
-      - convergence_ionic
+      - name: standard_output
+      - name: convergence_electronic
+      - name: convergence_ionic
     applicationName: vasp
     executableName: vasp
 
@@ -282,10 +282,10 @@ flavors:
       - name: KPOINTS
         templateName: KPOINTS
     results:
-      - reaction_energy_barrier
-      - reaction_energy_profile
+      - name: reaction_energy_barrier
+      - name: reaction_energy_profile
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: vasp
     executableName: vasp
 
@@ -298,16 +298,16 @@ flavors:
       - name: POSCAR
         templateName: POSCAR_NEB_INITIAL
     results:
-      - total_energy
-      - total_energy_contributions
-      - pressure
-      - fermi_energy
-      - atomic_forces
-      - total_force
-      - stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: pressure
+      - name: fermi_energy
+      - name: atomic_forces
+      - name: total_force
+      - name: stress_tensor
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: vasp
     executableName: vasp
 
@@ -320,15 +320,15 @@ flavors:
       - name: POSCAR
         templateName: POSCAR_NEB_FINAL
     results:
-      - total_energy
-      - total_energy_contributions
-      - pressure
-      - fermi_energy
-      - atomic_forces
-      - total_force
-      - stress_tensor
+      - name: total_energy
+      - name: total_energy_contributions
+      - name: pressure
+      - name: fermi_energy
+      - name: atomic_forces
+      - name: total_force
+      - name: stress_tensor
     monitors:
-      - standard_output
-      - convergence_electronic
+      - name: standard_output
+      - name: convergence_electronic
     applicationName: vasp
     executableName: vasp

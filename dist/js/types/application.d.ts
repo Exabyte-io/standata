@@ -1,20 +1,19 @@
-import { ApplicationSchemaBase, ExecutableSchema } from "@mat3ra/esse/dist/js/types";
-export type ApplicationVersionInfo = Pick<ApplicationSchemaBase, "isDefault" | "build" | "hasAdvancedComputeOptions"> & {
-    version: Required<ApplicationSchemaBase>["version"];
-};
-export type DefaultApplicationConfig = Pick<ApplicationSchemaBase, "name" | "shortName" | "version" | "summary" | "build">;
-export type ApplicationVersionsMapType = Pick<ApplicationSchemaBase, "shortName" | "summary" | "isLicensed"> & {
+import { ApplicationSchema, ExecutableSchema, FlavorSchema } from "@mat3ra/esse/dist/js/types";
+type OptionalExecutableSchema = Partial<ExecutableSchema>;
+export type ApplicationVersionInfo = Pick<ApplicationSchema, "isDefault" | "build" | "hasAdvancedComputeOptions" | "version">;
+export type ApplicationVersionsMapType = Pick<ApplicationSchema, "name" | "shortName" | "summary" | "isLicensed"> & {
     defaultVersion: string;
     versions: ApplicationVersionInfo[];
-    name: Required<ApplicationSchemaBase>["name"];
 };
 export type ApplicationVersionsMapByApplicationType = {
     [key: string]: ApplicationVersionsMapType;
 };
-export interface ExecutableTreeItem extends Pick<ExecutableSchema, "name" | "hasAdvancedComputeOptions"> {
-    isDefault?: ApplicationSchemaBase["isDefault"];
-    supportedApplicationVersions?: ApplicationSchemaBase["version"][];
-    flavors?: Record<string, any>;
+type OptionalFlavorSchema = Partial<FlavorSchema>;
+type Flavor = Pick<FlavorSchema, "input" | "monitors" | "applicationName" | "executableName"> & Pick<OptionalFlavorSchema, "results">;
+export type ExecutableTreeItem = Pick<ExecutableSchema, "hasAdvancedComputeOptions" | "isDefault" | "monitors" | "results"> & Pick<OptionalExecutableSchema, "postProcessors"> & {
+    supportedApplicationVersions?: ApplicationSchema["version"][];
+    flavors?: Record<string, Flavor>;
     [key: string]: any;
-}
-export type ApplicationExecutableTree = Record<string, ExecutableTreeItem>;
+};
+export type ApplicationExecutableTree = Record<string, Record<string, ExecutableTreeItem>>;
+export {};

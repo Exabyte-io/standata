@@ -11,36 +11,34 @@ const executableFlavorMapByApplication_json_1 = __importDefault(require("./runti
 const templatesList_json_1 = __importDefault(require("./runtime_data/applications/templatesList.json"));
 const applicationVersionMap_1 = require("./utils/applicationVersionMap");
 const TEMPLATES_LIST = templatesList_json_1.default;
+const APP_VERSIONS = applicationVersionsMapByApplication_json_1.default;
+const EXECUTABLE_FLAVOR = executableFlavorMapByApplication_json_1.default;
 var TAGS;
 (function (TAGS) {
     TAGS["DEFAULT"] = "default";
     TAGS["DEFAULT_VERSION"] = "default_version";
     TAGS["DEFAULT_BUILD"] = "default_build";
-})(TAGS = exports.TAGS || (exports.TAGS = {}));
+})(TAGS || (exports.TAGS = TAGS = {}));
 class ApplicationStandata extends base_1.Standata {
-    // eslint-disable-next-line class-methods-use-this
     getAppDataForApplication(appName) {
-        const applicationVersionsMap = applicationVersionsMapByApplication_json_1.default[appName];
+        const applicationVersionsMap = APP_VERSIONS[appName];
         if (!applicationVersionsMap) {
             throw new Error(`Application ${appName} not found`);
         }
         return applicationVersionsMap;
     }
-    // eslint-disable-next-line class-methods-use-this
     getAppTreeForApplication(appName) {
         // TODO: Convert to use this.findEntitiesByTags() when tree data is in Standata format
-        const executableData = executableFlavorMapByApplication_json_1.default;
+        const executableData = EXECUTABLE_FLAVOR;
         if (!(appName in executableData)) {
             throw new Error(`${appName} is not a known application with executable tree.`);
         }
         return executableData[appName];
     }
-    // eslint-disable-next-line class-methods-use-this
     getAllAppTemplates() {
         // TODO: Convert to use this.getAll() when template data is in Standata format
         return TEMPLATES_LIST;
     }
-    // eslint-disable-next-line class-methods-use-this
     getAllAppTree() {
         // TODO: Convert to use this.getAll() when tree data is in Standata format
         return executableFlavorMapByApplication_json_1.default;
@@ -55,7 +53,6 @@ class ApplicationStandata extends base_1.Standata {
     getAllAppData() {
         return this.getAll();
     }
-    // eslint-disable-next-line class-methods-use-this
     getTemplatesByName(appName, execName, templateName) {
         // TODO: Convert to use this.findEntitiesByTags() when template data is in Standata format
         const templates = TEMPLATES_LIST;
@@ -75,11 +72,11 @@ class ApplicationStandata extends base_1.Standata {
         return allEntities.filter((entity) => entity.name === appName);
     }
     static getDefaultVersionForApplication(appName) {
-        const applicationVersionsMap = new applicationVersionMap_1.ApplicationVersionsMap(applicationVersionsMapByApplication_json_1.default[appName]);
+        const applicationVersionsMap = new applicationVersionMap_1.ApplicationVersionsMap(APP_VERSIONS[appName]);
         return applicationVersionsMap.defaultVersion;
     }
     static getDefaultBuildForApplicationAndVersion(appName, version) {
-        const applicationVersionsMap = new applicationVersionMap_1.ApplicationVersionsMap(applicationVersionsMapByApplication_json_1.default[appName]);
+        const applicationVersionsMap = new applicationVersionMap_1.ApplicationVersionsMap(APP_VERSIONS[appName]);
         const versionConfig = applicationVersionsMap.versionConfigs.find((config) => config.version === version && config.isDefault);
         if (!versionConfig) {
             throw new Error(`No default build found for ${appName} with version ${version}`);

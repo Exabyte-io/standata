@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.filterMethodsByModel = exports.ModelMethodFilter = void 0;
+exports.ModelMethodFilter = void 0;
+exports.filterMethodsByModel = filterMethodsByModel;
 const modelMethodMap_json_1 = __importDefault(require("./runtime_data/models/modelMethodMap.json"));
 class ModelMethodFilter {
     constructor() {
@@ -85,4 +86,3 @@ function filterMethodsByModel({ methodList, model, }) {
     const modelMethodFilter = new ModelMethodFilter();
     return modelMethodFilter.getCompatibleMethods(model, methodList);
 }
-exports.filterMethodsByModel = filterMethodsByModel;
