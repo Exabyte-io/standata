@@ -153,6 +153,8 @@ export const BUILD_CONFIG = {
     },
 };
 
+// sometimes we need to define certain keys prior to using them later in another
+// key, e.g., environment variables, which must be excluded from sorting
 export const EXCLUDE_KEYS_FROM_SORTING = [
     "SOFTWARE_LIBRARIES_PATH",
     "SOFTWARE_COMPILERS_PATH",
