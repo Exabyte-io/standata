@@ -2,7 +2,6 @@
     "name": "Valence Band Offset (2D)",
     "subworkflows": [
         {
-            "isMultiMaterial": true,
             "_id": "9c65d03e-6a30-58f3-947a-f174342be0c3",
             "name": "BS + Avg ESP (Interface)",
             "application": {
@@ -663,7 +662,6 @@
             ]
         },
         {
-            "isMultiMaterial": true,
             "_id": "ba46d9b4-610f-537e-ae39-e39ce5240cda",
             "name": "BS + Avg ESP (interface left)",
             "application": {
@@ -1324,7 +1322,6 @@
             ]
         },
         {
-            "isMultiMaterial": true,
             "_id": "aa611fe8-1e6a-5e5c-976a-f64bfaaaace9",
             "name": "BS + Avg ESP (interface right)",
             "application": {
@@ -2195,6 +2192,7 @@
     ],
     "_id": "d8e08cac-7747-50aa-b925-41f214d722c6",
     "workflows": [],
+    "isMultiMaterial": true,
     "schemaVersion": "2022.8.16",
     "isDefault": false,
     "application": {
