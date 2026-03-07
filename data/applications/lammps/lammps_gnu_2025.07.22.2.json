@@ -4,5 +4,13 @@
     "summary": "LAMMPS",
     "version": "2025.07.22.2",
     "isDefault": true,
-    "build": "GNU"
+    "build": "GNU",
+    "buildConfig": {
+        "moduleName": "2025.07.22.2-gnu",
+        "imageName": "lammps",
+        "imageTag": "2025.07.22.2-gnu-0",
+        "bio": "LAMMPS 22Jul2025Update2 (GNU Build)",
+        "dependencies": [],
+        "environmentVariables": {}
+    }
 }

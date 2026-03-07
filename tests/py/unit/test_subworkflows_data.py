@@ -13,7 +13,6 @@ SUBWORKFLOW = SimpleNamespace(
     FILENAME="espresso/pw_scf.json",
     EXACT_NAME="pw-scf",
     RELAXATION_NAME="Variable-cell Relaxation",
-
 )
 
 
