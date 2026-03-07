@@ -216,7 +216,7 @@ export abstract class EntityProcessor {
             serverUtils.file.createDirIfNotExistsSync(path.dirname(destinationPath));
             const content = serverUtils.json.readJSONFileSync(filePath);
             const finalContent = shouldSort
-                ? Utils.object.sortKeysDeepForObject(content, this.options.excludeKeys)
+                ? Utils.object.sortKeysDeepForObjectWithExclude(content, this.options.excludeKeys)
                 : content;
             serverUtils.json.writeJSONFileSync(destinationPath, finalContent, {
                 spaces: BUILD_CONFIG.buildJSONFormat.spaces,
@@ -284,7 +284,7 @@ export abstract class EntityProcessor {
         excludeKeys?: string[],
     ): void {
         const finalContent = areKeysSorted
-            ? Utils.object.sortKeysDeepForObject(content, excludeKeys)
+            ? Utils.object.sortKeysDeepForObjectWithExclude(content, excludeKeys)
             : content;
         serverUtils.json.writeJSONFileSync(fullPath, finalContent, { spaces: 0 });
         console.log(`Written JS runtime data to "${fullPath}"`);
