@@ -2,7 +2,6 @@
     "name": "Nudged Elastic Band (NEB)",
     "subworkflows": [
         {
-            "isMultiMaterial": true,
             "_id": "c9034468-df28-5357-8912-02226f919042",
             "name": "Nudged Elastic Band (NEB)",
             "application": {
@@ -140,6 +139,7 @@
     ],
     "_id": "6dc0a5af-7ec5-50e4-b663-42fc5ddf0ef1",
     "workflows": [],
+    "isMultiMaterial": true,
     "schemaVersion": "2022.8.16",
     "isDefault": false,
     "application": {
