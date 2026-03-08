@@ -26,6 +26,22 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 summary: string;
                 version: string;
             };
+            "lammps/lammps_gnu_2025.07.22.2.json": {
+                build: string;
+                buildConfig: {
+                    bio: string;
+                    dependencies: never[];
+                    environmentVariables: {};
+                    imageName: string;
+                    imageTag: string;
+                    moduleName: string;
+                };
+                isDefault: boolean;
+                name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+            };
             "nwchem/nwchem_gnu_7.0.2.json": {
                 build: string;
                 buildConfig: {
@@ -909,6 +925,25 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         results: never[];
                     };
                 };
+                monitors: string[];
+                results: never[];
+            };
+        };
+        lammps: {
+            lmp: {
+                flavors: {
+                    emin: {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                        }[];
+                        isDefault: boolean;
+                        monitors: string[];
+                        results: never[];
+                    };
+                };
+                isDefault: boolean;
                 monitors: string[];
                 results: never[];
             };

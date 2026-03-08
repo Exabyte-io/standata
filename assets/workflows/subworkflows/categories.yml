@@ -35,6 +35,7 @@ categories:
     - wfn_plot
   application:
     - espresso
+    - lammps
     - nwchem
     - python
     - shell
@@ -395,6 +396,9 @@ entities:
       - total_energy_contributions
       - total_force
       - zero_point_energy
+  - filename: lammps/emin.json
+    categories:
+      - lammps
   - filename: nwchem/total_energy.json
     categories:
       - nwchem
