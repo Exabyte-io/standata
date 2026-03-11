@@ -255,6 +255,16 @@ entities:
       - stress_tensor
       - total_energy
       - total_force
+  - filename: espresso/ldos.json
+    categories:
+      - atomic_forces
+      - espresso
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
   - filename: espresso/neb.json
     categories:
       - espresso
