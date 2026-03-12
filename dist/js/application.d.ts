@@ -426,6 +426,15 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         monitors: string[];
                         results: never[];
                     };
+                    pp_ldos: {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: string[];
+                        results: never[];
+                    };
                     pp_wfn: {
                         applicationName: string;
                         executableName: string;
