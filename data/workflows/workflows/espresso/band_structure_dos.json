@@ -292,11 +292,11 @@
                     "input": [
                         {
                             "applicationName": "espresso",
-                            "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
+                            "content": "&BANDS\n    prefix = '__prefix__'\n    lsym = .false.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
                             "contextProviders": [],
                             "executableName": "bands.x",
                             "name": "bands.in",
-                            "rendered": "&BANDS\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n",
+                            "rendered": "&BANDS\n    prefix = '__prefix__'\n    lsym = .false.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n",
                             "schemaVersion": "2022.8.16"
                         }
                     ],
