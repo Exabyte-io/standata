@@ -15,3 +15,9 @@
   contextProviders: []
   applicationName: espresso
   executableName: pp.x
+
+- content: !readFile 'input_files_templates/espresso/pp_ldos.j2.in'
+  name: pp_ldos.in
+  contextProviders: []
+  applicationName: espresso
+  executableName: pp.x

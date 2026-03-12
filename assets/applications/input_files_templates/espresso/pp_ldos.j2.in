@@ -1,0 +1,13 @@
+&INPUTPP
+    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}
+    prefix = '__prefix__'
+    plot_num = 3
+    emin = -5.0
+    emax = 5.0
+    filplot = 'ldos.dat'
+/
+&PLOT
+    iflag = 3
+    output_format = 5
+    fileout = 'ldos.xsf'
+/

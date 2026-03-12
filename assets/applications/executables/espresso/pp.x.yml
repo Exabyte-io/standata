@@ -29,3 +29,12 @@ flavors:
       - standard_output
     applicationName: espresso
     executableName: pp.x
+
+  pp_ldos:
+    input:
+      - name: pp_ldos.in
+    results: []
+    monitors:
+      - standard_output
+    applicationName: espresso
+    executableName: pp.x
