@@ -11,6 +11,14 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
         filesMapByName: {
             "espresso/espresso_gnu_6.3.json": {
                 build: string;
+                buildConfig: {
+                    bio: string;
+                    dependencies: string[];
+                    environmentVariables: {};
+                    imageName: string;
+                    imageTag: string;
+                    moduleName: string;
+                };
                 hasAdvancedComputeOptions: boolean;
                 isDefault: boolean;
                 name: string;
@@ -20,6 +28,17 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
             };
             "nwchem/nwchem_gnu_7.0.2.json": {
                 build: string;
+                buildConfig: {
+                    bio: string;
+                    dependencies: string[];
+                    environmentVariables: {
+                        APPTAINERENV_NWCHEM_BASIS_LIBRARY: string;
+                        NWCHEMRC_PATH: string;
+                    };
+                    imageName: string;
+                    imageTag: string;
+                    moduleName: string;
+                };
                 isDefault: boolean;
                 name: string;
                 shortName: string;
@@ -44,6 +63,14 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
             };
             "vasp/vasp_gnu_5.4.4.json": {
                 build: string;
+                buildConfig: {
+                    bio: string;
+                    dependencies: string[];
+                    environmentVariables: {};
+                    imageName: string;
+                    imageTag: string;
+                    moduleName: string;
+                };
                 isDefault: boolean;
                 isLicensed: boolean;
                 name: string;

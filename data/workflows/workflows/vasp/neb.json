@@ -2,7 +2,6 @@
     "name": "Nudged Elastic Band (NEB)",
     "subworkflows": [
         {
-            "isMultiMaterial": true,
             "_id": "792e8c42-86ce-5f01-812a-66378ec4f379",
             "name": "Initial/Final Total Energies",
             "application": {
@@ -350,7 +349,6 @@
             ]
         },
         {
-            "isMultiMaterial": true,
             "_id": "c9b7ad2a-5207-5e41-9b66-28474a8921f8",
             "name": "Prepare Directories",
             "application": {
@@ -440,7 +438,6 @@
             ]
         },
         {
-            "isMultiMaterial": true,
             "_id": "e6215fb9-e60c-541b-b73e-b077d64b3a95",
             "name": "Nudged Elastic Band (NEB)",
             "application": {
@@ -634,6 +631,7 @@
     ],
     "_id": "df41740d-5989-553c-b845-0559d6f8f86b",
     "workflows": [],
+    "isMultiMaterial": true,
     "schemaVersion": "2022.8.16",
     "isDefault": false,
     "application": {

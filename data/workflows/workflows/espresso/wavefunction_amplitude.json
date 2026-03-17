@@ -407,6 +407,8 @@
                         ],
                         "results": [
                             {
+                                "basename": "wf_r.png",
+                                "filetype": "image",
                                 "name": "file_content"
                             }
                         ],

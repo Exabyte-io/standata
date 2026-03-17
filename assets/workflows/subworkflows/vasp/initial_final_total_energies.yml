@@ -2,7 +2,6 @@ application:
   name: vasp
   version: 5.4.4
 config:
-  isMultiMaterial: true
   functions:
     setDefaultCompute: null
 method:
