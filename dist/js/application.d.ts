@@ -38,6 +38,10 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 };
                 isDefault: boolean;
                 name: string;
+                runConfig: {
+                    commandTemplate: string;
+                    stdOutFile: string;
+                };
                 shortName: string;
                 summary: string;
                 version: string;

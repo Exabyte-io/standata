@@ -2,6 +2,10 @@
     "name": "lammps",
     "shortName": "lmp",
     "summary": "LAMMPS",
+    "runConfig": {
+        "commandTemplate": "{BASE_CMD} &&\nmodule load {MODULE} &&\n$EXEC_CMD mpirun -np {NP} {EXECUTABLE} {INPUTFILE} > {OUTPUTFILE} 2>&1\n",
+        "stdOutFile": "log.out"
+    },
     "version": "2025.07.22.2",
     "build": "CUDA",
     "isDefault": false,

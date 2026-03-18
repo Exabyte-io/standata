@@ -2,6 +2,12 @@ name: lammps
 shortName: lmp
 summary: LAMMPS
 defaultVersion: '2025.07.22.2'
+runConfig:
+  commandTemplate: |
+    {BASE_CMD} &&
+    module load {MODULE} &&
+    $EXEC_CMD mpirun -np {NP} {EXECUTABLE} {INPUTFILE} > {OUTPUTFILE} 2>&1
+  stdOutFile: 'log.out'
 versions:
   - version: '2025.07.22.2'
     isDefault: true
