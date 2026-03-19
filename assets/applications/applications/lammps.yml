@@ -6,7 +6,7 @@ runConfig:
   commandTemplate: |
     {BASE_CMD} &&
     module load {MODULE} &&
-    $EXEC_CMD mpirun -np {NP} {EXECUTABLE} -i {INPUTFILE} > {OUTPUTFILE} 2>&1
+    $EXEC_CMD mpirun -np {NP} {EXECUTABLE} -i {INPUTFILE} -l {OUTPUTFILE}
   stdOutFile: 'log.out'
 versions:
   - version: '2025.07.22.2'
