@@ -53,10 +53,9 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "hello_world",
-                "results": [],
                 "preProcessors": [],
                 "postProcessors": [],
+                "results": [],
                 "applicationName": "python",
                 "executableName": "python",
                 "input": [
@@ -74,6 +73,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "hello_world",
                 "schemaVersion": "2022.8.16"
             },
             "input": [

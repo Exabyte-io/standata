@@ -54,10 +54,9 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "bash_vasp_prepare_neb_images",
-                "results": [],
                 "preProcessors": [],
                 "postProcessors": [],
+                "results": [],
                 "applicationName": "shell",
                 "executableName": "sh",
                 "input": [
@@ -70,6 +69,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "bash_vasp_prepare_neb_images",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

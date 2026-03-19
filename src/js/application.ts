@@ -7,6 +7,7 @@ import APPLICATION_VERSIONS_MAP from "./runtime_data/applications/applicationVer
 import EXECUTABLE_FLAVOR_MAP from "./runtime_data/applications/executableFlavorMapByApplication.json";
 import TEMPLATES_LIST_RAW from "./runtime_data/applications/templatesList.json";
 import {
+    type ExecutableTreeItem,
     ApplicationExecutableTree,
     ApplicationVersionsMapByApplicationType,
 } from "./types/application";
@@ -248,7 +249,7 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         return application;
     }
 
-    getExecutableByName(appName: string, execName?: string) {
+    getExecutableByName(appName: string, execName?: string): ExecutableTreeItem {
         const appTree = this.getAppTreeForApplication(appName);
 
         const config =
@@ -263,15 +264,17 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         return config;
     }
 
+    /**
+     *
+     * @deprecated use getExecutableByName directly
+     */
+    getExecutableByConfig(appName: string, config?: { name: string }) {
+        return this.getExecutableByName(appName, config?.name);
+    }
+
     getExecutableAndFlavorByName(appName: string, execName?: string, flavorName?: string) {
         const executable = this.getExecutableByName(appName, execName);
-        const flavor = Object.entries(executable.flavors)
-            .map(([name, flavor]) => {
-                return { name, results: [], preProcessors: [], postProcessors: [], ...flavor };
-            })
-            .find(({ name, isDefault }) => {
-                return flavorName ? name === flavorName : isDefault;
-            });
+        const flavor = this.getFlavorByName(executable, flavorName);
 
         if (!flavor) {
             throw new Error(
@@ -280,6 +283,31 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         }
 
         return { executable, flavor };
+    }
+
+    getFlavorByName(executable: ExecutableTreeItem, name?: string) {
+        return this.getExecutableFlavors(executable).find((flavor) =>
+            name ? flavor.name === name : flavor.isDefault,
+        );
+    }
+
+    /**
+     * @deprecated use getFlavorByName directly
+     */
+    getFlavorByConfig(executable: ExecutableTreeItem, config?: { name: string }) {
+        return this.getFlavorByName(executable, config?.name);
+    }
+
+    getExecutableFlavors(executable: ExecutableTreeItem): FlavorSchema[] {
+        return Object.entries(executable.flavors).map(([key, value]) => {
+            return {
+                preProcessors: [],
+                postProcessors: [],
+                results: [],
+                ...value,
+                name: key,
+            };
+        });
     }
 
     getInput(flavor: FlavorSchema): TemplateSchema[] {

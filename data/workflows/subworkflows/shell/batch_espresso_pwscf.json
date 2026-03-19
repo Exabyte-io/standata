@@ -53,10 +53,9 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "job_espresso_pw_scf",
-                "results": [],
                 "preProcessors": [],
                 "postProcessors": [],
+                "results": [],
                 "applicationName": "shell",
                 "executableName": "sh",
                 "input": [
@@ -69,6 +68,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "job_espresso_pw_scf",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

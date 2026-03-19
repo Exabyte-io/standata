@@ -111,7 +111,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "pw_scf_magn",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "atomic_forces"
@@ -135,8 +136,6 @@
                                 "name": "total_force"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -152,6 +151,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "name": "pw_scf_magn",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -241,14 +241,13 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "pw_bands_magn",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "band_structure"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -261,6 +260,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "pw_bands_magn",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -335,10 +335,9 @@
                         "isDefault": false
                     },
                     "flavor": {
-                        "name": "bands_spin_up",
-                        "results": [],
                         "preProcessors": [],
                         "postProcessors": [],
+                        "results": [],
                         "applicationName": "espresso",
                         "executableName": "bands.x",
                         "input": [
@@ -351,6 +350,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "bands_spin_up",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -412,10 +412,9 @@
                         "isDefault": false
                     },
                     "flavor": {
-                        "name": "bands_spin_dn",
-                        "results": [],
                         "preProcessors": [],
                         "postProcessors": [],
+                        "results": [],
                         "applicationName": "espresso",
                         "executableName": "bands.x",
                         "input": [
@@ -428,6 +427,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "bands_spin_dn",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },

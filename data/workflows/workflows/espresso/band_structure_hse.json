@@ -110,7 +110,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "pw_scf",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "atomic_forces"
@@ -134,8 +135,6 @@
                                 "name": "total_force"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -152,6 +151,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "name": "pw_scf",
                         "schemaVersion": "2022.8.16"
                     },
                     "input": [
@@ -247,10 +247,9 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "espresso_extract_kpoints",
-                        "results": [],
                         "preProcessors": [],
                         "postProcessors": [],
+                        "results": [],
                         "applicationName": "python",
                         "executableName": "python",
                         "input": [
@@ -267,6 +266,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "espresso_extract_kpoints",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -412,7 +412,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "pw_scf_bands_hse",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "total_energy"
@@ -436,8 +437,6 @@
                                 "name": "stress_tensor"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -453,6 +452,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "name": "pw_scf_bands_hse",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -527,10 +527,9 @@
                         "isDefault": false
                     },
                     "flavor": {
-                        "name": "bands",
-                        "results": [],
                         "preProcessors": [],
                         "postProcessors": [],
+                        "results": [],
                         "applicationName": "espresso",
                         "executableName": "bands.x",
                         "input": [
@@ -543,6 +542,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "bands",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },

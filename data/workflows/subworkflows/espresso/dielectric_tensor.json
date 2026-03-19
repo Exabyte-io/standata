@@ -101,7 +101,8 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "pw_scf",
+                "preProcessors": [],
+                "postProcessors": [],
                 "results": [
                     {
                         "name": "atomic_forces"
@@ -125,8 +126,6 @@
                         "name": "total_force"
                     }
                 ],
-                "preProcessors": [],
-                "postProcessors": [],
                 "applicationName": "espresso",
                 "executableName": "pw.x",
                 "input": [
@@ -143,6 +142,7 @@
                         "name": "convergence_electronic"
                     }
                 ],
+                "name": "pw_scf",
                 "schemaVersion": "2022.8.16"
             },
             "input": [
@@ -250,7 +250,8 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "pw_nscf",
+                "preProcessors": [],
+                "postProcessors": [],
                 "results": [
                     {
                         "name": "fermi_energy"
@@ -259,8 +260,6 @@
                         "name": "band_gaps"
                     }
                 ],
-                "preProcessors": [],
-                "postProcessors": [],
                 "applicationName": "espresso",
                 "executableName": "pw.x",
                 "input": [
@@ -273,6 +272,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "pw_nscf",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
@@ -348,14 +348,13 @@
                 "isDefault": false
             },
             "flavor": {
-                "name": "dielectric_tensor",
+                "preProcessors": [],
+                "postProcessors": [],
                 "results": [
                     {
                         "name": "dielectric_tensor"
                     }
                 ],
-                "preProcessors": [],
-                "postProcessors": [],
                 "applicationName": "espresso",
                 "executableName": "epsilon.x",
                 "input": [
@@ -368,6 +367,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "dielectric_tensor",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

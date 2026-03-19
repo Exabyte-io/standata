@@ -53,10 +53,9 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "espresso_extract_kpoints",
-                "results": [],
                 "preProcessors": [],
                 "postProcessors": [],
+                "results": [],
                 "applicationName": "python",
                 "executableName": "python",
                 "input": [
@@ -73,6 +72,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "espresso_extract_kpoints",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

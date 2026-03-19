@@ -115,7 +115,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "pw_scf_hse",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "atomic_forces"
@@ -142,8 +143,6 @@
                                 "name": "total_force"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -159,6 +158,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "name": "pw_scf_hse",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -234,14 +234,13 @@
                         "isDefault": false
                     },
                     "flavor": {
-                        "name": "projwfc",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "density_of_states"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "projwfc.x",
                         "input": [
@@ -254,6 +253,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "projwfc",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },

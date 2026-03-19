@@ -53,10 +53,9 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "espresso_link_outdir_save",
-                "results": [],
                 "preProcessors": [],
                 "postProcessors": [],
+                "results": [],
                 "applicationName": "shell",
                 "executableName": "sh",
                 "input": [
@@ -69,6 +68,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "espresso_link_outdir_save",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

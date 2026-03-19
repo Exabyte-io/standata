@@ -46,28 +46,59 @@ describe("Application Standata", () => {
     });
 
     describe("Application-specific methods", () => {
-        it("getAppDataForApplication - should return application data for valid app", () => {
-            const appData = standata.getAppDataForApplication("espresso");
-            expect(appData).to.be.an("object");
-            expect(appData).to.have.property("name", "espresso");
-            expect(appData).to.have.property("shortName", "qe");
+        it("getApplicationsTree - merges application version map into nested version/build entries", () => {
+            const tree = standata.getApplicationsTree();
+            expect(tree).to.be.an("object");
+            expect(tree).to.have.property("espresso");
+            const { espresso } = tree;
+            expect(espresso).to.have.property("defaultVersion", "6.3");
+            expect(espresso.versions).to.have.property("6.3");
+            expect(espresso.versions["6.3"]).to.have.property("GNU");
+            const gnu63 = espresso.versions["6.3"].GNU;
+            expect(gnu63).to.have.property("name", "espresso");
+            expect(gnu63).to.have.property("shortName", "qe");
         });
 
-        it("getAppDataForApplication - should throw error for invalid app", () => {
+        it("getApplications - flattens every version/build from the applications tree", () => {
+            const apps = standata.getApplications();
+            expect(apps).to.be.an("array");
+            expect(apps.length).to.be.greaterThan(0);
+            const espressoGnu = apps.find(
+                (a) => a.name === "espresso" && a.version === "6.3" && a.build === "GNU",
+            );
+            expect(espressoGnu).to.not.equal(undefined);
+            expect(espressoGnu).to.have.property("shortName", "qe");
+        });
+
+        it("getApplicationTreeItem - returns defaultVersion and versions for a known app", () => {
+            const item = standata.getApplicationTreeItem("espresso");
+            expect(item.defaultVersion).to.equal("6.3");
+            expect(item.versions).to.have.key("6.3");
+        });
+
+        it("getApplicationTreeItem - should throw for unknown application", () => {
             expect(() => {
-                standata.getAppDataForApplication("nonexistent");
+                standata.getApplicationTreeItem("nonexistent");
             }).to.throw("Application nonexistent not found");
         });
 
-        it("getAppTreeForApplication - should return tree data for valid app", () => {
-            const treeData = standata.getAppTreeForApplication("espresso");
-            expect(treeData).to.be.an("object");
-            expect(treeData).to.have.property("pw.x");
+        it("getApplication - resolves default version and build from application config", () => {
+            const app = standata.getApplication({ name: "espresso" });
+            expect(app).to.have.property("name", "espresso");
+            expect(app).to.have.property("shortName", "qe");
+            expect(app).to.have.property("version", "6.3");
+            expect(app).to.have.property("build", "GNU");
         });
 
-        it("getAppTreeForApplication - should throw error for invalid app", () => {
+        it("getExecutableByName - should resolve executable config for valid app", () => {
+            const exec = standata.getExecutableByName("espresso", "pw.x");
+            expect(exec).to.be.an("object");
+            expect(exec).to.have.property("name", "pw.x");
+        });
+
+        it("getExecutableByName - should throw for app without executable tree", () => {
             expect(() => {
-                standata.getAppTreeForApplication("nonexistent");
+                standata.getExecutableByName("nonexistent");
             }).to.throw("nonexistent is not a known application with executable tree");
         });
 
@@ -78,12 +109,10 @@ describe("Application Standata", () => {
             expect(allData[0]).to.have.property("name");
         });
 
-        it("getAllApplicationNames - should return unique application names", () => {
-            const names = standata.getAllApplicationNames();
+        it("getApplicationsTree - application keys are unique and list known apps", () => {
+            const names = Object.keys(standata.getApplicationsTree());
             expect(names).to.be.an("array");
             expect(names).to.include("espresso");
-            // expect(names).to.include("python");
-            // Should be unique
             expect(new Set(names).size).to.equal(names.length);
         });
 

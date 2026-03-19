@@ -111,7 +111,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "pw_scf",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "atomic_forces"
@@ -135,8 +136,6 @@
                                 "name": "total_force"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -153,6 +152,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "name": "pw_scf",
                         "schemaVersion": "2022.8.16"
                     },
                     "input": [
@@ -227,14 +227,13 @@
                         "isDefault": false
                     },
                     "flavor": {
-                        "name": "ph_gamma",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "zero_point_energy"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "ph.x",
                         "input": [
@@ -247,6 +246,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "ph_gamma",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },

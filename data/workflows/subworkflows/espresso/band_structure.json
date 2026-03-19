@@ -100,7 +100,8 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "pw_scf",
+                "preProcessors": [],
+                "postProcessors": [],
                 "results": [
                     {
                         "name": "atomic_forces"
@@ -124,8 +125,6 @@
                         "name": "total_force"
                     }
                 ],
-                "preProcessors": [],
-                "postProcessors": [],
                 "applicationName": "espresso",
                 "executableName": "pw.x",
                 "input": [
@@ -142,6 +141,7 @@
                         "name": "convergence_electronic"
                     }
                 ],
+                "name": "pw_scf",
                 "schemaVersion": "2022.8.16"
             },
             "input": [
@@ -227,14 +227,13 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "pw_bands",
+                "preProcessors": [],
+                "postProcessors": [],
                 "results": [
                     {
                         "name": "band_structure"
                     }
                 ],
-                "preProcessors": [],
-                "postProcessors": [],
                 "applicationName": "espresso",
                 "executableName": "pw.x",
                 "input": [
@@ -247,6 +246,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "pw_bands",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
@@ -318,10 +318,9 @@
                 "isDefault": false
             },
             "flavor": {
-                "name": "bands",
-                "results": [],
                 "preProcessors": [],
                 "postProcessors": [],
+                "results": [],
                 "applicationName": "espresso",
                 "executableName": "bands.x",
                 "input": [
@@ -334,6 +333,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "bands",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

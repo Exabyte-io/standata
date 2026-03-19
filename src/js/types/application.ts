@@ -24,7 +24,7 @@ type RequiredFlavorFields =
     | "isDefault";
 type OptionalFlavorFields = "results";
 
-type FlavorConfig = Pick<FlavorSchema, RequiredFlavorFields> &
+export type FlavorConfig = Pick<FlavorSchema, RequiredFlavorFields> &
     Pick<OptionalFlavorSchema, OptionalFlavorFields>;
 
 type OptionalExecutableSchema = Partial<ExecutableSchema>;

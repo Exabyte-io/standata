@@ -56,10 +56,9 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "pyml:setup_variables_packages",
-                "results": [],
                 "preProcessors": [],
                 "postProcessors": [],
+                "results": [],
                 "applicationName": "python",
                 "executableName": "python",
                 "input": [
@@ -77,6 +76,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "pyml:setup_variables_packages",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
@@ -154,10 +154,9 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "pyml:data_input:read_csv:pandas",
-                "results": [],
                 "preProcessors": [],
                 "postProcessors": [],
+                "results": [],
                 "applicationName": "python",
                 "executableName": "python",
                 "input": [
@@ -175,6 +174,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "pyml:data_input:read_csv:pandas",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
@@ -247,10 +247,9 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "pyml:data_input:train_test_split:sklearn",
-                "results": [],
                 "preProcessors": [],
                 "postProcessors": [],
+                "results": [],
                 "applicationName": "python",
                 "executableName": "python",
                 "input": [
@@ -268,6 +267,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "pyml:data_input:train_test_split:sklearn",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
@@ -344,10 +344,9 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "pyml:pre_processing:standardization:sklearn",
-                "results": [],
                 "preProcessors": [],
                 "postProcessors": [],
+                "results": [],
                 "applicationName": "python",
                 "executableName": "python",
                 "input": [
@@ -365,6 +364,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "pyml:pre_processing:standardization:sklearn",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
@@ -444,14 +444,13 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "pyml:model:multilayer_perceptron:sklearn",
+                "preProcessors": [],
+                "postProcessors": [],
                 "results": [
                     {
                         "name": "workflow:pyml_predict"
                     }
                 ],
-                "preProcessors": [],
-                "postProcessors": [],
                 "applicationName": "python",
                 "executableName": "python",
                 "input": [
@@ -469,6 +468,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "pyml:model:multilayer_perceptron:sklearn",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
@@ -551,14 +551,13 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "pyml:post_processing:parity_plot:matplotlib",
+                "preProcessors": [],
+                "postProcessors": [],
                 "results": [
                     {
                         "name": "file_content"
                     }
                 ],
-                "preProcessors": [],
-                "postProcessors": [],
                 "applicationName": "python",
                 "executableName": "python",
                 "input": [
@@ -576,6 +575,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "pyml:post_processing:parity_plot:matplotlib",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

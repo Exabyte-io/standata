@@ -80,14 +80,13 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "vasp_bands",
+                "preProcessors": [],
+                "postProcessors": [],
                 "results": [
                     {
                         "name": "band_structure"
                     }
                 ],
-                "preProcessors": [],
-                "postProcessors": [],
                 "applicationName": "vasp",
                 "executableName": "vasp",
                 "input": [
@@ -112,6 +111,7 @@
                         "name": "convergence_electronic"
                     }
                 ],
+                "name": "vasp_bands",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

@@ -59,14 +59,13 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "plot_wavefunction",
+                "preProcessors": [],
+                "postProcessors": [],
                 "results": [
                     {
                         "name": "file_content"
                     }
                 ],
-                "preProcessors": [],
-                "postProcessors": [],
                 "applicationName": "python",
                 "executableName": "python",
                 "input": [
@@ -84,6 +83,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "plot_wavefunction",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

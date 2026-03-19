@@ -53,10 +53,9 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "espresso_collect_dynmat",
-                "results": [],
                 "preProcessors": [],
                 "postProcessors": [],
+                "results": [],
                 "applicationName": "shell",
                 "executableName": "sh",
                 "input": [
@@ -69,6 +68,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "espresso_collect_dynmat",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

@@ -82,7 +82,8 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "vasp_neb",
+                "preProcessors": [],
+                "postProcessors": [],
                 "results": [
                     {
                         "name": "reaction_energy_barrier"
@@ -91,8 +92,6 @@
                         "name": "reaction_energy_profile"
                     }
                 ],
-                "preProcessors": [],
-                "postProcessors": [],
                 "applicationName": "vasp",
                 "executableName": "vasp",
                 "input": [
@@ -110,6 +109,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "vasp_neb",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

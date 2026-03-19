@@ -107,7 +107,8 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "vasp_zpe",
+                "preProcessors": [],
+                "postProcessors": [],
                 "results": [
                     {
                         "name": "total_energy"
@@ -131,8 +132,6 @@
                         "name": "zero_point_energy"
                     }
                 ],
-                "preProcessors": [],
-                "postProcessors": [],
                 "applicationName": "vasp",
                 "executableName": "vasp",
                 "input": [
@@ -160,6 +159,7 @@
                         "name": "convergence_ionic"
                     }
                 ],
+                "name": "vasp_zpe",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

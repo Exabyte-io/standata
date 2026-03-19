@@ -187,19 +187,40 @@ class ApplicationStandata extends base_1.Standata {
         }
         return config;
     }
+    /**
+     *
+     * @deprecated use getExecutableByName directly
+     */
+    getExecutableByConfig(appName, config) {
+        return this.getExecutableByName(appName, config === null || config === void 0 ? void 0 : config.name);
+    }
     getExecutableAndFlavorByName(appName, execName, flavorName) {
         const executable = this.getExecutableByName(appName, execName);
-        const flavor = Object.entries(executable.flavors)
-            .map(([name, flavor]) => {
-            return { name, results: [], preProcessors: [], postProcessors: [], ...flavor };
-        })
-            .find(({ name, isDefault }) => {
-            return flavorName ? name === flavorName : isDefault;
-        });
+        const flavor = this.getFlavorByName(executable, flavorName);
         if (!flavor) {
             throw new Error(`Flavor ${flavorName} not found for executable ${execName} in application ${appName}`);
         }
         return { executable, flavor };
+    }
+    getFlavorByName(executable, name) {
+        return this.getExecutableFlavors(executable).find((flavor) => name ? flavor.name === name : flavor.isDefault);
+    }
+    /**
+     * @deprecated use getFlavorByName directly
+     */
+    getFlavorByConfig(executable, config) {
+        return this.getFlavorByName(executable, config === null || config === void 0 ? void 0 : config.name);
+    }
+    getExecutableFlavors(executable) {
+        return Object.entries(executable.flavors).map(([key, value]) => {
+            return {
+                preProcessors: [],
+                postProcessors: [],
+                results: [],
+                ...value,
+                name: key,
+            };
+        });
     }
     getInput(flavor) {
         const appName = flavor.applicationName || "";

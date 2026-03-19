@@ -110,7 +110,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "pw_scf",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "atomic_forces"
@@ -134,8 +135,6 @@
                                 "name": "total_force"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -152,6 +151,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "name": "pw_scf",
                         "schemaVersion": "2022.8.16"
                     },
                     "input": [
@@ -250,10 +250,9 @@
                         "isDefault": false
                     },
                     "flavor": {
-                        "name": "ph_init_qpoints",
-                        "results": [],
                         "preProcessors": [],
                         "postProcessors": [],
+                        "results": [],
                         "applicationName": "espresso",
                         "executableName": "ph.x",
                         "input": [
@@ -266,6 +265,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "ph_init_qpoints",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -388,10 +388,9 @@
                         "isDefault": false
                     },
                     "flavor": {
-                        "name": "ph_grid_restart",
-                        "results": [],
                         "preProcessors": [],
                         "postProcessors": [],
+                        "results": [],
                         "applicationName": "espresso",
                         "executableName": "ph.x",
                         "input": [
@@ -404,6 +403,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "ph_grid_restart",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -469,10 +469,9 @@
                         "isDefault": false
                     },
                     "flavor": {
-                        "name": "q2r",
-                        "results": [],
                         "preProcessors": [],
                         "postProcessors": [],
+                        "results": [],
                         "applicationName": "espresso",
                         "executableName": "q2r.x",
                         "input": [
@@ -485,6 +484,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "q2r",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -550,14 +550,13 @@
                         "isDefault": false
                     },
                     "flavor": {
-                        "name": "matdyn_grid",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "phonon_dos"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "matdyn.x",
                         "input": [
@@ -570,6 +569,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "matdyn_grid",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -639,14 +639,13 @@
                         "isDefault": false
                     },
                     "flavor": {
-                        "name": "matdyn_path",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "phonon_dispersions"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "matdyn.x",
                         "input": [
@@ -659,6 +658,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "matdyn_path",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -752,7 +752,7 @@
             "status": "idle",
             "statusTrack": [],
             "tags": [],
-            "workflowId": "3c30219d-b8d7-4206-a4af-845815342935",
+            "workflowId": "d380c881-756d-4160-941b-9c57c22b71e4",
             "flowchartId": "24e3c1f0-8090-512e-9727-8770071d17c8",
             "schemaVersion": "2022.8.16",
             "isDefault": false
@@ -850,10 +850,9 @@
                                 "schemaVersion": "2022.8.16"
                             },
                             "flavor": {
-                                "name": "espresso_link_outdir_save",
-                                "results": [],
                                 "preProcessors": [],
                                 "postProcessors": [],
+                                "results": [],
                                 "applicationName": "shell",
                                 "executableName": "sh",
                                 "input": [
@@ -866,6 +865,7 @@
                                         "name": "standard_output"
                                     }
                                 ],
+                                "name": "espresso_link_outdir_save",
                                 "schemaVersion": "2022.8.16",
                                 "isDefault": false
                             },
@@ -955,10 +955,9 @@
                                 "isDefault": false
                             },
                             "flavor": {
-                                "name": "ph_single_irr_qpt",
-                                "results": [],
                                 "preProcessors": [],
                                 "postProcessors": [],
+                                "results": [],
                                 "applicationName": "espresso",
                                 "executableName": "ph.x",
                                 "input": [
@@ -971,6 +970,7 @@
                                         "name": "standard_output"
                                     }
                                 ],
+                                "name": "ph_single_irr_qpt",
                                 "schemaVersion": "2022.8.16",
                                 "isDefault": false
                             },
@@ -1061,10 +1061,9 @@
                                 "schemaVersion": "2022.8.16"
                             },
                             "flavor": {
-                                "name": "espresso_collect_dynmat",
-                                "results": [],
                                 "preProcessors": [],
                                 "postProcessors": [],
+                                "results": [],
                                 "applicationName": "shell",
                                 "executableName": "sh",
                                 "input": [
@@ -1077,6 +1076,7 @@
                                         "name": "standard_output"
                                     }
                                 ],
+                                "name": "espresso_collect_dynmat",
                                 "schemaVersion": "2022.8.16",
                                 "isDefault": false
                             },

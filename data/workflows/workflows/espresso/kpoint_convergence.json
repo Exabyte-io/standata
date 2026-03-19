@@ -182,7 +182,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "pw_scf_kpt_conv",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "total_energy"
@@ -203,8 +204,6 @@
                                 "name": "stress_tensor"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -220,6 +219,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "name": "pw_scf_kpt_conv",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },

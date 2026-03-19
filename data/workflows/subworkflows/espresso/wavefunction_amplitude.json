@@ -104,7 +104,8 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "pw_scf",
+                "preProcessors": [],
+                "postProcessors": [],
                 "results": [
                     {
                         "name": "atomic_forces"
@@ -128,8 +129,6 @@
                         "name": "total_force"
                     }
                 ],
-                "preProcessors": [],
-                "postProcessors": [],
                 "applicationName": "espresso",
                 "executableName": "pw.x",
                 "input": [
@@ -146,6 +145,7 @@
                         "name": "convergence_electronic"
                     }
                 ],
+                "name": "pw_scf",
                 "schemaVersion": "2022.8.16"
             },
             "input": [
@@ -306,14 +306,13 @@
                 "isDefault": false
             },
             "flavor": {
-                "name": "pp_wfn",
+                "preProcessors": [],
+                "postProcessors": [],
                 "results": [
                     {
                         "name": "wavefunction_amplitude"
                     }
                 ],
-                "preProcessors": [],
-                "postProcessors": [],
                 "applicationName": "espresso",
                 "executableName": "pp.x",
                 "input": [
@@ -326,6 +325,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "pp_wfn",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

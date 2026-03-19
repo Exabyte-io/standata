@@ -111,7 +111,12 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "vasp_relax",
+                "preProcessors": [],
+                "postProcessors": [
+                    {
+                        "name": "prepare_restart"
+                    }
+                ],
                 "results": [
                     {
                         "name": "total_energy"
@@ -133,12 +138,6 @@
                     },
                     {
                         "name": "final_structure"
-                    }
-                ],
-                "preProcessors": [],
-                "postProcessors": [
-                    {
-                        "name": "prepare_restart"
                     }
                 ],
                 "applicationName": "vasp",
@@ -168,6 +167,7 @@
                         "name": "convergence_ionic"
                     }
                 ],
+                "name": "vasp_relax",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

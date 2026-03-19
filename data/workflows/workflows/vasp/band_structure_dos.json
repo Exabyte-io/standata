@@ -120,7 +120,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "vasp",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "total_energy"
@@ -144,8 +145,6 @@
                                 "name": "stress_tensor"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "vasp",
                         "executableName": "vasp",
                         "input": [
@@ -168,6 +167,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
                     "input": [
@@ -290,14 +290,13 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "vasp_bands",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "band_structure"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "vasp",
                         "executableName": "vasp",
                         "input": [
@@ -322,6 +321,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "name": "vasp_bands",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },

@@ -77,7 +77,8 @@
                         "isDefault": false
                     },
                     "flavor": {
-                        "name": "neb",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "reaction_energy_barrier"
@@ -86,8 +87,6 @@
                                 "name": "reaction_energy_profile"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "espresso",
                         "executableName": "neb.x",
                         "input": [
@@ -100,6 +99,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "neb",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },

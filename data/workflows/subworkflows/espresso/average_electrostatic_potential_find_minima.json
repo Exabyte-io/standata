@@ -53,10 +53,9 @@
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "name": "generic:processing:find_extrema:scipy",
-                "results": [],
                 "preProcessors": [],
                 "postProcessors": [],
+                "results": [],
                 "applicationName": "python",
                 "executableName": "python",
                 "input": [
@@ -74,6 +73,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "generic:processing:find_extrema:scipy",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

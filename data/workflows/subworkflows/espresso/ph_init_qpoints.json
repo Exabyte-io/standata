@@ -55,10 +55,9 @@
                 "isDefault": false
             },
             "flavor": {
-                "name": "ph_init_qpoints",
-                "results": [],
                 "preProcessors": [],
                 "postProcessors": [],
+                "results": [],
                 "applicationName": "espresso",
                 "executableName": "ph.x",
                 "input": [
@@ -71,6 +70,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "name": "ph_init_qpoints",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

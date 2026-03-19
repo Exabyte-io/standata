@@ -116,7 +116,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "vasp_neb_initial",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "total_energy"
@@ -140,8 +141,6 @@
                                 "name": "stress_tensor"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "vasp",
                         "executableName": "vasp",
                         "input": [
@@ -165,6 +164,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "name": "vasp_neb_initial",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -312,7 +312,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "vasp_neb_final",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "total_energy"
@@ -336,8 +337,6 @@
                                 "name": "stress_tensor"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "vasp",
                         "executableName": "vasp",
                         "input": [
@@ -361,6 +360,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "name": "vasp_neb_final",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -512,10 +512,9 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "bash_vasp_prepare_neb_images",
-                        "results": [],
                         "preProcessors": [],
                         "postProcessors": [],
+                        "results": [],
                         "applicationName": "shell",
                         "executableName": "sh",
                         "input": [
@@ -528,6 +527,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "bash_vasp_prepare_neb_images",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -648,7 +648,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "name": "vasp_neb",
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "results": [
                             {
                                 "name": "reaction_energy_barrier"
@@ -657,8 +658,6 @@
                                 "name": "reaction_energy_profile"
                             }
                         ],
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "applicationName": "vasp",
                         "executableName": "vasp",
                         "input": [
@@ -676,6 +675,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "name": "vasp_neb",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
