@@ -19,6 +19,10 @@ var TAGS;
     TAGS["DEFAULT_BUILD"] = "default_build";
 })(TAGS = exports.TAGS || (exports.TAGS = {}));
 class ApplicationStandata extends base_1.Standata {
+    constructor() {
+        super(...arguments);
+        this.appCache = {};
+    }
     getAppDataForApplication(appName) {
         const applicationVersionsMap = APP_VERSIONS[appName];
         if (!applicationVersionsMap) {
@@ -26,25 +30,40 @@ class ApplicationStandata extends base_1.Standata {
         }
         return applicationVersionsMap;
     }
-    getAppTreeForApplication(appName) {
+    getApplicationExecutablesTree(appName) {
+        if (appName in this.appCache) {
+            return this.appCache[appName];
+        }
         // TODO: Convert to use this.findEntitiesByTags() when tree data is in Standata format
         const executableData = EXECUTABLE_FLAVOR;
         if (!(appName in executableData)) {
             throw new Error(`${appName} is not a known application with executable tree.`);
         }
         const appTree = executableData[appName];
-        return Object.fromEntries(Object.entries(appTree).map(([name, exec]) => {
+        this.appCache[appName] = Object.fromEntries(Object.entries(appTree).map(([name, { flavors, ...executable }]) => {
             return [
                 name,
                 {
-                    preProcessors: [],
-                    postProcessors: [],
-                    applicationId: [],
-                    ...exec,
-                    name,
+                    executable: {
+                        preProcessors: [],
+                        postProcessors: [],
+                        applicationId: [],
+                        ...executable,
+                        name,
+                    },
+                    flavors: Object.entries(flavors).map(([name, value]) => {
+                        return {
+                            preProcessors: [],
+                            postProcessors: [],
+                            results: [],
+                            ...value,
+                            name,
+                        };
+                    }),
                 },
             ];
         }));
+        return this.appCache[appName];
     }
     getAllAppTemplates() {
         // TODO: Convert to use this.getAll() when template data is in Standata format
@@ -178,49 +197,32 @@ class ApplicationStandata extends base_1.Standata {
         return application;
     }
     getExecutableByName(appName, execName) {
-        const appTree = this.getAppTreeForApplication(appName);
-        const config = execName && appTree[execName]
-            ? appTree[execName]
-            : Object.values(appTree).find((exec) => exec.isDefault);
+        const appTree = this.getApplicationExecutablesTree(appName);
+        const config = (execName && appTree[execName]) ||
+            Object.values(appTree).find((exec) => exec.executable.isDefault);
         if (!config) {
             throw new Error(`Executable ${execName} not found for application ${appName}`);
         }
-        return config;
-    }
-    /**
-     *
-     * @deprecated use getExecutableByName directly
-     */
-    getExecutableByConfig(appName, config) {
-        return this.getExecutableByName(appName, config === null || config === void 0 ? void 0 : config.name);
+        return config.executable;
     }
     getExecutableAndFlavorByName(appName, execName, flavorName) {
-        const executable = this.getExecutableByName(appName, execName);
-        const flavor = this.getFlavorByName(executable, flavorName);
+        const appTree = this.getApplicationExecutablesTree(appName);
+        const config = (execName && appTree[execName]) ||
+            Object.values(appTree).find((exec) => exec.executable.isDefault);
+        if (!config) {
+            throw new Error(`Executable ${execName} not found for application ${appName}`);
+        }
+        const { executable, flavors } = config;
+        const flavor = flavors.find((value) => {
+            return flavorName ? value.name === flavorName : value.isDefault;
+        });
         if (!flavor) {
             throw new Error(`Flavor ${flavorName} not found for executable ${execName} in application ${appName}`);
         }
-        return { executable, flavor };
-    }
-    getFlavorByName(executable, name) {
-        return this.getExecutableFlavors(executable).find((flavor) => name ? flavor.name === name : flavor.isDefault);
-    }
-    /**
-     * @deprecated use getFlavorByName directly
-     */
-    getFlavorByConfig(executable, config) {
-        return this.getFlavorByName(executable, config === null || config === void 0 ? void 0 : config.name);
-    }
-    getExecutableFlavors(executable) {
-        return Object.entries(executable.flavors).map(([key, value]) => {
-            return {
-                preProcessors: [],
-                postProcessors: [],
-                results: [],
-                ...value,
-                name: key,
-            };
-        });
+        return {
+            executable,
+            flavor,
+        };
     }
     getInput(flavor) {
         const appName = flavor.applicationName || "";

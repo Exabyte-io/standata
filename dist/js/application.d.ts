@@ -1,6 +1,5 @@
-import type { ApplicationSchema, FlavorSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
+import type { ApplicationSchema, ExecutableSchema, FlavorSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
 import { Standata } from "./base";
-import { type ExecutableTreeItem } from "./types/application";
 export declare enum TAGS {
     DEFAULT = "default",
     DEFAULT_VERSION = "default_version",
@@ -80,8 +79,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
             }[];
         };
     };
+    private appCache;
     private getAppDataForApplication;
-    private getAppTreeForApplication;
+    private getApplicationExecutablesTree;
     getAllAppTemplates(): TemplateSchema[];
     getAllAppTree(): {
         espresso: {
@@ -1990,26 +1990,11 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
     getApplications(): ApplicationSchema[];
     getApplicationTreeItem(appName: string): ApplicationTreeItem;
     getApplication({ name, version, build }: ApplicationConfig): ApplicationSchema;
-    getExecutableByName(appName: string, execName?: string): ExecutableTreeItem;
-    /**
-     *
-     * @deprecated use getExecutableByName directly
-     */
-    getExecutableByConfig(appName: string, config?: {
-        name: string;
-    }): ExecutableTreeItem;
+    getExecutableByName(appName: string, execName?: string): ExecutableSchema;
     getExecutableAndFlavorByName(appName: string, execName?: string, flavorName?: string): {
-        executable: ExecutableTreeItem;
+        executable: ExecutableSchema;
         flavor: FlavorSchema;
     };
-    getFlavorByName(executable: ExecutableTreeItem, name?: string): FlavorSchema | undefined;
-    /**
-     * @deprecated use getFlavorByName directly
-     */
-    getFlavorByConfig(executable: ExecutableTreeItem, config?: {
-        name: string;
-    }): FlavorSchema | undefined;
-    getExecutableFlavors(executable: ExecutableTreeItem): FlavorSchema[];
     getInput(flavor: FlavorSchema): TemplateSchema[];
 }
 export {};

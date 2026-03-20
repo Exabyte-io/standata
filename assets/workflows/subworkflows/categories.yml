@@ -212,6 +212,7 @@ entities:
   - filename: espresso/espresso_xml_get_qpt_irr.json
     categories:
       - espresso
+      - python
   - filename: espresso/fixed_cell_relaxation.json
     categories:
       - atomic_forces

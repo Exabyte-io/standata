@@ -1,5 +1,10 @@
 /* eslint-disable class-methods-use-this */
-import type { ApplicationSchema, FlavorSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
+import type {
+    ApplicationSchema,
+    ExecutableSchema,
+    FlavorSchema,
+    TemplateSchema,
+} from "@mat3ra/esse/dist/js/types";
 
 import { Standata } from "./base";
 import APPLICATIONS from "./runtime_data/applications.json";
@@ -7,7 +12,7 @@ import APPLICATION_VERSIONS_MAP from "./runtime_data/applications/applicationVer
 import EXECUTABLE_FLAVOR_MAP from "./runtime_data/applications/executableFlavorMapByApplication.json";
 import TEMPLATES_LIST_RAW from "./runtime_data/applications/templatesList.json";
 import {
-    type ExecutableTreeItem,
+    type FlavorConfig,
     ApplicationExecutableTree,
     ApplicationVersionsMapByApplicationType,
 } from "./types/application";
@@ -44,6 +49,17 @@ type ApplicationTree = Record<string, ApplicationTreeItem>;
 export class ApplicationStandata extends Standata<ApplicationSchema> {
     static runtimeData = APPLICATIONS;
 
+    private appCache: Record<
+        string,
+        Record<
+            string,
+            {
+                executable: ExecutableSchema;
+                flavors: FlavorSchema[];
+            }
+        >
+    > = {};
+
     private getAppDataForApplication(appName: string) {
         const applicationVersionsMap = APP_VERSIONS[appName];
 
@@ -53,7 +69,11 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         return applicationVersionsMap;
     }
 
-    private getAppTreeForApplication(appName: string) {
+    private getApplicationExecutablesTree(appName: string) {
+        if (appName in this.appCache) {
+            return this.appCache[appName];
+        }
+
         // TODO: Convert to use this.findEntitiesByTags() when tree data is in Standata format
         const executableData = EXECUTABLE_FLAVOR;
 
@@ -63,20 +83,33 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
 
         const appTree = executableData[appName];
 
-        return Object.fromEntries(
-            Object.entries(appTree).map(([name, exec]) => {
+        this.appCache[appName] = Object.fromEntries(
+            Object.entries(appTree).map(([name, { flavors, ...executable }]) => {
                 return [
                     name,
                     {
-                        preProcessors: [],
-                        postProcessors: [],
-                        applicationId: [],
-                        ...exec,
-                        name,
+                        executable: {
+                            preProcessors: [],
+                            postProcessors: [],
+                            applicationId: [],
+                            ...executable,
+                            name,
+                        },
+                        flavors: Object.entries(flavors).map(([name, value]) => {
+                            return {
+                                preProcessors: [],
+                                postProcessors: [],
+                                results: [],
+                                ...value,
+                                name,
+                            };
+                        }),
                     },
                 ];
             }),
         );
+
+        return this.appCache[appName];
     }
 
     getAllAppTemplates(): TemplateSchema[] {
@@ -249,32 +282,42 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         return application;
     }
 
-    getExecutableByName(appName: string, execName?: string): ExecutableTreeItem {
-        const appTree = this.getAppTreeForApplication(appName);
+    getExecutableByName(appName: string, execName?: string) {
+        const appTree = this.getApplicationExecutablesTree(appName);
 
         const config =
-            execName && appTree[execName]
-                ? appTree[execName]
-                : Object.values(appTree).find((exec) => exec.isDefault);
+            (execName && appTree[execName]) ||
+            Object.values(appTree).find((exec) => exec.executable.isDefault);
 
         if (!config) {
             throw new Error(`Executable ${execName} not found for application ${appName}`);
         }
 
-        return config;
+        return config.executable;
     }
 
-    /**
-     *
-     * @deprecated use getExecutableByName directly
-     */
-    getExecutableByConfig(appName: string, config?: { name: string }) {
-        return this.getExecutableByName(appName, config?.name);
-    }
+    getExecutableAndFlavorByName(
+        appName: string,
+        execName?: string,
+        flavorName?: string,
+    ): {
+        executable: ExecutableSchema;
+        flavor: FlavorSchema;
+    } {
+        const appTree = this.getApplicationExecutablesTree(appName);
+        const config =
+            (execName && appTree[execName]) ||
+            Object.values(appTree).find((exec) => exec.executable.isDefault);
 
-    getExecutableAndFlavorByName(appName: string, execName?: string, flavorName?: string) {
-        const executable = this.getExecutableByName(appName, execName);
-        const flavor = this.getFlavorByName(executable, flavorName);
+        if (!config) {
+            throw new Error(`Executable ${execName} not found for application ${appName}`);
+        }
+
+        const { executable, flavors } = config;
+
+        const flavor = flavors.find((value) => {
+            return flavorName ? value.name === flavorName : value.isDefault;
+        });
 
         if (!flavor) {
             throw new Error(
@@ -282,32 +325,10 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
             );
         }
 
-        return { executable, flavor };
-    }
-
-    getFlavorByName(executable: ExecutableTreeItem, name?: string) {
-        return this.getExecutableFlavors(executable).find((flavor) =>
-            name ? flavor.name === name : flavor.isDefault,
-        );
-    }
-
-    /**
-     * @deprecated use getFlavorByName directly
-     */
-    getFlavorByConfig(executable: ExecutableTreeItem, config?: { name: string }) {
-        return this.getFlavorByName(executable, config?.name);
-    }
-
-    getExecutableFlavors(executable: ExecutableTreeItem): FlavorSchema[] {
-        return Object.entries(executable.flavors).map(([key, value]) => {
-            return {
-                preProcessors: [],
-                postProcessors: [],
-                results: [],
-                ...value,
-                name: key,
-            };
-        });
+        return {
+            executable,
+            flavor,
+        };
     }
 
     getInput(flavor: FlavorSchema): TemplateSchema[] {

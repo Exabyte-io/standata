@@ -270,7 +270,7 @@ export default function createSubworkflow(subworkflowData: SubworkflowData, cach
                 },
             },
         } as SubworkflowSchema["model"],
-        units: setNextLinks(setUnitsHead(units)),
+        units: setNextLinks(setUnitsHead(finalUnits)),
         ...config?.attributes,
     };
 
