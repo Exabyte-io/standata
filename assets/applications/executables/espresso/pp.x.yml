@@ -19,3 +19,13 @@ flavors:
       - standard_output
     applicationName: espresso
     executableName: pp.x
+
+  pp_wfn:
+    input:
+      - name: pp_wfn.in
+    results:
+      - wavefunction_amplitude
+    monitors:
+      - standard_output
+    applicationName: espresso
+    executableName: pp.x

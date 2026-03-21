@@ -310,6 +310,7 @@
     ],
     "_id": "7e865869-82fb-5769-84f0-ac9f9df354db",
     "workflows": [],
+    "isMultiMaterial": true,
     "schemaVersion": "2022.8.16",
     "isDefault": false,
     "application": {

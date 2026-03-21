@@ -16,6 +16,9 @@
 # https://docs.mat3ra.com/tutorials/dft/electronic/valence-band-offset/
 
 name: Valence Band Offset (2D)
+config:
+  attributes:
+    isMultiMaterial: true
 units:
   # interface-related subworkflows
   - name: average_electrostatic_potential_via_band_structure
