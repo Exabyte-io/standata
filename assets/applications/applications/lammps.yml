@@ -5,7 +5,7 @@ defaultVersion: '2025.07.22.2'
 runConfig:
   commandTemplate: |
     {BASE_CMD} &&
-    module load {MODULE} &&
+    {MODULE_CMD}
     $EXEC_CMD mpirun -machinefile {MACHINEFILE} -np {NP} {EXECUTABLE} -i {INPUTFILE} -l {OUTPUTFILE}
   outFileName: 'log.out'
 versions:
