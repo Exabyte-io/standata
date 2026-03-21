@@ -40,7 +40,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 name: string;
                 runConfig: {
                     commandTemplate: string;
-                    stdOutFile: string;
+                    outFileName: string;
                 };
                 shortName: string;
                 summary: string;

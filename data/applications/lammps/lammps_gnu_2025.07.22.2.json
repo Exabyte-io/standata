@@ -3,7 +3,7 @@
     "shortName": "lmp",
     "summary": "LAMMPS",
     "runConfig": {
-        "commandTemplate": "{BASE_CMD} &&\nmodule load {MODULE} &&\n$EXEC_CMD mpirun -np {NP} {EXECUTABLE} -i {INPUTFILE} -l {OUTPUTFILE}\n",
+        "commandTemplate": "{BASE_CMD} &&\nmodule load {MODULE} &&\n$EXEC_CMD mpirun -machinefile {MACHINEFILE} -np {NP} {EXECUTABLE} -i {INPUTFILE} -l {OUTPUTFILE}\n",
         "outFileName": "log.out"
     },
     "version": "2025.07.22.2",
