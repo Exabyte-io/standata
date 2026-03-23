@@ -80,7 +80,6 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
         };
     };
     private appCache;
-    private getAppDataForApplication;
     private getApplicationExecutablesTree;
     getAllAppTemplates(): TemplateSchema[];
     getAllAppTree(): {
@@ -1974,9 +1973,7 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
     getAllAppData(): ApplicationSchema[];
     getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[];
     getByApplicationName(appName: string): ApplicationSchema[];
-    static getDefaultVersionForApplication(appName: string): string;
     static getDefaultBuildForApplicationAndVersion(appName: string, version: string): string | null;
-    getDefaultConfigByNameAndVersion(appName: string, version?: string): ApplicationSchema;
     getDefaultConfig(): {
         name: string;
         shortName: string;
@@ -1985,12 +1982,14 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
         build: string;
     };
     private applicationsTree?;
-    private applications?;
+    private buildApplicationsTree;
     getApplicationsTree(): ApplicationTree;
-    getApplications(): ApplicationSchema[];
     getApplicationTreeItem(appName: string): ApplicationTreeItem;
     getApplication({ name, version, build }: ApplicationConfig): ApplicationSchema;
-    getExecutableByName(appName: string, execName?: string): ExecutableSchema;
+    getExecutableByName(appName: string, execName?: string): {
+        executable: ExecutableSchema;
+        flavors: FlavorSchema[];
+    };
     getExecutableAndFlavorByName(appName: string, execName?: string, flavorName?: string): {
         executable: ExecutableSchema;
         flavor: FlavorSchema;

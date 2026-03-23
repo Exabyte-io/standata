@@ -23,13 +23,6 @@ class ApplicationStandata extends base_1.Standata {
         super(...arguments);
         this.appCache = {};
     }
-    getAppDataForApplication(appName) {
-        const applicationVersionsMap = APP_VERSIONS[appName];
-        if (!applicationVersionsMap) {
-            throw new Error(`Application ${appName} not found`);
-        }
-        return applicationVersionsMap;
-    }
     getApplicationExecutablesTree(appName) {
         if (appName in this.appCache) {
             return this.appCache[appName];
@@ -101,9 +94,6 @@ class ApplicationStandata extends base_1.Standata {
         const allEntities = this.getAll();
         return allEntities.filter((entity) => entity.name === appName);
     }
-    static getDefaultVersionForApplication(appName) {
-        return APP_VERSIONS[appName].defaultVersion;
-    }
     static getDefaultBuildForApplicationAndVersion(appName, version) {
         var _a;
         const versionConfig = APP_VERSIONS[appName].versions.find((config) => {
@@ -111,38 +101,19 @@ class ApplicationStandata extends base_1.Standata {
         });
         return (_a = versionConfig === null || versionConfig === void 0 ? void 0 : versionConfig.build) !== null && _a !== void 0 ? _a : null;
     }
-    // TODO: move to parent class Standata, name and generic parameters
-    getDefaultConfigByNameAndVersion(appName, version) {
-        const tags = [TAGS.DEFAULT_BUILD];
-        let versionToUse = version;
-        if (!versionToUse) {
-            tags.push(TAGS.DEFAULT_VERSION);
-            versionToUse = ApplicationStandata.getDefaultVersionForApplication(appName);
-        }
-        const allEntriesWithTags = this.findEntitiesByTags(...tags);
-        const allEntriesWithTagsForNameAndVersion = allEntriesWithTags.filter((entity) => {
-            return entity.name === appName && entity.version === versionToUse;
-        });
-        if (allEntriesWithTagsForNameAndVersion.length > 1) {
-            throw new Error(`Multiple default version entries found for ${appName} with version ${versionToUse}`);
-        }
-        else if (allEntriesWithTagsForNameAndVersion.length === 0) {
-            throw new Error(`No default version entry found for ${appName} with version ${versionToUse}`);
-        }
-        return allEntriesWithTagsForNameAndVersion[0];
-    }
     getDefaultConfig() {
         const fullConfig = this.findEntitiesByTags(TAGS.DEFAULT)[0];
         const { name, shortName, version, summary, build } = fullConfig;
         return { name, shortName, version, summary, build };
     }
-    getApplicationsTree() {
-        if (this.applicationsTree) {
-            return this.applicationsTree;
-        }
+    buildApplicationsTree() {
         const applicationNames = this.getAllApplicationNames();
-        this.applicationsTree = applicationNames.reduce((tree, appName) => {
-            const { versions, defaultVersion, ...appData } = this.getAppDataForApplication(appName);
+        return applicationNames.reduce((tree, appName) => {
+            const application = APP_VERSIONS[appName];
+            if (!application) {
+                throw new Error(`Application ${appName} not found`);
+            }
+            const { versions, defaultVersion, ...appData } = application;
             return {
                 ...tree,
                 [appName]: {
@@ -162,19 +133,13 @@ class ApplicationStandata extends base_1.Standata {
                 },
             };
         }, {});
-        return this.applicationsTree;
     }
-    getApplications() {
-        if (this.applications) {
-            return this.applications;
+    getApplicationsTree() {
+        if (this.applicationsTree) {
+            return this.applicationsTree;
         }
-        const tree = this.getApplicationsTree();
-        this.applications = Object.values(tree).flatMap((appTreeItem) => {
-            return Object.values(appTreeItem.versions).flatMap((version) => {
-                return Object.values(version).flat();
-            });
-        });
-        return this.applications;
+        this.applicationsTree = this.buildApplicationsTree();
+        return this.applicationsTree;
     }
     getApplicationTreeItem(appName) {
         const tree = this.getApplicationsTree();
@@ -201,23 +166,17 @@ class ApplicationStandata extends base_1.Standata {
         const config = (execName && appTree[execName]) ||
             Object.values(appTree).find((exec) => exec.executable.isDefault);
         if (!config) {
-            throw new Error(`Executable ${execName} not found for application ${appName}`);
+            throw new Error(`Executable ${execName || "default"} not found for application ${appName}`);
         }
-        return config.executable;
+        return config;
     }
     getExecutableAndFlavorByName(appName, execName, flavorName) {
-        const appTree = this.getApplicationExecutablesTree(appName);
-        const config = (execName && appTree[execName]) ||
-            Object.values(appTree).find((exec) => exec.executable.isDefault);
-        if (!config) {
-            throw new Error(`Executable ${execName} not found for application ${appName}`);
-        }
-        const { executable, flavors } = config;
+        const { executable, flavors } = this.getExecutableByName(appName, execName);
         const flavor = flavors.find((value) => {
             return flavorName ? value.name === flavorName : value.isDefault;
         });
         if (!flavor) {
-            throw new Error(`Flavor ${flavorName} not found for executable ${execName} in application ${appName}`);
+            throw new Error(`Flavor ${flavorName || "default"} not found for executable ${execName} in application ${appName}`);
         }
         return {
             executable,
