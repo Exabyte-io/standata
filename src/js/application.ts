@@ -262,9 +262,10 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
     } {
         const { executable, flavors } = this.getExecutableByName(appName, execName);
 
-        const flavor = flavors.find((value) => {
-            return flavorName ? value.name === flavorName : value.isDefault;
-        });
+        const flavor =
+            flavors.find((value) => {
+                return flavorName ? value.name === flavorName : value.isDefault;
+            }) || flavors[0];
 
         if (!flavor) {
             throw new Error(

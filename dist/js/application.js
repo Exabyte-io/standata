@@ -174,7 +174,7 @@ class ApplicationStandata extends base_1.Standata {
         const { executable, flavors } = this.getExecutableByName(appName, execName);
         const flavor = flavors.find((value) => {
             return flavorName ? value.name === flavorName : value.isDefault;
-        });
+        }) || flavors[0];
         if (!flavor) {
             throw new Error(`Flavor ${flavorName || "default"} not found for executable ${execName} in application ${appName}`);
         }

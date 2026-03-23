@@ -85,297 +85,301 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
     getAllAppTree(): {
         espresso: {
             "abcoeff_to_eps.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: never[];
                 flavors: {
                     abcoeff_to_eps_simple: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
                             name: string;
                         }[];
+                        results: never[];
                         monitors: {
                             name: string;
                         }[];
-                        results: never[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: never[];
             };
             "average.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
                 flavors: {
                     average: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
                             name: string;
                         }[];
+                        results: never[];
                         monitors: {
                             name: string;
                         }[];
-                        results: never[];
+                        applicationName: string;
+                        executableName: string;
                     };
                     average_potential: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
-                            name: string;
-                        }[];
-                        monitors: {
                             name: string;
                         }[];
                         results: {
                             name: string;
                         }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: {
-                    name: string;
-                }[];
             };
             "bands.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
                 flavors: {
                     bands: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
                             name: string;
                         }[];
                         monitors: {
                             name: string;
                         }[];
-                    };
-                    bands_spin_dn: {
                         applicationName: string;
                         executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
                     };
                     bands_spin_up: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
                             name: string;
                         }[];
                         monitors: {
                             name: string;
                         }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    bands_spin_dn: {
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: {
-                    name: string;
-                }[];
             };
             "cp.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: never[];
                 flavors: {
                     cp: {
-                        applicationName: string;
-                        executableName: string;
+                        isDefault: boolean;
                         input: {
                             name: string;
                         }[];
-                        isDefault: boolean;
+                        results: never[];
                         monitors: {
                             name: string;
                         }[];
-                        results: never[];
+                        applicationName: string;
+                        executableName: string;
                     };
                     cp_wf: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
                             name: string;
                         }[];
+                        results: never[];
                         monitors: {
                             name: string;
                         }[];
-                        results: never[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: never[];
             };
             "dos.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
                 flavors: {
                     dos: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
-                            name: string;
-                        }[];
-                        monitors: {
                             name: string;
                         }[];
                         results: {
                             name: string;
                         }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: {
-                    name: string;
-                }[];
             };
             "dynmat.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: never[];
                 flavors: {
                     dynmat: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
                             name: string;
                         }[];
+                        results: never[];
                         monitors: {
                             name: string;
                         }[];
-                        results: never[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: never[];
             };
             "epsilon.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
                 flavors: {
                     dielectric_tensor: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
-                            name: string;
-                        }[];
-                        monitors: {
                             name: string;
                         }[];
                         results: {
                             name: string;
                         }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: {
-                    name: string;
-                }[];
             };
             "gw.x": {
-                flavors: {
-                    gw_bands_full_frequency: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    gw_bands_plasmon_pole: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                };
                 monitors: {
                     name: string;
                 }[];
                 results: {
                     name: string;
                 }[];
+                flavors: {
+                    gw_bands_plasmon_pole: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    gw_bands_full_frequency: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                };
             };
             "gww.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: never[];
                 flavors: {
                     gww_simple: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
                             name: string;
                         }[];
+                        results: never[];
                         monitors: {
                             name: string;
                         }[];
-                        results: never[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: never[];
             };
             "head.x": {
-                flavors: {
-                    head_simple: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: never[];
-                    };
-                };
                 monitors: {
                     name: string;
                 }[];
                 results: never[];
-            };
-            "hp.x": {
                 flavors: {
-                    hp: {
-                        applicationName: string;
-                        executableName: string;
+                    head_simple: {
                         input: {
                             name: string;
                         }[];
+                        results: never[];
                         monitors: {
                             name: string;
                         }[];
-                        results: {
-                            name: string;
-                        }[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
+            };
+            "hp.x": {
                 monitors: {
                     name: string;
                 }[];
                 results: {
                     name: string;
                 }[];
+                flavors: {
+                    hp: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                };
                 supportedApplicationVersions: string[];
             };
             "matdyn.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
                 flavors: {
                     matdyn_grid: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
                             name: string;
                         }[];
@@ -385,10 +389,10 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         results: {
                             name: string;
                         }[];
+                        applicationName: string;
+                        executableName: string;
                     };
                     matdyn_path: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
                             name: string;
                         }[];
@@ -398,1252 +402,857 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         results: {
                             name: string;
                         }[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: {
-                    name: string;
-                }[];
             };
             "neb.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: {
+                    name: string;
+                }[];
                 flavors: {
                     neb: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
                         isMultiMaterial: boolean;
-                        monitors: {
+                        input: {
                             name: string;
                         }[];
                         results: {
                             name: string;
                         }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: {
-                    name: string;
-                }[];
             };
             "ph.x": {
-                flavors: {
-                    ph_gamma: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    ph_grid: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    ph_grid_restart: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: never[];
-                    };
-                    ph_init_qpoints: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: never[];
-                    };
-                    ph_path: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    ph_single_irr_qpt: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: never[];
-                    };
-                };
                 monitors: {
                     name: string;
                 }[];
                 results: {
                     name: string;
                 }[];
-            };
-            "pp.x": {
                 flavors: {
-                    pp_density: {
-                        applicationName: string;
-                        executableName: string;
+                    ph_path: {
                         input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: never[];
-                    };
-                    pp_electrostatic_potential: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: never[];
-                    };
-                    pp_wfn: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
                             name: string;
                         }[];
                         results: {
                             name: string;
                         }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    ph_grid: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    ph_gamma: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    ph_init_qpoints: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: never[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    ph_grid_restart: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: never[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    ph_single_irr_qpt: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: never[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
+            };
+            "pp.x": {
                 monitors: {
                     name: string;
                 }[];
                 results: never[];
-            };
-            "projwfc.x": {
                 flavors: {
-                    projwfc: {
-                        applicationName: string;
-                        executableName: string;
+                    pp_density: {
                         input: {
                             name: string;
                         }[];
+                        results: never[];
                         monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pp_electrostatic_potential: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: never[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pp_wfn: {
+                        input: {
                             name: string;
                         }[];
                         results: {
                             name: string;
                         }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
+            };
+            "projwfc.x": {
                 monitors: {
                     name: string;
                 }[];
                 results: {
                     name: string;
                 }[];
-            };
-            "pw.x": {
                 flavors: {
-                    pw_bands: {
-                        applicationName: string;
-                        executableName: string;
+                    projwfc: {
                         input: {
-                            name: string;
-                        }[];
-                        monitors: {
                             name: string;
                         }[];
                         results: {
                             name: string;
                         }[];
-                    };
-                    "pw_bands_dft_u+j_magn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
                         monitors: {
                             name: string;
                         }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    "pw_bands_dft_u+v_magn": {
                         applicationName: string;
                         executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_bands_dft_u_magn: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_bands_dft_u_magn_legacy: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_bands_dft_u_soc: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_bands_dft_u_soc_legacy: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_bands_magn: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    pw_bands_soc: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    pw_esm: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    pw_esm_relax: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    pw_md: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    pw_nscf: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pw_nscf_dft_u+j_magn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    "pw_nscf_dft_u+v_magn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_nscf_dft_u_magn: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_nscf_dft_u_magn_legacy: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_nscf_dft_u_soc: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_nscf_dft_u_soc_legacy: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_nscf_magn: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    pw_nscf_soc: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    pw_relax: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    pw_scf: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        isDefault: boolean;
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    pw_scf_bands_hse: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    pw_scf_dft_u: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    "pw_scf_dft_u+j": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    "pw_scf_dft_u+j_magn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    "pw_scf_dft_u+v": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    "pw_scf_dft_u+v_magn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_scf_dft_u_legacy: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_scf_dft_u_magn: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_scf_dft_u_magn_legacy: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_scf_dft_u_soc: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_scf_dft_u_soc_legacy: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                        supportedApplicationVersions: string[];
-                    };
-                    pw_scf_hse: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    pw_scf_kpt_conv: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    pw_scf_magn: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    pw_scf_soc: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pw_vc-relax": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
                     };
                 };
-                hasAdvancedComputeOptions: boolean;
+            };
+            "pw.x": {
                 isDefault: boolean;
-                monitors: {
-                    name: string;
-                }[];
+                hasAdvancedComputeOptions: boolean;
                 postProcessors: {
                     name: string;
                 }[];
+                monitors: {
+                    name: string;
+                }[];
                 results: {
                     name: string;
                 }[];
+                flavors: {
+                    pw_scf: {
+                        isDefault: boolean;
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_scf_bands_hse: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_scf_hse: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_scf_kpt_conv: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_scf_dft_u: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    "pw_scf_dft_u+v": {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    "pw_scf_dft_u+j": {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_scf_dft_u_legacy: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_scf_magn: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_scf_soc: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_scf_dft_u_magn: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_scf_dft_u_soc: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    "pw_scf_dft_u+v_magn": {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    "pw_scf_dft_u+j_magn": {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_scf_dft_u_magn_legacy: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_scf_dft_u_soc_legacy: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_esm: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_esm_relax: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_nscf: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_nscf_magn: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_nscf_soc: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_nscf_dft_u_magn: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    "pw_nscf_dft_u+v_magn": {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    "pw_nscf_dft_u+j_magn": {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_nscf_dft_u_magn_legacy: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_nscf_dft_u_soc: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_nscf_dft_u_soc_legacy: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_bands: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_bands_magn: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_bands_soc: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_bands_dft_u_magn: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    "pw_bands_dft_u+v_magn": {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    "pw_bands_dft_u+j_magn": {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_bands_dft_u_magn_legacy: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_bands_dft_u_soc: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_bands_dft_u_soc_legacy: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                        supportedApplicationVersions: string[];
+                    };
+                    pw_relax: {
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pw_vc-relax": {
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    pw_md: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                };
             };
             "pw4gww.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: never[];
                 flavors: {
                     pw4gww_simple: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
                             name: string;
                         }[];
+                        results: never[];
                         monitors: {
                             name: string;
                         }[];
-                        results: never[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: never[];
             };
             "q2r.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: never[];
                 flavors: {
                     q2r: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
                             name: string;
                         }[];
+                        results: never[];
                         monitors: {
                             name: string;
                         }[];
-                        results: never[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: never[];
             };
             "simple.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: never[];
                 flavors: {
                     simple: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
                             name: string;
                         }[];
+                        results: never[];
                         monitors: {
                             name: string;
                         }[];
-                        results: never[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: never[];
             };
             "simple_bse.x": {
+                monitors: {
+                    name: string;
+                }[];
+                results: never[];
                 flavors: {
                     simple_bse: {
-                        applicationName: string;
-                        executableName: string;
                         input: {
                             name: string;
                         }[];
+                        results: never[];
                         monitors: {
                             name: string;
                         }[];
-                        results: never[];
+                        applicationName: string;
+                        executableName: string;
                     };
                 };
-                monitors: {
-                    name: string;
-                }[];
-                results: never[];
             };
             "simple_ip.x": {
-                flavors: {
-                    simple_ip: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: never[];
-                    };
-                };
                 monitors: {
                     name: string;
                 }[];
                 results: never[];
+                flavors: {
+                    simple_ip: {
+                        input: {
+                            name: string;
+                        }[];
+                        results: never[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                };
             };
         };
         nwchem: {
             nwchem: {
-                flavors: {
-                    nwchem_total_energy: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        isDefault: boolean;
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                };
-                hasAdvancedComputeOptions: boolean;
                 isDefault: boolean;
-                monitors: {
+                hasAdvancedComputeOptions: boolean;
+                postProcessors: {
                     name: string;
                 }[];
-                postProcessors: {
+                monitors: {
                     name: string;
                 }[];
                 results: {
                     name: string;
                 }[];
+                flavors: {
+                    nwchem_total_energy: {
+                        isDefault: boolean;
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                };
             };
         };
         python: {
             python: {
-                flavors: {
-                    espresso_extract_kpoints: {
-                        applicationName: string;
-                        executableName: string;
-                        input: ({
-                            name: string;
-                            templateName?: undefined;
-                        } | {
-                            name: string;
-                            templateName: string;
-                        })[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    espresso_xml_get_qpt_irr: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    "generic:post_processing:plot:matplotlib": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    "generic:processing:find_extrema:scipy": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    hello_world: {
-                        applicationName: string;
-                        executableName: string;
-                        input: ({
-                            name: string;
-                            templateName: string;
-                        } | {
-                            name: string;
-                            templateName?: undefined;
-                        })[];
-                        isDefault: boolean;
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    plot_wavefunction: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            basename: string;
-                            filetype: string;
-                            name: string;
-                        }[];
-                    };
-                    "pyml:custom": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:data_input:read_csv:pandas": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:data_input:train_test_split:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:model:adaboosted_trees_regression:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:model:bagged_trees_regression:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:model:extreme_gradboosted_trees_classification:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:model:extreme_gradboosted_trees_regression:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:model:gradboosted_trees_classification:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:model:gradboosted_trees_regression:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:model:k_means_clustering:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:model:kernel_ridge_regression:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:model:lasso_regression:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:model:multilayer_perceptron:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:model:random_forest_classification:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:model:random_forest_regression:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:model:ridge_regression:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:post_processing:parity_plot:matplotlib": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:post_processing:pca_2d_clusters:matplotlib": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:post_processing:roc_curve:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:pre_processing:min_max_scaler:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:pre_processing:remove_duplicates:pandas": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:pre_processing:remove_missing:pandas": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:pre_processing:standardization:sklearn": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    "pyml:setup_variables_packages": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                };
                 isDefault: boolean;
                 monitors: {
                     name: string;
@@ -1651,64 +1260,401 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                 results: {
                     name: string;
                 }[];
+                flavors: {
+                    hello_world: {
+                        isDefault: boolean;
+                        input: ({
+                            name: string;
+                            templateName: string;
+                        } | {
+                            name: string;
+                            templateName?: undefined;
+                        })[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    espresso_xml_get_qpt_irr: {
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    espresso_extract_kpoints: {
+                        input: ({
+                            name: string;
+                            templateName?: undefined;
+                        } | {
+                            name: string;
+                            templateName: string;
+                        })[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    plot_wavefunction: {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                            filetype: string;
+                            basename: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "generic:post_processing:plot:matplotlib": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "generic:processing:find_extrema:scipy": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:setup_variables_packages": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:custom": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:data_input:read_csv:pandas": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:data_input:train_test_split:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:pre_processing:min_max_scaler:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:pre_processing:remove_duplicates:pandas": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:pre_processing:remove_missing:pandas": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:pre_processing:standardization:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:adaboosted_trees_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:bagged_trees_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:gradboosted_trees_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:extreme_gradboosted_trees_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:k_means_clustering:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:kernel_ridge_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:lasso_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:multilayer_perceptron:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:random_forest_classification:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:gradboosted_trees_classification:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:extreme_gradboosted_trees_classification:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:random_forest_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:model:ridge_regression:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:post_processing:parity_plot:matplotlib": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:post_processing:pca_2d_clusters:matplotlib": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    "pyml:post_processing:roc_curve:sklearn": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                };
             };
         };
         shell: {
             sh: {
-                flavors: {
-                    bash_vasp_prepare_neb_images: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        isMultiMaterial: boolean;
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    espresso_collect_dynmat: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    espresso_link_outdir_save: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    hello_world: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        isDefault: boolean;
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                    job_espresso_pw_scf: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                    };
-                };
                 isDefault: boolean;
                 monitors: {
                     name: string;
@@ -1716,256 +1662,310 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                 results: {
                     name: string;
                 }[];
+                flavors: {
+                    hello_world: {
+                        isDefault: boolean;
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    job_espresso_pw_scf: {
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    espresso_link_outdir_save: {
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    espresso_collect_dynmat: {
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    bash_vasp_prepare_neb_images: {
+                        isMultiMaterial: boolean;
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                };
             };
         };
         vasp: {
             vasp: {
-                flavors: {
-                    vasp: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                        }[];
-                        isDefault: boolean;
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_bands: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_bands_hse: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        isDefault: boolean;
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_hse: {
-                        applicationName: string;
-                        executableName: string;
-                        input: ({
-                            name: string;
-                            templateName: string;
-                        } | {
-                            name: string;
-                            templateName?: undefined;
-                        })[];
-                        isDefault: boolean;
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_kpt_conv: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_neb: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        isMultiMaterial: boolean;
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_neb_final: {
-                        applicationName: string;
-                        executableName: string;
-                        input: ({
-                            name: string;
-                            templateName: string;
-                        } | {
-                            name: string;
-                            templateName?: undefined;
-                        })[];
-                        isMultiMaterial: boolean;
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_neb_initial: {
-                        applicationName: string;
-                        executableName: string;
-                        input: ({
-                            name: string;
-                            templateName: string;
-                        } | {
-                            name: string;
-                            templateName?: undefined;
-                        })[];
-                        isMultiMaterial: boolean;
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_nscf: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_nscf_hse: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        isDefault: boolean;
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_relax: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        postProcessors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_symprec: {
-                        applicationName: string;
-                        executableName: string;
-                        input: ({
-                            name: string;
-                            templateName: string;
-                        } | {
-                            name: string;
-                            templateName?: undefined;
-                        })[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_vc_relax: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        postProcessors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_vc_relax_conv: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                    vasp_zpe: {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: {
-                            name: string;
-                        }[];
-                        results: {
-                            name: string;
-                        }[];
-                    };
-                };
                 isDefault: boolean;
-                monitors: {
+                postProcessors: {
                     name: string;
                 }[];
-                postProcessors: {
+                monitors: {
                     name: string;
                 }[];
                 results: {
                     name: string;
                 }[];
+                flavors: {
+                    vasp: {
+                        isDefault: boolean;
+                        input: {
+                            name: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_symprec: {
+                        input: ({
+                            name: string;
+                            templateName: string;
+                        } | {
+                            name: string;
+                            templateName?: undefined;
+                        })[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_bands: {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_nscf: {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_hse: {
+                        isDefault: boolean;
+                        input: ({
+                            name: string;
+                            templateName: string;
+                        } | {
+                            name: string;
+                            templateName?: undefined;
+                        })[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_bands_hse: {
+                        isDefault: boolean;
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_nscf_hse: {
+                        isDefault: boolean;
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_relax: {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        postProcessors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_vc_relax: {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        postProcessors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_zpe: {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_kpt_conv: {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_vc_relax_conv: {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_neb: {
+                        isMultiMaterial: boolean;
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_neb_initial: {
+                        isMultiMaterial: boolean;
+                        input: ({
+                            name: string;
+                            templateName: string;
+                        } | {
+                            name: string;
+                            templateName?: undefined;
+                        })[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                    vasp_neb_final: {
+                        isMultiMaterial: boolean;
+                        input: ({
+                            name: string;
+                            templateName: string;
+                        } | {
+                            name: string;
+                            templateName?: undefined;
+                        })[];
+                        results: {
+                            name: string;
+                        }[];
+                        monitors: {
+                            name: string;
+                        }[];
+                        applicationName: string;
+                        executableName: string;
+                    };
+                };
             };
         };
     };
