@@ -59,17 +59,6 @@ describe("Application Standata", () => {
             expect(gnu63).to.have.property("shortName", "qe");
         });
 
-        it("getApplications - flattens every version/build from the applications tree", () => {
-            const apps = standata.getApplications();
-            expect(apps).to.be.an("array");
-            expect(apps.length).to.be.greaterThan(0);
-            const espressoGnu = apps.find(
-                (a) => a.name === "espresso" && a.version === "6.3" && a.build === "GNU",
-            );
-            expect(espressoGnu).to.not.equal(undefined);
-            expect(espressoGnu).to.have.property("shortName", "qe");
-        });
-
         it("getApplicationTreeItem - returns defaultVersion and versions for a known app", () => {
             const item = standata.getApplicationTreeItem("espresso");
             expect(item.defaultVersion).to.equal("6.3");
@@ -91,9 +80,9 @@ describe("Application Standata", () => {
         });
 
         it("getExecutableByName - should resolve executable config for valid app", () => {
-            const exec = standata.getExecutableByName("espresso", "pw.x");
-            expect(exec).to.be.an("object");
-            expect(exec).to.have.property("name", "pw.x");
+            const { executable } = standata.getExecutableByName("espresso", "pw.x");
+            expect(executable).to.be.an("object");
+            expect(executable).to.have.property("name", "pw.x");
         });
 
         it("getExecutableByName - should throw for app without executable tree", () => {
@@ -158,20 +147,6 @@ describe("Application Standata", () => {
             entities.forEach((entity) => {
                 expect(entity).to.have.property("name", "espresso");
             });
-        });
-
-        it("returns default version config when no version specified", () => {
-            const defaultVersionConfig = standata.getDefaultConfigByNameAndVersion("espresso");
-            expect(defaultVersionConfig).to.be.an("object");
-            expect(defaultVersionConfig).to.have.property("name", "espresso");
-            expect(defaultVersionConfig).to.have.property("version", "6.3");
-        });
-
-        it("returns default build config when version specified", () => {
-            const defaultBuildConfig = standata.getDefaultConfigByNameAndVersion("espresso", "6.3");
-            expect(defaultBuildConfig).to.be.an("object");
-            expect(defaultBuildConfig).to.have.property("name", "espresso");
-            expect(defaultBuildConfig).to.have.property("version", "6.3");
         });
 
         it("returns default config", () => {

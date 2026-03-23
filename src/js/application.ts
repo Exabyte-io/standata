@@ -12,7 +12,6 @@ import APPLICATION_VERSIONS_MAP from "./runtime_data/applications/applicationVer
 import EXECUTABLE_FLAVOR_MAP from "./runtime_data/applications/executableFlavorMapByApplication.json";
 import TEMPLATES_LIST_RAW from "./runtime_data/applications/templatesList.json";
 import {
-    type FlavorConfig,
     ApplicationExecutableTree,
     ApplicationVersionsMapByApplicationType,
 } from "./types/application";
@@ -59,15 +58,6 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
             }
         >
     > = {};
-
-    private getAppDataForApplication(appName: string) {
-        const applicationVersionsMap = APP_VERSIONS[appName];
-
-        if (!applicationVersionsMap) {
-            throw new Error(`Application ${appName} not found`);
-        }
-        return applicationVersionsMap;
-    }
 
     private getApplicationExecutablesTree(appName: string) {
         if (appName in this.appCache) {
@@ -156,39 +146,11 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         return allEntities.filter((entity) => entity.name === appName);
     }
 
-    static getDefaultVersionForApplication(appName: string) {
-        return APP_VERSIONS[appName].defaultVersion;
-    }
-
     static getDefaultBuildForApplicationAndVersion(appName: string, version: string) {
         const versionConfig = APP_VERSIONS[appName].versions.find((config) => {
             return config.version === version && config.isDefault;
         });
         return versionConfig?.build ?? null;
-    }
-
-    // TODO: move to parent class Standata, name and generic parameters
-    getDefaultConfigByNameAndVersion(appName: string, version?: string) {
-        const tags = [TAGS.DEFAULT_BUILD];
-        let versionToUse = version;
-        if (!versionToUse) {
-            tags.push(TAGS.DEFAULT_VERSION);
-            versionToUse = ApplicationStandata.getDefaultVersionForApplication(appName);
-        }
-        const allEntriesWithTags = this.findEntitiesByTags(...tags);
-        const allEntriesWithTagsForNameAndVersion = allEntriesWithTags.filter((entity) => {
-            return entity.name === appName && entity.version === versionToUse;
-        });
-        if (allEntriesWithTagsForNameAndVersion.length > 1) {
-            throw new Error(
-                `Multiple default version entries found for ${appName} with version ${versionToUse}`,
-            );
-        } else if (allEntriesWithTagsForNameAndVersion.length === 0) {
-            throw new Error(
-                `No default version entry found for ${appName} with version ${versionToUse}`,
-            );
-        }
-        return allEntriesWithTagsForNameAndVersion[0];
     }
 
     getDefaultConfig() {
@@ -199,17 +161,17 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
 
     private applicationsTree?: ApplicationTree;
 
-    private applications?: ApplicationSchema[];
-
-    public getApplicationsTree() {
-        if (this.applicationsTree) {
-            return this.applicationsTree;
-        }
-
+    private buildApplicationsTree() {
         const applicationNames = this.getAllApplicationNames();
 
-        this.applicationsTree = applicationNames.reduce((tree, appName) => {
-            const { versions, defaultVersion, ...appData } = this.getAppDataForApplication(appName);
+        return applicationNames.reduce((tree, appName) => {
+            const application = APP_VERSIONS[appName];
+
+            if (!application) {
+                throw new Error(`Application ${appName} not found`);
+            }
+
+            const { versions, defaultVersion, ...appData } = application;
 
             return {
                 ...tree,
@@ -233,24 +195,16 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
                 },
             };
         }, {});
-
-        return this.applicationsTree;
     }
 
-    public getApplications() {
-        if (this.applications) {
-            return this.applications;
+    public getApplicationsTree() {
+        if (this.applicationsTree) {
+            return this.applicationsTree;
         }
 
-        const tree = this.getApplicationsTree();
+        this.applicationsTree = this.buildApplicationsTree();
 
-        this.applications = Object.values(tree).flatMap((appTreeItem) => {
-            return Object.values(appTreeItem.versions).flatMap((version) => {
-                return Object.values(version).flat();
-            });
-        });
-
-        return this.applications;
+        return this.applicationsTree;
     }
 
     public getApplicationTreeItem(appName: string) {
@@ -290,10 +244,12 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
             Object.values(appTree).find((exec) => exec.executable.isDefault);
 
         if (!config) {
-            throw new Error(`Executable ${execName} not found for application ${appName}`);
+            throw new Error(
+                `Executable ${execName || "default"} not found for application ${appName}`,
+            );
         }
 
-        return config.executable;
+        return config;
     }
 
     getExecutableAndFlavorByName(
@@ -304,16 +260,7 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         executable: ExecutableSchema;
         flavor: FlavorSchema;
     } {
-        const appTree = this.getApplicationExecutablesTree(appName);
-        const config =
-            (execName && appTree[execName]) ||
-            Object.values(appTree).find((exec) => exec.executable.isDefault);
-
-        if (!config) {
-            throw new Error(`Executable ${execName} not found for application ${appName}`);
-        }
-
-        const { executable, flavors } = config;
+        const { executable, flavors } = this.getExecutableByName(appName, execName);
 
         const flavor = flavors.find((value) => {
             return flavorName ? value.name === flavorName : value.isDefault;
@@ -321,7 +268,9 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
 
         if (!flavor) {
             throw new Error(
-                `Flavor ${flavorName} not found for executable ${execName} in application ${appName}`,
+                `Flavor ${
+                    flavorName || "default"
+                } not found for executable ${execName} in application ${appName}`,
             );
         }
 
@@ -337,7 +286,6 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
 
         return flavor.input.map((input): TemplateSchema => {
             const inputName = input.templateName || input.name;
-
             const filtered = this.getTemplatesByName(appName, execName, inputName);
 
             if (filtered.length !== 1) {
