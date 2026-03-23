@@ -14,11 +14,6 @@ function setupNunjucksEnvironment(): nunjucks.Environment {
     );
     const env = new nunjucks.Environment(new nunjucks.FileSystemLoader(templatePath));
 
-    // Add custom filter for raw blocks (for JOB_WORK_DIR)
-    env.addFilter("raw", (str: string) => {
-        return str;
-    });
-
     // Add custom filter for sprintf-style formatting
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     env.addFilter("sprintf", (value: any, format: string) => {
