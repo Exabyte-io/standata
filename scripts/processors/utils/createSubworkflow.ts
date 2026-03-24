@@ -24,6 +24,7 @@ import {
 
 import { type ApplicationConfig, ApplicationStandata } from "../../../src/js/application";
 import { ApplicationMethodStandata } from "../../../src/js/applicationMethod";
+import { setUnitLinks } from "../../../src/js/utils/unit";
 import {
     defaultAssertionUnit,
     defaultAssignmentUnit,
@@ -34,13 +35,7 @@ import { dynamicSubworkflowsByApp, getSurfaceEnergySubworkflowUnits } from "./dy
 import ExecutionUnitConfigBuilder, {
     type ExecutionConfig,
 } from "./unitBuilders/ExecutionUnitConfigBuilder";
-import {
-    generateFlowChartId,
-    generateSubworkflowId,
-    setNextLinks,
-    setUnitsHead,
-    validateData,
-} from "./utils";
+import { generateFlowChartId, generateSubworkflowId, validateData } from "./utils";
 
 type UnitConfig<T extends { type: string }> = {
     type: T["type"];
@@ -270,7 +265,7 @@ export default function createSubworkflow(subworkflowData: SubworkflowData, cach
                 },
             },
         } as SubworkflowSchema["model"],
-        units: setNextLinks(setUnitsHead(finalUnits)),
+        units: setUnitLinks(finalUnits),
         ...config?.attributes,
     };
 

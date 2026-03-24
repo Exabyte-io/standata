@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.baseUiSchema = exports.methodTree = exports.modelTree = exports.setupNunjucksEnvironment = exports.filterMethodsByModel = exports.ModelMethodFilter = exports.MethodStandata = exports.ModelStandata = exports.ApplicationMethodStandata = exports.ApplicationModelStandata = exports.workflowSubworkflowMapByApplication = exports.SubworkflowStandata = exports.WorkflowStandata = exports.PropertyStandata = exports.ApplicationStandata = exports.MaterialStandata = exports.Standata = void 0;
+exports.baseUiSchema = exports.methodTree = exports.modelTree = exports.setUnitLinks = exports.setupNunjucksEnvironment = exports.filterMethodsByModel = exports.ModelMethodFilter = exports.MethodStandata = exports.ModelStandata = exports.ApplicationMethodStandata = exports.ApplicationModelStandata = exports.workflowSubworkflowMapByApplication = exports.SubworkflowStandata = exports.WorkflowStandata = exports.PropertyStandata = exports.ApplicationStandata = exports.MaterialStandata = exports.Standata = void 0;
 const methodTree_json_1 = __importDefault(require("./ui/methodTree.json"));
 exports.methodTree = methodTree_json_1.default;
 const modelTree_json_1 = __importDefault(require("./ui/modelTree.json"));
@@ -35,3 +35,5 @@ Object.defineProperty(exports, "ModelMethodFilter", { enumerable: true, get: fun
 Object.defineProperty(exports, "filterMethodsByModel", { enumerable: true, get: function () { return modelMethodFilter_1.filterMethodsByModel; } });
 var template_1 = require("./utils/template");
 Object.defineProperty(exports, "setupNunjucksEnvironment", { enumerable: true, get: function () { return template_1.setupNunjucksEnvironment; } });
+var unit_1 = require("./utils/unit");
+Object.defineProperty(exports, "setUnitLinks", { enumerable: true, get: function () { return unit_1.setUnitLinks; } });

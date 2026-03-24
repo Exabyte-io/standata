@@ -12,4 +12,5 @@ export { ModelStandata } from "./model";
 export { MethodStandata } from "./method";
 export { ModelMethodFilter, filterMethodsByModel } from "./modelMethodFilter";
 export { setupNunjucksEnvironment } from "./utils/template";
+export { setUnitLinks } from "./utils/unit";
 export { modelTree, methodTree, baseUiSchema };
