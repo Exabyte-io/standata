@@ -9,6 +9,8 @@ categories:
     - dielectric_tensor
     - fermi_energy
     - final_structure
+    - homo_energy
+    - lumo_energy
     - phonon_dispersions
     - phonon_dos
     - potential_profile
@@ -351,6 +353,8 @@ entities:
       - zero_point_energy
   - filename: nwchem/total_energy.json
     categories:
+      - homo_energy
+      - lumo_energy
       - nwchem
       - total_energy
       - total_energy_contributions
