@@ -151,4 +151,4 @@ export const BUILD_CONFIG = {
         lineWidth: -1,
         sortKeys: false,
     },
-};
+} as const;

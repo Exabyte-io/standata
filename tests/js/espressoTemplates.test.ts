@@ -1,32 +1,9 @@
 import { getRenderedTemplateFile, getTemplateContexts } from "@mat3ra/fixtures";
 import { expect } from "chai";
-import * as nunjucks from "nunjucks";
+import { Environment, FileSystemLoader } from "nunjucks";
 import * as path from "path";
-import { sprintf } from "sprintf-js";
 
-/**
- * Set up nunjucks environment with custom filters
- */
-function setupNunjucksEnvironment(): nunjucks.Environment {
-    const templatePath = path.join(
-        __dirname,
-        "../../assets/applications/input_files_templates/espresso",
-    );
-    const env = new nunjucks.Environment(new nunjucks.FileSystemLoader(templatePath));
-
-    // Add custom filter for raw blocks (for JOB_WORK_DIR)
-    env.addFilter("raw", (str: string) => {
-        return str;
-    });
-
-    // Add custom filter for sprintf-style formatting
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    env.addFilter("sprintf", (value: any, format: string) => {
-        return sprintf(format, value);
-    });
-
-    return env;
-}
+import { setupNunjucksEnvironment } from "../../src/js/utils/template";
 
 /**
  * Normalize template output for comparison
@@ -88,7 +65,11 @@ const templateNames = [
 ];
 
 describe("Espresso Template Rendering", () => {
-    const env = setupNunjucksEnvironment();
+    const templatePath = path.join(
+        __dirname,
+        "../../assets/applications/input_files_templates/espresso",
+    );
+    const env = setupNunjucksEnvironment(new Environment(new FileSystemLoader(templatePath)));
 
     getTemplateContexts().forEach((context) => {
         templateNames.forEach((templateName) => {

@@ -1,4 +1,5 @@
 {
+    "_id": "937fbac8-2dec-5fb1-a46f-b8a0cc3d3d05",
     "name": "Total Energy",
     "subworkflows": [
         {
@@ -25,11 +26,7 @@
                     "subtype": "pople",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -52,6 +49,9 @@
                     "flowchartId": "6f1eda0b-ebe1-5ccd-92dc-c2e55de5e0c7",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "nwchem",
                         "shortName": "nwchem",
@@ -62,18 +62,33 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [
+                            {
+                                "name": "error_handler"
+                            }
+                        ],
                         "hasAdvancedComputeOptions": false,
                         "isDefault": true,
                         "monitors": [
-                            "standard_output"
-                        ],
-                        "postProcessors": [
-                            "error_handler"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "nwchem",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "results": [
+                            {
+                                "name": "total_energy"
+                            },
+                            {
+                                "name": "total_energy_contributions"
+                            }
+                        ],
                         "applicationName": "nwchem",
                         "executableName": "nwchem",
                         "input": [
@@ -83,54 +98,61 @@
                         ],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output"
-                        ],
-                        "results": [
-                            "total_energy",
-                            "total_energy_contributions"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "nwchem_total_energy",
                         "schemaVersion": "2022.8.16"
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "nwchem",
-                            "content": " start nwchem\n title \"Test\"\n charge {{ input.CHARGE }}\n geometry units au noautosym\n {{ input.ATOMIC_POSITIONS }}\n end\n basis\n   * library {{ input.BASIS }}\n end\n dft\n xc {{ input.FUNCTIONAL }}\n mult {{ input.MULT }}\n end\n task dft energy\n",
-                            "contextProviders": [
-                                {
-                                    "name": "NWChemInputDataManager"
-                                }
-                            ],
-                            "executableName": "nwchem",
-                            "name": "nwchem_total_energy.inp",
-                            "rendered": " start nwchem\n title \"Test\"\n charge 0\n geometry units au noautosym\n Si     0.000000000    0.000000000    0.000000000 \nSi     1.116306745    0.789348070    1.933500000 \n end\n basis\n   * library 6-31G\n end\n dft\n xc B3LYP\n mult 1\n end\n task dft energy\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "nwchem",
+                                "content": " start nwchem\n title \"Test\"\n charge {{ input.CHARGE }}\n geometry units au noautosym\n {{ input.ATOMIC_POSITIONS }}\n end\n basis\n   * library {{ input.BASIS }}\n end\n dft\n xc {{ input.FUNCTIONAL }}\n mult {{ input.MULT }}\n end\n task dft energy\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "NWChemInputDataManager"
+                                    }
+                                ],
+                                "executableName": "nwchem",
+                                "name": "nwchem_total_energy.inp",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
-                    ]
+                    ],
+                    "context": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         }
     ],
     "units": [
         {
-            "name": "Total Energy",
             "type": "subworkflow",
-            "_id": "9e7a15b7-0b7d-5a8e-be7f-b8fcacd5cc13",
+            "name": "Total Energy",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "6059d61a-6a92-5657-9130-02208639aff8",
             "tags": [],
-            "head": true
+            "_id": "9e7a15b7-0b7d-5a8e-be7f-b8fcacd5cc13",
+            "flowchartId": "6059d61a-6a92-5657-9130-02208639aff8",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [
         "total_energy",
         "total_energy_contributions"
     ],
-    "_id": "937fbac8-2dec-5fb1-a46f-b8a0cc3d3d05",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

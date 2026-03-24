@@ -1,13 +1,13 @@
 import { ApplicationSchema } from "@mat3ra/esse/dist/js/types";
-import { ApplicationVersionInfo, ApplicationVersionsMapType } from "../types/application";
-export declare class ApplicationVersionsMap implements ApplicationVersionsMapType {
+import { ApplicationConfigItem, ApplicationVersion } from "../types/application";
+export declare class ApplicationVersionsMap implements ApplicationConfigItem {
     shortName: string;
     summary: string;
     isLicensed?: boolean | undefined;
     defaultVersion: string;
-    versions: ApplicationVersionInfo[];
-    map: ApplicationVersionsMapType;
-    constructor(config: ApplicationVersionsMapType);
+    versions: ApplicationVersion[];
+    map: ApplicationConfigItem;
+    constructor(config: ApplicationConfigItem);
     get name(): string;
     get nonVersionProperties(): {
         name: string;
@@ -15,7 +15,7 @@ export declare class ApplicationVersionsMap implements ApplicationVersionsMapTyp
         summary: string;
         isLicensed?: boolean | undefined;
     };
-    get versionConfigs(): ApplicationVersionInfo[];
+    get versionConfigs(): ApplicationVersion[];
     get versionConfigsFull(): ApplicationSchema[];
     getSlugForVersionConfig(versionConfigFull: ApplicationSchema): string;
 }

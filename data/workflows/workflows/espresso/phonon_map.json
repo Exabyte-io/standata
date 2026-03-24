@@ -1,9 +1,10 @@
 {
+    "_id": "bbf7f87c-d201-537e-8c0f-00dca0cbb7ec",
     "name": "Phonon Map",
     "subworkflows": [
         {
-            "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
-            "name": "Preliminary SCF Calculation",
+            "_id": "f52b8039-83d0-5485-a1f1-0bc37cb01ed3",
+            "name": "pw-scf",
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -31,11 +32,7 @@
                     "subtype": "us",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -76,6 +73,9 @@
                     "flowchartId": "9fc7a088-5533-5f70-bb33-f676ec65f565",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -87,20 +87,54 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [
+                            {
+                                "name": "remove_non_zero_weight_kpoints"
+                            }
+                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
-                        ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "results": [
+                            {
+                                "name": "atomic_forces"
+                            },
+                            {
+                                "name": "fermi_energy"
+                            },
+                            {
+                                "name": "pressure"
+                            },
+                            {
+                                "name": "stress_tensor"
+                            },
+                            {
+                                "name": "total_energy"
+                            },
+                            {
+                                "name": "total_energy_contributions"
+                            },
+                            {
+                                "name": "total_force"
+                            }
+                        ],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -110,47 +144,47 @@
                         ],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_electronic"
-                        ],
-                        "results": [
-                            "atomic_forces",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw_scf",
                         "schemaVersion": "2022.8.16"
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KGridFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_scf.in",
-                            "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "KGridFormDataManager"
+                                    },
+                                    {
+                                        "name": "QEPWXInputDataManager"
+                                    },
+                                    {
+                                        "name": "PlanewaveCutoffDataManager"
+                                    }
+                                ],
+                                "executableName": "pw.x",
+                                "name": "pw_scf.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
-                    ]
+                    ],
+                    "context": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "2f017bcb-f4ba-55b8-b939-1f780679a88e",
@@ -174,11 +208,7 @@
                     "subtype": "us",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -194,6 +224,9 @@
                     "flowchartId": "b8ea6a33-38f3-5434-b17e-b5eae8fff9fc",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -205,14 +238,21 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "ph.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "results": [],
                         "applicationName": "espresso",
                         "executableName": "ph.x",
                         "input": [
@@ -221,33 +261,39 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "results": [],
                         "name": "ph_init_qpoints",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&INPUTPH\n    tr2_ph = 1.0d-18,\n    recover = .false.\n    start_irr = 0\n    last_irr = 0\n    ldisp = .true.\n    fildyn = 'dyn0'\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
-                            "contextProviders": [
-                                {
-                                    "name": "QGridFormDataManager"
-                                }
-                            ],
-                            "executableName": "ph.x",
-                            "name": "ph_init_qpoints.in",
-                            "rendered": "&INPUTPH\n    tr2_ph = 1.0d-18,\n    recover = .false.\n    start_irr = 0\n    last_irr = 0\n    ldisp = .true.\n    fildyn = 'dyn0'\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    nq1 = 1\n    nq2 = 1\n    nq3 = 1\n    \n/\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&INPUTPH\n    tr2_ph = 1.0d-18,\n    recover = .false.\n    start_irr = 0\n    last_irr = 0\n    ldisp = .true.\n    fildyn = 'dyn0'\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "QGridFormDataManager"
+                                    }
+                                ],
+                                "executableName": "ph.x",
+                                "name": "ph_init_qpoints.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
-                    ]
+                    ],
+                    "context": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "e4b6b2e7-7d8f-5ae1-b6bd-ee81ecbca11a",
@@ -285,6 +331,9 @@
                     "flowchartId": "9b8a495e-1ac1-56a7-b2e0-af1b405a1219",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "python",
                         "shortName": "py",
@@ -295,14 +344,21 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "results": [],
                         "applicationName": "python",
                         "executableName": "python",
                         "input": [
@@ -311,55 +367,56 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "espresso_xml_get_qpt_irr",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "next": "d0fd8654-2106-546b-8792-7bb46272befc",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "python",
-                            "content": "# ---------------------------------------------------------- #\n#                                                            #\n#  This script extracts q-points and irreducible             #\n#  representations from Quantum ESPRESSO xml data.           #\n#                                                            #\n#  Expects control_ph.xml and patterns.?.xml files to exist  #\n#                                                            #\n# ---------------------------------------------------------- #\nfrom __future__ import print_function\n\nimport json\nfrom xml.dom import minidom\n\n{#    JOB_WORK_DIR will be initialized at runtime => avoid substituion below    #}\n{% raw %}\nCONTROL_PH_FILENAME = \"{{JOB_WORK_DIR}}/outdir/_ph0/__prefix__.phsave/control_ph.xml\"\nPATTERNS_FILENAME = \"{{JOB_WORK_DIR}}/outdir/_ph0/__prefix__.phsave/patterns.{}.xml\"\n{% endraw %}\n\n# get integer content of an xml tag in a document\ndef get_int_by_tag_name(doc, tag_name):\n    element = doc.getElementsByTagName(tag_name)\n    return int(element[0].firstChild.nodeValue)\n\nvalues = []\n\n# get number of q-points and cycle through them\nxmldoc = minidom.parse(CONTROL_PH_FILENAME)\nnumber_of_qpoints = get_int_by_tag_name(xmldoc, \"NUMBER_OF_Q_POINTS\")\n\nfor i in range(number_of_qpoints):\n    # get number of irreducible representations per qpoint\n    xmldoc = minidom.parse(PATTERNS_FILENAME.format(i+1))\n    number_of_irr_per_qpoint = get_int_by_tag_name(xmldoc, \"NUMBER_IRR_REP\")\n    # add each distinct combination of qpoint and irr as a separate entry\n    for j in range(number_of_irr_per_qpoint):\n      values.append({\n          \"qpoint\": i + 1,\n          \"irr\": j + 1\n      })\n\n# store final values in standard output (STDOUT)\nprint(json.dumps(values, indent=4))\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "espresso_xml_get_qpt_irr.py",
-                            "rendered": "# ---------------------------------------------------------- #\n#                                                            #\n#  This script extracts q-points and irreducible             #\n#  representations from Quantum ESPRESSO xml data.           #\n#                                                            #\n#  Expects control_ph.xml and patterns.?.xml files to exist  #\n#                                                            #\n# ---------------------------------------------------------- #\nfrom __future__ import print_function\n\nimport json\nfrom xml.dom import minidom\n\n\n\nCONTROL_PH_FILENAME = \"{{JOB_WORK_DIR}}/outdir/_ph0/__prefix__.phsave/control_ph.xml\"\nPATTERNS_FILENAME = \"{{JOB_WORK_DIR}}/outdir/_ph0/__prefix__.phsave/patterns.{}.xml\"\n\n\n# get integer content of an xml tag in a document\ndef get_int_by_tag_name(doc, tag_name):\n    element = doc.getElementsByTagName(tag_name)\n    return int(element[0].firstChild.nodeValue)\n\nvalues = []\n\n# get number of q-points and cycle through them\nxmldoc = minidom.parse(CONTROL_PH_FILENAME)\nnumber_of_qpoints = get_int_by_tag_name(xmldoc, \"NUMBER_OF_Q_POINTS\")\n\nfor i in range(number_of_qpoints):\n    # get number of irreducible representations per qpoint\n    xmldoc = minidom.parse(PATTERNS_FILENAME.format(i+1))\n    number_of_irr_per_qpoint = get_int_by_tag_name(xmldoc, \"NUMBER_IRR_REP\")\n    # add each distinct combination of qpoint and irr as a separate entry\n    for j in range(number_of_irr_per_qpoint):\n      values.append({\n          \"qpoint\": i + 1,\n          \"irr\": j + 1\n      })\n\n# store final values in standard output (STDOUT)\nprint(json.dumps(values, indent=4))\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "python",
+                                "content": "# ---------------------------------------------------------- #\n#                                                            #\n#  This script extracts q-points and irreducible             #\n#  representations from Quantum ESPRESSO xml data.           #\n#                                                            #\n#  Expects control_ph.xml and patterns.?.xml files to exist  #\n#                                                            #\n# ---------------------------------------------------------- #\nfrom __future__ import print_function\n\nimport json\nfrom xml.dom import minidom\n\n{#    JOB_WORK_DIR will be initialized at runtime => avoid substituion below    #}\n{% raw %}\nCONTROL_PH_FILENAME = \"{{JOB_WORK_DIR}}/outdir/_ph0/__prefix__.phsave/control_ph.xml\"\nPATTERNS_FILENAME = \"{{JOB_WORK_DIR}}/outdir/_ph0/__prefix__.phsave/patterns.{}.xml\"\n{% endraw %}\n\n# get integer content of an xml tag in a document\ndef get_int_by_tag_name(doc, tag_name):\n    element = doc.getElementsByTagName(tag_name)\n    return int(element[0].firstChild.nodeValue)\n\nvalues = []\n\n# get number of q-points and cycle through them\nxmldoc = minidom.parse(CONTROL_PH_FILENAME)\nnumber_of_qpoints = get_int_by_tag_name(xmldoc, \"NUMBER_OF_Q_POINTS\")\n\nfor i in range(number_of_qpoints):\n    # get number of irreducible representations per qpoint\n    xmldoc = minidom.parse(PATTERNS_FILENAME.format(i+1))\n    number_of_irr_per_qpoint = get_int_by_tag_name(xmldoc, \"NUMBER_IRR_REP\")\n    # add each distinct combination of qpoint and irr as a separate entry\n    for j in range(number_of_irr_per_qpoint):\n      values.append({\n          \"qpoint\": i + 1,\n          \"irr\": j + 1\n      })\n\n# store final values in standard output (STDOUT)\nprint(json.dumps(values, indent=4))\n",
+                                "contextProviders": [],
+                                "executableName": "python",
+                                "name": "espresso_xml_get_qpt_irr.py",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
-                    ]
+                    ],
+                    "context": [],
+                    "next": "assignment",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assignment",
                     "type": "assignment",
-                    "operand": "Q_POINTS",
-                    "value": "json.loads(STDOUT)",
                     "input": [
                         {
                             "scope": "9b8a495e-1ac1-56a7-b2e0-af1b405a1219",
                             "name": "STDOUT"
                         }
                     ],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "flowchartId": "d0fd8654-2106-546b-8792-7bb46272befc",
-                    "tags": [],
+                    "operand": "Q_POINTS",
+                    "value": "json.loads(STDOUT)",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "monitors": [],
+                    "results": [],
+                    "flowchartId": "assignment",
                     "head": false,
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "545a66e2-dfbe-513e-acaf-d79d0d139b9c",
@@ -375,8 +432,8 @@
                 "schemaVersion": "2022.8.16"
             },
             "properties": [
-                "phonon_dos",
-                "phonon_dispersions"
+                "phonon_dispersions",
+                "phonon_dos"
             ],
             "model": {
                 "type": "dft",
@@ -386,11 +443,7 @@
                     "subtype": "us",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -406,6 +459,9 @@
                     "flowchartId": "cb206177-a4af-599a-81ba-6c88d24253b6",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -417,14 +473,21 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "ph.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "results": [],
                         "applicationName": "espresso",
                         "executableName": "ph.x",
                         "input": [
@@ -433,32 +496,36 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "results": [],
                         "name": "ph_grid_restart",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&INPUTPH\n    tr2_ph = 1.0d-18,\n    recover = .true.\n    ldisp = .true.\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    fildyn = 'dyn'\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
-                            "contextProviders": [
-                                {
-                                    "name": "QGridFormDataManager"
-                                }
-                            ],
-                            "executableName": "ph.x",
-                            "name": "ph_grid_restart.in",
-                            "rendered": "&INPUTPH\n    tr2_ph = 1.0d-18,\n    recover = .true.\n    ldisp = .true.\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    fildyn = 'dyn'\n    nq1 = 1\n    nq2 = 1\n    nq3 = 1\n    \n/\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&INPUTPH\n    tr2_ph = 1.0d-18,\n    recover = .true.\n    ldisp = .true.\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    fildyn = 'dyn'\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "QGridFormDataManager"
+                                    }
+                                ],
+                                "executableName": "ph.x",
+                                "name": "ph_grid_restart.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "3b4507a7-9244-540b-abe0-66bceab700f5"
+                    "context": [],
+                    "next": "3b4507a7-9244-540b-abe0-66bceab700f5",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -473,6 +540,9 @@
                     "flowchartId": "3b4507a7-9244-540b-abe0-66bceab700f5",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -484,14 +554,21 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "q2r.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "results": [],
                         "applicationName": "espresso",
                         "executableName": "q2r.x",
                         "input": [
@@ -500,28 +577,32 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
-                        "results": [],
                         "name": "q2r",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&INPUT\n    fildyn = 'dyn'\n    zasr = 'simple'\n    flfrc = 'force_constants.fc'\n/\n",
-                            "contextProviders": [],
-                            "executableName": "q2r.x",
-                            "name": "q2r.in",
-                            "rendered": "&INPUT\n    fildyn = 'dyn'\n    zasr = 'simple'\n    flfrc = 'force_constants.fc'\n/\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&INPUT\n    fildyn = 'dyn'\n    zasr = 'simple'\n    flfrc = 'force_constants.fc'\n/\n",
+                                "contextProviders": [],
+                                "executableName": "q2r.x",
+                                "name": "q2r.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "8fe6a24b-c994-55a2-a448-88657292e8c2"
+                    "context": [],
+                    "next": "8fe6a24b-c994-55a2-a448-88657292e8c2",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -540,6 +621,9 @@
                     "flowchartId": "8fe6a24b-c994-55a2-a448-88657292e8c2",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -551,14 +635,25 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "matdyn.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "results": [
+                            {
+                                "name": "phonon_dos"
+                            }
+                        ],
                         "applicationName": "espresso",
                         "executableName": "matdyn.x",
                         "input": [
@@ -567,34 +662,36 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
-                        ],
-                        "results": [
-                            "phonon_dos"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "matdyn_grid",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&INPUT\n    asr = 'simple'\n    flfrc = 'force_constants.fc'\n    flfrq = 'frequencies.freq'\n    dos = .true.\n    fldos = 'phonon_dos.out'\n    deltaE = 1.d0\n    {% for d in igrid.dimensions -%}\n    nk{{loop.index}} = {{d}}\n    {% endfor %}\n /\n",
-                            "contextProviders": [
-                                {
-                                    "name": "IGridFormDataManager"
-                                }
-                            ],
-                            "executableName": "matdyn.x",
-                            "name": "matdyn_grid.in",
-                            "rendered": "&INPUT\n    asr = 'simple'\n    flfrc = 'force_constants.fc'\n    flfrq = 'frequencies.freq'\n    dos = .true.\n    fldos = 'phonon_dos.out'\n    deltaE = 1.d0\n    nk1 = 3\n    nk2 = 3\n    nk3 = 3\n    \n /\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&INPUT\n    asr = 'simple'\n    flfrc = 'force_constants.fc'\n    flfrq = 'frequencies.freq'\n    dos = .true.\n    fldos = 'phonon_dos.out'\n    deltaE = 1.d0\n    {% for d in igrid.dimensions -%}\n    nk{{loop.index}} = {{d}}\n    {% endfor %}\n /\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "IGridFormDataManager"
+                                    }
+                                ],
+                                "executableName": "matdyn.x",
+                                "name": "matdyn_grid.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "a7fded20-889b-54fc-bbb0-456e82689ab1"
+                    "context": [],
+                    "next": "a7fded20-889b-54fc-bbb0-456e82689ab1",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -613,6 +710,9 @@
                     "flowchartId": "a7fded20-889b-54fc-bbb0-456e82689ab1",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -624,14 +724,25 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "matdyn.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "results": [
+                            {
+                                "name": "phonon_dispersions"
+                            }
+                        ],
                         "applicationName": "espresso",
                         "executableName": "matdyn.x",
                         "input": [
@@ -640,75 +751,90 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
-                        ],
-                        "results": [
-                            "phonon_dispersions"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "matdyn_path",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&INPUT\n    asr = 'simple'\n    flfrc ='force_constants.fc'\n    flfrq ='frequencies.freq'\n    flvec ='normal_modes.out'\n    q_in_band_form = .true.\n /\n{{ipath.length}}\n{% for point in ipath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "IPathFormDataManager"
-                                }
-                            ],
-                            "executableName": "matdyn.x",
-                            "name": "matdyn_path.in",
-                            "rendered": "&INPUT\n    asr = 'simple'\n    flfrc ='force_constants.fc'\n    flfrq ='frequencies.freq'\n    flvec ='normal_modes.out'\n    q_in_band_form = .true.\n /\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&INPUT\n    asr = 'simple'\n    flfrc ='force_constants.fc'\n    flfrq ='frequencies.freq'\n    flvec ='normal_modes.out'\n    q_in_band_form = .true.\n /\n{{ipath.length}}\n{% for point in ipath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "IPathFormDataManager"
+                                    }
+                                ],
+                                "executableName": "matdyn.x",
+                                "name": "matdyn_path.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
-                    ]
+                    ],
+                    "context": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         }
     ],
     "units": [
         {
-            "name": "Preliminary SCF Calculation",
             "type": "subworkflow",
-            "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
+            "name": "pw-scf",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "b6a2b27a-0fec-5e0e-8974-073ee9d2ad83",
             "tags": [],
-            "head": true,
-            "next": "4bb74dfb-46a6-5bf4-a477-5d374dc2e271"
+            "_id": "f52b8039-83d0-5485-a1f1-0bc37cb01ed3",
+            "flowchartId": "d270b789-fb67-573c-a566-9f09fdacea23",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
+            "type": "subworkflow",
             "name": "ph-init-qpoints",
-            "type": "subworkflow",
-            "_id": "2f017bcb-f4ba-55b8-b939-1f780679a88e",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "4bb74dfb-46a6-5bf4-a477-5d374dc2e271",
             "tags": [],
-            "head": false,
-            "next": "9894b91f-6e97-5ee6-af02-0bef26bd62c0"
+            "_id": "2f017bcb-f4ba-55b8-b939-1f780679a88e",
+            "flowchartId": "4bb74dfb-46a6-5bf4-a477-5d374dc2e271",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
-            "name": "espresso-xml-get-qpt-irr",
             "type": "subworkflow",
-            "_id": "e4b6b2e7-7d8f-5ae1-b6bd-ee81ecbca11a",
+            "name": "espresso-xml-get-qpt-irr",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "9894b91f-6e97-5ee6-af02-0bef26bd62c0",
             "tags": [],
-            "head": false,
-            "next": "24e3c1f0-8090-512e-9727-8770071d17c8"
+            "_id": "e4b6b2e7-7d8f-5ae1-b6bd-ee81ecbca11a",
+            "flowchartId": "9894b91f-6e97-5ee6-af02-0bef26bd62c0",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "map",
             "type": "map",
-            "workflowId": "731d3397-3278-516a-b28e-53626ef50f0a",
             "input": {
                 "target": "MAP_DATA",
                 "scope": "global",
@@ -716,22 +842,32 @@
                 "values": [],
                 "useValues": false
             },
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "24e3c1f0-8090-512e-9727-8770071d17c8",
             "tags": [],
-            "head": false,
-            "next": "55a9e9fb-3545-5c4b-a1bb-b64a899b78c6"
+            "workflowId": "5cc1c6bd-9047-4b64-8e10-e5ae288bbacf",
+            "flowchartId": "24e3c1f0-8090-512e-9727-8770071d17c8",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
-            "name": "reduce",
             "type": "subworkflow",
-            "_id": "545a66e2-dfbe-513e-acaf-d79d0d139b9c",
+            "name": "reduce",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "55a9e9fb-3545-5c4b-a1bb-b64a899b78c6",
             "tags": [],
-            "head": false
+            "_id": "545a66e2-dfbe-513e-acaf-d79d0d139b9c",
+            "flowchartId": "55a9e9fb-3545-5c4b-a1bb-b64a899b78c6",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [
@@ -741,12 +877,14 @@
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force"
+        "total_force",
+        "phonon_dispersions",
+        "phonon_dos"
     ],
-    "_id": "23b9058b-884c-52d4-82a8-ee162b9761e0",
     "workflows": [
         {
-            "name": "pre-processor",
+            "_id": "731d3397-3278-516a-b28e-53626ef50f0a",
+            "name": "phonon_map_workflow",
             "subworkflows": [
                 {
                     "_id": "03f3a8a3-1fd0-5007-925f-fba78be63a51",
@@ -784,6 +922,9 @@
                             "flowchartId": "99304304-e873-5c89-ae83-91e61a7f629c",
                             "preProcessors": [],
                             "postProcessors": [],
+                            "status": "idle",
+                            "statusTrack": [],
+                            "tags": [],
                             "application": {
                                 "name": "shell",
                                 "shortName": "sh",
@@ -794,14 +935,21 @@
                                 "schemaVersion": "2022.8.16"
                             },
                             "executable": {
+                                "preProcessors": [],
+                                "postProcessors": [],
                                 "isDefault": true,
                                 "monitors": [
-                                    "standard_output"
+                                    {
+                                        "name": "standard_output"
+                                    }
                                 ],
                                 "name": "sh",
                                 "schemaVersion": "2022.8.16"
                             },
                             "flavor": {
+                                "preProcessors": [],
+                                "postProcessors": [],
+                                "results": [],
                                 "applicationName": "shell",
                                 "executableName": "sh",
                                 "input": [
@@ -810,28 +958,35 @@
                                     }
                                 ],
                                 "monitors": [
-                                    "standard_output"
+                                    {
+                                        "name": "standard_output"
+                                    }
                                 ],
                                 "name": "espresso_link_outdir_save",
                                 "schemaVersion": "2022.8.16",
                                 "isDefault": false
                             },
-                            "status": "idle",
-                            "statusTrack": [],
-                            "tags": [],
                             "input": [
                                 {
-                                    "applicationName": "shell",
-                                    "content": "{% raw %}\n#!/bin/bash\n\nmkdir -p {{ JOB_SCRATCH_DIR }}/outdir/_ph0\ncd {{ JOB_SCRATCH_DIR }}/outdir\ncp -r {{ JOB_WORK_DIR }}/../outdir/__prefix__.* .\n{% endraw %}\n",
-                                    "contextProviders": [],
-                                    "executableName": "sh",
-                                    "name": "espresso_link_outdir_save.sh",
-                                    "rendered": "\n#!/bin/bash\n\nmkdir -p {{ JOB_SCRATCH_DIR }}/outdir/_ph0\ncd {{ JOB_SCRATCH_DIR }}/outdir\ncp -r {{ JOB_WORK_DIR }}/../outdir/__prefix__.* .\n\n",
-                                    "schemaVersion": "2022.8.16"
+                                    "template": {
+                                        "applicationName": "shell",
+                                        "content": "{% raw %}\n#!/bin/bash\n\nmkdir -p {{ JOB_SCRATCH_DIR }}/outdir/_ph0\ncd {{ JOB_SCRATCH_DIR }}/outdir\ncp -r {{ JOB_WORK_DIR }}/../outdir/__prefix__.* .\n{% endraw %}\n",
+                                        "contextProviders": [],
+                                        "executableName": "sh",
+                                        "name": "espresso_link_outdir_save.sh",
+                                        "schemaVersion": "2022.8.16"
+                                    },
+                                    "rendered": "",
+                                    "isManuallyChanged": false
                                 }
-                            ]
+                            ],
+                            "context": [],
+                            "schemaVersion": "2022.8.16",
+                            "isDefault": false
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDraft": false
                 },
                 {
                     "_id": "e68db280-8636-53e3-81a0-88396ba6147d",
@@ -855,11 +1010,7 @@
                             "subtype": "us",
                             "data": {}
                         },
-                        "functional": {
-                            "slug": "pbe"
-                        },
-                        "refiners": [],
-                        "modifiers": []
+                        "functional": "pbe"
                     },
                     "units": [
                         {
@@ -875,6 +1026,9 @@
                             "flowchartId": "8db9af08-d935-57a0-a824-e7db6d936de8",
                             "preProcessors": [],
                             "postProcessors": [],
+                            "status": "idle",
+                            "statusTrack": [],
+                            "tags": [],
                             "application": {
                                 "name": "espresso",
                                 "shortName": "qe",
@@ -886,14 +1040,21 @@
                                 "schemaVersion": "2022.8.16"
                             },
                             "executable": {
+                                "preProcessors": [],
+                                "postProcessors": [],
                                 "monitors": [
-                                    "standard_output"
+                                    {
+                                        "name": "standard_output"
+                                    }
                                 ],
                                 "name": "ph.x",
                                 "schemaVersion": "2022.8.16",
                                 "isDefault": false
                             },
                             "flavor": {
+                                "preProcessors": [],
+                                "postProcessors": [],
+                                "results": [],
                                 "applicationName": "espresso",
                                 "executableName": "ph.x",
                                 "input": [
@@ -902,33 +1063,39 @@
                                     }
                                 ],
                                 "monitors": [
-                                    "standard_output"
+                                    {
+                                        "name": "standard_output"
+                                    }
                                 ],
-                                "results": [],
                                 "name": "ph_single_irr_qpt",
                                 "schemaVersion": "2022.8.16",
                                 "isDefault": false
                             },
-                            "status": "idle",
-                            "statusTrack": [],
-                            "tags": [],
                             "input": [
                                 {
-                                    "applicationName": "espresso",
-                                    "content": "&INPUTPH\n    tr2_ph = 1.0d-18\n    ldisp = .true.\n    {% raw %}\n    start_q = {{MAP_DATA.qpoint}}\n    last_q = {{MAP_DATA.qpoint}}\n    start_irr = {{MAP_DATA.irr}}\n    last_irr= {{MAP_DATA.irr}}\n    {% endraw %}\n    recover = .true.\n    fildyn = 'dyn'\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_SCRATCH_DIR }}/outdir'{% endraw %}\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
-                                    "contextProviders": [
-                                        {
-                                            "name": "QGridFormDataManager"
-                                        }
-                                    ],
-                                    "executableName": "ph.x",
-                                    "name": "ph_single_irr_qpt.in",
-                                    "rendered": "&INPUTPH\n    tr2_ph = 1.0d-18\n    ldisp = .true.\n    \n    start_q = {{MAP_DATA.qpoint}}\n    last_q = {{MAP_DATA.qpoint}}\n    start_irr = {{MAP_DATA.irr}}\n    last_irr= {{MAP_DATA.irr}}\n    \n    recover = .true.\n    fildyn = 'dyn'\n    prefix = '__prefix__'\n    outdir = '{{ JOB_SCRATCH_DIR }}/outdir'\n    nq1 = 1\n    nq2 = 1\n    nq3 = 1\n    \n/\n",
-                                    "schemaVersion": "2022.8.16"
+                                    "template": {
+                                        "applicationName": "espresso",
+                                        "content": "&INPUTPH\n    tr2_ph = 1.0d-18\n    ldisp = .true.\n    {% raw %}\n    start_q = {{MAP_DATA.qpoint}}\n    last_q = {{MAP_DATA.qpoint}}\n    start_irr = {{MAP_DATA.irr}}\n    last_irr= {{MAP_DATA.irr}}\n    {% endraw %}\n    recover = .true.\n    fildyn = 'dyn'\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_SCRATCH_DIR }}/outdir'{% endraw %}\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
+                                        "contextProviders": [
+                                            {
+                                                "name": "QGridFormDataManager"
+                                            }
+                                        ],
+                                        "executableName": "ph.x",
+                                        "name": "ph_single_irr_qpt.in",
+                                        "schemaVersion": "2022.8.16"
+                                    },
+                                    "rendered": "",
+                                    "isManuallyChanged": false
                                 }
-                            ]
+                            ],
+                            "context": [],
+                            "schemaVersion": "2022.8.16",
+                            "isDefault": false
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDraft": false
                 },
                 {
                     "_id": "7239fc3a-b343-513f-af35-e8687e1829da",
@@ -966,6 +1133,9 @@
                             "flowchartId": "cd5c3e29-511b-5ef8-949d-ad884f210301",
                             "preProcessors": [],
                             "postProcessors": [],
+                            "status": "idle",
+                            "statusTrack": [],
+                            "tags": [],
                             "application": {
                                 "name": "shell",
                                 "shortName": "sh",
@@ -976,14 +1146,21 @@
                                 "schemaVersion": "2022.8.16"
                             },
                             "executable": {
+                                "preProcessors": [],
+                                "postProcessors": [],
                                 "isDefault": true,
                                 "monitors": [
-                                    "standard_output"
+                                    {
+                                        "name": "standard_output"
+                                    }
                                 ],
                                 "name": "sh",
                                 "schemaVersion": "2022.8.16"
                             },
                             "flavor": {
+                                "preProcessors": [],
+                                "postProcessors": [],
+                                "results": [],
                                 "applicationName": "shell",
                                 "executableName": "sh",
                                 "input": [
@@ -992,79 +1169,80 @@
                                     }
                                 ],
                                 "monitors": [
-                                    "standard_output"
+                                    {
+                                        "name": "standard_output"
+                                    }
                                 ],
                                 "name": "espresso_collect_dynmat",
                                 "schemaVersion": "2022.8.16",
                                 "isDefault": false
                             },
-                            "status": "idle",
-                            "statusTrack": [],
-                            "tags": [],
                             "input": [
                                 {
-                                    "applicationName": "shell",
-                                    "content": "{% raw %}\n#!/bin/bash\n\ncp {{ JOB_SCRATCH_DIR }}/outdir/_ph0/__prefix__.phsave/dynmat* {{ JOB_WORK_DIR }}/../outdir/_ph0/__prefix__.phsave\n{% endraw %}\n",
-                                    "contextProviders": [],
-                                    "executableName": "sh",
-                                    "name": "espresso_collect_dynmat.sh",
-                                    "rendered": "\n#!/bin/bash\n\ncp {{ JOB_SCRATCH_DIR }}/outdir/_ph0/__prefix__.phsave/dynmat* {{ JOB_WORK_DIR }}/../outdir/_ph0/__prefix__.phsave\n\n",
-                                    "schemaVersion": "2022.8.16"
+                                    "template": {
+                                        "applicationName": "shell",
+                                        "content": "{% raw %}\n#!/bin/bash\n\ncp {{ JOB_SCRATCH_DIR }}/outdir/_ph0/__prefix__.phsave/dynmat* {{ JOB_WORK_DIR }}/../outdir/_ph0/__prefix__.phsave\n{% endraw %}\n",
+                                        "contextProviders": [],
+                                        "executableName": "sh",
+                                        "name": "espresso_collect_dynmat.sh",
+                                        "schemaVersion": "2022.8.16"
+                                    },
+                                    "rendered": "",
+                                    "isManuallyChanged": false
                                 }
-                            ]
+                            ],
+                            "context": [],
+                            "schemaVersion": "2022.8.16",
+                            "isDefault": false
                         }
-                    ]
+                    ],
+                    "schemaVersion": "2022.8.16",
+                    "isDraft": false
                 }
             ],
             "units": [
                 {
+                    "type": "subworkflow",
                     "name": "pre-processor",
-                    "type": "subworkflow",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "_id": "03f3a8a3-1fd0-5007-925f-fba78be63a51",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "flowchartId": "e9a790f4-dec6-52c1-b951-014f0ff01cb4",
-                    "tags": [],
-                    "head": true,
-                    "next": "c2195045-7a5c-54d3-ab88-211c82de09f1"
+                    "flowchartId": "e9a790f4-dec6-52c1-b951-014f0ff01cb4"
                 },
                 {
+                    "type": "subworkflow",
                     "name": "ph-single-irr-qpt",
-                    "type": "subworkflow",
-                    "_id": "e68db280-8636-53e3-81a0-88396ba6147d",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "c2195045-7a5c-54d3-ab88-211c82de09f1",
                     "tags": [],
-                    "head": false,
-                    "next": "e483c7fb-2a29-5e91-819a-7465ead70134"
+                    "_id": "e68db280-8636-53e3-81a0-88396ba6147d",
+                    "flowchartId": "c2195045-7a5c-54d3-ab88-211c82de09f1"
                 },
                 {
-                    "name": "post-processor",
                     "type": "subworkflow",
-                    "_id": "7239fc3a-b343-513f-af35-e8687e1829da",
+                    "name": "post-processor",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "e483c7fb-2a29-5e91-819a-7465ead70134",
                     "tags": [],
-                    "head": false
+                    "_id": "7239fc3a-b343-513f-af35-e8687e1829da",
+                    "flowchartId": "e483c7fb-2a29-5e91-819a-7465ead70134"
                 }
             ],
             "properties": [],
-            "_id": "731d3397-3278-516a-b28e-53626ef50f0a",
-            "workflows": [],
-            "schemaVersion": "2022.8.16",
-            "isDefault": false,
-            "compute": {
-                "ppn": 1,
-                "nodes": 1,
-                "queue": "D",
-                "timeLimit": "01:00:00",
-                "notify": "n",
-                "cluster": {
-                    "fqdn": ""
-                }
-            }
+            "workflows": []
         }
     ],
     "schemaVersion": "2022.8.16",

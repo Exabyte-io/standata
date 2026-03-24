@@ -1,9 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ApplicationSchema } from "@mat3ra/esse/dist/js/types";
 
-import { ApplicationVersionInfo, ApplicationVersionsMapType } from "../types/application";
+import { ApplicationConfigItem, ApplicationVersion } from "../types/application";
 
-export class ApplicationVersionsMap implements ApplicationVersionsMapType {
+export class ApplicationVersionsMap implements ApplicationConfigItem {
     shortName: string;
 
     summary: string;
@@ -12,11 +12,11 @@ export class ApplicationVersionsMap implements ApplicationVersionsMapType {
 
     defaultVersion: string;
 
-    versions: ApplicationVersionInfo[];
+    versions: ApplicationVersion[];
 
-    map: ApplicationVersionsMapType;
+    map: ApplicationConfigItem;
 
-    constructor(config: ApplicationVersionsMapType) {
+    constructor(config: ApplicationConfigItem) {
         this.map = config;
         this.defaultVersion = config.defaultVersion;
         this.versions = config.versions;

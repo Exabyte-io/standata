@@ -1,19 +1,24 @@
 import { ApplicationSchema, ExecutableSchema, FlavorSchema } from "@mat3ra/esse/dist/js/types";
-type OptionalExecutableSchema = Partial<ExecutableSchema>;
-export type ApplicationVersionInfo = Pick<ApplicationSchema, "isDefault" | "build" | "hasAdvancedComputeOptions" | "version">;
-export type ApplicationVersionsMapType = Pick<ApplicationSchema, "name" | "shortName" | "summary" | "isLicensed"> & {
+type VersionFields = "isDefault" | "build" | "hasAdvancedComputeOptions" | "version";
+type ApplicationFields = "name" | "shortName" | "summary" | "isLicensed";
+export type ApplicationVersion = Pick<ApplicationSchema, VersionFields>;
+export type ApplicationConfigItem = Pick<ApplicationSchema, ApplicationFields> & {
     defaultVersion: string;
-    versions: ApplicationVersionInfo[];
+    versions: ApplicationVersion[];
 };
 export type ApplicationVersionsMapByApplicationType = {
-    [key: string]: ApplicationVersionsMapType;
+    [key: string]: ApplicationConfigItem;
 };
 type OptionalFlavorSchema = Partial<FlavorSchema>;
-type Flavor = Pick<FlavorSchema, "input" | "monitors" | "applicationName" | "executableName"> & Pick<OptionalFlavorSchema, "results">;
-export type ExecutableTreeItem = Pick<ExecutableSchema, "hasAdvancedComputeOptions" | "isDefault" | "monitors" | "results"> & Pick<OptionalExecutableSchema, "postProcessors"> & {
+type RequiredFlavorFields = "input" | "monitors" | "applicationName" | "executableName" | "isDefault";
+type OptionalFlavorFields = "results";
+export type FlavorConfig = Pick<FlavorSchema, RequiredFlavorFields> & Pick<OptionalFlavorSchema, OptionalFlavorFields>;
+type OptionalExecutableSchema = Partial<ExecutableSchema>;
+type RequiredExecutableFields = "hasAdvancedComputeOptions" | "isDefault" | "monitors" | "results";
+type OptionalExecutableFields = "postProcessors";
+export type ExecutableTreeItem = Pick<ExecutableSchema, RequiredExecutableFields> & Pick<OptionalExecutableSchema, OptionalExecutableFields> & {
+    flavors: Record<string, FlavorConfig>;
     supportedApplicationVersions?: ApplicationSchema["version"][];
-    flavors?: Record<string, Flavor>;
-    [key: string]: any;
 };
 export type ApplicationExecutableTree = Record<string, Record<string, ExecutableTreeItem>>;
 export {};

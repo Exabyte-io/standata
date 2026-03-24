@@ -1,6 +1,7 @@
 import { BUILD_CONFIG } from "../../build-config";
 import { encodeDataAsURLPath } from "../utils";
 import { BaseModelMethodProcessor } from "./BaseModelMethodProcessor";
+import type { EntityWithPathAndUnits } from "./types";
 
 export class MethodsProcessor extends BaseModelMethodProcessor {
     private static defaultCategoryKeys = ["tier1", "tier2", "tier3", "type", "subtype"];
@@ -22,19 +23,19 @@ export class MethodsProcessor extends BaseModelMethodProcessor {
         });
     }
 
-    protected transformEntity(entity: any): any {
+    protected transformEntity(entity: EntityWithPathAndUnits): EntityWithPathAndUnits {
         if (entity?.units) {
             const categoryKeys = this.options.categoryKeys || [];
-            entity.units.forEach((unit: any) => {
+            entity.units.forEach((unit) => {
                 unit.path = encodeDataAsURLPath(unit, categoryKeys);
                 delete unit.schema;
             });
-            entity.path = entity.units.map((u: any) => u.path).join("::");
+            entity.path = entity.units.map((u) => u.path).join("::");
         }
         return entity;
     }
 
-    protected getDataSubdirectory(_entity: any): string {
-        return super.getDataSubdirectory(_entity).split("::")[0];
+    protected getDataSubdirectory(entity: EntityWithPathAndUnits): string {
+        return super.getDataSubdirectory(entity).split("::")[0];
     }
 }
