@@ -1,4 +1,5 @@
 {
+    "_id": "fcf105f9-5ae7-5c32-a6b3-e3579cbdf39a",
     "name": "K-point Convergence",
     "subworkflows": [
         {
@@ -15,13 +16,13 @@
                 "schemaVersion": "2022.8.16"
             },
             "properties": [
+                "atomic_forces",
+                "fermi_energy",
+                "pressure",
+                "stress_tensor",
                 "total_energy",
                 "total_energy_contributions",
-                "pressure",
-                "fermi_energy",
-                "atomic_forces",
-                "total_force",
-                "stress_tensor"
+                "total_force"
             ],
             "model": {
                 "type": "dft",
@@ -31,11 +32,7 @@
                     "subtype": "paw",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -44,22 +41,18 @@
                     "operand": "TOL",
                     "value": 0.00001,
                     "input": [],
-                    "flowchartId": "init-tolerance",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "init-tolerance",
                     "head": true,
                     "next": "init-increment",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Init increment",
@@ -67,22 +60,18 @@
                     "operand": "INC",
                     "value": 1,
                     "input": [],
-                    "flowchartId": "init-increment",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "init-increment",
                     "head": false,
                     "next": "init-result",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Init result",
@@ -90,22 +79,18 @@
                     "operand": "PREV_RESULT",
                     "value": 0,
                     "input": [],
-                    "flowchartId": "init-result",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "init-result",
                     "head": false,
                     "next": "init-parameter",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Init parameter",
@@ -113,22 +98,18 @@
                     "operand": "PARAMETER",
                     "value": 1,
                     "input": [],
-                    "flowchartId": "init-parameter",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "init-parameter",
                     "head": false,
                     "next": "vasp-kpoint-convergence",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -168,6 +149,9 @@
                     "flowchartId": "vasp-kpoint-convergence",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "isLicensed": true,
                         "name": "vasp",
@@ -179,21 +163,60 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [
+                            {
+                                "name": "error_handler"
+                            },
+                            {
+                                "name": "prepare_restart"
+                            },
+                            {
+                                "name": "remove_non_zero_weight_kpoints"
+                            }
+                        ],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
-                        "postProcessors": [
-                            "error_handler",
-                            "prepare_restart",
-                            "remove_non_zero_weight_kpoints"
-                        ],
+                        "applicationName": "vasp",
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "results": [
+                            {
+                                "name": "total_energy"
+                            },
+                            {
+                                "name": "total_energy_contributions"
+                            },
+                            {
+                                "name": "pressure"
+                            },
+                            {
+                                "name": "fermi_energy"
+                            },
+                            {
+                                "name": "atomic_forces"
+                            },
+                            {
+                                "name": "total_force"
+                            },
+                            {
+                                "name": "stress_tensor"
+                            }
+                        ],
                         "applicationName": "vasp",
                         "executableName": "vasp",
                         "input": [
@@ -211,70 +234,74 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output",
-                            "convergence_electronic"
-                        ],
-                        "results": [
-                            "total_energy",
-                            "total_energy_contributions",
-                            "pressure",
-                            "fermi_energy",
-                            "atomic_forces",
-                            "total_force",
-                            "stress_tensor"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "vasp_kpt_conv",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "vasp",
-                            "content": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n",
-                            "contextProviders": [
-                                {
-                                    "name": "VASPInputDataManager"
-                                }
-                            ],
-                            "executableName": "vasp",
-                            "name": "INCAR",
-                            "rendered": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "vasp",
+                                "content": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "VASPInputDataManager"
+                                    }
+                                ],
+                                "executableName": "vasp",
+                                "name": "INCAR",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         },
                         {
-                            "applicationName": "vasp",
-                            "content": "Automatic Mesh\n0\nGamma\n{% raw %}{{PARAMETER | default('1')}} {{PARAMETER | default('1')}} {{PARAMETER | default('1')}}{% endraw %}\n0 0 0\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KGridFormDataManager"
-                                },
-                                {
-                                    "name": "VASPInputDataManager"
-                                }
-                            ],
-                            "executableName": "vasp",
-                            "name": "KPOINTS",
-                            "rendered": "Automatic Mesh\n0\nGamma\n{{PARAMETER | default('1')}} {{PARAMETER | default('1')}} {{PARAMETER | default('1')}}\n0 0 0\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "vasp",
+                                "content": "Automatic Mesh\n0\nGamma\n{% raw %}{{PARAMETER | default('1')}} {{PARAMETER | default('1')}} {{PARAMETER | default('1')}}{% endraw %}\n0 0 0\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "KGridFormDataManager"
+                                    },
+                                    {
+                                        "name": "VASPInputDataManager"
+                                    }
+                                ],
+                                "executableName": "vasp",
+                                "name": "KPOINTS",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         },
                         {
-                            "applicationName": "vasp",
-                            "content": "{{ input.POSCAR }}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "VASPInputDataManager"
-                                }
-                            ],
-                            "executableName": "vasp",
-                            "name": "POSCAR",
-                            "rendered": "Silicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "vasp",
+                                "content": "{{ input.POSCAR }}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "VASPInputDataManager"
+                                    }
+                                ],
+                                "executableName": "vasp",
+                                "name": "POSCAR",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "store-result"
+                    "context": [],
+                    "next": "store-result",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "store result",
@@ -287,50 +314,39 @@
                             "scope": "vasp-kpoint-convergence"
                         }
                     ],
-                    "flowchartId": "store-result",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "store-result",
                     "head": false,
                     "next": "check-convergence",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "check convergence",
                     "type": "condition",
                     "input": [],
-                    "results": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "then": "convergence-is-reached",
-                    "else": "update-result",
                     "statement": "abs((PREV_RESULT-RESULT)/RESULT) < TOL",
                     "maxOccurrences": 50,
-                    "flowchartId": "check-convergence",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "check-convergence",
+                    "then": "convergence-is-reached",
+                    "else": "update-result",
                     "head": false,
                     "next": "update-result",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "update result",
@@ -343,22 +359,18 @@
                             "scope": "global"
                         }
                     ],
-                    "flowchartId": "update-result",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "update-result",
                     "head": false,
                     "next": "increment-parameter",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "increment parameter",
@@ -375,22 +387,18 @@
                             "scope": "global"
                         }
                     ],
-                    "flowchartId": "increment-parameter",
-                    "next": "vasp-kpoint-convergence",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "increment-parameter",
+                    "next": "vasp-kpoint-convergence",
                     "head": false,
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "exit",
@@ -403,35 +411,38 @@
                             "scope": "global"
                         }
                     ],
-                    "flowchartId": "convergence-is-reached",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "convergence-is-reached",
                     "head": false,
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         }
     ],
     "units": [
         {
-            "name": "K-point Convergence",
             "type": "subworkflow",
-            "_id": "5d736d84-d616-538f-a09b-81a32ac0777c",
+            "name": "K-point Convergence",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "a34eec2c-cdb2-537d-88c0-ed1d7b205879",
             "tags": [],
-            "head": true
+            "_id": "5d736d84-d616-538f-a09b-81a32ac0777c",
+            "flowchartId": "a34eec2c-cdb2-537d-88c0-ed1d7b205879",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [
@@ -443,7 +454,6 @@
         "total_energy_contributions",
         "total_force"
     ],
-    "_id": "fcf105f9-5ae7-5c32-a6b3-e3579cbdf39a",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

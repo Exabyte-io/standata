@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MethodStandata = void 0;
 const base_1 = require("./base");
-const methods_json_1 = __importDefault(require("./runtime_data/methods.json"));
 const modelMethodFilter_1 = require("./modelMethodFilter");
+const methods_json_1 = __importDefault(require("./runtime_data/methods.json"));
 const category_1 = require("./utils/category");
 class MethodStandata extends base_1.Standata {
     getByName(name) {

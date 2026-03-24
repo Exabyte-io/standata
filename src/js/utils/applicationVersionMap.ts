@@ -1,22 +1,22 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { ApplicationSchemaBase } from "@mat3ra/esse/dist/js/types";
+import { ApplicationSchema } from "@mat3ra/esse/dist/js/types";
 
-import { ApplicationVersionInfo, ApplicationVersionsMapType } from "../types/application";
+import { ApplicationConfigItem, ApplicationVersion } from "../types/application";
 
-export class ApplicationVersionsMap implements ApplicationVersionsMapType {
-    shortName?: string | undefined;
+export class ApplicationVersionsMap implements ApplicationConfigItem {
+    shortName: string;
 
-    summary?: string | undefined;
+    summary: string;
 
     isLicensed?: boolean | undefined;
 
     defaultVersion: string;
 
-    versions: ApplicationVersionInfo[];
+    versions: ApplicationVersion[];
 
-    map: ApplicationVersionsMapType;
+    map: ApplicationConfigItem;
 
-    constructor(config: ApplicationVersionsMapType) {
+    constructor(config: ApplicationConfigItem) {
         this.map = config;
         this.defaultVersion = config.defaultVersion;
         this.versions = config.versions;
@@ -30,7 +30,8 @@ export class ApplicationVersionsMap implements ApplicationVersionsMapType {
     }
 
     get nonVersionProperties() {
-        const { versions, defaultVersion, ...rest } = this.map;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { versions: _, defaultVersion: __, ...rest } = this.map;
         return rest;
     }
 
@@ -38,7 +39,7 @@ export class ApplicationVersionsMap implements ApplicationVersionsMapType {
         return this.map.versions;
     }
 
-    get versionConfigsFull(): ApplicationSchemaBase[] {
+    get versionConfigsFull(): ApplicationSchema[] {
         return this.versionConfigs.map((versionConfig) => {
             return {
                 ...this.nonVersionProperties,
@@ -47,7 +48,7 @@ export class ApplicationVersionsMap implements ApplicationVersionsMapType {
         });
     }
 
-    getSlugForVersionConfig(versionConfigFull: ApplicationSchemaBase) {
+    getSlugForVersionConfig(versionConfigFull: ApplicationSchema) {
         const buildSuffix = versionConfigFull.build
             ? `_${versionConfigFull.build.toLowerCase()}`
             : "";

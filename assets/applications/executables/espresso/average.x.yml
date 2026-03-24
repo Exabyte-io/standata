@@ -1,14 +1,14 @@
 monitors:
-  - standard_output
+  - name: standard_output
 results:
-  - average_potential_profile
+  - name: average_potential_profile
 flavors:
   average:
     input:
       - name: average.in
     results: []
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: average.x
 
@@ -16,8 +16,8 @@ flavors:
     input:
       - name: average.in
     results:
-      - average_potential_profile
+      - name: average_potential_profile
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: average.x
