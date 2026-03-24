@@ -42,6 +42,7 @@ class ApplicationStandata extends base_1.Standata {
                         postProcessors: [],
                         applicationId: [],
                         ...executable,
+                        applicationName: appName,
                         name,
                     },
                     flavors: Object.entries(flavors).map(([name, value]) => {

@@ -75,7 +75,7 @@ function addWorkflowToWorkflow<T extends Pick<WorkflowSchema, "workflows" | "uni
     nestedWorkflow: WorkflowSchema,
     config?: MapUnitConfig,
 ) {
-    const workflowId = generateDefaultWorkflowId();
+    const workflowId = nestedWorkflow._id || generateDefaultWorkflowId();
 
     const mapUnit: MapUnitSchema = {
         ...defaultMapConfig,

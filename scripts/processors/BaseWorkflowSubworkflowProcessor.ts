@@ -1,4 +1,9 @@
 /* eslint-disable class-methods-use-this */
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { validateAndClean } from "@mat3ra/esse/dist/js/utils/ajv";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import workflowSchema from "@mat3ra/esse/dist/js/schema/workflow.json";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Utils } from "@mat3ra/utils";
 import serverUtils from "@mat3ra/utils/server";
 import path from "path";
@@ -154,6 +159,13 @@ export abstract class BaseWorkflowSubworkflowProcessor<
                 ...(entityConfig.tags ? { tags: entityConfig.tags } : {}),
                 ...(entityConfig.appName ? { application: { name: entityConfig.appName } } : {}),
             };
+            if (this.options.entityNamePlural === "workflows") {
+                const result = validateAndClean(dataToWrite, workflowSchema, { coerceTypes: false, useDefaults: false });
+                if (!result.isValid && result.errors?.length) {
+                    const errMsg = result.errors.map((e: any) => `${e.instancePath ?? ""} ${e.message}`).join("; ");
+                    throw new Error(`workflows validation failed for ${entityConfig.appName}/${entityName}: ${errMsg}`);
+                }
+            }
             const spaces = minified
                 ? BUILD_CONFIG.buildJSONFormat.spaces
                 : BUILD_CONFIG.dataJSONFormat.spaces;

@@ -95,6 +95,7 @@
                         "name": "convergence_electronic"
                     }
                 ],
+                "applicationName": "espresso",
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"
             },

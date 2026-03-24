@@ -107,6 +107,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -237,6 +238,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -330,6 +332,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -407,6 +410,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false

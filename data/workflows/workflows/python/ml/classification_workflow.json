@@ -218,6 +218,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
@@ -316,6 +317,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
@@ -409,6 +411,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
@@ -506,6 +509,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
@@ -606,6 +610,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
@@ -713,6 +718,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },

@@ -1,5 +1,4 @@
 {
-    "isMultiMaterial": true,
     "_id": "c9b7ad2a-5207-5e41-9b66-28474a8921f8",
     "name": "Prepare Directories",
     "application": {
@@ -50,6 +49,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "applicationName": "shell",
                 "name": "sh",
                 "schemaVersion": "2022.8.16"
             },

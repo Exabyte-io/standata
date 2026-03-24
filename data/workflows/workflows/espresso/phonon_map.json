@@ -106,6 +106,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -245,6 +246,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "ph.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -352,6 +354,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
@@ -480,6 +483,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "ph.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -561,6 +565,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "q2r.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -642,6 +647,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "matdyn.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -731,6 +737,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "matdyn.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -849,7 +856,7 @@
             "status": "idle",
             "statusTrack": [],
             "tags": [],
-            "workflowId": "5cc1c6bd-9047-4b64-8e10-e5ae288bbacf",
+            "workflowId": "731d3397-3278-516a-b28e-53626ef50f0a",
             "flowchartId": "24e3c1f0-8090-512e-9727-8770071d17c8",
             "schemaVersion": "2022.8.16",
             "isDefault": false
@@ -943,6 +950,7 @@
                                         "name": "standard_output"
                                     }
                                 ],
+                                "applicationName": "shell",
                                 "name": "sh",
                                 "schemaVersion": "2022.8.16"
                             },
@@ -1047,6 +1055,7 @@
                                         "name": "standard_output"
                                     }
                                 ],
+                                "applicationName": "espresso",
                                 "name": "ph.x",
                                 "schemaVersion": "2022.8.16",
                                 "isDefault": false
@@ -1154,6 +1163,7 @@
                                         "name": "standard_output"
                                     }
                                 ],
+                                "applicationName": "shell",
                                 "name": "sh",
                                 "schemaVersion": "2022.8.16"
                             },

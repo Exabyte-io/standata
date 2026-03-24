@@ -83,6 +83,7 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
                             postProcessors: [],
                             applicationId: [],
                             ...executable,
+                            applicationName: appName,
                             name,
                         },
                         flavors: Object.entries(flavors).map(([name, value]) => {

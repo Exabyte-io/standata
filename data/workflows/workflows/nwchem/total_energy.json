@@ -75,6 +75,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "nwchem",
                         "name": "nwchem",
                         "schemaVersion": "2022.8.16"
                     },

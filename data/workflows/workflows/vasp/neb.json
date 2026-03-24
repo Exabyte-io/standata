@@ -3,7 +3,6 @@
     "name": "Nudged Elastic Band (NEB)",
     "subworkflows": [
         {
-            "isMultiMaterial": true,
             "_id": "792e8c42-86ce-5f01-812a-66378ec4f379",
             "name": "Initial/Final Total Energies",
             "application": {
@@ -112,6 +111,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "vasp",
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
@@ -308,6 +308,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "vasp",
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
@@ -451,7 +452,6 @@
             "isDraft": false
         },
         {
-            "isMultiMaterial": true,
             "_id": "c9b7ad2a-5207-5e41-9b66-28474a8921f8",
             "name": "Prepare Directories",
             "application": {
@@ -508,6 +508,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "shell",
                         "name": "sh",
                         "schemaVersion": "2022.8.16"
                     },
@@ -558,7 +559,6 @@
             "isDraft": false
         },
         {
-            "isMultiMaterial": true,
             "_id": "e6215fb9-e60c-541b-b73e-b077d64b3a95",
             "name": "Nudged Elastic Band (NEB)",
             "application": {
@@ -644,6 +644,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "vasp",
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
@@ -787,6 +788,7 @@
         "reaction_energy_profile"
     ],
     "workflows": [],
+    "isMultiMaterial": true,
     "schemaVersion": "2022.8.16",
     "isDefault": false,
     "application": {

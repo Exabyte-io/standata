@@ -3,7 +3,6 @@
     "name": "Valence Band Offset (2D)",
     "subworkflows": [
         {
-            "isMultiMaterial": true,
             "_id": "9c65d03e-6a30-58f3-947a-f174342be0c3",
             "name": "BS + Avg ESP (Interface)",
             "application": {
@@ -128,6 +127,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -255,6 +255,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -388,6 +389,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -416,7 +418,7 @@
                         {
                             "template": {
                                 "applicationName": "espresso",
-                                "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
+                                "content": "&BANDS\n    prefix = '__prefix__'\n    lsym = .false.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
                                 "contextProviders": [],
                                 "executableName": "bands.x",
                                 "name": "bands.in",
@@ -465,6 +467,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -546,6 +549,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "average.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -677,6 +681,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
@@ -764,7 +769,6 @@
             "isDraft": false
         },
         {
-            "isMultiMaterial": true,
             "_id": "ba46d9b4-610f-537e-ae39-e39ce5240cda",
             "name": "BS + Avg ESP (interface left)",
             "application": {
@@ -889,6 +893,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -1016,6 +1021,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -1149,6 +1155,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -1177,7 +1184,7 @@
                         {
                             "template": {
                                 "applicationName": "espresso",
-                                "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
+                                "content": "&BANDS\n    prefix = '__prefix__'\n    lsym = .false.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
                                 "contextProviders": [],
                                 "executableName": "bands.x",
                                 "name": "bands.in",
@@ -1226,6 +1233,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -1307,6 +1315,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "average.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -1438,6 +1447,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
@@ -1525,7 +1535,6 @@
             "isDraft": false
         },
         {
-            "isMultiMaterial": true,
             "_id": "aa611fe8-1e6a-5e5c-976a-f64bfaaaace9",
             "name": "BS + Avg ESP (interface right)",
             "application": {
@@ -1650,6 +1659,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -1777,6 +1787,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -1910,6 +1921,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -1938,7 +1950,7 @@
                         {
                             "template": {
                                 "applicationName": "espresso",
-                                "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
+                                "content": "&BANDS\n    prefix = '__prefix__'\n    lsym = .false.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
                                 "contextProviders": [],
                                 "executableName": "bands.x",
                                 "name": "bands.in",
@@ -1987,6 +1999,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -2068,6 +2081,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "average.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -2199,6 +2213,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
@@ -2514,6 +2529,7 @@
         "valence_band_offset"
     ],
     "workflows": [],
+    "isMultiMaterial": true,
     "schemaVersion": "2022.8.16",
     "isDefault": false,
     "application": {

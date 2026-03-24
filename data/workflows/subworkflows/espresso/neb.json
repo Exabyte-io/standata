@@ -1,5 +1,4 @@
 {
-    "isMultiMaterial": true,
     "_id": "c9034468-df28-5357-8912-02226f919042",
     "name": "Nudged Elastic Band (NEB)",
     "application": {
@@ -61,6 +60,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "applicationName": "espresso",
                 "name": "neb.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false

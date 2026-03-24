@@ -106,6 +106,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -243,6 +244,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
@@ -408,6 +410,7 @@
                                 "name": "convergence_electronic"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
@@ -522,6 +525,7 @@
                                 "name": "standard_output"
                             }
                         ],
+                        "applicationName": "espresso",
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -550,7 +554,7 @@
                         {
                             "template": {
                                 "applicationName": "espresso",
-                                "content": "&BANDS\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
+                                "content": "&BANDS\n    prefix = '__prefix__'\n    lsym = .false.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
                                 "contextProviders": [],
                                 "executableName": "bands.x",
                                 "name": "bands.in",

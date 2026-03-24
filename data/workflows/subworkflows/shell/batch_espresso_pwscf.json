@@ -49,6 +49,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "applicationName": "shell",
                 "name": "sh",
                 "schemaVersion": "2022.8.16"
             },

@@ -1,8 +1,6 @@
 application:
   name: vasp
   version: 5.4.4
-config:
-  isMultiMaterial: true
 method:
   name: PseudopotentialMethod
 model:

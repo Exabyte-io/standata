@@ -105,6 +105,7 @@
                         "name": "convergence_electronic"
                     }
                 ],
+                "applicationName": "vasp",
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
             },
@@ -275,6 +276,7 @@
                         "name": "convergence_electronic"
                     }
                 ],
+                "applicationName": "vasp",
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
             },

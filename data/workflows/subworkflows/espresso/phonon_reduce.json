@@ -53,6 +53,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "applicationName": "espresso",
                 "name": "ph.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
@@ -134,6 +135,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "applicationName": "espresso",
                 "name": "q2r.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
@@ -215,6 +217,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "applicationName": "espresso",
                 "name": "matdyn.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
@@ -304,6 +307,7 @@
                         "name": "standard_output"
                     }
                 ],
+                "applicationName": "espresso",
                 "name": "matdyn.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
