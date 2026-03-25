@@ -1,0 +1,20 @@
+{
+    "name": "lammps",
+    "shortName": "lmp",
+    "summary": "LAMMPS",
+    "runConfig": {
+        "commandTemplate": "{BASE_CMD} &&\n{MODULE_CMD}\n$EXEC_CMD mpirun -machinefile {MACHINEFILE} -np {NP} {EXECUTABLE} -i {INPUTFILE} -l {OUTPUTFILE}\n",
+        "outFileName": "log.out"
+    },
+    "version": "2025.07.22.2",
+    "isDefault": true,
+    "build": "GNU",
+    "buildConfig": {
+        "moduleName": "2025.07.22.2-gnu",
+        "imageName": "lammps",
+        "imageTag": "2025.07.22.2-gnu-0",
+        "bio": "LAMMPS 22Jul2025Update2 (GNU Build)",
+        "dependencies": [],
+        "environmentVariables": {}
+    }
+}

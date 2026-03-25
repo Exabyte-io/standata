@@ -22,6 +22,8 @@
 - !include 'templates/espresso/simple.x.yml'
 - !include 'templates/espresso/simple_bse.x.yml'
 - !include 'templates/espresso/simple_ip.x.yml'
+# lammps
+- !include 'templates/lammps/emin.yml'
 # nwchem
 - !include 'templates/nwchem/nwchem.yml'
 # python
