@@ -6,7 +6,9 @@
     },
     "properties": [
         "total_energy",
-        "total_energy_contributions"
+        "total_energy_contributions",
+        "homo_energy",
+        "lumo_energy"
     ],
     "model": {
         "type": "dft",
@@ -33,6 +35,12 @@
                 },
                 {
                     "name": "total_energy_contributions"
+                },
+                {
+                    "name": "homo_energy"
+                },
+                {
+                    "name": "lumo_energy"
                 }
             ],
             "monitors": [
@@ -78,7 +86,9 @@
                 ],
                 "results": [
                     "total_energy",
-                    "total_energy_contributions"
+                    "total_energy_contributions",
+                    "homo_energy",
+                    "lumo_energy"
                 ],
                 "name": "nwchem_total_energy",
                 "schemaVersion": "2022.8.16"
