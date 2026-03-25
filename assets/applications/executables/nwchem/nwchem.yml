@@ -7,6 +7,8 @@ monitors:
 results:
   - total_energy
   - total_energy_contributions
+  - homo_energy
+  - lumo_energy
 flavors:
   nwchem_total_energy:
     isDefault: true
@@ -15,6 +17,8 @@ flavors:
     results:
       - total_energy
       - total_energy_contributions
+      - homo_energy
+      - lumo_energy
     monitors:
       - standard_output
     applicationName: nwchem

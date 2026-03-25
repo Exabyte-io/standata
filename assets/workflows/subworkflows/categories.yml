@@ -10,6 +10,8 @@ categories:
     - fermi_energy
     - file_content
     - final_structure
+    - homo_energy
+    - lumo_energy
     - phonon_dispersions
     - phonon_dos
     - potential_profile
@@ -401,6 +403,8 @@ entities:
       - lammps
   - filename: nwchem/total_energy.json
     categories:
+      - homo_energy
+      - lumo_energy
       - nwchem
       - total_energy
       - total_energy_contributions
