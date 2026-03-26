@@ -1,3 +1,4 @@
+deepmd: !include 'applications/deepmd.yml'
 espresso: !include 'applications/espresso.yml'
 lammps: !include 'applications/lammps.yml'
 nwchem: !include 'applications/nwchem.yml'

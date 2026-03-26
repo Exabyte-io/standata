@@ -1,4 +1,9 @@
 !flatten
+# deepmd
+- !include 'templates/deepmd/dp_train.yml'
+- !include 'templates/deepmd/dp_prepare.yml'
+- !include 'templates/deepmd/dp_lmp.yml'
+- !include 'templates/deepmd/dp_create_lmp_structure.yml'
 # espresso
 - !include 'templates/espresso/abcoeff_to_eps.x.yml'
 - !include 'templates/espresso/average.x.yml'

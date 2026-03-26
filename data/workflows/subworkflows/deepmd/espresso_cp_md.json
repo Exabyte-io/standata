@@ -1,0 +1,96 @@
+{
+    "_id": "b48d8418-87fa-5a3e-a7e6-61b5c0b554b0",
+    "name": "CP-MD",
+    "application": {
+        "name": "deepmd"
+    },
+    "properties": [],
+    "model": {
+        "type": "dft",
+        "subtype": "gga",
+        "method": {
+            "type": "localorbital",
+            "subtype": "pople",
+            "data": {}
+        },
+        "functional": {
+            "slug": "pbe"
+        },
+        "refiners": [],
+        "modifiers": []
+    },
+    "units": [
+        {
+            "type": "execution",
+            "name": "cp",
+            "head": true,
+            "results": [],
+            "monitors": [
+                {
+                    "name": "standard_output"
+                }
+            ],
+            "flowchartId": "c2bfdd05-9192-5160-b0f0-4248441a92b5",
+            "preProcessors": [],
+            "postProcessors": [],
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "7.5",
+                "schemaVersion": "2022.8.16"
+            },
+            "executable": {
+                "monitors": [
+                    "standard_output"
+                ],
+                "name": "cp.x",
+                "schemaVersion": "2022.8.16",
+                "isDefault": false
+            },
+            "flavor": {
+                "applicationName": "espresso",
+                "executableName": "cp.x",
+                "input": [
+                    {
+                        "name": "cp.in"
+                    }
+                ],
+                "isDefault": true,
+                "monitors": [
+                    "standard_output"
+                ],
+                "results": [],
+                "name": "cp",
+                "schemaVersion": "2022.8.16"
+            },
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "input": [
+                {
+                    "applicationName": "espresso",
+                    "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'cp'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}'{% endraw %}\n    prefix = 'cp'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n    nstep = {{ dynamics.numberOfSteps }}\n    iprint = 1\n    dt = {{ dynamics.timeStep }}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    nr1b = 20\n    nr2b = 20\n    nr3b = 20\n/\n&ELECTRONS\n    electron_dynamics = 'verlet'\n    electron_velocities = 'zero'\n    emass = {{ dynamics.electronMass }}\n!! consider the below parameters if orthogonalization fails\n!   orthogonalization = 'ortho'\n!   ortho_eps = 1d-11\n/\n&IONS\n    ion_dynamics = 'verlet'\n    ion_velocities = 'zero'\n    tempw = {{ dynamics.temperature }}\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\n",
+                    "contextProviders": [
+                        {
+                            "name": "QEPWXInputDataManager"
+                        },
+                        {
+                            "name": "PlanewaveCutoffDataManager"
+                        },
+                        {
+                            "name": "IonDynamicsContextProvider"
+                        }
+                    ],
+                    "executableName": "cp.x",
+                    "name": "cp.in",
+                    "rendered": "&CONTROL\n    calculation = 'cp'\n    restart_mode = 'from_scratch'\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}'\n    prefix = 'cp'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n    nstep = 100\n    iprint = 1\n    dt = 5\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    nr1b = 20\n    nr2b = 20\n    nr3b = 20\n/\n&ELECTRONS\n    electron_dynamics = 'verlet'\n    electron_velocities = 'zero'\n    emass = 100\n!! consider the below parameters if orthogonalization fails\n!   orthogonalization = 'ortho'\n!   ortho_eps = 1d-11\n/\n&IONS\n    ion_dynamics = 'verlet'\n    ion_velocities = 'zero'\n    tempw = 300\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\n",
+                    "schemaVersion": "2022.8.16"
+                }
+            ]
+        }
+    ]
+}
