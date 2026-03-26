@@ -1,5 +1,5 @@
 {
-    "_id": "b48d8418-87fa-5a3e-a7e6-61b5c0b554b0",
+    "_id": "bf0d584b-0a7f-5174-8132-f8f0c8969bc5",
     "name": "CP-MD",
     "application": {
         "name": "deepmd"
@@ -9,8 +9,8 @@
         "type": "dft",
         "subtype": "gga",
         "method": {
-            "type": "localorbital",
-            "subtype": "pople",
+            "type": "pseudopotential",
+            "subtype": "us",
             "data": {}
         },
         "functional": {
@@ -40,7 +40,7 @@
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "7.5",
+                "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {

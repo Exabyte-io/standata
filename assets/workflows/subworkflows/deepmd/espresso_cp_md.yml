@@ -1,6 +1,5 @@
 application:
   name: espresso
-  version: "7.5"
 method:
   name: PseudopotentialMethod
 model:
