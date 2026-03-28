@@ -955,6 +955,16 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
         nwchem: {
             nwchem: {
                 flavors: {
+                    nwchem_frequency: {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                        }[];
+                        isDefault: boolean;
+                        monitors: string[];
+                        results: string[];
+                    };
                     nwchem_total_energy: {
                         applicationName: string;
                         executableName: string;
