@@ -113,7 +113,7 @@
                     "input": [
                         {
                             "applicationName": "nwchem",
-                            "content": " start nwchem\n title \"Test\"\n charge {{ input.CHARGE }}\n geometry units au noautosym\n {{ input.ATOMIC_POSITIONS }}\n end\n basis\n   * library {{ input.BASIS }}\n end\n dft\n xc {{ input.FUNCTIONAL }}\n mult {{ input.MULT }}\n end\n driver\n maxiter 256\n inhess 1\n print default\n end\n # task dft optimize\n task dft freq\n",
+                            "content": " start nwchem\n title \"Test\"\n charge {{ input.CHARGE }}\n geometry units au noautosym\n {{ input.ATOMIC_POSITIONS }}\n end\n basis\n   * library {{ input.BASIS }}\n end\n dft\n xc {{ input.FUNCTIONAL }}\n mult {{ input.MULT }}\n end\n driver\n maxiter 256\n inhess 1\n print default\n end\n # Uncomment the following line to perform a geometry optimization before the frequency calculation\n # task dft optimize\n task dft freq\n",
                             "contextProviders": [
                                 {
                                     "name": "NWChemInputDataManager"
@@ -121,7 +121,7 @@
                             ],
                             "executableName": "nwchem",
                             "name": "nwchem_frequency.inp",
-                            "rendered": " start nwchem\n title \"Test\"\n charge 0\n geometry units au noautosym\n Si     0.000000000    0.000000000    0.000000000 \nSi     1.116306745    0.789348070    1.933500000 \n end\n basis\n   * library 6-31G\n end\n dft\n xc B3LYP\n mult 1\n end\n driver\n maxiter 256\n inhess 1\n print default\n end\n # task dft optimize\n task dft freq\n",
+                            "rendered": " start nwchem\n title \"Test\"\n charge 0\n geometry units au noautosym\n Si     0.000000000    0.000000000    0.000000000 \nSi     1.116306745    0.789348070    1.933500000 \n end\n basis\n   * library 6-31G\n end\n dft\n xc B3LYP\n mult 1\n end\n driver\n maxiter 256\n inhess 1\n print default\n end\n # Uncomment the following line to perform a geometry optimization before the frequency calculation\n # task dft optimize\n task dft freq\n",
                             "schemaVersion": "2022.8.16"
                         }
                     ]
