@@ -38,6 +38,7 @@ categories:
     - wfn
     - wfn_plot
   application:
+    - deepmd
     - espresso
     - lammps
     - nwchem
@@ -45,6 +46,13 @@ categories:
     - shell
     - vasp
 entities:
+  - filename: deepmd/deepmd.json
+    categories:
+      - deepmd
+  - filename: deepmd/espresso_cp_md.json
+    categories:
+      - deepmd
+      - espresso
   - filename: espresso/average_electrostatic_potential_find_minima.json
     categories:
       - espresso
