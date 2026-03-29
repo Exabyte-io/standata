@@ -16,5 +16,6 @@
  inhess 1
  print default
  end
+ # Uncomment the following line to perform a geometry optimization before the frequency calculation
  # task dft optimize
  task dft freq
