@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------- #
 #                                                                  #
-#  Example python script for Mat3ra.com platform.                  #
+#  Example MatterSim calculation on Mat3ra.com platform            #
 #                                                                  #
 #  Will be used as follows:                                        #
 #                                                                  #

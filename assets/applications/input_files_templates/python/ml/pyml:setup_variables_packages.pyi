@@ -1,6 +1,6 @@
 # ----------------------------------------------------------------- #
 #                                                                   #
-#   General settings for PythonML jobs on the Exabyte.io Platform   #
+#   General settings for PythonML jobs on the Mat3ra.com Platform   #
 #                                                                   #
 #   This file generally shouldn't be modified directly by users.    #
 #   The "datafile" and "is_workflow_running_to_predict" variables   #
