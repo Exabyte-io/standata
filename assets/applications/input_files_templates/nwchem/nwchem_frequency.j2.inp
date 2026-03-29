@@ -16,5 +16,5 @@
  inhess 1
  print default
  end
- task dft optimize
+ # task dft optimize
  task dft freq
