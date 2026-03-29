@@ -1,4 +1,4 @@
-name: MatterSim
+name: MatterSim python workflow
 units:
 - name: mattersim
   type: subworkflow

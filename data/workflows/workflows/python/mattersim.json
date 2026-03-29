@@ -1,5 +1,5 @@
 {
-    "name": "MatterSim",
+    "name": "MatterSim python workflow",
     "subworkflows": [
         {
             "_id": "4452179e-c162-5c77-b068-80b3192c691a",
