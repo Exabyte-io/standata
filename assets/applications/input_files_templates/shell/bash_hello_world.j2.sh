@@ -1,7 +1,7 @@
 #!/bin/bash
 # ---------------------------------------------------------------- #
 #                                                                  #
-#  Example shell script for Exabyte.io platform.                   #
+#  Example shell script for Mat3ra.com platform.                   #
 #                                                                  #
 #  Will be used as follows:                                        #
 #                                                                  #

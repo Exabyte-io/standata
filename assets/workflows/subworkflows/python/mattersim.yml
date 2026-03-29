@@ -1,0 +1,14 @@
+application:
+  name: python
+  version: 3.10.13
+method:
+  name: UnknownMethod
+model:
+  name: UnknownModel
+name: Mattersim
+units:
+  - config:
+      execName: python
+      flavorName: pyml:mattersim
+      name: mattersim
+    type: executionBuilder

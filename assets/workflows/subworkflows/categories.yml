@@ -416,6 +416,9 @@ entities:
       - nwchem
       - total_energy
       - total_energy_contributions
+  - filename: python/mattersim.json
+    categories:
+      - python
   - filename: python/ml/classification_tail.json
     categories:
       - creates-predictions-csv-during-predict-phase

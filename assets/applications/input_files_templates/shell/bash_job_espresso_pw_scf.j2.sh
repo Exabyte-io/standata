@@ -2,7 +2,7 @@
 
 # ---------------------------------------------------------------- #
 #                                                                  #
-#  Example job submission script for Exabyte.io platform           #
+#  Example job submission script for Mat3ra.com platform           #
 #                                                                  #
 #  Shows resource manager directives for:                          #
 #                                                                  #
