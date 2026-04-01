@@ -282,11 +282,12 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
     }
 
     // TEMPLATES_LIST
+    getAllAppTemplates() {
+        return TEMPLATES_LIST;
+    }
 
     getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[] {
-        // TODO: Convert to use this.findEntitiesByTags() when template data is in Standata format
-        const templates = TEMPLATES_LIST;
-        const filtered = templates.filter((template) => {
+        const filtered = this.getAllAppTemplates().filter((template) => {
             const matchesApp = template.applicationName === appName;
             const matchesExec = template.executableName === execName;
             return matchesApp && matchesExec;

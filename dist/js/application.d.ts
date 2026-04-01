@@ -142,6 +142,7 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
         executable: ExecutableSchema;
         flavor: FlavorSchema;
     };
+    getAllAppTemplates(): TemplateSchema[];
     getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[];
     getInput(flavor: FlavorSchema): TemplateSchema[];
 }

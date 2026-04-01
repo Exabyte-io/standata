@@ -183,10 +183,11 @@ class ApplicationStandata extends base_1.Standata {
         };
     }
     // TEMPLATES_LIST
+    getAllAppTemplates() {
+        return TEMPLATES_LIST;
+    }
     getTemplatesByName(appName, execName, templateName) {
-        // TODO: Convert to use this.findEntitiesByTags() when template data is in Standata format
-        const templates = TEMPLATES_LIST;
-        const filtered = templates.filter((template) => {
+        const filtered = this.getAllAppTemplates().filter((template) => {
             const matchesApp = template.applicationName === appName;
             const matchesExec = template.executableName === execName;
             return matchesApp && matchesExec;
