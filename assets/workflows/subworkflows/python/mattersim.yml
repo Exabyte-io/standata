@@ -9,6 +9,6 @@ name: Mattersim
 units:
   - config:
       execName: python
-      flavorName: pyml:mattersim
+      flavorName: mlff:mattersim
       name: mattersim
     type: executionBuilder

@@ -367,7 +367,7 @@ flavors:
     applicationName: python
     executableName: python
 
-  'pyml:mattersim':
+  'mlff:mattersim':
     input:
       - name: script.py
         templateName: mattersim_script.py

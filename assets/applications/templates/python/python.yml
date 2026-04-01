@@ -211,13 +211,13 @@
   applicationName: python
   executableName: python
 
-- content: !readFile 'input_files_templates/python/mattersim_script.py'
+- content: !readFile 'input_files_templates/python/mlff/mattersim_script.py'
   name: mattersim_script.py
   contextProviders: []
   applicationName: python
   executableName: python
 
-- content: !readFile 'input_files_templates/python/requirements_mattersim.txt'
+- content: !readFile 'input_files_templates/python/mlff/requirements_mattersim.txt'
   name: requirements_mattersim.txt
   contextProviders: []
   applicationName: python

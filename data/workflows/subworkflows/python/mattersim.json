@@ -61,7 +61,7 @@
                 "monitors": [
                     "standard_output"
                 ],
-                "name": "pyml:mattersim",
+                "name": "mlff:mattersim",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
