@@ -2,3 +2,5 @@ GNU:
   nwchem:
     nwchem_total_energy:
       - path: '/pb/qm/dft/ksdft/hybrid?functional=b3lyp'
+    nwchem_frequency:
+      - path: '/pb/qm/dft/ksdft/hybrid?functional=b3lyp'

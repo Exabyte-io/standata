@@ -5,6 +5,9 @@ postProcessors:
 monitors:
   - standard_output
 results:
+  - zero_point_energy
+  - thermal_correction_to_energy
+  - thermal_correction_to_enthalpy
   - total_energy
   - total_energy_contributions
   - homo_energy
@@ -19,6 +22,20 @@ flavors:
       - total_energy_contributions
       - homo_energy
       - lumo_energy
+    monitors:
+      - standard_output
+    applicationName: nwchem
+    executableName: nwchem
+  nwchem_frequency:
+    isDefault: false
+    input:
+      - name: nwchem_frequency.inp
+    results:
+      - total_energy
+      - total_energy_contributions
+      - zero_point_energy
+      - thermal_correction_to_energy
+      - thermal_correction_to_enthalpy
     monitors:
       - standard_output
     applicationName: nwchem
