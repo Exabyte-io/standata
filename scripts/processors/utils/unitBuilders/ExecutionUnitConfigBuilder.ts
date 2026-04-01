@@ -25,11 +25,12 @@ export default class ExecutionUnitConfigBuilder extends UnitConfigBuilder<"execu
     constructor(config: ExecutionConfig, application: ApplicationSchema, cache?: string[]) {
         super({ name: config.name, type: "execution", flowchartId: config.flowchartId, cache });
 
-        const { executable, flavor } = new ApplicationStandata().getExecutableAndFlavorByName(
-            application.name,
-            config.execName,
-            config.flavorName,
-        );
+        const { executable, flavor } = new ApplicationStandata().getExecutableAndFlavorByName({
+            appName: application.name,
+            appVersion: application.version,
+            execName: config.execName,
+            flavorName: config.flavorName,
+        });
 
         this.application = application;
         this.executable = executable;

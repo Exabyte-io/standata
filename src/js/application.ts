@@ -45,73 +45,27 @@ type ApplicationTreeItem = {
 
 type ApplicationTree = Record<string, ApplicationTreeItem>;
 
+type AppConfig = { appName: string; appVersion?: string };
+type ExecutableConfig = AppConfig & { execName?: string };
+type FlavorConfig = ExecutableConfig & { flavorName?: string };
+
 export class ApplicationStandata extends Standata<ApplicationSchema> {
     static runtimeData = APPLICATIONS;
 
-    private appCache: Record<
+    private appExecutablesCache: Record<
         string,
         Record<
             string,
             {
                 executable: ExecutableSchema;
-                flavors: FlavorSchema[];
+                flavors: {
+                    flavor: FlavorSchema;
+                    supportedApplicationVersions?: string[];
+                }[];
+                supportedApplicationVersions?: string[];
             }
         >
     > = {};
-
-    private getApplicationExecutablesTree(appName: string) {
-        if (appName in this.appCache) {
-            return this.appCache[appName];
-        }
-
-        // TODO: Convert to use this.findEntitiesByTags() when tree data is in Standata format
-        const executableData = EXECUTABLE_FLAVOR;
-
-        if (!(appName in executableData)) {
-            throw new Error(`${appName} is not a known application with executable tree.`);
-        }
-
-        const appTree = executableData[appName];
-
-        this.appCache[appName] = Object.fromEntries(
-            Object.entries(appTree).map(([name, { flavors, ...executable }]) => {
-                return [
-                    name,
-                    {
-                        executable: {
-                            preProcessors: [],
-                            postProcessors: [],
-                            applicationId: [],
-                            ...executable,
-                            applicationName: appName,
-                            name,
-                        },
-                        flavors: Object.entries(flavors).map(([name, value]) => {
-                            return {
-                                preProcessors: [],
-                                postProcessors: [],
-                                results: [],
-                                ...value,
-                                name,
-                            };
-                        }),
-                    },
-                ];
-            }),
-        );
-
-        return this.appCache[appName];
-    }
-
-    getAllAppTemplates(): TemplateSchema[] {
-        // TODO: Convert to use this.getAll() when template data is in Standata format
-        return TEMPLATES_LIST;
-    }
-
-    getAllAppTree() {
-        // TODO: Convert to use this.getAll() when tree data is in Standata format
-        return EXECUTABLE_FLAVOR_MAP;
-    }
 
     // TODO: move to parent class Standata
     private getAllApplicationNames() {
@@ -123,22 +77,6 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
     // TODO: move to parent class Standata
     getAllAppData() {
         return this.getAll();
-    }
-
-    getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[] {
-        // TODO: Convert to use this.findEntitiesByTags() when template data is in Standata format
-        const templates = TEMPLATES_LIST;
-        const filtered = templates.filter((template) => {
-            const matchesApp = template.applicationName === appName;
-            const matchesExec = template.executableName === execName;
-            return matchesApp && matchesExec;
-        });
-
-        if (!templateName) {
-            return filtered;
-        }
-
-        return filtered.filter((template) => template.name === templateName);
     }
 
     // TODO: move to parent class Standata
@@ -198,7 +136,7 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         }, {});
     }
 
-    public getApplicationsTree() {
+    private getApplicationsTree() {
         if (this.applicationsTree) {
             return this.applicationsTree;
         }
@@ -208,19 +146,13 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         return this.applicationsTree;
     }
 
-    public getApplicationTreeItem(appName: string) {
+    public getApplication({ name, version, build }: ApplicationConfig) {
         const tree = this.getApplicationsTree();
-        const app = tree[appName];
-
-        if (!app) {
-            throw new Error(`Application ${appName} not found`);
+        const appTreeItem = tree[name];
+        if (!appTreeItem) {
+            throw new Error(`Application ${name} not found`);
         }
 
-        return app;
-    }
-
-    public getApplication({ name, version, build }: ApplicationConfig) {
-        const appTreeItem = this.getApplicationTreeItem(name);
         const { defaultVersion } = appTreeItem;
         const appVersion = appTreeItem.versions[version || defaultVersion];
 
@@ -237,35 +169,102 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         return application;
     }
 
-    getExecutableByName(appName: string, execName?: string) {
+    // EXECUTABLE_FLAVOR
+
+    private getApplicationExecutablesTree(appName: string) {
+        if (appName in this.appExecutablesCache) {
+            return this.appExecutablesCache[appName];
+        }
+
+        // TODO: Convert to use this.findEntitiesByTags() when tree data is in Standata format
+        const executableData = EXECUTABLE_FLAVOR;
+
+        if (!(appName in executableData)) {
+            throw new Error(`${appName} is not a known application with executable tree.`);
+        }
+
+        const appTree = executableData[appName];
+
+        this.appExecutablesCache[appName] = Object.fromEntries(
+            Object.entries(appTree).map(
+                ([name, { supportedApplicationVersions, flavors, ...executable }]) => {
+                    return [
+                        name,
+                        {
+                            executable: {
+                                preProcessors: [],
+                                postProcessors: [],
+                                applicationId: [],
+                                ...executable,
+                                applicationName: appName,
+                                name,
+                            },
+                            flavors: Object.entries(flavors).map(
+                                ([name, { supportedApplicationVersions, ...flavor }]) => {
+                                    return {
+                                        flavor: {
+                                            preProcessors: [],
+                                            postProcessors: [],
+                                            results: [],
+                                            ...flavor,
+                                            name,
+                                        },
+                                        supportedApplicationVersions,
+                                    };
+                                },
+                            ),
+                            supportedApplicationVersions,
+                        },
+                    ];
+                },
+            ),
+        );
+
+        return this.appExecutablesCache[appName];
+    }
+
+    getExecutablesByApplicationName({ appName, appVersion }: AppConfig) {
         const appTree = this.getApplicationExecutablesTree(appName);
 
-        const config =
-            (execName && appTree[execName]) ||
-            Object.values(appTree).find((exec) => exec.executable.isDefault);
+        return Object.values(appTree).filter((data) => {
+            return appVersion && data.supportedApplicationVersions
+                ? data.supportedApplicationVersions.includes(appVersion)
+                : true;
+        });
+    }
+
+    getExecutableByName({ appName, appVersion, execName }: ExecutableConfig) {
+        const config = this.getExecutablesByApplicationName({
+            appName,
+            appVersion,
+        }).find((data) => {
+            return execName ? data.executable.name === execName : data.executable.isDefault;
+        });
 
         if (!config) {
             throw new Error(
-                `Executable ${execName || "default"} not found for application ${appName}`,
+                `Executable ${execName || "default"} not found for application ${appName} version ${
+                    appVersion || "-any-"
+                }`,
             );
         }
 
-        return config;
+        return {
+            executable: config.executable,
+            flavors: config.flavors,
+        };
     }
 
-    getExecutableAndFlavorByName(
-        appName: string,
-        execName?: string,
-        flavorName?: string,
-    ): {
-        executable: ExecutableSchema;
-        flavor: FlavorSchema;
-    } {
-        const { executable, flavors } = this.getExecutableByName(appName, execName);
+    getExecutableAndFlavorByName({ appName, appVersion, execName, flavorName }: FlavorConfig) {
+        const { executable, flavors } = this.getExecutableByName({
+            appName,
+            appVersion,
+            execName,
+        });
 
         const flavor =
             flavors.find((value) => {
-                return flavorName ? value.name === flavorName : value.isDefault;
+                return flavorName ? value.flavor.name === flavorName : value.flavor.isDefault;
             }) || flavors[0];
 
         if (!flavor) {
@@ -278,8 +277,26 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
 
         return {
             executable,
-            flavor,
+            flavor: flavor.flavor,
         };
+    }
+
+    // TEMPLATES_LIST
+
+    getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[] {
+        // TODO: Convert to use this.findEntitiesByTags() when template data is in Standata format
+        const templates = TEMPLATES_LIST;
+        const filtered = templates.filter((template) => {
+            const matchesApp = template.applicationName === appName;
+            const matchesExec = template.executableName === execName;
+            return matchesApp && matchesExec;
+        });
+
+        if (!templateName) {
+            return filtered;
+        }
+
+        return filtered.filter((template) => template.name === templateName);
     }
 
     getInput(flavor: FlavorSchema): TemplateSchema[] {

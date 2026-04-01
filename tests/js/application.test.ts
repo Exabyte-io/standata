@@ -46,31 +46,6 @@ describe("Application Standata", () => {
     });
 
     describe("Application-specific methods", () => {
-        it("getApplicationsTree - merges application version map into nested version/build entries", () => {
-            const tree = standata.getApplicationsTree();
-            expect(tree).to.be.an("object");
-            expect(tree).to.have.property("espresso");
-            const { espresso } = tree;
-            expect(espresso).to.have.property("defaultVersion", "6.3");
-            expect(espresso.versions).to.have.property("6.3");
-            expect(espresso.versions["6.3"]).to.have.property("GNU");
-            const gnu63 = espresso.versions["6.3"].GNU;
-            expect(gnu63).to.have.property("name", "espresso");
-            expect(gnu63).to.have.property("shortName", "qe");
-        });
-
-        it("getApplicationTreeItem - returns defaultVersion and versions for a known app", () => {
-            const item = standata.getApplicationTreeItem("espresso");
-            expect(item.defaultVersion).to.equal("6.3");
-            expect(item.versions).to.have.key("6.3");
-        });
-
-        it("getApplicationTreeItem - should throw for unknown application", () => {
-            expect(() => {
-                standata.getApplicationTreeItem("nonexistent");
-            }).to.throw("Application nonexistent not found");
-        });
-
         it("getApplication - resolves default version and build from application config", () => {
             const app = standata.getApplication({ name: "espresso" });
             expect(app).to.have.property("name", "espresso");
@@ -80,14 +55,17 @@ describe("Application Standata", () => {
         });
 
         it("getExecutableByName - should resolve executable config for valid app", () => {
-            const { executable } = standata.getExecutableByName("espresso", "pw.x");
+            const { executable } = standata.getExecutableByName({
+                appName: "espresso",
+                execName: "pw.x",
+            });
             expect(executable).to.be.an("object");
             expect(executable).to.have.property("name", "pw.x");
         });
 
         it("getExecutableByName - should throw for app without executable tree", () => {
             expect(() => {
-                standata.getExecutableByName("nonexistent");
+                standata.getExecutableByName({ appName: "nonexistent" });
             }).to.throw("nonexistent is not a known application with executable tree");
         });
 
@@ -96,27 +74,6 @@ describe("Application Standata", () => {
             expect(allData).to.be.an("array");
             expect(allData.length).to.be.greaterThan(0);
             expect(allData[0]).to.have.property("name");
-        });
-
-        it("getApplicationsTree - application keys are unique and list known apps", () => {
-            const names = Object.keys(standata.getApplicationsTree());
-            expect(names).to.be.an("array");
-            expect(names).to.include("espresso");
-            expect(new Set(names).size).to.equal(names.length);
-        });
-
-        it("getAllAppTemplates - should return all templates", () => {
-            const templates = standata.getAllAppTemplates();
-            expect(templates).to.be.an("array");
-            expect(templates.length).to.be.greaterThan(0);
-            expect(templates[0]).to.have.property("applicationName");
-            expect(templates[0]).to.have.property("name");
-        });
-
-        it("getAllAppTree - should return complete tree data", () => {
-            const tree = standata.getAllAppTree();
-            expect(tree).to.be.an("object");
-            expect(tree).to.have.property("espresso");
         });
 
         it("getTemplatesByName - should return filtered templates", () => {

@@ -3,8 +3,8 @@ import { Utils } from "@mat3ra/utils";
 import serverUtils from "@mat3ra/utils/server";
 import * as path from "path";
 
-import { ApplicationVersionsMapByApplicationType } from "../../src/js/types/application";
 import { BUILD_CONFIG, EXCLUDE_KEYS_FROM_SORTING } from "../../build-config";
+import { ApplicationVersionsMapByApplicationType } from "../../src/js/types/application";
 import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
 import { buildJSONFromYAMLInDir, loadYAMLTree, resolveFromRoot } from "../utils";
 import { EntityProcessor } from "./EntityProcessor";
