@@ -11,7 +11,9 @@
         "imageName": "espresso",
         "imageTag": "7.5-host-cuda-12.8-0",
         "bio": "Quantum ESPRESSO 7.5 (CUDA 12.8)",
-        "dependencies": [],
+        "dependencies": [
+            "nvhpc/25.3-cuda-12.8"
+        ],
         "environmentVariables": {
             "SOFTWARE_LIBRARIES_PATH": "/export/compute/software/libraries",
             "SOFTWARE_COMPILERS_PATH": "/export/compute/software/compilers",
