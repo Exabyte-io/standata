@@ -9,7 +9,7 @@
     "buildConfig": {
         "moduleName": "7.5-host-intel-2023.1-libxc-7.0",
         "imageName": "espresso",
-        "imageTag": "7.5-host-intel-2023.1-libxc-7.0-0",
+        "imageTag": "7.5-host-intel-2023.1-libxc-7.0-1",
         "bio": "Quantum ESPRESSO 7.5 (Intel OneAPI 2023.1.0, LibXC 7.0)",
         "dependencies": [
             "intel/oneapi-2023.1.0"
