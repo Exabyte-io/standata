@@ -40,7 +40,7 @@
   applicationName: python
   executableName: python
 
-- content: !readFile 'input_files_templates/python/calculate_polar_vbo.pyi'
+- content: !readFile 'input_files_templates/python/espresso_calculate_polar_vbo.pyi'
   name: calculate_polar_vbo.py
   contextProviders: []
   applicationName: python
