@@ -21,6 +21,9 @@ from mattersim.forcefield import MatterSimCalculator
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"Running MatterSim on {device}")
 
+material = {{ MATERIAL }}
+print(f"Material from io context: {material}")
+
 si = bulk("Si", "diamond", a=5.43)
 si.calc = MatterSimCalculator(device=device)
 print(f"Energy (eV)                 = {si.get_potential_energy()}")

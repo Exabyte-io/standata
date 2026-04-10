@@ -16,9 +16,69 @@
     },
     "units": [
         {
+            "name": "io-material",
+            "type": "io",
+            "subtype": "input",
+            "source": "api",
+            "flowchartId": "io-material-flowchart-id",
+            "input": [
+                {
+                    "endpoint": "materials",
+                    "endpoint_options": {
+                        "params": {
+                            "query": "{'_id': MATERIAL_ID}",
+                            "projection": "{}"
+                        }
+                    },
+                    "name": "DATA"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "18c4920a-9a04-59f6-a374-b365dec07ecc",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "set-material",
+            "type": "assignment",
+            "operand": "MATERIAL",
+            "value": "DATA[0]",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-material-flowchart-id"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "18c4920a-9a04-59f6-a374-b365dec07ecc",
+            "tags": [],
+            "head": false,
+            "next": "4b914960-c8d7-59b5-9f84-fe5fd6a5871a",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
             "type": "execution",
             "name": "mattersim",
-            "head": true,
+            "head": false,
             "results": [],
             "monitors": [
                 {
@@ -71,11 +131,11 @@
             "input": [
                 {
                     "applicationName": "python",
-                    "content": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport torch\nfrom ase.build import bulk\nfrom ase.units import GPa\nfrom mattersim.forcefield import MatterSimCalculator\n\ndevice = \"cuda\" if torch.cuda.is_available() else \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\nsi = bulk(\"Si\", \"diamond\", a=5.43)\nsi.calc = MatterSimCalculator(device=device)\nprint(f\"Energy (eV)                 = {si.get_potential_energy()}\")\nprint(f\"Energy per atom (eV/atom)   = {si.get_potential_energy()/len(si)}\")\nprint(f\"Forces of first atom (eV/A) = {si.get_forces()[0]}\")\nprint(f\"Stress[0][0] (eV/A^3)       = {si.get_stress(voigt=False)[0][0]}\")\nprint(f\"Stress[0][0] (GPa)          = {si.get_stress(voigt=False)[0][0] / GPa}\")\n",
+                    "content": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport torch\nfrom ase.build import bulk\nfrom ase.units import GPa\nfrom mattersim.forcefield import MatterSimCalculator\n\ndevice = \"cuda\" if torch.cuda.is_available() else \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\nmaterial = {{ MATERIAL }}\nprint(f\"Material from io context: {material}\")\n\nsi = bulk(\"Si\", \"diamond\", a=5.43)\nsi.calc = MatterSimCalculator(device=device)\nprint(f\"Energy (eV)                 = {si.get_potential_energy()}\")\nprint(f\"Energy per atom (eV/atom)   = {si.get_potential_energy()/len(si)}\")\nprint(f\"Forces of first atom (eV/A) = {si.get_forces()[0]}\")\nprint(f\"Stress[0][0] (eV/A^3)       = {si.get_stress(voigt=False)[0][0]}\")\nprint(f\"Stress[0][0] (GPa)          = {si.get_stress(voigt=False)[0][0] / GPa}\")\n",
                     "contextProviders": [],
                     "executableName": "python",
                     "name": "script.py",
-                    "rendered": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport torch\nfrom ase.build import bulk\nfrom ase.units import GPa\nfrom mattersim.forcefield import MatterSimCalculator\n\ndevice = \"cuda\" if torch.cuda.is_available() else \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\nsi = bulk(\"Si\", \"diamond\", a=5.43)\nsi.calc = MatterSimCalculator(device=device)\nprint(f\"Energy (eV)                 = {si.get_potential_energy()}\")\nprint(f\"Energy per atom (eV/atom)   = {si.get_potential_energy()/len(si)}\")\nprint(f\"Forces of first atom (eV/A) = {si.get_forces()[0]}\")\nprint(f\"Stress[0][0] (eV/A^3)       = {si.get_stress(voigt=False)[0][0]}\")\nprint(f\"Stress[0][0] (GPa)          = {si.get_stress(voigt=False)[0][0] / GPa}\")\n",
+                    "rendered": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport torch\nfrom ase.build import bulk\nfrom ase.units import GPa\nfrom mattersim.forcefield import MatterSimCalculator\n\ndevice = \"cuda\" if torch.cuda.is_available() else \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\nmaterial = \nprint(f\"Material from io context: {material}\")\n\nsi = bulk(\"Si\", \"diamond\", a=5.43)\nsi.calc = MatterSimCalculator(device=device)\nprint(f\"Energy (eV)                 = {si.get_potential_energy()}\")\nprint(f\"Energy per atom (eV/atom)   = {si.get_potential_energy()/len(si)}\")\nprint(f\"Forces of first atom (eV/A) = {si.get_forces()[0]}\")\nprint(f\"Stress[0][0] (eV/A^3)       = {si.get_stress(voigt=False)[0][0]}\")\nprint(f\"Stress[0][0] (GPa)          = {si.get_stress(voigt=False)[0][0] / GPa}\")\n",
                     "schemaVersion": "2022.8.16"
                 },
                 {

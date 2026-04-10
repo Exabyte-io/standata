@@ -1363,6 +1363,15 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         applicationName: string;
                         executableName: string;
                     };
+                    "mlff:mattersim": {
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        applicationName: string;
+                        executableName: string;
+                    };
                 };
             };
         };
