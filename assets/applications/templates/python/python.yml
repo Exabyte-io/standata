@@ -40,6 +40,18 @@
   applicationName: python
   executableName: python
 
+- content: !readFile 'input_files_templates/python/calculate_polar_vbo.pyi'
+  name: calculate_polar_vbo.py
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
+- content: !readFile 'input_files_templates/python/requirements_calculate_polar_vbo.j2.txt'
+  name: requirements_calculate_polar_vbo.txt
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
 - content: !readFile 'input_files_templates/python/espresso_extract_kpoints.pyi'
   name: espresso_extract_kpoints.py
   contextProviders: []

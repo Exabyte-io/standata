@@ -1,0 +1,57 @@
+# Note: this subworkflow is assumed to be used as part of a polar valence band
+# offset workflow after the interface, left, and right BS + Avg ESP runs.
+# It expects VBM_LEFT and VBM_RIGHT to exist in the global context when a full
+# VBO value should be reported.
+application:
+  name: python
+  version: 3.10.13
+method:
+  name: UnknownMethod
+model:
+  name: UnknownModel
+name: Calculate Polar VBO
+properties:
+  - file_content
+  - valence_band_offset
+units:
+  - config:
+      name: Set Left Slab Bottom Z
+      operand: LEFT_SLAB_BOTTOM_Z
+      value: None
+    type: assignment
+  - config:
+      name: Set Left Slab Top Z
+      operand: LEFT_SLAB_TOP_Z
+      value: None
+    type: assignment
+  - config:
+      name: Set Right Slab Bottom Z
+      operand: RIGHT_SLAB_BOTTOM_Z
+      value: None
+    type: assignment
+  - config:
+      name: Set Right Slab Top Z
+      operand: RIGHT_SLAB_TOP_Z
+      value: None
+    type: assignment
+  - attributes:
+      results:
+        - name: file_content
+          basename: "polar_vbo_fit_interface.png"
+          filetype: "image"
+    config:
+      name: Calculate Polar VBO
+      execName: python
+      flavorName: calculate_polar_vbo
+      flowchartId: python-calculate-polar-vbo
+    type: executionBuilder
+  - config:
+      name: Set Polar Valence Band Offset
+      operand: VALENCE_BAND_OFFSET
+      value: "json.loads(STDOUT)['valence_band_offset']"
+      input:
+        - name: STDOUT
+          scope: python-calculate-polar-vbo
+      results:
+        - name: valence_band_offset
+    type: assignment
