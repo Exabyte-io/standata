@@ -211,8 +211,8 @@
   applicationName: python
   executableName: python
 
-- content: !readFile 'input_files_templates/python/mlff/mattersim_script.py'
-  name: mattersim_script.py
+- content: !readFile 'input_files_templates/python/mlff/mattersim_script.pyi'
+  name: mattersim_script.pyi
   contextProviders: []
   applicationName: python
   executableName: python

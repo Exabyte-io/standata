@@ -120,7 +120,7 @@
                         "input": [
                             {
                                 "name": "script.py",
-                                "templateName": "mattersim_script.py"
+                                "templateName": "mattersim_script.pyi"
                             },
                             {
                                 "name": "requirements.txt",
