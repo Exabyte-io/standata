@@ -1,0 +1,229 @@
+{
+    "_id": "fc3c187b-e4e6-5451-bacc-72e7f65c534c",
+    "name": "Calculate Polar VBO",
+    "application": {
+        "name": "espresso"
+    },
+    "properties": [
+        "file_content",
+        "valence_band_offset"
+    ],
+    "model": {
+        "type": "unknown",
+        "subtype": "unknown",
+        "method": {
+            "type": "unknown",
+            "subtype": "unknown",
+            "data": {}
+        }
+    },
+    "units": [
+        {
+            "name": "Set Left Slab Bottom Z",
+            "type": "assignment",
+            "operand": "LEFT_SLAB_BOTTOM_Z",
+            "value": "None",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "1e40311c-3d90-5210-9438-4020d405a061",
+            "tags": [],
+            "head": true,
+            "next": "4ffe0585-794e-575d-a0ce-0246f30139ce",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Set Left Slab Top Z",
+            "type": "assignment",
+            "operand": "LEFT_SLAB_TOP_Z",
+            "value": "None",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "4ffe0585-794e-575d-a0ce-0246f30139ce",
+            "tags": [],
+            "head": false,
+            "next": "08a58ab2-b1ec-51dd-b8eb-c75c56bb22a4",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Set Right Slab Bottom Z",
+            "type": "assignment",
+            "operand": "RIGHT_SLAB_BOTTOM_Z",
+            "value": "None",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "08a58ab2-b1ec-51dd-b8eb-c75c56bb22a4",
+            "tags": [],
+            "head": false,
+            "next": "a71bd883-e7b2-5969-91bc-15fb323a6b7e",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "Set Right Slab Top Z",
+            "type": "assignment",
+            "operand": "RIGHT_SLAB_TOP_Z",
+            "value": "None",
+            "input": [],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "a71bd883-e7b2-5969-91bc-15fb323a6b7e",
+            "tags": [],
+            "head": false,
+            "next": "python-calculate-polar-vbo",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "type": "execution",
+            "name": "Calculate Polar VBO",
+            "head": false,
+            "results": [
+                {
+                    "name": "file_content",
+                    "basename": "polar_vbo_fit_interface.png",
+                    "filetype": "image"
+                }
+            ],
+            "monitors": [
+                {
+                    "name": "standard_output"
+                }
+            ],
+            "flowchartId": "python-calculate-polar-vbo",
+            "preProcessors": [],
+            "postProcessors": [],
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            },
+            "executable": {
+                "isDefault": true,
+                "monitors": [
+                    "standard_output"
+                ],
+                "name": "python",
+                "schemaVersion": "2022.8.16"
+            },
+            "flavor": {
+                "applicationName": "python",
+                "executableName": "python",
+                "input": [
+                    {
+                        "name": "calculate_polar_vbo.py",
+                        "templateName": "calculate_polar_vbo.py"
+                    },
+                    {
+                        "name": "requirements.txt",
+                        "templateName": "requirements_calculate_polar_vbo.txt"
+                    }
+                ],
+                "monitors": [
+                    "standard_output"
+                ],
+                "results": [
+                    {
+                        "basename": "polar_vbo_fit_interface.png",
+                        "filetype": "image",
+                        "name": "file_content"
+                    }
+                ],
+                "name": "calculate_polar_vbo",
+                "schemaVersion": "2022.8.16",
+                "isDefault": false
+            },
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "input": [
+                {
+                    "applicationName": "python",
+                    "content": "input_files_templates/python/calculate_polar_vbo.pyi",
+                    "contextProviders": [],
+                    "executableName": "python",
+                    "name": "calculate_polar_vbo.py",
+                    "rendered": "input_files_templates/python/calculate_polar_vbo.pyi",
+                    "schemaVersion": "2022.8.16"
+                },
+                {
+                    "applicationName": "python",
+                    "content": "# ------------------------------------------------------------------ #\n#  Python package requirements for the polar VBO calculation         #\n# ------------------------------------------------------------------ #\n\nase>=3.22.1\nmatplotlib\nmat3ra-made>=2025.12.29.post0\nnumpy>=1.19.5\nscipy>=1.5.4\n",
+                    "contextProviders": [],
+                    "executableName": "python",
+                    "name": "requirements.txt",
+                    "rendered": "# ------------------------------------------------------------------ #\n#  Python package requirements for the polar VBO calculation         #\n# ------------------------------------------------------------------ #\n\nase>=3.22.1\nmatplotlib\nmat3ra-made>=2025.12.29.post0\nnumpy>=1.19.5\nscipy>=1.5.4\n",
+                    "schemaVersion": "2022.8.16"
+                }
+            ],
+            "next": "a7e39b44-9181-581b-b5fc-8ae24b6edbab"
+        },
+        {
+            "name": "Set Polar Valence Band Offset",
+            "type": "assignment",
+            "operand": "VALENCE_BAND_OFFSET",
+            "value": "json.loads(STDOUT)['valence_band_offset']",
+            "input": [
+                {
+                    "name": "STDOUT",
+                    "scope": "python-calculate-polar-vbo"
+                }
+            ],
+            "results": [
+                {
+                    "name": "valence_band_offset"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "a7e39b44-9181-581b-b5fc-8ae24b6edbab",
+            "tags": [],
+            "head": false,
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        }
+    ]
+}

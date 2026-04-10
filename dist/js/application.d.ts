@@ -1063,6 +1063,20 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
         python: {
             python: {
                 flavors: {
+                    calculate_polar_vbo: {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        results: {
+                            basename: string;
+                            filetype: string;
+                            name: string;
+                        }[];
+                    };
                     espresso_extract_kpoints: {
                         applicationName: string;
                         executableName: string;
