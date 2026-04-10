@@ -12,7 +12,7 @@ units:
       name: io-material
       subtype: input
       source: api
-      flowchartId: io-material-flowchart-id
+      flowchartId: io-material-flowchart-id-ac93759e
       input:
         - endpoint: materials
           endpoint_options:
@@ -27,7 +27,7 @@ units:
       value: "DATA[0]"
       input:
         - name: DATA
-          scope: io-material-flowchart-id
+          scope: io-material-flowchart-id-ac93759e
   - config:
       execName: python
       flavorName: mlff:mattersim

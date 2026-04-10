@@ -29,7 +29,7 @@
                     "type": "io",
                     "subtype": "input",
                     "source": "api",
-                    "flowchartId": "io-material-flowchart-id",
+                    "flowchartId": "io-material-flowchart-id-ac93759e",
                     "input": [
                         {
                             "endpoint": "materials",
@@ -65,7 +65,7 @@
                     "input": [
                         {
                             "name": "DATA",
-                            "scope": "io-material-flowchart-id"
+                            "scope": "io-material-flowchart-id-ac93759e"
                         }
                     ],
                     "status": "idle",
