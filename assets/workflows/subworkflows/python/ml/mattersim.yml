@@ -22,7 +22,7 @@ units:
           name: DATA
   - type: assignment
     config:
-      name: set-material
+      name: assign-material
       operand: MATERIAL
       value: "DATA[0]"
       input:
