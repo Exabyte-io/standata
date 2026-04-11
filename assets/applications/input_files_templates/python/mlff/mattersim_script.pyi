@@ -22,8 +22,13 @@ from munch import Munch
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"Running MatterSim on {device}")
 
+# this way material is obtained from the job context
 material_json = {% raw %}{{ MATERIAL }}{% endraw %}
 material = to_ase(dict(material_json))
+
+# alternatively, material can be defined via ase, e.g.:
+# from ase.build import bulk
+# material = bulk("Si", "diamond", a=5.43)
 
 material.calc = MatterSimCalculator(device=device)
 print(f"Energy (eV)                 = {material.get_potential_energy()}")
