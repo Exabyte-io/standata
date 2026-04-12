@@ -376,9 +376,6 @@ entities:
       - nwchem
       - total_energy
       - total_energy_contributions
-  - filename: python/mattersim.json
-    categories:
-      - python
   - filename: python/ml/classification_workflow.json
     categories:
       - python
@@ -386,6 +383,9 @@ entities:
     categories:
       - python
   - filename: python/ml/regression_workflow.json
+    categories:
+      - python
+  - filename: python/mlff/mattersim.json
     categories:
       - python
   - filename: python/python_script.json

@@ -440,9 +440,6 @@ entities:
       - python
       - remove-all-results
       - workflow:pyml_predict
-  - filename: python/ml/mattersim.json
-    categories:
-      - python
   - filename: python/ml/regression_tail.json
     categories:
       - creates-predictions-csv-during-predict-phase
@@ -455,6 +452,9 @@ entities:
       - pyml:workflow-type-setter
       - python
       - set-io-unit-filenames
+  - filename: python/mlff/mattersim.json
+    categories:
+      - python
   - filename: python/python_script.json
     categories:
       - python
