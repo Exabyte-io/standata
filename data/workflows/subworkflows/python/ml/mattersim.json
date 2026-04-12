@@ -121,7 +121,7 @@
                 "monitors": [
                     "standard_output"
                 ],
-                "name": "mlff:mattersim",
+                "name": "mlff:mattersim_with_material_from_io_unit",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

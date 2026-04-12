@@ -1114,7 +1114,16 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         isDefault: boolean;
                         monitors: string[];
                     };
-                    "mlff:mattersim": {
+                    "mlff:mattersim_with_material_from_ase": {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                    };
+                    "mlff:mattersim_with_material_from_io_unit": {
                         applicationName: string;
                         executableName: string;
                         input: {
