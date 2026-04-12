@@ -369,8 +369,8 @@ flavors:
 
   'mlff:mattersim':
     input:
-      - name: script.py
-        templateName: mattersim_script.pyi
+      - name: mattersim_with_material_from_io_unit.py
+        templateName: mattersim_with_material_from_io_unit.pyi
       - name: requirements.txt
         templateName: requirements_mattersim.txt
     monitors:
