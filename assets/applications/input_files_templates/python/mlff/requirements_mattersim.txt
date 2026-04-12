@@ -6,4 +6,4 @@
 ase==3.28.0
 mattersim==1.2.2
 munch
-mat3ra-made[tools]
+mat3ra-made[tools]==2026.4.2.post1
