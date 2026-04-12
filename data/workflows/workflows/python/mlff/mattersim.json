@@ -149,11 +149,11 @@
                         },
                         {
                             "applicationName": "python",
-                            "content": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for mattersim unit                    #\n#                                                                    #\n# ------------------------------------------------------------------ #\nase==3.28.0\nmattersim==1.2.2\nmunch\nmat3ra-made[tools]==2026.4.2.post1\n",
+                            "content": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for mattersim unit                    #\n#                                                                    #\n# ------------------------------------------------------------------ #\nase==3.23.0\nmattersim==1.1.2\nmunch\nmat3ra-made[tools]==2026.4.2.post1\n",
                             "contextProviders": [],
                             "executableName": "python",
                             "name": "requirements.txt",
-                            "rendered": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for mattersim unit                    #\n#                                                                    #\n# ------------------------------------------------------------------ #\nase==3.28.0\nmattersim==1.2.2\nmunch\nmat3ra-made[tools]==2026.4.2.post1\n",
+                            "rendered": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for mattersim unit                    #\n#                                                                    #\n# ------------------------------------------------------------------ #\nase==3.23.0\nmattersim==1.1.2\nmunch\nmat3ra-made[tools]==2026.4.2.post1\n",
                             "schemaVersion": "2022.8.16"
                         }
                     ]
