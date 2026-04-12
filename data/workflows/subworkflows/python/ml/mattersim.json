@@ -140,11 +140,11 @@
                 },
                 {
                     "applicationName": "python",
-                    "content": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for mattersim unit                    #\n#                                                                    #\n# ------------------------------------------------------------------ #\nase==3.23.0\nmattersim==1.1.2\nmunch\nmat3ra-made[tools]\n",
+                    "content": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for mattersim unit                    #\n#                                                                    #\n# ------------------------------------------------------------------ #\nase==3.28.0\nmattersim==1.2.2\nmunch\nmat3ra-made[tools]\n",
                     "contextProviders": [],
                     "executableName": "python",
                     "name": "requirements.txt",
-                    "rendered": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for mattersim unit                    #\n#                                                                    #\n# ------------------------------------------------------------------ #\nase==3.23.0\nmattersim==1.1.2\nmunch\nmat3ra-made[tools]\n",
+                    "rendered": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for mattersim unit                    #\n#                                                                    #\n# ------------------------------------------------------------------ #\nase==3.28.0\nmattersim==1.2.2\nmunch\nmat3ra-made[tools]\n",
                     "schemaVersion": "2022.8.16"
                 }
             ]
