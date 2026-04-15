@@ -7,6 +7,8 @@ categories:
     - charge_density_profile
     - density_of_states
     - dielectric_tensor
+    - electric_field_left
+    - electric_field_right
     - fermi_energy
     - file_content
     - final_structure
@@ -56,6 +58,11 @@ entities:
   - filename: espresso/average_electrostatic_potential_find_minima.json
     categories:
       - espresso
+      - python
+  - filename: espresso/average_electrostatic_potential_fit_polar.json
+    categories:
+      - espresso
+      - file_content
       - python
   - filename: espresso/average_electrostatic_potential_via_band_structure.json
     categories:
@@ -225,6 +232,10 @@ entities:
     categories:
       - espresso
       - python
+  - filename: espresso/extract_slab_coordinates.json
+    categories:
+      - espresso
+      - python
   - filename: espresso/fixed_cell_relaxation.json
     categories:
       - atomic_forces
@@ -346,6 +357,10 @@ entities:
     categories:
       - band_structure
       - espresso
+  - filename: espresso/set_polar_coordinates.json
+    categories:
+      - espresso
+      - shell
   - filename: espresso/surface_energy.json
     categories:
       - atomic_forces
@@ -369,6 +384,13 @@ entities:
       - total_force
   - filename: espresso/valence_band_offset_calc_from_previous_esp_vbm.json
     categories:
+      - espresso
+      - python
+      - valence_band_offset
+  - filename: espresso/valence_band_offset_calc_polar.json
+    categories:
+      - electric_field_left
+      - electric_field_right
       - espresso
       - python
       - valence_band_offset
@@ -426,6 +448,9 @@ entities:
       - nwchem
       - total_energy
       - total_energy_contributions
+  - filename: python/extract_slab_coordinates.json
+    categories:
+      - python
   - filename: python/ml/classification_tail.json
     categories:
       - creates-predictions-csv-during-predict-phase
@@ -458,6 +483,10 @@ entities:
   - filename: python/python_script.json
     categories:
       - python
+  - filename: python/set_material_index.json
+    categories:
+      - python
+      - shell
   - filename: shell/batch_espresso_pwscf.json
     categories:
       - shell

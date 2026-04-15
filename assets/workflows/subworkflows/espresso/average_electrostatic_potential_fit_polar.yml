@@ -1,0 +1,82 @@
+# Fit linear ESP for polar interfaces
+# Note: this subworkflow is assumed to be used as part of the valence band offset polar workflow
+# and is NOT self-sufficient!
+# The main workflow must override the input scopes to point to the correct extract execution units.
+application:
+  name: python
+  version: 3.10.13
+method:
+  name: UnknownMethod
+model:
+  name: UnknownModel
+name: Fit Polar ESP
+units:
+  # Import variables from other scopes (to be overridden by main workflow)
+  - config:
+      name: Import Average Potential Profile
+      operand: average_potential_profile
+      value: "average_potential_profile"
+      input:
+        - name: average_potential_profile
+          scope: average-electrostatic-potential
+    type: assignment
+  # Import STDOUT from slab1 extract execution (Left material for Interface fit)
+  - config:
+      name: Import Slab1 Coords JSON
+      operand: SLAB1_COORDS
+      value: "json.loads(STDOUT)"
+      input:
+        - name: STDOUT
+          scope: python-extract-coords-left
+    type: assignment
+  # Import STDOUT from slab2 extract execution (Right material for Interface fit)
+  - config:
+      name: Import Slab2 Coords JSON
+      operand: SLAB2_COORDS
+      value: "json.loads(STDOUT)"
+      input:
+        - name: STDOUT
+          scope: python-extract-coords-right
+    type: assignment
+  # Extract slab1 min/max from parsed JSON
+  - config:
+      name: Set Slab1 Min
+      operand: slab1_min
+      value: "SLAB1_COORDS['z_min']"
+    type: assignment
+  - config:
+      name: Set Slab1 Max
+      operand: slab1_max
+      value: "SLAB1_COORDS['z_max']"
+    type: assignment
+  # Extract slab2 min/max from parsed JSON
+  - config:
+      name: Set Slab2 Min
+      operand: slab2_min
+      value: "SLAB2_COORDS['z_min']"
+    type: assignment
+  - config:
+      name: Set Slab2 Max
+      operand: slab2_max
+      value: "SLAB2_COORDS['z_max']"
+    type: assignment
+  - config:
+      name: Set Interface Part Label
+      operand: interface_part
+      value: "'Interface'"
+    type: assignment
+  # Execute fitting
+  - config:
+      name: Fit Linear ESP for Polar Interface
+      execName: python
+      flavorName: espresso:processing:fit_esp_polar
+      flowchartId: python-fit-esp-polar
+    type: executionBuilder
+  - config:
+      name: Set Average ESP Value
+      operand: AVG_ESP
+      value: "json.loads(STDOUT)['minima']"
+      input:
+        - name: STDOUT
+          scope: python-fit-esp-polar
+    type: assignment
