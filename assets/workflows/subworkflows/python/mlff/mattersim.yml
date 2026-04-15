@@ -30,6 +30,6 @@ units:
           scope: io-material-flowchart-id-ac93759e
   - config:
       execName: python
-      flavorName: mlff:mattersim_with_material_from_io_unit
+      flavorName: mlff:mattersim
       name: mattersim
     type: executionBuilder

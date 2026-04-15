@@ -211,14 +211,8 @@
   applicationName: python
   executableName: python
 
-- content: !readFile 'input_files_templates/python/mlff/mattersim_with_material_from_io_unit.pyi'
-  name: mattersim_with_material_from_io_unit.pyi
-  contextProviders: []
-  applicationName: python
-  executableName: python
-
-- content: !readFile 'input_files_templates/python/mlff/mattersim_with_material_from_ase.pyi'
-  name: mattersim_with_material_from_ase.pyi
+- content: !readFile 'input_files_templates/python/mlff/mattersim.pyi'
+  name: mattersim.pyi
   contextProviders: []
   applicationName: python
   executableName: python
