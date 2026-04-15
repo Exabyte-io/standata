@@ -385,6 +385,9 @@ entities:
   - filename: python/ml/regression_workflow.json
     categories:
       - python
+  - filename: python/mlff/mattersim.json
+    categories:
+      - python
   - filename: python/python_script.json
     categories:
       - python

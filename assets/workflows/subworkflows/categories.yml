@@ -452,6 +452,9 @@ entities:
       - pyml:workflow-type-setter
       - python
       - set-io-unit-filenames
+  - filename: python/mlff/mattersim.json
+    categories:
+      - python
   - filename: python/python_script.json
     categories:
       - python

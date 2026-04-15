@@ -1114,6 +1114,15 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         isDefault: boolean;
                         monitors: string[];
                     };
+                    "mlff:mattersim": {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                    };
                     plot_wavefunction: {
                         applicationName: string;
                         executableName: string;
