@@ -9,7 +9,7 @@ properties:
   - total_energy_contributions
   - total_force
 units:
-- name: surface_energy_setup
-  type: subworkflow
-- name: surface_energy
-  type: subworkflow
+  - name: surface_energy_setup
+    type: subworkflow
+  - name: surface_energy
+    type: subworkflow
