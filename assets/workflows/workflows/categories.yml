@@ -290,15 +290,7 @@ entities:
       - espresso
   - filename: espresso/surface_energy.json
     categories:
-      - atomic_forces
       - espresso
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - surface_energy
-      - total_energy
-      - total_energy_contributions
-      - total_force
   - filename: espresso/total_energy.json
     categories:
       - atomic_forces

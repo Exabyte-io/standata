@@ -1369,6 +1369,15 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         }[];
                         monitors: string[];
                     };
+                    surface_energy_resolve_bulk_hash: {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                    };
                 };
                 isDefault: boolean;
                 monitors: string[];

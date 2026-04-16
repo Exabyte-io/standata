@@ -1,16 +1,32 @@
 application:
   name: espresso
   version: "6.3"
-dynamicSubworkflow:
-  name: surfaceEnergy
 method:
   name: PseudopotentialMethod
 model:
   name: DFTModel
-name: Surface Energy
+name: Surface Energy - QE
 units:
   - config:
       execName: pw.x
       flavorName: pw_scf
+      flowchartId: pw-scf-surface-energy
       name: pw_scf
     type: executionBuilder
+  - config:
+      flowchartId: assign-e-slab
+      input:
+        - name: total_energy
+          scope: pw-scf-surface-energy
+      name: assign-e-slab
+      operand: E_SLAB
+      value: total_energy
+    type: assignment
+  - config:
+      flowchartId: assign-surface-energy
+      name: assign-surface-energy
+      operand: SURFACE_ENERGY
+      results:
+        - name: surface_energy
+      value: "1 / (2 * A) * (E_SLAB - E_BULK * (N_SLAB / N_BULK))"
+    type: assignment

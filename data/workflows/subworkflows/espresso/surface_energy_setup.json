@@ -1,0 +1,521 @@
+{
+    "_id": "711cdbf6-7646-58ee-84de-eb914be40a29",
+    "name": "Surface Energy Setup",
+    "application": {
+        "name": "espresso"
+    },
+    "properties": [],
+    "model": {
+        "type": "unknown",
+        "subtype": "unknown",
+        "method": {
+            "type": "unknown",
+            "subtype": "unknown",
+            "data": {}
+        }
+    },
+    "units": [
+        {
+            "name": "io-slab",
+            "type": "io",
+            "subtype": "input",
+            "flowchartId": "io-slab",
+            "source": "api",
+            "input": [
+                {
+                    "endpoint": "materials",
+                    "endpoint_options": {
+                        "params": {
+                            "query": "{'_id': MATERIAL_ID}",
+                            "projection": "{}"
+                        }
+                    },
+                    "name": "DATA"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "assign-slab",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-slab",
+            "type": "assignment",
+            "operand": "SLAB",
+            "value": "DATA[0] if len(DATA) == 1 else None",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-slab"
+                }
+            ],
+            "flowchartId": "assign-slab",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assert-slab",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assert-slab",
+            "type": "assertion",
+            "statement": "SLAB != None",
+            "errorMessage": "Slab material does not exist!",
+            "flowchartId": "assert-slab",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "init-bulk-hash",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "init-bulk-hash",
+            "type": "assignment",
+            "operand": "BULK_HASH",
+            "value": "None",
+            "input": [],
+            "flowchartId": "init-bulk-hash",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-bulk-id",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-bulk-id",
+            "type": "assignment",
+            "operand": "BULK_ID",
+            "value": "SLAB.metadata.bulkId if hasattr(SLAB, 'metadata') and hasattr(SLAB.metadata, 'bulkId') else None",
+            "input": [],
+            "flowchartId": "assign-bulk-id",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "branch-bulk-resolution",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "branch-bulk-resolution",
+            "type": "condition",
+            "input": [],
+            "results": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "then": "resolve-bulk-hash",
+            "else": "assert-bulk-resolution",
+            "statement": "BULK_ID == None",
+            "maxOccurrences": 100,
+            "flowchartId": "branch-bulk-resolution",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "resolve-bulk-hash",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "type": "execution",
+            "name": "resolve-bulk-hash",
+            "head": false,
+            "results": [],
+            "monitors": [
+                {
+                    "name": "standard_output"
+                }
+            ],
+            "flowchartId": "resolve-bulk-hash",
+            "preProcessors": [],
+            "postProcessors": [],
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            },
+            "executable": {
+                "isDefault": true,
+                "monitors": [
+                    "standard_output"
+                ],
+                "name": "python",
+                "schemaVersion": "2022.8.16"
+            },
+            "flavor": {
+                "applicationName": "python",
+                "executableName": "python",
+                "input": [
+                    {
+                        "name": "resolve_bulk_hash.py",
+                        "templateName": "surface_energy_resolve_bulk_hash.py"
+                    },
+                    {
+                        "name": "requirements.txt",
+                        "templateName": "requirements_surface_energy_resolve_bulk_hash.txt"
+                    }
+                ],
+                "monitors": [
+                    "standard_output"
+                ],
+                "name": "surface_energy_resolve_bulk_hash",
+                "schemaVersion": "2022.8.16",
+                "isDefault": false
+            },
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "input": [
+                {
+                    "applicationName": "python",
+                    "content": "import json\n\nfrom mat3ra.made.material import Material\n\n\ndef material_from_crystal(crystal):\n    try:\n        return Material.from_json(json.dumps(crystal))\n    except Exception:\n        return Material(**crystal)\n\n\nslab_json = {% raw %}{{ SLAB }}{% endraw %}\nbulk_hash = None\n\nfor build_step in reversed((slab_json.get(\"metadata\") or {}).get(\"build\") or []):\n    try:\n        crystal = build_step[\"configuration\"][\"stack_components\"][0][\"crystal\"]\n    except (KeyError, IndexError, TypeError):\n        continue\n\n    try:\n        bulk_hash = material_from_crystal(crystal).calculate_hash()\n        break\n    except Exception:\n        continue\n\nprint(json.dumps({\"name\": \"BULK_HASH\", \"value\": bulk_hash, \"scope\": \"global\"}))\n",
+                    "contextProviders": [],
+                    "executableName": "python",
+                    "name": "resolve_bulk_hash.py",
+                    "rendered": "import json\n\nfrom mat3ra.made.material import Material\n\n\ndef material_from_crystal(crystal):\n    try:\n        return Material.from_json(json.dumps(crystal))\n    except Exception:\n        return Material(**crystal)\n\n\nslab_json = {{ SLAB }}\nbulk_hash = None\n\nfor build_step in reversed((slab_json.get(\"metadata\") or {}).get(\"build\") or []):\n    try:\n        crystal = build_step[\"configuration\"][\"stack_components\"][0][\"crystal\"]\n    except (KeyError, IndexError, TypeError):\n        continue\n\n    try:\n        bulk_hash = material_from_crystal(crystal).calculate_hash()\n        break\n    except Exception:\n        continue\n\nprint(json.dumps({\"name\": \"BULK_HASH\", \"value\": bulk_hash, \"scope\": \"global\"}))\n",
+                    "schemaVersion": "2022.8.16"
+                },
+                {
+                    "applicationName": "python",
+                    "content": "mat3ra-made[tools]==2026.4.2.post1\n",
+                    "contextProviders": [],
+                    "executableName": "python",
+                    "name": "requirements.txt",
+                    "rendered": "mat3ra-made[tools]==2026.4.2.post1\n",
+                    "schemaVersion": "2022.8.16"
+                }
+            ],
+            "next": "assert-bulk-resolution"
+        },
+        {
+            "name": "assert-bulk-resolution",
+            "type": "assertion",
+            "statement": "BULK_ID != None or BULK_HASH != None",
+            "errorMessage": "Surface slab metadata must include bulkId or build metadata with stack_components[0].crystal to infer the bulk material.",
+            "flowchartId": "assert-bulk-resolution",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "io-bulk",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "io-bulk",
+            "type": "io",
+            "subtype": "input",
+            "flowchartId": "io-bulk",
+            "source": "api",
+            "input": [
+                {
+                    "endpoint": "materials",
+                    "endpoint_options": {
+                        "params": {
+                            "query": "{'_id': BULK_ID} if BULK_ID != None else {'hash': BULK_HASH}",
+                            "projection": "{}"
+                        }
+                    },
+                    "name": "DATA"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-n-bulk-matches",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-n-bulk-matches",
+            "type": "assignment",
+            "operand": "N_BULK_MATCHES",
+            "value": "len(DATA)",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-bulk"
+                }
+            ],
+            "flowchartId": "assign-n-bulk-matches",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assert-n-bulk-matches",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assert-n-bulk-matches",
+            "type": "assertion",
+            "statement": "N_BULK_MATCHES == 1",
+            "errorMessage": "Expected exactly one bulk material for the slab. Ensure bulkId is correct or the metadata crystal hash resolves to a unique bulk material.",
+            "flowchartId": "assert-n-bulk-matches",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-bulk",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-bulk",
+            "type": "assignment",
+            "operand": "BULK",
+            "value": "DATA[0]",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-bulk"
+                }
+            ],
+            "flowchartId": "assign-bulk",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "io-e-bulk",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "io-e-bulk",
+            "type": "io",
+            "subtype": "input",
+            "flowchartId": "io-e-bulk",
+            "source": "api",
+            "input": [
+                {
+                    "endpoint": "refined-properties",
+                    "endpoint_options": {
+                        "params": {
+                            "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'espresso:'}}",
+                            "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
+                        }
+                    },
+                    "name": "DATA"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-e-bulk",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-e-bulk",
+            "type": "assignment",
+            "operand": "E_BULK",
+            "value": "DATA[0].data.value if DATA else None",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-e-bulk"
+                }
+            ],
+            "flowchartId": "assign-e-bulk",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assert-e-bulk",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assert-e-bulk",
+            "type": "assertion",
+            "statement": "E_BULK != None",
+            "errorMessage": "Bulk total energy does not exist for the resolved bulk material. Run a bulk total energy workflow first.",
+            "flowchartId": "assert-e-bulk",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-surface-area",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-surface-area",
+            "type": "assignment",
+            "operand": "A",
+            "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
+            "input": [],
+            "flowchartId": "assign-surface-area",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-n-bulk",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-n-bulk",
+            "type": "assignment",
+            "operand": "N_BULK",
+            "value": "len(BULK.basis.elements)",
+            "input": [],
+            "flowchartId": "assign-n-bulk",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-n-slab",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-n-slab",
+            "type": "assignment",
+            "operand": "N_SLAB",
+            "value": "len(SLAB.basis.elements)",
+            "input": [],
+            "flowchartId": "assign-n-slab",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            }
+        }
+    ]
+}

@@ -49,6 +49,17 @@ flavors:
     applicationName: python
     executableName: python
 
+  surface_energy_resolve_bulk_hash:
+    input:
+      - name: resolve_bulk_hash.py
+        templateName: surface_energy_resolve_bulk_hash.py
+      - name: requirements.txt
+        templateName: requirements_surface_energy_resolve_bulk_hash.txt
+    monitors:
+      - standard_output
+    applicationName: python
+    executableName: python
+
   'generic:post_processing:plot:matplotlib':
     input:
       - name: plot.py

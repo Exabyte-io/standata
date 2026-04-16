@@ -1,0 +1,152 @@
+application:
+  name: python
+  version: 3.10.13
+method:
+  name: UnknownMethod
+model:
+  name: UnknownModel
+name: Surface Energy Setup
+units:
+  - type: io
+    config:
+      name: io-slab
+      flowchartId: io-slab
+      subtype: input
+      source: api
+      input:
+        - endpoint: materials
+          endpoint_options:
+            params:
+              query: "{'_id': MATERIAL_ID}"
+              projection: "{}"
+          name: DATA
+  - type: assignment
+    config:
+      name: assign-slab
+      flowchartId: assign-slab
+      operand: SLAB
+      value: "DATA[0] if len(DATA) == 1 else None"
+      input:
+        - name: DATA
+          scope: io-slab
+  - type: assertion
+    config:
+      name: assert-slab
+      flowchartId: assert-slab
+      statement: "SLAB != None"
+      errorMessage: "Slab material does not exist!"
+  - type: assignment
+    config:
+      name: init-bulk-hash
+      flowchartId: init-bulk-hash
+      operand: BULK_HASH
+      value: "None"
+  - type: assignment
+    config:
+      name: assign-bulk-id
+      flowchartId: assign-bulk-id
+      operand: BULK_ID
+      value: "SLAB.metadata.bulkId if hasattr(SLAB, 'metadata') and hasattr(SLAB.metadata, 'bulkId') else None"
+  - type: condition
+    config:
+      name: branch-bulk-resolution
+      flowchartId: branch-bulk-resolution
+      statement: "BULK_ID == None"
+      then: resolve-bulk-hash
+      else: assert-bulk-resolution
+  - type: executionBuilder
+    config:
+      name: resolve-bulk-hash
+      flowchartId: resolve-bulk-hash
+      execName: python
+      flavorName: surface_energy_resolve_bulk_hash
+      next: assert-bulk-resolution
+  - type: assertion
+    config:
+      name: assert-bulk-resolution
+      flowchartId: assert-bulk-resolution
+      statement: "BULK_ID != None or BULK_HASH != None"
+      errorMessage: "Surface slab metadata must include bulkId or build metadata with stack_components[0].crystal to infer the bulk material."
+  - type: io
+    config:
+      name: io-bulk
+      flowchartId: io-bulk
+      subtype: input
+      source: api
+      input:
+        - endpoint: materials
+          endpoint_options:
+            params:
+              query: "{'_id': BULK_ID} if BULK_ID != None else {'hash': BULK_HASH}"
+              projection: "{}"
+          name: DATA
+  - type: assignment
+    config:
+      name: assign-n-bulk-matches
+      flowchartId: assign-n-bulk-matches
+      operand: N_BULK_MATCHES
+      value: "len(DATA)"
+      input:
+        - name: DATA
+          scope: io-bulk
+  - type: assertion
+    config:
+      name: assert-n-bulk-matches
+      flowchartId: assert-n-bulk-matches
+      statement: "N_BULK_MATCHES == 1"
+      errorMessage: "Expected exactly one bulk material for the slab. Ensure bulkId is correct or the metadata crystal hash resolves to a unique bulk material."
+  - type: assignment
+    config:
+      name: assign-bulk
+      flowchartId: assign-bulk
+      operand: BULK
+      value: "DATA[0]"
+      input:
+        - name: DATA
+          scope: io-bulk
+  - type: io
+    config:
+      name: io-e-bulk
+      flowchartId: io-e-bulk
+      subtype: input
+      source: api
+      input:
+        - endpoint: refined-properties
+          endpoint_options:
+            params:
+              query: "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'espresso:'}}"
+              projection: "{'sort': {'precision.value': -1}, 'limit': 1}"
+          name: DATA
+  - type: assignment
+    config:
+      name: assign-e-bulk
+      flowchartId: assign-e-bulk
+      operand: E_BULK
+      value: "DATA[0].data.value if DATA else None"
+      input:
+        - name: DATA
+          scope: io-e-bulk
+  - type: assertion
+    config:
+      name: assert-e-bulk
+      flowchartId: assert-e-bulk
+      statement: "E_BULK != None"
+      errorMessage: "Bulk total energy does not exist for the resolved bulk material. Run a bulk total energy workflow first."
+  - type: assignment
+    config:
+      name: assign-surface-area
+      flowchartId: assign-surface-area
+      operand: A
+      value: "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))"
+  - type: assignment
+    config:
+      name: assign-n-bulk
+      flowchartId: assign-n-bulk
+      operand: N_BULK
+      value: "len(BULK.basis.elements)"
+  - type: assignment
+    config:
+      name: assign-n-slab
+      flowchartId: assign-n-slab
+      operand: N_SLAB
+      value: "len(SLAB.basis.elements)"

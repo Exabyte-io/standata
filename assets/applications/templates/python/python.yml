@@ -34,6 +34,18 @@
   applicationName: python
   executableName: python
 
+- content: !readFile 'input_files_templates/python/surface_energy_resolve_bulk_hash.pyi'
+  name: surface_energy_resolve_bulk_hash.py
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
+- content: !readFile 'input_files_templates/python/requirements_surface_energy_resolve_bulk_hash.j2.txt'
+  name: requirements_surface_energy_resolve_bulk_hash.txt
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
 - content: !readFile 'input_files_templates/python/requirements_plot_wavefunction.j2.txt'
   name: requirements_plot_wavefunction.txt
   contextProviders: []
