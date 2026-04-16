@@ -54,7 +54,7 @@ flavors:
       - name: resolve_bulk_hash.py
         templateName: surface_energy_resolve_bulk_hash.py
       - name: requirements.txt
-        templateName: requirements_surface_energy_resolve_bulk_hash.txt
+        templateName: requirements_mat3ra_made_tools.txt
     monitors:
       - standard_output
     applicationName: python

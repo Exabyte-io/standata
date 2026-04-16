@@ -40,8 +40,8 @@
   applicationName: python
   executableName: python
 
-- content: !readFile 'input_files_templates/python/requirements_surface_energy_resolve_bulk_hash.j2.txt'
-  name: requirements_surface_energy_resolve_bulk_hash.txt
+- content: !readFile 'input_files_templates/python/requirements_mat3ra_made_tools.j2.txt'
+  name: requirements_mat3ra_made_tools.txt
   contextProviders: []
   applicationName: python
   executableName: python
