@@ -37,21 +37,9 @@ units:
       errorMessage: "Slab material does not exist!"
   - type: assignment
     config:
-      name: init-bulk-metadata-id
-      flowchartId: init-bulk-metadata-id
-      operand: BULK_METADATA_ID
-      value: "None"
-  - type: assignment
-    config:
-      name: init-bulk-hash
-      flowchartId: init-bulk-hash
-      operand: BULK_HASH
-      value: "None"
-  - type: assignment
-    config:
-      name: init-bulk-scaled-hash
-      flowchartId: init-bulk-scaled-hash
-      operand: BULK_SCALED_HASH
+      name: init-bulk-resolution
+      flowchartId: init-bulk-resolution
+      operand: BULK_RESOLUTION
       value: "None"
   - type: assignment
     config:
@@ -77,8 +65,8 @@ units:
     config:
       name: assert-bulk-resolution
       flowchartId: assert-bulk-resolution
-      statement: "BULK_ID != None or BULK_METADATA_ID != None or BULK_HASH != None or BULK_SCALED_HASH != None"
-      errorMessage: "Surface slab metadata must include bulkId or build metadata with stack_components[0].crystal carrying bulk identity to infer the bulk material."
+      statement: "BULK_ID != None or BULK_RESOLUTION != None"
+      errorMessage: "Surface slab metadata must include bulkId or build metadata with stack_components[0].crystal carrying resolvable bulk identity to infer the bulk material."
   - type: io
     config:
       name: io-bulk
@@ -89,7 +77,7 @@ units:
         - endpoint: materials
           endpoint_options:
             params:
-              query: "{'_id': BULK_ID} if BULK_ID != None else ({'_id': BULK_METADATA_ID} if BULK_METADATA_ID != None else ({'scaledHash': BULK_SCALED_HASH} if BULK_SCALED_HASH != None else {'hash': BULK_HASH}))"
+              query: "{'_id': BULK_ID} if BULK_ID != None else ({'_id': BULK_RESOLUTION.value} if BULK_RESOLUTION.kind == 'id' else ({'scaledHash': BULK_RESOLUTION.value} if BULK_RESOLUTION.kind == 'scaledHash' else {'hash': BULK_RESOLUTION.value}))"
               projection: "{}"
           name: DATA
   - type: assignment
