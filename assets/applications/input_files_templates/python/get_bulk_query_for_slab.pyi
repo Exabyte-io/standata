@@ -1,3 +1,20 @@
+# ---------------------------------------------------------- #
+#                                                            #
+#  This script builds the query used to locate the bulk      #
+#  structure corresponding to a slab material.               #
+#  SLAB comes from the workflow scope and is expected        #
+#  to be a JSON representation of the slab material.         #
+#                                                            #
+#  Resolution order:                                         #
+#  1. slab metadata bulkId                                   #
+#  2. build metadata crystal _id                             #
+#  3. build metadata crystal scaledHash                      #
+#  4. build metadata crystal hash                            #
+#  5. recalculated hash from the embedded crystal            #
+#                                                            #
+#  Emits BULK_QUERY to the workflow scope.                   #
+#                                                            #
+# ---------------------------------------------------------- #
 import json
 
 from mat3ra.made.material import Material

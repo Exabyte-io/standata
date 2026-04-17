@@ -1101,6 +1101,15 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         }[];
                         monitors: string[];
                     };
+                    get_bulk_query_for_slab: {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                    };
                     hello_world: {
                         applicationName: string;
                         executableName: string;
@@ -1361,15 +1370,6 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         monitors: string[];
                     };
                     "pyml:setup_variables_packages": {
-                        applicationName: string;
-                        executableName: string;
-                        input: {
-                            name: string;
-                            templateName: string;
-                        }[];
-                        monitors: string[];
-                    };
-                    get_bulk_query_for_slab: {
                         applicationName: string;
                         executableName: string;
                         input: {
