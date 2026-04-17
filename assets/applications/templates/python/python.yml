@@ -34,8 +34,8 @@
   applicationName: python
   executableName: python
 
-- content: !readFile 'input_files_templates/python/surface_energy_resolve_bulk_hash.pyi'
-  name: surface_energy_resolve_bulk_hash.py
+- content: !readFile 'input_files_templates/python/get_bulk_query_for_slab.pyi'
+  name: get_bulk_query_for_slab.py
   contextProviders: []
   applicationName: python
   executableName: python

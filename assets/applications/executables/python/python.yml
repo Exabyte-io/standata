@@ -49,10 +49,10 @@ flavors:
     applicationName: python
     executableName: python
 
-  surface_energy_resolve_bulk_hash:
+  get_bulk_query_for_slab:
     input:
       - name: resolve_bulk_hash.py
-        templateName: surface_energy_resolve_bulk_hash.py
+        templateName: get_bulk_query_for_slab.py
       - name: requirements.txt
         templateName: requirements_mat3ra_made_tools.txt
     monitors:

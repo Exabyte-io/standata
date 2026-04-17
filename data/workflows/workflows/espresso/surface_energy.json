@@ -94,78 +94,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
-                    "next": "init-bulk-resolution",
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "init-bulk-resolution",
-                    "type": "assignment",
-                    "operand": "BULK_RESOLUTION",
-                    "value": "None",
-                    "input": [],
-                    "flowchartId": "init-bulk-resolution",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
-                    "next": "assign-bulk-id",
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "assign-bulk-id",
-                    "type": "assignment",
-                    "operand": "BULK_ID",
-                    "value": "SLAB.metadata.bulkId if hasattr(SLAB, 'metadata') and hasattr(SLAB.metadata, 'bulkId') else None",
-                    "input": [],
-                    "flowchartId": "assign-bulk-id",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
-                    "next": "branch-bulk-resolution",
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "branch-bulk-resolution",
-                    "type": "condition",
-                    "input": [],
-                    "results": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "then": "resolve-bulk-hash",
-                    "else": "assert-bulk-resolution",
-                    "statement": "BULK_ID == None",
-                    "maxOccurrences": 100,
-                    "flowchartId": "branch-bulk-resolution",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
-                    "next": "resolve-bulk-hash",
+                    "next": "resolve-bulk-query",
                     "application": {
                         "name": "python",
                         "shortName": "py",
@@ -178,7 +107,7 @@
                 },
                 {
                     "type": "execution",
-                    "name": "resolve-bulk-hash",
+                    "name": "resolve-bulk-query",
                     "head": false,
                     "results": [],
                     "monitors": [
@@ -186,7 +115,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "resolve-bulk-hash",
+                    "flowchartId": "resolve-bulk-query",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -212,7 +141,7 @@
                         "input": [
                             {
                                 "name": "resolve_bulk_hash.py",
-                                "templateName": "surface_energy_resolve_bulk_hash.py"
+                                "templateName": "get_bulk_query_for_slab.py"
                             },
                             {
                                 "name": "requirements.txt",
@@ -222,7 +151,7 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "name": "surface_energy_resolve_bulk_hash",
+                        "name": "get_bulk_query_for_slab",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -232,11 +161,11 @@
                     "input": [
                         {
                             "applicationName": "python",
-                            "content": "import json\n\nfrom mat3ra.made.material import Material\nfrom munch import Munch\n\n\ndef material_from_crystal(crystal):\n    try:\n        return Material.from_json(json.dumps(crystal))\n    except Exception:\n        return Material(**crystal)\n\n\nslab_json = {% raw %}{{ SLAB }}{% endraw %}\nbulk_resolution = None\n\nfor build_step in reversed((slab_json.get(\"metadata\") or {}).get(\"build\") or []):\n    try:\n        crystal = build_step[\"configuration\"][\"stack_components\"][0][\"crystal\"]\n    except (KeyError, IndexError, TypeError):\n        continue\n\n    if crystal.get(\"_id\") is not None:\n        bulk_resolution = {\"kind\": \"id\", \"value\": crystal[\"_id\"]}\n        break\n    if crystal.get(\"scaledHash\") is not None:\n        bulk_resolution = {\"kind\": \"scaledHash\", \"value\": crystal[\"scaledHash\"]}\n        break\n    if crystal.get(\"hash\") is not None:\n        bulk_resolution = {\"kind\": \"hash\", \"value\": crystal[\"hash\"]}\n        break\n\n    try:\n        bulk_resolution = {\"kind\": \"hash\", \"value\": material_from_crystal(crystal).calculate_hash()}\n        break\n    except Exception:\n        continue\n\nprint(json.dumps({\"name\": \"BULK_RESOLUTION\", \"value\": bulk_resolution, \"scope\": \"global\"}))\n",
+                            "content": "import json\n\nfrom mat3ra.made.material import Material\nfrom munch import Munch\n\n\ndef material_from_crystal(crystal):\n    try:\n        return Material.from_json(json.dumps(crystal))\n    except Exception:\n        return Material(**crystal)\n\n\nslab_json = {% raw %}{{ SLAB }}{% endraw %}\nbulk_query = None\n\nmetadata = slab_json.get(\"metadata\") or {}\nif metadata.get(\"bulkId\") is not None:\n    bulk_query = {\"_id\": metadata[\"bulkId\"]}\n\nif bulk_query is None:\n    for build_step in reversed(metadata.get(\"build\") or []):\n        try:\n            crystal = build_step[\"configuration\"][\"stack_components\"][0][\"crystal\"]\n        except (KeyError, IndexError, TypeError):\n            continue\n\n        if crystal.get(\"_id\") is not None:\n            bulk_query = {\"_id\": crystal[\"_id\"]}\n            break\n        if crystal.get(\"scaledHash\") is not None:\n            bulk_query = {\"scaledHash\": crystal[\"scaledHash\"]}\n            break\n        if crystal.get(\"hash\") is not None:\n            bulk_query = {\"hash\": crystal[\"hash\"]}\n            break\n\n        try:\n            bulk_query = {\"hash\": material_from_crystal(crystal).calculate_hash()}\n            break\n        except Exception:\n            continue\n\nprint(json.dumps({\"name\": \"BULK_QUERY\", \"value\": bulk_query, \"scope\": \"global\"}))\n",
                             "contextProviders": [],
                             "executableName": "python",
                             "name": "resolve_bulk_hash.py",
-                            "rendered": "import json\n\nfrom mat3ra.made.material import Material\nfrom munch import Munch\n\n\ndef material_from_crystal(crystal):\n    try:\n        return Material.from_json(json.dumps(crystal))\n    except Exception:\n        return Material(**crystal)\n\n\nslab_json = {{ SLAB }}\nbulk_resolution = None\n\nfor build_step in reversed((slab_json.get(\"metadata\") or {}).get(\"build\") or []):\n    try:\n        crystal = build_step[\"configuration\"][\"stack_components\"][0][\"crystal\"]\n    except (KeyError, IndexError, TypeError):\n        continue\n\n    if crystal.get(\"_id\") is not None:\n        bulk_resolution = {\"kind\": \"id\", \"value\": crystal[\"_id\"]}\n        break\n    if crystal.get(\"scaledHash\") is not None:\n        bulk_resolution = {\"kind\": \"scaledHash\", \"value\": crystal[\"scaledHash\"]}\n        break\n    if crystal.get(\"hash\") is not None:\n        bulk_resolution = {\"kind\": \"hash\", \"value\": crystal[\"hash\"]}\n        break\n\n    try:\n        bulk_resolution = {\"kind\": \"hash\", \"value\": material_from_crystal(crystal).calculate_hash()}\n        break\n    except Exception:\n        continue\n\nprint(json.dumps({\"name\": \"BULK_RESOLUTION\", \"value\": bulk_resolution, \"scope\": \"global\"}))\n",
+                            "rendered": "import json\n\nfrom mat3ra.made.material import Material\nfrom munch import Munch\n\n\ndef material_from_crystal(crystal):\n    try:\n        return Material.from_json(json.dumps(crystal))\n    except Exception:\n        return Material(**crystal)\n\n\nslab_json = {{ SLAB }}\nbulk_query = None\n\nmetadata = slab_json.get(\"metadata\") or {}\nif metadata.get(\"bulkId\") is not None:\n    bulk_query = {\"_id\": metadata[\"bulkId\"]}\n\nif bulk_query is None:\n    for build_step in reversed(metadata.get(\"build\") or []):\n        try:\n            crystal = build_step[\"configuration\"][\"stack_components\"][0][\"crystal\"]\n        except (KeyError, IndexError, TypeError):\n            continue\n\n        if crystal.get(\"_id\") is not None:\n            bulk_query = {\"_id\": crystal[\"_id\"]}\n            break\n        if crystal.get(\"scaledHash\") is not None:\n            bulk_query = {\"scaledHash\": crystal[\"scaledHash\"]}\n            break\n        if crystal.get(\"hash\") is not None:\n            bulk_query = {\"hash\": crystal[\"hash\"]}\n            break\n\n        try:\n            bulk_query = {\"hash\": material_from_crystal(crystal).calculate_hash()}\n            break\n        except Exception:\n            continue\n\nprint(json.dumps({\"name\": \"BULK_QUERY\", \"value\": bulk_query, \"scope\": \"global\"}))\n",
                             "schemaVersion": "2022.8.16"
                         },
                         {
@@ -249,14 +178,14 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "assert-bulk-resolution"
+                    "next": "assert-bulk-query"
                 },
                 {
-                    "name": "assert-bulk-resolution",
+                    "name": "assert-bulk-query",
                     "type": "assertion",
-                    "statement": "BULK_ID != None or BULK_RESOLUTION != None",
-                    "errorMessage": "Surface slab metadata must include bulkId or build metadata with stack_components[0].crystal carrying resolvable bulk identity to infer the bulk material.",
-                    "flowchartId": "assert-bulk-resolution",
+                    "statement": "BULK_QUERY != None",
+                    "errorMessage": "Surface slab metadata must include bulkId or build metadata with stack_components[0].crystal carrying resolvable bulk identity to infer the bulk material query.",
+                    "flowchartId": "assert-bulk-query",
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
@@ -283,7 +212,7 @@
                             "endpoint": "materials",
                             "endpoint_options": {
                                 "params": {
-                                    "query": "{'_id': BULK_ID} if BULK_ID != None else ({'_id': BULK_RESOLUTION.value} if BULK_RESOLUTION.kind == 'id' else ({'scaledHash': BULK_RESOLUTION.value} if BULK_RESOLUTION.kind == 'scaledHash' else {'hash': BULK_RESOLUTION.value}))",
+                                    "query": "BULK_QUERY",
                                     "projection": "{}"
                                 }
                             },
@@ -321,6 +250,27 @@
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
+                    "next": "assert-bulk",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assert-bulk",
+                    "type": "assertion",
+                    "statement": "N_BULK_MATCHES > 0",
+                    "errorMessage": "No bulk material matched the resolved slab metadata query. Check the slab metadata or create the exact bulk representation on the platform.",
+                    "flowchartId": "assert-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
                     "next": "assert-n-bulk-matches",
                     "application": {
                         "name": "python",
@@ -336,7 +286,7 @@
                     "name": "assert-n-bulk-matches",
                     "type": "assertion",
                     "statement": "N_BULK_MATCHES == 1",
-                    "errorMessage": "Expected exactly one bulk material for the slab. Ensure bulkId is correct or the metadata crystal hash resolves to a unique bulk material.",
+                    "errorMessage": "Expected exactly one bulk material for the slab. Ensure bulkId is correct or the resolved slab metadata query matches a unique bulk material.",
                     "flowchartId": "assert-n-bulk-matches",
                     "status": "idle",
                     "statusTrack": [],

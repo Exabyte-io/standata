@@ -18,7 +18,6 @@ categories:
     - reaction_energy_barrier
     - reaction_energy_profile
     - stress_tensor
-    - surface_energy
     - thermal_correction_to_energy
     - thermal_correction_to_enthalpy
     - total_energy
@@ -470,14 +469,6 @@ entities:
       - vasp
   - filename: vasp/surface_energy.json
     categories:
-      - atomic_forces
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - surface_energy
-      - total_energy
-      - total_energy_contributions
-      - total_force
       - vasp
   - filename: vasp/total_energy.json
     categories:

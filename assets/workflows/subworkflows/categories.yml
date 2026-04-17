@@ -558,12 +558,17 @@ entities:
     categories:
       - band_structure
       - vasp
+  - filename: vasp/surface_energy_setup.json
+    categories:
+      - python
+      - vasp
   - filename: vasp/surface_energy.json
     categories:
       - atomic_forces
       - fermi_energy
       - pressure
       - stress_tensor
+      - surface_energy
       - total_energy
       - total_energy_contributions
       - total_force

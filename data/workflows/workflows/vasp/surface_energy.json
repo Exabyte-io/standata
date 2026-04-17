@@ -2,8 +2,485 @@
     "name": "Surface Energy",
     "subworkflows": [
         {
-            "_id": "257d53c6-c3b6-564c-95ce-dd0514d26c63",
-            "name": "Surface Energy",
+            "_id": "711cdbf6-7646-58ee-84de-eb914be40a29",
+            "name": "Surface Energy Setup",
+            "application": {
+                "name": "python",
+                "shortName": "py",
+                "summary": "Python Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "3.10.13",
+                "schemaVersion": "2022.8.16"
+            },
+            "properties": [],
+            "model": {
+                "type": "unknown",
+                "subtype": "unknown",
+                "method": {
+                    "type": "unknown",
+                    "subtype": "unknown",
+                    "data": {}
+                }
+            },
+            "units": [
+                {
+                    "name": "io-slab",
+                    "type": "io",
+                    "subtype": "input",
+                    "flowchartId": "io-slab",
+                    "source": "api",
+                    "input": [
+                        {
+                            "endpoint": "materials",
+                            "endpoint_options": {
+                                "params": {
+                                    "query": "{'_id': MATERIAL_ID}",
+                                    "projection": "{}"
+                                }
+                            },
+                            "name": "DATA"
+                        }
+                    ],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": true,
+                    "next": "assign-slab",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-slab",
+                    "type": "assignment",
+                    "operand": "SLAB",
+                    "value": "DATA[0] if len(DATA) == 1 else None",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-slab"
+                        }
+                    ],
+                    "flowchartId": "assign-slab",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assert-slab",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assert-slab",
+                    "type": "assertion",
+                    "statement": "SLAB != None",
+                    "errorMessage": "Slab material does not exist!",
+                    "flowchartId": "assert-slab",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "resolve-bulk-query",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "type": "execution",
+                    "name": "resolve-bulk-query",
+                    "head": false,
+                    "results": [],
+                    "monitors": [
+                        {
+                            "name": "standard_output"
+                        }
+                    ],
+                    "flowchartId": "resolve-bulk-query",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "executable": {
+                        "isDefault": true,
+                        "monitors": [
+                            "standard_output"
+                        ],
+                        "name": "python",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "flavor": {
+                        "applicationName": "python",
+                        "executableName": "python",
+                        "input": [
+                            {
+                                "name": "resolve_bulk_hash.py",
+                                "templateName": "get_bulk_query_for_slab.py"
+                            },
+                            {
+                                "name": "requirements.txt",
+                                "templateName": "requirements_mat3ra_made_tools.txt"
+                            }
+                        ],
+                        "monitors": [
+                            "standard_output"
+                        ],
+                        "name": "get_bulk_query_for_slab",
+                        "schemaVersion": "2022.8.16",
+                        "isDefault": false
+                    },
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "input": [
+                        {
+                            "applicationName": "python",
+                            "content": "import json\n\nfrom mat3ra.made.material import Material\nfrom munch import Munch\n\n\ndef material_from_crystal(crystal):\n    try:\n        return Material.from_json(json.dumps(crystal))\n    except Exception:\n        return Material(**crystal)\n\n\nslab_json = {% raw %}{{ SLAB }}{% endraw %}\nbulk_query = None\n\nmetadata = slab_json.get(\"metadata\") or {}\nif metadata.get(\"bulkId\") is not None:\n    bulk_query = {\"_id\": metadata[\"bulkId\"]}\n\nif bulk_query is None:\n    for build_step in reversed(metadata.get(\"build\") or []):\n        try:\n            crystal = build_step[\"configuration\"][\"stack_components\"][0][\"crystal\"]\n        except (KeyError, IndexError, TypeError):\n            continue\n\n        if crystal.get(\"_id\") is not None:\n            bulk_query = {\"_id\": crystal[\"_id\"]}\n            break\n        if crystal.get(\"scaledHash\") is not None:\n            bulk_query = {\"scaledHash\": crystal[\"scaledHash\"]}\n            break\n        if crystal.get(\"hash\") is not None:\n            bulk_query = {\"hash\": crystal[\"hash\"]}\n            break\n\n        try:\n            bulk_query = {\"hash\": material_from_crystal(crystal).calculate_hash()}\n            break\n        except Exception:\n            continue\n\nprint(json.dumps({\"name\": \"BULK_QUERY\", \"value\": bulk_query, \"scope\": \"global\"}))\n",
+                            "contextProviders": [],
+                            "executableName": "python",
+                            "name": "resolve_bulk_hash.py",
+                            "rendered": "import json\n\nfrom mat3ra.made.material import Material\nfrom munch import Munch\n\n\ndef material_from_crystal(crystal):\n    try:\n        return Material.from_json(json.dumps(crystal))\n    except Exception:\n        return Material(**crystal)\n\n\nslab_json = {{ SLAB }}\nbulk_query = None\n\nmetadata = slab_json.get(\"metadata\") or {}\nif metadata.get(\"bulkId\") is not None:\n    bulk_query = {\"_id\": metadata[\"bulkId\"]}\n\nif bulk_query is None:\n    for build_step in reversed(metadata.get(\"build\") or []):\n        try:\n            crystal = build_step[\"configuration\"][\"stack_components\"][0][\"crystal\"]\n        except (KeyError, IndexError, TypeError):\n            continue\n\n        if crystal.get(\"_id\") is not None:\n            bulk_query = {\"_id\": crystal[\"_id\"]}\n            break\n        if crystal.get(\"scaledHash\") is not None:\n            bulk_query = {\"scaledHash\": crystal[\"scaledHash\"]}\n            break\n        if crystal.get(\"hash\") is not None:\n            bulk_query = {\"hash\": crystal[\"hash\"]}\n            break\n\n        try:\n            bulk_query = {\"hash\": material_from_crystal(crystal).calculate_hash()}\n            break\n        except Exception:\n            continue\n\nprint(json.dumps({\"name\": \"BULK_QUERY\", \"value\": bulk_query, \"scope\": \"global\"}))\n",
+                            "schemaVersion": "2022.8.16"
+                        },
+                        {
+                            "applicationName": "python",
+                            "content": "mat3ra-made[tools]>=2026.4.2.post1\nmunch>=3.0.0\n",
+                            "contextProviders": [],
+                            "executableName": "python",
+                            "name": "requirements.txt",
+                            "rendered": "mat3ra-made[tools]>=2026.4.2.post1\nmunch>=3.0.0\n",
+                            "schemaVersion": "2022.8.16"
+                        }
+                    ],
+                    "next": "assert-bulk-query"
+                },
+                {
+                    "name": "assert-bulk-query",
+                    "type": "assertion",
+                    "statement": "BULK_QUERY != None",
+                    "errorMessage": "Surface slab metadata must include bulkId or build metadata with stack_components[0].crystal carrying resolvable bulk identity to infer the bulk material query.",
+                    "flowchartId": "assert-bulk-query",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "io-bulk",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "io-bulk",
+                    "type": "io",
+                    "subtype": "input",
+                    "flowchartId": "io-bulk",
+                    "source": "api",
+                    "input": [
+                        {
+                            "endpoint": "materials",
+                            "endpoint_options": {
+                                "params": {
+                                    "query": "BULK_QUERY",
+                                    "projection": "{}"
+                                }
+                            },
+                            "name": "DATA"
+                        }
+                    ],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-n-bulk-matches",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-n-bulk-matches",
+                    "type": "assignment",
+                    "operand": "N_BULK_MATCHES",
+                    "value": "len(DATA)",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-bulk"
+                        }
+                    ],
+                    "flowchartId": "assign-n-bulk-matches",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assert-bulk",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assert-bulk",
+                    "type": "assertion",
+                    "statement": "N_BULK_MATCHES > 0",
+                    "errorMessage": "No bulk material matched the resolved slab metadata query. Check the slab metadata or create the exact bulk representation on the platform.",
+                    "flowchartId": "assert-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assert-n-bulk-matches",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assert-n-bulk-matches",
+                    "type": "assertion",
+                    "statement": "N_BULK_MATCHES == 1",
+                    "errorMessage": "Expected exactly one bulk material for the slab. Ensure bulkId is correct or the resolved slab metadata query matches a unique bulk material.",
+                    "flowchartId": "assert-n-bulk-matches",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-bulk",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-bulk",
+                    "type": "assignment",
+                    "operand": "BULK",
+                    "value": "DATA[0]",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-bulk"
+                        }
+                    ],
+                    "flowchartId": "assign-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "io-e-bulk",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "io-e-bulk",
+                    "type": "io",
+                    "subtype": "input",
+                    "flowchartId": "io-e-bulk",
+                    "source": "api",
+                    "input": [
+                        {
+                            "endpoint": "refined-properties",
+                            "endpoint_options": {
+                                "params": {
+                                    "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'vasp:'}}",
+                                    "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
+                                }
+                            },
+                            "name": "DATA"
+                        }
+                    ],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-e-bulk",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-e-bulk",
+                    "type": "assignment",
+                    "operand": "E_BULK",
+                    "value": "DATA[0].data.value if DATA else None",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-e-bulk"
+                        }
+                    ],
+                    "flowchartId": "assign-e-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assert-e-bulk",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assert-e-bulk",
+                    "type": "assertion",
+                    "statement": "E_BULK != None",
+                    "errorMessage": "Bulk total energy does not exist for the resolved bulk material. Run a bulk total energy workflow first.",
+                    "flowchartId": "assert-e-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-surface-area",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-surface-area",
+                    "type": "assignment",
+                    "operand": "A",
+                    "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
+                    "input": [],
+                    "flowchartId": "assign-surface-area",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-n-bulk",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-n-bulk",
+                    "type": "assignment",
+                    "operand": "N_BULK",
+                    "value": "len(BULK.basis.elements)",
+                    "input": [],
+                    "flowchartId": "assign-n-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-n-slab",
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-n-slab",
+                    "type": "assignment",
+                    "operand": "N_SLAB",
+                    "value": "len(SLAB.basis.elements)",
+                    "input": [],
+                    "flowchartId": "assign-n-slab",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "application": {
+                        "name": "python",
+                        "shortName": "py",
+                        "summary": "Python Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "3.10.13",
+                        "schemaVersion": "2022.8.16"
+                    }
+                }
+            ]
+        },
+        {
+            "_id": "ea968eca-252a-5642-9438-d83d69497d22",
+            "name": "Surface Energy - VASP",
             "application": {
                 "isLicensed": true,
                 "name": "vasp",
@@ -21,7 +498,8 @@
                 "fermi_energy",
                 "atomic_forces",
                 "total_force",
-                "stress_tensor"
+                "stress_tensor",
+                "surface_energy"
             ],
             "model": {
                 "type": "dft",
@@ -39,352 +517,9 @@
             },
             "units": [
                 {
-                    "name": "io-slab",
-                    "type": "io",
-                    "subtype": "input",
-                    "head": true,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "e463ef46-a36e-5168-87dd-e21eb980dfb8",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "source": "api",
-                    "input": [
-                        {
-                            "endpoint": "materials",
-                            "endpoint_options": {
-                                "params": {
-                                    "query": "{'_id': MATERIAL_ID}",
-                                    "projection": "{}"
-                                }
-                            },
-                            "name": "DATA"
-                        }
-                    ],
-                    "next": "ee7abb4e-7848-5aeb-960d-0d441909e2d1",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
-                },
-                {
-                    "name": "slab",
-                    "type": "assignment",
-                    "operand": "SLAB",
-                    "value": "DATA[0]",
-                    "input": [
-                        {
-                            "name": "DATA",
-                            "scope": "e463ef46-a36e-5168-87dd-e21eb980dfb8"
-                        }
-                    ],
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "ee7abb4e-7848-5aeb-960d-0d441909e2d1",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "next": "44263820-0c80-5bd1-b854-9da8d198eac1",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
-                },
-                {
-                    "name": "io-bulk",
-                    "type": "io",
-                    "subtype": "input",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "44263820-0c80-5bd1-b854-9da8d198eac1",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "source": "api",
-                    "input": [
-                        {
-                            "endpoint": "materials",
-                            "endpoint_options": {
-                                "params": {
-                                    "query": "{'_id': SLAB.metadata.bulkId}",
-                                    "projection": "{}"
-                                }
-                            },
-                            "name": "DATA"
-                        }
-                    ],
-                    "next": "b70656f1-a394-57f4-b4de-00096969df4b",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
-                },
-                {
-                    "name": "bulk",
-                    "type": "assignment",
-                    "operand": "BULK",
-                    "value": "DATA[0] if DATA else None",
-                    "input": [
-                        {
-                            "name": "DATA",
-                            "scope": "44263820-0c80-5bd1-b854-9da8d198eac1"
-                        }
-                    ],
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "b70656f1-a394-57f4-b4de-00096969df4b",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "next": "6ca4006a-e3ae-56ea-91a1-06b9790b5f7e",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
-                },
-                {
-                    "name": "assert-bulk",
-                    "type": "assertion",
-                    "statement": "BULK != None",
-                    "errorMessage": "Bulk material does not exist!",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "6ca4006a-e3ae-56ea-91a1-06b9790b5f7e",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "next": "490635e0-c593-5809-9eb2-c794b96cfed1",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
-                },
-                {
-                    "name": "io-e-bulk",
-                    "type": "io",
-                    "subtype": "input",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "490635e0-c593-5809-9eb2-c794b96cfed1",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "source": "api",
-                    "input": [
-                        {
-                            "endpoint": "refined-properties",
-                            "endpoint_options": {
-                                "params": {
-                                    "query": "{ 'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': ''.join((SUBWORKFLOW.application.shortName, ':'))} }",
-                                    "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
-                                }
-                            },
-                            "name": "DATA"
-                        }
-                    ],
-                    "next": "bbe13b97-4243-5a85-8f61-a279d0b797aa",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
-                },
-                {
-                    "name": "e-bulk",
-                    "type": "assignment",
-                    "operand": "E_BULK",
-                    "value": "DATA[0].data.value if DATA else None",
-                    "input": [
-                        {
-                            "name": "DATA",
-                            "scope": "490635e0-c593-5809-9eb2-c794b96cfed1"
-                        }
-                    ],
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "bbe13b97-4243-5a85-8f61-a279d0b797aa",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "next": "a06c9f43-7670-5fd0-ac42-7028a472235a",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
-                },
-                {
-                    "name": "assert-e-bulk",
-                    "type": "assertion",
-                    "statement": "E_BULK != None",
-                    "errorMessage": "E_BULK does not exist!",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "a06c9f43-7670-5fd0-ac42-7028a472235a",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "next": "cdf210be-26ed-585a-b4ac-d55795ba2975",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
-                },
-                {
-                    "name": "surface",
-                    "type": "assignment",
-                    "operand": "A",
-                    "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
-                    "input": [],
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "cdf210be-26ed-585a-b4ac-d55795ba2975",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "next": "ffa8e43d-096a-555b-b8d0-6d283365ef47",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
-                },
-                {
-                    "name": "n-bulk",
-                    "type": "assignment",
-                    "operand": "N_BULK",
-                    "value": "len(BULK.basis.elements)",
-                    "input": [],
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "ffa8e43d-096a-555b-b8d0-6d283365ef47",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "next": "a0336ec5-a6da-5e4c-bb48-82b70cf5245f",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
-                },
-                {
-                    "name": "n-slab",
-                    "type": "assignment",
-                    "operand": "N_SLAB",
-                    "value": "len(SLAB.basis.elements)",
-                    "input": [],
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "a0336ec5-a6da-5e4c-bb48-82b70cf5245f",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "next": "913f756d-fbe1-548f-b3fc-f82ac46f1015",
-                    "application": {
-                        "isLicensed": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
-                },
-                {
                     "type": "execution",
                     "name": "vasp_symprec",
-                    "head": false,
+                    "head": true,
                     "results": [
                         {
                             "name": "total_energy"
@@ -416,7 +551,7 @@
                             "name": "convergence_electronic"
                         }
                     ],
-                    "flowchartId": "913f756d-fbe1-548f-b3fc-f82ac46f1015",
+                    "flowchartId": "vasp-surface-energy",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -523,26 +658,25 @@
                             "schemaVersion": "2022.8.16"
                         }
                     ],
-                    "next": "fcd88119-817c-5ac1-a430-ba892ac743eb"
+                    "next": "assign-e-slab"
                 },
                 {
-                    "name": "e-slab",
+                    "name": "assign-e-slab",
                     "type": "assignment",
                     "operand": "E_SLAB",
                     "value": "total_energy",
                     "input": [
                         {
                             "name": "total_energy",
-                            "scope": "913f756d-fbe1-548f-b3fc-f82ac46f1015"
+                            "scope": "vasp-surface-energy"
                         }
                     ],
+                    "flowchartId": "assign-e-slab",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "fcd88119-817c-5ac1-a430-ba892ac743eb",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "next": "542ea9ad-8a07-5a76-b233-f72fb27c4fc6",
+                    "next": "assign-surface-energy",
                     "application": {
                         "isLicensed": true,
                         "name": "vasp",
@@ -552,27 +686,24 @@
                         "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
+                    }
                 },
                 {
-                    "name": "surface-energy",
+                    "name": "assign-surface-energy",
                     "type": "assignment",
                     "operand": "SURFACE_ENERGY",
-                    "value": "1 / (2 * A) * (E_SLAB - E_BULK * (N_SLAB/N_BULK))",
+                    "value": "1 / (2 * A) * (E_SLAB - E_BULK * (N_SLAB / N_BULK))",
                     "input": [],
-                    "head": false,
+                    "flowchartId": "assign-surface-energy",
                     "results": [
                         {
                             "name": "surface_energy"
                         }
                     ],
-                    "monitors": [],
-                    "flowchartId": "542ea9ad-8a07-5a76-b233-f72fb27c4fc6",
-                    "preProcessors": [],
-                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
                     "application": {
                         "isLicensed": true,
                         "name": "vasp",
@@ -582,37 +713,36 @@
                         "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
+                    }
                 }
             ]
         }
     ],
     "units": [
         {
-            "name": "Surface Energy",
+            "name": "Surface Energy Setup",
             "type": "subworkflow",
-            "_id": "257d53c6-c3b6-564c-95ce-dd0514d26c63",
+            "_id": "711cdbf6-7646-58ee-84de-eb914be40a29",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "d81dc9ce-bb50-5bc6-af1d-e5ede03bb0a6",
+            "flowchartId": "0f4124bf-cef5-5ccc-8e53-abb1020cf3ec",
             "tags": [],
-            "head": true
+            "head": true,
+            "next": "0cb5a69f-332f-5317-86a0-de445cb2e170"
+        },
+        {
+            "name": "Surface Energy - VASP",
+            "type": "subworkflow",
+            "_id": "ea968eca-252a-5642-9438-d83d69497d22",
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "0cb5a69f-332f-5317-86a0-de445cb2e170",
+            "tags": [],
+            "head": false
         }
     ],
-    "properties": [
-        "atomic_forces",
-        "fermi_energy",
-        "pressure",
-        "stress_tensor",
-        "surface_energy",
-        "total_energy",
-        "total_energy_contributions",
-        "total_force"
-    ],
-    "_id": "24b4e6d1-0846-55dd-ae27-624bab5057b4",
+    "properties": [],
+    "_id": "808d68fd-9df9-5463-9d40-aa539e9495d5",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
