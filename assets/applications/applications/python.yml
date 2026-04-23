@@ -2,6 +2,7 @@ name: python
 shortName: py
 summary: Python Script
 defaultVersion: '3.10.13'
+isMaterial: true
 versions:
   - version: '3.10.13'
     isDefault: true

@@ -3,6 +3,7 @@
     "shortName": "vasp",
     "summary": "Vienna Ab-initio Simulation Package",
     "isLicensed": true,
+    "isMaterial": true,
     "version": "5.4.4",
     "isDefault": true,
     "build": "GNU",

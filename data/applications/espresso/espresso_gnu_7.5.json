@@ -2,6 +2,7 @@
     "name": "espresso",
     "shortName": "qe",
     "summary": "Quantum ESPRESSO",
+    "isMaterial": true,
     "version": "7.5",
     "isDefault": true,
     "build": "GNU",
