@@ -43,6 +43,7 @@
             "head": true,
             "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -92,6 +93,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -184,6 +186,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -269,6 +272,7 @@
             "head": false,
             "next": "08819369-b541-5b51-8a40-0ee135039482",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -292,6 +296,7 @@
             "head": false,
             "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -316,6 +321,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -378,6 +384,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -445,6 +452,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -513,6 +521,7 @@
             "tags": [],
             "head": false,
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",

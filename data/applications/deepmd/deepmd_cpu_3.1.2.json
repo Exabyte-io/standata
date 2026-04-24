@@ -2,7 +2,7 @@
     "name": "deepmd",
     "shortName": "dp",
     "summary": "DeepMD",
-    "isMaterial": true,
+    "isUsingMaterial": true,
     "version": "3.1.2",
     "isDefault": true,
     "build": "CPU",

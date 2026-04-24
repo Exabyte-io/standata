@@ -5,6 +5,7 @@
             "_id": "03e3f15b-2b22-5bb4-8bfd-6839d28a1ba9",
             "name": "Set Up the Job",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -39,6 +40,7 @@
                     "head": true,
                     "next": "head-fetch-training-data",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -72,6 +74,7 @@
                     "head": false,
                     "next": "head-branch-on-predict-status",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -104,6 +107,7 @@
                     "head": false,
                     "next": "head-fetch-trained-model",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -139,6 +143,7 @@
                     "head": false,
                     "next": "end-of-ml-train-head",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -160,6 +165,7 @@
                     "tags": [],
                     "head": false,
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -175,6 +181,7 @@
             "_id": "30acc5cd-54e6-5f05-aafd-413ee8a69aa1",
             "name": "Machine Learning",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -211,6 +218,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -291,6 +299,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -366,6 +375,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -445,6 +455,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -524,6 +535,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -615,6 +627,7 @@
                         }
                     ],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",

@@ -29,6 +29,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",

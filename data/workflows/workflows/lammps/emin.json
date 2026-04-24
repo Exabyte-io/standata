@@ -5,6 +5,7 @@
             "_id": "3a7a763d-bb3a-5681-8744-771b9e4a07d2",
             "name": "Energy minimization",
             "application": {
+                "isUsingMaterial": true,
                 "name": "lammps",
                 "shortName": "lmp",
                 "summary": "LAMMPS",
@@ -38,6 +39,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "lammps",
                         "shortName": "lmp",
                         "summary": "LAMMPS",

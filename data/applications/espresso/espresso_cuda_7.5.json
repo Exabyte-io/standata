@@ -2,7 +2,7 @@
     "name": "espresso",
     "shortName": "qe",
     "summary": "Quantum ESPRESSO",
-    "isMaterial": true,
+    "isUsingMaterial": true,
     "version": "7.5",
     "isDefault": false,
     "build": "CUDA",

@@ -52,6 +52,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "nwchem",
                 "shortName": "nwchem",
                 "summary": "NWChem",

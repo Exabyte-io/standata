@@ -2,7 +2,7 @@
     "name": "lammps",
     "shortName": "lmp",
     "summary": "LAMMPS",
-    "isMaterial": true,
+    "isUsingMaterial": true,
     "runConfig": {
         "commandTemplate": "{BASE_CMD} &&\n{MODULE_CMD}\n$EXEC_CMD mpirun -machinefile {MACHINEFILE} -np {NP} {EXECUTABLE} -i {INPUTFILE} -l {OUTPUTFILE}\n",
         "outFileName": "log.out"
