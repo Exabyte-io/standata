@@ -1,6 +1,6 @@
 import { FilterTree } from "../types/applicationFilter";
 export declare enum FilterMode {
-    ANY_MATCH = "ANY",
+    ANY_MATCH = "ANY",// OR logic - at least one filter must match (for models)
     ALL_MATCH = "ALL"
 }
 export declare abstract class ApplicationFilterStandata {
