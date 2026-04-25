@@ -54,6 +54,7 @@
             "next": "ee7abb4e-7848-5aeb-960d-0d441909e2d1",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -86,6 +87,7 @@
             "next": "44263820-0c80-5bd1-b854-9da8d198eac1",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -124,6 +126,7 @@
             "next": "b70656f1-a394-57f4-b4de-00096969df4b",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -156,6 +159,7 @@
             "next": "6ca4006a-e3ae-56ea-91a1-06b9790b5f7e",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -182,6 +186,7 @@
             "next": "490635e0-c593-5809-9eb2-c794b96cfed1",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -220,6 +225,7 @@
             "next": "bbe13b97-4243-5a85-8f61-a279d0b797aa",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -252,6 +258,7 @@
             "next": "a06c9f43-7670-5fd0-ac42-7028a472235a",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -278,6 +285,7 @@
             "next": "cdf210be-26ed-585a-b4ac-d55795ba2975",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -305,6 +313,7 @@
             "next": "ffa8e43d-096a-555b-b8d0-6d283365ef47",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -332,6 +341,7 @@
             "next": "a0336ec5-a6da-5e4c-bb48-82b70cf5245f",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -359,6 +369,7 @@
             "next": "913f756d-fbe1-548f-b3fc-f82ac46f1015",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -411,6 +422,7 @@
             "postProcessors": [],
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -535,6 +547,7 @@
             "next": "542ea9ad-8a07-5a76-b233-f72fb27c4fc6",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -565,6 +578,7 @@
             "postProcessors": [],
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",

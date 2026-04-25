@@ -5,6 +5,7 @@
             "_id": "9c65d03e-6a30-58f3-947a-f174342be0c3",
             "name": "BS + Avg ESP (Interface)",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -53,6 +54,7 @@
                     "head": true,
                     "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -102,6 +104,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -194,6 +197,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -279,6 +283,7 @@
                     "head": false,
                     "next": "08819369-b541-5b51-8a40-0ee135039482",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -302,6 +307,7 @@
                     "head": false,
                     "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -326,6 +332,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -388,6 +395,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -455,6 +463,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -523,6 +532,7 @@
                     "tags": [],
                     "head": false,
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -539,6 +549,7 @@
             "_id": "ce26adc1-6a26-53ef-9626-5eb6a6b9ccb7",
             "name": "Find ESP Values (Interface)",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -572,6 +583,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -650,6 +662,7 @@
                     "tags": [],
                     "head": false,
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -665,6 +678,7 @@
             "_id": "ba46d9b4-610f-537e-ae39-e39ce5240cda",
             "name": "BS + Avg ESP (interface left)",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -713,6 +727,7 @@
                     "head": true,
                     "next": "3e6d3a1e-8d6c-5d5f-9a97-ffc0b895ef08",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -762,6 +777,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -854,6 +870,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -939,6 +956,7 @@
                     "head": false,
                     "next": "08819369-b541-5b51-8a40-0ee135039482",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -962,6 +980,7 @@
                     "head": false,
                     "next": "dfc4f1c5-5856-588a-99df-6d5fb46bb429",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -986,6 +1005,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1048,6 +1068,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1115,6 +1136,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1183,6 +1205,7 @@
                     "tags": [],
                     "head": false,
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1199,6 +1222,7 @@
             "_id": "6c303926-905c-5749-81d5-2d2964fdf09a",
             "name": "Find ESP Value (Interface left)",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -1232,6 +1256,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -1310,6 +1335,7 @@
                     "tags": [],
                     "head": false,
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -1325,6 +1351,7 @@
             "_id": "aa611fe8-1e6a-5e5c-976a-f64bfaaaace9",
             "name": "BS + Avg ESP (interface right)",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -1373,6 +1400,7 @@
                     "head": true,
                     "next": "b89d6348-3915-5c24-9fbb-350bc98ac708",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1422,6 +1450,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1514,6 +1543,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1599,6 +1629,7 @@
                     "head": false,
                     "next": "08819369-b541-5b51-8a40-0ee135039482",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1622,6 +1653,7 @@
                     "head": false,
                     "next": "bc3f514c-4bed-521b-85a3-4e0edfdc3585",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1646,6 +1678,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1708,6 +1741,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1775,6 +1809,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1843,6 +1878,7 @@
                     "tags": [],
                     "head": false,
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1859,6 +1895,7 @@
             "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
             "name": "Find ESP Value (Interface right)",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -1892,6 +1929,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -1970,6 +2008,7 @@
                     "tags": [],
                     "head": false,
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -1985,6 +2024,7 @@
             "_id": "1b70e606-a7ee-599e-89e0-91a7dc5faa4a",
             "name": "Calculate VBO",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -2019,6 +2059,7 @@
                     "head": true,
                     "next": "2626f7bb-d392-5fd4-ab71-329b508de347",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -2041,6 +2082,7 @@
                     "head": false,
                     "next": "b7307787-53e2-599b-ad12-d627b04074b4",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -2063,6 +2105,7 @@
                     "head": false,
                     "next": "197f4b4d-cb7b-57be-a885-d44cb1f61905",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -2089,6 +2132,7 @@
                     "tags": [],
                     "head": false,
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",

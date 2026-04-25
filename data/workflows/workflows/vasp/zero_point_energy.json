@@ -6,6 +6,7 @@
             "name": "Zero Point Energy",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -81,6 +82,7 @@
                     "postProcessors": [],
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",

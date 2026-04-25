@@ -40,6 +40,7 @@
             "head": true,
             "next": "init-increment",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -63,6 +64,7 @@
             "head": false,
             "next": "init-result",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -86,6 +88,7 @@
             "head": false,
             "next": "init-parameter",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -109,6 +112,7 @@
             "head": false,
             "next": "pwscf-kpoint-convergence",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -155,6 +159,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -243,6 +248,7 @@
             "head": false,
             "next": "check-convergence",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -271,6 +277,7 @@
             "head": false,
             "next": "update-result",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -299,6 +306,7 @@
             "head": false,
             "next": "increment-parameter",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -331,6 +339,7 @@
             "tags": [],
             "head": false,
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -358,6 +367,7 @@
             "tags": [],
             "head": false,
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",

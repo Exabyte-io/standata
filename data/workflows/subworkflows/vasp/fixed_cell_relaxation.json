@@ -75,6 +75,7 @@
             ],
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",

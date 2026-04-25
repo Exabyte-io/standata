@@ -32,6 +32,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -112,6 +113,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -187,6 +189,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -266,6 +269,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -345,6 +349,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -436,6 +441,7 @@
                 }
             ],
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",

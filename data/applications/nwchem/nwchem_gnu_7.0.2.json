@@ -2,6 +2,7 @@
     "name": "nwchem",
     "shortName": "nwchem",
     "summary": "NWChem",
+    "isUsingMaterial": true,
     "version": "7.0.2",
     "isDefault": true,
     "build": "GNU",
