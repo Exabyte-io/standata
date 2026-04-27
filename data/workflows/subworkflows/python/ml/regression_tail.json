@@ -44,14 +44,7 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
                 "isDefault": true,
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "python",
                 "name": "python",
                 "schemaVersion": "2022.8.16"
@@ -143,14 +136,7 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
                 "isDefault": true,
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "python",
                 "name": "python",
                 "schemaVersion": "2022.8.16"
@@ -237,14 +223,7 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
                 "isDefault": true,
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "python",
                 "name": "python",
                 "schemaVersion": "2022.8.16"
@@ -335,14 +314,7 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
                 "isDefault": true,
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "python",
                 "name": "python",
                 "schemaVersion": "2022.8.16"
@@ -436,14 +408,7 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
                 "isDefault": true,
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "python",
                 "name": "python",
                 "schemaVersion": "2022.8.16"
@@ -544,14 +509,7 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
                 "isDefault": true,
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "python",
                 "name": "python",
                 "schemaVersion": "2022.8.16"

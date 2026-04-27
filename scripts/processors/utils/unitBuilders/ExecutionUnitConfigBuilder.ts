@@ -66,7 +66,7 @@ export default class ExecutionUnitConfigBuilder extends UnitConfigBuilder<"execu
                 rendered: "",
                 isManuallyChanged: false,
             })),
-            context: {},
+            context: [],
             ...attributes,
         };
     }

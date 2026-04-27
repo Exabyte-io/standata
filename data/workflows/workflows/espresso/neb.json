@@ -64,13 +64,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "neb.x",
                         "schemaVersion": "2022.8.16",
@@ -163,7 +156,6 @@
     "workflows": [],
     "isMultiMaterial": true,
     "schemaVersion": "2022.8.16",
-    "isDefault": false,
     "application": {
         "name": "espresso"
     }

@@ -62,19 +62,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [
-                            {
-                                "name": "error_handler"
-                            }
-                        ],
                         "hasAdvancedComputeOptions": false,
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "nwchem",
                         "name": "nwchem",
                         "schemaVersion": "2022.8.16"
@@ -156,7 +145,6 @@
     ],
     "workflows": [],
     "schemaVersion": "2022.8.16",
-    "isDefault": false,
     "application": {
         "name": "nwchem"
     }
