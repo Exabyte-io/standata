@@ -67,41 +67,10 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         >
     > = {};
 
-    // TODO: move to parent class Standata
-    private getAllApplicationNames() {
-        const allApps = this.getAll();
-        const uniqueNames = new Set(allApps.map((app) => app.name));
-        return Array.from(uniqueNames);
-    }
-
-    // TODO: move to parent class Standata
-    getAllAppData() {
-        return this.getAll();
-    }
-
-    // TODO: move to parent class Standata
-    getByApplicationName(appName: string) {
-        const allEntities = this.getAll();
-        return allEntities.filter((entity) => entity.name === appName);
-    }
-
-    static getDefaultBuildForApplicationAndVersion(appName: string, version: string) {
-        const versionConfig = APP_VERSIONS[appName].versions.find((config) => {
-            return config.version === version && config.isDefault;
-        });
-        return versionConfig?.build ?? null;
-    }
-
-    getDefaultConfig() {
-        const fullConfig = this.findEntitiesByTags(TAGS.DEFAULT)[0];
-        const { name, shortName, version, summary, build } = fullConfig;
-        return { name, shortName, version, summary, build };
-    }
-
     private applicationsTree?: ApplicationTree;
 
     private buildApplicationsTree() {
-        const applicationNames = this.getAllApplicationNames();
+        const applicationNames = [...new Set(this.getAll().map((app) => app.name))];
 
         return applicationNames.reduce((tree, appName) => {
             const application = APP_VERSIONS[appName];
@@ -144,6 +113,19 @@ export class ApplicationStandata extends Standata<ApplicationSchema> {
         this.applicationsTree = this.buildApplicationsTree();
 
         return this.applicationsTree;
+    }
+
+    public getDefaultConfig() {
+        const fullConfig = this.findEntitiesByTags(TAGS.DEFAULT)[0];
+        const { name, shortName, version, summary, build } = fullConfig;
+        return { name, shortName, version, summary, build };
+    }
+
+    public getAllApplications() {
+        const tree = this.getApplicationsTree();
+        return Object.values(tree)
+            .flatMap((item) => Object.values(item.versions))
+            .flatMap((version) => Object.values(version));
     }
 
     public getApplication({ name, version, build }: ApplicationConfig) {

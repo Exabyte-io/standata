@@ -69,14 +69,6 @@ describe("Application Standata", () => {
             }).to.throw("nonexistent is not a known application with executable tree");
         });
 
-        it("getAllAppData - should return all application data", () => {
-            const allData = standata.getAllAppData();
-            console.log("allData", allData);
-            expect(allData).to.be.an("array");
-            expect(allData.length).to.be.greaterThan(0);
-            expect(allData[0]).to.have.property("name");
-        });
-
         it("getTemplatesByName - should return filtered templates", () => {
             const templates = standata.getTemplatesByName("espresso", "pw.x");
             expect(templates).to.be.an("array");
@@ -98,13 +90,22 @@ describe("Application Standata", () => {
             }
         });
 
-        it("getByApplicationName - should return entities by application name", () => {
-            const entities = standata.getByApplicationName("espresso");
-            expect(entities).to.be.an("array");
-            expect(entities.length).to.be.greaterThan(0);
-            entities.forEach((entity) => {
-                expect(entity).to.have.property("name", "espresso");
-            });
+        it("getAllApplications - should return all applications", () => {
+            const applications = standata.getAllApplications();
+            expect(applications).to.be.an("array");
+            expect(applications.length).to.be.greaterThan(0);
+
+            expect(applications.map((application) => application.name)).to.deep.include.members([
+                "espresso",
+                "nwchem",
+                "python",
+                "shell",
+                "vasp",
+                "shell",
+                "vasp",
+                "lammps",
+                "deepmd",
+            ]);
         });
 
         it("returns default config", () => {
