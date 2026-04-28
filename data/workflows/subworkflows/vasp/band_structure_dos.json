@@ -290,7 +290,7 @@
                 {
                     "template": {
                         "applicationName": "vasp",
-                        "content": "kpoints path\n{{kpath.length}}\nreciprocal\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
+                        "content": "kpoints path\n{{kpath.length}}\nreciprocal\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d|sprintf(\"%14.9f\")}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
                         "contextProviders": [
                             {
                                 "name": "KPathFormDataManager"
