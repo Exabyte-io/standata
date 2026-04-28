@@ -23,35 +23,8 @@ class ApplicationStandata extends base_1.Standata {
         super(...arguments);
         this.appExecutablesCache = {};
     }
-    // TODO: move to parent class Standata
-    getAllApplicationNames() {
-        const allApps = this.getAll();
-        const uniqueNames = new Set(allApps.map((app) => app.name));
-        return Array.from(uniqueNames);
-    }
-    // TODO: move to parent class Standata
-    getAllAppData() {
-        return this.getAll();
-    }
-    // TODO: move to parent class Standata
-    getByApplicationName(appName) {
-        const allEntities = this.getAll();
-        return allEntities.filter((entity) => entity.name === appName);
-    }
-    static getDefaultBuildForApplicationAndVersion(appName, version) {
-        var _a;
-        const versionConfig = APP_VERSIONS[appName].versions.find((config) => {
-            return config.version === version && config.isDefault;
-        });
-        return (_a = versionConfig === null || versionConfig === void 0 ? void 0 : versionConfig.build) !== null && _a !== void 0 ? _a : null;
-    }
-    getDefaultConfig() {
-        const fullConfig = this.findEntitiesByTags(TAGS.DEFAULT)[0];
-        const { name, shortName, version, summary, build } = fullConfig;
-        return { name, shortName, version, summary, build };
-    }
     buildApplicationsTree() {
-        const applicationNames = this.getAllApplicationNames();
+        const applicationNames = [...new Set(this.getAll().map((app) => app.name))];
         return applicationNames.reduce((tree, appName) => {
             const application = APP_VERSIONS[appName];
             if (!application) {
@@ -84,6 +57,17 @@ class ApplicationStandata extends base_1.Standata {
         }
         this.applicationsTree = this.buildApplicationsTree();
         return this.applicationsTree;
+    }
+    getDefaultConfig() {
+        const fullConfig = this.findEntitiesByTags(TAGS.DEFAULT)[0];
+        const { name, shortName, version, summary, build } = fullConfig;
+        return { name, shortName, version, summary, build };
+    }
+    getAllApplications() {
+        const tree = this.getApplicationsTree();
+        return Object.values(tree)
+            .flatMap((item) => Object.values(item.versions))
+            .flatMap((version) => Object.values(version));
     }
     getApplication({ name, version, build }) {
         const tree = this.getApplicationsTree();

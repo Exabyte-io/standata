@@ -143,10 +143,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
         };
     };
     private appExecutablesCache;
-    private getAllApplicationNames;
-    getAllAppData(): ApplicationSchema[];
-    getByApplicationName(appName: string): ApplicationSchema[];
-    static getDefaultBuildForApplicationAndVersion(appName: string, version: string): string | null;
+    private applicationsTree?;
+    private buildApplicationsTree;
+    private getApplicationsTree;
     getDefaultConfig(): {
         name: string;
         shortName: string;
@@ -154,9 +153,7 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
         summary: string;
         build: string;
     };
-    private applicationsTree?;
-    private buildApplicationsTree;
-    private getApplicationsTree;
+    getAllApplications(): ApplicationSchema[];
     getApplication({ name, version, build }: ApplicationConfig): ApplicationSchema;
     private getApplicationExecutablesTree;
     getExecutablesByApplicationName({ appName, appVersion }: AppConfig): {
