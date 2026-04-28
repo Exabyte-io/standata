@@ -71,6 +71,7 @@ describe("Application Standata", () => {
 
         it("getAllAppData - should return all application data", () => {
             const allData = standata.getAllAppData();
+            console.log("allData", allData);
             expect(allData).to.be.an("array");
             expect(allData.length).to.be.greaterThan(0);
             expect(allData[0]).to.have.property("name");
