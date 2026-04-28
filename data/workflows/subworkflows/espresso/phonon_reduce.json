@@ -46,13 +46,6 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "espresso",
                 "name": "ph.x",
                 "schemaVersion": "2022.8.16",
@@ -128,13 +121,6 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "espresso",
                 "name": "q2r.x",
                 "schemaVersion": "2022.8.16",
@@ -210,13 +196,6 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "espresso",
                 "name": "matdyn.x",
                 "schemaVersion": "2022.8.16",
@@ -300,13 +279,6 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "espresso",
                 "name": "matdyn.x",
                 "schemaVersion": "2022.8.16",
@@ -340,7 +312,7 @@
                 {
                     "template": {
                         "applicationName": "espresso",
-                        "content": "&INPUT\n    asr = 'simple'\n    flfrc ='force_constants.fc'\n    flfrq ='frequencies.freq'\n    flvec ='normal_modes.out'\n    q_in_band_form = .true.\n /\n{{ipath.length}}\n{% for point in ipath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
+                        "content": "&INPUT\n    asr = 'simple'\n    flfrc ='force_constants.fc'\n    flfrq ='frequencies.freq'\n    flvec ='normal_modes.out'\n    q_in_band_form = .true.\n /\n{{ipath.length}}\n{% for point in ipath -%}\n{% for d in point.coordinates %}{{d|sprintf(\"%14.9f\")}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
                         "contextProviders": [
                             {
                                 "name": "IPathFormDataManager"

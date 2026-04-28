@@ -397,6 +397,7 @@ entities:
     categories:
       - file_content
       - python
+      - workflow:pyml_predict
   - filename: python/mlff/mattersim.json
     categories:
       - python

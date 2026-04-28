@@ -83,30 +83,7 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [
-                    {
-                        "name": "error_handler"
-                    },
-                    {
-                        "name": "prepare_restart"
-                    },
-                    {
-                        "name": "remove_non_zero_weight_kpoints"
-                    }
-                ],
                 "isDefault": true,
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    },
-                    {
-                        "name": "convergence_ionic"
-                    },
-                    {
-                        "name": "convergence_electronic"
-                    }
-                ],
                 "applicationName": "vasp",
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
