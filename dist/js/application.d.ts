@@ -23,6 +23,22 @@ type ApplicationTree = Record<string, ApplicationTreeItem>;
 export declare class ApplicationStandata extends Standata<ApplicationSchema> {
     static runtimeData: {
         filesMapByName: {
+            "deepmd/deepmd_cpu_3.1.2.json": {
+                build: string;
+                buildConfig: {
+                    bio: string;
+                    dependencies: never[];
+                    environmentVariables: {};
+                    imageName: string;
+                    imageTag: string;
+                    moduleName: string;
+                };
+                isDefault: boolean;
+                name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+            };
             "espresso/espresso_gnu_6.3.json": {
                 build: string;
                 buildConfig: {
@@ -36,6 +52,26 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                 hasAdvancedComputeOptions: boolean;
                 isDefault: boolean;
                 name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+            };
+            "lammps/lammps_gnu_2025.07.22.2.json": {
+                build: string;
+                buildConfig: {
+                    bio: string;
+                    dependencies: never[];
+                    environmentVariables: {};
+                    imageName: string;
+                    imageTag: string;
+                    moduleName: string;
+                };
+                isDefault: boolean;
+                name: string;
+                runConfig: {
+                    commandTemplate: string;
+                    outFileName: string;
+                };
                 shortName: string;
                 summary: string;
                 version: string;
@@ -110,6 +146,67 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
     private getApplicationExecutablesTree;
     getAllAppTemplates(): TemplateSchema[];
     getAllAppTree(): {
+        deepmd: {
+            dp: {
+                flavors: {
+                    dp_train_se_e2_r: {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: string[];
+                        results: never[];
+                    };
+                };
+                isDefault: boolean;
+                monitors: string[];
+                results: never[];
+            };
+            lmp: {
+                flavors: {
+                    lammps_md: {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                        }[];
+                        monitors: string[];
+                        results: never[];
+                    };
+                };
+                isDefault: boolean;
+                monitors: string[];
+                results: never[];
+            };
+            python: {
+                flavors: {
+                    espresso_cp_to_deepmd: {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                        }[];
+                        isDefault: boolean;
+                        monitors: string[];
+                        results: never[];
+                    };
+                    espresso_to_lammps_structure: {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                        }[];
+                        isDefault: boolean;
+                        monitors: string[];
+                        results: never[];
+                    };
+                };
+                isDefault: boolean;
+                monitors: string[];
+                results: never[];
+            };
+        };
         espresso: {
             "abcoeff_to_eps.x": {
                 flavors: {
@@ -1247,10 +1344,29 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                 results: never[];
             };
         };
+        lammps: {
+            lmp: {
+                flavors: {
+                    emin: {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                        }[];
+                        isDefault: boolean;
+                        monitors: string[];
+                        results: never[];
+                    };
+                };
+                isDefault: boolean;
+                monitors: string[];
+                results: never[];
+            };
+        };
         nwchem: {
             nwchem: {
                 flavors: {
-                    nwchem_total_energy: {
+                    nwchem_frequency: {
                         applicationName: string;
                         executableName: string;
                         input: {
@@ -1260,6 +1376,18 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         monitors: {
                             name: string;
                         }[];
+                        results: {
+                            name: string;
+                        }[];
+                    };
+                    nwchem_total_energy: {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                        }[];
+                        isDefault: boolean;
+                        monitors: string[];
                         results: {
                             name: string;
                         }[];
@@ -1341,6 +1469,15 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         monitors: {
                             name: string;
                         }[];
+                    };
+                    "mlff:mattersim": {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
                     };
                     plot_wavefunction: {
                         applicationName: string;

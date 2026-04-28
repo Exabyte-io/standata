@@ -20,6 +20,18 @@ versions:
   #### version 7.5 ####
   - version: '7.5'
     isDefault: true
+    build: GNU
+    hasAdvancedComputeOptions: true
+    buildConfig:
+      moduleName: '7.5-gnu'
+      imageName: 'espresso'
+      imageTag: '7.5-gnu-0'
+      bio: 'Quantum ESPRESSO 7.5 (GCC 11.5.0, OpenMPI 4.1.1 and OpenBLAS)'
+      dependencies:
+        - 'mpi/ompi-4.1.1'
+      environmentVariables: {}
+  - version: '7.5'
+    isDefault: false
     build: CUDA
     hasAdvancedComputeOptions: true
     buildConfig:

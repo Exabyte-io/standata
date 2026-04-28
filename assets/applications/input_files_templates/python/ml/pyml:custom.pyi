@@ -1,6 +1,6 @@
 # ----------------------------------------------------------------- #
 #                                                                   #
-#   Custom workflow unit template for the Exabyte.io platform       #
+#   Custom workflow unit template for the Mat3ra.com platform       #
 #                                                                   #
 #   This file imports a set of workflow-specific context variables  #
 #   from settings.py. It then uses a context manager to save and    #

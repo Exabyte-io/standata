@@ -3,7 +3,7 @@
     "shortName": "qe",
     "summary": "Quantum ESPRESSO",
     "version": "7.5",
-    "isDefault": true,
+    "isDefault": false,
     "build": "CUDA",
     "hasAdvancedComputeOptions": true,
     "buildConfig": {
