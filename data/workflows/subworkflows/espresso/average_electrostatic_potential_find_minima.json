@@ -28,6 +28,9 @@
             "flowchartId": "python-find-extrema",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
                 "name": "python",
                 "shortName": "py",
@@ -38,14 +41,22 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
+                "preProcessors": [],
+                "postProcessors": [],
                 "isDefault": true,
                 "monitors": [
-                    "standard_output"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
+                "applicationName": "python",
                 "name": "python",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
+                "preProcessors": [],
+                "postProcessors": [],
+                "results": [],
                 "applicationName": "python",
                 "executableName": "python",
                 "input": [
@@ -59,24 +70,26 @@
                     }
                 ],
                 "monitors": [
-                    "standard_output"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
                 "name": "generic:processing:find_extrema:scipy",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "python",
-                    "content": "# ----------------------------------------------------------- #\n# This script aims to determine extrema for a given array.    #\n# Please adjust the parameters according to your data.        #\n# Note: This template expects the array to be defined in the  #\n# context as 'array_from_context' (see details below).        #\n# ----------------------------------------------------------- #\nimport json\n\nimport numpy as np\nfrom munch import Munch\nfrom scipy.signal import find_peaks\n\n# Data From Context\n# -----------------\n# The array 'array_from_context' is a 1D list (float or int) that has to be defined in\n# a preceding assignment unit in order to be extracted from the context.\n# Example: [0.0, 1.0, 4.0, 3.0]\n# Upon rendering the following Jinja template the extracted array will be inserted.\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n\n# Settings\n# --------\nprominence = 0.3  # required prominence in the unit of the data array\n\n# Find Extrema\n# ------------\nmax_indices, _ = find_peaks(Y, prominence=prominence)\nmin_indices, _ = find_peaks(-1 * Y, prominence=prominence)\n\nresult = {\n    \"maxima\": Y[max_indices].tolist(),\n    \"minima\": Y[min_indices].tolist(),\n}\n\n# print final values to standard output (STDOUT),\n# so that they can be read by a subsequent assignment unit (using value=STDOUT)\nprint(json.dumps(result, indent=4))\n",
-                    "contextProviders": [],
-                    "executableName": "python",
-                    "name": "find_extrema.py",
-                    "rendered": "# ----------------------------------------------------------- #\n# This script aims to determine extrema for a given array.    #\n# Please adjust the parameters according to your data.        #\n# Note: This template expects the array to be defined in the  #\n# context as 'array_from_context' (see details below).        #\n# ----------------------------------------------------------- #\nimport json\n\nimport numpy as np\nfrom munch import Munch\nfrom scipy.signal import find_peaks\n\n# Data From Context\n# -----------------\n# The array 'array_from_context' is a 1D list (float or int) that has to be defined in\n# a preceding assignment unit in order to be extracted from the context.\n# Example: [0.0, 1.0, 4.0, 3.0]\n# Upon rendering the following Jinja template the extracted array will be inserted.\nY = np.array({{array_from_context}})\n\n# Settings\n# --------\nprominence = 0.3  # required prominence in the unit of the data array\n\n# Find Extrema\n# ------------\nmax_indices, _ = find_peaks(Y, prominence=prominence)\nmin_indices, _ = find_peaks(-1 * Y, prominence=prominence)\n\nresult = {\n    \"maxima\": Y[max_indices].tolist(),\n    \"minima\": Y[min_indices].tolist(),\n}\n\n# print final values to standard output (STDOUT),\n# so that they can be read by a subsequent assignment unit (using value=STDOUT)\nprint(json.dumps(result, indent=4))\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "python",
+                        "content": "# ----------------------------------------------------------- #\n# This script aims to determine extrema for a given array.    #\n# Please adjust the parameters according to your data.        #\n# Note: This template expects the array to be defined in the  #\n# context as 'array_from_context' (see details below).        #\n# ----------------------------------------------------------- #\nimport json\n\nimport numpy as np\nfrom munch import Munch\nfrom scipy.signal import find_peaks\n\n# Data From Context\n# -----------------\n# The array 'array_from_context' is a 1D list (float or int) that has to be defined in\n# a preceding assignment unit in order to be extracted from the context.\n# Example: [0.0, 1.0, 4.0, 3.0]\n# Upon rendering the following Jinja template the extracted array will be inserted.\n{% raw %}Y = np.array({{array_from_context}}){% endraw %}\n\n# Settings\n# --------\nprominence = 0.3  # required prominence in the unit of the data array\n\n# Find Extrema\n# ------------\nmax_indices, _ = find_peaks(Y, prominence=prominence)\nmin_indices, _ = find_peaks(-1 * Y, prominence=prominence)\n\nresult = {\n    \"maxima\": Y[max_indices].tolist(),\n    \"minima\": Y[min_indices].tolist(),\n}\n\n# print final values to standard output (STDOUT),\n# so that they can be read by a subsequent assignment unit (using value=STDOUT)\nprint(json.dumps(result, indent=4))\n",
+                        "contextProviders": [],
+                        "executableName": "python",
+                        "name": "find_extrema.py",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 },
                 {
                     "applicationName": "python",
@@ -88,7 +101,10 @@
                     "schemaVersion": "2022.8.16"
                 }
             ],
-            "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d"
+            "context": [],
+            "next": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Set Average ESP Value",
@@ -101,20 +117,19 @@
                     "scope": "python-find-extrema"
                 }
             ],
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
             "tags": [],
+            "flowchartId": "8fce780b-5555-5b73-b3d1-1bb24a4c759d",
             "head": false,
-            "application": {
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "3.10.13",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

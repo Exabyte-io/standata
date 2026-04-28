@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
@@ -8,13 +7,10 @@ import * as path from "path";
 import { BUILD_CONFIG } from "../../build-config";
 import { findJsonFilesRecursively } from "../utils";
 import { EntityProcessor, EntityProcessorOptions } from "./EntityProcessor";
+import type { CategoryCollectOptions, CategorySets } from "./types";
 
 export interface ModelMethodProcessorOptions extends EntityProcessorOptions {
-    categoryCollectOptions?: {
-        includeUnits?: boolean;
-        includeTags?: boolean;
-        includeEntitiesMap?: boolean;
-    };
+    categoryCollectOptions?: CategoryCollectOptions;
 }
 
 export abstract class CategorizedEntityProcessor extends EntityProcessor {
@@ -26,6 +22,7 @@ export abstract class CategorizedEntityProcessor extends EntityProcessor {
     }
 
     // TODO: move to specific entity processors
+    // eslint-disable-next-line class-methods-use-this
     public getCategoryCollectOptions() {
         return {
             includeUnits: false,
@@ -40,21 +37,24 @@ export abstract class CategorizedEntityProcessor extends EntityProcessor {
         const categoryKeys = this.options.categoryKeys || [];
         const { includeUnits, includeTags, includeEntitiesMap } = this.getCategoryCollectOptions();
 
-        const categorySets: Record<string, Set<string>> = Object.fromEntries(
+        const categorySets: CategorySets = Object.fromEntries(
             [...categoryKeys, includeTags ? "tags" : null]
                 .filter(Boolean)
                 .map((k) => [k as string, new Set<string>()]),
-        ) as any;
+        );
         const entities: { filename: string; categories: string[] }[] = [];
 
         const jsonFiles = findJsonFilesRecursively(this.resolvedPaths.dataDir);
+        // eslint-disable-next-line no-restricted-syntax
         for (const filePath of jsonFiles) {
             console.log(`Processing file: ${filePath}`);
             try {
-                const data = serverUtils.json.readJSONFileSync(filePath) as any;
+                const data = serverUtils.json.readJSONFileSync(filePath) as Record<string, unknown>;
+
                 this.addCategoriesFromObject(data, categoryKeys, includeTags, categorySets);
-                if (includeUnits && Array.isArray((data as any)?.units)) {
-                    for (const u of (data as any).units) {
+                if (includeUnits && Array.isArray(data.units)) {
+                    // eslint-disable-next-line no-restricted-syntax
+                    for (const u of data.units as Record<string, unknown>[]) {
                         this.addCategoriesFromObject(u, categoryKeys, includeTags, categorySets);
                     }
                 }
@@ -62,25 +62,31 @@ export abstract class CategorizedEntityProcessor extends EntityProcessor {
                 if (includeEntitiesMap) {
                     const relativePath = path.relative(this.resolvedPaths.dataDir, filePath);
                     const flat = new Set<string>();
+
                     this.addCategoriesToSet(data, categoryKeys, includeTags, flat);
-                    if (includeUnits && Array.isArray((data as any)?.units)) {
-                        for (const u of (data as any).units)
+                    if (includeUnits && Array.isArray(data.units)) {
+                        // eslint-disable-next-line no-restricted-syntax
+                        for (const u of data.units as Record<string, unknown>[]) {
                             this.addCategoriesToSet(u, categoryKeys, includeTags, flat);
+                        }
                     }
                     entities.push({ filename: relativePath, categories: Array.from(flat).sort() });
                 }
-            } catch (e: any) {
-                console.error(`Error processing ${filePath}: ${e.message}`);
+            } catch (e: unknown) {
+                const errorMessage = e instanceof Error ? e.message : String(e);
+                console.error(`Error processing ${filePath}: ${errorMessage}`);
             }
         }
 
-        const categoriesOut: any = {};
+        const categoriesOut: Record<string, string[]> = {};
+
         categoryKeys.forEach((key) => {
-            const arr = Array.from((categorySets as any)[key]).sort();
+            const arr = Array.from(categorySets[key]).sort();
             if (arr.length > 0) categoriesOut[key] = arr;
         });
+
         if (includeTags) {
-            const tagsArr = Array.from((categorySets as any).tags || []).sort();
+            const tagsArr = Array.from(categorySets.tags || []).sort();
             if (tagsArr.length > 0) categoriesOut.tags = tagsArr;
         }
 
@@ -102,26 +108,29 @@ export abstract class CategorizedEntityProcessor extends EntityProcessor {
         console.log(`Categories file written to: ${categoriesPath}`);
     }
 
+    // eslint-disable-next-line class-methods-use-this
     public addCategoriesFromObject(
-        obj: any,
-        categoryKeys: string[],
+        obj: Record<string, unknown>,
+        categoryKeys: readonly string[],
         includeTags: boolean,
-        categorySets: Record<string, Set<string>>,
-    ): void {
+        categorySets: CategorySets,
+    ) {
         categoryKeys.forEach((key) => {
             const value = lodash.get(obj, key);
             if (typeof value === "string" && value) {
-                (categorySets as any)[key].add(value);
+                categorySets[key].add(value);
             }
         });
-        if (includeTags && Array.isArray(obj?.tags)) {
-            obj.tags.forEach((t: string) => (categorySets as any).tags.add(t));
+
+        if (includeTags && Array.isArray(obj.tags)) {
+            (obj.tags as string[]).forEach((t) => categorySets.tags.add(t));
         }
     }
 
+    // eslint-disable-next-line class-methods-use-this
     public addCategoriesToSet(
-        obj: any,
-        categoryKeys: string[],
+        obj: Record<string, unknown>,
+        categoryKeys: readonly string[],
         includeTags: boolean,
         target: Set<string>,
     ): void {
@@ -129,8 +138,8 @@ export abstract class CategorizedEntityProcessor extends EntityProcessor {
             const value = lodash.get(obj, key);
             if (typeof value === "string" && value) target.add(value);
         });
-        if (includeTags && Array.isArray(obj?.tags)) {
-            obj.tags.forEach((t: string) => target.add(t));
+        if (includeTags && Array.isArray(obj.tags)) {
+            (obj.tags as string[]).forEach((t) => target.add(t));
         }
     }
 }

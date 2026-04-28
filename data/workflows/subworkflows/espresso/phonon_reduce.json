@@ -5,8 +5,8 @@
         "name": "espresso"
     },
     "properties": [
-        "phonon_dos",
-        "phonon_dispersions"
+        "phonon_dispersions",
+        "phonon_dos"
     ],
     "model": {
         "type": "dft",
@@ -16,11 +16,7 @@
             "subtype": "us",
             "data": {}
         },
-        "functional": {
-            "slug": "pbe"
-        },
-        "refiners": [],
-        "modifiers": []
+        "functional": "pbe"
     },
     "units": [
         {
@@ -36,6 +32,9 @@
             "flowchartId": "cb206177-a4af-599a-81ba-6c88d24253b6",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -47,14 +46,22 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
+                "preProcessors": [],
+                "postProcessors": [],
                 "monitors": [
-                    "standard_output"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
+                "applicationName": "espresso",
                 "name": "ph.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
             "flavor": {
+                "preProcessors": [],
+                "postProcessors": [],
+                "results": [],
                 "applicationName": "espresso",
                 "executableName": "ph.x",
                 "input": [
@@ -63,32 +70,36 @@
                     }
                 ],
                 "monitors": [
-                    "standard_output"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
-                "results": [],
                 "name": "ph_grid_restart",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "espresso",
-                    "content": "&INPUTPH\n    tr2_ph = 1.0d-18,\n    recover = .true.\n    ldisp = .true.\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    fildyn = 'dyn'\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
-                    "contextProviders": [
-                        {
-                            "name": "QGridFormDataManager"
-                        }
-                    ],
-                    "executableName": "ph.x",
-                    "name": "ph_grid_restart.in",
-                    "rendered": "&INPUTPH\n    tr2_ph = 1.0d-18,\n    recover = .true.\n    ldisp = .true.\n    prefix = '__prefix__'\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    fildyn = 'dyn'\n    nq1 = 1\n    nq2 = 1\n    nq3 = 1\n    \n/\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "espresso",
+                        "content": "&INPUTPH\n    tr2_ph = 1.0d-18,\n    recover = .true.\n    ldisp = .true.\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    fildyn = 'dyn'\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
+                        "contextProviders": [
+                            {
+                                "name": "QGridFormDataManager"
+                            }
+                        ],
+                        "executableName": "ph.x",
+                        "name": "ph_grid_restart.in",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
             ],
-            "next": "3b4507a7-9244-540b-abe0-66bceab700f5"
+            "context": [],
+            "next": "3b4507a7-9244-540b-abe0-66bceab700f5",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "type": "execution",
@@ -103,6 +114,9 @@
             "flowchartId": "3b4507a7-9244-540b-abe0-66bceab700f5",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -114,14 +128,22 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
+                "preProcessors": [],
+                "postProcessors": [],
                 "monitors": [
-                    "standard_output"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
+                "applicationName": "espresso",
                 "name": "q2r.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
             "flavor": {
+                "preProcessors": [],
+                "postProcessors": [],
+                "results": [],
                 "applicationName": "espresso",
                 "executableName": "q2r.x",
                 "input": [
@@ -130,28 +152,32 @@
                     }
                 ],
                 "monitors": [
-                    "standard_output"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
-                "results": [],
                 "name": "q2r",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "espresso",
-                    "content": "&INPUT\n    fildyn = 'dyn'\n    zasr = 'simple'\n    flfrc = 'force_constants.fc'\n/\n",
-                    "contextProviders": [],
-                    "executableName": "q2r.x",
-                    "name": "q2r.in",
-                    "rendered": "&INPUT\n    fildyn = 'dyn'\n    zasr = 'simple'\n    flfrc = 'force_constants.fc'\n/\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "espresso",
+                        "content": "&INPUT\n    fildyn = 'dyn'\n    zasr = 'simple'\n    flfrc = 'force_constants.fc'\n/\n",
+                        "contextProviders": [],
+                        "executableName": "q2r.x",
+                        "name": "q2r.in",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
             ],
-            "next": "8fe6a24b-c994-55a2-a448-88657292e8c2"
+            "context": [],
+            "next": "8fe6a24b-c994-55a2-a448-88657292e8c2",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "type": "execution",
@@ -170,6 +196,9 @@
             "flowchartId": "8fe6a24b-c994-55a2-a448-88657292e8c2",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -181,14 +210,26 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
+                "preProcessors": [],
+                "postProcessors": [],
                 "monitors": [
-                    "standard_output"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
+                "applicationName": "espresso",
                 "name": "matdyn.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
             "flavor": {
+                "preProcessors": [],
+                "postProcessors": [],
+                "results": [
+                    {
+                        "name": "phonon_dos"
+                    }
+                ],
                 "applicationName": "espresso",
                 "executableName": "matdyn.x",
                 "input": [
@@ -197,34 +238,36 @@
                     }
                 ],
                 "monitors": [
-                    "standard_output"
-                ],
-                "results": [
-                    "phonon_dos"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
                 "name": "matdyn_grid",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "espresso",
-                    "content": "&INPUT\n    asr = 'simple'\n    flfrc = 'force_constants.fc'\n    flfrq = 'frequencies.freq'\n    dos = .true.\n    fldos = 'phonon_dos.out'\n    deltaE = 1.d0\n    {% for d in igrid.dimensions -%}\n    nk{{loop.index}} = {{d}}\n    {% endfor %}\n /\n",
-                    "contextProviders": [
-                        {
-                            "name": "IGridFormDataManager"
-                        }
-                    ],
-                    "executableName": "matdyn.x",
-                    "name": "matdyn_grid.in",
-                    "rendered": "&INPUT\n    asr = 'simple'\n    flfrc = 'force_constants.fc'\n    flfrq = 'frequencies.freq'\n    dos = .true.\n    fldos = 'phonon_dos.out'\n    deltaE = 1.d0\n    nk1 = 3\n    nk2 = 3\n    nk3 = 3\n    \n /\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "espresso",
+                        "content": "&INPUT\n    asr = 'simple'\n    flfrc = 'force_constants.fc'\n    flfrq = 'frequencies.freq'\n    dos = .true.\n    fldos = 'phonon_dos.out'\n    deltaE = 1.d0\n    {% for d in igrid.dimensions -%}\n    nk{{loop.index}} = {{d}}\n    {% endfor %}\n /\n",
+                        "contextProviders": [
+                            {
+                                "name": "IGridFormDataManager"
+                            }
+                        ],
+                        "executableName": "matdyn.x",
+                        "name": "matdyn_grid.in",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
             ],
-            "next": "a7fded20-889b-54fc-bbb0-456e82689ab1"
+            "context": [],
+            "next": "a7fded20-889b-54fc-bbb0-456e82689ab1",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "type": "execution",
@@ -243,6 +286,9 @@
             "flowchartId": "a7fded20-889b-54fc-bbb0-456e82689ab1",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
                 "name": "espresso",
                 "shortName": "qe",
@@ -254,14 +300,26 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
+                "preProcessors": [],
+                "postProcessors": [],
                 "monitors": [
-                    "standard_output"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
+                "applicationName": "espresso",
                 "name": "matdyn.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
             "flavor": {
+                "preProcessors": [],
+                "postProcessors": [],
+                "results": [
+                    {
+                        "name": "phonon_dispersions"
+                    }
+                ],
                 "applicationName": "espresso",
                 "executableName": "matdyn.x",
                 "input": [
@@ -270,33 +328,37 @@
                     }
                 ],
                 "monitors": [
-                    "standard_output"
-                ],
-                "results": [
-                    "phonon_dispersions"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
                 "name": "matdyn_path",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "espresso",
-                    "content": "&INPUT\n    asr = 'simple'\n    flfrc ='force_constants.fc'\n    flfrq ='frequencies.freq'\n    flvec ='normal_modes.out'\n    q_in_band_form = .true.\n /\n{{ipath.length}}\n{% for point in ipath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
-                    "contextProviders": [
-                        {
-                            "name": "IPathFormDataManager"
-                        }
-                    ],
-                    "executableName": "matdyn.x",
-                    "name": "matdyn_path.in",
-                    "rendered": "&INPUT\n    asr = 'simple'\n    flfrc ='force_constants.fc'\n    flfrq ='frequencies.freq'\n    flvec ='normal_modes.out'\n    q_in_band_form = .true.\n /\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "espresso",
+                        "content": "&INPUT\n    asr = 'simple'\n    flfrc ='force_constants.fc'\n    flfrq ='frequencies.freq'\n    flvec ='normal_modes.out'\n    q_in_band_form = .true.\n /\n{{ipath.length}}\n{% for point in ipath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
+                        "contextProviders": [
+                            {
+                                "name": "IPathFormDataManager"
+                            }
+                        ],
+                        "executableName": "matdyn.x",
+                        "name": "matdyn_path.in",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
-            ]
+            ],
+            "context": [],
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

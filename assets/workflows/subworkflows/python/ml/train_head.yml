@@ -19,7 +19,8 @@ units:
       enableRender: true
       flowchartId: head-fetch-training-data
       input:
-        - basename: "{{DATASET_BASENAME}}"
+        - type: object_storage
+          basename: "{{DATASET_BASENAME}}"
           objectData:
             CONTAINER: ""
             NAME: "{{DATASET_FILEPATH}}"
@@ -42,7 +43,8 @@ units:
       enableRender: true
       flowchartId: head-fetch-trained-model
       input:
-        - basename: ""
+        - type: object_storage
+          basename: ""
           objectData:
             CONTAINER: ""
             NAME: ""

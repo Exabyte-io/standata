@@ -21,32 +21,37 @@
             "operand": "IS_WORKFLOW_RUNNING_TO_PREDICT",
             "value": "False",
             "input": [],
-            "flowchartId": "head-set-predict-status",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
             "tags": [
                 "pyml:workflow-type-setter"
             ],
-            "status": "idle",
-            "statusTrack": [],
+            "flowchartId": "head-set-predict-status",
             "head": true,
             "next": "head-fetch-training-data",
-            "application": {
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "3.10.13",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Fetch Dataset",
             "type": "io",
             "subtype": "input",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "enableRender": true,
             "flowchartId": "head-fetch-training-data",
             "input": [
                 {
+                    "type": "object_storage",
                     "basename": "{{DATASET_BASENAME}}",
                     "objectData": {
                         "CONTAINER": "",
@@ -57,20 +62,10 @@
                 }
             ],
             "source": "object_storage",
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "head": false,
             "next": "head-branch-on-predict-status",
-            "application": {
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "3.10.13",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Train or Predict?",
@@ -81,37 +76,41 @@
                     "scope": "global"
                 }
             ],
-            "results": [],
-            "preProcessors": [],
-            "postProcessors": [],
-            "then": "head-fetch-trained-model",
-            "else": "end-of-ml-train-head",
             "statement": "IS_WORKFLOW_RUNNING_TO_PREDICT",
             "maxOccurrences": 100,
-            "flowchartId": "head-branch-on-predict-status",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "else": "end-of-ml-train-head",
+            "flowchartId": "head-branch-on-predict-status",
+            "then": "head-fetch-trained-model",
             "head": false,
             "next": "head-fetch-trained-model",
-            "application": {
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "3.10.13",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Fetch Trained Model as file",
             "type": "io",
             "subtype": "input",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [
+                "set-io-unit-filenames"
+            ],
             "enableRender": true,
             "flowchartId": "head-fetch-trained-model",
             "input": [
                 {
+                    "type": "object_storage",
                     "basename": "",
                     "objectData": {
                         "CONTAINER": "",
@@ -122,22 +121,10 @@
                 }
             ],
             "source": "object_storage",
-            "tags": [
-                "set-io-unit-filenames"
-            ],
-            "status": "idle",
-            "statusTrack": [],
             "head": false,
             "next": "end-of-ml-train-head",
-            "application": {
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "3.10.13",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "End Setup",
@@ -145,20 +132,19 @@
             "operand": "IS_SETUP_COMPLETE",
             "value": "True",
             "input": [],
-            "flowchartId": "end-of-ml-train-head",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "end-of-ml-train-head",
             "head": false,
-            "application": {
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "3.10.13",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

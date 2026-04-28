@@ -1,18 +1,17 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Utils } from "@mat3ra/utils";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
 import * as fs from "fs";
 import * as path from "path";
 
 import { BUILD_CONFIG } from "../../build-config";
-import { RuntimeData, StandataConfig } from "../../src/js/types/standata";
+import { EntityItem, RuntimeData, StandataConfig } from "../../src/js/types/standata";
 import {
     encodeDataAsURLPath,
     findJsonFilesRecursively,
     readYAMLFileResolved,
     resolveFromRoot,
 } from "../utils";
+import type { BuildArtifact } from "./types";
 
 export interface EntityProcessorOptions {
     rootDir: string;
@@ -21,15 +20,15 @@ export interface EntityProcessorOptions {
     dataDir: string;
     buildDir: string;
     categoriesRelativePath: string;
-    categoryKeys?: string[];
+    categoryKeys?: readonly string[];
     excludedAssetFiles?: string[];
     areKeysSorted?: boolean;
     excludeKeys?: string[];
 }
 
-export type AssetRecord = {
+export type AssetRecord<T = unknown> = {
     sourceFile: string;
-    entities: any[];
+    entities: T[];
 };
 
 export abstract class EntityProcessor {
@@ -62,12 +61,12 @@ export abstract class EntityProcessor {
 
     // Hooks
     // eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
-    protected transformEntity(entity: any, _sourceFile: string): any {
+    protected transformEntity(entity: unknown, _sourceFile: string): unknown {
         return entity;
     }
 
     // eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
-    protected getDataSubdirectory(_entity: any, _sourceFile: string): string {
+    protected getDataSubdirectory(_entity: unknown, _sourceFile: string): string {
         return "";
     }
 
@@ -75,12 +74,12 @@ export abstract class EntityProcessor {
     protected additionalProcessing(): void {}
 
     // eslint-disable-next-line class-methods-use-this
-    protected getBuildArtifacts(): { relativePath: string; content: any }[] {
+    protected getBuildArtifacts(): BuildArtifact[] {
         return [];
     }
 
     // Default implementations
-    public readAssets(): AssetRecord[] {
+    public readAssets() {
         const yamlFiles = serverUtils.file.getFilesInDirectory(this.resolvedPaths.assetsDir, [
             ".yml",
             ".yaml",
@@ -97,7 +96,6 @@ export abstract class EntityProcessor {
                 const entities = Utils.array.normalizeToArray(parsed);
                 return { sourceFile: filePath, entities } as AssetRecord;
             });
-        return this.assets;
     }
 
     protected getExcludedAssetFiles(): string[] {
@@ -134,22 +132,32 @@ export abstract class EntityProcessor {
 
     protected copyAndMinifyFromDataToBuild(): void {
         const { dataDir, buildDir } = this.resolvedPaths;
-        if (!dataDir || !buildDir) return;
+
+        if (!dataDir || !buildDir) {
+            return;
+        }
+
         if (!fs.existsSync(dataDir)) {
             console.warn(`  Warning: Data directory ${dataDir} does not exist`);
             return;
         }
 
         const files = serverUtils.file.getFilesInDirectory(dataDir, [".json"]);
-        if (files.length === 0) return;
+
+        if (files.length === 0) {
+            return;
+        }
 
         serverUtils.file.createDirIfNotExistsSync(buildDir);
+
         files.forEach((filePath: string) => {
             const relativePath = path.relative(dataDir, filePath);
             const destinationPath = path.resolve(buildDir, relativePath);
+
             serverUtils.file.createDirIfNotExistsSync(path.dirname(destinationPath));
 
             const content = serverUtils.json.readJSONFileSync(filePath);
+
             serverUtils.json.writeJSONFileSync(destinationPath, content, {
                 spaces: BUILD_CONFIG.buildJSONFormat.spaces,
             });
@@ -159,24 +167,35 @@ export abstract class EntityProcessor {
 
     protected cleanDataDirectory(): void {
         const { dataDir } = this.resolvedPaths;
-        if (!fs.existsSync(dataDir)) return;
+        if (!fs.existsSync(dataDir)) {
+            return;
+        }
 
         console.log(`  Cleaning ${dataDir}...`);
+
         const files = findJsonFilesRecursively(dataDir);
-        files.forEach((file: string) => {
-            fs.unlinkSync(file);
-        });
+        findJsonFilesRecursively(dataDir).forEach(fs.unlinkSync);
+
         console.log(`  Removed ${files.length} files`);
     }
 
     public writeDataDirectoryContent(): void {
         const { dataDir } = this.resolvedPaths;
+        const categoryKeys = this.options.categoryKeys || [];
+
         serverUtils.file.createDirIfNotExistsSync(dataDir);
 
-        const categoryKeys = this.options.categoryKeys || [];
         this.assets.forEach(({ sourceFile, entities }) => {
-            entities.forEach((entity: any) => {
-                const transformed = this.transformEntity({ ...entity }, sourceFile);
+            entities.forEach((entity: unknown) => {
+                const raw =
+                    typeof entity === "object" && entity !== null
+                        ? { ...(entity as object) }
+                        : entity;
+
+                const transformed = this.transformEntity(raw, sourceFile) as Record<
+                    string,
+                    unknown
+                >;
                 if (!transformed.path && categoryKeys.length > 0) {
                     transformed.path = encodeDataAsURLPath(transformed, categoryKeys);
                 }
@@ -253,17 +272,19 @@ export abstract class EntityProcessor {
 
     protected generateRuntimeDataConfig(): RuntimeData {
         // Read categories YAML
-        const categoriesContent: any = serverUtils.yaml.readYAMLFileSync(this.categoriesPath);
+        const categoriesContent = serverUtils.yaml.readYAMLFileSync(
+            this.categoriesPath,
+        ) as StandataConfig;
         const { entities } = categoriesContent;
 
         // Build runtime data object
         const runtimeDataConfig: RuntimeData = {
-            standataConfig: categoriesContent as StandataConfig,
+            standataConfig: categoriesContent,
             filesMapByName: {},
         };
 
         // Load each entity's JSON file
-        entities.forEach((entity: any) => {
+        entities.forEach((entity: EntityItem) => {
             const entityPath = path.join(this.resolvedPaths.dataDir, entity.filename);
             console.log(`  Loading entity file: ${entityPath}`);
             if (fs.existsSync(entityPath)) {

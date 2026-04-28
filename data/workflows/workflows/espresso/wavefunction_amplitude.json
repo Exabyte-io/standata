@@ -1,4 +1,5 @@
 {
+    "_id": "196d364a-5a30-549b-a898-8b9704b50ff1",
     "name": "Wavefunction Amplitude",
     "subworkflows": [
         {
@@ -33,11 +34,7 @@
                     "subtype": "us",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -81,6 +78,9 @@
                     "flowchartId": "pw-scf",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -92,20 +92,55 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [
+                            {
+                                "name": "remove_non_zero_weight_kpoints"
+                            }
+                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
-                        ],
+                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "results": [
+                            {
+                                "name": "atomic_forces"
+                            },
+                            {
+                                "name": "fermi_energy"
+                            },
+                            {
+                                "name": "pressure"
+                            },
+                            {
+                                "name": "stress_tensor"
+                            },
+                            {
+                                "name": "total_energy"
+                            },
+                            {
+                                "name": "total_energy_contributions"
+                            },
+                            {
+                                "name": "total_force"
+                            }
+                        ],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -115,46 +150,44 @@
                         ],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_electronic"
-                        ],
-                        "results": [
-                            "atomic_forces",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw_scf",
                         "schemaVersion": "2022.8.16"
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KGridFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_scf.in",
-                            "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "KGridFormDataManager"
+                                    },
+                                    {
+                                        "name": "QEPWXInputDataManager"
+                                    },
+                                    {
+                                        "name": "PlanewaveCutoffDataManager"
+                                    }
+                                ],
+                                "executableName": "pw.x",
+                                "name": "pw_scf.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "extract-band-energies"
+                    "context": [],
+                    "next": "extract-band-energies",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Extract Band Energies",
@@ -167,22 +200,18 @@
                             "scope": "pw-scf"
                         }
                     ],
-                    "flowchartId": "extract-band-energies",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "extract-band-energies",
                     "head": false,
                     "next": "indices-below-fermi",
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Find Indices Below Fermi",
@@ -195,22 +224,18 @@
                             "scope": "pw-scf"
                         }
                     ],
-                    "flowchartId": "indices-below-fermi",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "indices-below-fermi",
                     "head": false,
                     "next": "8771dc7f-878e-5f13-a840-a3a416854f1e",
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Store Band Below EF",
@@ -218,22 +243,18 @@
                     "operand": "KBAND_VALUE_BELOW_EF",
                     "value": "indices_below_fermi[-1] + 1 if len(indices_below_fermi) > 0 else 1",
                     "input": [],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "8771dc7f-878e-5f13-a840-a3a416854f1e",
                     "tags": [],
+                    "flowchartId": "8771dc7f-878e-5f13-a840-a3a416854f1e",
                     "head": false,
                     "next": "57a07d7d-3f68-5f31-97ad-ebe8c5593cd2",
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "Select Band",
@@ -241,22 +262,18 @@
                     "operand": "KBAND_VALUE",
                     "value": "KBAND_VALUE_BELOW_EF",
                     "input": [],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
-                    "flowchartId": "57a07d7d-3f68-5f31-97ad-ebe8c5593cd2",
                     "tags": [],
+                    "flowchartId": "57a07d7d-3f68-5f31-97ad-ebe8c5593cd2",
                     "head": false,
                     "next": "pp-wfn",
-                    "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -275,6 +292,9 @@
                     "flowchartId": "pp-wfn",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "espresso",
                         "shortName": "qe",
@@ -286,14 +306,26 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
+                        "applicationName": "espresso",
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
                     "flavor": {
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "results": [
+                            {
+                                "name": "wavefunction_amplitude"
+                            }
+                        ],
                         "applicationName": "espresso",
                         "executableName": "pp.x",
                         "input": [
@@ -302,31 +334,35 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
-                        ],
-                        "results": [
-                            "wavefunction_amplitude"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
                         "name": "pp_wfn",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    plot_num = 7\n    kpoint = 1\n    kband = {% raw %}{{ KBAND_VALUE | default(1) }}{% endraw %}\n    lsign = .true.\n/\n&PLOT\n    iflag = 1\n    fileout = 'wf_r.dat'\n    output_format = 0\n    x0(1) = 0.0, x0(2) = 0.0, x0(3) = 0.0\n    e1(1) = 0.0, e1(2) = 0.0, e1(3) = {{material.lattice.c/material.lattice.a}}\n    nx = 200\n/\n",
-                            "contextProviders": [],
-                            "executableName": "pp.x",
-                            "name": "pp_wfn.in",
-                            "rendered": "&INPUTPP\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    plot_num = 7\n    kpoint = 1\n    kband = {{ KBAND_VALUE | default(1) }}\n    lsign = .true.\n/\n&PLOT\n    iflag = 1\n    fileout = 'wf_r.dat'\n    output_format = 0\n    x0(1) = 0.0, x0(2) = 0.0, x0(3) = 0.0\n    e1(1) = 0.0, e1(2) = 0.0, e1(3) = NaN\n    nx = 200\n/\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "&INPUTPP\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    plot_num = 7\n    kpoint = 1\n    kband = {% raw %}{{ KBAND_VALUE | default(1) }}{% endraw %}\n    lsign = .true.\n/\n&PLOT\n    iflag = 1\n    fileout = 'wf_r.dat'\n    output_format = 0\n    x0(1) = 0.0, x0(2) = 0.0, x0(3) = 0.0\n    e1(1) = 0.0, e1(2) = 0.0, e1(3) = {{material.lattice.c/material.lattice.a}}\n    nx = 200\n/\n",
+                                "contextProviders": [],
+                                "executableName": "pp.x",
+                                "name": "pp_wfn.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
-                    ]
+                    ],
+                    "context": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "e4ec581f-1cb3-5036-b698-999a96711559",
@@ -359,9 +395,7 @@
                     "head": true,
                     "results": [
                         {
-                            "name": "file_content",
-                            "basename": "wf_r.png",
-                            "filetype": "image"
+                            "name": "file_content"
                         }
                     ],
                     "monitors": [
@@ -372,6 +406,9 @@
                     "flowchartId": "57fca898-8e8b-5ef2-81a5-9d2b612bc18d",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "name": "python",
                         "shortName": "py",
@@ -382,14 +419,26 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "preProcessors": [],
+                        "postProcessors": [],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output"
+                            {
+                                "name": "standard_output"
+                            }
                         ],
+                        "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "results": [
+                            {
+                                "name": "file_content"
+                            }
+                        ],
                         "applicationName": "python",
                         "executableName": "python",
                         "input": [
@@ -403,67 +452,79 @@
                             }
                         ],
                         "monitors": [
-                            "standard_output"
-                        ],
-                        "results": [
                             {
-                                "basename": "wf_r.png",
-                                "filetype": "image",
-                                "name": "file_content"
+                                "name": "standard_output"
                             }
                         ],
                         "name": "plot_wavefunction",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "python",
-                            "content": "# ---------------------------------------------------------------- #\n#  Generate wavefunction plot from pp.x output                     #\n#  And saves static                                                #\n# ---------------------------------------------------------------- #\n\nimport matplotlib\nimport numpy as np\n\nmatplotlib.use('Agg')  # Non-interactive backend\nimport matplotlib.pyplot as plt\n\n# Load wavefunction data from pp.x output\ndata = np.loadtxt('wf_r.dat')\nz = data[:, 0]\npsi_r = data[:, 1]\n\n# Calculate wavefunction amplitude\npsi_amplitude = np.abs(psi_r)\n\n# Create static PNG plot\nfig, ax = plt.subplots(figsize=(10, 6))\nax.plot(z, psi_amplitude, 'b-', linewidth=2)\nax.set_xlabel('Position z (alat)', fontsize=12)\nax.set_ylabel('Wavefunction amplitude |ψ| (a.u.)', fontsize=12)\nax.set_title('Wavefunction along z-axis', fontsize=14)\nax.grid(True, alpha=0.3)\nplt.tight_layout()\nplt.savefig('wf_r.png', dpi=150, bbox_inches='tight')\nplt.close()\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "script.py",
-                            "rendered": "# ---------------------------------------------------------------- #\n#  Generate wavefunction plot from pp.x output                     #\n#  And saves static                                                #\n# ---------------------------------------------------------------- #\n\nimport matplotlib\nimport numpy as np\n\nmatplotlib.use('Agg')  # Non-interactive backend\nimport matplotlib.pyplot as plt\n\n# Load wavefunction data from pp.x output\ndata = np.loadtxt('wf_r.dat')\nz = data[:, 0]\npsi_r = data[:, 1]\n\n# Calculate wavefunction amplitude\npsi_amplitude = np.abs(psi_r)\n\n# Create static PNG plot\nfig, ax = plt.subplots(figsize=(10, 6))\nax.plot(z, psi_amplitude, 'b-', linewidth=2)\nax.set_xlabel('Position z (alat)', fontsize=12)\nax.set_ylabel('Wavefunction amplitude |ψ| (a.u.)', fontsize=12)\nax.set_title('Wavefunction along z-axis', fontsize=14)\nax.grid(True, alpha=0.3)\nplt.tight_layout()\nplt.savefig('wf_r.png', dpi=150, bbox_inches='tight')\nplt.close()\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "python",
+                                "content": "# ---------------------------------------------------------------- #\n#  Generate wavefunction plot from pp.x output                     #\n#  And saves static                                                #\n# ---------------------------------------------------------------- #\n\nimport matplotlib\nimport numpy as np\n\nmatplotlib.use('Agg')  # Non-interactive backend\nimport matplotlib.pyplot as plt\n\n# Load wavefunction data from pp.x output\ndata = np.loadtxt('wf_r.dat')\nz = data[:, 0]\npsi_r = data[:, 1]\n\n# Calculate wavefunction amplitude\npsi_amplitude = np.abs(psi_r)\n\n# Create static PNG plot\nfig, ax = plt.subplots(figsize=(10, 6))\nax.plot(z, psi_amplitude, 'b-', linewidth=2)\nax.set_xlabel('Position z (alat)', fontsize=12)\nax.set_ylabel('Wavefunction amplitude |ψ| (a.u.)', fontsize=12)\nax.set_title('Wavefunction along z-axis', fontsize=14)\nax.grid(True, alpha=0.3)\nplt.tight_layout()\nplt.savefig('wf_r.png', dpi=150, bbox_inches='tight')\nplt.close()\n",
+                                "contextProviders": [],
+                                "executableName": "python",
+                                "name": "script.py",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         },
                         {
-                            "applicationName": "python",
-                            "content": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for plot_wavefunction unit            #\n#                                                                    #\n# ------------------------------------------------------------------ #\n\nnumpy<2\nmatplotlib\n\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "requirements.txt",
-                            "rendered": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for plot_wavefunction unit            #\n#                                                                    #\n# ------------------------------------------------------------------ #\n\nnumpy<2\nmatplotlib\n\n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "python",
+                                "content": "# ------------------------------------------------------------------ #\n#                                                                    #\n#  Python package requirements for plot_wavefunction unit            #\n#                                                                    #\n# ------------------------------------------------------------------ #\n\nnumpy<2\nmatplotlib\n\n",
+                                "contextProviders": [],
+                                "executableName": "python",
+                                "name": "requirements.txt",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
-                    ]
+                    ],
+                    "context": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         }
     ],
     "units": [
         {
-            "name": "Wavefunction Amplitude",
             "type": "subworkflow",
-            "_id": "6a670ac8-6c12-5285-a6f8-9bf579fc88ee",
+            "name": "Wavefunction Amplitude",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "36467db9-279f-52a3-a6ef-ffdc26d875ed",
             "tags": [],
-            "head": true,
-            "next": "4ce49281-e731-550e-af66-6d2408db8237"
+            "_id": "6a670ac8-6c12-5285-a6f8-9bf579fc88ee",
+            "flowchartId": "36467db9-279f-52a3-a6ef-ffdc26d875ed",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
-            "name": "Plot Wavefunction",
             "type": "subworkflow",
-            "_id": "e4ec581f-1cb3-5036-b698-999a96711559",
+            "name": "Plot Wavefunction",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "4ce49281-e731-550e-af66-6d2408db8237",
             "tags": [],
-            "head": false
+            "_id": "e4ec581f-1cb3-5036-b698-999a96711559",
+            "flowchartId": "4ce49281-e731-550e-af66-6d2408db8237",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [
@@ -475,9 +536,9 @@
         "total_energy",
         "total_energy_contributions",
         "total_force",
-        "wavefunction_amplitude"
+        "wavefunction_amplitude",
+        "file_content"
     ],
-    "_id": "196d364a-5a30-549b-a898-8b9704b50ff1",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
