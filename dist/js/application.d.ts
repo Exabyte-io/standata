@@ -23,6 +23,22 @@ type FlavorConfig = ExecutableConfig & {
 export declare class ApplicationStandata extends Standata<ApplicationSchema> {
     static runtimeData: {
         filesMapByName: {
+            "deepmd/deepmd_cpu_3.1.2.json": {
+                build: string;
+                buildConfig: {
+                    bio: string;
+                    dependencies: never[];
+                    environmentVariables: {};
+                    imageName: string;
+                    imageTag: string;
+                    moduleName: string;
+                };
+                isDefault: boolean;
+                name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+            };
             "espresso/espresso_gnu_6.3.json": {
                 build: string;
                 buildConfig: {
@@ -36,6 +52,26 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                 hasAdvancedComputeOptions: boolean;
                 isDefault: boolean;
                 name: string;
+                shortName: string;
+                summary: string;
+                version: string;
+            };
+            "lammps/lammps_gnu_2025.07.22.2.json": {
+                build: string;
+                buildConfig: {
+                    bio: string;
+                    dependencies: never[];
+                    environmentVariables: {};
+                    imageName: string;
+                    imageTag: string;
+                    moduleName: string;
+                };
+                isDefault: boolean;
+                name: string;
+                runConfig: {
+                    commandTemplate: string;
+                    outFileName: string;
+                };
                 shortName: string;
                 summary: string;
                 version: string;

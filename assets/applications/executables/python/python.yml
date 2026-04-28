@@ -366,3 +366,14 @@ flavors:
       - name: standard_output
     applicationName: python
     executableName: python
+
+  "mlff:mattersim":
+    input:
+      - name: script.py
+        templateName: mattersim.pyi
+      - name: requirements.txt
+        templateName: requirements_mattersim.txt
+    monitors:
+      - name: standard_output
+    applicationName: python
+    executableName: python

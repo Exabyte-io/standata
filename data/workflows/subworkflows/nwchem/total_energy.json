@@ -5,6 +5,8 @@
         "name": "nwchem"
     },
     "properties": [
+        "homo_energy",
+        "lumo_energy",
         "total_energy",
         "total_energy_contributions"
     ],
@@ -29,6 +31,12 @@
                 },
                 {
                     "name": "total_energy_contributions"
+                },
+                {
+                    "name": "homo_energy"
+                },
+                {
+                    "name": "lumo_energy"
                 }
             ],
             "monitors": [
@@ -67,6 +75,12 @@
                     },
                     {
                         "name": "total_energy_contributions"
+                    },
+                    {
+                        "name": "homo_energy"
+                    },
+                    {
+                        "name": "lumo_energy"
                     }
                 ],
                 "applicationName": "nwchem",

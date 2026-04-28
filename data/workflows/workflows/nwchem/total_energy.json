@@ -1,5 +1,5 @@
 {
-    "_id": "937fbac8-2dec-5fb1-a46f-b8a0cc3d3d05",
+    "_id": "556abcd9-49b5-5bfe-83e5-ac2cdfcae4f7",
     "name": "Total Energy",
     "subworkflows": [
         {
@@ -15,6 +15,8 @@
                 "schemaVersion": "2022.8.16"
             },
             "properties": [
+                "homo_energy",
+                "lumo_energy",
                 "total_energy",
                 "total_energy_contributions"
             ],
@@ -39,6 +41,12 @@
                         },
                         {
                             "name": "total_energy_contributions"
+                        },
+                        {
+                            "name": "homo_energy"
+                        },
+                        {
+                            "name": "lumo_energy"
                         }
                     ],
                     "monitors": [
@@ -77,6 +85,12 @@
                             },
                             {
                                 "name": "total_energy_contributions"
+                            },
+                            {
+                                "name": "homo_energy"
+                            },
+                            {
+                                "name": "lumo_energy"
                             }
                         ],
                         "applicationName": "nwchem",
@@ -140,6 +154,8 @@
         }
     ],
     "properties": [
+        "homo_energy",
+        "lumo_energy",
         "total_energy",
         "total_energy_contributions"
     ],

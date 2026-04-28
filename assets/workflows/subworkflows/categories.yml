@@ -10,6 +10,8 @@ categories:
     - fermi_energy
     - file_content
     - final_structure
+    - homo_energy
+    - lumo_energy
     - phonon_dispersions
     - phonon_dos
     - potential_profile
@@ -18,6 +20,8 @@ categories:
     - reaction_energy_profile
     - stress_tensor
     - surface_energy
+    - thermal_correction_to_energy
+    - thermal_correction_to_enthalpy
     - total_energy
     - total_energy_contributions
     - total_force
@@ -35,12 +39,21 @@ categories:
     - wfn
     - wfn_plot
   application:
+    - deepmd
     - espresso
+    - lammps
     - nwchem
     - python
     - shell
     - vasp
 entities:
+  - filename: deepmd/deepmd.json
+    categories:
+      - deepmd
+  - filename: deepmd/espresso_cp_md.json
+    categories:
+      - deepmd
+      - espresso
   - filename: espresso/average_electrostatic_potential_find_minima.json
     categories:
       - espresso
@@ -396,8 +409,21 @@ entities:
       - total_energy_contributions
       - total_force
       - zero_point_energy
+  - filename: lammps/emin.json
+    categories:
+      - lammps
+  - filename: nwchem/frequency.json
+    categories:
+      - nwchem
+      - thermal_correction_to_energy
+      - thermal_correction_to_enthalpy
+      - total_energy
+      - total_energy_contributions
+      - zero_point_energy
   - filename: nwchem/total_energy.json
     categories:
+      - homo_energy
+      - lumo_energy
       - nwchem
       - total_energy
       - total_energy_contributions
@@ -427,6 +453,9 @@ entities:
       - pyml:workflow-type-setter
       - python
       - set-io-unit-filenames
+  - filename: python/mlff/mattersim.json
+    categories:
+      - python
   - filename: python/python_script.json
     categories:
       - python
