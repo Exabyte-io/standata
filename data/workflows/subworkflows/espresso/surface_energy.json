@@ -53,6 +53,7 @@
             ],
             "next": "ee7abb4e-7848-5aeb-960d-0d441909e2d1",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -85,6 +86,7 @@
             "postProcessors": [],
             "next": "44263820-0c80-5bd1-b854-9da8d198eac1",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -123,6 +125,7 @@
             ],
             "next": "b70656f1-a394-57f4-b4de-00096969df4b",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -155,6 +158,7 @@
             "postProcessors": [],
             "next": "6ca4006a-e3ae-56ea-91a1-06b9790b5f7e",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -181,6 +185,7 @@
             "postProcessors": [],
             "next": "490635e0-c593-5809-9eb2-c794b96cfed1",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -219,6 +224,7 @@
             ],
             "next": "bbe13b97-4243-5a85-8f61-a279d0b797aa",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -251,6 +257,7 @@
             "postProcessors": [],
             "next": "a06c9f43-7670-5fd0-ac42-7028a472235a",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -277,6 +284,7 @@
             "postProcessors": [],
             "next": "cdf210be-26ed-585a-b4ac-d55795ba2975",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -304,6 +312,7 @@
             "postProcessors": [],
             "next": "ffa8e43d-096a-555b-b8d0-6d283365ef47",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -331,6 +340,7 @@
             "postProcessors": [],
             "next": "a0336ec5-a6da-5e4c-bb48-82b70cf5245f",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -358,6 +368,7 @@
             "postProcessors": [],
             "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -410,6 +421,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -503,6 +515,7 @@
             "postProcessors": [],
             "next": "542ea9ad-8a07-5a76-b233-f72fb27c4fc6",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -533,6 +546,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",

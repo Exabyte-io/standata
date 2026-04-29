@@ -2,6 +2,7 @@
     "name": "espresso",
     "shortName": "qe",
     "summary": "Quantum ESPRESSO",
+    "isUsingMaterial": true,
     "version": "7.5",
     "isDefault": false,
     "build": "Intel",

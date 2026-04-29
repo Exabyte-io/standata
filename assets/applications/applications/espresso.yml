@@ -2,6 +2,7 @@ name: espresso
 shortName: qe
 summary: Quantum ESPRESSO
 defaultVersion: '6.3'
+isUsingMaterial: true
 versions:
   #### version 6.3 ####
   - version: '6.3'

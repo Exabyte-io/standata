@@ -13,7 +13,7 @@ var TAGS;
 (function (TAGS) {
     TAGS["RELAXATION"] = "variable-cell_relaxation";
     TAGS["DEFAULT"] = "default";
-})(TAGS = exports.TAGS || (exports.TAGS = {}));
+})(TAGS || (exports.TAGS = TAGS = {}));
 class BaseWorkflowStandata extends base_1.Standata {
     findByApplication(appName) {
         return this.findEntitiesByTags(appName);

@@ -5,6 +5,7 @@
             "_id": "6a670ac8-6c12-5285-a6f8-9bf579fc88ee",
             "name": "Wavefunction Amplitude",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -82,6 +83,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -174,6 +176,7 @@
                     "head": false,
                     "next": "indices-below-fermi",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -202,6 +205,7 @@
                     "head": false,
                     "next": "8771dc7f-878e-5f13-a840-a3a416854f1e",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -225,6 +229,7 @@
                     "head": false,
                     "next": "57a07d7d-3f68-5f31-97ad-ebe8c5593cd2",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -248,6 +253,7 @@
                     "head": false,
                     "next": "pp-wfn",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -276,6 +282,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -332,6 +339,7 @@
             "_id": "e4ec581f-1cb3-5036-b698-999a96711559",
             "name": "Plot Wavefunction",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -373,6 +381,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
