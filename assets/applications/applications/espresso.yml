@@ -2,7 +2,6 @@ name: espresso
 shortName: qe
 summary: Quantum ESPRESSO
 defaultVersion: '6.3'
-# ADE uses this key to determine if material(s) are shown in the job designer that use this application
 isUsingMaterial: true
 versions:
   #### version 6.3 ####
