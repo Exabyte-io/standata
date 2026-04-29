@@ -5,6 +5,7 @@
             "_id": "f1341a29-777d-5ca3-8933-78a5e0d3f6f2",
             "name": "HSE Band Gap",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -82,6 +83,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -175,6 +177,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",

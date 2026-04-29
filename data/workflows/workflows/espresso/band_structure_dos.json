@@ -5,6 +5,7 @@
             "_id": "fa594399-6b98-5d79-986c-0713601dc06c",
             "name": "Band Structure + Density of States",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -81,6 +82,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -173,6 +175,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -254,6 +257,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -323,6 +327,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -409,6 +414,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",

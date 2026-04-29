@@ -5,6 +5,7 @@
             "_id": "64551dfb-e529-5d8d-9092-ff268f4da134",
             "name": "Recalculate Bands",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -50,6 +51,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -131,6 +133,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",

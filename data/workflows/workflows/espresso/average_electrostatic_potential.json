@@ -5,6 +5,7 @@
             "_id": "7f2f8a38-c3bd-5aa9-b3b0-2c367287dd60",
             "name": "Average Electrostatic Potential",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -78,6 +79,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -166,6 +168,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -233,6 +236,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",

@@ -30,6 +30,7 @@
             "head": true,
             "next": "2626f7bb-d392-5fd4-ab71-329b508de347",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -52,6 +53,7 @@
             "head": false,
             "next": "b7307787-53e2-599b-ad12-d627b04074b4",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -74,6 +76,7 @@
             "head": false,
             "next": "197f4b4d-cb7b-57be-a885-d44cb1f61905",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -100,6 +103,7 @@
             "tags": [],
             "head": false,
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",

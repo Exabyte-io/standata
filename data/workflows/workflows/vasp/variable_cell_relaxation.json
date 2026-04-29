@@ -7,6 +7,7 @@
             "name": "Variable-cell Relaxation",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -86,6 +87,7 @@
                     ],
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",

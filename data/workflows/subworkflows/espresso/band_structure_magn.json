@@ -68,6 +68,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -163,6 +164,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -247,6 +249,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -309,6 +312,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",

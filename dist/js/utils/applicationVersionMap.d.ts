@@ -13,7 +13,7 @@ export declare class ApplicationVersionsMap implements ApplicationVersionsMapTyp
         shortName?: string | undefined;
         summary?: string | undefined;
         isLicensed?: boolean | undefined;
-        name: string;
+        name: Required<ApplicationSchemaBase>["name"];
     };
     get versionConfigs(): ApplicationVersionInfo[];
     get versionConfigsFull(): ApplicationSchemaBase[];

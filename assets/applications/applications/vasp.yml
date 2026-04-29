@@ -3,6 +3,7 @@ shortName: vasp
 summary: Vienna Ab-initio Simulation Package
 defaultVersion: '5.4.4'
 isLicensed: true
+isUsingMaterial: true
 versions:
   #### version 5.4.4 ####
   - version: '5.4.4'

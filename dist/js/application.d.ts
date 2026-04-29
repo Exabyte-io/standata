@@ -20,6 +20,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                     moduleName: string;
                 };
                 isDefault: boolean;
+                isUsingMaterial: boolean;
                 name: string;
                 shortName: string;
                 summary: string;
@@ -37,6 +38,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 };
                 hasAdvancedComputeOptions: boolean;
                 isDefault: boolean;
+                isUsingMaterial: boolean;
                 name: string;
                 shortName: string;
                 summary: string;
@@ -53,6 +55,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                     moduleName: string;
                 };
                 isDefault: boolean;
+                isUsingMaterial: boolean;
                 name: string;
                 runConfig: {
                     commandTemplate: string;
@@ -76,6 +79,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                     moduleName: string;
                 };
                 isDefault: boolean;
+                isUsingMaterial: boolean;
                 name: string;
                 shortName: string;
                 summary: string;
@@ -84,6 +88,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
             "python/python_gnu_3.10.13.json": {
                 build: string;
                 isDefault: boolean;
+                isUsingMaterial: boolean;
                 name: string;
                 shortName: string;
                 summary: string;
@@ -109,6 +114,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                 };
                 isDefault: boolean;
                 isLicensed: boolean;
+                isUsingMaterial: boolean;
                 name: string;
                 shortName: string;
                 summary: string;
