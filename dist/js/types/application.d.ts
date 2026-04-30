@@ -1,4 +1,4 @@
-import { ApplicationSchema, ExecutableSchema, FlavorSchema } from "@mat3ra/esse/dist/js/types";
+import { type TemplateSchema, ApplicationSchema, ExecutableSchema, FlavorSchema } from "@mat3ra/esse/dist/js/types";
 type VersionFields = "isDefault" | "build" | "hasAdvancedComputeOptions" | "version";
 type ApplicationFields = "name" | "shortName" | "summary" | "isLicensed";
 export type ApplicationVersion = Pick<ApplicationSchema, VersionFields>;
@@ -10,10 +10,12 @@ export type ApplicationVersionsMapByApplicationType = {
     [key: string]: ApplicationConfigItem;
 };
 type OptionalFlavorSchema = Partial<FlavorSchema>;
-type RequiredFlavorFields = "input" | "monitors" | "applicationName" | "executableName" | "isDefault";
+type RequiredFlavorFields = "input" | "monitors" | "isDefault";
 type OptionalFlavorFields = "results";
 export type FlavorConfig = Pick<FlavorSchema, RequiredFlavorFields> & Pick<OptionalFlavorSchema, OptionalFlavorFields> & {
     supportedApplicationVersions?: string[];
+    applicationName: string;
+    executableName: string;
 };
 type OptionalExecutableSchema = Partial<ExecutableSchema>;
 type RequiredExecutableFields = "hasAdvancedComputeOptions" | "isDefault" | "monitors" | "results";
@@ -23,4 +25,8 @@ export type ExecutableTreeItem = Pick<ExecutableSchema, RequiredExecutableFields
     supportedApplicationVersions?: string[];
 };
 export type ApplicationExecutableTree = Record<string, Record<string, ExecutableTreeItem>>;
+export type TemplateConfigItem = Pick<TemplateSchema, "content" | "contextProviders" | "name"> & {
+    applicationName: string;
+    executableName: string;
+};
 export {};

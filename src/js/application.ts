@@ -12,11 +12,12 @@ import APPLICATION_VERSIONS_MAP from "./runtime_data/applications/applicationVer
 import EXECUTABLE_FLAVOR_MAP from "./runtime_data/applications/executableFlavorMapByApplication.json";
 import TEMPLATES_LIST_RAW from "./runtime_data/applications/templatesList.json";
 import {
+    type TemplateConfigItem,
     ApplicationExecutableTree,
     ApplicationVersionsMapByApplicationType,
 } from "./types/application";
 
-const TEMPLATES_LIST = TEMPLATES_LIST_RAW as TemplateSchema[];
+const TEMPLATES_LIST = TEMPLATES_LIST_RAW as TemplateConfigItem[];
 const APP_VERSIONS = APPLICATION_VERSIONS_MAP as ApplicationVersionsMapByApplicationType;
 const EXECUTABLE_FLAVOR = EXECUTABLE_FLAVOR_MAP as ApplicationExecutableTree;
 

@@ -1,5 +1,6 @@
 import type { ApplicationSchema, ExecutableSchema, FlavorSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
 import { Standata } from "./base";
+import { type TemplateConfigItem } from "./types/application";
 export declare enum TAGS {
     DEFAULT = "default",
     DEFAULT_VERSION = "default_version",
@@ -175,7 +176,7 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
         executable: ExecutableSchema;
         flavor: FlavorSchema;
     };
-    getAllAppTemplates(): TemplateSchema[];
+    getAllAppTemplates(): TemplateConfigItem[];
     getTemplatesByName(appName: string, execName: string, templateName?: string): TemplateSchema[];
     getInput(flavor: FlavorSchema): TemplateSchema[];
 }

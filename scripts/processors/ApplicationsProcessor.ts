@@ -4,12 +4,17 @@ import serverUtils from "@mat3ra/utils/server";
 import * as path from "path";
 
 import { BUILD_CONFIG, EXCLUDE_KEYS_FROM_SORTING } from "../../build-config";
-import { ApplicationVersionsMapByApplicationType } from "../../src/js/types/application";
+import {
+    type ApplicationConfigItem,
+    ApplicationVersionsMapByApplicationType,
+} from "../../src/js/types/application";
 import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
 import { buildJSONFromYAMLInDir, loadYAMLTree, resolveFromRoot } from "../utils";
 import { EntityProcessor } from "./EntityProcessor";
 
 type ApplicationVersionsMapType = ApplicationVersionsMapByApplicationType;
+
+type ApplicationYAMLTree = Record<string, ApplicationConfigItem>;
 
 export class ApplicationsProcessor extends EntityProcessor {
     constructor(rootDir: string) {
@@ -43,14 +48,34 @@ export class ApplicationsProcessor extends EntityProcessor {
         const modelAssetPath = path.resolve(sourcesRoot, BUILD_CONFIG.applications.assets.models);
         const methodAssetPath = path.resolve(sourcesRoot, BUILD_CONFIG.applications.assets.methods);
 
-        const nestedApplicationData = loadYAMLTree(applicationAssetPath) as Record<
-            string,
-            Record<string, ApplicationVersionsMapType>
-        >;
-        const clean = Utils.object.flattenNestedObjects(nestedApplicationData) as Record<
-            string,
-            ApplicationVersionsMapType
-        >;
+        const tree = loadYAMLTree<ApplicationYAMLTree>(applicationAssetPath);
+        const clean = Utils.object.flattenNestedObjects(tree);
+
+        // console.log({
+        //     clean,
+        //     tree,
+        // });
+
+        // const apps = Object.values(clean).reduce<ApplicationSchema[]>((acc, appData) => {
+        //     console.log({ appData });
+        //     const apps = appData.versions.map((version) => {
+        //         const app: ApplicationSchema = {
+        //             name: appData.name,
+        //             shortName: appData.shortName,
+        //             summary: appData.summary,
+        //             isLicensed: appData.isLicensed,
+        //             hasAdvancedComputeOptions: Boolean(version.hasAdvancedComputeOptions),
+        //             build: version.build,
+        //             version: version.version,
+        //             isUsingMaterial: Boolean(appData.isUsingMaterial),
+        //             // ...version,
+        //             // applicationName: appData.applicationName,
+        //         };
+
+        //         return app;
+        //     });
+        //     return [...apps, ...acc];
+        // }, []);
 
         this.cleanApplicationData = clean;
         this.modelFilterTree = loadYAMLTree(modelAssetPath);
