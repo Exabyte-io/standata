@@ -1,16 +1,16 @@
 import type { FlavorSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
 import { expect } from "chai";
 
-import { type ApplicationDriver, ApplicationStandata } from "../../src/js/application";
+import ApplicationRegistry, { type ApplicationDriver } from "../../src/js/ApplicationRegistry";
 import StandataDriver from "../../src/js/StandataDriver";
 
-describe("ApplicationStandata", () => {
+describe("ApplicationRegistry", () => {
     describe("with runtime ApplicationDriver", () => {
         const driver = new StandataDriver();
-        let standata: ApplicationStandata;
+        let standata: ApplicationRegistry;
 
         beforeEach(() => {
-            standata = new ApplicationStandata(driver);
+            standata = new ApplicationRegistry(driver);
         });
 
         it("getDefaultApplication returns the first application flagged isDefault in driver order", () => {
@@ -69,33 +69,33 @@ describe("ApplicationStandata", () => {
         let previousDriver: ApplicationDriver | undefined;
 
         beforeEach(() => {
-            previousDriver = ApplicationStandata.driver;
+            previousDriver = ApplicationRegistry.driver;
         });
 
         afterEach(() => {
-            ApplicationStandata.driver = previousDriver!;
+            ApplicationRegistry.driver = previousDriver!;
         });
 
-        it("constructor uses ApplicationStandata.driver when no instance driver is passed", () => {
+        it("constructor uses ApplicationRegistry.driver when no instance driver is passed", () => {
             const mockDriver: ApplicationDriver = {
                 getApplications: () => [{ name: "a", version: "1", isDefault: true } as never],
                 getTemplates: () => [],
                 getFlavors: () => [],
                 getExecutables: () => [],
             };
-            ApplicationStandata.setDriver(mockDriver);
-            const standata = new ApplicationStandata();
+            ApplicationRegistry.setDriver(mockDriver);
+            const standata = new ApplicationRegistry();
             expect(standata.getDefaultApplication()?.name).to.equal("a");
         });
 
-        it("constructor prefers an explicitly passed driver over ApplicationStandata.driver", () => {
+        it("constructor prefers an explicitly passed driver over ApplicationRegistry.driver", () => {
             const unused: ApplicationDriver = {
                 getApplications: () => [],
                 getTemplates: () => [],
                 getFlavors: () => [],
                 getExecutables: () => [],
             };
-            ApplicationStandata.setDriver(unused);
+            ApplicationRegistry.setDriver(unused);
 
             const injected: ApplicationDriver = {
                 getApplications: () => [
@@ -105,7 +105,7 @@ describe("ApplicationStandata", () => {
                 getFlavors: () => [],
                 getExecutables: () => [],
             };
-            const standata = new ApplicationStandata(injected);
+            const standata = new ApplicationRegistry(injected);
             expect(standata.getDefaultApplication()?.name).to.equal("injected");
         });
     });
@@ -132,7 +132,7 @@ describe("ApplicationStandata", () => {
                 getExecutables: () => [],
             };
 
-            const standata = new ApplicationStandata(mockDriver);
+            const standata = new ApplicationRegistry(mockDriver);
             const resolved = standata.getInput(flavor);
 
             expect(resolved).to.have.length(1);

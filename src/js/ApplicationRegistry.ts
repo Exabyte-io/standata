@@ -43,7 +43,7 @@ export interface ApplicationDriver {
     getExecutables(): ExecutableSchema[];
 }
 
-export class ApplicationStandata {
+export default class ApplicationRegistry {
     static driver: ApplicationDriver;
 
     private driver: ApplicationDriver;
@@ -53,7 +53,7 @@ export class ApplicationStandata {
     }
 
     constructor(driver?: ApplicationDriver) {
-        this.driver = driver || ApplicationStandata.driver;
+        this.driver = driver || ApplicationRegistry.driver;
     }
 
     getApplications() {
@@ -123,8 +123,8 @@ export class ApplicationStandata {
     }
 
     getInput(flavor: FlavorSchema): TemplateSchema[] {
-        const appName = flavor.applicationName || "";
-        const execName = flavor.executableName || "";
+        const appName = flavor.applicationName;
+        const execName = flavor.executableName;
 
         return flavor.input.map((input): TemplateSchema => {
             const inputName = input.templateName || input.name;
@@ -136,7 +136,7 @@ export class ApplicationStandata {
                 );
             }
 
-            return { ...filtered[0], name: input.name || "" };
+            return { ...filtered[0], name: input.name };
         });
     }
 }

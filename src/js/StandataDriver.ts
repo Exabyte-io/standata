@@ -5,7 +5,7 @@ import type {
     TemplateSchema,
 } from "@mat3ra/esse/dist/js/types";
 
-import type { ApplicationDriver } from "./application";
+import type { ApplicationDriver } from "./ApplicationRegistry";
 import APPLICATIONS from "./runtime_data/applications/applicationsList.json";
 import EXECUTABLES from "./runtime_data/applications/executablesList.json";
 import FLAVORS from "./runtime_data/applications/flavorsList.json";

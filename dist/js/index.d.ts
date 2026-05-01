@@ -1,9 +1,10 @@
+import ApplicationRegistry from "./ApplicationRegistry";
+import StandataDriver from "./StandataDriver";
 import methodTree from "./ui/methodTree.json";
 import modelTree from "./ui/modelTree.json";
 import baseUiSchema from "./ui/schemas.json";
 export { Standata } from "./base";
 export { MaterialStandata } from "./material";
-export { ApplicationStandata } from "./application";
 export { PropertyStandata } from "./property";
 export { WorkflowStandata, SubworkflowStandata, workflowSubworkflowMapByApplication, } from "./workflow";
 export { ApplicationModelStandata } from "./applicationModel";
@@ -13,4 +14,4 @@ export { MethodStandata } from "./method";
 export { ModelMethodFilter, filterMethodsByModel } from "./modelMethodFilter";
 export { setupNunjucksEnvironment } from "./utils/template";
 export { setUnitLinks } from "./utils/unit";
-export { modelTree, methodTree, baseUiSchema };
+export { modelTree, methodTree, baseUiSchema, ApplicationRegistry, StandataDriver };

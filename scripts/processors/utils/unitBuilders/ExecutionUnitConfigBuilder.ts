@@ -5,7 +5,7 @@ import type {
     FlavorSchema,
 } from "@mat3ra/esse/dist/js/types";
 
-import { ApplicationStandata } from "../../../../src/js/application";
+import ApplicationRegistry from "../../../../src/js/ApplicationRegistry";
 import { UnitConfigBuilder } from "./UnitConfigBuilder";
 
 export type ExecutionConfig = {
@@ -25,9 +25,9 @@ export default class ExecutionUnitConfigBuilder extends UnitConfigBuilder<"execu
     constructor(config: ExecutionConfig, application: ApplicationSchema, cache?: string[]) {
         super({ name: config.name, type: "execution", flowchartId: config.flowchartId, cache });
 
-        const standata = new ApplicationStandata();
+        const registry = new ApplicationRegistry();
 
-        const executable = standata.getExecutablesByApplication(application).find((executable) => {
+        const executable = registry.getExecutablesByApplication(application).find((executable) => {
             return executable.name === config.execName;
         });
 
@@ -37,7 +37,7 @@ export default class ExecutionUnitConfigBuilder extends UnitConfigBuilder<"execu
             );
         }
 
-        const flavor = standata
+        const flavor = registry
             .getFlavorsByApplicationExecutable(application, executable)
             .find((flavor) => {
                 return flavor.name === config.flavorName;
@@ -78,7 +78,7 @@ export default class ExecutionUnitConfigBuilder extends UnitConfigBuilder<"execu
             application: this.application,
             executable: this.executable,
             flavor: this.flavor,
-            input: new ApplicationStandata().getInput(this.flavor).map((input) => ({
+            input: new ApplicationRegistry().getInput(this.flavor).map((input) => ({
                 template: input,
                 rendered: "",
                 isManuallyChanged: false,
