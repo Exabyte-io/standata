@@ -102,31 +102,40 @@ export default class ApplicationRegistry {
         });
     }
 
-    getTemplatesByName(appName: string, execName: string, templateName: string): TemplateSchema[] {
-        return this.driver.getTemplates().filter((template) => {
-            return (
-                template.applicationName === appName &&
-                template.executableName === execName &&
-                template.name === templateName
-            );
-        });
-    }
-
-    getInput(flavor: FlavorSchema): TemplateSchema[] {
-        const appName = flavor.applicationName;
+    getInput(
+        application: Pick<ApplicationSchema, "name" | "version">,
+        flavor: FlavorSchema,
+    ): TemplateSchema[] {
         const execName = flavor.executableName;
 
         return flavor.input.map((input): TemplateSchema => {
             const inputName = input.templateName || input.name;
-            const filtered = this.getTemplatesByName(appName, execName, inputName);
 
-            if (filtered.length !== 1) {
-                console.log(
-                    `found ${filtered.length} templates for app=${appName} exec=${execName} name=${inputName} expected 1`,
+            const templates = this.driver.getTemplates().filter((template) => {
+                return (
+                    application.name === template.applicationName &&
+                    applicationVersionSatisfiesSupportedRange(
+                        application.version,
+                        template.applicationVersion,
+                    ) &&
+                    template.executableName === execName &&
+                    template.name === inputName
+                );
+            });
+
+            if (templates.length === 0) {
+                throw new Error(
+                    `Template not found for app=${application.name} exec=${execName} name=${inputName}`,
                 );
             }
 
-            return { ...filtered[0], name: input.name };
+            if (templates.length > 1) {
+                console.log(
+                    `found ${templates.length} templates for app=${application.name} exec=${execName} name=${inputName} expected 1`,
+                );
+            }
+
+            return { ...templates[0], name: input.name };
         });
     }
 }

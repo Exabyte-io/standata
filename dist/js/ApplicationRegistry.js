@@ -60,23 +60,23 @@ class ApplicationRegistry {
                 flavor.executableName === executable.name);
         });
     }
-    getTemplatesByName(appName, execName, templateName) {
-        return this.driver.getTemplates().filter((template) => {
-            return (template.applicationName === appName &&
-                template.executableName === execName &&
-                template.name === templateName);
-        });
-    }
-    getInput(flavor) {
-        const appName = flavor.applicationName;
+    getInput(application, flavor) {
         const execName = flavor.executableName;
         return flavor.input.map((input) => {
             const inputName = input.templateName || input.name;
-            const filtered = this.getTemplatesByName(appName, execName, inputName);
-            if (filtered.length !== 1) {
-                console.log(`found ${filtered.length} templates for app=${appName} exec=${execName} name=${inputName} expected 1`);
+            const templates = this.driver.getTemplates().filter((template) => {
+                return (application.name === template.applicationName &&
+                    (0, applicationVersion_1.applicationVersionSatisfiesSupportedRange)(application.version, template.applicationVersion) &&
+                    template.executableName === execName &&
+                    template.name === inputName);
+            });
+            if (templates.length === 0) {
+                throw new Error(`Template not found for app=${application.name} exec=${execName} name=${inputName}`);
             }
-            return { ...filtered[0], name: input.name };
+            if (templates.length > 1) {
+                console.log(`found ${templates.length} templates for app=${application.name} exec=${execName} name=${inputName} expected 1`);
+            }
+            return { ...templates[0], name: input.name };
         });
     }
 }

@@ -90,6 +90,17 @@ function flavorAssetToSchemas(
     };
 }
 
+function templateAssetToSchemas(templateData: TemplateYAMLItem) {
+    return {
+        name: templateData.name,
+        contextProviders: templateData.contextProviders,
+        content: templateData.content,
+        applicationName: templateData.applicationName,
+        applicationVersion: templateData.supportedApplicationVersions ?? "*",
+        executableName: templateData.executableName,
+    };
+}
+
 export class ApplicationsProcessor extends EntityProcessor {
     constructor(rootDir: string) {
         super({
@@ -196,16 +207,7 @@ export class ApplicationsProcessor extends EntityProcessor {
             return validateData(flavor, "software/flavor");
         });
 
-        this.allTemplates = templatesTree.map((data) => {
-            return {
-                name: data.name,
-                contextProviders: data.contextProviders,
-                content: data.content,
-                applicationName: data.applicationName,
-                executableName: data.executableName,
-                applicationVersion: data.supportedApplicationVersions ?? "*",
-            };
-        });
+        this.allTemplates = templatesTree.map(templateAssetToSchemas);
 
         this.allTemplates = this.allTemplates.map((template) => {
             return validateData(template, "software/template");

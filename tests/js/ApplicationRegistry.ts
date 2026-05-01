@@ -49,19 +49,8 @@ describe("ApplicationRegistry", () => {
             expect(flavors75.some((f) => f.name === "pw_scf_dft_u")).to.equal(true);
         });
 
-        it("getTemplatesByName returns templates matching application, executable, and template file name", () => {
-            const templates = standata.getTemplatesByName("espresso", "pw.x", "pw_scf.in");
-            expect(templates.length).to.equal(1);
-            const [template] = templates;
-            expect(template.applicationName).to.equal("espresso");
-            expect(template.executableName).to.equal("pw.x");
-            expect(template.name).to.equal("pw_scf.in");
-        });
-
-        it("getTemplatesByName returns an empty array when nothing matches", () => {
-            expect(
-                standata.getTemplatesByName("espresso", "pw.x", "__no_such_template__.in"),
-            ).to.deep.equal([]);
+        it("getTemplates returns the driver template list", () => {
+            expect(standata.getTemplates()).to.equal(driver.getTemplates());
         });
     });
 
@@ -112,8 +101,11 @@ describe("ApplicationRegistry", () => {
 
     describe("getInput", () => {
         it("resolves flavor input entries via templateName and overlays input name", () => {
+            const application = { name: "test-app", version: "1.0.0" };
+
             const baseTemplate = {
                 applicationName: "test-app",
+                applicationVersion: "*",
                 executableName: "test-exe",
                 name: "base.tpl",
                 content: "{}",
@@ -133,7 +125,7 @@ describe("ApplicationRegistry", () => {
             };
 
             const standata = new ApplicationRegistry(mockDriver);
-            const resolved = standata.getInput(flavor);
+            const resolved = standata.getInput(application, flavor);
 
             expect(resolved).to.have.length(1);
             expect(resolved[0].name).to.equal("rendered.in");

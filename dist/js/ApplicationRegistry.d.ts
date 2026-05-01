@@ -27,6 +27,5 @@ export default class ApplicationRegistry {
     getDefaultApplication(): ApplicationSchema | undefined;
     getExecutablesByApplication(application: Pick<ApplicationSchema, "name" | "version">): ExecutableSchema[];
     getFlavorsByApplicationExecutable(application: Pick<ApplicationSchema, "name" | "version">, executable: Pick<ExecutableSchema, "name">): FlavorSchema[];
-    getTemplatesByName(appName: string, execName: string, templateName: string): TemplateSchema[];
-    getInput(flavor: FlavorSchema): TemplateSchema[];
+    getInput(application: Pick<ApplicationSchema, "name" | "version">, flavor: FlavorSchema): TemplateSchema[];
 }

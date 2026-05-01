@@ -78,11 +78,16 @@ export default class ExecutionUnitConfigBuilder extends UnitConfigBuilder<"execu
             application: this.application,
             executable: this.executable,
             flavor: this.flavor,
-            input: new ApplicationRegistry().getInput(this.flavor).map((input) => ({
-                template: input,
-                rendered: "",
-                isManuallyChanged: false,
-            })),
+            input: new ApplicationRegistry()
+                .getInput(
+                    { name: this.application.name, version: this.application.version },
+                    this.flavor,
+                )
+                .map((input) => ({
+                    template: input,
+                    rendered: "",
+                    isManuallyChanged: false,
+                })),
             context: [],
             ...attributes,
         };
