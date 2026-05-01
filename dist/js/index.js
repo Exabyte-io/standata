@@ -3,11 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StandataDriver = exports.ApplicationRegistry = exports.baseUiSchema = exports.methodTree = exports.modelTree = exports.setUnitLinks = exports.setupNunjucksEnvironment = exports.filterMethodsByModel = exports.ModelMethodFilter = exports.MethodStandata = exports.ModelStandata = exports.ApplicationMethodStandata = exports.ApplicationModelStandata = exports.workflowSubworkflowMapByApplication = exports.SubworkflowStandata = exports.WorkflowStandata = exports.PropertyStandata = exports.MaterialStandata = exports.Standata = void 0;
+exports.ApplicationRegistry = exports.baseUiSchema = exports.methodTree = exports.modelTree = exports.setUnitLinks = exports.setupNunjucksEnvironment = exports.filterMethodsByModel = exports.ModelMethodFilter = exports.MethodStandata = exports.ModelStandata = exports.ApplicationMethodStandata = exports.ApplicationModelStandata = exports.workflowSubworkflowMapByApplication = exports.SubworkflowStandata = exports.WorkflowStandata = exports.PropertyStandata = exports.MaterialStandata = exports.Standata = void 0;
 const ApplicationRegistry_1 = __importDefault(require("./ApplicationRegistry"));
 exports.ApplicationRegistry = ApplicationRegistry_1.default;
-const StandataDriver_1 = __importDefault(require("./StandataDriver"));
-exports.StandataDriver = StandataDriver_1.default;
 const methodTree_json_1 = __importDefault(require("./ui/methodTree.json"));
 exports.methodTree = methodTree_json_1.default;
 const modelTree_json_1 = __importDefault(require("./ui/modelTree.json"));
