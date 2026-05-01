@@ -5,35 +5,13 @@ import type {
     FlavorSchema,
     TemplateSchema,
 } from "@mat3ra/esse/dist/js/types";
-import {
-    satisfies as versionSatisfiesRange,
-    validate as isValidApplicationVersion,
-} from "compare-versions";
+
+import { applicationVersionSatisfiesSupportedRange } from "./utils/applicationVersion";
 
 export enum TAGS {
     DEFAULT = "default",
     DEFAULT_VERSION = "default_version",
     DEFAULT_BUILD = "default_build",
-}
-
-/**
- * Whether `version` matches executable `supportedApplicationVersions`.
- * Delegates to [`compare-versions`](https://www.npmjs.com/package/compare-versions): npm-style ranges work for
- * dot-separated numeric versions (including short semver like `7.5` and CalVer like `2025.07.22.2`).
- */
-function applicationVersionSatisfiesSupportedRange(version: string, rangeSpec: string): boolean {
-    const range = rangeSpec.trim();
-    if (range === "*" || range === "") {
-        return true;
-    }
-    if (!isValidApplicationVersion(version)) {
-        return false;
-    }
-    try {
-        return versionSatisfiesRange(version, range);
-    } catch {
-        return false;
-    }
 }
 
 export interface ApplicationDriver {
@@ -58,6 +36,18 @@ export default class ApplicationRegistry {
 
     getApplications() {
         return this.driver.getApplications();
+    }
+
+    getTemplates() {
+        return this.driver.getTemplates();
+    }
+
+    getFlavors() {
+        return this.driver.getFlavors();
+    }
+
+    getExecutables() {
+        return this.driver.getExecutables();
     }
 
     findApplication({ name, version, build }: { name: string; version?: string; build?: string }) {

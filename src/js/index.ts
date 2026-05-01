@@ -16,6 +16,7 @@ export { ApplicationMethodStandata } from "./applicationMethod";
 export { ModelStandata } from "./model";
 export { MethodStandata } from "./method";
 export { ModelMethodFilter, filterMethodsByModel } from "./modelMethodFilter";
+export { applicationVersionSatisfiesSupportedRange } from "./utils/applicationVersion";
 export { setupNunjucksEnvironment } from "./utils/template";
 export { setUnitLinks } from "./utils/unit";
 

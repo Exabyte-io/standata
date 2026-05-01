@@ -1,33 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TAGS = void 0;
-const compare_versions_1 = require("compare-versions");
+const applicationVersion_1 = require("./utils/applicationVersion");
 var TAGS;
 (function (TAGS) {
     TAGS["DEFAULT"] = "default";
     TAGS["DEFAULT_VERSION"] = "default_version";
     TAGS["DEFAULT_BUILD"] = "default_build";
 })(TAGS || (exports.TAGS = TAGS = {}));
-/**
- * Whether `version` matches executable `supportedApplicationVersions`.
- * Delegates to [`compare-versions`](https://www.npmjs.com/package/compare-versions): npm-style ranges work for
- * dot-separated numeric versions (including short semver like `7.5` and CalVer like `2025.07.22.2`).
- */
-function applicationVersionSatisfiesSupportedRange(version, rangeSpec) {
-    const range = rangeSpec.trim();
-    if (range === "*" || range === "") {
-        return true;
-    }
-    if (!(0, compare_versions_1.validate)(version)) {
-        return false;
-    }
-    try {
-        return (0, compare_versions_1.satisfies)(version, range);
-    }
-    catch (_a) {
-        return false;
-    }
-}
 class ApplicationRegistry {
     static setDriver(driver) {
         this.driver = driver;
@@ -37,6 +17,15 @@ class ApplicationRegistry {
     }
     getApplications() {
         return this.driver.getApplications();
+    }
+    getTemplates() {
+        return this.driver.getTemplates();
+    }
+    getFlavors() {
+        return this.driver.getFlavors();
+    }
+    getExecutables() {
+        return this.driver.getExecutables();
     }
     findApplication({ name, version, build }) {
         const application = this.driver
@@ -61,13 +50,13 @@ class ApplicationRegistry {
     getExecutablesByApplication(application) {
         return this.driver.getExecutables().filter((executable) => {
             return (executable.applicationName === application.name &&
-                applicationVersionSatisfiesSupportedRange(application.version, executable.applicationVersion));
+                (0, applicationVersion_1.applicationVersionSatisfiesSupportedRange)(application.version, executable.applicationVersion));
         });
     }
     getFlavorsByApplicationExecutable(application, executable) {
         return this.driver.getFlavors().filter((flavor) => {
             return (flavor.applicationName === application.name &&
-                applicationVersionSatisfiesSupportedRange(application.version, flavor.applicationVersion) &&
+                (0, applicationVersion_1.applicationVersionSatisfiesSupportedRange)(application.version, flavor.applicationVersion) &&
                 flavor.executableName === executable.name);
         });
     }

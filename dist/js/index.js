@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ApplicationRegistry = exports.baseUiSchema = exports.methodTree = exports.modelTree = exports.setUnitLinks = exports.setupNunjucksEnvironment = exports.filterMethodsByModel = exports.ModelMethodFilter = exports.MethodStandata = exports.ModelStandata = exports.ApplicationMethodStandata = exports.ApplicationModelStandata = exports.workflowSubworkflowMapByApplication = exports.SubworkflowStandata = exports.WorkflowStandata = exports.PropertyStandata = exports.MaterialStandata = exports.Standata = void 0;
+exports.ApplicationRegistry = exports.baseUiSchema = exports.methodTree = exports.modelTree = exports.setUnitLinks = exports.setupNunjucksEnvironment = exports.applicationVersionSatisfiesSupportedRange = exports.filterMethodsByModel = exports.ModelMethodFilter = exports.MethodStandata = exports.ModelStandata = exports.ApplicationMethodStandata = exports.ApplicationModelStandata = exports.workflowSubworkflowMapByApplication = exports.SubworkflowStandata = exports.WorkflowStandata = exports.PropertyStandata = exports.MaterialStandata = exports.Standata = void 0;
 const ApplicationRegistry_1 = __importDefault(require("./ApplicationRegistry"));
 exports.ApplicationRegistry = ApplicationRegistry_1.default;
 const methodTree_json_1 = __importDefault(require("./ui/methodTree.json"));
@@ -33,6 +33,8 @@ Object.defineProperty(exports, "MethodStandata", { enumerable: true, get: functi
 var modelMethodFilter_1 = require("./modelMethodFilter");
 Object.defineProperty(exports, "ModelMethodFilter", { enumerable: true, get: function () { return modelMethodFilter_1.ModelMethodFilter; } });
 Object.defineProperty(exports, "filterMethodsByModel", { enumerable: true, get: function () { return modelMethodFilter_1.filterMethodsByModel; } });
+var applicationVersion_1 = require("./utils/applicationVersion");
+Object.defineProperty(exports, "applicationVersionSatisfiesSupportedRange", { enumerable: true, get: function () { return applicationVersion_1.applicationVersionSatisfiesSupportedRange; } });
 var template_1 = require("./utils/template");
 Object.defineProperty(exports, "setupNunjucksEnvironment", { enumerable: true, get: function () { return template_1.setupNunjucksEnvironment; } });
 var unit_1 = require("./utils/unit");

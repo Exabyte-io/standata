@@ -16,6 +16,9 @@ export default class ApplicationRegistry {
     static setDriver(driver: ApplicationDriver): void;
     constructor(driver?: ApplicationDriver);
     getApplications(): ApplicationSchema[];
+    getTemplates(): TemplateSchema[];
+    getFlavors(): FlavorSchema[];
+    getExecutables(): ExecutableSchema[];
     findApplication({ name, version, build }: {
         name: string;
         version?: string;
