@@ -6,12 +6,15 @@
             "_id": "2667054e-3c04-50a9-bd95-55c530d727c9",
             "name": "Zero Point Energy",
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
@@ -80,24 +83,59 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
+                        "isDefaultVersion": true,
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "isDefault": true,
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "preProcessors": [],
+                        "applicationName": "vasp",
+                        "applicationVersion": "*",
+                        "executableName": "vasp",
+                        "input": [
+                            {
+                                "name": "INCAR",
+                                "templateName": "INCAR_ZPE"
+                            },
+                            {
+                                "name": "KPOINTS",
+                                "templateName": "KPOINTS"
+                            },
+                            {
+                                "name": "POSCAR",
+                                "templateName": "POSCAR"
+                            }
+                        ],
+                        "isDefault": false,
+                        "monitors": [
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            }
+                        ],
+                        "name": "vasp_zpe",
                         "postProcessors": [],
+                        "preProcessors": [],
                         "results": [
                             {
                                 "name": "total_energy"
@@ -121,41 +159,13 @@
                                 "name": "zero_point_energy"
                             }
                         ],
-                        "applicationName": "vasp",
-                        "executableName": "vasp",
-                        "input": [
-                            {
-                                "name": "INCAR",
-                                "templateName": "INCAR_ZPE"
-                            },
-                            {
-                                "name": "KPOINTS",
-                                "templateName": "KPOINTS"
-                            },
-                            {
-                                "name": "POSCAR",
-                                "templateName": "POSCAR"
-                            }
-                        ],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            },
-                            {
-                                "name": "convergence_ionic"
-                            }
-                        ],
-                        "name": "vasp_zpe",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
+                        "schemaVersion": "2022.8.16"
                     },
                     "input": [
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "ISMEAR = 1\nSIGMA = 0.1\nIBRION = 5\n",
                                 "contextProviders": [
                                     {
@@ -172,6 +182,7 @@
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
                                 "contextProviders": [
                                     {
@@ -191,6 +202,7 @@
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "{{ input.POSCAR }}\n",
                                 "contextProviders": [
                                     {

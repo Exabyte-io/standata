@@ -6,12 +6,15 @@
             "_id": "f1341a29-777d-5ca3-8933-78a5e0d3f6f2",
             "name": "HSE Band Gap",
             "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
+                "isDefaultVersion": true,
+                "isLicensed": false,
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
                 "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
@@ -82,25 +85,47 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
+                        "isDefaultVersion": true,
+                        "isLicensed": false,
+                        "isUsingMaterial": true,
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "applicationName": "espresso",
+                        "applicationVersion": "*",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "preProcessors": [],
+                        "applicationName": "espresso",
+                        "applicationVersion": "*",
+                        "executableName": "pw.x",
+                        "input": [
+                            {
+                                "name": "pw_scf_hse.in"
+                            }
+                        ],
+                        "isDefault": false,
+                        "monitors": [
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
+                        ],
+                        "name": "pw_scf_hse",
                         "postProcessors": [],
+                        "preProcessors": [],
                         "results": [
                             {
                                 "name": "atomic_forces"
@@ -127,29 +152,13 @@
                                 "name": "total_force"
                             }
                         ],
-                        "applicationName": "espresso",
-                        "executableName": "pw.x",
-                        "input": [
-                            {
-                                "name": "pw_scf_hse.in"
-                            }
-                        ],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            }
-                        ],
-                        "name": "pw_scf_hse",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
+                        "schemaVersion": "2022.8.16"
                     },
                     "input": [
                         {
                             "template": {
                                 "applicationName": "espresso",
+                                "applicationVersion": "*",
                                 "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    ecutfock = 100\n    occupations = 'smearing'\n    degauss = 0.005\n    input_dft='hse',\n    nqx1 = {% if kgrid.dimensions[0]%2 == 0 %}{{kgrid.dimensions[0]/2}}{% else %}{{(kgrid.dimensions[0]+1)/2}}{% endif %}, nqx2 = {% if kgrid.dimensions[1]%2 == 0 %}{{kgrid.dimensions[1]/2}}{% else %}{{(kgrid.dimensions[1]+1)/2}}{% endif %}, nqx3 = {% if kgrid.dimensions[2]%2 == 0 %}{{kgrid.dimensions[2]/2}}{% else %}{{(kgrid.dimensions[2]+1)/2}}{% endif %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{% if d%2 == 0 %}{{d}} {% else %}{{d+1}} {% endif %}{% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
                                 "contextProviders": [
                                     {
@@ -196,49 +205,56 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
+                        "isDefaultVersion": true,
+                        "isLicensed": false,
+                        "isUsingMaterial": true,
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
                         "applicationName": "espresso",
+                        "applicationVersion": "*",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": false,
                         "name": "projwfc.x",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
+                        "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "results": [
-                            {
-                                "name": "density_of_states"
-                            }
-                        ],
                         "applicationName": "espresso",
+                        "applicationVersion": "*",
                         "executableName": "projwfc.x",
                         "input": [
                             {
                                 "name": "projwfc.in"
                             }
                         ],
+                        "isDefault": false,
                         "monitors": [
                             {
                                 "name": "standard_output"
                             }
                         ],
                         "name": "projwfc",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
+                        "postProcessors": [],
+                        "preProcessors": [],
+                        "results": [
+                            {
+                                "name": "density_of_states"
+                            }
+                        ],
+                        "schemaVersion": "2022.8.16"
                     },
                     "input": [
                         {
                             "template": {
                                 "applicationName": "espresso",
+                                "applicationVersion": "*",
                                 "content": "&PROJWFC\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    degauss = 0.01\n    deltaE = 0.05\n/\n",
                                 "contextProviders": [],
                                 "executableName": "projwfc.x",

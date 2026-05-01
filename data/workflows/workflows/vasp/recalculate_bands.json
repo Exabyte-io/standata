@@ -6,12 +6,15 @@
             "_id": "12f70885-f81a-5ff4-ae18-7ef4aaa27fc2",
             "name": "Recalculate Bands",
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
@@ -53,30 +56,29 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
+                        "isDefaultVersion": true,
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "isDefault": true,
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "results": [
-                            {
-                                "name": "band_structure"
-                            }
-                        ],
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
                         "executableName": "vasp",
                         "input": [
                             {
@@ -92,6 +94,7 @@
                                 "templateName": ""
                             }
                         ],
+                        "isDefault": false,
                         "monitors": [
                             {
                                 "name": "standard_output"
@@ -101,13 +104,20 @@
                             }
                         ],
                         "name": "vasp_bands",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
+                        "postProcessors": [],
+                        "preProcessors": [],
+                        "results": [
+                            {
+                                "name": "band_structure"
+                            }
+                        ],
+                        "schemaVersion": "2022.8.16"
                     },
                     "input": [
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "ISMEAR = 0\nSIGMA = 0.05\nISTART = 1\nICHARG = 11\n",
                                 "contextProviders": [
                                     {
@@ -124,6 +134,7 @@
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "kpoints path\n{{kpath.length}}\nreciprocal\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d|sprintf(\"%14.9f\")}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
                                 "contextProviders": [
                                     {
@@ -143,6 +154,7 @@
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "{{ input.POSCAR }}\n",
                                 "contextProviders": [
                                     {

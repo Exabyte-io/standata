@@ -1,10 +1,14 @@
 {
     "name": "deepmd",
     "shortName": "dp",
-    "summary": "DeepMD",
-    "version": "3.1.2",
-    "isDefault": true,
     "build": "CPU",
+    "version": "3.1.2",
+    "summary": "DeepMD",
+    "isLicensed": false,
+    "isUsingMaterial": true,
+    "hasAdvancedComputeOptions": false,
+    "isDefault": true,
+    "isDefaultVersion": true,
     "buildConfig": {
         "moduleName": "3.1.2-cpu",
         "imageName": "deepmd",

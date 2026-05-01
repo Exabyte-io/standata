@@ -1,124 +1,145 @@
+import type { FlavorSchema, TemplateSchema } from "@mat3ra/esse/dist/js/types";
 import { expect } from "chai";
 
-import { ApplicationStandata } from "../../src/js";
-import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
-import applicationVersionsMapByApplication from "./fixtures/applicationVersionsMapByApplication.json";
-import EspressoGnu63 from "./fixtures/espresso_gnu_6.3.json";
+import { type ApplicationDriver, ApplicationStandata } from "../../src/js/application";
+import StandataDriver from "../../src/js/StandataDriver";
 
-describe("ApplicationVersionsMap", () => {
-    it("should correctly instantiate from JSON data", () => {
-        const espressoVersionsMap = new ApplicationVersionsMap(
-            applicationVersionsMapByApplication.espresso,
-        );
-        expect(espressoVersionsMap).to.be.an.instanceof(ApplicationVersionsMap);
-        expect(espressoVersionsMap.versions).to.be.an("array");
-        expect(espressoVersionsMap.getSlugForVersionConfig(EspressoGnu63)).to.equal(
-            "espresso_gnu_6.3.json",
-        );
-        expect(espressoVersionsMap.defaultVersion).to.equal("6.3");
-        expect(espressoVersionsMap.name).to.equal("espresso");
-        expect(espressoVersionsMap.shortName).to.equal("qe");
-        expect(espressoVersionsMap.versionConfigsFull.length).to.not.equal(0);
-    });
-});
+describe("ApplicationStandata", () => {
+    describe("with runtime ApplicationDriver", () => {
+        const driver = new StandataDriver();
+        let standata: ApplicationStandata;
 
-describe("Application Standata", () => {
-    let standata: ApplicationStandata;
-
-    beforeEach(() => {
-        standata = new ApplicationStandata();
-    });
-
-    describe("Basic Standata methods", () => {
-        it("can search applications by tags", () => {
-            const tags = ["quantum-mechanical"];
-            const entities = standata.findEntitiesByTags(...tags);
-            expect(entities).to.deep.include.members([EspressoGnu63]);
-            expect(entities.length).to.be.greaterThan(0);
+        beforeEach(() => {
+            standata = new ApplicationStandata(driver);
         });
 
-        it("can find espresso applications", () => {
-            const espressoApps = standata.findEntitiesByTags("quantum-mechanical");
-            expect(espressoApps).to.be.an("array");
-            expect(espressoApps.length).to.be.greaterThan(0);
-            expect(espressoApps[0]).to.have.property("name", "espresso");
-        });
-    });
-
-    describe("Application-specific methods", () => {
-        it("getApplication - resolves default version and build from application config", () => {
-            const app = standata.getApplication({ name: "espresso" });
-            expect(app).to.have.property("name", "espresso");
-            expect(app).to.have.property("shortName", "qe");
-            expect(app).to.have.property("version", "6.3");
-            expect(app).to.have.property("build", "GNU");
+        it("getDefaultApplication returns the first application flagged isDefault in driver order", () => {
+            const apps = driver.getApplications();
+            const expected = apps.find((a) => a.isDefault);
+            expect(standata.getDefaultApplication()).to.deep.equal(expected);
+            expect(expected).to.exist;
         });
 
-        it("getExecutableByName - should resolve executable config for valid app", () => {
-            const { executable } = standata.getExecutableByName({
-                appName: "espresso",
-                execName: "pw.x",
+        it("getExecutablesByApplication filters by application name and satisfies applicationVersion range", () => {
+            const espresso63 = { name: "espresso" as const, version: "6.3" };
+            const executables = standata.getExecutablesByApplication(espresso63);
+            expect(executables.some((e) => e.name === "pw.x")).to.equal(true);
+            const hp = executables.find((e) => e.name === "hp.x");
+            expect(hp, "hp.x requires >=7.0 and should not match espresso 6.3").to.equal(undefined);
+        });
+
+        it("getExecutablesByApplication includes version-constrained executables when application version matches", () => {
+            const espresso75 = { name: "espresso" as const, version: "7.5" };
+            const executables = standata.getExecutablesByApplication(espresso75);
+            expect(executables.some((e) => e.name === "hp.x")).to.equal(true);
+        });
+
+        it("getFlavorsByApplicationExecutable filters by app, version range, and executable name", () => {
+            const espresso63 = { name: "espresso" as const, version: "6.3" };
+            const flavors63 = standata.getFlavorsByApplicationExecutable(espresso63, {
+                name: "pw.x",
             });
-            expect(executable).to.be.an("object");
-            expect(executable).to.have.property("name", "pw.x");
-        });
+            expect(flavors63.some((f) => f.name === "pw_scf")).to.equal(true);
+            expect(flavors63.some((f) => f.name === "pw_scf_dft_u")).to.equal(false);
 
-        it("getExecutableByName - should throw for app without executable tree", () => {
-            expect(() => {
-                standata.getExecutableByName({ appName: "nonexistent" });
-            }).to.throw("nonexistent is not a known application with executable tree");
-        });
-
-        it("getTemplatesByName - should return filtered templates", () => {
-            const templates = standata.getTemplatesByName("espresso", "pw.x");
-            expect(templates).to.be.an("array");
-            templates.forEach((template) => {
-                expect(template).to.have.property("applicationName", "espresso");
-                expect(template).to.have.property("executableName", "pw.x");
+            const espresso75 = { name: "espresso" as const, version: "7.5" };
+            const flavors75 = standata.getFlavorsByApplicationExecutable(espresso75, {
+                name: "pw.x",
             });
+            expect(flavors75.some((f) => f.name === "pw_scf_dft_u")).to.equal(true);
         });
 
-        it("getTemplatesByName - should filter by template name when provided", () => {
-            const allTemplates = standata.getTemplatesByName("espresso", "pw.x");
-            if (allTemplates.length > 0) {
-                const templateName = allTemplates[0].name;
-                const filtered = standata.getTemplatesByName("espresso", "pw.x", templateName);
-                expect(filtered).to.be.an("array");
-                filtered.forEach((template) => {
-                    expect(template).to.have.property("name", templateName);
-                });
-            }
+        it("getTemplatesByName returns templates matching application, executable, and template file name", () => {
+            const templates = standata.getTemplatesByName("espresso", "pw.x", "pw_scf.in");
+            expect(templates.length).to.equal(1);
+            const [template] = templates;
+            expect(template.applicationName).to.equal("espresso");
+            expect(template.executableName).to.equal("pw.x");
+            expect(template.name).to.equal("pw_scf.in");
         });
 
-        it("getAllApplications - should return all applications", () => {
-            const applications = standata.getAllApplications();
-            expect(applications).to.be.an("array");
-            expect(applications.length).to.be.greaterThan(0);
+        it("getTemplatesByName returns an empty array when nothing matches", () => {
+            expect(
+                standata.getTemplatesByName("espresso", "pw.x", "__no_such_template__.in"),
+            ).to.deep.equal([]);
+        });
+    });
 
-            expect(applications.map((application) => application.name)).to.deep.include.members([
-                "espresso",
-                "nwchem",
-                "python",
-                "shell",
-                "vasp",
-                "shell",
-                "vasp",
-                "lammps",
-                "deepmd",
-            ]);
+    describe("driver wiring", () => {
+        let previousDriver: ApplicationDriver | undefined;
+
+        beforeEach(() => {
+            previousDriver = ApplicationStandata.driver;
         });
 
-        it("returns default config", () => {
-            const defaultConfig = standata.getDefaultConfig();
-            expect(defaultConfig).to.be.an("object");
-            expect(defaultConfig).to.have.property("name", "espresso");
-            expect(defaultConfig).to.have.property("shortName", "qe");
-            expect(defaultConfig).to.have.property("summary", "Quantum ESPRESSO");
-            expect(defaultConfig).to.have.property("version", "6.3");
-            expect(defaultConfig).to.have.property("build", "GNU");
+        afterEach(() => {
+            ApplicationStandata.driver = previousDriver!;
+        });
 
-            expect(defaultConfig).to.not.have.property("isDefault");
-            expect(defaultConfig).to.not.have.property("hasAdvancedComputeOptions");
+        it("constructor uses ApplicationStandata.driver when no instance driver is passed", () => {
+            const mockDriver: ApplicationDriver = {
+                getApplications: () => [{ name: "a", version: "1", isDefault: true } as never],
+                getTemplates: () => [],
+                getFlavors: () => [],
+                getExecutables: () => [],
+            };
+            ApplicationStandata.setDriver(mockDriver);
+            const standata = new ApplicationStandata();
+            expect(standata.getDefaultApplication()?.name).to.equal("a");
+        });
+
+        it("constructor prefers an explicitly passed driver over ApplicationStandata.driver", () => {
+            const unused: ApplicationDriver = {
+                getApplications: () => [],
+                getTemplates: () => [],
+                getFlavors: () => [],
+                getExecutables: () => [],
+            };
+            ApplicationStandata.setDriver(unused);
+
+            const injected: ApplicationDriver = {
+                getApplications: () => [
+                    { name: "injected", version: "1", isDefault: true } as never,
+                ],
+                getTemplates: () => [],
+                getFlavors: () => [],
+                getExecutables: () => [],
+            };
+            const standata = new ApplicationStandata(injected);
+            expect(standata.getDefaultApplication()?.name).to.equal("injected");
+        });
+    });
+
+    describe("getInput", () => {
+        it("resolves flavor input entries via templateName and overlays input name", () => {
+            const baseTemplate = {
+                applicationName: "test-app",
+                executableName: "test-exe",
+                name: "base.tpl",
+                content: "{}",
+            } as TemplateSchema;
+
+            const flavor = {
+                applicationName: "test-app",
+                executableName: "test-exe",
+                input: [{ name: "rendered.in", templateName: "base.tpl" }],
+            } as FlavorSchema;
+
+            const mockDriver: ApplicationDriver = {
+                getApplications: () => [],
+                getTemplates: () => [baseTemplate],
+                getFlavors: () => [],
+                getExecutables: () => [],
+            };
+
+            const standata = new ApplicationStandata(mockDriver);
+            const resolved = standata.getInput(flavor);
+
+            expect(resolved).to.have.length(1);
+            expect(resolved[0].name).to.equal("rendered.in");
+            expect(resolved[0].applicationName).to.equal("test-app");
+            expect(resolved[0].executableName).to.equal("test-exe");
+            expect(resolved[0].content).to.equal("{}");
         });
     });
 });

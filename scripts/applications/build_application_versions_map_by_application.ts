@@ -1,8 +1,6 @@
+import serverUtils from "@mat3ra/utils/server";
 import * as fs from "fs";
 import * as path from "path";
-
-// eslint-disable-next-line import/no-extraneous-dependencies
-import serverUtils from "@mat3ra/utils/server";
 
 import { BUILD_CONFIG } from "../../build-config";
 
@@ -30,5 +28,3 @@ application_versions_map_by_application = json.loads(r'''${JSON.stringify(
 if (require.main === module) {
     buildApplicationVersionsMapByApplicationPythonModule();
 }
-
-

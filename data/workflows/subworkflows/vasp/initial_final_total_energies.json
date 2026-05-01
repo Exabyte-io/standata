@@ -66,24 +66,55 @@
             "statusTrack": [],
             "tags": [],
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "isDefault": true,
                 "applicationName": "vasp",
+                "applicationVersion": "*",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "preProcessors": [],
+                "applicationName": "vasp",
+                "applicationVersion": "*",
+                "executableName": "vasp",
+                "input": [
+                    {
+                        "name": "INCAR",
+                        "templateName": "INCAR_NEB_INITIAL_FINAL"
+                    },
+                    {
+                        "name": "KPOINTS"
+                    },
+                    {
+                        "name": "POSCAR",
+                        "templateName": "POSCAR_NEB_INITIAL"
+                    }
+                ],
+                "isDefault": false,
+                "monitors": [
+                    {
+                        "name": "standard_output"
+                    },
+                    {
+                        "name": "convergence_electronic"
+                    }
+                ],
+                "name": "vasp_neb_initial",
                 "postProcessors": [],
+                "preProcessors": [],
                 "results": [
                     {
                         "name": "total_energy"
@@ -107,37 +138,13 @@
                         "name": "stress_tensor"
                     }
                 ],
-                "applicationName": "vasp",
-                "executableName": "vasp",
-                "input": [
-                    {
-                        "name": "INCAR",
-                        "templateName": "INCAR_NEB_INITIAL_FINAL"
-                    },
-                    {
-                        "name": "KPOINTS"
-                    },
-                    {
-                        "name": "POSCAR",
-                        "templateName": "POSCAR_NEB_INITIAL"
-                    }
-                ],
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    },
-                    {
-                        "name": "convergence_electronic"
-                    }
-                ],
-                "name": "vasp_neb_initial",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
+                "schemaVersion": "2022.8.16"
             },
             "input": [
                 {
                     "template": {
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
                         "content": "ISTART = 0\nENCUT = 500\nISPIN = 2\n",
                         "contextProviders": [
                             {
@@ -157,6 +164,7 @@
                 {
                     "template": {
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
                         "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
                         "contextProviders": [
                             {
@@ -176,6 +184,7 @@
                 {
                     "template": {
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
                         "content": "{{ input.FIRST_IMAGE }}\n",
                         "contextProviders": [
                             {
@@ -240,24 +249,55 @@
             "statusTrack": [],
             "tags": [],
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "isDefault": true,
                 "applicationName": "vasp",
+                "applicationVersion": "*",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "preProcessors": [],
+                "applicationName": "vasp",
+                "applicationVersion": "*",
+                "executableName": "vasp",
+                "input": [
+                    {
+                        "name": "INCAR",
+                        "templateName": "INCAR_NEB_INITIAL_FINAL"
+                    },
+                    {
+                        "name": "KPOINTS"
+                    },
+                    {
+                        "name": "POSCAR",
+                        "templateName": "POSCAR_NEB_FINAL"
+                    }
+                ],
+                "isDefault": false,
+                "monitors": [
+                    {
+                        "name": "standard_output"
+                    },
+                    {
+                        "name": "convergence_electronic"
+                    }
+                ],
+                "name": "vasp_neb_final",
                 "postProcessors": [],
+                "preProcessors": [],
                 "results": [
                     {
                         "name": "total_energy"
@@ -281,37 +321,13 @@
                         "name": "stress_tensor"
                     }
                 ],
-                "applicationName": "vasp",
-                "executableName": "vasp",
-                "input": [
-                    {
-                        "name": "INCAR",
-                        "templateName": "INCAR_NEB_INITIAL_FINAL"
-                    },
-                    {
-                        "name": "KPOINTS"
-                    },
-                    {
-                        "name": "POSCAR",
-                        "templateName": "POSCAR_NEB_FINAL"
-                    }
-                ],
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    },
-                    {
-                        "name": "convergence_electronic"
-                    }
-                ],
-                "name": "vasp_neb_final",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
+                "schemaVersion": "2022.8.16"
             },
             "input": [
                 {
                     "template": {
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
                         "content": "ISTART = 0\nENCUT = 500\nISPIN = 2\n",
                         "contextProviders": [
                             {
@@ -331,6 +347,7 @@
                 {
                     "template": {
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
                         "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
                         "contextProviders": [
                             {
@@ -350,6 +367,7 @@
                 {
                     "template": {
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
                         "content": "{{ input.LAST_IMAGE }}\n",
                         "contextProviders": [
                             {

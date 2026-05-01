@@ -25,12 +25,29 @@ export default class ExecutionUnitConfigBuilder extends UnitConfigBuilder<"execu
     constructor(config: ExecutionConfig, application: ApplicationSchema, cache?: string[]) {
         super({ name: config.name, type: "execution", flowchartId: config.flowchartId, cache });
 
-        const { executable, flavor } = new ApplicationStandata().getExecutableAndFlavorByName({
-            appName: application.name,
-            appVersion: application.version,
-            execName: config.execName,
-            flavorName: config.flavorName,
+        const standata = new ApplicationStandata();
+
+        const executable = standata.getExecutablesByApplication(application).find((executable) => {
+            return executable.name === config.execName;
         });
+
+        if (!executable) {
+            throw new Error(
+                `Executable ${config.execName} not found for application ${application.name} version ${application.version}`,
+            );
+        }
+
+        const flavor = standata
+            .getFlavorsByApplicationExecutable(application, executable)
+            .find((flavor) => {
+                return flavor.name === config.flavorName;
+            });
+
+        if (!flavor) {
+            throw new Error(
+                `Flavor ${config.flavorName} not found for executable ${config.execName} in application ${application.name} version ${application.version}`,
+            );
+        }
 
         this.application = application;
         this.executable = executable;

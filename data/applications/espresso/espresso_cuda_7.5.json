@@ -1,11 +1,14 @@
 {
     "name": "espresso",
     "shortName": "qe",
-    "summary": "Quantum ESPRESSO",
-    "version": "7.5",
-    "isDefault": false,
     "build": "CUDA",
+    "version": "7.5",
+    "summary": "Quantum ESPRESSO",
+    "isLicensed": false,
+    "isUsingMaterial": true,
     "hasAdvancedComputeOptions": true,
+    "isDefault": false,
+    "isDefaultVersion": false,
     "buildConfig": {
         "moduleName": "7.5-cuda-12.8",
         "imageName": "espresso",

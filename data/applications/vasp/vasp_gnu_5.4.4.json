@@ -1,11 +1,14 @@
 {
     "name": "vasp",
     "shortName": "vasp",
+    "build": "GNU",
+    "version": "5.4.4",
     "summary": "Vienna Ab-initio Simulation Package",
     "isLicensed": true,
-    "version": "5.4.4",
+    "isUsingMaterial": true,
+    "hasAdvancedComputeOptions": false,
     "isDefault": true,
-    "build": "GNU",
+    "isDefaultVersion": true,
     "buildConfig": {
         "moduleName": "5.4.4-gnu",
         "imageName": "vasp",

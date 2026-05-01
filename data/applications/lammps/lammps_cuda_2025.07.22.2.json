@@ -1,14 +1,14 @@
 {
     "name": "lammps",
     "shortName": "lmp",
-    "summary": "LAMMPS",
-    "runConfig": {
-        "commandTemplate": "{BASE_CMD} &&\n{MODULE_CMD}\n$EXEC_CMD mpirun -machinefile {MACHINEFILE} -np {NP} {EXECUTABLE} -i {INPUTFILE} -l {OUTPUTFILE}\n",
-        "outFileName": "log.out"
-    },
-    "version": "2025.07.22.2",
     "build": "CUDA",
+    "version": "2025.07.22.2",
+    "summary": "LAMMPS",
+    "isLicensed": false,
+    "isUsingMaterial": true,
+    "hasAdvancedComputeOptions": false,
     "isDefault": false,
+    "isDefaultVersion": true,
     "buildConfig": {
         "moduleName": "2025.07.22.2-intel-2023.1-cuda-12.8",
         "imageName": "lammps",

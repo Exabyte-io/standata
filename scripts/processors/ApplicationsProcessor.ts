@@ -1,20 +1,93 @@
-import { ApplicationSchema } from "@mat3ra/esse/dist/js/types";
+import {
+    type ExecutableSchema,
+    type FlavorSchema,
+    type TemplateSchema,
+    ApplicationSchema,
+} from "@mat3ra/esse/dist/js/types";
 import { Utils } from "@mat3ra/utils";
 import serverUtils from "@mat3ra/utils/server";
 import * as path from "path";
 
 import { BUILD_CONFIG, EXCLUDE_KEYS_FROM_SORTING } from "../../build-config";
 import {
-    type ApplicationConfigItem,
-    ApplicationVersionsMapByApplicationType,
+    type ApplicationYAMLItem,
+    type ExecutableYAMLItem,
+    type FlavorYAMLItem,
+    type TemplateYAMLItem,
 } from "../../src/js/types/application";
-import { ApplicationVersionsMap } from "../../src/js/utils/applicationVersionMap";
-import { buildJSONFromYAMLInDir, loadYAMLTree, resolveFromRoot } from "../utils";
+import {
+    buildJSONFromYAMLInDir,
+    loadYAMLTree,
+    readYAMLFileResolved,
+    resolveFromRoot,
+} from "../utils";
 import { EntityProcessor } from "./EntityProcessor";
+import { validateData } from "./utils/utils";
 
-type ApplicationVersionsMapType = ApplicationVersionsMapByApplicationType;
+type ApplicationYAMLTree = Record<string, ApplicationYAMLItem>;
 
-type ApplicationYAMLTree = Record<string, ApplicationConfigItem>;
+type ExecutableYAMLTree = Record<string, Record<string, ExecutableYAMLItem>>;
+
+type TemplateYAMLTree = TemplateYAMLItem[];
+
+type ApplicationWithBuildConfig = ApplicationSchema & { buildConfig: object };
+
+function applicationAssetToSchemas(appData: ApplicationYAMLItem) {
+    return appData.versions.map((version) => {
+        const app: ApplicationWithBuildConfig = {
+            name: appData.name,
+            shortName: appData.shortName,
+            build: version.build,
+            version: version.version,
+            summary: appData.summary,
+            isLicensed: Boolean(appData.isLicensed),
+            isUsingMaterial: Boolean(appData.isUsingMaterial),
+            hasAdvancedComputeOptions: Boolean(version.hasAdvancedComputeOptions),
+            isDefault: Boolean(version.isDefault),
+            isDefaultVersion: appData.defaultVersion === version.version,
+            buildConfig: version.buildConfig,
+        };
+
+        return app;
+    });
+}
+
+function executableAssetToSchemas(
+    applicationName: string,
+    executableName: string,
+    executableData: ExecutableYAMLItem,
+) {
+    return {
+        name: executableName,
+        isDefault: Boolean(executableData.isDefault),
+        preProcessors: executableData.preProcessors || [],
+        postProcessors: executableData.postProcessors || [],
+        monitors: executableData.monitors || [],
+        results: executableData.results || [],
+        hasAdvancedComputeOptions: Boolean(executableData.hasAdvancedComputeOptions),
+        applicationName,
+        applicationVersion: executableData.supportedApplicationVersions ?? "*",
+    };
+}
+
+function flavorAssetToSchemas(
+    applicationName: string,
+    executableName: string,
+    flavorName: string,
+    flavorData: FlavorYAMLItem,
+): FlavorSchema {
+    return {
+        name: flavorName,
+        applicationName,
+        executableName,
+        applicationVersion: flavorData.supportedApplicationVersions ?? "*",
+        preProcessors: flavorData.preProcessors || [],
+        postProcessors: flavorData.postProcessors || [],
+        monitors: flavorData.monitors || [],
+        results: flavorData.results || [],
+        input: flavorData.input,
+    };
+}
 
 export class ApplicationsProcessor extends EntityProcessor {
     constructor(rootDir: string) {
@@ -26,121 +99,175 @@ export class ApplicationsProcessor extends EntityProcessor {
             buildDir: BUILD_CONFIG.applications.build.path,
             categoriesRelativePath: BUILD_CONFIG.applications.assets.categories,
             areKeysSorted: true,
-            excludeKeys: EXCLUDE_KEYS_FROM_SORTING,
+            excludeKeys: [...EXCLUDE_KEYS_FROM_SORTING],
         });
     }
 
-    private cleanApplicationData: Record<string, ApplicationVersionsMapType> = {};
+    private cleanApplicationData: Record<string, ApplicationYAMLItem> = {};
 
-    private modelFilterTree: Record<string, unknown> = {};
+    private allApplications: ApplicationSchema[] = [];
 
-    private methodFilterTree: Record<string, unknown> = {};
+    private allExecutables: ExecutableSchema[] = [];
+
+    private allFlavors: FlavorSchema[] = [];
+
+    private allTemplates: TemplateSchema[] = [];
+
+    private allApplicationsWithBuildConfigs: ApplicationWithBuildConfig[] = [];
+
+    private modelMethodMapByApplication: {
+        models: Record<string, unknown>;
+        methods: Record<string, unknown>;
+    } = {
+        models: {},
+        methods: {},
+    };
 
     public readAssets() {
-        const sourcesRoot = resolveFromRoot(
-            this.options.rootDir,
-            BUILD_CONFIG.applications.assets.path,
-        );
-        const applicationAssetPath = path.resolve(
-            sourcesRoot,
-            BUILD_CONFIG.applications.assets.applications,
-        );
-        const modelAssetPath = path.resolve(sourcesRoot, BUILD_CONFIG.applications.assets.models);
-        const methodAssetPath = path.resolve(sourcesRoot, BUILD_CONFIG.applications.assets.methods);
+        const { assets } = BUILD_CONFIG.applications;
+
+        const sourcesRoot = resolveFromRoot(this.options.rootDir, assets.path);
+        const applicationAssetPath = path.resolve(sourcesRoot, assets.applications);
+        const modelAssetPath = path.resolve(sourcesRoot, assets.models);
+        const methodAssetPath = path.resolve(sourcesRoot, assets.methods);
 
         const tree = loadYAMLTree<ApplicationYAMLTree>(applicationAssetPath);
         const clean = Utils.object.flattenNestedObjects(tree);
 
-        // console.log({
-        //     clean,
-        //     tree,
-        // });
-
-        // const apps = Object.values(clean).reduce<ApplicationSchema[]>((acc, appData) => {
-        //     console.log({ appData });
-        //     const apps = appData.versions.map((version) => {
-        //         const app: ApplicationSchema = {
-        //             name: appData.name,
-        //             shortName: appData.shortName,
-        //             summary: appData.summary,
-        //             isLicensed: appData.isLicensed,
-        //             hasAdvancedComputeOptions: Boolean(version.hasAdvancedComputeOptions),
-        //             build: version.build,
-        //             version: version.version,
-        //             isUsingMaterial: Boolean(appData.isUsingMaterial),
-        //             // ...version,
-        //             // applicationName: appData.applicationName,
-        //         };
-
-        //         return app;
-        //     });
-        //     return [...apps, ...acc];
-        // }, []);
-
         this.cleanApplicationData = clean;
-        this.modelFilterTree = loadYAMLTree(modelAssetPath);
-        this.methodFilterTree = loadYAMLTree(methodAssetPath);
+
+        const executableTree = readYAMLFileResolved<ExecutableYAMLTree>(
+            assets.executableTree,
+            sourcesRoot,
+        );
+
+        const templatesTree = readYAMLFileResolved<TemplateYAMLTree>(assets.templates, sourcesRoot);
+
+        this.allApplicationsWithBuildConfigs = Object.values(clean).reduce<
+            ApplicationWithBuildConfig[]
+        >((acc, appData) => {
+            const apps = applicationAssetToSchemas(appData);
+
+            return [...acc, ...apps];
+        }, []);
+
+        this.allApplications = this.allApplicationsWithBuildConfigs.map(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            ({ buildConfig: _, ...app }) => {
+                return app;
+            },
+        );
+
+        this.allExecutables = Object.entries(executableTree).flatMap(
+            ([applicationName, executables]) => {
+                return Object.entries(executables).map(([executableName, executableData]) => {
+                    return executableAssetToSchemas(
+                        applicationName,
+                        executableName,
+                        executableData,
+                    );
+                });
+            },
+        );
+
+        this.allExecutables = this.allExecutables.map((executable) => {
+            return validateData(executable, "software/executable");
+        });
+
+        this.allFlavors = Object.entries(executableTree).flatMap(
+            ([applicationName, executables]) => {
+                return Object.entries(executables).flatMap(([executableName, executableData]) => {
+                    return Object.entries(executableData.flavors).map(
+                        ([flavorName, flavorData]) => {
+                            return flavorAssetToSchemas(
+                                applicationName,
+                                executableName,
+                                flavorName,
+                                flavorData,
+                            );
+                        },
+                    );
+                });
+            },
+        );
+
+        this.allFlavors = this.allFlavors.map((flavor) => {
+            return validateData(flavor, "software/flavor");
+        });
+
+        this.allTemplates = templatesTree.map((data) => {
+            return {
+                name: data.name,
+                contextProviders: data.contextProviders,
+                content: data.content,
+                applicationName: data.applicationName,
+                executableName: data.executableName,
+                applicationVersion: data.supportedApplicationVersions ?? "*",
+            };
+        });
+
+        this.allTemplates = this.allTemplates.map((template) => {
+            return validateData(template, "software/template");
+        });
+
+        this.modelMethodMapByApplication = {
+            models: loadYAMLTree(modelAssetPath),
+            methods: loadYAMLTree(methodAssetPath),
+        };
 
         this.assets = [];
     }
 
     public writeBuildDirectoryContent(): void {
         if (!this.resolvedPaths.buildDir) return;
-        serverUtils.file.createDirIfNotExistsSync(this.resolvedPaths.buildDir);
 
-        const targetBuildDir = this.resolvedPaths.buildDir as string;
+        const { buildDir } = this.resolvedPaths;
+        const buildConfig = BUILD_CONFIG.applications.build;
         const workingDir = BUILD_CONFIG.applications.assets.path;
-        buildJSONFromYAMLInDir({
-            assetPath: BUILD_CONFIG.applications.assets.templates,
-            targetPath: `${targetBuildDir}/${BUILD_CONFIG.applications.build.templatesList}`,
-            workingDir,
-            spaces: 0,
-        });
+
+        const applicationsPath = path.resolve(buildDir, buildConfig.applicationsList);
+        const executablesPath = path.resolve(buildDir, buildConfig.executablesList);
+        const flavorsPath = path.resolve(buildDir, buildConfig.flavorsList);
+        const templatesPath = path.resolve(buildDir, buildConfig.templatesList);
+
+        serverUtils.file.createDirIfNotExistsSync(this.resolvedPaths.buildDir);
+        serverUtils.json.writeJSONFileSync(applicationsPath, this.allApplications);
+        serverUtils.json.writeJSONFileSync(executablesPath, this.allExecutables);
+        serverUtils.json.writeJSONFileSync(flavorsPath, this.allFlavors);
+        serverUtils.json.writeJSONFileSync(templatesPath, this.allTemplates);
+        serverUtils.json.writeJSONFileSync(
+            path.resolve(buildDir, buildConfig.modelMethodMapByApplication),
+            this.modelMethodMapByApplication,
+        );
+
         buildJSONFromYAMLInDir({
             assetPath: BUILD_CONFIG.applications.assets.executableTree,
-            targetPath: `${targetBuildDir}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
+            targetPath: `${buildDir}/${BUILD_CONFIG.applications.build.executableFlavorMapByApplication}`,
             workingDir,
             spaces: 0,
         });
 
         serverUtils.json.writeJSONFileSync(
             path.resolve(
-                targetBuildDir,
+                buildDir,
                 BUILD_CONFIG.applications.build.applicationVersionsMapByApplication,
             ),
             this.cleanApplicationData,
         );
-
-        const modelMethodMapByApplication = {
-            models: this.modelFilterTree,
-            methods: this.methodFilterTree,
-        };
-        serverUtils.json.writeJSONFileSync(
-            path.resolve(
-                targetBuildDir,
-                BUILD_CONFIG.applications.build.modelMethodMapByApplication,
-            ),
-            modelMethodMapByApplication,
-        );
     }
 
     public writeDataDirectoryContent(): void {
-        const appNames = Object.keys(this.cleanApplicationData);
-        appNames.forEach((appName) => {
-            const applicationDataForVersions = this.cleanApplicationData[appName];
-            const appVersionsMap = new ApplicationVersionsMap(applicationDataForVersions);
-            const { versionConfigsFull } = appVersionsMap;
+        this.allApplicationsWithBuildConfigs.forEach((app) => {
+            const fileName = `${app.name}_${app.build.toLowerCase()}_${app.version}.json`;
+            const appDir = path.resolve(this.resolvedPaths.dataDir, app.name);
+            const filePath = path.resolve(appDir, fileName);
 
-            const appDir = path.resolve(this.resolvedPaths.dataDir, appName);
             serverUtils.file.createDirIfNotExistsSync(appDir);
-            versionConfigsFull.forEach((versionConfigFull: ApplicationSchema) => {
-                const fileName = appVersionsMap.getSlugForVersionConfig(versionConfigFull);
-                const filePath = path.resolve(appDir, fileName);
-                serverUtils.json.writeJSONFileSync(filePath, versionConfigFull, {
-                    spaces: BUILD_CONFIG.dataJSONFormat.spaces,
-                });
-                console.log(`Generated application version: ${appName}/${fileName}`);
+            serverUtils.json.writeJSONFileSync(filePath, app, {
+                spaces: BUILD_CONFIG.dataJSONFormat.spaces,
             });
+
+            console.log(`Generated application version: ${app.name}/${fileName}`);
         });
     }
 }

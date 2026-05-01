@@ -6,12 +6,15 @@
             "_id": "792e8c42-86ce-5f01-812a-66378ec4f379",
             "name": "Initial/Final Total Energies",
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
@@ -77,24 +80,55 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
+                        "isDefaultVersion": true,
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "isDefault": true,
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "preProcessors": [],
+                        "applicationName": "vasp",
+                        "applicationVersion": "*",
+                        "executableName": "vasp",
+                        "input": [
+                            {
+                                "name": "INCAR",
+                                "templateName": "INCAR_NEB_INITIAL_FINAL"
+                            },
+                            {
+                                "name": "KPOINTS"
+                            },
+                            {
+                                "name": "POSCAR",
+                                "templateName": "POSCAR_NEB_INITIAL"
+                            }
+                        ],
+                        "isDefault": false,
+                        "monitors": [
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
+                        ],
+                        "name": "vasp_neb_initial",
                         "postProcessors": [],
+                        "preProcessors": [],
                         "results": [
                             {
                                 "name": "total_energy"
@@ -118,37 +152,13 @@
                                 "name": "stress_tensor"
                             }
                         ],
-                        "applicationName": "vasp",
-                        "executableName": "vasp",
-                        "input": [
-                            {
-                                "name": "INCAR",
-                                "templateName": "INCAR_NEB_INITIAL_FINAL"
-                            },
-                            {
-                                "name": "KPOINTS"
-                            },
-                            {
-                                "name": "POSCAR",
-                                "templateName": "POSCAR_NEB_INITIAL"
-                            }
-                        ],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            }
-                        ],
-                        "name": "vasp_neb_initial",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
+                        "schemaVersion": "2022.8.16"
                     },
                     "input": [
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "ISTART = 0\nENCUT = 500\nISPIN = 2\n",
                                 "contextProviders": [
                                     {
@@ -168,6 +178,7 @@
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
                                 "contextProviders": [
                                     {
@@ -187,6 +198,7 @@
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "{{ input.FIRST_IMAGE }}\n",
                                 "contextProviders": [
                                     {
@@ -251,24 +263,55 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
+                        "isDefaultVersion": true,
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "isDefault": true,
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "preProcessors": [],
+                        "applicationName": "vasp",
+                        "applicationVersion": "*",
+                        "executableName": "vasp",
+                        "input": [
+                            {
+                                "name": "INCAR",
+                                "templateName": "INCAR_NEB_INITIAL_FINAL"
+                            },
+                            {
+                                "name": "KPOINTS"
+                            },
+                            {
+                                "name": "POSCAR",
+                                "templateName": "POSCAR_NEB_FINAL"
+                            }
+                        ],
+                        "isDefault": false,
+                        "monitors": [
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
+                        ],
+                        "name": "vasp_neb_final",
                         "postProcessors": [],
+                        "preProcessors": [],
                         "results": [
                             {
                                 "name": "total_energy"
@@ -292,37 +335,13 @@
                                 "name": "stress_tensor"
                             }
                         ],
-                        "applicationName": "vasp",
-                        "executableName": "vasp",
-                        "input": [
-                            {
-                                "name": "INCAR",
-                                "templateName": "INCAR_NEB_INITIAL_FINAL"
-                            },
-                            {
-                                "name": "KPOINTS"
-                            },
-                            {
-                                "name": "POSCAR",
-                                "templateName": "POSCAR_NEB_FINAL"
-                            }
-                        ],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            }
-                        ],
-                        "name": "vasp_neb_final",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
+                        "schemaVersion": "2022.8.16"
                     },
                     "input": [
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "ISTART = 0\nENCUT = 500\nISPIN = 2\n",
                                 "contextProviders": [
                                     {
@@ -342,6 +361,7 @@
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
                                 "contextProviders": [
                                     {
@@ -361,6 +381,7 @@
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "{{ input.LAST_IMAGE }}\n",
                                 "contextProviders": [
                                     {
@@ -409,11 +430,15 @@
             "_id": "c9b7ad2a-5207-5e41-9b66-28474a8921f8",
             "name": "Prepare Directories",
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
+                "isLicensed": false,
+                "isUsingMaterial": false,
                 "name": "shell",
                 "shortName": "sh",
                 "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             },
@@ -445,44 +470,52 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
+                        "isDefaultVersion": true,
+                        "isLicensed": false,
+                        "isUsingMaterial": false,
                         "name": "shell",
                         "shortName": "sh",
                         "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
                         "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "isDefault": true,
                         "applicationName": "shell",
+                        "applicationVersion": "*",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
                         "name": "sh",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "results": [],
                         "applicationName": "shell",
+                        "applicationVersion": "*",
                         "executableName": "sh",
                         "input": [
                             {
                                 "name": "bash_vasp_prepare_neb_images.sh"
                             }
                         ],
+                        "isDefault": false,
                         "monitors": [
                             {
                                 "name": "standard_output"
                             }
                         ],
                         "name": "bash_vasp_prepare_neb_images",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
+                        "postProcessors": [],
+                        "preProcessors": [],
+                        "results": [],
+                        "schemaVersion": "2022.8.16"
                     },
                     "input": [
                         {
                             "template": {
                                 "applicationName": "shell",
+                                "applicationVersion": "*",
                                 "content": "#!/bin/bash\n\n# ------------------------------------------------------------------ #\n#  This script prepares necessary directories to run VASP NEB\n#  calculation. It puts initial POSCAR into directory 00, final into 0N\n#  and intermediate images in 01 to 0(N-1). It is assumed that SCF\n#  calculations for initial and final structures are already done in\n#  previous subworkflows and their standard outputs are written into\n#  \"vasp_neb_initial.out\" and \"vasp_neb_final.out\" files respectively.\n#  These outputs are here copied into initial (00) and final (0N)\n#  directories to calculate the reaction energy profile.\n# ------------------------------------------------------------------ #\n\n{% raw %}\ncd {{ JOB_WORK_DIR }}\n{% endraw %}\n\n# Prepare First Directory\nmkdir -p 00\ncat > 00/POSCAR <<EOF\n{{ input.FIRST_IMAGE }}\nEOF\ncp vasp_neb_initial.out 00/stdout\ncp CONTCAR 00/CONTCAR\n\n# Prepare Last Directory\nmkdir -p 0{{ input.INTERMEDIATE_IMAGES.length + 1 }}\ncat > 0{{ input.INTERMEDIATE_IMAGES.length + 1 }}/POSCAR <<EOF\n{{ input.LAST_IMAGE }}\nEOF\ncp CONTCAR 0{{ input.INTERMEDIATE_IMAGES.length + 1 }}/CONTCAR\ncp vasp_neb_final.out 0{{ input.INTERMEDIATE_IMAGES.length + 1 }}/stdout\n\n{% for IMAGE in input.INTERMEDIATE_IMAGES %}\n# Prepare Intermediate Directory {{ loop.index }}\nmkdir -p 0{{ loop.index }}\ncat > 0{{ loop.index }}/POSCAR <<EOF\n{{ IMAGE }}\nEOF\n{% endfor -%}\n",
                                 "contextProviders": [
                                     {
@@ -509,12 +542,15 @@
             "_id": "e6215fb9-e60c-541b-b73e-b077d64b3a95",
             "name": "Nudged Elastic Band (NEB)",
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
@@ -557,33 +593,29 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
+                        "isDefaultVersion": true,
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "isDefault": true,
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "results": [
-                            {
-                                "name": "reaction_energy_barrier"
-                            },
-                            {
-                                "name": "reaction_energy_profile"
-                            }
-                        ],
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
                         "executableName": "vasp",
                         "input": [
                             {
@@ -595,19 +627,30 @@
                                 "templateName": "KPOINTS"
                             }
                         ],
+                        "isDefault": false,
                         "monitors": [
                             {
                                 "name": "standard_output"
                             }
                         ],
                         "name": "vasp_neb",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
+                        "postProcessors": [],
+                        "preProcessors": [],
+                        "results": [
+                            {
+                                "name": "reaction_energy_barrier"
+                            },
+                            {
+                                "name": "reaction_energy_profile"
+                            }
+                        ],
+                        "schemaVersion": "2022.8.16"
                     },
                     "input": [
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "ISTART = 0\nIBRION = 1\nEDIFFG = -0.001\nENCUT = 500\nNELM = 100\nNSW = 100\nIMAGES = {{ input.INTERMEDIATE_IMAGES.length or neb.nImages }}\nSPRING = -5\nISPIN = 2\n",
                                 "contextProviders": [
                                     {
@@ -627,6 +670,7 @@
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
                                 "contextProviders": [
                                     {

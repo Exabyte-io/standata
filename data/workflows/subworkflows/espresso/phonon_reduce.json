@@ -36,45 +36,52 @@
             "statusTrack": [],
             "tags": [],
             "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
+                "isDefaultVersion": true,
+                "isLicensed": false,
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
                 "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
                 "applicationName": "espresso",
+                "applicationVersion": "*",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": false,
                 "name": "ph.x",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
+                "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "preProcessors": [],
-                "postProcessors": [],
-                "results": [],
                 "applicationName": "espresso",
+                "applicationVersion": "*",
                 "executableName": "ph.x",
                 "input": [
                     {
                         "name": "ph_grid_restart.in"
                     }
                 ],
+                "isDefault": false,
                 "monitors": [
                     {
                         "name": "standard_output"
                     }
                 ],
                 "name": "ph_grid_restart",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
+                "postProcessors": [],
+                "preProcessors": [],
+                "results": [],
+                "schemaVersion": "2022.8.16"
             },
             "input": [
                 {
                     "template": {
                         "applicationName": "espresso",
+                        "applicationVersion": "*",
                         "content": "&INPUTPH\n    tr2_ph = 1.0d-18,\n    recover = .true.\n    ldisp = .true.\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    fildyn = 'dyn'\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
                         "contextProviders": [
                             {
@@ -111,45 +118,52 @@
             "statusTrack": [],
             "tags": [],
             "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
+                "isDefaultVersion": true,
+                "isLicensed": false,
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
                 "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
                 "applicationName": "espresso",
+                "applicationVersion": "*",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": false,
                 "name": "q2r.x",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
+                "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "preProcessors": [],
-                "postProcessors": [],
-                "results": [],
                 "applicationName": "espresso",
+                "applicationVersion": "*",
                 "executableName": "q2r.x",
                 "input": [
                     {
                         "name": "q2r.in"
                     }
                 ],
+                "isDefault": false,
                 "monitors": [
                     {
                         "name": "standard_output"
                     }
                 ],
                 "name": "q2r",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
+                "postProcessors": [],
+                "preProcessors": [],
+                "results": [],
+                "schemaVersion": "2022.8.16"
             },
             "input": [
                 {
                     "template": {
                         "applicationName": "espresso",
+                        "applicationVersion": "*",
                         "content": "&INPUT\n    fildyn = 'dyn'\n    zasr = 'simple'\n    flfrc = 'force_constants.fc'\n/\n",
                         "contextProviders": [],
                         "executableName": "q2r.x",
@@ -186,49 +200,56 @@
             "statusTrack": [],
             "tags": [],
             "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
+                "isDefaultVersion": true,
+                "isLicensed": false,
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
                 "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
                 "applicationName": "espresso",
+                "applicationVersion": "*",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": false,
                 "name": "matdyn.x",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
+                "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "preProcessors": [],
-                "postProcessors": [],
-                "results": [
-                    {
-                        "name": "phonon_dos"
-                    }
-                ],
                 "applicationName": "espresso",
+                "applicationVersion": "*",
                 "executableName": "matdyn.x",
                 "input": [
                     {
                         "name": "matdyn_grid.in"
                     }
                 ],
+                "isDefault": false,
                 "monitors": [
                     {
                         "name": "standard_output"
                     }
                 ],
                 "name": "matdyn_grid",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
+                "postProcessors": [],
+                "preProcessors": [],
+                "results": [
+                    {
+                        "name": "phonon_dos"
+                    }
+                ],
+                "schemaVersion": "2022.8.16"
             },
             "input": [
                 {
                     "template": {
                         "applicationName": "espresso",
+                        "applicationVersion": "*",
                         "content": "&INPUT\n    asr = 'simple'\n    flfrc = 'force_constants.fc'\n    flfrq = 'frequencies.freq'\n    dos = .true.\n    fldos = 'phonon_dos.out'\n    deltaE = 1.d0\n    {% for d in igrid.dimensions -%}\n    nk{{loop.index}} = {{d}}\n    {% endfor %}\n /\n",
                         "contextProviders": [
                             {
@@ -269,49 +290,56 @@
             "statusTrack": [],
             "tags": [],
             "application": {
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
+                "isDefaultVersion": true,
+                "isLicensed": false,
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
                 "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
                 "applicationName": "espresso",
+                "applicationVersion": "*",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": false,
                 "name": "matdyn.x",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
+                "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "preProcessors": [],
-                "postProcessors": [],
-                "results": [
-                    {
-                        "name": "phonon_dispersions"
-                    }
-                ],
                 "applicationName": "espresso",
+                "applicationVersion": "*",
                 "executableName": "matdyn.x",
                 "input": [
                     {
                         "name": "matdyn_path.in"
                     }
                 ],
+                "isDefault": false,
                 "monitors": [
                     {
                         "name": "standard_output"
                     }
                 ],
                 "name": "matdyn_path",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
+                "postProcessors": [],
+                "preProcessors": [],
+                "results": [
+                    {
+                        "name": "phonon_dispersions"
+                    }
+                ],
+                "schemaVersion": "2022.8.16"
             },
             "input": [
                 {
                     "template": {
                         "applicationName": "espresso",
+                        "applicationVersion": "*",
                         "content": "&INPUT\n    asr = 'simple'\n    flfrc ='force_constants.fc'\n    flfrq ='frequencies.freq'\n    flvec ='normal_modes.out'\n    q_in_band_form = .true.\n /\n{{ipath.length}}\n{% for point in ipath -%}\n{% for d in point.coordinates %}{{d|sprintf(\"%14.9f\")}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
                         "contextProviders": [
                             {

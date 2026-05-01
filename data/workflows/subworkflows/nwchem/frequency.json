@@ -55,24 +55,44 @@
             "statusTrack": [],
             "tags": [],
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
+                "isLicensed": false,
+                "isUsingMaterial": true,
                 "name": "nwchem",
                 "shortName": "nwchem",
                 "summary": "NWChem",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "7.0.2",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
+                "applicationName": "nwchem",
+                "applicationVersion": "*",
                 "hasAdvancedComputeOptions": false,
                 "isDefault": true,
-                "applicationName": "nwchem",
                 "name": "nwchem",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "preProcessors": [],
+                "applicationName": "nwchem",
+                "applicationVersion": "*",
+                "executableName": "nwchem",
+                "input": [
+                    {
+                        "name": "nwchem_frequency.inp"
+                    }
+                ],
+                "isDefault": false,
+                "monitors": [
+                    {
+                        "name": "standard_output"
+                    }
+                ],
+                "name": "nwchem_frequency",
                 "postProcessors": [],
+                "preProcessors": [],
                 "results": [
                     {
                         "name": "total_energy"
@@ -90,26 +110,13 @@
                         "name": "thermal_correction_to_enthalpy"
                     }
                 ],
-                "applicationName": "nwchem",
-                "executableName": "nwchem",
-                "input": [
-                    {
-                        "name": "nwchem_frequency.inp"
-                    }
-                ],
-                "isDefault": false,
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
-                "name": "nwchem_frequency",
                 "schemaVersion": "2022.8.16"
             },
             "input": [
                 {
                     "template": {
                         "applicationName": "nwchem",
+                        "applicationVersion": "*",
                         "content": " start nwchem\n title \"Test\"\n charge {{ input.CHARGE }}\n geometry units au noautosym\n {{ input.ATOMIC_POSITIONS }}\n end\n basis\n   * library {{ input.BASIS }}\n end\n dft\n xc {{ input.FUNCTIONAL }}\n mult {{ input.MULT }}\n end\n driver\n maxiter 256\n inhess 1\n print default\n end\n # Uncomment the following line to perform a geometry optimization before the frequency calculation\n # task dft optimize\n task dft freq\n",
                         "contextProviders": [
                             {

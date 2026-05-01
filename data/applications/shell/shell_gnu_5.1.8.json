@@ -1,8 +1,12 @@
 {
     "name": "shell",
     "shortName": "sh",
-    "summary": "Shell Script",
+    "build": "GNU",
     "version": "5.1.8",
+    "summary": "Shell Script",
+    "isLicensed": false,
+    "isUsingMaterial": false,
+    "hasAdvancedComputeOptions": false,
     "isDefault": true,
-    "build": "GNU"
+    "isDefaultVersion": true
 }

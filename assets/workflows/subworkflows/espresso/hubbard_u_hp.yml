@@ -2,7 +2,7 @@
 name: Hubbard U
 application:
   name: espresso
-  version: "7.2"
+  version: ">=7.2"
 method:
   name: PseudopotentialMethod
 model:

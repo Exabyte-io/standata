@@ -1,10 +1,14 @@
 {
     "name": "nwchem",
     "shortName": "nwchem",
-    "summary": "NWChem",
-    "version": "7.0.2",
-    "isDefault": true,
     "build": "GNU",
+    "version": "7.0.2",
+    "summary": "NWChem",
+    "isLicensed": false,
+    "isUsingMaterial": true,
+    "hasAdvancedComputeOptions": false,
+    "isDefault": true,
+    "isDefaultVersion": true,
     "buildConfig": {
         "moduleName": "7.0.2-gnu",
         "imageName": "nwchem",
