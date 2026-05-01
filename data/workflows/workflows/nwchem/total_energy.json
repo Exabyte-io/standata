@@ -94,7 +94,7 @@
                                 "name": "nwchem_total_energy.inp"
                             }
                         ],
-                        "isDefault": false,
+                        "isDefault": true,
                         "monitors": [
                             {
                                 "name": "standard_output"

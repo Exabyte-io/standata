@@ -75,7 +75,7 @@
                                 "name": "hello_world.sh"
                             }
                         ],
-                        "isDefault": false,
+                        "isDefault": true,
                         "monitors": [
                             {
                                 "name": "standard_output"

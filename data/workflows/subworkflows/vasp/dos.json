@@ -105,7 +105,7 @@
                         "name": "POSCAR"
                     }
                 ],
-                "isDefault": false,
+                "isDefault": true,
                 "monitors": [
                     {
                         "name": "standard_output"

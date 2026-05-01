@@ -62,7 +62,7 @@
                         "name": "cp.in"
                     }
                 ],
-                "isDefault": false,
+                "isDefault": true,
                 "monitors": [
                     {
                         "name": "standard_output"

@@ -61,7 +61,7 @@
                         "name": "in.emin"
                     }
                 ],
-                "isDefault": false,
+                "isDefault": true,
                 "monitors": [
                     {
                         "name": "standard_output"

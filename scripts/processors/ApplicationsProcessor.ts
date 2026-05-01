@@ -86,6 +86,7 @@ function flavorAssetToSchemas(
         monitors: flavorData.monitors || [],
         results: flavorData.results || [],
         input: flavorData.input,
+        isDefault: Boolean(flavorData.isDefault),
     };
 }
 

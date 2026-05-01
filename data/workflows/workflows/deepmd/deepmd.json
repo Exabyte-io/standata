@@ -76,7 +76,7 @@
                                 "name": "cp.in"
                             }
                         ],
-                        "isDefault": false,
+                        "isDefault": true,
                         "monitors": [
                             {
                                 "name": "standard_output"
@@ -194,7 +194,7 @@
                                 "name": "espresso_cp_to_deepmd.py"
                             }
                         ],
-                        "isDefault": false,
+                        "isDefault": true,
                         "monitors": [
                             {
                                 "name": "standard_output"

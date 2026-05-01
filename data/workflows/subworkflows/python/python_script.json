@@ -65,7 +65,7 @@
                         "name": "requirements.txt"
                     }
                 ],
-                "isDefault": false,
+                "isDefault": true,
                 "monitors": [
                     {
                         "name": "standard_output"

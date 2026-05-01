@@ -114,7 +114,7 @@
                                 "name": "pw_scf.in"
                             }
                         ],
-                        "isDefault": false,
+                        "isDefault": true,
                         "monitors": [
                             {
                                 "name": "standard_output"
