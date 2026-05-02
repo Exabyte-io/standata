@@ -13,11 +13,15 @@
 #                                                                  #
 # ---------------------------------------------------------------- #
 
+import os
 import torch
 from ase.units import GPa
 from mat3ra.made.tools.convert import to_ase
 from mattersim.forcefield import MatterSimCalculator
 from munch import Munch
+
+os.environ['PYTORCH_KERNEL_CACHE_PATH'] = '/tmp/pytorch_cache'
+
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"Running MatterSim on {device}")

@@ -13,11 +13,13 @@
 #                                                                  #
 # ---------------------------------------------------------------- #
 
+import os
 import torch
 from mattersim.forcefield.potential import MatterSimCalculator
 from mattersim.applications.relax import Relaxer
 from munch import Munch
 
+os.environ['PYTORCH_KERNEL_CACHE_PATH'] = '/tmp/pytorch_cache'
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"Running MatterSim on {device}")
 
