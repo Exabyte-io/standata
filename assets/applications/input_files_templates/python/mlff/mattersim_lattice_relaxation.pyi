@@ -23,13 +23,13 @@ print(f"Running MatterSim on {device}")
 
 # this way material is obtained from the job context
 material_json = {% raw %}{{ MATERIAL }}{% endraw %}
-material = to_ase(dict(material_json))
+initial_structure = to_ase(dict(material_json))
 
 # alternatively, material can be defined via ase, e.g.:
 # from ase.build import bulk
-# material = bulk("Si", "diamond", a=5.43)
+# initial_structure = bulk("Si", "diamond", a=5.43)
 
-material.calc = MatterSimCalculator(device=device)
+initial_structure.calc = MatterSimCalculator(device=device)
 
 # initialize the relaxation object
 relaxer = Relaxer(
@@ -38,11 +38,11 @@ relaxer = Relaxer(
     constrain_symmetry=True, # whether to constrain the symmetry
 )
 
-is_converged, relaxed_structure = relaxer.relax(material, steps=500, fmax=0.01)
+is_converged, relaxed_structure = relaxer.relax(initial_structure, steps=500, fmax=0.01)
 
 # save the structures to file
-material.write("initial_structure.cif")
-material.write("initial_structure.poscar")
+initial_structure.write("initial_structure.cif")
+initial_structure.write("initial_structure.poscar")
 
 relaxed_structure.write("relaxed_structure.cif")
 relaxed_structure.write("relaxed_structure.poscar")
