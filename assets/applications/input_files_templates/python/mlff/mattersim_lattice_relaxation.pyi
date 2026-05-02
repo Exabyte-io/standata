@@ -40,6 +40,9 @@ relaxer = Relaxer(
 
 is_converged, relaxed_structure = relaxer.relax(material, steps=500, fmax=0.01)
 
-# save the relaxed structure to a file
+# save the structures to file
+material.write("initial_structure.cif")
+material.write("initial_structure.poscar")
+
 relaxed_structure.write("relaxed_structure.cif")
 relaxed_structure.write("relaxed_structure.poscar")
