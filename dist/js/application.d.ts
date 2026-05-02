@@ -1129,6 +1129,15 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         }[];
                         monitors: string[];
                     };
+                    "mlff:mattersim_lattice_relaxation": {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                    };
                     plot_wavefunction: {
                         applicationName: string;
                         executableName: string;

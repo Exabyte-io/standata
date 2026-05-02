@@ -452,6 +452,9 @@ entities:
       - pyml:workflow-type-setter
       - python
       - set-io-unit-filenames
+  - filename: python/mlff/mattersim_lattice_relaxation.json
+    categories:
+      - python
   - filename: python/mlff/mattersim.json
     categories:
       - python
