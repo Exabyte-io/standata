@@ -20,10 +20,12 @@ from mattersim.applications.phonon import PhononWorkflow
 import numpy as np
 from munch import Munch
 
-os.environ['PYTORCH_KERNEL_CACHE_PATH'] = os.path.expanduser('~/pytorch_kernel_cache')
-os.makedirs(os.environ['PYTORCH_KERNEL_CACHE_PATH'], exist_ok=True)
-
-device = "cuda" if torch.cuda.is_available() else "cpu"
+if torch.cuda.is_available():
+    device = "cuda"
+    os.environ["PYTORCH_KERNEL_CACHE_PATH"] = os.path.expanduser("~/pytorch_kernel_cache")
+    os.makedirs(os.environ["PYTORCH_KERNEL_CACHE_PATH"], exist_ok=True)
+else:
+    device = "cpu"
 print(f"Running MatterSim on {device}")
 
 # this way material is obtained from the job context
