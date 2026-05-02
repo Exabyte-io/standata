@@ -228,3 +228,9 @@
   contextProviders: []
   applicationName: python
   executableName: python
+
+- content: !readFile 'input_files_templates/python/mlff/mattersim_phonon_dispersion.pyi'
+  name: mattersim_phonon_dispersion.pyi
+  contextProviders: []
+  applicationName: python
+  executableName: python

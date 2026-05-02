@@ -455,6 +455,9 @@ entities:
   - filename: python/mlff/mattersim_lattice_relaxation.json
     categories:
       - python
+  - filename: python/mlff/mattersim_phonon_dispersion.json
+    categories:
+      - python
   - filename: python/mlff/mattersim.json
     categories:
       - python

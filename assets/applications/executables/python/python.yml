@@ -388,3 +388,14 @@ flavors:
       - standard_output
     applicationName: python
     executableName: python
+
+  'mlff:mattersim_phonon_dispersion':
+    input:
+      - name: script.py
+        templateName: mattersim_phonon_dispersion.pyi
+      - name: requirements.txt
+        templateName: requirements_mattersim.txt
+    monitors:
+      - standard_output
+    applicationName: python
+    executableName: python
