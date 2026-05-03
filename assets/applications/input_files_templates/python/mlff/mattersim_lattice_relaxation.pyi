@@ -58,14 +58,14 @@ relaxed_structure.write("relaxed_structure.cif")
 relaxed_structure.write("relaxed_structure.poscar")
 
 # save a comparison plot of the initial and final structures
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 9))
+def save_labeled_structure(atoms, filename):
+    fig, ax = plt.subplots(figsize=(8, 8))
 
-def draw_labeled_structure(atoms, ax, title):
-    # use smaller radii for atoms visualization
+    # Use smaller radii for atoms visualization
     current_radii = [covalent_radii[a.number] * 0.5 for a in atoms]
 
     # Plot atoms
-    plot_atoms(atoms, ax, radii=current_radii, rotation='45x,30y,30z', show_unit_cell=2)
+    plot_atoms(atoms, ax, radii=current_radii, rotation='45x,30y,0z', show_unit_cell=2)
 
     # View settings
     ax.set_axis_off()
@@ -90,16 +90,14 @@ def draw_labeled_structure(atoms, ax, title):
         f"c: [{cell[2,0]:.4f}, {cell[2,1]:.4f}, {cell[2,2]:.4f}]"
     )
 
-    # transform=ax.transAxes puts the text relative to the plot box (0 to 1)
-    ax.text(0.5, -0.15, lattice_text, transform=ax.transAxes,
+    ax.text(0.5, -0.05, lattice_text, transform=ax.transAxes,
             fontsize=10, ha='center', va='top', family='monospace',
             bbox=dict(facecolor='ghostwhite', alpha=0.8, edgecolor='gray', boxstyle='round'))
 
-    ax.set_title(title, fontsize=16, pad=20)
+    # Save with your specific filenames
+    plt.savefig(filename, dpi=300, bbox_inches='tight')
+    plt.close(fig)
+    print(f"Saved: {filename}")
 
-# Execute
-draw_labeled_structure(initial_structure, ax1, 'Initial structure')
-draw_labeled_structure(relaxed_structure, ax2, 'Final structure')
-
-plt.tight_layout()
-plt.savefig('initial_vs_final_structure.png', dpi=300)
+save_labeled_structure(initial_structure, 'initial_structure.png')
+save_labeled_structure(relaxed_structure, 'relaxed_structure.png')

@@ -36,5 +36,8 @@ units:
     attributes:
       results:
         - name: file_content
-          basename: "initial_vs_final_structure.png"
+          basename: "initial_structure.png"
+          filetype: "image"
+        - name: file_content
+          basename: "relaxed_structure.png"
           filetype: "image"
