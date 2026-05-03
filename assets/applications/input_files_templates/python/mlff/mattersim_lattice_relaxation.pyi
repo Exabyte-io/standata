@@ -16,6 +16,7 @@
 import os
 import torch
 from munch import Munch
+from mat3ra.made.tools.convert import to_ase
 from mattersim.forcefield.potential import MatterSimCalculator
 from mattersim.applications.relax import Relaxer
 

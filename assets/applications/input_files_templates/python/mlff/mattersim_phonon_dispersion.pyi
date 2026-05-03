@@ -19,6 +19,7 @@ from pathlib import Path
 import numpy as np
 import torch
 from munch import Munch
+from mat3ra.made.tools.convert import to_ase
 from mattersim.forcefield.potential import MatterSimCalculator
 from mattersim.applications.phonon import PhononWorkflow
 
