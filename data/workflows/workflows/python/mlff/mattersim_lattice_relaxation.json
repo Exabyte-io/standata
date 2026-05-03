@@ -14,7 +14,9 @@
                 "version": "3.10.13",
                 "schemaVersion": "2022.8.16"
             },
-            "properties": [],
+            "properties": [
+                "file_content"
+            ],
             "model": {
                 "type": "unknown",
                 "subtype": "unknown",
@@ -91,7 +93,13 @@
                     "type": "execution",
                     "name": "mattersim_lattice_relaxation",
                     "head": false,
-                    "results": [],
+                    "results": [
+                        {
+                            "name": "file_content",
+                            "basename": "initial_vs_final_structure.png",
+                            "filetype": "image"
+                        }
+                    ],
                     "monitors": [
                         {
                             "name": "standard_output"
@@ -133,6 +141,9 @@
                         ],
                         "monitors": [
                             "standard_output"
+                        ],
+                        "results": [
+                            "file_content"
                         ],
                         "name": "mlff:mattersim_lattice_relaxation",
                         "schemaVersion": "2022.8.16",
@@ -177,8 +188,10 @@
             "head": true
         }
     ],
-    "properties": [],
-    "_id": "5ed1ea1a-dd14-5255-9bf9-40e7b2f342b5",
+    "properties": [
+        "file_content"
+    ],
+    "_id": "d1aaf067-9c06-5c93-953a-33d2c3a2e536",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

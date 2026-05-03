@@ -33,3 +33,8 @@ units:
       flavorName: mlff:mattersim_lattice_relaxation
       name: mattersim_lattice_relaxation
     type: executionBuilder
+    attributes:
+      results:
+        - name: file_content
+          basename: "initial_vs_final_structure.png"
+          filetype: "image"

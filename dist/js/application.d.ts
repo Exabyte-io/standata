@@ -1137,6 +1137,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                             templateName: string;
                         }[];
                         monitors: string[];
+                        results: string[];
                     };
                     "mlff:mattersim_phonon_dispersion": {
                         applicationName: string;

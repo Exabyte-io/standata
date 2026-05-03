@@ -386,6 +386,8 @@ flavors:
         templateName: requirements_mattersim.txt
     monitors:
       - standard_output
+    results:
+      - file_content
     applicationName: python
     executableName: python
 

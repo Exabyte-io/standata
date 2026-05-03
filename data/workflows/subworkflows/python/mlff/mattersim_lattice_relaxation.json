@@ -4,7 +4,9 @@
     "application": {
         "name": "python"
     },
-    "properties": [],
+    "properties": [
+        "file_content"
+    ],
     "model": {
         "type": "unknown",
         "subtype": "unknown",
@@ -81,7 +83,13 @@
             "type": "execution",
             "name": "mattersim_lattice_relaxation",
             "head": false,
-            "results": [],
+            "results": [
+                {
+                    "name": "file_content",
+                    "basename": "initial_vs_final_structure.png",
+                    "filetype": "image"
+                }
+            ],
             "monitors": [
                 {
                     "name": "standard_output"
@@ -123,6 +131,9 @@
                 ],
                 "monitors": [
                     "standard_output"
+                ],
+                "results": [
+                    "file_content"
                 ],
                 "name": "mlff:mattersim_lattice_relaxation",
                 "schemaVersion": "2022.8.16",

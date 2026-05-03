@@ -454,6 +454,7 @@ entities:
       - set-io-unit-filenames
   - filename: python/mlff/mattersim_lattice_relaxation.json
     categories:
+      - file_content
       - python
   - filename: python/mlff/mattersim_phonon_dispersion.json
     categories:
