@@ -1,4 +1,4 @@
 name: Lattice Relaxation - MatterSim python workflow
 units:
-- name: mattersim
+- name: mattersim_lattice_relaxation
   type: subworkflow

@@ -14,11 +14,14 @@
 # ---------------------------------------------------------------- #
 
 import os
+import shutil
+from pathlib import Path
+import numpy as np
 import torch
+from munch import Munch
 from mattersim.forcefield.potential import MatterSimCalculator
 from mattersim.applications.phonon import PhononWorkflow
-import numpy as np
-from munch import Munch
+
 
 if torch.cuda.is_available():
     device = "cuda"
@@ -39,13 +42,20 @@ material = to_ase(dict(material_json))
 material.calc = MatterSimCalculator(device=device)
 
 # Configure the Phonon Workflow
+work_dir = "./"
+
 ph = PhononWorkflow(
     atoms=material,
     find_prim = False,
-    work_dir = "./",
+    work_dir = work_dir,
     amplitude = 0.01,
     supercell_matrix = np.diag([4, 4, 4]),
 )
 
 has_imag, phonons = ph.run()
 print(f"Has imaginary phonon: {has_imag}")
+
+# Files: work_dir/Si2_phonon_dos.png -> ./phonon_dos.png
+for f in Path(work_dir).glob("*_phonon_*.png"):
+    new_name = f.name.split('_', 1)
+    shutil.copy2(f, new_name)

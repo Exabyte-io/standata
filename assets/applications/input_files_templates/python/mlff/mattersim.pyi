@@ -15,10 +15,10 @@
 
 import os
 import torch
+from munch import Munch
 from ase.units import GPa
 from mat3ra.made.tools.convert import to_ase
 from mattersim.forcefield import MatterSimCalculator
-from munch import Munch
 
 if torch.cuda.is_available():
     device = "cuda"

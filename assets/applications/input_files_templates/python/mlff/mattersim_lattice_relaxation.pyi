@@ -15,9 +15,9 @@
 
 import os
 import torch
+from munch import Munch
 from mattersim.forcefield.potential import MatterSimCalculator
 from mattersim.applications.relax import Relaxer
-from munch import Munch
 
 if torch.cuda.is_available():
     device = "cuda"

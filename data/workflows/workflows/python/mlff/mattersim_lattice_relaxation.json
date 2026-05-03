@@ -2,8 +2,8 @@
     "name": "Lattice Relaxation - MatterSim python workflow",
     "subworkflows": [
         {
-            "_id": "4452179e-c162-5c77-b068-80b3192c691a",
-            "name": "Mattersim",
+            "_id": "6a36b074-fad5-5a17-8f9a-da65d11bf716",
+            "name": "Mattersim Lattice Relaxation",
             "application": {
                 "isUsingMaterial": true,
                 "name": "python",
@@ -75,7 +75,7 @@
                     "flowchartId": "51e48ac9-872f-5ee3-b4bf-1a4e83ea3e5a",
                     "tags": [],
                     "head": false,
-                    "next": "4b914960-c8d7-59b5-9f84-fe5fd6a5871a",
+                    "next": "c3ca5b29-1f9d-595f-9726-d41c5fd0bd59",
                     "application": {
                         "isUsingMaterial": true,
                         "name": "python",
@@ -89,7 +89,7 @@
                 },
                 {
                     "type": "execution",
-                    "name": "mattersim",
+                    "name": "mattersim_lattice_relaxation",
                     "head": false,
                     "results": [],
                     "monitors": [
@@ -97,7 +97,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "4b914960-c8d7-59b5-9f84-fe5fd6a5871a",
+                    "flowchartId": "c3ca5b29-1f9d-595f-9726-d41c5fd0bd59",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -124,7 +124,7 @@
                         "input": [
                             {
                                 "name": "script.py",
-                                "templateName": "mattersim.pyi"
+                                "templateName": "mattersim_lattice_relaxation.pyi"
                             },
                             {
                                 "name": "requirements.txt",
@@ -134,7 +134,7 @@
                         "monitors": [
                             "standard_output"
                         ],
-                        "name": "mlff:mattersim",
+                        "name": "mlff:mattersim_lattice_relaxation",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -144,11 +144,11 @@
                     "input": [
                         {
                             "applicationName": "python",
-                            "content": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport os\nimport torch\nfrom ase.units import GPa\nfrom mat3ra.made.tools.convert import to_ase\nfrom mattersim.forcefield import MatterSimCalculator\nfrom munch import Munch\n\nif torch.cuda.is_available():\n    device = \"cuda\"\n    os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"] = os.path.expanduser(\"~/pytorch_kernel_cache\")\n    os.makedirs(os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"], exist_ok=True)\nelse:\n    device = \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\n# this way material is obtained from the job context\nmaterial_json = {% raw %}{{ MATERIAL }}{% endraw %}\nmaterial = to_ase(dict(material_json))\n\n# alternatively, material can be defined via ase, e.g.:\n# from ase.build import bulk\n# material = bulk(\"Si\", \"diamond\", a=5.43)\n\nmaterial.calc = MatterSimCalculator(device=device)\nprint(f\"Energy (eV)                 = {material.get_potential_energy()}\")\nprint(f\"Energy per atom (eV/atom)   = {material.get_potential_energy()/len(material)}\")\nprint(f\"Forces of first atom (eV/A) = {material.get_forces()[0]}\")\nprint(f\"Stress[0][0] (eV/A^3)       = {material.get_stress(voigt=False)[0][0]}\")\nprint(f\"Stress[0][0] (GPa)          = {material.get_stress(voigt=False)[0][0] / GPa}\")\n",
+                            "content": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport os\nimport torch\nfrom munch import Munch\nfrom mattersim.forcefield.potential import MatterSimCalculator\nfrom mattersim.applications.relax import Relaxer\n\nif torch.cuda.is_available():\n    device = \"cuda\"\n    os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"] = os.path.expanduser(\"~/pytorch_kernel_cache\")\n    os.makedirs(os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"], exist_ok=True)\nelse:\n    device = \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\n# this way material is obtained from the job context\nmaterial_json = {% raw %}{{ MATERIAL }}{% endraw %}\ninitial_structure = to_ase(dict(material_json))\n\n# alternatively, material can be defined via ase, e.g.:\n# from ase.build import bulk\n# initial_structure = bulk(\"Si\", \"diamond\", a=5.43)\n\ninitial_structure.calc = MatterSimCalculator(device=device)\n\n# initialize the relaxation object\nrelaxer = Relaxer(\n    optimizer=\"BFGS\", # the optimization method\n    filter=\"ExpCellFilter\", # filter to apply to the cell\n    constrain_symmetry=True, # whether to constrain the symmetry\n)\n\nis_converged, relaxed_structure = relaxer.relax(initial_structure, steps=500, fmax=0.01)\n\n# save the structures to file\ninitial_structure.write(\"initial_structure.cif\")\ninitial_structure.write(\"initial_structure.poscar\")\n\nrelaxed_structure.write(\"relaxed_structure.cif\")\nrelaxed_structure.write(\"relaxed_structure.poscar\")\n",
                             "contextProviders": [],
                             "executableName": "python",
                             "name": "script.py",
-                            "rendered": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport os\nimport torch\nfrom ase.units import GPa\nfrom mat3ra.made.tools.convert import to_ase\nfrom mattersim.forcefield import MatterSimCalculator\nfrom munch import Munch\n\nif torch.cuda.is_available():\n    device = \"cuda\"\n    os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"] = os.path.expanduser(\"~/pytorch_kernel_cache\")\n    os.makedirs(os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"], exist_ok=True)\nelse:\n    device = \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\n# this way material is obtained from the job context\nmaterial_json = {{ MATERIAL }}\nmaterial = to_ase(dict(material_json))\n\n# alternatively, material can be defined via ase, e.g.:\n# from ase.build import bulk\n# material = bulk(\"Si\", \"diamond\", a=5.43)\n\nmaterial.calc = MatterSimCalculator(device=device)\nprint(f\"Energy (eV)                 = {material.get_potential_energy()}\")\nprint(f\"Energy per atom (eV/atom)   = {material.get_potential_energy()/len(material)}\")\nprint(f\"Forces of first atom (eV/A) = {material.get_forces()[0]}\")\nprint(f\"Stress[0][0] (eV/A^3)       = {material.get_stress(voigt=False)[0][0]}\")\nprint(f\"Stress[0][0] (GPa)          = {material.get_stress(voigt=False)[0][0] / GPa}\")\n",
+                            "rendered": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport os\nimport torch\nfrom munch import Munch\nfrom mattersim.forcefield.potential import MatterSimCalculator\nfrom mattersim.applications.relax import Relaxer\n\nif torch.cuda.is_available():\n    device = \"cuda\"\n    os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"] = os.path.expanduser(\"~/pytorch_kernel_cache\")\n    os.makedirs(os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"], exist_ok=True)\nelse:\n    device = \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\n# this way material is obtained from the job context\nmaterial_json = {{ MATERIAL }}\ninitial_structure = to_ase(dict(material_json))\n\n# alternatively, material can be defined via ase, e.g.:\n# from ase.build import bulk\n# initial_structure = bulk(\"Si\", \"diamond\", a=5.43)\n\ninitial_structure.calc = MatterSimCalculator(device=device)\n\n# initialize the relaxation object\nrelaxer = Relaxer(\n    optimizer=\"BFGS\", # the optimization method\n    filter=\"ExpCellFilter\", # filter to apply to the cell\n    constrain_symmetry=True, # whether to constrain the symmetry\n)\n\nis_converged, relaxed_structure = relaxer.relax(initial_structure, steps=500, fmax=0.01)\n\n# save the structures to file\ninitial_structure.write(\"initial_structure.cif\")\ninitial_structure.write(\"initial_structure.poscar\")\n\nrelaxed_structure.write(\"relaxed_structure.cif\")\nrelaxed_structure.write(\"relaxed_structure.poscar\")\n",
                             "schemaVersion": "2022.8.16"
                         },
                         {
@@ -167,18 +167,18 @@
     ],
     "units": [
         {
-            "name": "Mattersim",
+            "name": "Mattersim Lattice Relaxation",
             "type": "subworkflow",
-            "_id": "4452179e-c162-5c77-b068-80b3192c691a",
+            "_id": "6a36b074-fad5-5a17-8f9a-da65d11bf716",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "34ac0ed6-d467-5a3e-ba79-f9d47263d171",
+            "flowchartId": "cf22e01f-4343-5e52-95d2-a298f216ae2d",
             "tags": [],
             "head": true
         }
     ],
     "properties": [],
-    "_id": "fe89118c-5eaa-5613-b7c3-800535cb102d",
+    "_id": "5ed1ea1a-dd14-5255-9bf9-40e7b2f342b5",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
