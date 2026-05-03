@@ -60,7 +60,7 @@ relaxed_structure.write("relaxed_structure.cif")
 relaxed_structure.write("relaxed_structure.poscar")
 
 # save a comparison plot of the initial and final structures
-def save_labeled_structure(atoms, filename):
+def save_structure(atoms, filename):
     fig, ax = plt.subplots(figsize=(8, 8))
 
     # Use smaller radii for atoms visualization
@@ -97,8 +97,8 @@ def save_labeled_structure(atoms, filename):
             bbox=dict(facecolor='ghostwhite', alpha=0.8, edgecolor='gray', boxstyle='round'))
 
     # Save with your specific filenames
-    plt.savefig(filename, dpi=300, bbox_inches='tight')
+    plt.savefig(filename, dpi=150, bbox_inches='tight')
     plt.close(fig)
 
-save_labeled_structure(initial_structure, 'initial_structure.png')
-save_labeled_structure(relaxed_structure, 'relaxed_structure.png')
+save_structure(initial_structure, 'initial_structure.png')
+save_structure(relaxed_structure, 'relaxed_structure.png')
