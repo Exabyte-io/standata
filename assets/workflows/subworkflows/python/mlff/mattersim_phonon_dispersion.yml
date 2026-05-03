@@ -36,7 +36,7 @@ units:
     attributes:
       results:
         - name: file_content
-          basename: "phonon_bands.png"
+          basename: "phonon_band.png"
           filetype: "image"
         - name: file_content
           basename: "phonon_dos.png"
