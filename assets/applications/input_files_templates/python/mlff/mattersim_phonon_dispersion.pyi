@@ -58,5 +58,5 @@ print(f"Has imaginary phonon: {has_imag}")
 
 # Files: work_dir/Si2_phonon_dos.png -> ./phonon_dos.png
 for f in Path(work_dir).glob("*_phonon_*.png"):
-    new_name = f.name.split('_', 1)
+    new_name = f.name.split('_', 1)[1]
     shutil.copy2(f, new_name)
