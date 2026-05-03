@@ -14,7 +14,9 @@
                 "version": "3.10.13",
                 "schemaVersion": "2022.8.16"
             },
-            "properties": [],
+            "properties": [
+                "file_content"
+            ],
             "model": {
                 "type": "unknown",
                 "subtype": "unknown",
@@ -91,7 +93,18 @@
                     "type": "execution",
                     "name": "mattersim_phonon_dispersion",
                     "head": false,
-                    "results": [],
+                    "results": [
+                        {
+                            "name": "file_content",
+                            "basename": "phonon_bands.png",
+                            "filetype": "image"
+                        },
+                        {
+                            "name": "file_content",
+                            "basename": "phonon_dos.png",
+                            "filetype": "image"
+                        }
+                    ],
                     "monitors": [
                         {
                             "name": "standard_output"
@@ -134,6 +147,9 @@
                         "monitors": [
                             "standard_output"
                         ],
+                        "results": [
+                            "file_content"
+                        ],
                         "name": "mlff:mattersim_phonon_dispersion",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -144,11 +160,11 @@
                     "input": [
                         {
                             "applicationName": "python",
-                            "content": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport os, shutil\nfrom pathlib import Path\nimport numpy as np\nimport torch\nfrom munch import Munch\nfrom mattersim.forcefield.potential import MatterSimCalculator\nfrom mattersim.applications.phonon import PhononWorkflow\n\n\nif torch.cuda.is_available():\n    device = \"cuda\"\n    os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"] = os.path.expanduser(\"~/pytorch_kernel_cache\")\n    os.makedirs(os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"], exist_ok=True)\nelse:\n    device = \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\n# this way material is obtained from the job context\nmaterial_json = {% raw %}{{ MATERIAL }}{% endraw %}\nmaterial = to_ase(dict(material_json))\n\n# alternatively, material can be defined via ase, e.g.:\n# from ase.build import bulk\n# material = bulk(\"Si\", \"diamond\", a=5.43)\n\nmaterial.calc = MatterSimCalculator(device=device)\n\n# Configure the Phonon Workflow\nwork_dir = \"./\"\n\nph = PhononWorkflow(\n    atoms=material,\n    find_prim = False,\n    work_dir = work_dir,\n    amplitude = 0.01,\n    supercell_matrix = np.diag([4, 4, 4]),\n)\n\nhas_imag, phonons = ph.run()\nprint(f\"Has imaginary phonon: {has_imag}\")\n\n# Files: work_dir/Si2_phonon_dos.png -> ./phonon_dos.png\nfor f in Path(work_dir).glob(\"*_phonon_*.png\"):\n    new_name = f.name.split('_', 1)\n    shutil.copy2(f, new_name)\n",
+                            "content": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport os\nimport shutil\nfrom pathlib import Path\nimport numpy as np\nimport torch\nfrom munch import Munch\nfrom mattersim.forcefield.potential import MatterSimCalculator\nfrom mattersim.applications.phonon import PhononWorkflow\n\n\nif torch.cuda.is_available():\n    device = \"cuda\"\n    os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"] = os.path.expanduser(\"~/pytorch_kernel_cache\")\n    os.makedirs(os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"], exist_ok=True)\nelse:\n    device = \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\n# this way material is obtained from the job context\nmaterial_json = {% raw %}{{ MATERIAL }}{% endraw %}\nmaterial = to_ase(dict(material_json))\n\n# alternatively, material can be defined via ase, e.g.:\n# from ase.build import bulk\n# material = bulk(\"Si\", \"diamond\", a=5.43)\n\nmaterial.calc = MatterSimCalculator(device=device)\n\n# Configure the Phonon Workflow\nwork_dir = \"./\"\n\nph = PhononWorkflow(\n    atoms=material,\n    find_prim = False,\n    work_dir = work_dir,\n    amplitude = 0.01,\n    supercell_matrix = np.diag([4, 4, 4]),\n)\n\nhas_imag, phonons = ph.run()\nprint(f\"Has imaginary phonon: {has_imag}\")\n\n# Files: work_dir/Si2_phonon_dos.png -> ./phonon_dos.png\nfor f in Path(work_dir).glob(\"*_phonon_*.png\"):\n    new_name = f.name.split('_', 1)\n    shutil.copy2(f, new_name)\n",
                             "contextProviders": [],
                             "executableName": "python",
                             "name": "script.py",
-                            "rendered": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport os, shutil\nfrom pathlib import Path\nimport numpy as np\nimport torch\nfrom munch import Munch\nfrom mattersim.forcefield.potential import MatterSimCalculator\nfrom mattersim.applications.phonon import PhononWorkflow\n\n\nif torch.cuda.is_available():\n    device = \"cuda\"\n    os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"] = os.path.expanduser(\"~/pytorch_kernel_cache\")\n    os.makedirs(os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"], exist_ok=True)\nelse:\n    device = \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\n# this way material is obtained from the job context\nmaterial_json = {{ MATERIAL }}\nmaterial = to_ase(dict(material_json))\n\n# alternatively, material can be defined via ase, e.g.:\n# from ase.build import bulk\n# material = bulk(\"Si\", \"diamond\", a=5.43)\n\nmaterial.calc = MatterSimCalculator(device=device)\n\n# Configure the Phonon Workflow\nwork_dir = \"./\"\n\nph = PhononWorkflow(\n    atoms=material,\n    find_prim = False,\n    work_dir = work_dir,\n    amplitude = 0.01,\n    supercell_matrix = np.diag([4, 4, 4]),\n)\n\nhas_imag, phonons = ph.run()\nprint(f\"Has imaginary phonon: {has_imag}\")\n\n# Files: work_dir/Si2_phonon_dos.png -> ./phonon_dos.png\nfor f in Path(work_dir).glob(\"*_phonon_*.png\"):\n    new_name = f.name.split('_', 1)\n    shutil.copy2(f, new_name)\n",
+                            "rendered": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport os\nimport shutil\nfrom pathlib import Path\nimport numpy as np\nimport torch\nfrom munch import Munch\nfrom mattersim.forcefield.potential import MatterSimCalculator\nfrom mattersim.applications.phonon import PhononWorkflow\n\n\nif torch.cuda.is_available():\n    device = \"cuda\"\n    os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"] = os.path.expanduser(\"~/pytorch_kernel_cache\")\n    os.makedirs(os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"], exist_ok=True)\nelse:\n    device = \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\n# this way material is obtained from the job context\nmaterial_json = {{ MATERIAL }}\nmaterial = to_ase(dict(material_json))\n\n# alternatively, material can be defined via ase, e.g.:\n# from ase.build import bulk\n# material = bulk(\"Si\", \"diamond\", a=5.43)\n\nmaterial.calc = MatterSimCalculator(device=device)\n\n# Configure the Phonon Workflow\nwork_dir = \"./\"\n\nph = PhononWorkflow(\n    atoms=material,\n    find_prim = False,\n    work_dir = work_dir,\n    amplitude = 0.01,\n    supercell_matrix = np.diag([4, 4, 4]),\n)\n\nhas_imag, phonons = ph.run()\nprint(f\"Has imaginary phonon: {has_imag}\")\n\n# Files: work_dir/Si2_phonon_dos.png -> ./phonon_dos.png\nfor f in Path(work_dir).glob(\"*_phonon_*.png\"):\n    new_name = f.name.split('_', 1)\n    shutil.copy2(f, new_name)\n",
                             "schemaVersion": "2022.8.16"
                         },
                         {
@@ -177,8 +193,11 @@
             "head": true
         }
     ],
-    "properties": [],
-    "_id": "60a46d16-5d20-5402-8c55-b8c7e202f2e0",
+    "properties": [
+        "file_content",
+        "file_content"
+    ],
+    "_id": "522355ad-1524-5b50-96b5-81d1832a9efe",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

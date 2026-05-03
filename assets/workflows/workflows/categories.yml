@@ -8,6 +8,7 @@ categories:
     - density_of_states
     - dielectric_tensor
     - fermi_energy
+    - file_content
     - final_structure
     - homo_energy
     - lumo_energy
@@ -390,6 +391,7 @@ entities:
       - python
   - filename: python/mlff/mattersim_phonon_dispersion.json
     categories:
+      - file_content
       - python
   - filename: python/mlff/mattersim.json
     categories:
