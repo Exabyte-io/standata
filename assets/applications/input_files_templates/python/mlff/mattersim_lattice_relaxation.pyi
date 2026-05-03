@@ -33,13 +33,14 @@ print(f"Running MatterSim on {device}")
 
 # this way material is obtained from the job context
 material_json = {% raw %}{{ MATERIAL }}{% endraw %}
-initial_structure = to_ase(dict(material_json))
+material = to_ase(dict(material_json))
 
 # alternatively, material can be defined via ase, e.g.:
 # from ase.build import bulk
-# initial_structure = bulk("Si", "diamond", a=5.43)
+# material = bulk("Si", "diamond", a=5.43)
 
-initial_structure.calc = MatterSimCalculator(device=device)
+material.calc = MatterSimCalculator(device=device)
+initial_structure = material.copy()  # make deep copy
 
 # initialize the relaxation object
 relaxer = Relaxer(
@@ -48,7 +49,8 @@ relaxer = Relaxer(
     constrain_symmetry=True, # whether to constrain the symmetry
 )
 
-is_converged, relaxed_structure = relaxer.relax(initial_structure, steps=500, fmax=0.01)
+# relaxed_structure is pointer to material object
+is_converged, relaxed_structure = relaxer.relax(material, steps=500, fmax=0.01)
 
 # save the structures to file
 initial_structure.write("initial_structure.cif")
@@ -65,7 +67,7 @@ def save_labeled_structure(atoms, filename):
     current_radii = [covalent_radii[a.number] * 0.5 for a in atoms]
 
     # Plot atoms
-    plot_atoms(atoms, ax, radii=current_radii, rotation='0x,0y,0z', show_unit_cell=2)
+    plot_atoms(atoms, ax, radii=current_radii, rotation='10x,15y,15z', show_unit_cell=2)
 
     # View settings
     ax.set_axis_off()
@@ -97,7 +99,6 @@ def save_labeled_structure(atoms, filename):
     # Save with your specific filenames
     plt.savefig(filename, dpi=300, bbox_inches='tight')
     plt.close(fig)
-    print(f"Saved: {filename}")
 
 save_labeled_structure(initial_structure, 'initial_structure.png')
 save_labeled_structure(relaxed_structure, 'relaxed_structure.png')
