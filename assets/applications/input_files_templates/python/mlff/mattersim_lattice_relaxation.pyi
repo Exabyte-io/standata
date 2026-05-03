@@ -67,7 +67,7 @@ def save_labeled_structure(atoms, filename):
     current_radii = [covalent_radii[a.number] * 0.5 for a in atoms]
 
     # Plot atoms
-    plot_atoms(atoms, ax, radii=current_radii, rotation='10x,15y,15z', show_unit_cell=2)
+    plot_atoms(atoms, ax, radii=current_radii, rotation='10x,45y,15z', show_unit_cell=2)
 
     # View settings
     ax.set_axis_off()
