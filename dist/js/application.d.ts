@@ -1128,6 +1128,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                             templateName: string;
                         }[];
                         monitors: string[];
+                        results: string[];
                     };
                     "mlff:mattersim_lattice_relaxation": {
                         applicationName: string;

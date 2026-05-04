@@ -14,6 +14,7 @@
 # ---------------------------------------------------------------- #
 
 import os
+import csv
 import torch
 from munch import Munch
 from ase.units import GPa
@@ -37,8 +38,22 @@ material = to_ase(dict(material_json))
 # material = bulk("Si", "diamond", a=5.43)
 
 material.calc = MatterSimCalculator(device=device)
-print(f"Energy (eV)                 = {material.get_potential_energy()}")
-print(f"Energy per atom (eV/atom)   = {material.get_potential_energy()/len(material)}")
-print(f"Forces of first atom (eV/A) = {material.get_forces()[0]}")
-print(f"Stress[0][0] (eV/A^3)       = {material.get_stress(voigt=False)[0][0]}")
-print(f"Stress[0][0] (GPa)          = {material.get_stress(voigt=False)[0][0] / GPa}")
+
+results = {
+    "Energy (eV)": material.get_potential_energy(),
+    "Energy per atom (eV/atom)": material.get_potential_energy() / len(material),
+    "Forces of first atom (eV/A)": material.get_forces()[0],
+    "Stress[0][0] (eV/A^3)": material.get_stress(voigt=False)[0][0],
+    "Stress[0][0] (GPa)": material.get_stress(voigt=False)[0][0] / GPa
+}
+
+with open("results.csv", 'w', newline='') as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=["Property", "Value"])
+    writer.writeheader()
+
+    for prop, val in results.items():
+        # print to stdout
+        print(f"{prop:<27} = {val}")
+
+        # write to CSV rows, used to render the results in the web app
+        writer.writerow({"Property": prop, "Value": val})

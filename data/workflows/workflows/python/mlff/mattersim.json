@@ -14,7 +14,9 @@
                 "version": "3.10.13",
                 "schemaVersion": "2022.8.16"
             },
-            "properties": [],
+            "properties": [
+                "file_content"
+            ],
             "model": {
                 "type": "unknown",
                 "subtype": "unknown",
@@ -91,7 +93,13 @@
                     "type": "execution",
                     "name": "mattersim",
                     "head": false,
-                    "results": [],
+                    "results": [
+                        {
+                            "name": "file_content",
+                            "basename": "results.csv",
+                            "filetype": "csv"
+                        }
+                    ],
                     "monitors": [
                         {
                             "name": "standard_output"
@@ -134,6 +142,9 @@
                         "monitors": [
                             "standard_output"
                         ],
+                        "results": [
+                            "file_content"
+                        ],
                         "name": "mlff:mattersim",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
@@ -144,11 +155,11 @@
                     "input": [
                         {
                             "applicationName": "python",
-                            "content": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport os\nimport torch\nfrom munch import Munch\nfrom ase.units import GPa\nfrom mat3ra.made.tools.convert import to_ase\nfrom mattersim.forcefield import MatterSimCalculator\n\nif torch.cuda.is_available():\n    device = \"cuda\"\n    os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"] = os.path.expanduser(\"~/pytorch_kernel_cache\")\n    os.makedirs(os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"], exist_ok=True)\nelse:\n    device = \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\n# this way material is obtained from the job context\nmaterial_json = {% raw %}{{ MATERIAL }}{% endraw %}\nmaterial = to_ase(dict(material_json))\n\n# alternatively, material can be defined via ase, e.g.:\n# from ase.build import bulk\n# material = bulk(\"Si\", \"diamond\", a=5.43)\n\nmaterial.calc = MatterSimCalculator(device=device)\nprint(f\"Energy (eV)                 = {material.get_potential_energy()}\")\nprint(f\"Energy per atom (eV/atom)   = {material.get_potential_energy()/len(material)}\")\nprint(f\"Forces of first atom (eV/A) = {material.get_forces()[0]}\")\nprint(f\"Stress[0][0] (eV/A^3)       = {material.get_stress(voigt=False)[0][0]}\")\nprint(f\"Stress[0][0] (GPa)          = {material.get_stress(voigt=False)[0][0] / GPa}\")\n",
+                            "content": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport os\nimport csv\nimport torch\nfrom munch import Munch\nfrom ase.units import GPa\nfrom mat3ra.made.tools.convert import to_ase\nfrom mattersim.forcefield import MatterSimCalculator\n\nif torch.cuda.is_available():\n    device = \"cuda\"\n    os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"] = os.path.expanduser(\"~/pytorch_kernel_cache\")\n    os.makedirs(os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"], exist_ok=True)\nelse:\n    device = \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\n# this way material is obtained from the job context\nmaterial_json = {% raw %}{{ MATERIAL }}{% endraw %}\nmaterial = to_ase(dict(material_json))\n\n# alternatively, material can be defined via ase, e.g.:\n# from ase.build import bulk\n# material = bulk(\"Si\", \"diamond\", a=5.43)\n\nmaterial.calc = MatterSimCalculator(device=device)\n\nresults = {\n    \"Energy (eV)\": material.get_potential_energy(),\n    \"Energy per atom (eV/atom)\": material.get_potential_energy() / len(material),\n    \"Forces of first atom (eV/A)\": material.get_forces()[0],\n    \"Stress[0][0] (eV/A^3)\": material.get_stress(voigt=False)[0][0],\n    \"Stress[0][0] (GPa)\": material.get_stress(voigt=False)[0][0] / GPa\n}\n\nwith open(\"results.csv\", 'w', newline='') as csvfile:\n    writer = csv.DictWriter(csvfile, fieldnames=[\"Property\", \"Value\"])\n    writer.writeheader()\n\n    for prop, val in results.items():\n        # print to stdout\n        print(f\"{prop:<27} = {val}\")\n\n        # write to CSV rows, used to render the results in the web app\n        writer.writerow({\"Property\": prop, \"Value\": val})\n",
                             "contextProviders": [],
                             "executableName": "python",
                             "name": "script.py",
-                            "rendered": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport os\nimport torch\nfrom munch import Munch\nfrom ase.units import GPa\nfrom mat3ra.made.tools.convert import to_ase\nfrom mattersim.forcefield import MatterSimCalculator\n\nif torch.cuda.is_available():\n    device = \"cuda\"\n    os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"] = os.path.expanduser(\"~/pytorch_kernel_cache\")\n    os.makedirs(os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"], exist_ok=True)\nelse:\n    device = \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\n# this way material is obtained from the job context\nmaterial_json = {{ MATERIAL }}\nmaterial = to_ase(dict(material_json))\n\n# alternatively, material can be defined via ase, e.g.:\n# from ase.build import bulk\n# material = bulk(\"Si\", \"diamond\", a=5.43)\n\nmaterial.calc = MatterSimCalculator(device=device)\nprint(f\"Energy (eV)                 = {material.get_potential_energy()}\")\nprint(f\"Energy per atom (eV/atom)   = {material.get_potential_energy()/len(material)}\")\nprint(f\"Forces of first atom (eV/A) = {material.get_forces()[0]}\")\nprint(f\"Stress[0][0] (eV/A^3)       = {material.get_stress(voigt=False)[0][0]}\")\nprint(f\"Stress[0][0] (GPa)          = {material.get_stress(voigt=False)[0][0] / GPa}\")\n",
+                            "rendered": "# ---------------------------------------------------------------- #\n#                                                                  #\n#  Example MatterSim calculation on Mat3ra.com platform            #\n#                                                                  #\n#  Will be used as follows:                                        #\n#                                                                  #\n#    1. runtime directory for this calculation is created          #\n#    2. requirements.txt is used to create a virtual environment   #\n#    3. virtual environment is activated                           #\n#    4. python process running this script is started              #\n#                                                                  #\n#  Adjust the content below to include your code.                  #\n#                                                                  #\n# ---------------------------------------------------------------- #\n\nimport os\nimport csv\nimport torch\nfrom munch import Munch\nfrom ase.units import GPa\nfrom mat3ra.made.tools.convert import to_ase\nfrom mattersim.forcefield import MatterSimCalculator\n\nif torch.cuda.is_available():\n    device = \"cuda\"\n    os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"] = os.path.expanduser(\"~/pytorch_kernel_cache\")\n    os.makedirs(os.environ[\"PYTORCH_KERNEL_CACHE_PATH\"], exist_ok=True)\nelse:\n    device = \"cpu\"\nprint(f\"Running MatterSim on {device}\")\n\n# this way material is obtained from the job context\nmaterial_json = {{ MATERIAL }}\nmaterial = to_ase(dict(material_json))\n\n# alternatively, material can be defined via ase, e.g.:\n# from ase.build import bulk\n# material = bulk(\"Si\", \"diamond\", a=5.43)\n\nmaterial.calc = MatterSimCalculator(device=device)\n\nresults = {\n    \"Energy (eV)\": material.get_potential_energy(),\n    \"Energy per atom (eV/atom)\": material.get_potential_energy() / len(material),\n    \"Forces of first atom (eV/A)\": material.get_forces()[0],\n    \"Stress[0][0] (eV/A^3)\": material.get_stress(voigt=False)[0][0],\n    \"Stress[0][0] (GPa)\": material.get_stress(voigt=False)[0][0] / GPa\n}\n\nwith open(\"results.csv\", 'w', newline='') as csvfile:\n    writer = csv.DictWriter(csvfile, fieldnames=[\"Property\", \"Value\"])\n    writer.writeheader()\n\n    for prop, val in results.items():\n        # print to stdout\n        print(f\"{prop:<27} = {val}\")\n\n        # write to CSV rows, used to render the results in the web app\n        writer.writerow({\"Property\": prop, \"Value\": val})\n",
                             "schemaVersion": "2022.8.16"
                         },
                         {
@@ -177,8 +188,10 @@
             "head": true
         }
     ],
-    "properties": [],
-    "_id": "fe89118c-5eaa-5613-b7c3-800535cb102d",
+    "properties": [
+        "file_content"
+    ],
+    "_id": "9ecdfc22-0621-5619-8e78-4eb4b7bf09bc",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

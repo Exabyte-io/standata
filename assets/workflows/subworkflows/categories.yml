@@ -462,6 +462,7 @@ entities:
       - python
   - filename: python/mlff/mattersim.json
     categories:
+      - file_content
       - python
   - filename: python/python_script.json
     categories:
