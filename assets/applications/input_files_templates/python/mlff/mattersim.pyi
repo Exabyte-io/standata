@@ -39,21 +39,29 @@ material = to_ase(dict(material_json))
 
 material.calc = MatterSimCalculator(device=device)
 
+energy = float(material.get_potential_energy())
+forces_first = material.get_forces()[0]
+stress_00 = float(material.get_stress(voigt=False)[0][0])
+
+
 results = {
-    "Energy (eV)": material.get_potential_energy(),
-    "Energy per atom (eV/atom)": material.get_potential_energy() / len(material),
-    "Forces of first atom (eV/A)": material.get_forces()[0],
-    "Stress[0][0] (eV/A^3)": material.get_stress(voigt=False)[0][0],
-    "Stress[0][0] (GPa)": material.get_stress(voigt=False)[0][0] / GPa
+    "Energy (eV)": energy,
+    "Energy per atom (eV/atom)": energy / len(material),
+    "Force on first atom Fx (eV/A)": float(forces_first[0]),
+    "Force on first atom Fy (eV/A)": float(forces_first[1]),
+    "Force on first atom Fz (eV/A)": float(forces_first[2]),
+    "Stress[0][0] (eV/A^3)": stress_00,
+    "Stress[0][0] (GPa)": stress_00 / GPa,
 }
 
-with open("results.csv", 'w', newline='') as csvfile:
+with open("results.csv", "w", newline="") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=["Property", "Value"])
     writer.writeheader()
 
     for prop, val in results.items():
-        # print to stdout
-        print(f"{prop:<27} = {val}")
+        # print full-precision value to stdout
+        print(f"{prop:<35} = {val}")
 
-        # write to CSV rows, used to render the results in the web app
-        writer.writerow({"Property": prop, "Value": val})
+        # write to CSV rows, used for showing results in the web app
+        # trim values to 6 significant digits
+        writer.writerow({"Property": prop, "Value": f"{val:.6g}"})

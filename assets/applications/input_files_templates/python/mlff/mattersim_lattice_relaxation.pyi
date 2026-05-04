@@ -32,7 +32,7 @@ else:
 print(f"Running MatterSim on {device}")
 
 # this way material is obtained from the job context
-material_json = {% raw %}{{ MATERIAL }}{% endraw %}
+material_json = {{ MATERIAL }}
 material = to_ase(dict(material_json))
 
 # alternatively, material can be defined via ase, e.g.:
@@ -67,7 +67,7 @@ def save_structure(atoms, filename):
     current_radii = [covalent_radii[a.number] * 0.5 for a in atoms]
 
     # Plot atoms
-    plot_atoms(atoms, ax, radii=current_radii, rotation='10x,45y,15z', show_unit_cell=2)
+    plot_atoms(atoms, ax, radii=current_radii, rotation='15x,45y,15z', show_unit_cell=2)
 
     # View settings
     ax.set_axis_off()
@@ -76,8 +76,8 @@ def save_structure(atoms, filename):
     # Add atom labels
     for a in atoms:
         label = f"{a.symbol} ({a.position[0]:.3f}, {a.position[1]:.3f}, {a.position[2]:.3f})"
-        x_offset = a.position[0] + 0.8
-        y_offset = a.position[1] + 0.3
+        x_offset = a.position[0] + 1.0
+        y_offset = a.position[1] + 0.5
 
         ax.text(x_offset, y_offset, label,
                 fontsize=10, ha='left', va='bottom',
