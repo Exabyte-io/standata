@@ -18,13 +18,13 @@ units:
       name: assign-bulk-id
       flowchartId: assign-bulk-id
       operand: BULK_ID
-      value: "getattr(getattr(SLAB, 'metadata', None), 'bulkId', None)"
+      value: "SLAB.metadata.bulkId if SLAB.metadata else None"
   - type: assignment
     config:
       name: assign-slab-build
       flowchartId: assign-slab-build
       operand: SLAB_BUILD
-      value: "getattr(getattr(SLAB, 'metadata', None), 'build', []) or []"
+      value: "(SLAB.metadata.build or []) if SLAB.metadata else []"
   - type: assignment
     config:
       name: assign-last-build-step
@@ -36,47 +36,39 @@ units:
       name: assign-last-build-configuration
       flowchartId: assign-last-build-configuration
       operand: LAST_BUILD_CONFIGURATION
-      value: "getattr(LAST_BUILD_STEP, 'configuration', None) if LAST_BUILD_STEP != None else None"
+      value: "LAST_BUILD_STEP.configuration if LAST_BUILD_STEP else None"
   - type: assignment
     config:
       name: assign-last-stack-component
       flowchartId: assign-last-stack-component
       operand: LAST_STACK_COMPONENT
-      value: "(getattr(LAST_BUILD_CONFIGURATION, 'stack_components', []) or [None])[0] if LAST_BUILD_CONFIGURATION != None else None"
+      value: "(LAST_BUILD_CONFIGURATION.stack_components or [None])[0] if LAST_BUILD_CONFIGURATION else None"
   - type: assignment
     config:
       name: assign-last-build-crystal
       flowchartId: assign-last-build-crystal
       operand: LAST_BUILD_CRYSTAL
-      value: "getattr(LAST_STACK_COMPONENT, 'crystal', None) if LAST_STACK_COMPONENT != None else None"
-  - type: assignment
-    config:
-      name: assign-crystal-id
-      flowchartId: assign-crystal-id
-      operand: CRYSTAL_ID
-      value: "getattr(LAST_BUILD_CRYSTAL, '_id', None)"
+      value: "LAST_STACK_COMPONENT.crystal if LAST_STACK_COMPONENT else None"
   - type: assignment
     config:
       name: assign-crystal-scaled-hash
       flowchartId: assign-crystal-scaled-hash
       operand: CRYSTAL_SCALED_HASH
-      value: "getattr(LAST_BUILD_CRYSTAL, 'scaledHash', None)"
+      value: "LAST_BUILD_CRYSTAL.scaledHash if LAST_BUILD_CRYSTAL else None"
   - type: assignment
     config:
       name: assign-crystal-hash
       flowchartId: assign-crystal-hash
       operand: CRYSTAL_HASH
-      value: "getattr(LAST_BUILD_CRYSTAL, 'hash', None)"
+      value: "LAST_BUILD_CRYSTAL.hash if LAST_BUILD_CRYSTAL else None"
   - type: assignment
     config:
       name: assign-bulk-query
       flowchartId: assign-bulk-query
       operand: BULK_QUERY
       value: >-
-        {'_id': BULK_ID}
+        {'exabyteId': BULK_ID}
         if BULK_ID is not None
-        else {'_id': CRYSTAL_ID}
-        if CRYSTAL_ID is not None
         else {'scaledHash': CRYSTAL_SCALED_HASH}
         if CRYSTAL_SCALED_HASH is not None
         else {'hash': CRYSTAL_HASH}
@@ -89,7 +81,7 @@ units:
       statement: "BULK_QUERY != None"
       errorMessage: >-
         Surface slab metadata must include bulkId or build metadata with
-        stack_components[0].crystal carrying _id, scaledHash, or hash to infer
+        stack_components[0].crystal carrying scaledHash or hash to infer
         the bulk material query. Upload the bulk material and run its total
         energy workflow before calculating surface energy.
   - type: io
