@@ -1,0 +1,39 @@
+method:
+  name: UnknownMethod
+model:
+  name: UnknownModel
+name: Get Bulk Energy
+apps:
+  - espresso
+  - vasp
+units:
+  - type: io
+    config:
+      name: io-e-bulk
+      flowchartId: io-e-bulk
+      subtype: input
+      source: api
+      input:
+        - endpoint: refined-properties
+          endpoint_options:
+            params:
+              query: "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': ''.join((SUBWORKFLOW.application.shortName, ':'))}}"
+              projection: "{'sort': {'precision.value': -1}, 'limit': 1}"
+          name: DATA
+  - type: assignment
+    config:
+      name: assign-e-bulk
+      flowchartId: assign-e-bulk
+      operand: E_BULK
+      value: "DATA[0].data.value if DATA else None"
+      input:
+        - name: DATA
+          scope: io-e-bulk
+  - type: assertion
+    config:
+      name: assert-e-bulk
+      flowchartId: assert-e-bulk
+      statement: "E_BULK != None"
+      errorMessage: >-
+        Bulk total energy does not exist for the resolved bulk material. Run a
+        bulk total energy workflow first.

@@ -1,0 +1,37 @@
+method:
+  name: UnknownMethod
+model:
+  name: UnknownModel
+name: Verify Slab
+apps:
+  - espresso
+  - vasp
+units:
+  - type: io
+    config:
+      name: io-slab
+      flowchartId: io-slab
+      subtype: input
+      source: api
+      input:
+        - endpoint: materials
+          endpoint_options:
+            params:
+              query: "{'_id': MATERIAL_ID}"
+              projection: "{}"
+          name: DATA
+  - type: assignment
+    config:
+      name: assign-slab
+      flowchartId: assign-slab
+      operand: SLAB
+      value: "DATA[0] if len(DATA) == 1 else None"
+      input:
+        - name: DATA
+          scope: io-slab
+  - type: assertion
+    config:
+      name: assert-slab
+      flowchartId: assert-slab
+      statement: "SLAB != None"
+      errorMessage: "Slab material does not exist!"

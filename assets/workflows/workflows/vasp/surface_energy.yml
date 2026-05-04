@@ -9,7 +9,11 @@ properties:
   - total_energy_contributions
   - total_force
 units:
-  - name: surface_energy_setup
+  - name: verify_slab
+    type: subworkflow
+  - name: resolve_bulk_from_slab
+    type: subworkflow
+  - name: get_e_bulk
     type: subworkflow
   - name: surface_energy
     type: subworkflow

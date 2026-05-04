@@ -49,17 +49,6 @@ flavors:
     applicationName: python
     executableName: python
 
-  get_bulk_query_for_slab:
-    input:
-      - name: resolve_bulk_hash.py
-        templateName: get_bulk_query_for_slab.py
-      - name: requirements.txt
-        templateName: requirements_mat3ra_made_tools.txt
-    monitors:
-      - standard_output
-    applicationName: python
-    executableName: python
-
   'generic:post_processing:plot:matplotlib':
     input:
       - name: plot.py

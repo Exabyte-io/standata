@@ -7,6 +7,24 @@ model:
   name: DFTModel
 name: Surface Energy - VASP
 units:
+  - type: assignment
+    config:
+      flowchartId: assign-surface-area
+      name: assign-surface-area
+      operand: A
+      value: "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))"
+  - type: assignment
+    config:
+      flowchartId: assign-n-bulk
+      name: assign-n-bulk
+      operand: N_BULK
+      value: "len(BULK.basis.elements)"
+  - type: assignment
+    config:
+      flowchartId: assign-n-slab
+      name: assign-n-slab
+      operand: N_SLAB
+      value: "len(SLAB.basis.elements)"
   - type: executionBuilder
     config:
       execName: vasp

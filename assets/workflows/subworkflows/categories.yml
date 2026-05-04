@@ -347,10 +347,6 @@ entities:
     categories:
       - band_structure
       - espresso
-  - filename: espresso/surface_energy_setup.json
-    categories:
-      - espresso
-      - python
   - filename: espresso/surface_energy.json
     categories:
       - atomic_forces
@@ -362,6 +358,15 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
+  - filename: espresso/surface_energy/get_e_bulk.json
+    categories:
+      - espresso
+  - filename: espresso/surface_energy/resolve_bulk_from_slab.json
+    categories:
+      - espresso
+  - filename: espresso/surface_energy/verify_slab.json
+    categories:
+      - espresso
   - filename: espresso/total_energy.json
     categories:
       - atomic_forces
@@ -558,10 +563,6 @@ entities:
     categories:
       - band_structure
       - vasp
-  - filename: vasp/surface_energy_setup.json
-    categories:
-      - python
-      - vasp
   - filename: vasp/surface_energy.json
     categories:
       - atomic_forces
@@ -572,6 +573,15 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
+      - vasp
+  - filename: vasp/surface_energy/get_e_bulk.json
+    categories:
+      - vasp
+  - filename: vasp/surface_energy/resolve_bulk_from_slab.json
+    categories:
+      - vasp
+  - filename: vasp/surface_energy/verify_slab.json
+    categories:
       - vasp
   - filename: vasp/total_energy.json
     categories:

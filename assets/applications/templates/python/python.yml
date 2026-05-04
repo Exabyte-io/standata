@@ -34,18 +34,6 @@
   applicationName: python
   executableName: python
 
-- content: !readFile 'input_files_templates/python/get_bulk_query_for_slab.pyi'
-  name: get_bulk_query_for_slab.py
-  contextProviders: []
-  applicationName: python
-  executableName: python
-
-- content: !readFile 'input_files_templates/python/requirements_mat3ra_made_tools.j2.txt'
-  name: requirements_mat3ra_made_tools.txt
-  contextProviders: []
-  applicationName: python
-  executableName: python
-
 - content: !readFile 'input_files_templates/python/requirements_plot_wavefunction.j2.txt'
   name: requirements_plot_wavefunction.txt
   contextProviders: []

@@ -1,0 +1,143 @@
+method:
+  name: UnknownMethod
+model:
+  name: UnknownModel
+name: Resolve Bulk From Slab
+apps:
+  - espresso
+  - vasp
+units:
+  - type: assertion
+    config:
+      name: assert-slab
+      flowchartId: assert-slab
+      statement: "SLAB != None"
+      errorMessage: Surface slab must be resolved before bulk resolution.
+  - type: assignment
+    config:
+      name: assign-bulk-id
+      flowchartId: assign-bulk-id
+      operand: BULK_ID
+      value: "getattr(getattr(SLAB, 'metadata', None), 'bulkId', None)"
+  - type: assignment
+    config:
+      name: assign-slab-build
+      flowchartId: assign-slab-build
+      operand: SLAB_BUILD
+      value: "getattr(getattr(SLAB, 'metadata', None), 'build', []) or []"
+  - type: assignment
+    config:
+      name: assign-last-build-step
+      flowchartId: assign-last-build-step
+      operand: LAST_BUILD_STEP
+      value: "SLAB_BUILD[-1] if SLAB_BUILD else None"
+  - type: assignment
+    config:
+      name: assign-last-build-configuration
+      flowchartId: assign-last-build-configuration
+      operand: LAST_BUILD_CONFIGURATION
+      value: "getattr(LAST_BUILD_STEP, 'configuration', None) if LAST_BUILD_STEP != None else None"
+  - type: assignment
+    config:
+      name: assign-last-stack-component
+      flowchartId: assign-last-stack-component
+      operand: LAST_STACK_COMPONENT
+      value: "(getattr(LAST_BUILD_CONFIGURATION, 'stack_components', []) or [None])[0] if LAST_BUILD_CONFIGURATION != None else None"
+  - type: assignment
+    config:
+      name: assign-last-build-crystal
+      flowchartId: assign-last-build-crystal
+      operand: LAST_BUILD_CRYSTAL
+      value: "getattr(LAST_STACK_COMPONENT, 'crystal', None) if LAST_STACK_COMPONENT != None else None"
+  - type: assignment
+    config:
+      name: assign-crystal-id
+      flowchartId: assign-crystal-id
+      operand: CRYSTAL_ID
+      value: "getattr(LAST_BUILD_CRYSTAL, '_id', None)"
+  - type: assignment
+    config:
+      name: assign-crystal-scaled-hash
+      flowchartId: assign-crystal-scaled-hash
+      operand: CRYSTAL_SCALED_HASH
+      value: "getattr(LAST_BUILD_CRYSTAL, 'scaledHash', None)"
+  - type: assignment
+    config:
+      name: assign-crystal-hash
+      flowchartId: assign-crystal-hash
+      operand: CRYSTAL_HASH
+      value: "getattr(LAST_BUILD_CRYSTAL, 'hash', None)"
+  - type: assignment
+    config:
+      name: assign-bulk-query
+      flowchartId: assign-bulk-query
+      operand: BULK_QUERY
+      value: >-
+        {'_id': BULK_ID}
+        if BULK_ID is not None
+        else {'_id': CRYSTAL_ID}
+        if CRYSTAL_ID is not None
+        else {'scaledHash': CRYSTAL_SCALED_HASH}
+        if CRYSTAL_SCALED_HASH is not None
+        else {'hash': CRYSTAL_HASH}
+        if CRYSTAL_HASH is not None
+        else None
+  - type: assertion
+    config:
+      name: assert-bulk-query
+      flowchartId: assert-bulk-query
+      statement: "BULK_QUERY != None"
+      errorMessage: >-
+        Surface slab metadata must include bulkId or build metadata with
+        stack_components[0].crystal carrying _id, scaledHash, or hash to infer
+        the bulk material query. Upload the bulk material and run its total
+        energy workflow before calculating surface energy.
+  - type: io
+    config:
+      name: io-bulk
+      flowchartId: io-bulk
+      subtype: input
+      source: api
+      input:
+        - endpoint: materials
+          endpoint_options:
+            params:
+              query: "BULK_QUERY"
+              projection: "{}"
+          name: DATA
+  - type: assignment
+    config:
+      name: assign-n-bulk-matches
+      flowchartId: assign-n-bulk-matches
+      operand: N_BULK_MATCHES
+      value: "len(DATA)"
+      input:
+        - name: DATA
+          scope: io-bulk
+  - type: assertion
+    config:
+      name: assert-bulk
+      flowchartId: assert-bulk
+      statement: "N_BULK_MATCHES > 0"
+      errorMessage: >-
+        No bulk material matched the resolved slab metadata query. Upload the
+        bulk material and run its total energy workflow before calculating
+        surface energy.
+  - type: assertion
+    config:
+      name: assert-n-bulk-matches
+      flowchartId: assert-n-bulk-matches
+      statement: "N_BULK_MATCHES == 1"
+      errorMessage: >-
+        Expected exactly one bulk material for the slab. Ensure bulkId is
+        correct or the resolved slab metadata query matches a unique bulk
+        material.
+  - type: assignment
+    config:
+      name: assign-bulk
+      flowchartId: assign-bulk
+      operand: BULK
+      value: "DATA[0]"
+      input:
+        - name: DATA
+          scope: io-bulk
