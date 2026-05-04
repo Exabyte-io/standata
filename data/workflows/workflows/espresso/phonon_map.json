@@ -1,10 +1,10 @@
 {
-    "_id": "bbf7f87c-d201-537e-8c0f-00dca0cbb7ec",
+    "_id": "23b9058b-884c-52d4-82a8-ee162b9761e0",
     "name": "Phonon Map",
     "subworkflows": [
         {
-            "_id": "f52b8039-83d0-5485-a1f1-0bc37cb01ed3",
-            "name": "pw-scf",
+            "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
+            "name": "Preliminary SCF Calculation",
             "application": {
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
@@ -799,7 +799,7 @@
     "units": [
         {
             "type": "subworkflow",
-            "name": "pw-scf",
+            "name": "Preliminary SCF Calculation",
             "results": [],
             "monitors": [],
             "preProcessors": [],
@@ -807,8 +807,8 @@
             "status": "idle",
             "statusTrack": [],
             "tags": [],
-            "_id": "f52b8039-83d0-5485-a1f1-0bc37cb01ed3",
-            "flowchartId": "d270b789-fb67-573c-a566-9f09fdacea23",
+            "_id": "79f2cb6a-7994-5369-8c85-af07c55ad26f",
+            "flowchartId": "b6a2b27a-0fec-5e0e-8974-073ee9d2ad83",
             "schemaVersion": "2022.8.16",
             "isDefault": false
         },
