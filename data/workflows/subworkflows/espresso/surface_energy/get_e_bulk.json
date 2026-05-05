@@ -1,0 +1,102 @@
+{
+    "_id": "91cf1bd0-8e96-52e5-861e-bf1b2e3b4a03",
+    "name": "Get Bulk Energy",
+    "application": {
+        "name": "espresso"
+    },
+    "properties": [],
+    "model": {
+        "type": "unknown",
+        "subtype": "unknown",
+        "method": {
+            "type": "pseudopotential",
+            "subtype": "us",
+            "data": {}
+        }
+    },
+    "units": [
+        {
+            "name": "io-e-bulk",
+            "type": "io",
+            "subtype": "input",
+            "flowchartId": "io-e-bulk",
+            "source": "api",
+            "input": [
+                {
+                    "endpoint": "refined-properties",
+                    "endpoint_options": {
+                        "params": {
+                            "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': ''.join((SUBWORKFLOW.application.shortName, ':'))}}",
+                            "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
+                        }
+                    },
+                    "name": "DATA"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "assign-e-bulk",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-e-bulk",
+            "type": "assignment",
+            "operand": "E_BULK",
+            "value": "DATA[0].data.value if DATA else None",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-e-bulk"
+                }
+            ],
+            "flowchartId": "assign-e-bulk",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assert-e-bulk",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assert-e-bulk",
+            "type": "assertion",
+            "statement": "E_BULK != None",
+            "errorMessage": "Bulk total energy does not exist for the resolved bulk material. Run a bulk total energy workflow first.",
+            "flowchartId": "assert-e-bulk",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        }
+    ]
+}

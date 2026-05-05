@@ -30,9 +30,78 @@
     },
     "units": [
         {
+            "name": "assign-surface-area",
+            "type": "assignment",
+            "operand": "A",
+            "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
+            "input": [],
+            "flowchartId": "assign-surface-area",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "assign-n-bulk",
+            "application": {
+                "isLicensed": true,
+                "name": "vasp",
+                "shortName": "vasp",
+                "summary": "Vienna Ab-initio Simulation Package",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.4.4",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-n-bulk",
+            "type": "assignment",
+            "operand": "N_BULK",
+            "value": "len(BULK.basis.elements)",
+            "input": [],
+            "flowchartId": "assign-n-bulk",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-n-slab",
+            "application": {
+                "isLicensed": true,
+                "name": "vasp",
+                "shortName": "vasp",
+                "summary": "Vienna Ab-initio Simulation Package",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.4.4",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-n-slab",
+            "type": "assignment",
+            "operand": "N_SLAB",
+            "value": "len(SLAB.basis.elements)",
+            "input": [],
+            "flowchartId": "assign-n-slab",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "vasp-surface-energy",
+            "application": {
+                "isLicensed": true,
+                "name": "vasp",
+                "shortName": "vasp",
+                "summary": "Vienna Ab-initio Simulation Package",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.4.4",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
             "type": "execution",
             "name": "vasp_symprec",
-            "head": true,
+            "head": false,
             "results": [
                 {
                     "name": "total_energy"

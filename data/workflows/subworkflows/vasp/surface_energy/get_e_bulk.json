@@ -1,0 +1,102 @@
+{
+    "_id": "3d6e2398-8920-5663-949c-3239911c761a",
+    "name": "Get Bulk Energy",
+    "application": {
+        "name": "vasp"
+    },
+    "properties": [],
+    "model": {
+        "type": "unknown",
+        "subtype": "unknown",
+        "method": {
+            "type": "pseudopotential",
+            "subtype": "paw",
+            "data": {}
+        }
+    },
+    "units": [
+        {
+            "name": "io-e-bulk",
+            "type": "io",
+            "subtype": "input",
+            "flowchartId": "io-e-bulk",
+            "source": "api",
+            "input": [
+                {
+                    "endpoint": "refined-properties",
+                    "endpoint_options": {
+                        "params": {
+                            "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': ''.join((SUBWORKFLOW.application.shortName, ':'))}}",
+                            "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
+                        }
+                    },
+                    "name": "DATA"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "assign-e-bulk",
+            "application": {
+                "isLicensed": true,
+                "name": "vasp",
+                "shortName": "vasp",
+                "summary": "Vienna Ab-initio Simulation Package",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.4.4",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-e-bulk",
+            "type": "assignment",
+            "operand": "E_BULK",
+            "value": "DATA[0].data.value if DATA else None",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-e-bulk"
+                }
+            ],
+            "flowchartId": "assign-e-bulk",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assert-e-bulk",
+            "application": {
+                "isLicensed": true,
+                "name": "vasp",
+                "shortName": "vasp",
+                "summary": "Vienna Ab-initio Simulation Package",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.4.4",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assert-e-bulk",
+            "type": "assertion",
+            "statement": "E_BULK != None",
+            "errorMessage": "Bulk total energy does not exist for the resolved bulk material. Run a bulk total energy workflow first.",
+            "flowchartId": "assert-e-bulk",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "application": {
+                "isLicensed": true,
+                "name": "vasp",
+                "shortName": "vasp",
+                "summary": "Vienna Ab-initio Simulation Package",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.4.4",
+                "schemaVersion": "2022.8.16"
+            }
+        }
+    ]
+}

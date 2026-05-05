@@ -2,15 +2,16 @@
     "name": "Surface Energy",
     "subworkflows": [
         {
-            "_id": "711cdbf6-7646-58ee-84de-eb914be40a29",
-            "name": "Surface Energy Setup",
+            "_id": "b2b0b64f-6e74-528b-ab96-76df8ed09186",
+            "name": "Verify Slab",
             "application": {
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
                 "build": "GNU",
+                "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "3.10.13",
+                "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
             "properties": [],
@@ -18,8 +19,8 @@
                 "type": "unknown",
                 "subtype": "unknown",
                 "method": {
-                    "type": "unknown",
-                    "subtype": "unknown",
+                    "type": "pseudopotential",
+                    "subtype": "us",
                     "data": {}
                 }
             },
@@ -48,12 +49,13 @@
                     "head": true,
                     "next": "assign-slab",
                     "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "3.10.13",
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -75,12 +77,13 @@
                     "head": false,
                     "next": "assert-slab",
                     "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "3.10.13",
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -94,97 +97,277 @@
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
-                    "next": "resolve-bulk-query",
                     "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "3.10.13",
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
+                    }
+                }
+            ]
+        },
+        {
+            "_id": "825f7657-5978-5973-bd4d-eda3639ec527",
+            "name": "Resolve Bulk From Slab",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            },
+            "properties": [],
+            "model": {
+                "type": "unknown",
+                "subtype": "unknown",
+                "method": {
+                    "type": "pseudopotential",
+                    "subtype": "us",
+                    "data": {}
+                }
+            },
+            "units": [
+                {
+                    "name": "assert-slab",
+                    "type": "assertion",
+                    "statement": "SLAB != None",
+                    "errorMessage": "Surface slab must be resolved before bulk resolution.",
+                    "flowchartId": "assert-slab",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": true,
+                    "next": "assign-bulk-id",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
                 },
                 {
-                    "type": "execution",
-                    "name": "resolve-bulk-query",
-                    "head": false,
-                    "results": [],
-                    "monitors": [
-                        {
-                            "name": "standard_output"
-                        }
-                    ],
-                    "flowchartId": "resolve-bulk-query",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "executable": {
-                        "isDefault": true,
-                        "monitors": [
-                            "standard_output"
-                        ],
-                        "name": "python",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "flavor": {
-                        "applicationName": "python",
-                        "executableName": "python",
-                        "input": [
-                            {
-                                "name": "resolve_bulk_hash.py",
-                                "templateName": "get_bulk_query_for_slab.py"
-                            },
-                            {
-                                "name": "requirements.txt",
-                                "templateName": "requirements_mat3ra_made_tools.txt"
-                            }
-                        ],
-                        "monitors": [
-                            "standard_output"
-                        ],
-                        "name": "get_bulk_query_for_slab",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
-                    },
+                    "name": "assign-bulk-id",
+                    "type": "assignment",
+                    "operand": "BULK_ID",
+                    "value": "SLAB.metadata.get('bulkId') if SLAB.metadata else None",
+                    "input": [],
+                    "flowchartId": "assign-bulk-id",
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
-                    "input": [
-                        {
-                            "applicationName": "python",
-                            "content": "# ---------------------------------------------------------- #\n#                                                            #\n#  This script builds the query used to locate the bulk      #\n#  structure corresponding to a slab material.               #\n#  SLAB comes from the workflow scope and is expected        #\n#  to be a JSON representation of the slab material.         #\n#                                                            #\n#  Resolution order:                                         #\n#  1. slab metadata bulkId                                   #\n#  2. build metadata crystal _id                             #\n#  3. build metadata crystal scaledHash                      #\n#  4. build metadata crystal hash                            #\n#  5. recalculated hash from the embedded crystal            #\n#                                                            #\n#  Emits BULK_QUERY to the workflow scope.                   #\n#                                                            #\n# ---------------------------------------------------------- #\nimport json\n\nfrom mat3ra.made.material import Material\nfrom munch import Munch\n\n\ndef material_from_crystal(crystal):\n    try:\n        return Material.from_json(json.dumps(crystal))\n    except Exception:\n        return Material(**crystal)\n\n\nslab_json = {% raw %}{{ SLAB }}{% endraw %}\nbulk_query = None\n\nmetadata = slab_json.get(\"metadata\") or {}\nif metadata.get(\"bulkId\") is not None:\n    bulk_query = {\"_id\": metadata[\"bulkId\"]}\n\nif bulk_query is None:\n    for build_step in reversed(metadata.get(\"build\") or []):\n        try:\n            crystal = build_step[\"configuration\"][\"stack_components\"][0][\"crystal\"]\n        except (KeyError, IndexError, TypeError):\n            continue\n\n        if crystal.get(\"_id\") is not None:\n            bulk_query = {\"_id\": crystal[\"_id\"]}\n            break\n        if crystal.get(\"scaledHash\") is not None:\n            bulk_query = {\"scaledHash\": crystal[\"scaledHash\"]}\n            break\n        if crystal.get(\"hash\") is not None:\n            bulk_query = {\"hash\": crystal[\"hash\"]}\n            break\n\n        try:\n            bulk_query = {\"hash\": material_from_crystal(crystal).calculate_hash()}\n            break\n        except Exception:\n            continue\n\nprint(json.dumps({\"name\": \"BULK_QUERY\", \"value\": bulk_query, \"scope\": \"global\"}))\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "resolve_bulk_hash.py",
-                            "rendered": "# ---------------------------------------------------------- #\n#                                                            #\n#  This script builds the query used to locate the bulk      #\n#  structure corresponding to a slab material.               #\n#  SLAB comes from the workflow scope and is expected        #\n#  to be a JSON representation of the slab material.         #\n#                                                            #\n#  Resolution order:                                         #\n#  1. slab metadata bulkId                                   #\n#  2. build metadata crystal _id                             #\n#  3. build metadata crystal scaledHash                      #\n#  4. build metadata crystal hash                            #\n#  5. recalculated hash from the embedded crystal            #\n#                                                            #\n#  Emits BULK_QUERY to the workflow scope.                   #\n#                                                            #\n# ---------------------------------------------------------- #\nimport json\n\nfrom mat3ra.made.material import Material\nfrom munch import Munch\n\n\ndef material_from_crystal(crystal):\n    try:\n        return Material.from_json(json.dumps(crystal))\n    except Exception:\n        return Material(**crystal)\n\n\nslab_json = {{ SLAB }}\nbulk_query = None\n\nmetadata = slab_json.get(\"metadata\") or {}\nif metadata.get(\"bulkId\") is not None:\n    bulk_query = {\"_id\": metadata[\"bulkId\"]}\n\nif bulk_query is None:\n    for build_step in reversed(metadata.get(\"build\") or []):\n        try:\n            crystal = build_step[\"configuration\"][\"stack_components\"][0][\"crystal\"]\n        except (KeyError, IndexError, TypeError):\n            continue\n\n        if crystal.get(\"_id\") is not None:\n            bulk_query = {\"_id\": crystal[\"_id\"]}\n            break\n        if crystal.get(\"scaledHash\") is not None:\n            bulk_query = {\"scaledHash\": crystal[\"scaledHash\"]}\n            break\n        if crystal.get(\"hash\") is not None:\n            bulk_query = {\"hash\": crystal[\"hash\"]}\n            break\n\n        try:\n            bulk_query = {\"hash\": material_from_crystal(crystal).calculate_hash()}\n            break\n        except Exception:\n            continue\n\nprint(json.dumps({\"name\": \"BULK_QUERY\", \"value\": bulk_query, \"scope\": \"global\"}))\n",
-                            "schemaVersion": "2022.8.16"
-                        },
-                        {
-                            "applicationName": "python",
-                            "content": "mat3ra-made[tools]>=2026.4.2.post1\nmunch>=3.0.0\n",
-                            "contextProviders": [],
-                            "executableName": "python",
-                            "name": "requirements.txt",
-                            "rendered": "mat3ra-made[tools]>=2026.4.2.post1\nmunch>=3.0.0\n",
-                            "schemaVersion": "2022.8.16"
-                        }
-                    ],
-                    "next": "assert-bulk-query"
+                    "head": false,
+                    "next": "assign-slab-build",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-slab-build",
+                    "type": "assignment",
+                    "operand": "SLAB_BUILD",
+                    "value": "(SLAB.metadata.get('build') or []) if SLAB.metadata else []",
+                    "input": [],
+                    "flowchartId": "assign-slab-build",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-last-build-step",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-last-build-step",
+                    "type": "assignment",
+                    "operand": "LAST_BUILD_STEP",
+                    "value": "SLAB_BUILD[-1] if SLAB_BUILD else None",
+                    "input": [],
+                    "flowchartId": "assign-last-build-step",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-last-build-configuration",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-last-build-configuration",
+                    "type": "assignment",
+                    "operand": "LAST_BUILD_CONFIGURATION",
+                    "value": "LAST_BUILD_STEP.get('configuration') if LAST_BUILD_STEP else None",
+                    "input": [],
+                    "flowchartId": "assign-last-build-configuration",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-last-stack-component",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-last-stack-component",
+                    "type": "assignment",
+                    "operand": "LAST_STACK_COMPONENT",
+                    "value": "(LAST_BUILD_CONFIGURATION.get('stack_components') or [None])[0] if LAST_BUILD_CONFIGURATION else None",
+                    "input": [],
+                    "flowchartId": "assign-last-stack-component",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-last-build-crystal",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-last-build-crystal",
+                    "type": "assignment",
+                    "operand": "LAST_BUILD_CRYSTAL",
+                    "value": "LAST_STACK_COMPONENT.get('crystal') if LAST_STACK_COMPONENT else None",
+                    "input": [],
+                    "flowchartId": "assign-last-build-crystal",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-crystal-scaled-hash",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-crystal-scaled-hash",
+                    "type": "assignment",
+                    "operand": "CRYSTAL_SCALED_HASH",
+                    "value": "LAST_BUILD_CRYSTAL.get('scaledHash') if LAST_BUILD_CRYSTAL else None",
+                    "input": [],
+                    "flowchartId": "assign-crystal-scaled-hash",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-crystal-hash",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-crystal-hash",
+                    "type": "assignment",
+                    "operand": "CRYSTAL_HASH",
+                    "value": "LAST_BUILD_CRYSTAL.get('hash') if LAST_BUILD_CRYSTAL else None",
+                    "input": [],
+                    "flowchartId": "assign-crystal-hash",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-bulk-query",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-bulk-query",
+                    "type": "assignment",
+                    "operand": "BULK_QUERY",
+                    "value": "{'_id': BULK_ID} if BULK_ID is not None else {'scaledHash': CRYSTAL_SCALED_HASH} if CRYSTAL_SCALED_HASH is not None else {'hash': CRYSTAL_HASH} if CRYSTAL_HASH is not None else None",
+                    "input": [],
+                    "flowchartId": "assign-bulk-query",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assert-bulk-query",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
+                    }
                 },
                 {
                     "name": "assert-bulk-query",
                     "type": "assertion",
                     "statement": "BULK_QUERY != None",
-                    "errorMessage": "Surface slab metadata must include bulkId or build metadata with stack_components[0].crystal carrying resolvable bulk identity to infer the bulk material query.",
+                    "errorMessage": "Surface slab metadata must include bulkId or build metadata with stack_components[0].crystal carrying scaledHash or hash to infer the bulk material query. Upload the bulk material and run its total energy workflow before calculating surface energy.",
                     "flowchartId": "assert-bulk-query",
                     "status": "idle",
                     "statusTrack": [],
@@ -192,12 +375,13 @@
                     "head": false,
                     "next": "io-bulk",
                     "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "3.10.13",
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -225,12 +409,13 @@
                     "head": false,
                     "next": "assign-n-bulk-matches",
                     "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "3.10.13",
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -252,12 +437,13 @@
                     "head": false,
                     "next": "assert-bulk",
                     "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "3.10.13",
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -265,7 +451,7 @@
                     "name": "assert-bulk",
                     "type": "assertion",
                     "statement": "N_BULK_MATCHES > 0",
-                    "errorMessage": "No bulk material matched the resolved slab metadata query. Check the slab metadata or create the exact bulk representation on the platform.",
+                    "errorMessage": "No bulk material matched the resolved slab metadata query. Upload the bulk material and run its total energy workflow before calculating surface energy.",
                     "flowchartId": "assert-bulk",
                     "status": "idle",
                     "statusTrack": [],
@@ -273,12 +459,13 @@
                     "head": false,
                     "next": "assert-n-bulk-matches",
                     "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "3.10.13",
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -294,12 +481,13 @@
                     "head": false,
                     "next": "assign-bulk",
                     "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "3.10.13",
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -319,17 +507,43 @@
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
-                    "next": "io-e-bulk",
                     "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "3.10.13",
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
-                },
+                }
+            ]
+        },
+        {
+            "_id": "91cf1bd0-8e96-52e5-861e-bf1b2e3b4a03",
+            "name": "Get Bulk Energy",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            },
+            "properties": [],
+            "model": {
+                "type": "unknown",
+                "subtype": "unknown",
+                "method": {
+                    "type": "pseudopotential",
+                    "subtype": "us",
+                    "data": {}
+                }
+            },
+            "units": [
                 {
                     "name": "io-e-bulk",
                     "type": "io",
@@ -341,7 +555,7 @@
                             "endpoint": "refined-properties",
                             "endpoint_options": {
                                 "params": {
-                                    "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'qe:'}}",
+                                    "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': ''.join((SUBWORKFLOW.application.shortName, ':'))}}",
                                     "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
                                 }
                             },
@@ -351,15 +565,16 @@
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
-                    "head": false,
+                    "head": true,
                     "next": "assign-e-bulk",
                     "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "3.10.13",
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -381,12 +596,13 @@
                     "head": false,
                     "next": "assert-e-bulk",
                     "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "3.10.13",
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -400,79 +616,14 @@
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
-                    "next": "assign-surface-area",
                     "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
                         "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "assign-surface-area",
-                    "type": "assignment",
-                    "operand": "A",
-                    "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
-                    "input": [],
-                    "flowchartId": "assign-surface-area",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
-                    "next": "assign-n-bulk",
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "assign-n-bulk",
-                    "type": "assignment",
-                    "operand": "N_BULK",
-                    "value": "len(BULK.basis.elements)",
-                    "input": [],
-                    "flowchartId": "assign-n-bulk",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
-                    "next": "assign-n-slab",
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "assign-n-slab",
-                    "type": "assignment",
-                    "operand": "N_SLAB",
-                    "value": "len(SLAB.basis.elements)",
-                    "input": [],
-                    "flowchartId": "assign-n-slab",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
-                    "application": {
-                        "name": "python",
-                        "shortName": "py",
-                        "summary": "Python Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "3.10.13",
+                        "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     }
                 }
@@ -517,9 +668,78 @@
             },
             "units": [
                 {
+                    "name": "assign-surface-area",
+                    "type": "assignment",
+                    "operand": "A",
+                    "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
+                    "input": [],
+                    "flowchartId": "assign-surface-area",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": true,
+                    "next": "assign-n-bulk",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-n-bulk",
+                    "type": "assignment",
+                    "operand": "N_BULK",
+                    "value": "len(BULK.basis.elements)",
+                    "input": [],
+                    "flowchartId": "assign-n-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-n-slab",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-n-slab",
+                    "type": "assignment",
+                    "operand": "N_SLAB",
+                    "value": "len(SLAB.basis.elements)",
+                    "input": [],
+                    "flowchartId": "assign-n-slab",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "pw-scf-surface-energy",
+                    "application": {
+                        "name": "espresso",
+                        "shortName": "qe",
+                        "summary": "Quantum ESPRESSO",
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "version": "6.3",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
                     "type": "execution",
                     "name": "pw_scf",
-                    "head": true,
+                    "head": false,
                     "results": [
                         {
                             "name": "atomic_forces"
@@ -689,14 +909,36 @@
     ],
     "units": [
         {
-            "name": "Surface Energy Setup",
+            "name": "Verify Slab",
             "type": "subworkflow",
-            "_id": "711cdbf6-7646-58ee-84de-eb914be40a29",
+            "_id": "b2b0b64f-6e74-528b-ab96-76df8ed09186",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "0f4124bf-cef5-5ccc-8e53-abb1020cf3ec",
+            "flowchartId": "f89d2300-8105-57a9-b7b8-e0397c587995",
             "tags": [],
             "head": true,
+            "next": "84d19eea-cda7-5586-b05f-6d6adb3ec29f"
+        },
+        {
+            "name": "Resolve Bulk From Slab",
+            "type": "subworkflow",
+            "_id": "825f7657-5978-5973-bd4d-eda3639ec527",
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "84d19eea-cda7-5586-b05f-6d6adb3ec29f",
+            "tags": [],
+            "head": false,
+            "next": "772d0df2-fe8f-5842-bd5d-0fd2c9605955"
+        },
+        {
+            "name": "Get Bulk Energy",
+            "type": "subworkflow",
+            "_id": "91cf1bd0-8e96-52e5-861e-bf1b2e3b4a03",
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "772d0df2-fe8f-5842-bd5d-0fd2c9605955",
+            "tags": [],
+            "head": false,
             "next": "ff05c104-effc-5c80-bb6a-ac041b833b71"
         },
         {
@@ -711,7 +953,7 @@
         }
     ],
     "properties": [],
-    "_id": "808d68fd-9df9-5463-9d40-aa539e9495d5",
+    "_id": "8dc6e7aa-79cd-5a39-9a1b-6da7e78a1b03",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

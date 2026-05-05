@@ -30,9 +30,78 @@
     },
     "units": [
         {
+            "name": "assign-surface-area",
+            "type": "assignment",
+            "operand": "A",
+            "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
+            "input": [],
+            "flowchartId": "assign-surface-area",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "assign-n-bulk",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-n-bulk",
+            "type": "assignment",
+            "operand": "N_BULK",
+            "value": "len(BULK.basis.elements)",
+            "input": [],
+            "flowchartId": "assign-n-bulk",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-n-slab",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-n-slab",
+            "type": "assignment",
+            "operand": "N_SLAB",
+            "value": "len(SLAB.basis.elements)",
+            "input": [],
+            "flowchartId": "assign-n-slab",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "pw-scf-surface-energy",
+            "application": {
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
             "type": "execution",
             "name": "pw_scf",
-            "head": true,
+            "head": false,
             "results": [
                 {
                     "name": "atomic_forces"

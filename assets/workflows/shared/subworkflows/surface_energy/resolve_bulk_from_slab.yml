@@ -18,13 +18,13 @@ units:
       name: assign-bulk-id
       flowchartId: assign-bulk-id
       operand: BULK_ID
-      value: "SLAB.metadata.bulkId if SLAB.metadata else None"
+      value: "SLAB.metadata.get('bulkId') if SLAB.metadata else None"
   - type: assignment
     config:
       name: assign-slab-build
       flowchartId: assign-slab-build
       operand: SLAB_BUILD
-      value: "(SLAB.metadata.build or []) if SLAB.metadata else []"
+      value: "(SLAB.metadata.get('build') or []) if SLAB.metadata else []"
   - type: assignment
     config:
       name: assign-last-build-step
@@ -36,38 +36,38 @@ units:
       name: assign-last-build-configuration
       flowchartId: assign-last-build-configuration
       operand: LAST_BUILD_CONFIGURATION
-      value: "LAST_BUILD_STEP.configuration if LAST_BUILD_STEP else None"
+      value: "LAST_BUILD_STEP.get('configuration') if LAST_BUILD_STEP else None"
   - type: assignment
     config:
       name: assign-last-stack-component
       flowchartId: assign-last-stack-component
       operand: LAST_STACK_COMPONENT
-      value: "(LAST_BUILD_CONFIGURATION.stack_components or [None])[0] if LAST_BUILD_CONFIGURATION else None"
+      value: "(LAST_BUILD_CONFIGURATION.get('stack_components') or [None])[0] if LAST_BUILD_CONFIGURATION else None"
   - type: assignment
     config:
       name: assign-last-build-crystal
       flowchartId: assign-last-build-crystal
       operand: LAST_BUILD_CRYSTAL
-      value: "LAST_STACK_COMPONENT.crystal if LAST_STACK_COMPONENT else None"
+      value: "LAST_STACK_COMPONENT.get('crystal') if LAST_STACK_COMPONENT else None"
   - type: assignment
     config:
       name: assign-crystal-scaled-hash
       flowchartId: assign-crystal-scaled-hash
       operand: CRYSTAL_SCALED_HASH
-      value: "LAST_BUILD_CRYSTAL.scaledHash if LAST_BUILD_CRYSTAL else None"
+      value: "LAST_BUILD_CRYSTAL.get('scaledHash') if LAST_BUILD_CRYSTAL else None"
   - type: assignment
     config:
       name: assign-crystal-hash
       flowchartId: assign-crystal-hash
       operand: CRYSTAL_HASH
-      value: "LAST_BUILD_CRYSTAL.hash if LAST_BUILD_CRYSTAL else None"
+      value: "LAST_BUILD_CRYSTAL.get('hash') if LAST_BUILD_CRYSTAL else None"
   - type: assignment
     config:
       name: assign-bulk-query
       flowchartId: assign-bulk-query
       operand: BULK_QUERY
       value: >-
-        {'exabyteId': BULK_ID}
+        {'_id': BULK_ID}
         if BULK_ID is not None
         else {'scaledHash': CRYSTAL_SCALED_HASH}
         if CRYSTAL_SCALED_HASH is not None
