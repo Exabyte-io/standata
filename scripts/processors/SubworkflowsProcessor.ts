@@ -1,9 +1,7 @@
 // @ts-ignore
 import { builders, createSubworkflowByName, Subworkflow, UnitFactory } from "@mat3ra/wode";
-import path from "path";
 
 import { BUILD_CONFIG } from "../../build-config";
-import { loadYAMLFilesAsMap } from "../utils";
 import { BaseWorkflowSubworkflowProcessor } from "./BaseWorkflowSubworkflowProcessor";
 
 export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
@@ -19,24 +17,6 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
             excludedAssetFiles: [BUILD_CONFIG.subworkflows.assets.categories],
             categoriesRelativePath: BUILD_CONFIG.subworkflows.assets.categories,
             categoryKeys: SubworkflowsProcessor.defaultCategoryKeys,
-        });
-    }
-
-    public setEntityMapByApplication() {
-        const sharedPath = path.resolve(
-            __dirname,
-            "../../",
-            BUILD_CONFIG.subworkflows.assets.sharedPath,
-        );
-        const sharedSubworkflows = loadYAMLFilesAsMap(sharedPath);
-        this.applications.forEach((applicationName) => {
-            const applicationSubworkflows = loadYAMLFilesAsMap(
-                `${this.resolvedPaths.assetsDir}/${applicationName}`,
-            );
-            this.entityMapByApplication[applicationName] = {
-                ...sharedSubworkflows,
-                ...applicationSubworkflows,
-            };
         });
     }
 

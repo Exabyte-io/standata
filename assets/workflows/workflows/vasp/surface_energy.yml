@@ -9,11 +9,11 @@ properties:
   - total_energy_contributions
   - total_force
 units:
-  - name: verify_slab
+  - name: shell/utils/verify_slab
     type: subworkflow
-  - name: resolve_bulk_from_slab_by_bulk_id
+  - name: shell/utils/resolve_bulk_from_slab_by_bulk_id
     type: subworkflow
-  - name: resolve_bulk_from_slab_by_build
+  - name: shell/utils/resolve_bulk_from_slab_by_build
     type: subworkflow
   - name: get_e_bulk
     type: subworkflow

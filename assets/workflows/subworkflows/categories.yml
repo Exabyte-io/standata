@@ -54,22 +54,6 @@ entities:
     categories:
       - deepmd
       - espresso
-  - filename: deepmd/get_e_bulk.json
-    categories:
-      - deepmd
-      - shell
-  - filename: deepmd/resolve_bulk_from_slab_by_build.json
-    categories:
-      - deepmd
-      - shell
-  - filename: deepmd/resolve_bulk_from_slab_by_bulk_id.json
-    categories:
-      - deepmd
-      - shell
-  - filename: deepmd/verify_slab.json
-    categories:
-      - deepmd
-      - shell
   - filename: espresso/average_electrostatic_potential_find_minima.json
     categories:
       - espresso
@@ -255,7 +239,6 @@ entities:
   - filename: espresso/get_e_bulk.json
     categories:
       - espresso
-      - shell
   - filename: espresso/gw_band_structure_band_gap_full_frequency.json
     categories:
       - atomic_forces
@@ -367,14 +350,6 @@ entities:
     categories:
       - band_structure
       - espresso
-  - filename: espresso/resolve_bulk_from_slab_by_build.json
-    categories:
-      - espresso
-      - shell
-  - filename: espresso/resolve_bulk_from_slab_by_bulk_id.json
-    categories:
-      - espresso
-      - shell
   - filename: espresso/surface_energy.json
     categories:
       - atomic_forces
@@ -413,10 +388,6 @@ entities:
       - total_energy
       - total_force
       - variable-cell_relaxation
-  - filename: espresso/verify_slab.json
-    categories:
-      - espresso
-      - shell
   - filename: espresso/wavefunction_amplitude.json
     categories:
       - atomic_forces
@@ -445,22 +416,6 @@ entities:
   - filename: lammps/emin.json
     categories:
       - lammps
-  - filename: lammps/get_e_bulk.json
-    categories:
-      - lammps
-      - shell
-  - filename: lammps/resolve_bulk_from_slab_by_build.json
-    categories:
-      - lammps
-      - shell
-  - filename: lammps/resolve_bulk_from_slab_by_bulk_id.json
-    categories:
-      - lammps
-      - shell
-  - filename: lammps/verify_slab.json
-    categories:
-      - lammps
-      - shell
   - filename: nwchem/frequency.json
     categories:
       - nwchem
@@ -469,18 +424,6 @@ entities:
       - total_energy
       - total_energy_contributions
       - zero_point_energy
-  - filename: nwchem/get_e_bulk.json
-    categories:
-      - nwchem
-      - shell
-  - filename: nwchem/resolve_bulk_from_slab_by_build.json
-    categories:
-      - nwchem
-      - shell
-  - filename: nwchem/resolve_bulk_from_slab_by_bulk_id.json
-    categories:
-      - nwchem
-      - shell
   - filename: nwchem/total_energy.json
     categories:
       - homo_energy
@@ -488,14 +431,6 @@ entities:
       - nwchem
       - total_energy
       - total_energy_contributions
-  - filename: nwchem/verify_slab.json
-    categories:
-      - nwchem
-      - shell
-  - filename: python/get_e_bulk.json
-    categories:
-      - python
-      - shell
   - filename: python/ml/classification_tail.json
     categories:
       - creates-predictions-csv-during-predict-phase
@@ -528,34 +463,19 @@ entities:
   - filename: python/python_script.json
     categories:
       - python
-  - filename: python/resolve_bulk_from_slab_by_build.json
-    categories:
-      - python
-      - shell
-  - filename: python/resolve_bulk_from_slab_by_bulk_id.json
-    categories:
-      - python
-      - shell
-  - filename: python/verify_slab.json
-    categories:
-      - python
-      - shell
   - filename: shell/batch_espresso_pwscf.json
-    categories:
-      - shell
-  - filename: shell/get_e_bulk.json
     categories:
       - shell
   - filename: shell/hello_world.json
     categories:
       - shell
-  - filename: shell/resolve_bulk_from_slab_by_build.json
+  - filename: shell/utils/resolve_bulk_from_slab_by_build.json
     categories:
       - shell
-  - filename: shell/resolve_bulk_from_slab_by_bulk_id.json
+  - filename: shell/utils/resolve_bulk_from_slab_by_bulk_id.json
     categories:
       - shell
-  - filename: shell/verify_slab.json
+  - filename: shell/utils/verify_slab.json
     categories:
       - shell
   - filename: vasp/band_gap.json
@@ -615,7 +535,6 @@ entities:
       - vasp
   - filename: vasp/get_e_bulk.json
     categories:
-      - shell
       - vasp
   - filename: vasp/initial_final_total_energies.json
     categories:
@@ -650,14 +569,6 @@ entities:
     categories:
       - band_structure
       - vasp
-  - filename: vasp/resolve_bulk_from_slab_by_build.json
-    categories:
-      - shell
-      - vasp
-  - filename: vasp/resolve_bulk_from_slab_by_bulk_id.json
-    categories:
-      - shell
-      - vasp
   - filename: vasp/surface_energy.json
     categories:
       - atomic_forces
@@ -689,10 +600,6 @@ entities:
       - total_energy
       - total_force
       - variable-cell_relaxation
-      - vasp
-  - filename: vasp/verify_slab.json
-    categories:
-      - shell
       - vasp
   - filename: vasp/zero_point_energy.json
     categories:

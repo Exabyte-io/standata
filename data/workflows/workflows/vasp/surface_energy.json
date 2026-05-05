@@ -561,26 +561,33 @@
             ]
         },
         {
-            "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
+            "_id": "38331759-74dd-500b-b28b-44ae4fca9b3e",
             "name": "Get Bulk Energy",
             "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
+                "isLicensed": true,
+                "isUsingMaterial": true,
+                "name": "vasp",
+                "shortName": "vasp",
+                "summary": "Vienna Ab-initio Simulation Package",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "5.1.8",
+                "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "properties": [],
             "model": {
-                "type": "unknown",
-                "subtype": "unknown",
+                "type": "dft",
+                "subtype": "gga",
                 "method": {
-                    "type": "unknown",
-                    "subtype": "unknown",
+                    "type": "pseudopotential",
+                    "subtype": "paw",
                     "data": {}
-                }
+                },
+                "functional": {
+                    "slug": "pbe"
+                },
+                "refiners": [],
+                "modifiers": []
             },
             "units": [
                 {
@@ -594,7 +601,7 @@
                             "endpoint": "refined-properties",
                             "endpoint_options": {
                                 "params": {
-                                    "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': ''.join((SUBWORKFLOW.application.shortName, ':'))}}",
+                                    "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'vasp:'}}",
                                     "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
                                 }
                             },
@@ -607,12 +614,14 @@
                     "head": true,
                     "next": "assign-e-bulk",
                     "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
+                        "isLicensed": true,
+                        "isUsingMaterial": true,
+                        "name": "vasp",
+                        "shortName": "vasp",
+                        "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.1.8",
+                        "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -634,12 +643,14 @@
                     "head": false,
                     "next": "assert-e-bulk",
                     "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
+                        "isLicensed": true,
+                        "isUsingMaterial": true,
+                        "name": "vasp",
+                        "shortName": "vasp",
+                        "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.1.8",
+                        "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -654,12 +665,14 @@
                     "tags": [],
                     "head": false,
                     "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
+                        "isLicensed": true,
+                        "isUsingMaterial": true,
+                        "name": "vasp",
+                        "shortName": "vasp",
+                        "summary": "Vienna Ab-initio Simulation Package",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.1.8",
+                        "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
                     }
                 }
@@ -1018,7 +1031,7 @@
         {
             "name": "Get Bulk Energy",
             "type": "subworkflow",
-            "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
+            "_id": "38331759-74dd-500b-b28b-44ae4fca9b3e",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "772d0df2-fe8f-5842-bd5d-0fd2c9605955",

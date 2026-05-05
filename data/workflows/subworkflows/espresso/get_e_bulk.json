@@ -1,18 +1,23 @@
 {
-    "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
+    "_id": "db008d30-d6ce-5176-8fd2-3f2255a4bdb8",
     "name": "Get Bulk Energy",
     "application": {
         "name": "espresso"
     },
     "properties": [],
     "model": {
-        "type": "unknown",
-        "subtype": "unknown",
+        "type": "dft",
+        "subtype": "gga",
         "method": {
-            "type": "unknown",
-            "subtype": "unknown",
+            "type": "pseudopotential",
+            "subtype": "us",
             "data": {}
-        }
+        },
+        "functional": {
+            "slug": "pbe"
+        },
+        "refiners": [],
+        "modifiers": []
     },
     "units": [
         {
@@ -26,7 +31,7 @@
                     "endpoint": "refined-properties",
                     "endpoint_options": {
                         "params": {
-                            "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': ''.join((SUBWORKFLOW.application.shortName, ':'))}}",
+                            "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'qe:'}}",
                             "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
                         }
                     },
@@ -39,12 +44,14 @@
             "head": true,
             "next": "assign-e-bulk",
             "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
                 "build": "GNU",
+                "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "5.1.8",
+                "version": "6.3",
                 "schemaVersion": "2022.8.16"
             }
         },
@@ -66,12 +73,14 @@
             "head": false,
             "next": "assert-e-bulk",
             "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
                 "build": "GNU",
+                "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "5.1.8",
+                "version": "6.3",
                 "schemaVersion": "2022.8.16"
             }
         },
@@ -86,12 +95,14 @@
             "tags": [],
             "head": false,
             "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
                 "build": "GNU",
+                "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "5.1.8",
+                "version": "6.3",
                 "schemaVersion": "2022.8.16"
             }
         }
