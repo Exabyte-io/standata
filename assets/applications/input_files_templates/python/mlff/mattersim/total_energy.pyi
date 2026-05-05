@@ -54,6 +54,7 @@ results = {
     "Stress[0][0] (GPa)": stress_00 / GPa,
 }
 
+# results.csv is hardcoded to display the results in the web app
 with open("results.csv", "w", newline="") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=["Property", "Value"])
     writer.writeheader()

@@ -96,9 +96,9 @@ def save_structure(atoms, filename):
             fontsize=10, ha='center', va='top', family='monospace',
             bbox=dict(facecolor='ghostwhite', alpha=0.8, edgecolor='gray', boxstyle='round'))
 
-    # Save with your specific filenames
     plt.savefig(filename, dpi=150, bbox_inches='tight')
     plt.close(fig)
 
+# output filenames are hardcoded to display the structures in the web app
 save_structure(initial_structure, 'initial_structure.png')
 save_structure(relaxed_structure, 'relaxed_structure.png')
