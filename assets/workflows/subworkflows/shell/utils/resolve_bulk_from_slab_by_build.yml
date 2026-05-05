@@ -63,14 +63,6 @@ units:
       errorMessage: >-
         No bulk material matched the resolved slab build metadata query.
         Upload the bulk material and run its total energy workflow first.
-  - type: assertion
-    config:
-      name: assert-n-bulk-matches
-      flowchartId: assert-n-bulk-matches
-      statement: "N_BULK_MATCHES == 1"
-      errorMessage: >-
-        Expected exactly one bulk material for the slab. Ensure the crystal
-        scaledHash or hash matches a unique bulk material.
   - type: assignment
     config:
       name: assign-bulk

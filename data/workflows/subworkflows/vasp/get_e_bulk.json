@@ -1,23 +1,18 @@
 {
-    "_id": "38331759-74dd-500b-b28b-44ae4fca9b3e",
+    "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
     "name": "Get Bulk Energy",
     "application": {
         "name": "vasp"
     },
     "properties": [],
     "model": {
-        "type": "dft",
-        "subtype": "gga",
+        "type": "unknown",
+        "subtype": "unknown",
         "method": {
-            "type": "pseudopotential",
-            "subtype": "paw",
+            "type": "unknown",
+            "subtype": "unknown",
             "data": {}
-        },
-        "functional": {
-            "slug": "pbe"
-        },
-        "refiners": [],
-        "modifiers": []
+        }
     },
     "units": [
         {
@@ -44,14 +39,12 @@
             "head": true,
             "next": "assign-e-bulk",
             "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "5.4.4",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             }
         },
@@ -73,14 +66,12 @@
             "head": false,
             "next": "assert-e-bulk",
             "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "5.4.4",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             }
         },
@@ -95,14 +86,12 @@
             "tags": [],
             "head": false,
             "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "5.4.4",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             }
         }

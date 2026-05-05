@@ -473,27 +473,6 @@
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
-                    "next": "assert-n-bulk-matches",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "assert-n-bulk-matches",
-                    "type": "assertion",
-                    "statement": "N_BULK_MATCHES == 1",
-                    "errorMessage": "Expected exactly one bulk material for the slab. Ensure the crystal scaledHash or hash matches a unique bulk material.",
-                    "flowchartId": "assert-n-bulk-matches",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
                     "next": "assign-bulk",
                     "application": {
                         "name": "shell",
@@ -561,33 +540,26 @@
             ]
         },
         {
-            "_id": "38331759-74dd-500b-b28b-44ae4fca9b3e",
+            "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
             "name": "Get Bulk Energy",
             "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "5.4.4",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             },
             "properties": [],
             "model": {
-                "type": "dft",
-                "subtype": "gga",
+                "type": "unknown",
+                "subtype": "unknown",
                 "method": {
-                    "type": "pseudopotential",
-                    "subtype": "paw",
+                    "type": "unknown",
+                    "subtype": "unknown",
                     "data": {}
-                },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                }
             },
             "units": [
                 {
@@ -614,14 +586,12 @@
                     "head": true,
                     "next": "assign-e-bulk",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -643,14 +613,12 @@
                     "head": false,
                     "next": "assert-e-bulk",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -665,14 +633,12 @@
                     "tags": [],
                     "head": false,
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 }
@@ -1031,7 +997,7 @@
         {
             "name": "Get Bulk Energy",
             "type": "subworkflow",
-            "_id": "38331759-74dd-500b-b28b-44ae4fca9b3e",
+            "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "772d0df2-fe8f-5842-bd5d-0fd2c9605955",

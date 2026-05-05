@@ -177,27 +177,6 @@
             "statusTrack": [],
             "tags": [],
             "head": false,
-            "next": "assert-n-bulk-matches",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
-            "name": "assert-n-bulk-matches",
-            "type": "assertion",
-            "statement": "N_BULK_MATCHES == 1",
-            "errorMessage": "Expected exactly one bulk material for the slab. Ensure the crystal scaledHash or hash matches a unique bulk material.",
-            "flowchartId": "assert-n-bulk-matches",
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "head": false,
             "next": "assign-bulk",
             "application": {
                 "name": "shell",

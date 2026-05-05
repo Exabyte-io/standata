@@ -239,6 +239,7 @@ entities:
   - filename: espresso/get_e_bulk.json
     categories:
       - espresso
+      - shell
   - filename: espresso/gw_band_structure_band_gap_full_frequency.json
     categories:
       - atomic_forces
@@ -535,6 +536,7 @@ entities:
       - vasp
   - filename: vasp/get_e_bulk.json
     categories:
+      - shell
       - vasp
   - filename: vasp/initial_final_total_energies.json
     categories:

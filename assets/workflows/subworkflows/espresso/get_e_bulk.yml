@@ -1,10 +1,9 @@
 application:
-  name: espresso
-  version: "6.3"
+  name: shell
 method:
-  name: PseudopotentialMethod
+  name: UnknownMethod
 model:
-  name: DFTModel
+  name: UnknownModel
 name: Get Bulk Energy
 units:
   - type: io

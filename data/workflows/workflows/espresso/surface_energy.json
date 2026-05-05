@@ -473,27 +473,6 @@
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
-                    "next": "assert-n-bulk-matches",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "assert-n-bulk-matches",
-                    "type": "assertion",
-                    "statement": "N_BULK_MATCHES == 1",
-                    "errorMessage": "Expected exactly one bulk material for the slab. Ensure the crystal scaledHash or hash matches a unique bulk material.",
-                    "flowchartId": "assert-n-bulk-matches",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
                     "next": "assign-bulk",
                     "application": {
                         "name": "shell",
@@ -561,33 +540,26 @@
             ]
         },
         {
-            "_id": "db008d30-d6ce-5176-8fd2-3f2255a4bdb8",
+            "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
             "name": "Get Bulk Energy",
             "application": {
-                "isUsingMaterial": true,
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
-                "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             },
             "properties": [],
             "model": {
-                "type": "dft",
-                "subtype": "gga",
+                "type": "unknown",
+                "subtype": "unknown",
                 "method": {
-                    "type": "pseudopotential",
-                    "subtype": "us",
+                    "type": "unknown",
+                    "subtype": "unknown",
                     "data": {}
-                },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                }
             },
             "units": [
                 {
@@ -614,14 +586,12 @@
                     "head": true,
                     "next": "assign-e-bulk",
                     "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -643,14 +613,12 @@
                     "head": false,
                     "next": "assert-e-bulk",
                     "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -665,14 +633,12 @@
                     "tags": [],
                     "head": false,
                     "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "version": "6.3",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 }
@@ -1000,7 +966,7 @@
         {
             "name": "Get Bulk Energy",
             "type": "subworkflow",
-            "_id": "db008d30-d6ce-5176-8fd2-3f2255a4bdb8",
+            "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "772d0df2-fe8f-5842-bd5d-0fd2c9605955",
