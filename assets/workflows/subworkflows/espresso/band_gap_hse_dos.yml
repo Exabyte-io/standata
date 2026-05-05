@@ -7,9 +7,7 @@ model:
   config:
     type: dft
     subtype: hybrid
-    functional:
-      name: hse06
-      slug: hse06
+    functional: hse06
 method:
   name: PseudopotentialMethod
   config:

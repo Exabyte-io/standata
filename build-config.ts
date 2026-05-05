@@ -151,7 +151,7 @@ export const BUILD_CONFIG = {
         lineWidth: -1,
         sortKeys: false,
     },
-};
+} as const;
 
 // sometimes we need to define certain keys prior to using them later in another
 // key, e.g., environment variables, which must be excluded from sorting

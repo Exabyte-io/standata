@@ -16,11 +16,7 @@
             "subtype": "paw",
             "data": {}
         },
-        "functional": {
-            "slug": "pbe"
-        },
-        "refiners": [],
-        "modifiers": []
+        "functional": "pbe"
     },
     "units": [
         {
@@ -43,6 +39,9 @@
             "flowchartId": "9a1660ab-8067-5fad-9fb8-7c039f634636",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
                 "isLicensed": true,
                 "isUsingMaterial": true,
@@ -56,20 +55,21 @@
             },
             "executable": {
                 "isDefault": true,
-                "monitors": [
-                    "standard_output",
-                    "convergence_ionic",
-                    "convergence_electronic"
-                ],
-                "postProcessors": [
-                    "error_handler",
-                    "prepare_restart",
-                    "remove_non_zero_weight_kpoints"
-                ],
+                "applicationName": "vasp",
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
+                "preProcessors": [],
+                "postProcessors": [],
+                "results": [
+                    {
+                        "name": "reaction_energy_barrier"
+                    },
+                    {
+                        "name": "reaction_energy_profile"
+                    }
+                ],
                 "applicationName": "vasp",
                 "executableName": "vasp",
                 "input": [
@@ -83,53 +83,59 @@
                     }
                 ],
                 "monitors": [
-                    "standard_output"
-                ],
-                "results": [
-                    "reaction_energy_barrier",
-                    "reaction_energy_profile"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
                 "name": "vasp_neb",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "vasp",
-                    "content": "ISTART = 0\nIBRION = 1\nEDIFFG = -0.001\nENCUT = 500\nNELM = 100\nNSW = 100\nIMAGES = {{ input.INTERMEDIATE_IMAGES.length or neb.nImages }}\nSPRING = -5\nISPIN = 2\n",
-                    "contextProviders": [
-                        {
-                            "name": "NEBFormDataManager"
-                        },
-                        {
-                            "name": "VASPNEBInputDataManager"
-                        }
-                    ],
-                    "executableName": "vasp",
-                    "name": "INCAR",
-                    "rendered": "ISTART = 0\nIBRION = 1\nEDIFFG = -0.001\nENCUT = 500\nNELM = 100\nNSW = 100\nIMAGES = 1\nSPRING = -5\nISPIN = 2\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "vasp",
+                        "content": "ISTART = 0\nIBRION = 1\nEDIFFG = -0.001\nENCUT = 500\nNELM = 100\nNSW = 100\nIMAGES = {{ input.INTERMEDIATE_IMAGES.length or neb.nImages }}\nSPRING = -5\nISPIN = 2\n",
+                        "contextProviders": [
+                            {
+                                "name": "NEBFormDataManager"
+                            },
+                            {
+                                "name": "VASPNEBInputDataManager"
+                            }
+                        ],
+                        "executableName": "vasp",
+                        "name": "INCAR",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 },
                 {
-                    "applicationName": "vasp",
-                    "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                    "contextProviders": [
-                        {
-                            "name": "KGridFormDataManager"
-                        },
-                        {
-                            "name": "VASPInputDataManager"
-                        }
-                    ],
-                    "executableName": "vasp",
-                    "name": "KPOINTS",
-                    "rendered": "Automatic mesh\n0\nGamma\n  2 2 2 \n  0 0 0 \n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "vasp",
+                        "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                        "contextProviders": [
+                            {
+                                "name": "KGridFormDataManager"
+                            },
+                            {
+                                "name": "VASPInputDataManager"
+                            }
+                        ],
+                        "executableName": "vasp",
+                        "name": "KPOINTS",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
-            ]
+            ],
+            "context": [],
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

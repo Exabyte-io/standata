@@ -1,4 +1,5 @@
 {
+    "_id": "68512987-de73-5614-bab2-0f8b575cffa3",
     "name": "Surface Energy",
     "subworkflows": [
         {
@@ -20,6 +21,7 @@
                 "fermi_energy",
                 "pressure",
                 "stress_tensor",
+                "surface_energy",
                 "total_energy",
                 "total_energy_contributions",
                 "total_force"
@@ -32,26 +34,26 @@
                     "subtype": "us",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
-                    "name": "io-slab",
                     "type": "io",
-                    "subtype": "input",
+                    "name": "io-slab",
                     "head": true,
                     "results": [],
                     "monitors": [],
                     "flowchartId": "e463ef46-a36e-5168-87dd-e21eb980dfb8",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "subtype": "input",
                     "source": "api",
                     "input": [
                         {
+                            "type": "api",
                             "endpoint": "materials",
                             "endpoint_options": {
                                 "params": {
@@ -63,67 +65,50 @@
                         }
                     ],
                     "next": "ee7abb4e-7848-5aeb-960d-0d441909e2d1",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
-                    "name": "slab",
                     "type": "assignment",
-                    "operand": "SLAB",
-                    "value": "DATA[0]",
-                    "input": [
-                        {
-                            "name": "DATA",
-                            "scope": "e463ef46-a36e-5168-87dd-e21eb980dfb8"
-                        }
-                    ],
+                    "name": "slab",
                     "head": false,
                     "results": [],
                     "monitors": [],
                     "flowchartId": "ee7abb4e-7848-5aeb-960d-0d441909e2d1",
                     "preProcessors": [],
                     "postProcessors": [],
-                    "next": "44263820-0c80-5bd1-b854-9da8d198eac1",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "e463ef46-a36e-5168-87dd-e21eb980dfb8"
+                        }
+                    ],
+                    "operand": "SLAB",
+                    "value": "DATA[0]",
+                    "next": "44263820-0c80-5bd1-b854-9da8d198eac1",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
-                    "name": "io-bulk",
                     "type": "io",
-                    "subtype": "input",
+                    "name": "io-bulk",
                     "head": false,
                     "results": [],
                     "monitors": [],
                     "flowchartId": "44263820-0c80-5bd1-b854-9da8d198eac1",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "subtype": "input",
                     "source": "api",
                     "input": [
                         {
+                            "type": "api",
                             "endpoint": "materials",
                             "endpoint_options": {
                                 "params": {
@@ -135,94 +120,68 @@
                         }
                     ],
                     "next": "b70656f1-a394-57f4-b4de-00096969df4b",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
-                    "name": "bulk",
                     "type": "assignment",
-                    "operand": "BULK",
-                    "value": "DATA[0] if DATA else None",
-                    "input": [
-                        {
-                            "name": "DATA",
-                            "scope": "44263820-0c80-5bd1-b854-9da8d198eac1"
-                        }
-                    ],
+                    "name": "bulk",
                     "head": false,
                     "results": [],
                     "monitors": [],
                     "flowchartId": "b70656f1-a394-57f4-b4de-00096969df4b",
                     "preProcessors": [],
                     "postProcessors": [],
-                    "next": "6ca4006a-e3ae-56ea-91a1-06b9790b5f7e",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "44263820-0c80-5bd1-b854-9da8d198eac1"
+                        }
+                    ],
+                    "operand": "BULK",
+                    "value": "DATA[0] if DATA else None",
+                    "next": "6ca4006a-e3ae-56ea-91a1-06b9790b5f7e",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
-                    "name": "assert-bulk",
                     "type": "assertion",
-                    "statement": "BULK != None",
-                    "errorMessage": "Bulk material does not exist!",
+                    "name": "assert-bulk",
                     "head": false,
                     "results": [],
                     "monitors": [],
                     "flowchartId": "6ca4006a-e3ae-56ea-91a1-06b9790b5f7e",
                     "preProcessors": [],
                     "postProcessors": [],
-                    "next": "490635e0-c593-5809-9eb2-c794b96cfed1",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "statement": "BULK != None",
+                    "errorMessage": "Bulk material does not exist!",
+                    "next": "490635e0-c593-5809-9eb2-c794b96cfed1",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
-                    "name": "io-e-bulk",
                     "type": "io",
-                    "subtype": "input",
+                    "name": "io-e-bulk",
                     "head": false,
                     "results": [],
                     "monitors": [],
                     "flowchartId": "490635e0-c593-5809-9eb2-c794b96cfed1",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "subtype": "input",
                     "source": "api",
                     "input": [
                         {
+                            "type": "api",
                             "endpoint": "refined-properties",
                             "endpoint_options": {
                                 "params": {
@@ -234,164 +193,107 @@
                         }
                     ],
                     "next": "bbe13b97-4243-5a85-8f61-a279d0b797aa",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": []
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
-                    "name": "e-bulk",
                     "type": "assignment",
-                    "operand": "E_BULK",
-                    "value": "DATA[0].data.value if DATA else None",
-                    "input": [
-                        {
-                            "name": "DATA",
-                            "scope": "490635e0-c593-5809-9eb2-c794b96cfed1"
-                        }
-                    ],
+                    "name": "e-bulk",
                     "head": false,
                     "results": [],
                     "monitors": [],
                     "flowchartId": "bbe13b97-4243-5a85-8f61-a279d0b797aa",
                     "preProcessors": [],
                     "postProcessors": [],
-                    "next": "a06c9f43-7670-5fd0-ac42-7028a472235a",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "490635e0-c593-5809-9eb2-c794b96cfed1"
+                        }
+                    ],
+                    "operand": "E_BULK",
+                    "value": "DATA[0].data.value if DATA else None",
+                    "next": "a06c9f43-7670-5fd0-ac42-7028a472235a",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
-                    "name": "assert-e-bulk",
                     "type": "assertion",
-                    "statement": "E_BULK != None",
-                    "errorMessage": "E_BULK does not exist!",
+                    "name": "assert-e-bulk",
                     "head": false,
                     "results": [],
                     "monitors": [],
                     "flowchartId": "a06c9f43-7670-5fd0-ac42-7028a472235a",
                     "preProcessors": [],
                     "postProcessors": [],
-                    "next": "cdf210be-26ed-585a-b4ac-d55795ba2975",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "statement": "E_BULK != None",
+                    "errorMessage": "E_BULK does not exist!",
+                    "next": "cdf210be-26ed-585a-b4ac-d55795ba2975",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
-                    "name": "surface",
                     "type": "assignment",
-                    "operand": "A",
-                    "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
-                    "input": [],
+                    "name": "surface",
                     "head": false,
                     "results": [],
                     "monitors": [],
                     "flowchartId": "cdf210be-26ed-585a-b4ac-d55795ba2975",
                     "preProcessors": [],
                     "postProcessors": [],
-                    "next": "ffa8e43d-096a-555b-b8d0-6d283365ef47",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "input": [],
+                    "operand": "A",
+                    "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
+                    "next": "ffa8e43d-096a-555b-b8d0-6d283365ef47",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
-                    "name": "n-bulk",
                     "type": "assignment",
-                    "operand": "N_BULK",
-                    "value": "len(BULK.basis.elements)",
-                    "input": [],
+                    "name": "n-bulk",
                     "head": false,
                     "results": [],
                     "monitors": [],
                     "flowchartId": "ffa8e43d-096a-555b-b8d0-6d283365ef47",
                     "preProcessors": [],
                     "postProcessors": [],
-                    "next": "a0336ec5-a6da-5e4c-bb48-82b70cf5245f",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "input": [],
+                    "operand": "N_BULK",
+                    "value": "len(BULK.basis.elements)",
+                    "next": "a0336ec5-a6da-5e4c-bb48-82b70cf5245f",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
-                    "name": "n-slab",
                     "type": "assignment",
-                    "operand": "N_SLAB",
-                    "value": "len(SLAB.basis.elements)",
-                    "input": [],
+                    "name": "n-slab",
                     "head": false,
                     "results": [],
                     "monitors": [],
                     "flowchartId": "a0336ec5-a6da-5e4c-bb48-82b70cf5245f",
                     "preProcessors": [],
                     "postProcessors": [],
-                    "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "input": [],
+                    "operand": "N_SLAB",
+                    "value": "len(SLAB.basis.elements)",
+                    "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -431,6 +333,9 @@
                     "flowchartId": "9fc7a088-5533-5f70-bb33-f676ec65f565",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
                         "isUsingMaterial": true,
                         "name": "espresso",
@@ -445,18 +350,36 @@
                     "executable": {
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
-                        ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
-                        ],
+                        "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "results": [
+                            {
+                                "name": "atomic_forces"
+                            },
+                            {
+                                "name": "fermi_energy"
+                            },
+                            {
+                                "name": "pressure"
+                            },
+                            {
+                                "name": "stress_tensor"
+                            },
+                            {
+                                "name": "total_energy"
+                            },
+                            {
+                                "name": "total_energy_contributions"
+                            },
+                            {
+                                "name": "total_force"
+                            }
+                        ],
                         "applicationName": "espresso",
                         "executableName": "pw.x",
                         "input": [
@@ -466,86 +389,72 @@
                         ],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_electronic"
-                        ],
-                        "results": [
-                            "atomic_forces",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw_scf",
                         "schemaVersion": "2022.8.16"
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KGridFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_scf.in",
-                            "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "KGridFormDataManager"
+                                    },
+                                    {
+                                        "name": "QEPWXInputDataManager"
+                                    },
+                                    {
+                                        "name": "PlanewaveCutoffDataManager"
+                                    }
+                                ],
+                                "executableName": "pw.x",
+                                "name": "pw_scf.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "fcd88119-817c-5ac1-a430-ba892ac743eb"
+                    "context": [],
+                    "next": "fcd88119-817c-5ac1-a430-ba892ac743eb",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
-                    "name": "e-slab",
                     "type": "assignment",
-                    "operand": "E_SLAB",
-                    "value": "total_energy",
-                    "input": [
-                        {
-                            "name": "total_energy",
-                            "scope": "9fc7a088-5533-5f70-bb33-f676ec65f565"
-                        }
-                    ],
+                    "name": "e-slab",
                     "head": false,
                     "results": [],
                     "monitors": [],
                     "flowchartId": "fcd88119-817c-5ac1-a430-ba892ac743eb",
                     "preProcessors": [],
                     "postProcessors": [],
-                    "next": "542ea9ad-8a07-5a76-b233-f72fb27c4fc6",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "input": [
+                        {
+                            "name": "total_energy",
+                            "scope": "9fc7a088-5533-5f70-bb33-f676ec65f565"
+                        }
+                    ],
+                    "operand": "E_SLAB",
+                    "value": "total_energy",
+                    "next": "542ea9ad-8a07-5a76-b233-f72fb27c4fc6",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
-                    "name": "surface-energy",
                     "type": "assignment",
-                    "operand": "SURFACE_ENERGY",
-                    "value": "1 / (2 * A) * (E_SLAB - E_BULK * (N_SLAB/N_BULK))",
-                    "input": [],
+                    "name": "surface-energy",
                     "head": false,
                     "results": [
                         {
@@ -556,34 +465,35 @@
                     "flowchartId": "542ea9ad-8a07-5a76-b233-f72fb27c4fc6",
                     "preProcessors": [],
                     "postProcessors": [],
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    },
                     "status": "idle",
                     "statusTrack": [],
-                    "tags": []
+                    "tags": [],
+                    "input": [],
+                    "operand": "SURFACE_ENERGY",
+                    "value": "1 / (2 * A) * (E_SLAB - E_BULK * (N_SLAB/N_BULK))",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         }
     ],
     "units": [
         {
-            "name": "Surface Energy",
             "type": "subworkflow",
-            "_id": "3e05a2b5-4171-54a2-9d2d-9e46118a56bf",
+            "name": "Surface Energy",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "d81dc9ce-bb50-5bc6-af1d-e5ede03bb0a6",
             "tags": [],
-            "head": true
+            "_id": "3e05a2b5-4171-54a2-9d2d-9e46118a56bf",
+            "flowchartId": "d81dc9ce-bb50-5bc6-af1d-e5ede03bb0a6",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [
@@ -596,7 +506,6 @@
         "total_energy_contributions",
         "total_force"
     ],
-    "_id": "68512987-de73-5614-bab2-0f8b575cffa3",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

@@ -1,5 +1,5 @@
 monitors:
-  - standard_output
+  - name: standard_output
 results: []
 flavors:
   gww_simple:
@@ -7,6 +7,6 @@ flavors:
       - name: gww_simple.in
     results: []
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: gww.x

@@ -1,6 +1,6 @@
 isDefault: false
 monitors:
-  - standard_output
+  - name: standard_output
 results: []
 flavors:
   lammps_md:
@@ -8,6 +8,6 @@ flavors:
       - name: in.lammps
     results: []
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: deepmd
-    executableName: lmp  # mpirun -np $NP lmp -in in.lammps
+    executableName: lmp # mpirun -np $NP lmp -in in.lammps

@@ -8,6 +8,7 @@ categories:
     - density_of_states
     - dielectric_tensor
     - fermi_energy
+    - file_content
     - final_structure
     - homo_energy
     - lumo_energy
@@ -24,7 +25,9 @@ categories:
     - total_energy
     - total_energy_contributions
     - total_force
+    - valence_band_offset
     - wavefunction_amplitude
+    - workflow:pyml_predict
     - zero_point_energy
   tags:
     - default
@@ -279,6 +282,8 @@ entities:
       - atomic_forces
       - espresso
       - fermi_energy
+      - phonon_dispersions
+      - phonon_dos
       - pressure
       - stress_tensor
       - total_energy
@@ -322,6 +327,7 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
+      - valence_band_offset
   - filename: espresso/variable_cell_relaxation.json
     categories:
       - atomic_forces
@@ -339,6 +345,7 @@ entities:
       - band_structure
       - espresso
       - fermi_energy
+      - file_content
       - pressure
       - stress_tensor
       - total_energy
@@ -378,13 +385,19 @@ entities:
       - total_energy_contributions
   - filename: python/ml/classification_workflow.json
     categories:
+      - file_content
       - python
+      - workflow:pyml_predict
   - filename: python/ml/clustering_workflow.json
     categories:
+      - file_content
       - python
+      - workflow:pyml_predict
   - filename: python/ml/regression_workflow.json
     categories:
+      - file_content
       - python
+      - workflow:pyml_predict
   - filename: python/mlff/mattersim.json
     categories:
       - python
@@ -467,6 +480,8 @@ entities:
       - atomic_forces
       - fermi_energy
       - pressure
+      - reaction_energy_barrier
+      - reaction_energy_profile
       - stress_tensor
       - total_energy
       - total_energy_contributions
