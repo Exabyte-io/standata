@@ -5,6 +5,7 @@
             "_id": "bf0d584b-0a7f-5174-8132-f8f0c8969bc5",
             "name": "CP-MD",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -44,6 +45,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -108,6 +110,7 @@
             "_id": "9ec0f0e4-0f69-5fc7-a6b4-5c5df9499e61",
             "name": "DeePMD",
             "application": {
+                "isUsingMaterial": true,
                 "name": "deepmd",
                 "shortName": "dp",
                 "summary": "DeepMD",
@@ -141,6 +144,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "deepmd",
                         "shortName": "dp",
                         "summary": "DeepMD",
@@ -203,6 +207,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "deepmd",
                         "shortName": "dp",
                         "summary": "DeepMD",
@@ -265,6 +270,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "deepmd",
                         "shortName": "dp",
                         "summary": "DeepMD",
@@ -327,6 +333,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "deepmd",
                         "shortName": "dp",
                         "summary": "DeepMD",

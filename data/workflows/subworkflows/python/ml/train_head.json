@@ -30,6 +30,7 @@
             "head": true,
             "next": "head-fetch-training-data",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -63,6 +64,7 @@
             "head": false,
             "next": "head-branch-on-predict-status",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -95,6 +97,7 @@
             "head": false,
             "next": "head-fetch-trained-model",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -130,6 +133,7 @@
             "head": false,
             "next": "end-of-ml-train-head",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -151,6 +155,7 @@
             "tags": [],
             "head": false,
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",

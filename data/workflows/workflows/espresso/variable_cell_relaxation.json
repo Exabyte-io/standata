@@ -6,6 +6,7 @@
             "_id": "58709c44-47f6-5fbf-bf2e-358b9d98f75d",
             "name": "Variable-cell Relaxation",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -81,6 +82,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",

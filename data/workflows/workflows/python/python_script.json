@@ -5,6 +5,7 @@
             "_id": "64a079ba-7a12-57b7-ac06-310b2bf8d354",
             "name": "Python Script",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -38,6 +39,7 @@
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",

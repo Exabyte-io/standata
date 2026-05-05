@@ -29,6 +29,7 @@
             "preProcessors": [],
             "postProcessors": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "lammps",
                 "shortName": "lmp",
                 "summary": "LAMMPS",
