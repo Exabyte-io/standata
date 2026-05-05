@@ -211,14 +211,26 @@
   applicationName: python
   executableName: python
 
-- content: !readFile 'input_files_templates/python/mlff/mattersim.pyi'
-  name: mattersim.pyi
+- content: !readFile 'input_files_templates/python/mlff/mattersim/requirements.txt'
+  name: mattersim_requirements.txt
   contextProviders: []
   applicationName: python
   executableName: python
 
-- content: !readFile 'input_files_templates/python/mlff/requirements_mattersim.txt'
-  name: requirements_mattersim.txt
+- content: !readFile 'input_files_templates/python/mlff/mattersim/total_energy.pyi'
+  name: mattersim_total_energy.py
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
+- content: !readFile 'input_files_templates/python/mlff/mattersim/cell_relaxation.pyi'
+  name: mattersim_cell_relaxation.py
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
+- content: !readFile 'input_files_templates/python/mlff/mattersim/phonon_dispersion.pyi'
+  name: mattersim_phonon_dispersion.py
   contextProviders: []
   applicationName: python
   executableName: python

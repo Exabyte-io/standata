@@ -13,13 +13,20 @@
 #                                                                  #
 # ---------------------------------------------------------------- #
 
+import os
+import csv
 import torch
+from munch import Munch
 from ase.units import GPa
 from mat3ra.made.tools.convert import to_ase
 from mattersim.forcefield import MatterSimCalculator
-from munch import Munch
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
+if torch.cuda.is_available():
+    device = "cuda"
+    os.environ["PYTORCH_KERNEL_CACHE_PATH"] = os.path.expanduser("~/pytorch_kernel_cache")
+    os.makedirs(os.environ["PYTORCH_KERNEL_CACHE_PATH"], exist_ok=True)
+else:
+    device = "cpu"
 print(f"Running MatterSim on {device}")
 
 # this way material is obtained from the job context
@@ -31,8 +38,31 @@ material = to_ase(dict(material_json))
 # material = bulk("Si", "diamond", a=5.43)
 
 material.calc = MatterSimCalculator(device=device)
-print(f"Energy (eV)                 = {material.get_potential_energy()}")
-print(f"Energy per atom (eV/atom)   = {material.get_potential_energy()/len(material)}")
-print(f"Forces of first atom (eV/A) = {material.get_forces()[0]}")
-print(f"Stress[0][0] (eV/A^3)       = {material.get_stress(voigt=False)[0][0]}")
-print(f"Stress[0][0] (GPa)          = {material.get_stress(voigt=False)[0][0] / GPa}")
+
+energy = float(material.get_potential_energy())
+forces_first = material.get_forces()[0]
+stress_00 = float(material.get_stress(voigt=False)[0][0])
+
+
+results = {
+    "Energy (eV)": energy,
+    "Energy per atom (eV/atom)": energy / len(material),
+    "Force on first atom Fx (eV/A)": float(forces_first[0]),
+    "Force on first atom Fy (eV/A)": float(forces_first[1]),
+    "Force on first atom Fz (eV/A)": float(forces_first[2]),
+    "Stress[0][0] (eV/A^3)": stress_00,
+    "Stress[0][0] (GPa)": stress_00 / GPa,
+}
+
+# results.csv is hardcoded to display the results in the web app
+with open("results.csv", "w", newline="") as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=["Property", "Value"])
+    writer.writeheader()
+
+    for prop, val in results.items():
+        # print full-precision value to stdout
+        print(f"{prop:<35} = {val}")
+
+        # write to CSV rows, used for showing results in the web app
+        # trim values to 6 significant digits
+        writer.writerow({"Property": prop, "Value": f"{val:.6g}"})

@@ -367,13 +367,41 @@ flavors:
     applicationName: python
     executableName: python
 
-  'mlff:mattersim':
+  'mlff:mattersim:total_energy':
     input:
       - name: script.py
-        templateName: mattersim.pyi
+        templateName: mattersim_total_energy.py
       - name: requirements.txt
-        templateName: requirements_mattersim.txt
+        templateName: mattersim_requirements.txt
     monitors:
       - standard_output
+    results:
+      - file_content
+    applicationName: python
+    executableName: python
+
+  'mlff:mattersim:cell_relaxation':
+    input:
+      - name: script.py
+        templateName: mattersim_cell_relaxation.py
+      - name: requirements.txt
+        templateName: mattersim_requirements.txt
+    monitors:
+      - standard_output
+    results:
+      - file_content
+    applicationName: python
+    executableName: python
+
+  'mlff:mattersim:phonon_dispersion':
+    input:
+      - name: script.py
+        templateName: mattersim_phonon_dispersion.py
+      - name: requirements.txt
+        templateName: mattersim_requirements.txt
+    monitors:
+      - standard_output
+    results:
+      - file_content
     applicationName: python
     executableName: python

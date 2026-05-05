@@ -8,6 +8,7 @@ categories:
     - density_of_states
     - dielectric_tensor
     - fermi_energy
+    - file_content
     - final_structure
     - homo_energy
     - lumo_energy
@@ -385,8 +386,17 @@ entities:
   - filename: python/ml/regression_workflow.json
     categories:
       - python
-  - filename: python/mlff/mattersim.json
+  - filename: python/mlff/mattersim_cell_relaxation.json
     categories:
+      - file_content
+      - python
+  - filename: python/mlff/mattersim_phonon_dispersion.json
+    categories:
+      - file_content
+      - python
+  - filename: python/mlff/mattersim_total_energy.json
+    categories:
+      - file_content
       - python
   - filename: python/python_script.json
     categories:

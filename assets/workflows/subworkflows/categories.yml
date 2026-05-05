@@ -452,8 +452,17 @@ entities:
       - pyml:workflow-type-setter
       - python
       - set-io-unit-filenames
-  - filename: python/mlff/mattersim.json
+  - filename: python/mlff/mattersim_cell_relaxation.json
     categories:
+      - file_content
+      - python
+  - filename: python/mlff/mattersim_phonon_dispersion.json
+    categories:
+      - file_content
+      - python
+  - filename: python/mlff/mattersim_total_energy.json
+    categories:
+      - file_content
       - python
   - filename: python/python_script.json
     categories:

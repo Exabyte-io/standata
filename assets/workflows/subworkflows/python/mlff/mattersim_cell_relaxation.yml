@@ -5,10 +5,9 @@ method:
   name: UnknownMethod
 model:
   name: UnknownModel
-name: Mattersim
+name: Cell Relaxation - MatterSim
 units:
-  - type: io
-    config:
+  - config:
       name: io-material
       subtype: input
       source: api
@@ -20,16 +19,25 @@ units:
               query: "{'_id': MATERIAL_ID}"
               projection: "{}"
           name: DATA
-  - type: assignment
-    config:
+    type: io
+  - config:
       name: assign-material
       operand: MATERIAL
       value: "DATA[0]"
       input:
         - name: DATA
           scope: io-material-flowchart-id-ac93759e
+    type: assignment
   - config:
       execName: python
-      flavorName: mlff:mattersim
-      name: mattersim
+      flavorName: mlff:mattersim:cell_relaxation
+      name: mattersim_cell_relaxation
     type: executionBuilder
+    attributes:
+      results:
+        - name: file_content
+          basename: "initial_structure.png"
+          filetype: "image"
+        - name: file_content
+          basename: "relaxed_structure.png"
+          filetype: "image"
