@@ -1,12 +1,14 @@
 {
     "name": "espresso",
     "shortName": "qe",
-    "summary": "Quantum ESPRESSO",
-    "isUsingMaterial": true,
-    "version": "7.5",
-    "isDefault": true,
     "build": "GNU",
+    "version": "7.5",
+    "summary": "Quantum ESPRESSO",
+    "isLicensed": false,
+    "isUsingMaterial": true,
     "hasAdvancedComputeOptions": true,
+    "isDefault": true,
+    "isDefaultVersion": false,
     "buildConfig": {
         "moduleName": "7.5-gnu",
         "imageName": "espresso",

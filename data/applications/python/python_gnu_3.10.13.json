@@ -1,9 +1,12 @@
 {
     "name": "python",
     "shortName": "py",
-    "summary": "Python Script",
-    "isUsingMaterial": true,
+    "build": "GNU",
     "version": "3.10.13",
+    "summary": "Python Script",
+    "isLicensed": false,
+    "isUsingMaterial": true,
+    "hasAdvancedComputeOptions": false,
     "isDefault": true,
-    "build": "GNU"
+    "isDefaultVersion": true
 }

@@ -5,7 +5,7 @@ import type {
     FlavorSchema,
 } from "@mat3ra/esse/dist/js/types";
 
-import { ApplicationStandata } from "../../../../src/js/application";
+import ApplicationRegistry from "../../../../src/js/ApplicationRegistry";
 import { UnitConfigBuilder } from "./UnitConfigBuilder";
 
 export type ExecutionConfig = {
@@ -25,11 +25,29 @@ export default class ExecutionUnitConfigBuilder extends UnitConfigBuilder<"execu
     constructor(config: ExecutionConfig, application: ApplicationSchema, cache?: string[]) {
         super({ name: config.name, type: "execution", flowchartId: config.flowchartId, cache });
 
-        const { executable, flavor } = new ApplicationStandata().getExecutableAndFlavorByName(
-            application.name,
-            config.execName,
-            config.flavorName,
-        );
+        const registry = new ApplicationRegistry();
+
+        const executable = registry.getExecutablesByApplication(application).find((executable) => {
+            return executable.name === config.execName;
+        });
+
+        if (!executable) {
+            throw new Error(
+                `Executable ${config.execName} not found for application ${application.name} version ${application.version}`,
+            );
+        }
+
+        const flavor = registry
+            .getFlavorsByApplicationExecutable(application, executable)
+            .find((flavor) => {
+                return flavor.name === config.flavorName;
+            });
+
+        if (!flavor) {
+            throw new Error(
+                `Flavor ${config.flavorName} not found for executable ${config.execName} in application ${application.name} version ${application.version}`,
+            );
+        }
 
         this.application = application;
         this.executable = executable;
@@ -60,11 +78,16 @@ export default class ExecutionUnitConfigBuilder extends UnitConfigBuilder<"execu
             application: this.application,
             executable: this.executable,
             flavor: this.flavor,
-            input: new ApplicationStandata().getInput(this.flavor).map((input) => ({
-                template: input,
-                rendered: "",
-                isManuallyChanged: false,
-            })),
+            input: new ApplicationRegistry()
+                .getInput(
+                    { name: this.application.name, version: this.application.version },
+                    this.flavor,
+                )
+                .map((input) => ({
+                    template: input,
+                    rendered: "",
+                    isManuallyChanged: false,
+                })),
             context: [],
             ...attributes,
         };

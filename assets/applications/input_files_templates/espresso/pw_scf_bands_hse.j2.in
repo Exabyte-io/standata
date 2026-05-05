@@ -60,5 +60,5 @@ K_POINTS crystal
 {% endfor %}
 {% endraw %}
 {% for point in explicitKPath -%}
-{% for d in point.coordinates %}{{d}} {% endfor -%}0.0000001
+{% for d in point.coordinates %}{{d|sprintf("%14.9f")}} {% endfor -%}0.0000001
 {% endfor %}

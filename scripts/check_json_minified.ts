@@ -1,9 +1,9 @@
+import { Utils } from "@mat3ra/utils/server";
 import * as fs from "fs";
 import * as path from "path";
 
 // @ts-ignore
 import { findJsonFilesRecursively } from "./utils";
-import { Utils } from "@mat3ra/utils/server";
 
 const RUNTIME_DATA_DIR = path.resolve(__dirname, "../dist/js/runtime_data");
 

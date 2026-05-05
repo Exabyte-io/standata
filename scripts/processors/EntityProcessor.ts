@@ -302,7 +302,7 @@ export abstract class EntityProcessor {
         content: object,
         fullPath: string,
         areKeysSorted = true,
-        excludeKeys?: string[],
+        excludeKeys: string[] = [],
     ): void {
         const finalContent = areKeysSorted
             ? Utils.object.sortKeysDeepForObjectWithExclude(content, excludeKeys)

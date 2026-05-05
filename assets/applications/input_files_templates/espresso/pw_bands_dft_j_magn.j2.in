@@ -61,7 +61,7 @@ CELL_PARAMETERS angstrom
 K_POINTS crystal_b
 {{kpath.length}}
 {% for point in kpath -%}
-{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}
+{% for d in point.coordinates %}{{d|sprintf("%14.9f")}} {% endfor -%}{{point.steps}}
 {% endfor %}
 HUBBARD {ortho-atomic}
 {% for row in hubbard_j -%}

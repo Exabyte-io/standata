@@ -1,12 +1,14 @@
 {
     "name": "espresso",
     "shortName": "qe",
-    "summary": "Quantum ESPRESSO",
-    "isUsingMaterial": true,
-    "version": "6.3",
-    "isDefault": true,
     "build": "GNU",
+    "version": "6.3",
+    "summary": "Quantum ESPRESSO",
+    "isLicensed": false,
+    "isUsingMaterial": true,
     "hasAdvancedComputeOptions": true,
+    "isDefault": true,
+    "isDefaultVersion": true,
     "buildConfig": {
         "moduleName": "6.3-gnu",
         "imageName": "espresso",

@@ -22,8 +22,8 @@ import {
     ModelFactory,
 } from "@mat3ra/mode";
 
-import { type ApplicationConfig, ApplicationStandata } from "../../../src/js/application";
 import { ApplicationMethodStandata } from "../../../src/js/applicationMethod";
+import ApplicationRegistry from "../../../src/js/ApplicationRegistry";
 import { setUnitLinks } from "../../../src/js/utils/unit";
 import {
     defaultAssertionUnit,
@@ -106,7 +106,7 @@ type SubworkflowConfig = AttributesConfig & Partial<SubworkflowSchema> & Subwork
 
 export type SubworkflowData = {
     name: string;
-    application: ApplicationConfig;
+    application: Pick<ApplicationSchema, "name" | "version">;
     model: ModelConfig;
     method: MethodConfig;
     units: AnyUnitConfig[];
@@ -226,7 +226,8 @@ function applySubworkflowFunctions<T extends Partial<ComputePropertySchema>>(
 }
 
 export default function createSubworkflow(subworkflowData: SubworkflowData, cache: string[] = []) {
-    const application = new ApplicationStandata().getApplication(subworkflowData.application);
+    const application = new ApplicationRegistry().findApplication(subworkflowData.application);
+
     const model = createModel(subworkflowData.model);
     const method = createMethod(subworkflowData.method, application);
     const units = createUnits(subworkflowData.units, application, cache);
