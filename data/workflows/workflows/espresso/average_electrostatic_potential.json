@@ -6,6 +6,7 @@
             "_id": "7f2f8a38-c3bd-5aa9-b3b0-2c367287dd60",
             "name": "Average Electrostatic Potential",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -78,6 +79,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -88,25 +90,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [
-                            {
-                                "name": "remove_non_zero_weight_kpoints"
-                            }
-                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_ionic"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -202,6 +187,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -212,13 +198,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
@@ -284,6 +263,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -294,13 +274,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "average.x",
                         "schemaVersion": "2022.8.16",

@@ -6,6 +6,7 @@
             "_id": "03e3f15b-2b22-5bb4-8bfd-6839d28a1ba9",
             "name": "Set Up the Job",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -162,6 +163,7 @@
             "_id": "30acc5cd-54e6-5f05-aafd-413ee8a69aa1",
             "name": "Machine Learning",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -201,6 +203,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -210,14 +213,7 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -251,7 +247,7 @@
                         {
                             "template": {
                                 "applicationName": "python",
-                                "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#   General settings for PythonML jobs on the Exabyte.io Platform   #\n#                                                                   #\n#   This file generally shouldn't be modified directly by users.    #\n#   The \"datafile\" and \"is_workflow_running_to_predict\" variables   #\n#   are defined in the head subworkflow, and are templated into     #\n#   this file. This helps facilitate the workflow's behavior        #\n#   differing whether it is in a \"train\" or \"predict\" mode.         #\n#                                                                   #\n#   Also in this file is the \"Context\" object, which helps maintain #\n#   certain Python objects between workflow units, and between      #\n#   predict runs.                                                   #\n#                                                                   #\n#   Whenever a python object needs to be stored for subsequent runs #\n#   (such as in the case of a trained model), context.save() can be #\n#   called to save it. The object can then be loaded again by using #\n#   context.load().                                                 #\n# ----------------------------------------------------------------- #\n\n\nimport os\nimport pickle\n\n# ==================================================\n# Variables modified in the Important Settings menu\n# ==================================================\n# Variables in this section can (and oftentimes need to) be modified by the user in the \"Important Settings\" tab\n# of a workflow.\n\n# Target_column_name is used during training to identify the variable the model is traing to predict.\n# For example, consider a CSV containing three columns, \"Y\", \"X1\", and \"X2\". If the goal is to train a model\n# that will predict the value of \"Y,\" then target_column_name would be set to \"Y\"\ntarget_column_name = \"{{ mlSettings.target_column_name }}\"\n\n# The type of ML problem being performed. Can be either \"regression\", \"classification,\" or \"clustering.\"\nproblem_category = \"{{ mlSettings.problem_category }}\"\n\n# =============================\n# Non user-modifiable variables\n# =============================\n# Variables in this section generally do not need to be modified.\n\n# The problem category, regression or classification or clustering. In regression, the target (predicted) variable\n# is continues. In classification, it is categorical. In clustering, there is no target - a set of labels is\n# automatically generated.\nis_regression = is_classification = is_clustering = False\nif problem_category.lower() == \"regression\":\n    is_regression = True\nelif problem_category.lower() == \"classification\":\n    is_classification = True\nelif problem_category.lower() == \"clustering\":\n    is_clustering = True\nelse:\n    raise ValueError(\n        \"Variable 'problem_category' must be either 'regression', 'classification', or 'clustering'. Check settings.py\")\n\n# The variables \"is_workflow_running_to_predict\" and \"is_workflow_running_to_train\" are used to control whether\n# the workflow is in a \"training\" mode or a \"prediction\" mode. The \"IS_WORKFLOW_RUNNING_TO_PREDICT\" variable is set by\n# an assignment unit in the \"Set Up the Job\" subworkflow that executes at the start of the job. It is automatically\n# changed when the predict workflow is generated, so users should not need to modify this variable.\nis_workflow_running_to_predict = {% raw %}{{IS_WORKFLOW_RUNNING_TO_PREDICT}}{% endraw %}\nis_workflow_running_to_train = not is_workflow_running_to_predict\n\n# Sets the datafile variable. The \"datafile\" is the data that will be read in, and will be used by subsequent\n# workflow units for either training or prediction, depending on the workflow mode.\nif is_workflow_running_to_predict:\n    datafile = \"{% raw %}{{DATASET_BASENAME}}{% endraw %}\"\nelse:\n    datafile = \"{% raw %}{{DATASET_BASENAME}}{% endraw %}\"\n\n# The \"Context\" class allows for data to be saved and loaded between units, and between train and predict runs.\n# Variables which have been saved using the \"Save\" method are written to disk, and the predict workflow is automatically\n# configured to obtain these files when it starts.\n#\n# IMPORTANT NOTE: Do *not* adjust the value of \"context_dir_pathname\" in the Context object. If the value is changed, then\n# files will not be correctly copied into the generated predict workflow. This will cause the predict workflow to be\n# generated in a broken state, and it will not be able to make any predictions.\nclass Context(object):\n    \"\"\"\n    Saves and loads objects from the disk, useful for preserving data between workflow units\n\n    Attributes:\n        context_paths (dict): Dictionary of the format {variable_name: path}, that governs where\n                              pickle saves files.\n\n    Methods:\n        save: Used to save objects to the context directory\n        load: Used to load objects from the context directory\n    \"\"\"\n\n    def __init__(self, context_file_basename=\"workflow_context_file_mapping\"):\n        \"\"\"\n        Constructor for Context objects\n\n        Args:\n            context_file_basename (str): Name of the file to store context paths in\n        \"\"\"\n\n        # Warning: DO NOT modify the context_dir_pathname variable below\n        # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\n        context_dir_pathname = \"{% raw %}{{ CONTEXT_DIR_RELATIVE_PATH }}{% endraw %}\"\n        # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        self._context_dir_pathname = context_dir_pathname\n        self._context_file = os.path.join(context_dir_pathname, context_file_basename)\n\n        # Make context dir if it does not exist\n        if not os.path.exists(context_dir_pathname):\n            os.makedirs(context_dir_pathname)\n\n        # Read in the context sources dictionary, if it exists\n        if os.path.exists(self._context_file):\n            with open(self._context_file, \"rb\") as file_handle:\n                self.context_paths: dict = pickle.load(file_handle)\n        else:\n            # Items is a dictionary of {varname: path}\n            self.context_paths = {}\n\n    def __enter__(self):\n        return self\n\n    def __exit__(self, exc_type, exc_value, traceback):\n        self._update_context()\n\n    def __contains__(self, item):\n        return item in self.context_paths\n\n    def _update_context(self):\n        with open(self._context_file, \"wb\") as file_handle:\n            pickle.dump(self.context_paths, file_handle)\n\n    def load(self, name: str):\n        \"\"\"\n        Returns a contextd object\n\n        Args:\n            name (str): The name in self.context_paths of the object\n        \"\"\"\n        path = self.context_paths[name]\n        with open(path, \"rb\") as file_handle:\n            obj = pickle.load(file_handle)\n        return obj\n\n    def save(self, obj: object, name: str):\n        \"\"\"\n        Saves an object to disk using pickle\n\n        Args:\n            name (str): Friendly name for the object, used for lookup in load() method\n            obj (object): Object to store on disk\n        \"\"\"\n        path = os.path.join(self._context_dir_pathname, f\"{name}.pkl\")\n        self.context_paths[name] = path\n        with open(path, \"wb\") as file_handle:\n            pickle.dump(obj, file_handle)\n        self._update_context()\n\n# Generate a context object, so that the \"with settings.context\" can be used by other units in this workflow.\ncontext = Context()\n\nis_using_train_test_split = \"is_using_train_test_split\" in context and (context.load(\"is_using_train_test_split\"))\n\n# Create a Class for a DummyScaler()\nclass DummyScaler:\n    \"\"\"\n    This class is a 'DummyScaler' which trivially acts on data by returning it unchanged.\n    \"\"\"\n\n    def fit(self, X):\n        return self\n\n    def transform(self, X):\n        return X\n\n    def fit_transform(self, X):\n        return X\n\n    def inverse_transform(self, X):\n        return X\n\nif 'target_scaler' not in context:\n    context.save(DummyScaler(), 'target_scaler')\n",
+                                "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#   General settings for PythonML jobs on the Mat3ra.com Platform   #\n#                                                                   #\n#   This file generally shouldn't be modified directly by users.    #\n#   The \"datafile\" and \"is_workflow_running_to_predict\" variables   #\n#   are defined in the head subworkflow, and are templated into     #\n#   this file. This helps facilitate the workflow's behavior        #\n#   differing whether it is in a \"train\" or \"predict\" mode.         #\n#                                                                   #\n#   Also in this file is the \"Context\" object, which helps maintain #\n#   certain Python objects between workflow units, and between      #\n#   predict runs.                                                   #\n#                                                                   #\n#   Whenever a python object needs to be stored for subsequent runs #\n#   (such as in the case of a trained model), context.save() can be #\n#   called to save it. The object can then be loaded again by using #\n#   context.load().                                                 #\n# ----------------------------------------------------------------- #\n\n\nimport os\nimport pickle\n\n# ==================================================\n# Variables modified in the Important Settings menu\n# ==================================================\n# Variables in this section can (and oftentimes need to) be modified by the user in the \"Important Settings\" tab\n# of a workflow.\n\n# Target_column_name is used during training to identify the variable the model is traing to predict.\n# For example, consider a CSV containing three columns, \"Y\", \"X1\", and \"X2\". If the goal is to train a model\n# that will predict the value of \"Y,\" then target_column_name would be set to \"Y\"\ntarget_column_name = \"{{ mlSettings.target_column_name }}\"\n\n# The type of ML problem being performed. Can be either \"regression\", \"classification,\" or \"clustering.\"\nproblem_category = \"{{ mlSettings.problem_category }}\"\n\n# =============================\n# Non user-modifiable variables\n# =============================\n# Variables in this section generally do not need to be modified.\n\n# The problem category, regression or classification or clustering. In regression, the target (predicted) variable\n# is continues. In classification, it is categorical. In clustering, there is no target - a set of labels is\n# automatically generated.\nis_regression = is_classification = is_clustering = False\nif problem_category.lower() == \"regression\":\n    is_regression = True\nelif problem_category.lower() == \"classification\":\n    is_classification = True\nelif problem_category.lower() == \"clustering\":\n    is_clustering = True\nelse:\n    raise ValueError(\n        \"Variable 'problem_category' must be either 'regression', 'classification', or 'clustering'. Check settings.py\")\n\n# The variables \"is_workflow_running_to_predict\" and \"is_workflow_running_to_train\" are used to control whether\n# the workflow is in a \"training\" mode or a \"prediction\" mode. The \"IS_WORKFLOW_RUNNING_TO_PREDICT\" variable is set by\n# an assignment unit in the \"Set Up the Job\" subworkflow that executes at the start of the job. It is automatically\n# changed when the predict workflow is generated, so users should not need to modify this variable.\nis_workflow_running_to_predict = {% raw %}{{IS_WORKFLOW_RUNNING_TO_PREDICT}}{% endraw %}\nis_workflow_running_to_train = not is_workflow_running_to_predict\n\n# Sets the datafile variable. The \"datafile\" is the data that will be read in, and will be used by subsequent\n# workflow units for either training or prediction, depending on the workflow mode.\nif is_workflow_running_to_predict:\n    datafile = \"{% raw %}{{DATASET_BASENAME}}{% endraw %}\"\nelse:\n    datafile = \"{% raw %}{{DATASET_BASENAME}}{% endraw %}\"\n\n# The \"Context\" class allows for data to be saved and loaded between units, and between train and predict runs.\n# Variables which have been saved using the \"Save\" method are written to disk, and the predict workflow is automatically\n# configured to obtain these files when it starts.\n#\n# IMPORTANT NOTE: Do *not* adjust the value of \"context_dir_pathname\" in the Context object. If the value is changed, then\n# files will not be correctly copied into the generated predict workflow. This will cause the predict workflow to be\n# generated in a broken state, and it will not be able to make any predictions.\nclass Context(object):\n    \"\"\"\n    Saves and loads objects from the disk, useful for preserving data between workflow units\n\n    Attributes:\n        context_paths (dict): Dictionary of the format {variable_name: path}, that governs where\n                              pickle saves files.\n\n    Methods:\n        save: Used to save objects to the context directory\n        load: Used to load objects from the context directory\n    \"\"\"\n\n    def __init__(self, context_file_basename=\"workflow_context_file_mapping\"):\n        \"\"\"\n        Constructor for Context objects\n\n        Args:\n            context_file_basename (str): Name of the file to store context paths in\n        \"\"\"\n\n        # Warning: DO NOT modify the context_dir_pathname variable below\n        # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\n        context_dir_pathname = \"{% raw %}{{ CONTEXT_DIR_RELATIVE_PATH }}{% endraw %}\"\n        # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        self._context_dir_pathname = context_dir_pathname\n        self._context_file = os.path.join(context_dir_pathname, context_file_basename)\n\n        # Make context dir if it does not exist\n        if not os.path.exists(context_dir_pathname):\n            os.makedirs(context_dir_pathname)\n\n        # Read in the context sources dictionary, if it exists\n        if os.path.exists(self._context_file):\n            with open(self._context_file, \"rb\") as file_handle:\n                self.context_paths: dict = pickle.load(file_handle)\n        else:\n            # Items is a dictionary of {varname: path}\n            self.context_paths = {}\n\n    def __enter__(self):\n        return self\n\n    def __exit__(self, exc_type, exc_value, traceback):\n        self._update_context()\n\n    def __contains__(self, item):\n        return item in self.context_paths\n\n    def _update_context(self):\n        with open(self._context_file, \"wb\") as file_handle:\n            pickle.dump(self.context_paths, file_handle)\n\n    def load(self, name: str):\n        \"\"\"\n        Returns a contextd object\n\n        Args:\n            name (str): The name in self.context_paths of the object\n        \"\"\"\n        path = self.context_paths[name]\n        with open(path, \"rb\") as file_handle:\n            obj = pickle.load(file_handle)\n        return obj\n\n    def save(self, obj: object, name: str):\n        \"\"\"\n        Saves an object to disk using pickle\n\n        Args:\n            name (str): Friendly name for the object, used for lookup in load() method\n            obj (object): Object to store on disk\n        \"\"\"\n        path = os.path.join(self._context_dir_pathname, f\"{name}.pkl\")\n        self.context_paths[name] = path\n        with open(path, \"wb\") as file_handle:\n            pickle.dump(obj, file_handle)\n        self._update_context()\n\n# Generate a context object, so that the \"with settings.context\" can be used by other units in this workflow.\ncontext = Context()\n\nis_using_train_test_split = \"is_using_train_test_split\" in context and (context.load(\"is_using_train_test_split\"))\n\n# Create a Class for a DummyScaler()\nclass DummyScaler:\n    \"\"\"\n    This class is a 'DummyScaler' which trivially acts on data by returning it unchanged.\n    \"\"\"\n\n    def fit(self, X):\n        return self\n\n    def transform(self, X):\n        return X\n\n    def fit_transform(self, X):\n        return X\n\n    def inverse_transform(self, X):\n        return X\n\nif 'target_scaler' not in context:\n    context.save(DummyScaler(), 'target_scaler')\n",
                                 "contextProviders": [
                                     {
                                         "name": "MLSettingsDataManager"
@@ -300,6 +296,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -309,14 +306,7 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -394,6 +384,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -403,14 +394,7 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -492,6 +476,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -501,14 +486,7 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -593,6 +571,7 @@
                         "creates-predictions-csv-during-predict-phase"
                     ],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -602,14 +581,7 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -701,6 +673,7 @@
                         "remove-all-results"
                     ],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -710,14 +683,7 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"

@@ -6,6 +6,7 @@
             "_id": "9c65d03e-6a30-58f3-947a-f174342be0c3",
             "name": "BS + Avg ESP (Interface)",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -98,6 +99,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -108,25 +110,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [
-                            {
-                                "name": "remove_non_zero_weight_kpoints"
-                            }
-                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_ionic"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -226,6 +211,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -236,25 +222,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [
-                            {
-                                "name": "remove_non_zero_weight_kpoints"
-                            }
-                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_ionic"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -372,6 +341,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -382,13 +352,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
@@ -450,6 +413,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -460,13 +424,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
@@ -532,6 +489,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -542,13 +500,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "average.x",
                         "schemaVersion": "2022.8.16",
@@ -628,6 +579,7 @@
             "_id": "ce26adc1-6a26-53ef-9626-5eb6a6b9ccb7",
             "name": "Find ESP Values (Interface)",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -664,6 +616,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -673,14 +626,7 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -726,7 +672,7 @@
                         {
                             "template": {
                                 "applicationName": "python",
-                                "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
+                                "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch>=3.0.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
                                 "contextProviders": [],
                                 "executableName": "python",
                                 "name": "requirements.txt",
@@ -772,6 +718,7 @@
             "_id": "ba46d9b4-610f-537e-ae39-e39ce5240cda",
             "name": "BS + Avg ESP (interface left)",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -864,6 +811,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -874,25 +822,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [
-                            {
-                                "name": "remove_non_zero_weight_kpoints"
-                            }
-                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_ionic"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -992,6 +923,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1002,25 +934,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [
-                            {
-                                "name": "remove_non_zero_weight_kpoints"
-                            }
-                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_ionic"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -1138,6 +1053,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1148,13 +1064,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
@@ -1216,6 +1125,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1226,13 +1136,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
@@ -1298,6 +1201,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1308,13 +1212,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "average.x",
                         "schemaVersion": "2022.8.16",
@@ -1394,6 +1291,7 @@
             "_id": "6c303926-905c-5749-81d5-2d2964fdf09a",
             "name": "Find ESP Value (Interface left)",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -1430,6 +1328,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -1439,14 +1338,7 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -1492,7 +1384,7 @@
                         {
                             "template": {
                                 "applicationName": "python",
-                                "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
+                                "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch>=3.0.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
                                 "contextProviders": [],
                                 "executableName": "python",
                                 "name": "requirements.txt",
@@ -1538,6 +1430,7 @@
             "_id": "aa611fe8-1e6a-5e5c-976a-f64bfaaaace9",
             "name": "BS + Avg ESP (interface right)",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -1630,6 +1523,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1640,25 +1534,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [
-                            {
-                                "name": "remove_non_zero_weight_kpoints"
-                            }
-                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_ionic"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -1758,6 +1635,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1768,25 +1646,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [
-                            {
-                                "name": "remove_non_zero_weight_kpoints"
-                            }
-                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_ionic"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -1904,6 +1765,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1914,13 +1776,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "bands.x",
                         "schemaVersion": "2022.8.16",
@@ -1982,6 +1837,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1992,13 +1848,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
@@ -2064,6 +1913,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -2074,13 +1924,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "average.x",
                         "schemaVersion": "2022.8.16",
@@ -2160,6 +2003,7 @@
             "_id": "736295e8-2ee0-5974-83bc-362061ac0688",
             "name": "Find ESP Value (Interface right)",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -2196,6 +2040,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -2205,14 +2050,7 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -2258,7 +2096,7 @@
                         {
                             "template": {
                                 "applicationName": "python",
-                                "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch==2.5.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
+                                "content": "# ----------------------------------------------------------------- #\n#                                                                   #\n#  Example Python package requirements for the Mat3ra platform      #\n#                                                                   #\n#  Will be used as follows:                                         #\n#                                                                   #\n#    1. A runtime directory for this calculation is created         #\n#    2. This list is used to populate a Python virtual environment  #\n#    3. The virtual environment is activated                        #\n#    4. The Python process running the script included within this  #\n#       job is started                                              #\n#                                                                   #\n#  For more information visit:                                      #\n#   - https://pip.pypa.io/en/stable/reference/pip_install           #\n#   - https://virtualenv.pypa.io/en/stable/                         #\n#                                                                   #\n# ----------------------------------------------------------------- #\n\n\nmunch>=3.0.0\nnumpy>=1.19.5\nscipy>=1.5.4\nmatplotlib>=3.0.0\n",
                                 "contextProviders": [],
                                 "executableName": "python",
                                 "name": "requirements.txt",
@@ -2304,6 +2142,7 @@
             "_id": "1b70e606-a7ee-599e-89e0-91a7dc5faa4a",
             "name": "Calculate VBO",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",

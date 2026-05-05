@@ -6,6 +6,7 @@
             "_id": "6a670ac8-6c12-5285-a6f8-9bf579fc88ee",
             "name": "Wavefunction Amplitude",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -82,6 +83,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -92,25 +94,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [
-                            {
-                                "name": "remove_non_zero_weight_kpoints"
-                            }
-                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_ionic"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -296,6 +281,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -306,13 +292,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pp.x",
                         "schemaVersion": "2022.8.16",
@@ -368,6 +347,7 @@
             "_id": "e4ec581f-1cb3-5036-b698-999a96711559",
             "name": "Plot Wavefunction",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -410,6 +390,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -419,14 +400,7 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"

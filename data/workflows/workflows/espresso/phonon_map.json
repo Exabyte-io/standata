@@ -6,6 +6,7 @@
             "_id": "f52b8039-83d0-5485-a1f1-0bc37cb01ed3",
             "name": "pw-scf",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -77,6 +78,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -87,25 +89,8 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [
-                            {
-                                "name": "remove_non_zero_weight_kpoints"
-                            }
-                        ],
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_ionic"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
@@ -191,6 +176,7 @@
             "_id": "2f017bcb-f4ba-55b8-b939-1f780679a88e",
             "name": "ph-init-qpoints",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -229,6 +215,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -239,13 +226,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "ph.x",
                         "schemaVersion": "2022.8.16",
@@ -301,6 +281,7 @@
             "_id": "e4b6b2e7-7d8f-5ae1-b6bd-ee81ecbca11a",
             "name": "espresso-xml-get-qpt-irr",
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -337,6 +318,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "python",
                         "shortName": "py",
                         "summary": "Python Script",
@@ -346,14 +328,7 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
                         "isDefault": true,
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "python",
                         "name": "python",
                         "schemaVersion": "2022.8.16"
@@ -425,6 +400,7 @@
             "_id": "545a66e2-dfbe-513e-acaf-d79d0d139b9c",
             "name": "reduce",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -466,6 +442,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -476,13 +453,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "ph.x",
                         "schemaVersion": "2022.8.16",
@@ -548,6 +518,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -558,13 +529,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "q2r.x",
                         "schemaVersion": "2022.8.16",
@@ -630,6 +594,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -640,13 +605,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "matdyn.x",
                         "schemaVersion": "2022.8.16",
@@ -720,6 +678,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -730,13 +689,6 @@
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "preProcessors": [],
-                        "postProcessors": [],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            }
-                        ],
                         "applicationName": "espresso",
                         "name": "matdyn.x",
                         "schemaVersion": "2022.8.16",
@@ -942,14 +894,7 @@
                                 "schemaVersion": "2022.8.16"
                             },
                             "executable": {
-                                "preProcessors": [],
-                                "postProcessors": [],
                                 "isDefault": true,
-                                "monitors": [
-                                    {
-                                        "name": "standard_output"
-                                    }
-                                ],
                                 "applicationName": "shell",
                                 "name": "sh",
                                 "schemaVersion": "2022.8.16"
@@ -1000,6 +945,7 @@
                     "_id": "e68db280-8636-53e3-81a0-88396ba6147d",
                     "name": "ph-single-irr-qpt",
                     "application": {
+                        "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
@@ -1038,6 +984,7 @@
                             "statusTrack": [],
                             "tags": [],
                             "application": {
+                                "isUsingMaterial": true,
                                 "name": "espresso",
                                 "shortName": "qe",
                                 "summary": "Quantum ESPRESSO",
@@ -1048,13 +995,6 @@
                                 "schemaVersion": "2022.8.16"
                             },
                             "executable": {
-                                "preProcessors": [],
-                                "postProcessors": [],
-                                "monitors": [
-                                    {
-                                        "name": "standard_output"
-                                    }
-                                ],
                                 "applicationName": "espresso",
                                 "name": "ph.x",
                                 "schemaVersion": "2022.8.16",
@@ -1155,14 +1095,7 @@
                                 "schemaVersion": "2022.8.16"
                             },
                             "executable": {
-                                "preProcessors": [],
-                                "postProcessors": [],
                                 "isDefault": true,
-                                "monitors": [
-                                    {
-                                        "name": "standard_output"
-                                    }
-                                ],
                                 "applicationName": "shell",
                                 "name": "sh",
                                 "schemaVersion": "2022.8.16"

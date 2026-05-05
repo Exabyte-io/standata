@@ -14,7 +14,8 @@ units:
       source: api
       flowchartId: io-material-flowchart-id-ac93759e
       input:
-        - endpoint: materials
+        - type: api
+          endpoint: materials
           endpoint_options:
             params:
               query: "{'_id': MATERIAL_ID}"

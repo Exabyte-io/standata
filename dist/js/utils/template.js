@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setupNunjucksEnvironment = void 0;
+exports.setupNunjucksEnvironment = setupNunjucksEnvironment;
 const sprintf_js_1 = require("sprintf-js");
 const DEFAULT_FILTERS = {
     sprintf: (value, format) => (0, sprintf_js_1.sprintf)(format, value),
@@ -11,4 +11,3 @@ function setupNunjucksEnvironment(env) {
     });
     return env;
 }
-exports.setupNunjucksEnvironment = setupNunjucksEnvironment;

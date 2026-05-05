@@ -23,7 +23,7 @@ flavors:
       - name: homo_energy
       - name: lumo_energy
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: nwchem
     executableName: nwchem
   nwchem_frequency:

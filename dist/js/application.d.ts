@@ -34,6 +34,7 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                     moduleName: string;
                 };
                 isDefault: boolean;
+                isUsingMaterial: boolean;
                 name: string;
                 shortName: string;
                 summary: string;
@@ -51,6 +52,7 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                 };
                 hasAdvancedComputeOptions: boolean;
                 isDefault: boolean;
+                isUsingMaterial: boolean;
                 name: string;
                 shortName: string;
                 summary: string;
@@ -67,6 +69,7 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                     moduleName: string;
                 };
                 isDefault: boolean;
+                isUsingMaterial: boolean;
                 name: string;
                 runConfig: {
                     commandTemplate: string;
@@ -90,6 +93,7 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                     moduleName: string;
                 };
                 isDefault: boolean;
+                isUsingMaterial: boolean;
                 name: string;
                 shortName: string;
                 summary: string;
@@ -98,6 +102,7 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
             "python/python_gnu_3.10.13.json": {
                 build: string;
                 isDefault: boolean;
+                isUsingMaterial: boolean;
                 name: string;
                 shortName: string;
                 summary: string;
@@ -123,6 +128,7 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                 };
                 isDefault: boolean;
                 isLicensed: boolean;
+                isUsingMaterial: boolean;
                 name: string;
                 shortName: string;
                 summary: string;
@@ -155,12 +161,16 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
                 isDefault: boolean;
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
             lmp: {
@@ -171,12 +181,16 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                         input: {
                             name: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
                 isDefault: boolean;
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
             python: {
@@ -188,7 +202,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                         }[];
                         isDefault: boolean;
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                     espresso_to_lammps_structure: {
@@ -198,12 +214,16 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                         }[];
                         isDefault: boolean;
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
                 isDefault: boolean;
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
         };
@@ -1354,12 +1374,16 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                         }[];
                         isDefault: boolean;
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: never[];
                     };
                 };
                 isDefault: boolean;
-                monitors: string[];
+                monitors: {
+                    name: string;
+                }[];
                 results: never[];
             };
         };
@@ -1387,7 +1411,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                         }[];
                         isDefault: boolean;
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                         results: {
                             name: string;
                         }[];
@@ -1477,7 +1503,9 @@ export declare class ApplicationStandata extends Standata<ApplicationSchema> {
                             name: string;
                             templateName: string;
                         }[];
-                        monitors: string[];
+                        monitors: {
+                            name: string;
+                        }[];
                     };
                     plot_wavefunction: {
                         applicationName: string;

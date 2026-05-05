@@ -5,10 +5,10 @@
         "name": "nwchem"
     },
     "properties": [
-        "total_energy",
-        "total_energy_contributions",
         "homo_energy",
-        "lumo_energy"
+        "lumo_energy",
+        "total_energy",
+        "total_energy_contributions"
     ],
     "model": {
         "type": "dft",
@@ -51,6 +51,7 @@
             "statusTrack": [],
             "tags": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "nwchem",
                 "shortName": "nwchem",
                 "summary": "NWChem",
@@ -60,19 +61,8 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [
-                    {
-                        "name": "error_handler"
-                    }
-                ],
                 "hasAdvancedComputeOptions": false,
                 "isDefault": true,
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "nwchem",
                 "name": "nwchem",
                 "schemaVersion": "2022.8.16"
@@ -86,6 +76,12 @@
                     },
                     {
                         "name": "total_energy_contributions"
+                    },
+                    {
+                        "name": "homo_energy"
+                    },
+                    {
+                        "name": "lumo_energy"
                     }
                 ],
                 "applicationName": "nwchem",

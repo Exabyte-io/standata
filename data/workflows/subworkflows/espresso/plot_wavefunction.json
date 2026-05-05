@@ -38,6 +38,7 @@
             "statusTrack": [],
             "tags": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "python",
                 "shortName": "py",
                 "summary": "Python Script",
@@ -47,14 +48,7 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
                 "isDefault": true,
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "python",
                 "name": "python",
                 "schemaVersion": "2022.8.16"

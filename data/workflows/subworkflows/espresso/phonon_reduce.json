@@ -36,6 +36,7 @@
             "statusTrack": [],
             "tags": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -46,13 +47,6 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "espresso",
                 "name": "ph.x",
                 "schemaVersion": "2022.8.16",
@@ -118,6 +112,7 @@
             "statusTrack": [],
             "tags": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -128,13 +123,6 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "espresso",
                 "name": "q2r.x",
                 "schemaVersion": "2022.8.16",
@@ -200,6 +188,7 @@
             "statusTrack": [],
             "tags": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -210,13 +199,6 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "espresso",
                 "name": "matdyn.x",
                 "schemaVersion": "2022.8.16",
@@ -290,6 +272,7 @@
             "statusTrack": [],
             "tags": [],
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -300,13 +283,6 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "preProcessors": [],
-                "postProcessors": [],
-                "monitors": [
-                    {
-                        "name": "standard_output"
-                    }
-                ],
                 "applicationName": "espresso",
                 "name": "matdyn.x",
                 "schemaVersion": "2022.8.16",

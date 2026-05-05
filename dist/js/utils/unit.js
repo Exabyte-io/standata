@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setUnitLinks = void 0;
+exports.setUnitLinks = setUnitLinks;
 /**
  * @summary set the head of an array of units
  */
@@ -36,4 +36,3 @@ function setNextLinks(units) {
 function setUnitLinks(units) {
     return setNextLinks(setUnitsHead(units));
 }
-exports.setUnitLinks = setUnitLinks;
