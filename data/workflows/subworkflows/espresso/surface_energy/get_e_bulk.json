@@ -39,6 +39,7 @@
             "head": true,
             "next": "assign-e-bulk",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -67,6 +68,7 @@
             "head": false,
             "next": "assert-e-bulk",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -88,6 +90,7 @@
             "tags": [],
             "head": false,
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",

@@ -27,6 +27,7 @@
             "head": true,
             "next": "assign-bulk-id",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -50,6 +51,7 @@
             "head": false,
             "next": "assign-slab-build",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -73,6 +75,7 @@
             "head": false,
             "next": "assign-last-build-step",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -96,6 +99,7 @@
             "head": false,
             "next": "assign-last-build-configuration",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -119,6 +123,7 @@
             "head": false,
             "next": "assign-last-stack-component",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -142,6 +147,7 @@
             "head": false,
             "next": "assign-last-build-crystal",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -165,6 +171,7 @@
             "head": false,
             "next": "assign-crystal-scaled-hash",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -188,6 +195,7 @@
             "head": false,
             "next": "assign-crystal-hash",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -211,6 +219,7 @@
             "head": false,
             "next": "assign-bulk-query",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -234,6 +243,7 @@
             "head": false,
             "next": "assert-bulk-query",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -256,6 +266,7 @@
             "head": false,
             "next": "io-bulk",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -290,6 +301,7 @@
             "head": false,
             "next": "assign-n-bulk-matches",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -318,6 +330,7 @@
             "head": false,
             "next": "assert-bulk",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -340,6 +353,7 @@
             "head": false,
             "next": "assert-n-bulk-matches",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -362,6 +376,7 @@
             "head": false,
             "next": "assign-bulk",
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
@@ -389,6 +404,7 @@
             "tags": [],
             "head": false,
             "application": {
+                "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",

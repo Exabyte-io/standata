@@ -6,6 +6,7 @@
             "name": "Verify Slab",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -50,6 +51,7 @@
                     "next": "assign-slab",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -78,6 +80,7 @@
                     "next": "assert-slab",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -99,6 +102,7 @@
                     "head": false,
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -115,6 +119,7 @@
             "name": "Resolve Bulk From Slab",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -147,6 +152,7 @@
                     "next": "assign-bulk-id",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -170,6 +176,7 @@
                     "next": "assign-slab-build",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -193,6 +200,7 @@
                     "next": "assign-last-build-step",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -216,6 +224,7 @@
                     "next": "assign-last-build-configuration",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -239,6 +248,7 @@
                     "next": "assign-last-stack-component",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -262,6 +272,7 @@
                     "next": "assign-last-build-crystal",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -285,6 +296,7 @@
                     "next": "assign-crystal-scaled-hash",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -308,6 +320,7 @@
                     "next": "assign-crystal-hash",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -331,6 +344,7 @@
                     "next": "assign-bulk-query",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -354,6 +368,7 @@
                     "next": "assert-bulk-query",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -376,6 +391,7 @@
                     "next": "io-bulk",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -410,6 +426,7 @@
                     "next": "assign-n-bulk-matches",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -438,6 +455,7 @@
                     "next": "assert-bulk",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -460,6 +478,7 @@
                     "next": "assert-n-bulk-matches",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -482,6 +501,7 @@
                     "next": "assign-bulk",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -509,6 +529,7 @@
                     "head": false,
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -525,6 +546,7 @@
             "name": "Get Bulk Energy",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -569,6 +591,7 @@
                     "next": "assign-e-bulk",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -597,6 +620,7 @@
                     "next": "assert-e-bulk",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -618,6 +642,7 @@
                     "head": false,
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -634,6 +659,7 @@
             "name": "Surface Energy - VASP",
             "application": {
                 "isLicensed": true,
+                "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
@@ -681,6 +707,7 @@
                     "next": "assign-n-bulk",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -704,6 +731,7 @@
                     "next": "assign-n-slab",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -727,6 +755,7 @@
                     "next": "vasp-surface-energy",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -776,6 +805,7 @@
                     "postProcessors": [],
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -899,6 +929,7 @@
                     "next": "assign-surface-energy",
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
@@ -926,6 +957,7 @@
                     "head": false,
                     "application": {
                         "isLicensed": true,
+                        "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
