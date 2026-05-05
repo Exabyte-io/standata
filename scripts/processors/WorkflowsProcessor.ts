@@ -9,9 +9,9 @@ import { BaseWorkflowSubworkflowProcessor } from "./BaseWorkflowSubworkflowProce
 export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
     public static defaultCategoryKeys = ["properties", "isMultimaterial", "tags", "application"];
 
-    private subworkflowMapByApplication: Record<any, string>;
+    private subworkflowMapByApplication: Record<string, Record<string, any>>;
 
-    constructor(rootDir: string, subworkflowsMapByApplication: Record<any, string>) {
+    constructor(rootDir: string, subworkflowsMapByApplication: Record<string, Record<string, any>>) {
         super({
             rootDir,
             entityNamePlural: "workflows",
@@ -28,8 +28,73 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
     private get workflowSubworkflowMapByApplication(): { workflows: any; subworkflows: any } {
         const workflowSubworkflowMapByApplication = { workflows: {}, subworkflows: {} } as any;
         workflowSubworkflowMapByApplication.workflows = this.entityMapByApplication;
-        workflowSubworkflowMapByApplication.subworkflows = this.subworkflowMapByApplication;
+        workflowSubworkflowMapByApplication.subworkflows =
+            this.subworkflowMapWithCrossApplicationReferences;
         return workflowSubworkflowMapByApplication;
+    }
+
+    private get subworkflowMapWithCrossApplicationReferences(): Record<string, any> {
+        return Object.fromEntries(
+            Object.entries(this.subworkflowMapByApplication).map(([applicationName, subworkflows]) => [
+                applicationName,
+                {
+                    ...subworkflows,
+                    ...this.getCrossApplicationReferences(applicationName),
+                },
+            ]),
+        );
+    }
+
+    private getCrossApplicationReferences(applicationName: string): Record<string, any> {
+        return Object.fromEntries(
+            [...this.getExternalSubworkflowNamesForApplication(applicationName)].map((subworkflowName) => {
+                const [sourceApplicationName, ...pathParts] = subworkflowName.split("/");
+                const subworkflowData = this.findSubworkflowByPath(
+                    sourceApplicationName,
+                    pathParts.join("/"),
+                );
+                return [subworkflowName, subworkflowData];
+            }),
+        );
+    }
+
+    private getExternalSubworkflowNamesForApplication(applicationName: string): Set<string> {
+        const subworkflowNames = new Set<string>();
+        Object.values(this.entityMapByApplication[applicationName] || {}).forEach((workflowData) => {
+            this.addExternalSubworkflowNames(subworkflowNames, applicationName, workflowData);
+        });
+        return subworkflowNames;
+    }
+
+    private addExternalSubworkflowNames(
+        subworkflowNames: Set<string>,
+        applicationName: string,
+        workflowData: any,
+    ): void {
+        (workflowData.units || []).forEach((unitData: any) => {
+            if (this.isExternalSubworkflowName(unitData.name, applicationName)) {
+                subworkflowNames.add(unitData.name);
+            }
+            if (unitData.units) {
+                this.addExternalSubworkflowNames(subworkflowNames, applicationName, unitData);
+            }
+        });
+    }
+
+    private isExternalSubworkflowName(subworkflowName: string, applicationName: string): boolean {
+        const [sourceApplicationName, pathSegment] = subworkflowName.split("/");
+        return Boolean(
+            pathSegment &&
+                sourceApplicationName !== applicationName &&
+                this.subworkflowMapByApplication[sourceApplicationName],
+        );
+    }
+
+    private findSubworkflowByPath(applicationName: string, pathInSource: string): any {
+        const subworkflows = this.subworkflowMapByApplication[applicationName] || {};
+        return Object.values(subworkflows).find((subworkflowData: any) => {
+            return subworkflowData.__path__ === pathInSource;
+        });
     }
 
     protected buildEntityConfigs(): any[] {
