@@ -89,6 +89,7 @@ export const BUILD_CONFIG = {
     subworkflows: {
         assets: {
             path: "assets/workflows/subworkflows",
+            sharedPath: "assets/workflows/shared/subworkflows",
             categories: "categories.yml",
         },
         data: {

@@ -1,13 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { validateAndClean } from "@mat3ra/esse/dist/js/utils/ajv";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import workflowSchema from "@mat3ra/esse/dist/js/schema/workflow.json";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { validateAndClean } from "@mat3ra/esse/dist/js/utils/ajv";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Utils } from "@mat3ra/utils";
 // eslint-disable-next-line import/no-extraneous-dependencies
-// @ts-ignore
 import serverUtils from "@mat3ra/utils/server";
 // @ts-ignore
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { builders, Subworkflow, UnitFactory, Workflow } from "@mat3ra/wode";
 import path from "path";
 
@@ -174,10 +174,17 @@ export abstract class BaseWorkflowSubworkflowProcessor extends CategorizedEntity
                 ...(entityConfig.appName ? { application: { name: entityConfig.appName } } : {}),
             };
             if (this.options.entityNamePlural === "workflows") {
-                const result = validateAndClean(dataToWrite, workflowSchema, { coerceTypes: false, useDefaults: false });
+                const result = validateAndClean(dataToWrite, workflowSchema, {
+                    coerceTypes: false,
+                    useDefaults: false,
+                });
                 if (!result.isValid && result.errors?.length) {
-                    const errMsg = result.errors.map((e: any) => `${e.instancePath ?? ""} ${e.message}`).join("; ");
-                    throw new Error(`workflows validation failed for ${entityConfig.appName}/${entityName}: ${errMsg}`);
+                    const errMsg = result.errors
+                        .map((e: any) => `${e.instancePath ?? ""} ${e.message}`)
+                        .join("; ");
+                    throw new Error(
+                        `workflows validation failed for ${entityConfig.appName}/${entityName}: ${errMsg}`,
+                    );
                 }
             }
             const spaces = minified
