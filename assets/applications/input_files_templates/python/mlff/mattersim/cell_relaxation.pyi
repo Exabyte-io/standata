@@ -32,7 +32,7 @@ else:
 print(f"Running MatterSim on {device}")
 
 # this way material is obtained from the job context
-material_json = {{ MATERIAL }}
+material_json = {% raw %}{{ MATERIAL }}{% endraw %}
 material = to_ase(dict(material_json))
 
 # alternatively, material can be defined via ase, e.g.:
