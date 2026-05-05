@@ -1,9 +1,9 @@
 {
-    "name": "MatterSim python workflow",
+    "name": "Total Energy - MatterSim python workflow",
     "subworkflows": [
         {
-            "_id": "4452179e-c162-5c77-b068-80b3192c691a",
-            "name": "Mattersim",
+            "_id": "311e9257-f8af-593f-943a-4bd0f63ce0e5",
+            "name": "Total Energy - MatterSim",
             "application": {
                 "isUsingMaterial": true,
                 "name": "python",
@@ -77,7 +77,7 @@
                     "flowchartId": "51e48ac9-872f-5ee3-b4bf-1a4e83ea3e5a",
                     "tags": [],
                     "head": false,
-                    "next": "4b914960-c8d7-59b5-9f84-fe5fd6a5871a",
+                    "next": "fede8caf-7b88-555d-8b92-3fb5baf936d5",
                     "application": {
                         "isUsingMaterial": true,
                         "name": "python",
@@ -91,7 +91,7 @@
                 },
                 {
                     "type": "execution",
-                    "name": "mattersim",
+                    "name": "mattersim_total_energy",
                     "head": false,
                     "results": [
                         {
@@ -105,7 +105,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "4b914960-c8d7-59b5-9f84-fe5fd6a5871a",
+                    "flowchartId": "fede8caf-7b88-555d-8b92-3fb5baf936d5",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -132,7 +132,7 @@
                         "input": [
                             {
                                 "name": "script.py",
-                                "templateName": "mattersim.pyi"
+                                "templateName": "mattersim_total_energy.pyi"
                             },
                             {
                                 "name": "requirements.txt",
@@ -145,7 +145,7 @@
                         "results": [
                             "file_content"
                         ],
-                        "name": "mlff:mattersim",
+                        "name": "mlff:mattersim:total_energy",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -178,12 +178,12 @@
     ],
     "units": [
         {
-            "name": "Mattersim",
+            "name": "Total Energy - MatterSim",
             "type": "subworkflow",
-            "_id": "4452179e-c162-5c77-b068-80b3192c691a",
+            "_id": "311e9257-f8af-593f-943a-4bd0f63ce0e5",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "34ac0ed6-d467-5a3e-ba79-f9d47263d171",
+            "flowchartId": "4ce9bcd0-20db-563c-b186-e879b9ddc059",
             "tags": [],
             "head": true
         }
@@ -191,7 +191,7 @@
     "properties": [
         "file_content"
     ],
-    "_id": "9ecdfc22-0621-5619-8e78-4eb4b7bf09bc",
+    "_id": "41220035-441f-586d-b3ff-10c252c58531",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

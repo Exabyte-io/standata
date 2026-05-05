@@ -1120,7 +1120,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         isDefault: boolean;
                         monitors: string[];
                     };
-                    "mlff:mattersim": {
+                    "mlff:mattersim:cell_relaxation": {
                         applicationName: string;
                         executableName: string;
                         input: {
@@ -1130,7 +1130,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         monitors: string[];
                         results: string[];
                     };
-                    "mlff:mattersim_lattice_relaxation": {
+                    "mlff:mattersim:phonon_dispersion": {
                         applicationName: string;
                         executableName: string;
                         input: {
@@ -1140,7 +1140,7 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         monitors: string[];
                         results: string[];
                     };
-                    "mlff:mattersim_phonon_dispersion": {
+                    "mlff:mattersim:total_energy": {
                         applicationName: string;
                         executableName: string;
                         input: {

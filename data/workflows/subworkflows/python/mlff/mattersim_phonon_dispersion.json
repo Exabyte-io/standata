@@ -1,6 +1,6 @@
 {
-    "_id": "1ef1e095-9602-5311-bdf9-2e67006b7ddd",
-    "name": "Mattersim Phonon Dispersion",
+    "_id": "97ac4f51-5f95-5f31-b4ff-a28d6aa1fcde",
+    "name": "Phonon Dispersion - MatterSim",
     "application": {
         "name": "python"
     },
@@ -140,7 +140,7 @@
                 "results": [
                     "file_content"
                 ],
-                "name": "mlff:mattersim_phonon_dispersion",
+                "name": "mlff:mattersim:phonon_dispersion",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },

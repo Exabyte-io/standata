@@ -1,9 +1,9 @@
 {
-    "name": "Lattice Relaxation - MatterSim python workflow",
+    "name": "Cell Relaxation - MatterSim python workflow",
     "subworkflows": [
         {
-            "_id": "6a36b074-fad5-5a17-8f9a-da65d11bf716",
-            "name": "Mattersim Lattice Relaxation",
+            "_id": "61f29495-286d-5a05-ac3c-510eca56325a",
+            "name": "Cell Relaxation - MatterSim",
             "application": {
                 "isUsingMaterial": true,
                 "name": "python",
@@ -77,7 +77,7 @@
                     "flowchartId": "51e48ac9-872f-5ee3-b4bf-1a4e83ea3e5a",
                     "tags": [],
                     "head": false,
-                    "next": "c3ca5b29-1f9d-595f-9726-d41c5fd0bd59",
+                    "next": "bf61ad33-a82f-5e59-9225-8ceb36ccbb19",
                     "application": {
                         "isUsingMaterial": true,
                         "name": "python",
@@ -91,7 +91,7 @@
                 },
                 {
                     "type": "execution",
-                    "name": "mattersim_lattice_relaxation",
+                    "name": "mattersim_cell_relaxation",
                     "head": false,
                     "results": [
                         {
@@ -110,7 +110,7 @@
                             "name": "standard_output"
                         }
                     ],
-                    "flowchartId": "c3ca5b29-1f9d-595f-9726-d41c5fd0bd59",
+                    "flowchartId": "bf61ad33-a82f-5e59-9225-8ceb36ccbb19",
                     "preProcessors": [],
                     "postProcessors": [],
                     "application": {
@@ -137,7 +137,7 @@
                         "input": [
                             {
                                 "name": "script.py",
-                                "templateName": "mattersim_lattice_relaxation.pyi"
+                                "templateName": "mattersim_cell_relaxation.pyi"
                             },
                             {
                                 "name": "requirements.txt",
@@ -150,7 +150,7 @@
                         "results": [
                             "file_content"
                         ],
-                        "name": "mlff:mattersim_lattice_relaxation",
+                        "name": "mlff:mattersim:cell_relaxation",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -183,12 +183,12 @@
     ],
     "units": [
         {
-            "name": "Mattersim Lattice Relaxation",
+            "name": "Cell Relaxation - MatterSim",
             "type": "subworkflow",
-            "_id": "6a36b074-fad5-5a17-8f9a-da65d11bf716",
+            "_id": "61f29495-286d-5a05-ac3c-510eca56325a",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "cf22e01f-4343-5e52-95d2-a298f216ae2d",
+            "flowchartId": "6c8988f1-9062-57fa-834f-3e829be74182",
             "tags": [],
             "head": true
         }
@@ -197,7 +197,7 @@
         "file_content",
         "file_content"
     ],
-    "_id": "0081d2e7-f580-5c34-9a1b-6766ca655c07",
+    "_id": "f37e1e97-aa63-56a7-971a-e9551475cc2e",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

@@ -5,7 +5,7 @@ method:
   name: UnknownMethod
 model:
   name: UnknownModel
-name: Mattersim
+name: Cell Relaxation - MatterSim
 units:
   - config:
       name: io-material
@@ -30,11 +30,14 @@ units:
     type: assignment
   - config:
       execName: python
-      flavorName: mlff:mattersim
-      name: mattersim
+      flavorName: mlff:mattersim:cell_relaxation
+      name: mattersim_cell_relaxation
     type: executionBuilder
     attributes:
       results:
         - name: file_content
-          basename: "results.csv"
-          filetype: "csv"
+          basename: "initial_structure.png"
+          filetype: "image"
+        - name: file_content
+          basename: "relaxed_structure.png"
+          filetype: "image"

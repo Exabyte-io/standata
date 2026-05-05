@@ -5,7 +5,7 @@ method:
   name: UnknownMethod
 model:
   name: UnknownModel
-name: Mattersim Lattice Relaxation
+name: Total Energy - MatterSim
 units:
   - config:
       name: io-material
@@ -30,14 +30,11 @@ units:
     type: assignment
   - config:
       execName: python
-      flavorName: mlff:mattersim_lattice_relaxation
-      name: mattersim_lattice_relaxation
+      flavorName: mlff:mattersim:total_energy
+      name: mattersim_total_energy
     type: executionBuilder
     attributes:
       results:
         - name: file_content
-          basename: "initial_structure.png"
-          filetype: "image"
-        - name: file_content
-          basename: "relaxed_structure.png"
-          filetype: "image"
+          basename: "results.csv"
+          filetype: "csv"

@@ -5,7 +5,7 @@ method:
   name: UnknownMethod
 model:
   name: UnknownModel
-name: Mattersim Phonon Dispersion
+name: Phonon Dispersion - MatterSim
 units:
   - config:
       name: io-material
@@ -30,7 +30,7 @@ units:
     type: assignment
   - config:
       execName: python
-      flavorName: mlff:mattersim_phonon_dispersion
+      flavorName: mlff:mattersim:phonon_dispersion
       name: mattersim_phonon_dispersion
     type: executionBuilder
     attributes:

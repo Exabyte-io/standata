@@ -2,8 +2,8 @@
     "name": "Phonon Dispersion - MatterSim python workflow",
     "subworkflows": [
         {
-            "_id": "1ef1e095-9602-5311-bdf9-2e67006b7ddd",
-            "name": "Mattersim Phonon Dispersion",
+            "_id": "97ac4f51-5f95-5f31-b4ff-a28d6aa1fcde",
+            "name": "Phonon Dispersion - MatterSim",
             "application": {
                 "isUsingMaterial": true,
                 "name": "python",
@@ -150,7 +150,7 @@
                         "results": [
                             "file_content"
                         ],
-                        "name": "mlff:mattersim_phonon_dispersion",
+                        "name": "mlff:mattersim:phonon_dispersion",
                         "schemaVersion": "2022.8.16",
                         "isDefault": false
                     },
@@ -183,12 +183,12 @@
     ],
     "units": [
         {
-            "name": "Mattersim Phonon Dispersion",
+            "name": "Phonon Dispersion - MatterSim",
             "type": "subworkflow",
-            "_id": "1ef1e095-9602-5311-bdf9-2e67006b7ddd",
+            "_id": "97ac4f51-5f95-5f31-b4ff-a28d6aa1fcde",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "231784d4-b233-5eb9-9e23-309638fb4ece",
+            "flowchartId": "6bf73772-0f03-506e-a36f-d4a8aa3efd4d",
             "tags": [],
             "head": true
         }
@@ -197,7 +197,7 @@
         "file_content",
         "file_content"
     ],
-    "_id": "522355ad-1524-5b50-96b5-81d1832a9efe",
+    "_id": "d68dafa1-2f1f-53be-a13c-b564e7da6570",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
