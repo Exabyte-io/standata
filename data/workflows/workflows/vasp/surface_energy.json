@@ -2,17 +2,15 @@
     "name": "Surface Energy",
     "subworkflows": [
         {
-            "_id": "0c8eb624-7087-587b-8406-18b07c427f9f",
+            "_id": "104f04c3-2bff-5f01-9e41-1f35b02c1608",
             "name": "Verify Slab",
             "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "5.4.4",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             },
             "properties": [],
@@ -20,8 +18,8 @@
                 "type": "unknown",
                 "subtype": "unknown",
                 "method": {
-                    "type": "pseudopotential",
-                    "subtype": "paw",
+                    "type": "unknown",
+                    "subtype": "unknown",
                     "data": {}
                 }
             },
@@ -50,14 +48,12 @@
                     "head": true,
                     "next": "assign-slab",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -79,14 +75,12 @@
                     "head": false,
                     "next": "assert-slab",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -101,31 +95,27 @@
                     "tags": [],
                     "head": false,
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 }
             ]
         },
         {
-            "_id": "ca458b24-4fcb-55e1-a8c5-7c4692ee83d7",
-            "name": "Resolve Bulk From Slab",
+            "_id": "31958c8b-58fc-53c0-be83-c2675f37c7aa",
+            "name": "Resolve Bulk From Slab By Bulk ID",
             "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "5.4.4",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             },
             "properties": [],
@@ -133,35 +123,12 @@
                 "type": "unknown",
                 "subtype": "unknown",
                 "method": {
-                    "type": "pseudopotential",
-                    "subtype": "paw",
+                    "type": "unknown",
+                    "subtype": "unknown",
                     "data": {}
                 }
             },
             "units": [
-                {
-                    "name": "assert-slab",
-                    "type": "assertion",
-                    "statement": "SLAB != None",
-                    "errorMessage": "Surface slab must be resolved before bulk resolution.",
-                    "flowchartId": "assert-slab",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": true,
-                    "next": "assign-bulk-id",
-                    "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
                 {
                     "name": "assign-bulk-id",
                     "type": "assignment",
@@ -172,185 +139,224 @@
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
-                    "head": false,
-                    "next": "assign-slab-build",
+                    "head": true,
+                    "next": "init-bulk",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
                 {
-                    "name": "assign-slab-build",
+                    "name": "init-bulk",
                     "type": "assignment",
-                    "operand": "SLAB_BUILD",
-                    "value": "(SLAB.metadata.get('build') or []) if SLAB.metadata else []",
+                    "operand": "BULK",
+                    "value": "None",
                     "input": [],
-                    "flowchartId": "assign-slab-build",
+                    "flowchartId": "init-bulk",
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
-                    "next": "assign-last-build-step",
+                    "next": "check-bulk-id",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
                 {
-                    "name": "assign-last-build-step",
-                    "type": "assignment",
-                    "operand": "LAST_BUILD_STEP",
-                    "value": "SLAB_BUILD[-1] if SLAB_BUILD else None",
+                    "name": "check-bulk-id",
+                    "type": "condition",
                     "input": [],
-                    "flowchartId": "assign-last-build-step",
+                    "results": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "then": "done",
+                    "else": "io-bulk",
+                    "statement": "BULK_ID is None",
+                    "maxOccurrences": 100,
+                    "flowchartId": "check-bulk-id",
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
-                    "next": "assign-last-build-configuration",
+                    "next": "io-bulk",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
                 {
-                    "name": "assign-last-build-configuration",
-                    "type": "assignment",
-                    "operand": "LAST_BUILD_CONFIGURATION",
-                    "value": "LAST_BUILD_STEP.get('configuration') if LAST_BUILD_STEP else None",
-                    "input": [],
-                    "flowchartId": "assign-last-build-configuration",
+                    "name": "io-bulk",
+                    "type": "io",
+                    "subtype": "input",
+                    "flowchartId": "io-bulk",
+                    "source": "api",
+                    "input": [
+                        {
+                            "endpoint": "materials",
+                            "endpoint_options": {
+                                "params": {
+                                    "query": "{'_id': BULK_ID}",
+                                    "projection": "{}"
+                                }
+                            },
+                            "name": "DATA"
+                        }
+                    ],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
-                    "next": "assign-last-stack-component",
+                    "next": "assign-bulk",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
                 {
-                    "name": "assign-last-stack-component",
+                    "name": "assign-bulk",
                     "type": "assignment",
-                    "operand": "LAST_STACK_COMPONENT",
-                    "value": "(LAST_BUILD_CONFIGURATION.get('stack_components') or [None])[0] if LAST_BUILD_CONFIGURATION else None",
-                    "input": [],
-                    "flowchartId": "assign-last-stack-component",
+                    "operand": "BULK",
+                    "value": "DATA[0] if DATA else None",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-bulk"
+                        }
+                    ],
+                    "flowchartId": "assign-bulk",
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
-                    "next": "assign-last-build-crystal",
+                    "next": "done",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
                 {
-                    "name": "assign-last-build-crystal",
+                    "name": "done",
+                    "type": "assignment",
+                    "operand": "BULK",
+                    "value": "BULK",
+                    "input": [
+                        {
+                            "name": "BULK",
+                            "scope": "global"
+                        }
+                    ],
+                    "flowchartId": "done",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                }
+            ]
+        },
+        {
+            "_id": "f7daa3d8-1174-57e4-8d23-7c1f7a476f31",
+            "name": "Resolve Bulk From Slab By Build",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            },
+            "properties": [],
+            "model": {
+                "type": "unknown",
+                "subtype": "unknown",
+                "method": {
+                    "type": "unknown",
+                    "subtype": "unknown",
+                    "data": {}
+                }
+            },
+            "units": [
+                {
+                    "name": "check-bulk-set",
+                    "type": "condition",
+                    "input": [],
+                    "results": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "then": "done",
+                    "else": "assign-crystal",
+                    "statement": "BULK is not None",
+                    "maxOccurrences": 100,
+                    "flowchartId": "check-bulk-set",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": true,
+                    "next": "assign-crystal",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-crystal",
                     "type": "assignment",
                     "operand": "LAST_BUILD_CRYSTAL",
-                    "value": "LAST_STACK_COMPONENT.get('crystal') if LAST_STACK_COMPONENT else None",
+                    "value": "(((SLAB.metadata.get('build') or [{}])[-1].get('configuration') or {}).get('stack_components') or [{}])[0].get('crystal') if SLAB.metadata else None",
                     "input": [],
-                    "flowchartId": "assign-last-build-crystal",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
-                    "next": "assign-crystal-scaled-hash",
-                    "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "assign-crystal-scaled-hash",
-                    "type": "assignment",
-                    "operand": "CRYSTAL_SCALED_HASH",
-                    "value": "LAST_BUILD_CRYSTAL.get('scaledHash') if LAST_BUILD_CRYSTAL else None",
-                    "input": [],
-                    "flowchartId": "assign-crystal-scaled-hash",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
-                    "next": "assign-crystal-hash",
-                    "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.4.4",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "assign-crystal-hash",
-                    "type": "assignment",
-                    "operand": "CRYSTAL_HASH",
-                    "value": "LAST_BUILD_CRYSTAL.get('hash') if LAST_BUILD_CRYSTAL else None",
-                    "input": [],
-                    "flowchartId": "assign-crystal-hash",
+                    "flowchartId": "assign-crystal",
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
                     "next": "assign-bulk-query",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -358,7 +364,7 @@
                     "name": "assign-bulk-query",
                     "type": "assignment",
                     "operand": "BULK_QUERY",
-                    "value": "{'_id': BULK_ID} if BULK_ID is not None else {'scaledHash': CRYSTAL_SCALED_HASH} if CRYSTAL_SCALED_HASH is not None else {'hash': CRYSTAL_HASH} if CRYSTAL_HASH is not None else None",
+                    "value": "{'scaledHash': LAST_BUILD_CRYSTAL.get('scaledHash')} if LAST_BUILD_CRYSTAL and LAST_BUILD_CRYSTAL.get('scaledHash') else {'hash': LAST_BUILD_CRYSTAL.get('hash')} if LAST_BUILD_CRYSTAL and LAST_BUILD_CRYSTAL.get('hash') else None",
                     "input": [],
                     "flowchartId": "assign-bulk-query",
                     "status": "idle",
@@ -367,14 +373,12 @@
                     "head": false,
                     "next": "assert-bulk-query",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -382,7 +386,7 @@
                     "name": "assert-bulk-query",
                     "type": "assertion",
                     "statement": "BULK_QUERY != None",
-                    "errorMessage": "Surface slab metadata must include bulkId or build metadata with stack_components[0].crystal carrying scaledHash or hash to infer the bulk material query. Upload the bulk material and run its total energy workflow before calculating surface energy.",
+                    "errorMessage": "Surface slab build metadata does not carry a crystal scaledHash or hash. Upload the bulk material and run its total energy workflow first.",
                     "flowchartId": "assert-bulk-query",
                     "status": "idle",
                     "statusTrack": [],
@@ -390,14 +394,12 @@
                     "head": false,
                     "next": "io-bulk",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -425,14 +427,12 @@
                     "head": false,
                     "next": "assign-n-bulk-matches",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -454,14 +454,12 @@
                     "head": false,
                     "next": "assert-bulk",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -469,7 +467,7 @@
                     "name": "assert-bulk",
                     "type": "assertion",
                     "statement": "N_BULK_MATCHES > 0",
-                    "errorMessage": "No bulk material matched the resolved slab metadata query. Upload the bulk material and run its total energy workflow before calculating surface energy.",
+                    "errorMessage": "No bulk material matched the resolved slab build metadata query. Upload the bulk material and run its total energy workflow first.",
                     "flowchartId": "assert-bulk",
                     "status": "idle",
                     "statusTrack": [],
@@ -477,14 +475,12 @@
                     "head": false,
                     "next": "assert-n-bulk-matches",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -492,7 +488,7 @@
                     "name": "assert-n-bulk-matches",
                     "type": "assertion",
                     "statement": "N_BULK_MATCHES == 1",
-                    "errorMessage": "Expected exactly one bulk material for the slab. Ensure bulkId is correct or the resolved slab metadata query matches a unique bulk material.",
+                    "errorMessage": "Expected exactly one bulk material for the slab. Ensure the crystal scaledHash or hash matches a unique bulk material.",
                     "flowchartId": "assert-n-bulk-matches",
                     "status": "idle",
                     "statusTrack": [],
@@ -500,14 +496,12 @@
                     "head": false,
                     "next": "assign-bulk",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -527,32 +521,55 @@
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
+                    "next": "done",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "done",
+                    "type": "assignment",
+                    "operand": "BULK",
+                    "value": "BULK",
+                    "input": [
+                        {
+                            "name": "BULK",
+                            "scope": "global"
+                        }
+                    ],
+                    "flowchartId": "done",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 }
             ]
         },
         {
-            "_id": "3d6e2398-8920-5663-949c-3239911c761a",
+            "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
             "name": "Get Bulk Energy",
             "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "5.4.4",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             },
             "properties": [],
@@ -560,8 +577,8 @@
                 "type": "unknown",
                 "subtype": "unknown",
                 "method": {
-                    "type": "pseudopotential",
-                    "subtype": "paw",
+                    "type": "unknown",
+                    "subtype": "unknown",
                     "data": {}
                 }
             },
@@ -590,14 +607,12 @@
                     "head": true,
                     "next": "assign-e-bulk",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -619,14 +634,12 @@
                     "head": false,
                     "next": "assert-e-bulk",
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 },
@@ -641,14 +654,12 @@
                     "tags": [],
                     "head": false,
                     "application": {
-                        "isLicensed": true,
-                        "isUsingMaterial": true,
-                        "name": "vasp",
-                        "shortName": "vasp",
-                        "summary": "Vienna Ab-initio Simulation Package",
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
                         "build": "GNU",
                         "isDefault": true,
-                        "version": "5.4.4",
+                        "version": "5.1.8",
                         "schemaVersion": "2022.8.16"
                     }
                 }
@@ -974,21 +985,32 @@
         {
             "name": "Verify Slab",
             "type": "subworkflow",
-            "_id": "0c8eb624-7087-587b-8406-18b07c427f9f",
+            "_id": "104f04c3-2bff-5f01-9e41-1f35b02c1608",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "f89d2300-8105-57a9-b7b8-e0397c587995",
             "tags": [],
             "head": true,
-            "next": "84d19eea-cda7-5586-b05f-6d6adb3ec29f"
+            "next": "657a54c3-8a46-5e16-b56e-0c11cb40bdc0"
         },
         {
-            "name": "Resolve Bulk From Slab",
+            "name": "Resolve Bulk From Slab By Bulk ID",
             "type": "subworkflow",
-            "_id": "ca458b24-4fcb-55e1-a8c5-7c4692ee83d7",
+            "_id": "31958c8b-58fc-53c0-be83-c2675f37c7aa",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "84d19eea-cda7-5586-b05f-6d6adb3ec29f",
+            "flowchartId": "657a54c3-8a46-5e16-b56e-0c11cb40bdc0",
+            "tags": [],
+            "head": false,
+            "next": "31273a7c-b460-5dd4-8ff8-5d7e027914b7"
+        },
+        {
+            "name": "Resolve Bulk From Slab By Build",
+            "type": "subworkflow",
+            "_id": "f7daa3d8-1174-57e4-8d23-7c1f7a476f31",
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "31273a7c-b460-5dd4-8ff8-5d7e027914b7",
             "tags": [],
             "head": false,
             "next": "772d0df2-fe8f-5842-bd5d-0fd2c9605955"
@@ -996,7 +1018,7 @@
         {
             "name": "Get Bulk Energy",
             "type": "subworkflow",
-            "_id": "3d6e2398-8920-5663-949c-3239911c761a",
+            "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
             "status": "idle",
             "statusTrack": [],
             "flowchartId": "772d0df2-fe8f-5842-bd5d-0fd2c9605955",
@@ -1016,7 +1038,7 @@
         }
     ],
     "properties": [],
-    "_id": "5f053709-c865-5d3e-b945-e233aa8b0456",
+    "_id": "b65f0dc3-e9b0-5d0b-b5b5-d94df4eccc72",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

@@ -1,0 +1,99 @@
+{
+    "_id": "104f04c3-2bff-5f01-9e41-1f35b02c1608",
+    "name": "Verify Slab",
+    "application": {
+        "name": "vasp"
+    },
+    "properties": [],
+    "model": {
+        "type": "unknown",
+        "subtype": "unknown",
+        "method": {
+            "type": "unknown",
+            "subtype": "unknown",
+            "data": {}
+        }
+    },
+    "units": [
+        {
+            "name": "io-slab",
+            "type": "io",
+            "subtype": "input",
+            "flowchartId": "io-slab",
+            "source": "api",
+            "input": [
+                {
+                    "endpoint": "materials",
+                    "endpoint_options": {
+                        "params": {
+                            "query": "{'_id': MATERIAL_ID}",
+                            "projection": "{}"
+                        }
+                    },
+                    "name": "DATA"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "assign-slab",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-slab",
+            "type": "assignment",
+            "operand": "SLAB",
+            "value": "DATA[0] if len(DATA) == 1 else None",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-slab"
+                }
+            ],
+            "flowchartId": "assign-slab",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assert-slab",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assert-slab",
+            "type": "assertion",
+            "statement": "SLAB != None",
+            "errorMessage": "Slab material does not exist!",
+            "flowchartId": "assert-slab",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        }
+    ]
+}

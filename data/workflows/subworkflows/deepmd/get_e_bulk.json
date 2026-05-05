@@ -1,16 +1,16 @@
 {
-    "_id": "91cf1bd0-8e96-52e5-861e-bf1b2e3b4a03",
+    "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
     "name": "Get Bulk Energy",
     "application": {
-        "name": "espresso"
+        "name": "deepmd"
     },
     "properties": [],
     "model": {
         "type": "unknown",
         "subtype": "unknown",
         "method": {
-            "type": "pseudopotential",
-            "subtype": "us",
+            "type": "unknown",
+            "subtype": "unknown",
             "data": {}
         }
     },
@@ -39,14 +39,12 @@
             "head": true,
             "next": "assign-e-bulk",
             "application": {
-                "isUsingMaterial": true,
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
-                "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             }
         },
@@ -68,14 +66,12 @@
             "head": false,
             "next": "assert-e-bulk",
             "application": {
-                "isUsingMaterial": true,
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
-                "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             }
         },
@@ -90,14 +86,12 @@
             "tags": [],
             "head": false,
             "application": {
-                "isUsingMaterial": true,
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
-                "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "version": "6.3",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             }
         }

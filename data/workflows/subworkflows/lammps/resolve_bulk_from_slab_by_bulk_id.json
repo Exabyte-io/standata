@@ -1,0 +1,176 @@
+{
+    "_id": "31958c8b-58fc-53c0-be83-c2675f37c7aa",
+    "name": "Resolve Bulk From Slab By Bulk ID",
+    "application": {
+        "name": "lammps"
+    },
+    "properties": [],
+    "model": {
+        "type": "unknown",
+        "subtype": "unknown",
+        "method": {
+            "type": "unknown",
+            "subtype": "unknown",
+            "data": {}
+        }
+    },
+    "units": [
+        {
+            "name": "assign-bulk-id",
+            "type": "assignment",
+            "operand": "BULK_ID",
+            "value": "SLAB.metadata.get('bulkId') if SLAB.metadata else None",
+            "input": [],
+            "flowchartId": "assign-bulk-id",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "init-bulk",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "init-bulk",
+            "type": "assignment",
+            "operand": "BULK",
+            "value": "None",
+            "input": [],
+            "flowchartId": "init-bulk",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "check-bulk-id",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "check-bulk-id",
+            "type": "condition",
+            "input": [],
+            "results": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "then": "done",
+            "else": "io-bulk",
+            "statement": "BULK_ID is None",
+            "maxOccurrences": 100,
+            "flowchartId": "check-bulk-id",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "io-bulk",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "io-bulk",
+            "type": "io",
+            "subtype": "input",
+            "flowchartId": "io-bulk",
+            "source": "api",
+            "input": [
+                {
+                    "endpoint": "materials",
+                    "endpoint_options": {
+                        "params": {
+                            "query": "{'_id': BULK_ID}",
+                            "projection": "{}"
+                        }
+                    },
+                    "name": "DATA"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-bulk",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-bulk",
+            "type": "assignment",
+            "operand": "BULK",
+            "value": "DATA[0] if DATA else None",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-bulk"
+                }
+            ],
+            "flowchartId": "assign-bulk",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "done",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "done",
+            "type": "assignment",
+            "operand": "BULK",
+            "value": "BULK",
+            "input": [
+                {
+                    "name": "BULK",
+                    "scope": "global"
+                }
+            ],
+            "flowchartId": "done",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        }
+    ]
+}

@@ -1,6 +1,6 @@
 {
-    "_id": "0c8eb624-7087-587b-8406-18b07c427f9f",
-    "name": "Verify Slab",
+    "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
+    "name": "Get Bulk Energy",
     "application": {
         "name": "vasp"
     },
@@ -9,25 +9,25 @@
         "type": "unknown",
         "subtype": "unknown",
         "method": {
-            "type": "pseudopotential",
-            "subtype": "paw",
+            "type": "unknown",
+            "subtype": "unknown",
             "data": {}
         }
     },
     "units": [
         {
-            "name": "io-slab",
+            "name": "io-e-bulk",
             "type": "io",
             "subtype": "input",
-            "flowchartId": "io-slab",
+            "flowchartId": "io-e-bulk",
             "source": "api",
             "input": [
                 {
-                    "endpoint": "materials",
+                    "endpoint": "refined-properties",
                     "endpoint_options": {
                         "params": {
-                            "query": "{'_id': MATERIAL_ID}",
-                            "projection": "{}"
+                            "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': ''.join((SUBWORKFLOW.application.shortName, ':'))}}",
+                            "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
                         }
                     },
                     "name": "DATA"
@@ -37,67 +37,61 @@
             "statusTrack": [],
             "tags": [],
             "head": true,
-            "next": "assign-slab",
+            "next": "assign-e-bulk",
             "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "5.4.4",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             }
         },
         {
-            "name": "assign-slab",
+            "name": "assign-e-bulk",
             "type": "assignment",
-            "operand": "SLAB",
-            "value": "DATA[0] if len(DATA) == 1 else None",
+            "operand": "E_BULK",
+            "value": "DATA[0].data.value if DATA else None",
             "input": [
                 {
                     "name": "DATA",
-                    "scope": "io-slab"
+                    "scope": "io-e-bulk"
                 }
             ],
-            "flowchartId": "assign-slab",
+            "flowchartId": "assign-e-bulk",
             "status": "idle",
             "statusTrack": [],
             "tags": [],
             "head": false,
-            "next": "assert-slab",
+            "next": "assert-e-bulk",
             "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "5.4.4",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             }
         },
         {
-            "name": "assert-slab",
+            "name": "assert-e-bulk",
             "type": "assertion",
-            "statement": "SLAB != None",
-            "errorMessage": "Slab material does not exist!",
-            "flowchartId": "assert-slab",
+            "statement": "E_BULK != None",
+            "errorMessage": "Bulk total energy does not exist for the resolved bulk material. Run a bulk total energy workflow first.",
+            "flowchartId": "assert-e-bulk",
             "status": "idle",
             "statusTrack": [],
             "tags": [],
             "head": false,
             "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
                 "build": "GNU",
                 "isDefault": true,
-                "version": "5.4.4",
+                "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             }
         }
