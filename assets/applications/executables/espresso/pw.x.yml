@@ -110,7 +110,7 @@ flavors:
       - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_scf_dft_u+v:
     input:
@@ -129,7 +129,7 @@ flavors:
       - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_scf_dft_u+j:
     input:
@@ -148,7 +148,7 @@ flavors:
       - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_scf_dft_u_legacy:
     input:
@@ -167,7 +167,7 @@ flavors:
       - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=6.3"
+    supportedApplicationVersions: '<=7.0'
 
   pw_scf_magn:
     input:
@@ -220,7 +220,7 @@ flavors:
       - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_scf_dft_u_soc:
     input:
@@ -239,7 +239,7 @@ flavors:
       - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_scf_dft_u+v_magn:
     input:
@@ -258,7 +258,7 @@ flavors:
       - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_scf_dft_u+j_magn:
     input:
@@ -277,7 +277,7 @@ flavors:
       - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_scf_dft_u_magn_legacy:
     input:
@@ -296,7 +296,7 @@ flavors:
       - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=6.3"
+    supportedApplicationVersions: '<=7.0'
 
   pw_scf_dft_u_soc_legacy:
     input:
@@ -315,7 +315,7 @@ flavors:
       - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=6.3"
+    supportedApplicationVersions: '<=7.0'
 
   pw_esm:
     input:
@@ -398,7 +398,7 @@ flavors:
       - name: standard_output
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_nscf_dft_u+v_magn:
     input:
@@ -410,7 +410,7 @@ flavors:
       - name: standard_output
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_nscf_dft_u+j_magn:
     input:
@@ -422,7 +422,7 @@ flavors:
       - name: standard_output
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_nscf_dft_u_magn_legacy:
     input:
@@ -441,7 +441,7 @@ flavors:
       - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=6.3"
+    supportedApplicationVersions: '<=7.0'
 
   pw_nscf_dft_u_soc:
     input:
@@ -453,7 +453,7 @@ flavors:
       - name: standard_output
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_nscf_dft_u_soc_legacy:
     input:
@@ -472,7 +472,7 @@ flavors:
       - name: convergence_electronic
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=6.3"
+    supportedApplicationVersions: '<=7.0'
 
   pw_bands:
     input:
@@ -513,7 +513,7 @@ flavors:
       - name: standard_output
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_bands_dft_u+v_magn:
     input:
@@ -524,7 +524,7 @@ flavors:
       - name: standard_output
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_bands_dft_u+j_magn:
     input:
@@ -535,7 +535,7 @@ flavors:
       - name: standard_output
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_bands_dft_u_magn_legacy:
     input:
@@ -546,7 +546,7 @@ flavors:
       - name: standard_output
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=6.3"
+    supportedApplicationVersions: '<=7.0'
 
   pw_bands_dft_u_soc:
     input:
@@ -557,7 +557,7 @@ flavors:
       - name: standard_output
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=7.2"
+    supportedApplicationVersions: '>=7.2'
 
   pw_bands_dft_u_soc_legacy:
     input:
@@ -568,7 +568,7 @@ flavors:
       - name: standard_output
     applicationName: espresso
     executableName: pw.x
-    supportedApplicationVersions: ">=6.3"
+    supportedApplicationVersions: '<=7.0'
 
   pw_relax:
     input:
