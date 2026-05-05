@@ -34,12 +34,34 @@ class ApplicationRegistry {
             return application.name === name;
         })
             .filter((application) => {
-            return version ? application.version === version : application.isDefaultVersion;
+            if (version) {
+                return (0, applicationVersion_1.applicationVersionSatisfiesSupportedRange)(application.version, version);
+            }
+            return application.isDefaultVersion;
         })
             .find((application) => {
             return build ? application.build === build : application.isDefault;
         });
         if (!application) {
+            console.log({
+                name,
+                d: this.driver
+                    .getApplications()
+                    .filter((application) => {
+                    return application.name === name;
+                })
+                    .filter((application) => {
+                    console.log({
+                        version,
+                        applicationVersion: application.version,
+                        satisfies: (0, applicationVersion_1.applicationVersionSatisfiesSupportedRange)(application.version, version || "*"),
+                    });
+                    if (version) {
+                        return (0, applicationVersion_1.applicationVersionSatisfiesSupportedRange)(application.version, version);
+                    }
+                    return application.isDefaultVersion;
+                }),
+            });
             throw new Error(`Application ${name} not found`);
         }
         return application;

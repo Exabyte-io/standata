@@ -57,7 +57,10 @@ export default class ApplicationRegistry {
                 return application.name === name;
             })
             .filter((application) => {
-                return version ? application.version === version : application.isDefaultVersion;
+                if (version) {
+                    return applicationVersionSatisfiesSupportedRange(application.version, version);
+                }
+                return application.isDefaultVersion;
             })
             .find((application) => {
                 return build ? application.build === build : application.isDefault;
