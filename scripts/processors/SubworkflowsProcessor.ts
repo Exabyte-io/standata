@@ -22,23 +22,6 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         });
     }
 
-    private getSharedSubworkflowsForApplication(
-        sharedSubworkflows: Record<string, any>,
-        applicationName: string,
-    ): Record<string, any> {
-        return Object.fromEntries(
-            Object.entries(sharedSubworkflows)
-                .filter(
-                    ([, data]: [string, any]) =>
-                        !Array.isArray(data.apps) || data.apps.includes(applicationName),
-                )
-                .map(([name, { apps: _, ...data }]: [string, any]) => [
-                    name,
-                    { ...data, application: { name: applicationName } },
-                ]),
-        );
-    }
-
     public setEntityMapByApplication() {
         const sharedPath = path.resolve(
             __dirname,
@@ -51,7 +34,7 @@ export class SubworkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
                 `${this.resolvedPaths.assetsDir}/${applicationName}`,
             );
             this.entityMapByApplication[applicationName] = {
-                ...this.getSharedSubworkflowsForApplication(sharedSubworkflows, applicationName),
+                ...sharedSubworkflows,
                 ...applicationSubworkflows,
             };
         });

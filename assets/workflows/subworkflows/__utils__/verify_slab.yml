@@ -1,11 +1,10 @@
+application:
+  name: shell
 method:
   name: UnknownMethod
 model:
   name: UnknownModel
 name: Verify Slab
-apps:
-  - espresso
-  - vasp
 units:
   - type: io
     config:

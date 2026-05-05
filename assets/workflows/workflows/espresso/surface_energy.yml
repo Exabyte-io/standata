@@ -11,7 +11,9 @@ properties:
 units:
   - name: verify_slab
     type: subworkflow
-  - name: resolve_bulk_from_slab
+  - name: resolve_bulk_from_slab_by_bulk_id
+    type: subworkflow
+  - name: resolve_bulk_from_slab_by_build
     type: subworkflow
   - name: get_e_bulk
     type: subworkflow
