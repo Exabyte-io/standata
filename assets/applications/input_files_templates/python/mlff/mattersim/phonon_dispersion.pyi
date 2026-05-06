@@ -21,6 +21,7 @@ import torch
 from mat3ra.made.tools.convert import to_ase
 from mattersim.forcefield.potential import MatterSimCalculator
 from mattersim.applications.phonon import PhononWorkflow
+from utils import get_material_from_context_variable
 
 
 if torch.cuda.is_available():
