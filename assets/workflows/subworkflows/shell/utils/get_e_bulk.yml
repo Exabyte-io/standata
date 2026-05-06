@@ -16,7 +16,7 @@ units:
         - endpoint: refined-properties
           endpoint_options:
             params:
-              query: "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'vasp:'}}"
+              query: "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'APP:'}}"
               projection: "{'sort': {'precision.value': -1}, 'limit': 1}"
           name: DATA
   - type: assignment

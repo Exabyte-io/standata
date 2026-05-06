@@ -21,7 +21,21 @@ units:
     type: subworkflow
   - name: shell/utils/resolve_bulk_from_slab_by_build
     type: subworkflow
-  - name: get_e_bulk
+  - name: shell/utils/get_e_bulk
     type: subworkflow
+    unitConfigs:
+      - index: 0
+        type: io
+        config:
+          attributes:
+            input:
+              - endpoint: refined-properties
+                endpoint_options:
+                  params:
+                    query: >-
+                      {'exabyteId': BULK.exabyteId, 'data.name': 'total_energy',
+                      'group': {'$regex': 'qe:'}}
+                    projection: "{'sort': {'precision.value': -1}, 'limit': 1}"
+                name: DATA
   - name: surface_energy
     type: subworkflow

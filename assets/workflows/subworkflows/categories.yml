@@ -236,10 +236,6 @@ entities:
       - stress_tensor
       - total_energy
       - total_force
-  - filename: espresso/get_e_bulk.json
-    categories:
-      - espresso
-      - shell
   - filename: espresso/gw_band_structure_band_gap_full_frequency.json
     categories:
       - atomic_forces
@@ -470,6 +466,9 @@ entities:
   - filename: shell/hello_world.json
     categories:
       - shell
+  - filename: shell/utils/get_e_bulk.json
+    categories:
+      - shell
   - filename: shell/utils/get_material_by_id.json
     categories:
       - shell
@@ -533,10 +532,6 @@ entities:
       - stress_tensor
       - total_energy
       - total_force
-      - vasp
-  - filename: vasp/get_e_bulk.json
-    categories:
-      - shell
       - vasp
   - filename: vasp/initial_final_total_energies.json
     categories:

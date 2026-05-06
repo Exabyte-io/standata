@@ -2,7 +2,7 @@
     "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
     "name": "Get Bulk Energy",
     "application": {
-        "name": "vasp"
+        "name": "shell"
     },
     "properties": [],
     "model": {
@@ -26,7 +26,7 @@
                     "endpoint": "refined-properties",
                     "endpoint_options": {
                         "params": {
-                            "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'vasp:'}}",
+                            "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'APP:'}}",
                             "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
                         }
                     },
