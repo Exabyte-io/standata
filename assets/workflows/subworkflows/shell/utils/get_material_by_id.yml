@@ -4,12 +4,12 @@ method:
   name: UnknownMethod
 model:
   name: UnknownModel
-name: Verify Slab
+name: Get Material By ID
 units:
   - type: io
     config:
-      name: io-slab
-      flowchartId: io-slab
+      name: io-material
+      flowchartId: io-material
       subtype: input
       source: api
       input:
@@ -21,16 +21,10 @@ units:
           name: DATA
   - type: assignment
     config:
-      name: assign-slab
-      flowchartId: assign-slab
-      operand: SLAB
+      name: assign-material
+      flowchartId: assign-material
+      operand: MATERIAL
       value: "DATA[0] if len(DATA) == 1 else None"
       input:
         - name: DATA
-          scope: io-slab
-  - type: assertion
-    config:
-      name: assert-slab
-      flowchartId: assert-slab
-      statement: "SLAB != None"
-      errorMessage: "Slab material does not exist!"
+          scope: io-material

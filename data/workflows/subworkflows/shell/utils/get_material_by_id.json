@@ -1,6 +1,6 @@
 {
-    "_id": "104f04c3-2bff-5f01-9e41-1f35b02c1608",
-    "name": "Verify Slab",
+    "_id": "ad32fd60-cdf4-5c4a-8ad8-0cd8eafa4572",
+    "name": "Get Material By ID",
     "application": {
         "name": "shell"
     },
@@ -16,10 +16,10 @@
     },
     "units": [
         {
-            "name": "io-slab",
+            "name": "io-material",
             "type": "io",
             "subtype": "input",
-            "flowchartId": "io-slab",
+            "flowchartId": "io-material",
             "source": "api",
             "input": [
                 {
@@ -37,7 +37,7 @@
             "statusTrack": [],
             "tags": [],
             "head": true,
-            "next": "assign-slab",
+            "next": "assign-material",
             "application": {
                 "name": "shell",
                 "shortName": "sh",
@@ -49,38 +49,17 @@
             }
         },
         {
-            "name": "assign-slab",
+            "name": "assign-material",
             "type": "assignment",
-            "operand": "SLAB",
+            "operand": "MATERIAL",
             "value": "DATA[0] if len(DATA) == 1 else None",
             "input": [
                 {
                     "name": "DATA",
-                    "scope": "io-slab"
+                    "scope": "io-material"
                 }
             ],
-            "flowchartId": "assign-slab",
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "head": false,
-            "next": "assert-slab",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
-            "name": "assert-slab",
-            "type": "assertion",
-            "statement": "SLAB != None",
-            "errorMessage": "Slab material does not exist!",
-            "flowchartId": "assert-slab",
+            "flowchartId": "assign-material",
             "status": "idle",
             "statusTrack": [],
             "tags": [],

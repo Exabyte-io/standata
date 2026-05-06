@@ -2,8 +2,8 @@
     "name": "Surface Energy",
     "subworkflows": [
         {
-            "_id": "104f04c3-2bff-5f01-9e41-1f35b02c1608",
-            "name": "Verify Slab",
+            "_id": "ad32fd60-cdf4-5c4a-8ad8-0cd8eafa4572",
+            "name": "Get Material By ID",
             "application": {
                 "name": "shell",
                 "shortName": "sh",
@@ -25,10 +25,10 @@
             },
             "units": [
                 {
-                    "name": "io-slab",
+                    "name": "io-material",
                     "type": "io",
                     "subtype": "input",
-                    "flowchartId": "io-slab",
+                    "flowchartId": "io-material",
                     "source": "api",
                     "input": [
                         {
@@ -46,7 +46,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "head": true,
-                    "next": "assign-slab",
+                    "next": "assign-material",
                     "application": {
                         "name": "shell",
                         "shortName": "sh",
@@ -58,38 +58,17 @@
                     }
                 },
                 {
-                    "name": "assign-slab",
+                    "name": "assign-material",
                     "type": "assignment",
                     "operand": "SLAB",
                     "value": "DATA[0] if len(DATA) == 1 else None",
                     "input": [
                         {
                             "name": "DATA",
-                            "scope": "io-slab"
+                            "scope": "io-material"
                         }
                     ],
-                    "flowchartId": "assign-slab",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
-                    "next": "assert-slab",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "assert-slab",
-                    "type": "assertion",
-                    "statement": "SLAB != None",
-                    "errorMessage": "Slab material does not exist!",
-                    "flowchartId": "assert-slab",
+                    "flowchartId": "assign-material",
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
@@ -312,7 +291,7 @@
             },
             "units": [
                 {
-                    "name": "check-bulk-set",
+                    "name": "is-bulk-present",
                     "type": "condition",
                     "input": [],
                     "results": [],
@@ -322,7 +301,7 @@
                     "else": "assign-crystal",
                     "statement": "BULK is not None",
                     "maxOccurrences": 100,
-                    "flowchartId": "check-bulk-set",
+                    "flowchartId": "is-bulk-present",
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
@@ -342,7 +321,7 @@
                     "name": "assign-crystal",
                     "type": "assignment",
                     "operand": "LAST_BUILD_CRYSTAL",
-                    "value": "(((SLAB.metadata.get('build') or [{}])[-1].get('configuration') or {}).get('stack_components') or [{}])[0].get('crystal') if SLAB.metadata else None",
+                    "value": "(((SLAB.metadata.get('build') or [{}])[-1].get('configuration') or {}).get( 'stack_components' ) or [{}])[0].get('crystal') if SLAB.metadata else None",
                     "input": [],
                     "flowchartId": "assign-crystal",
                     "status": "idle",
@@ -425,33 +404,6 @@
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
-                    "next": "assign-n-bulk-matches",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "assign-n-bulk-matches",
-                    "type": "assignment",
-                    "operand": "N_BULK_MATCHES",
-                    "value": "len(DATA)",
-                    "input": [
-                        {
-                            "name": "DATA",
-                            "scope": "io-bulk"
-                        }
-                    ],
-                    "flowchartId": "assign-n-bulk-matches",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
                     "next": "assert-bulk",
                     "application": {
                         "name": "shell",
@@ -466,9 +418,15 @@
                 {
                     "name": "assert-bulk",
                     "type": "assertion",
-                    "statement": "N_BULK_MATCHES > 0",
+                    "statement": "len(DATA) > 0",
                     "errorMessage": "No bulk material matched the resolved slab build metadata query. Upload the bulk material and run its total energy workflow first.",
                     "flowchartId": "assert-bulk",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-bulk"
+                        }
+                    ],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
@@ -962,12 +920,12 @@
     ],
     "units": [
         {
-            "name": "Verify Slab",
+            "name": "Get Material By ID",
             "type": "subworkflow",
-            "_id": "104f04c3-2bff-5f01-9e41-1f35b02c1608",
+            "_id": "ad32fd60-cdf4-5c4a-8ad8-0cd8eafa4572",
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "f89d2300-8105-57a9-b7b8-e0397c587995",
+            "flowchartId": "77568205-b615-5ad5-ae25-9038d20a94de",
             "tags": [],
             "head": true,
             "next": "657a54c3-8a46-5e16-b56e-0c11cb40bdc0"
@@ -1017,7 +975,7 @@
         }
     ],
     "properties": [],
-    "_id": "b65f0dc3-e9b0-5d0b-b5b5-d94df4eccc72",
+    "_id": "847e467b-e76b-5bc4-b152-3faaba15e0fb",
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
