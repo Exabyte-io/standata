@@ -54,26 +54,23 @@ units:
               query: "BULK_QUERY"
               projection: "{}"
           name: DATA
-  - type: assertion
-    config:
-      name: assert-bulk
-      flowchartId: assert-bulk
-      statement: "len(DATA) > 0"
-      errorMessage: >-
-        No bulk material matched the resolved slab build metadata query.
-        Upload the bulk material and run its total energy workflow first.
-      input:
-        - name: DATA
-          scope: io-bulk
   - type: assignment
     config:
       name: assign-bulk
       flowchartId: assign-bulk
       operand: BULK
-      value: "DATA[0]"
+      value: "DATA[0] if DATA else None"
       input:
         - name: DATA
           scope: io-bulk
+  - type: assertion
+    config:
+      name: assert-bulk
+      flowchartId: assert-bulk
+      statement: "BULK != None"
+      errorMessage: >-
+        No bulk material matched the resolved slab build metadata query.
+        Upload the bulk material and run its total energy workflow first.
   - type: assignment
     config:
       name: done

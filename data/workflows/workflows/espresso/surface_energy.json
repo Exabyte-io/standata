@@ -404,33 +404,6 @@
                     "statusTrack": [],
                     "tags": [],
                     "head": false,
-                    "next": "assert-bulk",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "assert-bulk",
-                    "type": "assertion",
-                    "statement": "len(DATA) > 0",
-                    "errorMessage": "No bulk material matched the resolved slab build metadata query. Upload the bulk material and run its total energy workflow first.",
-                    "flowchartId": "assert-bulk",
-                    "input": [
-                        {
-                            "name": "DATA",
-                            "scope": "io-bulk"
-                        }
-                    ],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
                     "next": "assign-bulk",
                     "application": {
                         "name": "shell",
@@ -446,7 +419,7 @@
                     "name": "assign-bulk",
                     "type": "assignment",
                     "operand": "BULK",
-                    "value": "DATA[0]",
+                    "value": "DATA[0] if DATA else None",
                     "input": [
                         {
                             "name": "DATA",
@@ -454,6 +427,27 @@
                         }
                     ],
                     "flowchartId": "assign-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assert-bulk",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assert-bulk",
+                    "type": "assertion",
+                    "statement": "BULK != None",
+                    "errorMessage": "No bulk material matched the resolved slab build metadata query. Upload the bulk material and run its total energy workflow first.",
+                    "flowchartId": "assert-bulk",
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
