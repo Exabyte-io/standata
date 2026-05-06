@@ -16,10 +16,10 @@
 import os
 import csv
 import torch
-from ase.units import GPa
 from mat3ra.made.tools.convert import to_ase
-from mattersim.forcefield import MatterSimCalculator
 from utils import get_material_from_context_variable
+from mattersim.forcefield import MatterSimCalculator
+from ase.units import GPa
 
 
 if torch.cuda.is_available():

@@ -16,9 +16,9 @@
 import os
 import torch
 from mat3ra.made.tools.convert import to_ase
+from utils import get_material_from_context_variable, save_structure_comparison_png
 from mattersim.forcefield.potential import MatterSimCalculator
 from mattersim.applications.relax import Relaxer
-from utils import get_material_from_context_variable, save_structure_comparison_png
 
 
 # calculation parameters
