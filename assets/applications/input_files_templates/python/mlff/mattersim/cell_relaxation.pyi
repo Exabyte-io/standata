@@ -15,13 +15,18 @@
 
 import os
 import torch
-from munch import Munch
 from mat3ra.made.tools.convert import to_ase
 from mattersim.forcefield.potential import MatterSimCalculator
 from mattersim.applications.relax import Relaxer
-import matplotlib.pyplot as plt
-from ase.visualize.plot import plot_atoms
-from ase.data import covalent_radii
+from utils import get_material_from_context_variable, save_structure_comparison_png
+
+
+# calculation parameters
+MAX_STEPS = 500  # Maximum number of steps to relax for
+FMAX = 0.01  # Force threshold
+CELL_RELAXATION_TYPE = "fixed"  # or "variable"
+OPTIMIZER_TYPE = "BFGS"  # or "FIRE"
+
 
 if torch.cuda.is_available():
     device = "cuda"
@@ -31,26 +36,24 @@ else:
     device = "cpu"
 print(f"Running MatterSim on {device}")
 
-# this way material is obtained from the job context
-material_json = {% raw %}{{ MATERIAL }}{% endraw %}
-material = to_ase(dict(material_json))
+ase_atoms = to_ase(get_material_from_context_variable())
 
 # alternatively, material can be defined via ase, e.g.:
 # from ase.build import bulk
-# material = bulk("Si", "diamond", a=5.43)
+# ase_atoms = bulk("Si", "diamond", a=5.43)
 
-material.calc = MatterSimCalculator(device=device)
-initial_structure = material.copy()  # make deep copy
+ase_atoms.calc = MatterSimCalculator(device=device)
+initial_structure = ase_atoms.copy()  # make deep copy
 
 # initialize the relaxation object
 relaxer = Relaxer(
-    optimizer="BFGS", # the optimization method
-    filter="ExpCellFilter", # filter to apply to the cell
-    constrain_symmetry=True, # whether to constrain the symmetry
+    optimizer=OPTIMIZER_TYPE,  # the optimization method
+    filter="ExpCellFilter",  # filter to apply to the cell
+    constrain_symmetry=True,  # whether to constrain the symmetry
 )
 
 # relaxed_structure is pointer to material object
-is_converged, relaxed_structure = relaxer.relax(material, steps=500, fmax=0.01)
+is_converged, relaxed_structure = relaxer.relax(ase_atoms, steps=MAX_STEPS, fmax=FMAX)
 
 # save the structures to file
 initial_structure.write("initial_structure.cif")
@@ -59,46 +62,6 @@ initial_structure.write("initial_structure.poscar")
 relaxed_structure.write("relaxed_structure.cif")
 relaxed_structure.write("relaxed_structure.poscar")
 
-# save a comparison plot of the initial and final structures
-def save_structure(atoms, filename):
-    fig, ax = plt.subplots(figsize=(8, 8))
-
-    # Use smaller radii for atoms visualization
-    current_radii = [covalent_radii[a.number] * 0.5 for a in atoms]
-
-    # Plot atoms
-    plot_atoms(atoms, ax, radii=current_radii, rotation='15x,45y,15z', show_unit_cell=2)
-
-    # View settings
-    ax.set_axis_off()
-    ax.autoscale_view()
-
-    # Add atom labels
-    for a in atoms:
-        label = f"{a.symbol} ({a.position[0]:.3f}, {a.position[1]:.3f}, {a.position[2]:.3f})"
-        x_offset = a.position[0] + 1.0
-        y_offset = a.position[1] + 0.5
-
-        ax.text(x_offset, y_offset, label,
-                fontsize=10, ha='left', va='bottom',
-                bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', pad=1))
-
-    # Add Lattice Vectors below the plot
-    cell = atoms.get_cell()
-    lattice_text = (
-        f"Lattice Vectors:\n"
-        f"a: [{cell[0,0]:.4f}, {cell[0,1]:.4f}, {cell[0,2]:.4f}]\n"
-        f"b: [{cell[1,0]:.4f}, {cell[1,1]:.4f}, {cell[1,2]:.4f}]\n"
-        f"c: [{cell[2,0]:.4f}, {cell[2,1]:.4f}, {cell[2,2]:.4f}]"
-    )
-
-    ax.text(0.5, -0.05, lattice_text, transform=ax.transAxes,
-            fontsize=10, ha='center', va='top', family='monospace',
-            bbox=dict(facecolor='ghostwhite', alpha=0.8, edgecolor='gray', boxstyle='round'))
-
-    plt.savefig(filename, dpi=150, bbox_inches='tight')
-    plt.close(fig)
-
 # output filenames are hardcoded to display the structures in the web app
-save_structure(initial_structure, 'initial_structure.png')
-save_structure(relaxed_structure, 'relaxed_structure.png')
+save_structure_comparison_png(initial_structure, "initial_structure.png")
+save_structure_comparison_png(relaxed_structure, "relaxed_structure.png")

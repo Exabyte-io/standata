@@ -18,7 +18,6 @@ import shutil
 from pathlib import Path
 import numpy as np
 import torch
-from munch import Munch
 from mat3ra.made.tools.convert import to_ase
 from mattersim.forcefield.potential import MatterSimCalculator
 from mattersim.applications.phonon import PhononWorkflow
@@ -33,20 +32,19 @@ else:
 print(f"Running MatterSim on {device}")
 
 # this way material is obtained from the job context
-material_json = {% raw %}{{ MATERIAL }}{% endraw %}
-material = to_ase(dict(material_json))
+ase_atoms = to_ase(get_material_from_context_variable())
 
 # alternatively, material can be defined via ase, e.g.:
 # from ase.build import bulk
-# material = bulk("Si", "diamond", a=5.43)
+# ase_atoms = bulk("Si", "diamond", a=5.43)
 
-material.calc = MatterSimCalculator(device=device)
+ase_atoms.calc = MatterSimCalculator(device=device)
 
 # Configure the Phonon Workflow
 work_dir = "./"
 
 ph = PhononWorkflow(
-    atoms=material,
+    atoms=ase_atoms,
     find_prim = False,
     work_dir = work_dir,
     amplitude = 0.01,

@@ -211,6 +211,13 @@
   applicationName: python
   executableName: python
 
+- content: !readFile 'input_files_templates/python/utils.py'
+  name: utils.py
+  contextProviders: []
+  applicationName: python
+  executableName: python
+
+
 - content: !readFile 'input_files_templates/python/mlff/mattersim/requirements.txt'
   name: mattersim_requirements.txt
   contextProviders: []

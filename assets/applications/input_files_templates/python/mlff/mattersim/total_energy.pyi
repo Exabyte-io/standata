@@ -16,10 +16,11 @@
 import os
 import csv
 import torch
-from munch import Munch
 from ase.units import GPa
 from mat3ra.made.tools.convert import to_ase
 from mattersim.forcefield import MatterSimCalculator
+from utils import get_material_from_context_variable
+
 
 if torch.cuda.is_available():
     device = "cuda"
@@ -30,23 +31,22 @@ else:
 print(f"Running MatterSim on {device}")
 
 # this way material is obtained from the job context
-material_json = {% raw %}{{ MATERIAL }}{% endraw %}
-material = to_ase(dict(material_json))
+ase_atoms = to_ase(get_material_from_context_variable())
 
 # alternatively, material can be defined via ase, e.g.:
 # from ase.build import bulk
-# material = bulk("Si", "diamond", a=5.43)
+# ase_atoms = bulk("Si", "diamond", a=5.43)
 
-material.calc = MatterSimCalculator(device=device)
+ase_atoms.calc = MatterSimCalculator(device=device)
 
-energy = float(material.get_potential_energy())
-forces_first = material.get_forces()[0]
-stress_00 = float(material.get_stress(voigt=False)[0][0])
+energy = float(ase_atoms.get_potential_energy())
+forces_first = ase_atoms.get_forces()[0]
+stress_00 = float(ase_atoms.get_stress(voigt=False)[0][0])
 
 
 results = {
     "Energy (eV)": energy,
-    "Energy per atom (eV/atom)": energy / len(material),
+    "Energy per atom (eV/atom)": energy / len(ase_atoms),
     "Force on first atom Fx (eV/A)": float(forces_first[0]),
     "Force on first atom Fy (eV/A)": float(forces_first[1]),
     "Force on first atom Fz (eV/A)": float(forces_first[2]),
