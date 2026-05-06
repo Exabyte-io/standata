@@ -46,55 +46,25 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
     }
 
     private getCrossApplicationReferences(applicationName: string): Record<string, any> {
-        return Object.fromEntries(
-            [...this.getExternalSubworkflowNamesForApplication(applicationName)].map((subworkflowName) => {
-                const [sourceApplicationName, ...pathParts] = subworkflowName.split("/");
-                const subworkflowData = this.findSubworkflowByPath(
-                    sourceApplicationName,
-                    pathParts.join("/"),
-                );
-                return [subworkflowName, subworkflowData];
-            }),
+        const references: Record<string, any> = {};
+        const unitsToVisit = Object.values(this.entityMapByApplication[applicationName] || {}).flatMap(
+            (workflowData: any) => workflowData.units || [],
         );
-    }
 
-    private getExternalSubworkflowNamesForApplication(applicationName: string): Set<string> {
-        const subworkflowNames = new Set<string>();
-        Object.values(this.entityMapByApplication[applicationName] || {}).forEach((workflowData) => {
-            this.addExternalSubworkflowNames(subworkflowNames, applicationName, workflowData);
-        });
-        return subworkflowNames;
-    }
+        while (unitsToVisit.length) {
+            const unitData = unitsToVisit.pop();
+            unitsToVisit.push(...(unitData.units || []));
+            const [sourceApplicationName, ...pathParts] = String(unitData.name || "").split("/");
+            const pathInSource = pathParts.join("/");
+            const sourceSubworkflows = this.subworkflowMapByApplication[sourceApplicationName];
+            if (!pathInSource || sourceApplicationName === applicationName || !sourceSubworkflows) continue;
 
-    private addExternalSubworkflowNames(
-        subworkflowNames: Set<string>,
-        applicationName: string,
-        workflowData: any,
-    ): void {
-        (workflowData.units || []).forEach((unitData: any) => {
-            if (this.isExternalSubworkflowName(unitData.name, applicationName)) {
-                subworkflowNames.add(unitData.name);
-            }
-            if (unitData.units) {
-                this.addExternalSubworkflowNames(subworkflowNames, applicationName, unitData);
-            }
-        });
-    }
-
-    private isExternalSubworkflowName(subworkflowName: string, applicationName: string): boolean {
-        const [sourceApplicationName, pathSegment] = subworkflowName.split("/");
-        return Boolean(
-            pathSegment &&
-                sourceApplicationName !== applicationName &&
-                this.subworkflowMapByApplication[sourceApplicationName],
-        );
-    }
-
-    private findSubworkflowByPath(applicationName: string, pathInSource: string): any {
-        const subworkflows = this.subworkflowMapByApplication[applicationName] || {};
-        return Object.values(subworkflows).find((subworkflowData: any) => {
-            return subworkflowData.__path__ === pathInSource;
-        });
+            const subworkflowData = Object.values(sourceSubworkflows).find((subworkflow: any) => {
+                return subworkflow.__path__ === pathInSource;
+            });
+            if (subworkflowData) references[unitData.name] = subworkflowData;
+        }
+        return references;
     }
 
     protected buildEntityConfigs(): any[] {
