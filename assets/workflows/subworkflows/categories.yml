@@ -453,8 +453,17 @@ entities:
       - pyml:workflow-type-setter
       - python
       - set-io-unit-filenames
-  - filename: python/mlff/mattersim.json
+  - filename: python/mlff/mattersim_cell_relaxation.json
     categories:
+      - file_content
+      - python
+  - filename: python/mlff/mattersim_phonon_dispersion.json
+    categories:
+      - file_content
+      - python
+  - filename: python/mlff/mattersim_total_energy.json
+    categories:
+      - file_content
       - python
   - filename: python/python_script.json
     categories:
@@ -463,6 +472,18 @@ entities:
     categories:
       - shell
   - filename: shell/hello_world.json
+    categories:
+      - shell
+  - filename: shell/utils/get_e_bulk.json
+    categories:
+      - shell
+  - filename: shell/utils/get_material_by_id.json
+    categories:
+      - shell
+  - filename: shell/utils/resolve_bulk_from_slab_by_build.json
+    categories:
+      - shell
+  - filename: shell/utils/resolve_bulk_from_slab_by_bulk_id.json
     categories:
       - shell
   - filename: vasp/band_gap.json

@@ -1,6 +1,6 @@
 {
-    "_id": "3e05a2b5-4171-54a2-9d2d-9e46118a56bf",
-    "name": "Surface Energy",
+    "_id": "f9de6348-fcc4-54b7-a09d-c6496e22d33a",
+    "name": "Surface Energy - QE",
     "application": {
         "name": "espresso"
     },
@@ -12,7 +12,8 @@
         "surface_energy",
         "total_energy",
         "total_energy_contributions",
-        "total_force"
+        "total_force",
+        "surface_energy"
     ],
     "model": {
         "type": "dft",
@@ -26,6 +27,7 @@
     },
     "units": [
         {
+<<<<<<< HEAD
             "type": "io",
             "name": "io-slab",
             "head": true,
@@ -282,6 +284,78 @@
             "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
             "schemaVersion": "2022.8.16",
             "isDefault": false
+=======
+            "name": "assign-surface-area",
+            "type": "assignment",
+            "operand": "A",
+            "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
+            "input": [],
+            "flowchartId": "assign-surface-area",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "assign-n-bulk",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-n-bulk",
+            "type": "assignment",
+            "operand": "N_BULK",
+            "value": "len(BULK.basis.elements)",
+            "input": [],
+            "flowchartId": "assign-n-bulk",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-n-slab",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-n-slab",
+            "type": "assignment",
+            "operand": "N_SLAB",
+            "value": "len(SLAB.basis.elements)",
+            "input": [],
+            "flowchartId": "assign-n-slab",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "pw-scf-surface-energy",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+>>>>>>> ee23e1a0bf1f01e082e52c18fe2d2df9fa641612
         },
         {
             "type": "execution",
@@ -318,7 +392,7 @@
                     "name": "convergence_electronic"
                 }
             ],
-            "flowchartId": "9fc7a088-5533-5f70-bb33-f676ec65f565",
+            "flowchartId": "pw-scf-surface-energy",
             "preProcessors": [],
             "postProcessors": [],
             "status": "idle",
@@ -411,6 +485,7 @@
                     "isManuallyChanged": false
                 }
             ],
+<<<<<<< HEAD
             "context": [],
             "next": "fcd88119-817c-5ac1-a430-ba892ac743eb",
             "schemaVersion": "2022.8.16",
@@ -444,11 +519,52 @@
             "type": "assignment",
             "name": "surface-energy",
             "head": false,
+=======
+            "next": "assign-e-slab"
+        },
+        {
+            "name": "assign-e-slab",
+            "type": "assignment",
+            "operand": "E_SLAB",
+            "value": "total_energy",
+            "input": [
+                {
+                    "name": "total_energy",
+                    "scope": "pw-scf-surface-energy"
+                }
+            ],
+            "flowchartId": "assign-e-slab",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-surface-energy",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-surface-energy",
+            "type": "assignment",
+            "operand": "SURFACE_ENERGY",
+            "value": "1 / (2 * A) * (E_SLAB - E_BULK * (N_SLAB / N_BULK))",
+            "input": [],
+            "flowchartId": "assign-surface-energy",
+>>>>>>> ee23e1a0bf1f01e082e52c18fe2d2df9fa641612
             "results": [
                 {
                     "name": "surface_energy"
                 }
             ],
+<<<<<<< HEAD
             "monitors": [],
             "flowchartId": "542ea9ad-8a07-5a76-b233-f72fb27c4fc6",
             "preProcessors": [],
@@ -461,6 +577,23 @@
             "value": "1 / (2 * A) * (E_SLAB - E_BULK * (N_SLAB/N_BULK))",
             "schemaVersion": "2022.8.16",
             "isDefault": false
+=======
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+>>>>>>> ee23e1a0bf1f01e082e52c18fe2d2df9fa641612
         }
     ],
     "schemaVersion": "2022.8.16",

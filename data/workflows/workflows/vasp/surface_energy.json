@@ -3,8 +3,603 @@
     "name": "Surface Energy",
     "subworkflows": [
         {
-            "_id": "257d53c6-c3b6-564c-95ce-dd0514d26c63",
-            "name": "Surface Energy",
+            "_id": "ad32fd60-cdf4-5c4a-8ad8-0cd8eafa4572",
+            "name": "Get Material By ID",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            },
+            "properties": [],
+            "model": {
+                "type": "unknown",
+                "subtype": "unknown",
+                "method": {
+                    "type": "unknown",
+                    "subtype": "unknown",
+                    "data": {}
+                }
+            },
+            "units": [
+                {
+                    "name": "io-material",
+                    "type": "io",
+                    "subtype": "input",
+                    "flowchartId": "io-material",
+                    "source": "api",
+                    "input": [
+                        {
+                            "endpoint": "materials",
+                            "endpoint_options": {
+                                "params": {
+                                    "query": "{'_id': MATERIAL_ID}",
+                                    "projection": "{}"
+                                }
+                            },
+                            "name": "DATA"
+                        }
+                    ],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": true,
+                    "next": "assign-material",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-material",
+                    "type": "assignment",
+                    "operand": "SLAB",
+                    "value": "DATA[0] if len(DATA) == 1 else None",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-material"
+                        }
+                    ],
+                    "flowchartId": "assign-material",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                }
+            ]
+        },
+        {
+            "_id": "31958c8b-58fc-53c0-be83-c2675f37c7aa",
+            "name": "Resolve Bulk From Slab By Bulk ID",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            },
+            "properties": [],
+            "model": {
+                "type": "unknown",
+                "subtype": "unknown",
+                "method": {
+                    "type": "unknown",
+                    "subtype": "unknown",
+                    "data": {}
+                }
+            },
+            "units": [
+                {
+                    "name": "assign-bulk-id",
+                    "type": "assignment",
+                    "operand": "BULK_ID",
+                    "value": "SLAB.metadata.get('bulkId') if SLAB.metadata else None",
+                    "input": [],
+                    "flowchartId": "assign-bulk-id",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": true,
+                    "next": "init-bulk",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "init-bulk",
+                    "type": "assignment",
+                    "operand": "BULK",
+                    "value": "None",
+                    "input": [],
+                    "flowchartId": "init-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "check-bulk-id",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "check-bulk-id",
+                    "type": "condition",
+                    "input": [],
+                    "results": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "then": "done",
+                    "else": "io-bulk",
+                    "statement": "BULK_ID is None",
+                    "maxOccurrences": 100,
+                    "flowchartId": "check-bulk-id",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "io-bulk",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "io-bulk",
+                    "type": "io",
+                    "subtype": "input",
+                    "flowchartId": "io-bulk",
+                    "source": "api",
+                    "input": [
+                        {
+                            "endpoint": "materials",
+                            "endpoint_options": {
+                                "params": {
+                                    "query": "{'_id': BULK_ID}",
+                                    "projection": "{}"
+                                }
+                            },
+                            "name": "DATA"
+                        }
+                    ],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-bulk",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-bulk",
+                    "type": "assignment",
+                    "operand": "BULK",
+                    "value": "DATA[0] if DATA else None",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-bulk"
+                        }
+                    ],
+                    "flowchartId": "assign-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "done",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "done",
+                    "type": "assignment",
+                    "operand": "BULK",
+                    "value": "BULK",
+                    "input": [
+                        {
+                            "name": "BULK",
+                            "scope": "global"
+                        }
+                    ],
+                    "flowchartId": "done",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                }
+            ]
+        },
+        {
+            "_id": "f7daa3d8-1174-57e4-8d23-7c1f7a476f31",
+            "name": "Resolve Bulk From Slab By Build",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            },
+            "properties": [],
+            "model": {
+                "type": "unknown",
+                "subtype": "unknown",
+                "method": {
+                    "type": "unknown",
+                    "subtype": "unknown",
+                    "data": {}
+                }
+            },
+            "units": [
+                {
+                    "name": "is-bulk-present",
+                    "type": "condition",
+                    "input": [],
+                    "results": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "then": "done",
+                    "else": "assign-crystal",
+                    "statement": "BULK is not None",
+                    "maxOccurrences": 100,
+                    "flowchartId": "is-bulk-present",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": true,
+                    "next": "assign-crystal",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-crystal",
+                    "type": "assignment",
+                    "operand": "LAST_BUILD_CRYSTAL",
+                    "value": "(((SLAB.metadata.get('build') or [{}])[-1].get('configuration') or {}).get( 'stack_components' ) or [{}])[0].get('crystal') if SLAB.metadata else None",
+                    "input": [],
+                    "flowchartId": "assign-crystal",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-bulk-query",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-bulk-query",
+                    "type": "assignment",
+                    "operand": "BULK_QUERY",
+                    "value": "{'scaledHash': LAST_BUILD_CRYSTAL.get('scaledHash')} if LAST_BUILD_CRYSTAL and LAST_BUILD_CRYSTAL.get('scaledHash') else {'hash': LAST_BUILD_CRYSTAL.get('hash')} if LAST_BUILD_CRYSTAL and LAST_BUILD_CRYSTAL.get('hash') else None",
+                    "input": [],
+                    "flowchartId": "assign-bulk-query",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assert-bulk-query",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assert-bulk-query",
+                    "type": "assertion",
+                    "statement": "BULK_QUERY != None",
+                    "errorMessage": "Surface slab build metadata does not carry a crystal scaledHash or hash. Upload the bulk material and run its total energy workflow first.",
+                    "flowchartId": "assert-bulk-query",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "io-bulk",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "io-bulk",
+                    "type": "io",
+                    "subtype": "input",
+                    "flowchartId": "io-bulk",
+                    "source": "api",
+                    "input": [
+                        {
+                            "endpoint": "materials",
+                            "endpoint_options": {
+                                "params": {
+                                    "query": "BULK_QUERY",
+                                    "projection": "{}"
+                                }
+                            },
+                            "name": "DATA"
+                        }
+                    ],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-bulk",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-bulk",
+                    "type": "assignment",
+                    "operand": "BULK",
+                    "value": "DATA[0] if DATA else None",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-bulk"
+                        }
+                    ],
+                    "flowchartId": "assign-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assert-bulk",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assert-bulk",
+                    "type": "assertion",
+                    "statement": "BULK != None",
+                    "errorMessage": "No bulk material matched the resolved slab build metadata query. Upload the bulk material and run its total energy workflow first.",
+                    "flowchartId": "assert-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "done",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "done",
+                    "type": "assignment",
+                    "operand": "BULK",
+                    "value": "BULK",
+                    "input": [
+                        {
+                            "name": "BULK",
+                            "scope": "global"
+                        }
+                    ],
+                    "flowchartId": "done",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                }
+            ]
+        },
+        {
+            "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
+            "name": "Get Bulk Energy",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            },
+            "properties": [],
+            "model": {
+                "type": "unknown",
+                "subtype": "unknown",
+                "method": {
+                    "type": "unknown",
+                    "subtype": "unknown",
+                    "data": {}
+                }
+            },
+            "units": [
+                {
+                    "name": "io-e-bulk",
+                    "type": "io",
+                    "subtype": "input",
+                    "flowchartId": "io-e-bulk",
+                    "source": "api",
+                    "input": [
+                        {
+                            "endpoint": "refined-properties",
+                            "endpoint_options": {
+                                "params": {
+                                    "query": "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'vasp:'}}",
+                                    "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
+                                }
+                            },
+                            "name": "DATA"
+                        }
+                    ],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": true,
+                    "next": "assign-e-bulk",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-e-bulk",
+                    "type": "assignment",
+                    "operand": "E_BULK",
+                    "value": "DATA[0].data.value if DATA else None",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-e-bulk"
+                        }
+                    ],
+                    "flowchartId": "assign-e-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assert-e-bulk",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assert-e-bulk",
+                    "type": "assertion",
+                    "statement": "E_BULK != None",
+                    "errorMessage": "Bulk total energy does not exist for the resolved bulk material. Run a bulk total energy workflow first.",
+                    "flowchartId": "assert-e-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                }
+            ]
+        },
+        {
+            "_id": "ea968eca-252a-5642-9438-d83d69497d22",
+            "name": "Surface Energy - VASP",
             "application": {
                 "isLicensed": true,
                 "isUsingMaterial": true,
@@ -24,7 +619,16 @@
                 "surface_energy",
                 "total_energy",
                 "total_energy_contributions",
+<<<<<<< HEAD
                 "total_force"
+=======
+                "pressure",
+                "fermi_energy",
+                "atomic_forces",
+                "total_force",
+                "stress_tensor",
+                "surface_energy"
+>>>>>>> ee23e1a0bf1f01e082e52c18fe2d2df9fa641612
             ],
             "model": {
                 "type": "dft",
@@ -38,6 +642,7 @@
             },
             "units": [
                 {
+<<<<<<< HEAD
                     "type": "io",
                     "name": "io-slab",
                     "head": true,
@@ -294,6 +899,78 @@
                     "next": "913f756d-fbe1-548f-b3fc-f82ac46f1015",
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
+=======
+                    "name": "assign-surface-area",
+                    "type": "assignment",
+                    "operand": "A",
+                    "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
+                    "input": [],
+                    "flowchartId": "assign-surface-area",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": true,
+                    "next": "assign-n-bulk",
+                    "application": {
+                        "isLicensed": true,
+                        "isUsingMaterial": true,
+                        "name": "vasp",
+                        "shortName": "vasp",
+                        "summary": "Vienna Ab-initio Simulation Package",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-n-bulk",
+                    "type": "assignment",
+                    "operand": "N_BULK",
+                    "value": "len(BULK.basis.elements)",
+                    "input": [],
+                    "flowchartId": "assign-n-bulk",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-n-slab",
+                    "application": {
+                        "isLicensed": true,
+                        "isUsingMaterial": true,
+                        "name": "vasp",
+                        "shortName": "vasp",
+                        "summary": "Vienna Ab-initio Simulation Package",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-n-slab",
+                    "type": "assignment",
+                    "operand": "N_SLAB",
+                    "value": "len(SLAB.basis.elements)",
+                    "input": [],
+                    "flowchartId": "assign-n-slab",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "vasp-surface-energy",
+                    "application": {
+                        "isLicensed": true,
+                        "isUsingMaterial": true,
+                        "name": "vasp",
+                        "shortName": "vasp",
+                        "summary": "Vienna Ab-initio Simulation Package",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
+                    }
+>>>>>>> ee23e1a0bf1f01e082e52c18fe2d2df9fa641612
                 },
                 {
                     "type": "execution",
@@ -330,7 +1007,7 @@
                             "name": "convergence_electronic"
                         }
                     ],
-                    "flowchartId": "913f756d-fbe1-548f-b3fc-f82ac46f1015",
+                    "flowchartId": "vasp-surface-energy",
                     "preProcessors": [],
                     "postProcessors": [],
                     "status": "idle",
@@ -458,6 +1135,7 @@
                             "isManuallyChanged": false
                         }
                     ],
+<<<<<<< HEAD
                     "context": [],
                     "next": "fcd88119-817c-5ac1-a430-ba892ac743eb",
                     "schemaVersion": "2022.8.16",
@@ -491,11 +1169,52 @@
                     "type": "assignment",
                     "name": "surface-energy",
                     "head": false,
+=======
+                    "next": "assign-e-slab"
+                },
+                {
+                    "name": "assign-e-slab",
+                    "type": "assignment",
+                    "operand": "E_SLAB",
+                    "value": "total_energy",
+                    "input": [
+                        {
+                            "name": "total_energy",
+                            "scope": "vasp-surface-energy"
+                        }
+                    ],
+                    "flowchartId": "assign-e-slab",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-surface-energy",
+                    "application": {
+                        "isLicensed": true,
+                        "isUsingMaterial": true,
+                        "name": "vasp",
+                        "shortName": "vasp",
+                        "summary": "Vienna Ab-initio Simulation Package",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-surface-energy",
+                    "type": "assignment",
+                    "operand": "SURFACE_ENERGY",
+                    "value": "1 / (2 * A) * (E_SLAB - E_BULK * (N_SLAB / N_BULK))",
+                    "input": [],
+                    "flowchartId": "assign-surface-energy",
+>>>>>>> ee23e1a0bf1f01e082e52c18fe2d2df9fa641612
                     "results": [
                         {
                             "name": "surface_energy"
                         }
                     ],
+<<<<<<< HEAD
                     "monitors": [],
                     "flowchartId": "542ea9ad-8a07-5a76-b233-f72fb27c4fc6",
                     "preProcessors": [],
@@ -508,6 +1227,23 @@
                     "value": "1 / (2 * A) * (E_SLAB - E_BULK * (N_SLAB/N_BULK))",
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
+=======
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "application": {
+                        "isLicensed": true,
+                        "isUsingMaterial": true,
+                        "name": "vasp",
+                        "shortName": "vasp",
+                        "summary": "Vienna Ab-initio Simulation Package",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.4.4",
+                        "schemaVersion": "2022.8.16"
+                    }
+>>>>>>> ee23e1a0bf1f01e082e52c18fe2d2df9fa641612
                 }
             ],
             "schemaVersion": "2022.8.16",
@@ -516,6 +1252,7 @@
     ],
     "units": [
         {
+<<<<<<< HEAD
             "type": "subworkflow",
             "name": "Surface Energy",
             "results": [],
@@ -541,6 +1278,64 @@
         "total_energy_contributions",
         "total_force"
     ],
+=======
+            "name": "Get Material By ID",
+            "type": "subworkflow",
+            "_id": "ad32fd60-cdf4-5c4a-8ad8-0cd8eafa4572",
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "77568205-b615-5ad5-ae25-9038d20a94de",
+            "tags": [],
+            "head": true,
+            "next": "657a54c3-8a46-5e16-b56e-0c11cb40bdc0"
+        },
+        {
+            "name": "Resolve Bulk From Slab By Bulk ID",
+            "type": "subworkflow",
+            "_id": "31958c8b-58fc-53c0-be83-c2675f37c7aa",
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "657a54c3-8a46-5e16-b56e-0c11cb40bdc0",
+            "tags": [],
+            "head": false,
+            "next": "31273a7c-b460-5dd4-8ff8-5d7e027914b7"
+        },
+        {
+            "name": "Resolve Bulk From Slab By Build",
+            "type": "subworkflow",
+            "_id": "f7daa3d8-1174-57e4-8d23-7c1f7a476f31",
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "31273a7c-b460-5dd4-8ff8-5d7e027914b7",
+            "tags": [],
+            "head": false,
+            "next": "772d0df2-fe8f-5842-bd5d-0fd2c9605955"
+        },
+        {
+            "name": "Get Bulk Energy",
+            "type": "subworkflow",
+            "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "772d0df2-fe8f-5842-bd5d-0fd2c9605955",
+            "tags": [],
+            "head": false,
+            "next": "0cb5a69f-332f-5317-86a0-de445cb2e170"
+        },
+        {
+            "name": "Surface Energy - VASP",
+            "type": "subworkflow",
+            "_id": "ea968eca-252a-5642-9438-d83d69497d22",
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "0cb5a69f-332f-5317-86a0-de445cb2e170",
+            "tags": [],
+            "head": false
+        }
+    ],
+    "properties": [],
+    "_id": "847e467b-e76b-5bc4-b152-3faaba15e0fb",
+>>>>>>> ee23e1a0bf1f01e082e52c18fe2d2df9fa641612
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,
