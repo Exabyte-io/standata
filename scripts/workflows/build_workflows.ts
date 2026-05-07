@@ -1,6 +1,12 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+import JSONSchemasInterface from "@mat3ra/esse/dist/js/esse/JSONSchemasInterface";
+import schemas from "@mat3ra/esse/dist/js/schemas.json";
+import type { JSONSchema7 } from "json-schema";
+
 import { SubworkflowsProcessor } from "../processors/SubworkflowsProcessor";
 import { WorkflowsProcessor } from "../processors/WorkflowsProcessor";
+
+// Running this to set schemas for validation, removing the redundant data from application-flavors tree: `flavors`
+JSONSchemasInterface.setSchemas(schemas as JSONSchema7[]);
 
 const subworkflowsProcessor = new SubworkflowsProcessor(__dirname);
 subworkflowsProcessor.process();

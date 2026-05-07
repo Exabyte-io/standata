@@ -1,16 +1,16 @@
 monitors:
-  - standard_output
+  - name: standard_output
 results:
-  - phonon_dos
-  - phonon_dispersions
+  - name: phonon_dos
+  - name: phonon_dispersions
 flavors:
   matdyn_grid:
     input:
       - name: matdyn_grid.in
     monitors:
-      - standard_output
+      - name: standard_output
     results:
-      - phonon_dos
+      - name: phonon_dos
     applicationName: espresso
     executableName: matdyn.x
 
@@ -18,8 +18,8 @@ flavors:
     input:
       - name: matdyn_path.in
     monitors:
-      - standard_output
+      - name: standard_output
     results:
-      - phonon_dispersions
+      - name: phonon_dispersions
     applicationName: espresso
     executableName: matdyn.x

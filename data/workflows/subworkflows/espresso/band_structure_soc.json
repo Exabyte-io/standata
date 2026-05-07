@@ -6,13 +6,13 @@
     },
     "properties": [
         "atomic_forces",
+        "band_structure",
         "fermi_energy",
         "pressure",
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force",
-        "band_structure"
+        "total_force"
     ],
     "model": {
         "type": "dft",
@@ -24,11 +24,7 @@
                 "searchText": "nc-fr"
             }
         },
-        "functional": {
-            "slug": "pbe"
-        },
-        "refiners": [],
-        "modifiers": []
+        "functional": "pbe"
     },
     "units": [
         {
@@ -69,6 +65,9 @@
             "flowchartId": "74ec024a-f247-5f15-9c21-cc169bcb62c7",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
                 "isUsingMaterial": true,
                 "name": "espresso",
@@ -83,18 +82,36 @@
             "executable": {
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "monitors": [
-                    "standard_output",
-                    "convergence_ionic",
-                    "convergence_electronic"
-                ],
-                "postProcessors": [
-                    "remove_non_zero_weight_kpoints"
-                ],
+                "applicationName": "espresso",
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
+                "preProcessors": [],
+                "postProcessors": [],
+                "results": [
+                    {
+                        "name": "atomic_forces"
+                    },
+                    {
+                        "name": "fermi_energy"
+                    },
+                    {
+                        "name": "pressure"
+                    },
+                    {
+                        "name": "stress_tensor"
+                    },
+                    {
+                        "name": "total_energy"
+                    },
+                    {
+                        "name": "total_energy_contributions"
+                    },
+                    {
+                        "name": "total_force"
+                    }
+                ],
                 "applicationName": "espresso",
                 "executableName": "pw.x",
                 "input": [
@@ -103,50 +120,48 @@
                     }
                 ],
                 "monitors": [
-                    "standard_output",
-                    "convergence_electronic"
-                ],
-                "results": [
-                    "atomic_forces",
-                    "fermi_energy",
-                    "pressure",
-                    "stress_tensor",
-                    "total_energy",
-                    "total_energy_contributions",
-                    "total_force"
+                    {
+                        "name": "standard_output"
+                    },
+                    {
+                        "name": "convergence_electronic"
+                    }
                 ],
                 "name": "pw_scf_soc",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "espresso",
-                    "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP_WITH_LABELS }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n    noncolin = .true.\n    lspinorb = .true.\n{%- if nonCollinearMagnetization.isStartingMagnetization %}\n{%- for item in nonCollinearMagnetization.startingMagnetization %}\n    starting_magnetization({{ item.index }}) = {{ item.value }} {% endfor -%}\n{%- endif %}\n{%- if nonCollinearMagnetization.isConstrainedMagnetization %}\n    constrained_magnetization = '{{ nonCollinearMagnetization.constrainedMagnetization.constrainType }}'\n    lambda = {{ nonCollinearMagnetization.constrainedMagnetization.lambda }}\n{%- endif %}\n{%- if nonCollinearMagnetization.isConstrainedMagnetization and nonCollinearMagnetization.isFixedMagnetization %}\n    fixed_magnetization(1) = {{ nonCollinearMagnetization.fixedMagnetization.x }}\n    fixed_magnetization(2) = {{ nonCollinearMagnetization.fixedMagnetization.y }}\n    fixed_magnetization(3) = {{ nonCollinearMagnetization.fixedMagnetization.z }}\n{%- endif %}\n{%- if nonCollinearMagnetization.isExistingChargeDensity and nonCollinearMagnetization.lforcet %}\n    lforcet = .true.\n{%- endif %}\n{%- if nonCollinearMagnetization.isExistingChargeDensity and not nonCollinearMagnetization.lforcet %}\n    lforcet = .false.\n{%- endif %}\n{%- if nonCollinearMagnetization.isArbitrarySpinDirection %}\n{%- for item in nonCollinearMagnetization.spinAngles %}\n    angle1({{ item.index }}) = {{ item.angle1 }}\n    angle2({{ item.index }}) = {{ item.angle2 }} {% endfor %}\n{%- endif %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n{%- if nonCollinearMagnetization.isExistingChargeDensity %}\n    startingpot = 'file'\n{%- endif %}\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES_WITH_LABELS }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                    "contextProviders": [
-                        {
-                            "name": "KGridFormDataManager"
-                        },
-                        {
-                            "name": "QEPWXInputDataManager"
-                        },
-                        {
-                            "name": "PlanewaveCutoffDataManager"
-                        },
-                        {
-                            "name": "NonCollinearMagnetizationDataManager"
-                        }
-                    ],
-                    "executableName": "pw.x",
-                    "name": "pw_scf_soc.in",
-                    "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n    noncolin = .true.\n    lspinorb = .true.\n    starting_magnetization(1) = 0 \n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "espresso",
+                        "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP_WITH_LABELS }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n    noncolin = .true.\n    lspinorb = .true.\n{%- if nonCollinearMagnetization.isStartingMagnetization %}\n{%- for item in nonCollinearMagnetization.startingMagnetization %}\n    starting_magnetization({{ item.index }}) = {{ item.value }} {% endfor -%}\n{%- endif %}\n{%- if nonCollinearMagnetization.isConstrainedMagnetization %}\n    constrained_magnetization = '{{ nonCollinearMagnetization.constrainedMagnetization.constrainType }}'\n    lambda = {{ nonCollinearMagnetization.constrainedMagnetization.lambda }}\n{%- endif %}\n{%- if nonCollinearMagnetization.isConstrainedMagnetization and nonCollinearMagnetization.isFixedMagnetization %}\n    fixed_magnetization(1) = {{ nonCollinearMagnetization.fixedMagnetization.x }}\n    fixed_magnetization(2) = {{ nonCollinearMagnetization.fixedMagnetization.y }}\n    fixed_magnetization(3) = {{ nonCollinearMagnetization.fixedMagnetization.z }}\n{%- endif %}\n{%- if nonCollinearMagnetization.isExistingChargeDensity and nonCollinearMagnetization.lforcet %}\n    lforcet = .true.\n{%- endif %}\n{%- if nonCollinearMagnetization.isExistingChargeDensity and not nonCollinearMagnetization.lforcet %}\n    lforcet = .false.\n{%- endif %}\n{%- if nonCollinearMagnetization.isArbitrarySpinDirection %}\n{%- for item in nonCollinearMagnetization.spinAngles %}\n    angle1({{ item.index }}) = {{ item.angle1 }}\n    angle2({{ item.index }}) = {{ item.angle2 }} {% endfor %}\n{%- endif %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n{%- if nonCollinearMagnetization.isExistingChargeDensity %}\n    startingpot = 'file'\n{%- endif %}\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES_WITH_LABELS -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                        "contextProviders": [
+                            {
+                                "name": "KGridFormDataManager"
+                            },
+                            {
+                                "name": "QEPWXInputDataManager"
+                            },
+                            {
+                                "name": "PlanewaveCutoffDataManager"
+                            },
+                            {
+                                "name": "NonCollinearMagnetizationDataManager"
+                            }
+                        ],
+                        "executableName": "pw.x",
+                        "name": "pw_scf_soc.in",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
             ],
-            "next": "cee6ae30-cf34-5138-bdc5-5c57c2a6de5b"
+            "context": [],
+            "next": "cee6ae30-cf34-5138-bdc5-5c57c2a6de5b",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "type": "execution",
@@ -165,6 +180,9 @@
             "flowchartId": "cee6ae30-cf34-5138-bdc5-5c57c2a6de5b",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
                 "isUsingMaterial": true,
                 "name": "espresso",
@@ -179,18 +197,18 @@
             "executable": {
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
-                "monitors": [
-                    "standard_output",
-                    "convergence_ionic",
-                    "convergence_electronic"
-                ],
-                "postProcessors": [
-                    "remove_non_zero_weight_kpoints"
-                ],
+                "applicationName": "espresso",
                 "name": "pw.x",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
+                "preProcessors": [],
+                "postProcessors": [],
+                "results": [
+                    {
+                        "name": "band_structure"
+                    }
+                ],
                 "applicationName": "espresso",
                 "executableName": "pw.x",
                 "input": [
@@ -199,43 +217,45 @@
                     }
                 ],
                 "monitors": [
-                    "standard_output"
-                ],
-                "results": [
-                    "band_structure"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
                 "name": "pw_bands_soc",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "espresso",
-                    "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP_WITH_LABELS }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n    noncolin = .true.\n    lspinorb = .true.\n{%- if nonCollinearMagnetization.isStartingMagnetization %}\n{%- for item in nonCollinearMagnetization.startingMagnetization %}\n    starting_magnetization({{ item.index }}) = {{ item.value }} {% endfor -%}\n{%- endif %}\n{%- if nonCollinearMagnetization.isConstrainedMagnetization %}\n    constrained_magnetization = '{{ nonCollinearMagnetization.constrainedMagnetization.constrainType }}'\n    lambda = {{ nonCollinearMagnetization.constrainedMagnetization.lambda }}\n{%- endif %}\n{%- if nonCollinearMagnetization.isConstrainedMagnetization and nonCollinearMagnetization.isFixedMagnetization %}\n    fixed_magnetization(1) = {{ nonCollinearMagnetization.fixedMagnetization.x }}\n    fixed_magnetization(2) = {{ nonCollinearMagnetization.fixedMagnetization.y }}\n    fixed_magnetization(3) = {{ nonCollinearMagnetization.fixedMagnetization.z }}\n{%- endif %}\n{%- if nonCollinearMagnetization.isExistingChargeDensity and nonCollinearMagnetization.lforcet %}\n    lforcet = .true.\n{%- endif %}\n{%- if nonCollinearMagnetization.isExistingChargeDensity and not nonCollinearMagnetization.lforcet %}\n    lforcet = .false.\n{%- endif %}\n{%- if nonCollinearMagnetization.isArbitrarySpinDirection %}\n{%- for item in nonCollinearMagnetization.spinAngles %}\n    angle1({{ item.index }}) = {{ item.angle1 }}\n    angle2({{ item.index }}) = {{ item.angle2 }} {% endfor %}\n{%- endif %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES_WITH_LABELS }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
-                    "contextProviders": [
-                        {
-                            "name": "KPathFormDataManager"
-                        },
-                        {
-                            "name": "QEPWXInputDataManager"
-                        },
-                        {
-                            "name": "PlanewaveCutoffDataManager"
-                        },
-                        {
-                            "name": "NonCollinearMagnetizationDataManager"
-                        }
-                    ],
-                    "executableName": "pw.x",
-                    "name": "pw_bands_soc.in",
-                    "rendered": "&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n    noncolin = .true.\n    lspinorb = .true.\n    starting_magnetization(1) = 0 \n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS crystal_b\n11\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.000000000    0.500000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.375000000    0.375000000    0.750000000 10\n   0.000000000    0.000000000    0.000000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.250000000    0.750000000 10\n   0.500000000    0.500000000    0.500000000 10\n   0.625000000    0.250000000    0.625000000 10\n   0.500000000    0.000000000    0.500000000 10\n\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "espresso",
+                        "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'bands'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{input.RESTART_MODE}}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP_WITH_LABELS }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n    noncolin = .true.\n    lspinorb = .true.\n{%- if nonCollinearMagnetization.isStartingMagnetization %}\n{%- for item in nonCollinearMagnetization.startingMagnetization %}\n    starting_magnetization({{ item.index }}) = {{ item.value }} {% endfor -%}\n{%- endif %}\n{%- if nonCollinearMagnetization.isConstrainedMagnetization %}\n    constrained_magnetization = '{{ nonCollinearMagnetization.constrainedMagnetization.constrainType }}'\n    lambda = {{ nonCollinearMagnetization.constrainedMagnetization.lambda }}\n{%- endif %}\n{%- if nonCollinearMagnetization.isConstrainedMagnetization and nonCollinearMagnetization.isFixedMagnetization %}\n    fixed_magnetization(1) = {{ nonCollinearMagnetization.fixedMagnetization.x }}\n    fixed_magnetization(2) = {{ nonCollinearMagnetization.fixedMagnetization.y }}\n    fixed_magnetization(3) = {{ nonCollinearMagnetization.fixedMagnetization.z }}\n{%- endif %}\n{%- if nonCollinearMagnetization.isExistingChargeDensity and nonCollinearMagnetization.lforcet %}\n    lforcet = .true.\n{%- endif %}\n{%- if nonCollinearMagnetization.isExistingChargeDensity and not nonCollinearMagnetization.lforcet %}\n    lforcet = .false.\n{%- endif %}\n{%- if nonCollinearMagnetization.isArbitrarySpinDirection %}\n{%- for item in nonCollinearMagnetization.spinAngles %}\n    angle1({{ item.index }}) = {{ item.angle1 }}\n    angle2({{ item.index }}) = {{ item.angle2 }} {% endfor %}\n{%- endif %}\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES_WITH_LABELS -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS crystal_b\n{{kpath.length}}\n{% for point in kpath -%}\n{% for d in point.coordinates %}{{d}} {% endfor -%}{{point.steps}}\n{% endfor %}\n",
+                        "contextProviders": [
+                            {
+                                "name": "KPathFormDataManager"
+                            },
+                            {
+                                "name": "QEPWXInputDataManager"
+                            },
+                            {
+                                "name": "PlanewaveCutoffDataManager"
+                            },
+                            {
+                                "name": "NonCollinearMagnetizationDataManager"
+                            }
+                        ],
+                        "executableName": "pw.x",
+                        "name": "pw_bands_soc.in",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
             ],
-            "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2"
+            "context": [],
+            "next": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "type": "execution",
@@ -250,6 +270,9 @@
             "flowchartId": "771fbb40-ea80-5ba4-ae3f-6cd9a56c26e2",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
                 "isUsingMaterial": true,
                 "name": "espresso",
@@ -262,14 +285,15 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "monitors": [
-                    "standard_output"
-                ],
+                "applicationName": "espresso",
                 "name": "bands.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
             "flavor": {
+                "preProcessors": [],
+                "postProcessors": [],
+                "results": [],
                 "applicationName": "espresso",
                 "executableName": "bands.x",
                 "input": [
@@ -278,26 +302,33 @@
                     }
                 ],
                 "monitors": [
-                    "standard_output"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
                 "name": "bands",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "espresso",
-                    "content": "&BANDS\n    prefix = '__prefix__'\n    lsym = .false.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
-                    "contextProviders": [],
-                    "executableName": "bands.x",
-                    "name": "bands.in",
-                    "rendered": "&BANDS\n    prefix = '__prefix__'\n    lsym = .false.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    filband = '{{ JOB_WORK_DIR }}/bands.dat'\n    no_overlap = .true.\n/\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "espresso",
+                        "content": "&BANDS\n    prefix = '__prefix__'\n    lsym = .false.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    filband = {% raw %}'{{ JOB_WORK_DIR }}/bands.dat'{% endraw %}\n    no_overlap = .true.\n/\n",
+                        "contextProviders": [],
+                        "executableName": "bands.x",
+                        "name": "bands.in",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
-            ]
+            ],
+            "context": [],
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

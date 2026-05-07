@@ -372,7 +372,6 @@ entities:
   - filename: espresso/valence_band_offset_calc_from_previous_esp_vbm.json
     categories:
       - espresso
-      - python
       - valence_band_offset
   - filename: espresso/variable_cell_relaxation.json
     categories:

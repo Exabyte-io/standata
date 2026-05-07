@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { JsYamlAllSchemas } from "@mat3ra/code/dist/js/utils";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
@@ -16,11 +14,11 @@ const ignoreType = new yaml.Type("!ignore", {
 
 const schemaWithIgnore = JsYamlAllSchemas.extend([ignoreType]);
 
-export function readYAMLFileResolved(filePath: string): any {
-    return serverUtils.yaml.readYAMLFile(filePath, { schema: schemaWithIgnore });
+export function readYAMLFileResolved<T extends object>(filePath: string): T {
+    return serverUtils.yaml.readYAMLFile(filePath, { schema: schemaWithIgnore }) as T;
 }
 
-export function hasIgnoreDirective(data: any): boolean {
+export function hasIgnoreDirective(data?: { [IGNORE_MARKER]?: boolean }): boolean {
     return data?.[IGNORE_MARKER] === true;
 }
 
@@ -28,27 +26,29 @@ export function resolveFromRoot(scriptDirname: string, ...pathSegments: string[]
     return path.resolve(scriptDirname, "../..", ...pathSegments);
 }
 
-/**
- * Converts YAML file to JSON, optionally resolving relative includes from a working directory
- */
-export function buildJSONFromYAMLInDir({
-    assetPath,
-    targetPath,
-    workingDir,
-    spaces = 0,
-}: {
+type BuildJSONOptions = {
     assetPath: string;
     targetPath: string;
     workingDir?: string;
     spaces?: number;
-}): any {
+};
+
+/**
+ * Converts YAML file to JSON, optionally resolving relative includes from a working directory
+ */
+export function buildJSONFromYAMLInDir<T extends object>({
+    assetPath,
+    targetPath,
+    workingDir,
+    spaces = 0,
+}: BuildJSONOptions) {
     const originalCwd = process.cwd();
     try {
         if (workingDir) {
             process.chdir(workingDir);
         }
 
-        const data = readYAMLFileResolved(assetPath);
+        const data = readYAMLFileResolved<T>(assetPath);
         const resolvedTargetPath = workingDir ? path.resolve(originalCwd, targetPath) : targetPath;
 
         serverUtils.json.writeJSONFileSync(resolvedTargetPath, data, {
@@ -75,9 +75,12 @@ function removeYAMLExtension(filePath: string): string {
  * Processes a single YAML file with a callback.
  * Skips files marked with !ignore directive.
  */
-function processYAMLFile(filePath: string, callback: (filePath: string, data: any) => void): void {
+function processYAMLFile<T extends object>(
+    filePath: string,
+    callback: (filePath: string, data: T) => void,
+): void {
     try {
-        const data = readYAMLFileResolved(filePath);
+        const data = readYAMLFileResolved<T>(filePath);
         if (hasIgnoreDirective(data)) {
             console.log(`  Ignoring: ${filePath} (marked with !ignore)`);
             return;
@@ -91,16 +94,19 @@ function processYAMLFile(filePath: string, callback: (filePath: string, data: an
 /**
  * Recursively traverses a path and processes YAML files.
  */
-function traversePath(currentPath: string, callback: (filePath: string, data: any) => void): void {
+function traversePath<T extends object>(
+    currentPath: string,
+    callback: (filePath: string, data: T) => void,
+): void {
     if (!fs.existsSync(currentPath)) return;
 
     const stat = fs.statSync(currentPath);
 
     if (stat.isDirectory()) {
         const items = fs.readdirSync(currentPath);
-        items.forEach((item) => traversePath(path.join(currentPath, item), callback));
+        items.forEach((item) => traversePath<T>(path.join(currentPath, item), callback));
     } else if (stat.isFile() && isYAMLFile(currentPath)) {
-        processYAMLFile(currentPath, callback);
+        processYAMLFile<T>(currentPath, callback);
     }
 }
 
@@ -108,21 +114,21 @@ function traversePath(currentPath: string, callback: (filePath: string, data: an
  * Traverses a directory and processes YAML files with a callback.
  * Skips files marked with !ignore directive.
  */
-export function traverseYAMLFiles(
+export function traverseYAMLFiles<T extends object>(
     rootPath: string,
-    callback: (filePath: string, data: any) => void,
+    callback: (filePath: string, data: T) => void,
 ): void {
-    traversePath(rootPath, callback);
+    traversePath<T>(rootPath, callback);
 }
 
 /**
  * Loads a directory tree of YAML files into a nested object structure.
  * Uses lodash-compatible object paths for nested structure.
  */
-export function loadYAMLTree(rootPath: string): Record<string, any> {
-    const tree: Record<string, any> = {};
+export function loadYAMLTree<T extends object>(rootPath: string): Record<string, T> {
+    const tree: Record<string, T> = {};
 
-    traverseYAMLFiles(rootPath, (filePath, data) => {
+    traverseYAMLFiles<T>(rootPath, (filePath, data) => {
         const objectPath = serverUtils.file.createObjectPathFromFilePath(filePath, rootPath);
         lodash.set(tree, objectPath, data);
     });
@@ -164,10 +170,10 @@ export function encodeDataAsURLPath(
  *     classification_tail: { __path__: "ml/classification_tail", ... }
  *   }
  */
-export function loadYAMLFilesAsMap(dirPath: string): Record<string, any> {
-    const result: Record<string, any> = {};
+export function loadYAMLFilesAsMap<T extends object>(dirPath: string) {
+    const result: Record<string, T & { __path__: string }> = {};
 
-    traverseYAMLFiles(dirPath, (filePath, data) => {
+    traverseYAMLFiles<T>(dirPath, (filePath, data) => {
         const key = removeYAMLExtension(path.basename(filePath));
         const relativePath = removeYAMLExtension(path.relative(dirPath, filePath));
         result[key] = { __path__: relativePath, ...data };

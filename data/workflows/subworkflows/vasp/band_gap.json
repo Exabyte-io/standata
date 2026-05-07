@@ -5,15 +5,14 @@
         "name": "vasp"
     },
     "properties": [
+        "atomic_forces",
+        "band_gaps",
+        "fermi_energy",
+        "pressure",
+        "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "pressure",
-        "fermi_energy",
-        "atomic_forces",
-        "total_force",
-        "stress_tensor",
-        "band_gaps",
-        "fermi_energy"
+        "total_force"
     ],
     "model": {
         "type": "dft",
@@ -23,11 +22,7 @@
             "subtype": "paw",
             "data": {}
         },
-        "functional": {
-            "slug": "pbe"
-        },
-        "refiners": [],
-        "modifiers": []
+        "functional": "pbe"
     },
     "units": [
         {
@@ -68,6 +63,9 @@
             "flowchartId": "9cb87769-bf20-56bf-a8b3-5a164e3bf541",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
                 "isLicensed": true,
                 "isUsingMaterial": true,
@@ -81,20 +79,36 @@
             },
             "executable": {
                 "isDefault": true,
-                "monitors": [
-                    "standard_output",
-                    "convergence_ionic",
-                    "convergence_electronic"
-                ],
-                "postProcessors": [
-                    "error_handler",
-                    "prepare_restart",
-                    "remove_non_zero_weight_kpoints"
-                ],
+                "applicationName": "vasp",
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
+                "preProcessors": [],
+                "postProcessors": [],
+                "results": [
+                    {
+                        "name": "total_energy"
+                    },
+                    {
+                        "name": "total_energy_contributions"
+                    },
+                    {
+                        "name": "pressure"
+                    },
+                    {
+                        "name": "fermi_energy"
+                    },
+                    {
+                        "name": "atomic_forces"
+                    },
+                    {
+                        "name": "total_force"
+                    },
+                    {
+                        "name": "stress_tensor"
+                    }
+                ],
                 "applicationName": "vasp",
                 "executableName": "vasp",
                 "input": [
@@ -110,69 +124,73 @@
                 ],
                 "isDefault": true,
                 "monitors": [
-                    "standard_output",
-                    "convergence_electronic"
-                ],
-                "results": [
-                    "total_energy",
-                    "total_energy_contributions",
-                    "pressure",
-                    "fermi_energy",
-                    "atomic_forces",
-                    "total_force",
-                    "stress_tensor"
+                    {
+                        "name": "standard_output"
+                    },
+                    {
+                        "name": "convergence_electronic"
+                    }
                 ],
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "vasp",
-                    "content": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n",
-                    "contextProviders": [
-                        {
-                            "name": "VASPInputDataManager"
-                        }
-                    ],
-                    "executableName": "vasp",
-                    "name": "INCAR",
-                    "rendered": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "vasp",
+                        "content": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n",
+                        "contextProviders": [
+                            {
+                                "name": "VASPInputDataManager"
+                            }
+                        ],
+                        "executableName": "vasp",
+                        "name": "INCAR",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 },
                 {
-                    "applicationName": "vasp",
-                    "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                    "contextProviders": [
-                        {
-                            "name": "KGridFormDataManager"
-                        },
-                        {
-                            "name": "VASPInputDataManager"
-                        }
-                    ],
-                    "executableName": "vasp",
-                    "name": "KPOINTS",
-                    "rendered": "Automatic mesh\n0\nGamma\n  2 2 2 \n  0 0 0 \n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "vasp",
+                        "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                        "contextProviders": [
+                            {
+                                "name": "KGridFormDataManager"
+                            },
+                            {
+                                "name": "VASPInputDataManager"
+                            }
+                        ],
+                        "executableName": "vasp",
+                        "name": "KPOINTS",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 },
                 {
-                    "applicationName": "vasp",
-                    "content": "{{ input.POSCAR }}\n",
-                    "contextProviders": [
-                        {
-                            "name": "VASPInputDataManager"
-                        }
-                    ],
-                    "executableName": "vasp",
-                    "name": "POSCAR",
-                    "rendered": "Silicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "vasp",
+                        "content": "{{ input.POSCAR }}\n",
+                        "contextProviders": [
+                            {
+                                "name": "VASPInputDataManager"
+                            }
+                        ],
+                        "executableName": "vasp",
+                        "name": "POSCAR",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
             ],
-            "next": "f0d65517-9592-5bc8-948e-a0851a766cbb"
+            "context": [],
+            "next": "f0d65517-9592-5bc8-948e-a0851a766cbb",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "type": "execution",
@@ -197,6 +215,9 @@
             "flowchartId": "f0d65517-9592-5bc8-948e-a0851a766cbb",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
                 "isLicensed": true,
                 "isUsingMaterial": true,
@@ -210,20 +231,21 @@
             },
             "executable": {
                 "isDefault": true,
-                "monitors": [
-                    "standard_output",
-                    "convergence_ionic",
-                    "convergence_electronic"
-                ],
-                "postProcessors": [
-                    "error_handler",
-                    "prepare_restart",
-                    "remove_non_zero_weight_kpoints"
-                ],
+                "applicationName": "vasp",
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
+                "preProcessors": [],
+                "postProcessors": [],
+                "results": [
+                    {
+                        "name": "band_gaps"
+                    },
+                    {
+                        "name": "fermi_energy"
+                    }
+                ],
                 "applicationName": "vasp",
                 "executableName": "vasp",
                 "input": [
@@ -241,64 +263,75 @@
                     }
                 ],
                 "monitors": [
-                    "standard_output",
-                    "convergence_electronic"
-                ],
-                "results": [
-                    "band_gaps",
-                    "fermi_energy"
+                    {
+                        "name": "standard_output"
+                    },
+                    {
+                        "name": "convergence_electronic"
+                    }
                 ],
                 "name": "vasp_nscf",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "vasp",
-                    "content": "ISMEAR = 0\nSIGMA = 0.05\nISTART = 1\nICHARG = 11\n",
-                    "contextProviders": [
-                        {
-                            "name": "VASPInputDataManager"
-                        }
-                    ],
-                    "executableName": "vasp",
-                    "name": "INCAR",
-                    "rendered": "ISMEAR = 0\nSIGMA = 0.05\nISTART = 1\nICHARG = 11\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "vasp",
+                        "content": "ISMEAR = 0\nSIGMA = 0.05\nISTART = 1\nICHARG = 11\n",
+                        "contextProviders": [
+                            {
+                                "name": "VASPInputDataManager"
+                            }
+                        ],
+                        "executableName": "vasp",
+                        "name": "INCAR",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 },
                 {
-                    "applicationName": "vasp",
-                    "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                    "contextProviders": [
-                        {
-                            "name": "KGridFormDataManager"
-                        },
-                        {
-                            "name": "VASPInputDataManager"
-                        }
-                    ],
-                    "executableName": "vasp",
-                    "name": "KPOINTS",
-                    "rendered": "Automatic mesh\n0\nGamma\n  2 2 2 \n  0 0 0 \n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "vasp",
+                        "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                        "contextProviders": [
+                            {
+                                "name": "KGridFormDataManager"
+                            },
+                            {
+                                "name": "VASPInputDataManager"
+                            }
+                        ],
+                        "executableName": "vasp",
+                        "name": "KPOINTS",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 },
                 {
-                    "applicationName": "vasp",
-                    "content": "{{ input.POSCAR }}\n",
-                    "contextProviders": [
-                        {
-                            "name": "VASPInputDataManager"
-                        }
-                    ],
-                    "executableName": "vasp",
-                    "name": "POSCAR",
-                    "rendered": "Silicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "vasp",
+                        "content": "{{ input.POSCAR }}\n",
+                        "contextProviders": [
+                            {
+                                "name": "VASPInputDataManager"
+                            }
+                        ],
+                        "executableName": "vasp",
+                        "name": "POSCAR",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
-            ]
+            ],
+            "context": [],
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

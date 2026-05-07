@@ -13,11 +13,7 @@
             "subtype": "us",
             "data": {}
         },
-        "functional": {
-            "slug": "pbe"
-        },
-        "refiners": [],
-        "modifiers": []
+        "functional": "pbe"
     },
     "units": [
         {
@@ -33,6 +29,9 @@
             "flowchartId": "8db9af08-d935-57a0-a824-e7db6d936de8",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
                 "isUsingMaterial": true,
                 "name": "espresso",
@@ -45,14 +44,15 @@
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "monitors": [
-                    "standard_output"
-                ],
+                "applicationName": "espresso",
                 "name": "ph.x",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
             "flavor": {
+                "preProcessors": [],
+                "postProcessors": [],
+                "results": [],
                 "applicationName": "espresso",
                 "executableName": "ph.x",
                 "input": [
@@ -61,31 +61,37 @@
                     }
                 ],
                 "monitors": [
-                    "standard_output"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
-                "results": [],
                 "name": "ph_single_irr_qpt",
                 "schemaVersion": "2022.8.16",
                 "isDefault": false
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "espresso",
-                    "content": "&INPUTPH\n    tr2_ph = 1.0d-18\n    ldisp = .true.\n    {% raw %}\n    start_q = {{MAP_DATA.qpoint}}\n    last_q = {{MAP_DATA.qpoint}}\n    start_irr = {{MAP_DATA.irr}}\n    last_irr= {{MAP_DATA.irr}}\n    {% endraw %}\n    recover = .true.\n    fildyn = 'dyn'\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_SCRATCH_DIR }}/outdir'{% endraw %}\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
-                    "contextProviders": [
-                        {
-                            "name": "QGridFormDataManager"
-                        }
-                    ],
-                    "executableName": "ph.x",
-                    "name": "ph_single_irr_qpt.in",
-                    "rendered": "&INPUTPH\n    tr2_ph = 1.0d-18\n    ldisp = .true.\n    \n    start_q = {{MAP_DATA.qpoint}}\n    last_q = {{MAP_DATA.qpoint}}\n    start_irr = {{MAP_DATA.irr}}\n    last_irr= {{MAP_DATA.irr}}\n    \n    recover = .true.\n    fildyn = 'dyn'\n    prefix = '__prefix__'\n    outdir = '{{ JOB_SCRATCH_DIR }}/outdir'\n    nq1 = 1\n    nq2 = 1\n    nq3 = 1\n    \n/\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "espresso",
+                        "content": "&INPUTPH\n    tr2_ph = 1.0d-18\n    ldisp = .true.\n    {% raw %}\n    start_q = {{MAP_DATA.qpoint}}\n    last_q = {{MAP_DATA.qpoint}}\n    start_irr = {{MAP_DATA.irr}}\n    last_irr= {{MAP_DATA.irr}}\n    {% endraw %}\n    recover = .true.\n    fildyn = 'dyn'\n    prefix = '__prefix__'\n    outdir = {% raw %}'{{ JOB_SCRATCH_DIR }}/outdir'{% endraw %}\n    {% for d in qgrid.dimensions -%}\n    nq{{loop.index}} = {{d}}\n    {% endfor %}\n/\n",
+                        "contextProviders": [
+                            {
+                                "name": "QGridFormDataManager"
+                            }
+                        ],
+                        "executableName": "ph.x",
+                        "name": "ph_single_irr_qpt.in",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
-            ]
+            ],
+            "context": [],
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

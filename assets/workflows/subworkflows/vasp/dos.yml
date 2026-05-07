@@ -13,6 +13,6 @@ units:
       name: vasp
     functions:
       addResults:
-        - density_of_states
+        - name: density_of_states
       head: true
     type: executionBuilder
