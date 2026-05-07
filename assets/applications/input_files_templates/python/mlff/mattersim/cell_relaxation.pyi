@@ -16,7 +16,7 @@
 import os
 import torch
 from mat3ra.made.tools.convert import to_ase
-from utils import get_material_from_context_variable, save_structure_comparison_png
+from utils import get_material_from_context_variable, save_structure_png
 from mattersim.forcefield.potential import MatterSimCalculator
 from mattersim.applications.relax import Relaxer
 
@@ -63,5 +63,5 @@ relaxed_structure.write("relaxed_structure.cif")
 relaxed_structure.write("relaxed_structure.poscar")
 
 # output filenames are hardcoded to display the structures in the web app
-save_structure_comparison_png(initial_structure, "initial_structure.png")
-save_structure_comparison_png(relaxed_structure, "relaxed_structure.png")
+save_structure_png(initial_structure, "initial_structure.png")
+save_structure_png(relaxed_structure, "relaxed_structure.png")

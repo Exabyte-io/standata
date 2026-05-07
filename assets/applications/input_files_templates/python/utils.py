@@ -16,13 +16,31 @@ from ase.data import covalent_radii
 from ase.visualize.plot import plot_atoms
 
 
-# set material from the job context via io unit
 def get_material_from_context_variable() -> dict:
+    '''Return the job's input material as a plain Python `dict`.
+
+    `tojson` is substituted by Jinja2 at job submission; `{% raw %}` shields it
+    from the Standata build's Nunjucks pass, `r"""..."""` keeps Python from
+    re-parsing the JSON's backslashes, and `json.loads` converts JSON `true`/
+    `false`/`null` to Python.
+    '''
     return json.loads(r"""{% raw %}{{ MATERIAL | tojson }}{% endraw %}""")
 
 
-# save a comparison plot of the initial and final structures
-def save_structure_comparison_png(atoms, filename):
+def save_structure_png(atoms, filename):
+    """Render an ASE `Atoms` object to a PNG with annotated lattice info.
+
+    The unit cell is shown in mode `2` (all twelve edges drawn).
+
+    Parameters
+    ----------
+    atoms : ase.Atoms
+        Structure to visualize. Must have a defined cell for the lattice
+        caption to be meaningful.
+    filename : str | os.PathLike
+        Output path for the rendered PNG. Saved at 150 dpi with a tight
+        bounding box.
+    """
     fig, ax = plt.subplots(figsize=(8, 8))
 
     # Use smaller radii for atoms visualization
