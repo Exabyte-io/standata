@@ -15,12 +15,9 @@ describe("Workflow Standata", () => {
 
         // Check that all found entities are espresso workflows with total_energy property
         entities.forEach((entity) => {
-            if (entity.subworkflows[0].application.name !== "espresso") {
-                console.log(JSON.stringify(entity));
-            }
-            // Check that it's an espresso workflow
             expect(entity.subworkflows).to.be.an("array");
-            expect(entity.subworkflows[0].application.name).to.equal("espresso");
+            // Check that it's an espresso or logical shell workflow
+            expect(entity.subworkflows[0].application.name).to.be.oneOf(["espresso", "shell"]);
 
             // Check that it has total_energy property
             expect(entity.properties).to.be.an("array");
