@@ -19,6 +19,7 @@ categories:
     - reaction_energy_barrier
     - reaction_energy_profile
     - stress_tensor
+    - surface_energy
     - thermal_correction_to_energy
     - thermal_correction_to_enthalpy
     - total_energy
@@ -353,6 +354,7 @@ entities:
       - fermi_energy
       - pressure
       - stress_tensor
+      - surface_energy
       - total_energy
       - total_energy_contributions
       - total_force
@@ -473,6 +475,18 @@ entities:
   - filename: shell/hello_world.json
     categories:
       - shell
+  - filename: shell/utils/get_e_bulk.json
+    categories:
+      - shell
+  - filename: shell/utils/get_material_by_id.json
+    categories:
+      - shell
+  - filename: shell/utils/resolve_bulk_from_slab_by_build.json
+    categories:
+      - shell
+  - filename: shell/utils/resolve_bulk_from_slab_by_bulk_id.json
+    categories:
+      - shell
   - filename: vasp/band_gap.json
     categories:
       - atomic_forces
@@ -567,6 +581,7 @@ entities:
       - fermi_energy
       - pressure
       - stress_tensor
+      - surface_energy
       - total_energy
       - total_energy_contributions
       - total_force
