@@ -13,26 +13,50 @@
 #                                                                  #
 # ---------------------------------------------------------------- #
 
+import os
+import shutil
+from pathlib import Path
+import numpy as np
 import torch
-from ase.units import GPa
 from mat3ra.made.tools.convert import to_ase
-from mattersim.forcefield import MatterSimCalculator
-from munch import Munch
+from utils import get_material_from_context_variable
+from mattersim.forcefield.potential import MatterSimCalculator
+from mattersim.applications.phonon import PhononWorkflow
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
+
+if torch.cuda.is_available():
+    device = "cuda"
+    os.environ["PYTORCH_KERNEL_CACHE_PATH"] = os.path.expanduser("~/pytorch_kernel_cache")
+    os.makedirs(os.environ["PYTORCH_KERNEL_CACHE_PATH"], exist_ok=True)
+else:
+    device = "cpu"
 print(f"Running MatterSim on {device}")
 
 # this way material is obtained from the job context
-material_json = {% raw %}{{ MATERIAL }}{% endraw %}
-material = to_ase(dict(material_json))
+ase_atoms = to_ase(get_material_from_context_variable())
 
 # alternatively, material can be defined via ase, e.g.:
 # from ase.build import bulk
-# material = bulk("Si", "diamond", a=5.43)
+# ase_atoms = bulk("Si", "diamond", a=5.43)
 
-material.calc = MatterSimCalculator(device=device)
-print(f"Energy (eV)                 = {material.get_potential_energy()}")
-print(f"Energy per atom (eV/atom)   = {material.get_potential_energy()/len(material)}")
-print(f"Forces of first atom (eV/A) = {material.get_forces()[0]}")
-print(f"Stress[0][0] (eV/A^3)       = {material.get_stress(voigt=False)[0][0]}")
-print(f"Stress[0][0] (GPa)          = {material.get_stress(voigt=False)[0][0] / GPa}")
+ase_atoms.calc = MatterSimCalculator(device=device)
+
+# Configure the Phonon Workflow
+work_dir = "./"
+
+ph = PhononWorkflow(
+    atoms=ase_atoms,
+    find_prim = False,
+    work_dir = work_dir,
+    amplitude = 0.01,
+    supercell_matrix = np.diag([4, 4, 4]),
+)
+
+has_imag, phonons = ph.run()
+print(f"Has imaginary phonon: {has_imag}")
+
+# Files: work_dir/Si2_phonon_dos.png -> ./phonon_dos.png
+# output filenames are hardcoded to display the results in the web app
+for f in Path(work_dir).glob("*_phonon_*.png"):
+    new_name = f.name.split('_', 1)[1]
+    shutil.copy2(f, new_name)
