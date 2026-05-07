@@ -17,14 +17,15 @@ from ase.visualize.plot import plot_atoms
 
 
 def get_material_from_context_variable() -> dict:
-    '''Return the job's input material as a plain Python `dict`.
+    """Return the job's input material as a plain Python `dict`.
 
-    `tojson` is substituted by Jinja2 at job submission; `{% raw %}` shields it
-    from the Standata build's Nunjucks pass, `r...` keeps Python from
-    re-parsing the JSON's backslashes, and `json.loads` converts JSON `true`/
-    `false`/`null` to Python.
-    '''
-    return json.loads(r'''{% raw %}{{ MATERIAL | tojson }}{% endraw %}''')
+    The MATERIAL Jinja2 expression below is substituted by rupy at job
+    submission; the surrounding raw markers shield it from the Standata
+    build's Nunjucks pass, the raw triple-quoted Python string keeps Python
+    from re-parsing the JSON's backslashes, and `json.loads` converts JSON
+    true/false/null to Python.
+    """
+    return json.loads(r"""{% raw %}{{ MATERIAL | tojson }}{% endraw %}""")
 
 
 def save_structure_png(atoms, filename):
