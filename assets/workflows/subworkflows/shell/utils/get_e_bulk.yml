@@ -1,3 +1,6 @@
+# This subworkflow is used to get the bulk total energy for a given bulk material and assign to E_BULK
+# It assumes that the bulk total energy has already been calculated and uploaded as a refined property
+# BULK is the material structure from the platform for which the energy was calculated
 application:
   name: shell
 method:
@@ -16,6 +19,7 @@ units:
         - endpoint: refined-properties
           endpoint_options:
             params:
+#             `APP` is used as a placeholder meant to be replaced by an app shortname in the workflow that uses this
               query: "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'APP:'}}"
               projection: "{'sort': {'precision.value': -1}, 'limit': 1}"
           name: DATA
