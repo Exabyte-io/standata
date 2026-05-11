@@ -105,6 +105,15 @@ export default class ApplicationRegistry {
         });
     }
 
+    getDefaultFlavor(
+        application: Pick<ApplicationSchema, "name" | "version">,
+        executable: Pick<ExecutableSchema, "name">,
+    ) {
+        const flavors = this.getFlavorsByApplicationExecutable(application, executable);
+
+        return flavors.find((flavor) => flavor.isDefault) || flavors[0];
+    }
+
     getInput(
         application: Pick<ApplicationSchema, "name" | "version">,
         flavor: FlavorSchema,

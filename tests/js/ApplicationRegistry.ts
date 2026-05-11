@@ -17,7 +17,7 @@ describe("ApplicationRegistry", () => {
             const apps = driver.getApplications();
             const expected = apps.find((a) => a.isDefault);
             expect(standata.getDefaultApplication()).to.deep.equal(expected);
-            expect(expected).to.exist;
+            expect(expected).to.not.equal(undefined);
         });
 
         it("getExecutablesByApplication filters by application name and satisfies applicationVersion range", () => {
@@ -49,20 +49,70 @@ describe("ApplicationRegistry", () => {
             expect(flavors75.some((f) => f.name === "pw_scf_dft_u")).to.equal(true);
         });
 
+        it("getDefaultFlavor returns defaults for selectable Espresso executables", () => {
+            const espresso63 = { name: "espresso" as const, version: "6.3" };
+            const cases = [
+                { executableName: "pp.x", flavorName: "pp_electrostatic_potential" },
+                { executableName: "average.x", flavorName: "average" },
+            ] as const;
+
+            cases.forEach(({ executableName, flavorName }) => {
+                const flavor = standata.getDefaultFlavor(espresso63, {
+                    name: executableName,
+                });
+
+                expect(flavor?.name).to.equal(flavorName);
+            });
+        });
+
+        it("getDefaultFlavor falls back to the first matching flavor when none is default", () => {
+            const firstFlavor: FlavorSchema = {
+                applicationName: "test-app",
+                applicationVersion: "*",
+                executableName: "test-exe",
+                input: [],
+                isDefault: false,
+                monitors: [],
+                name: "first-flavor",
+                postProcessors: [],
+                preProcessors: [],
+                results: [],
+            };
+            const secondFlavor: FlavorSchema = {
+                ...firstFlavor,
+                name: "second-flavor",
+            };
+
+            const mockDriver: ApplicationDriver = {
+                getApplications: () => [],
+                getTemplates: () => [],
+                getFlavors: () => [firstFlavor, secondFlavor],
+                getExecutables: () => [],
+            };
+
+            const registry = new ApplicationRegistry(mockDriver);
+            const flavor = registry.getDefaultFlavor(
+                { name: "test-app", version: "1.0.0" },
+                { name: "test-exe" },
+            );
+
+            expect(flavor?.name).to.equal("first-flavor");
+        });
+
         it("getTemplates returns the driver template list", () => {
             expect(standata.getTemplates()).to.equal(driver.getTemplates());
         });
     });
 
     describe("driver wiring", () => {
-        let previousDriver: ApplicationDriver | undefined;
+        let previousDriver: ApplicationDriver;
 
         beforeEach(() => {
             previousDriver = ApplicationRegistry.driver;
         });
 
         afterEach(() => {
-            ApplicationRegistry.driver = previousDriver!;
+            ApplicationRegistry.driver = previousDriver;
         });
 
         it("constructor uses ApplicationRegistry.driver when no instance driver is passed", () => {

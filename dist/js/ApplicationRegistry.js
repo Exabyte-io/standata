@@ -63,6 +63,10 @@ class ApplicationRegistry {
                 flavor.executableName === executable.name);
         });
     }
+    getDefaultFlavor(application, executable) {
+        const flavors = this.getFlavorsByApplicationExecutable(application, executable);
+        return flavors.find((flavor) => flavor.isDefault) || flavors[0];
+    }
     getInput(application, flavor) {
         const execName = flavor.executableName;
         return flavor.input.map((input) => {
