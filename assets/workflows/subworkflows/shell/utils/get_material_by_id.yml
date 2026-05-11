@@ -13,18 +13,19 @@ units:
       subtype: input
       source: api
       input:
-        - endpoint: materials
+        - type: api
+          endpoint: materials
           endpoint_options:
             params:
               query: "{'_id': MATERIAL_ID}"
-              projection: "{}"
+              projection: '{}'
           name: DATA
   - type: assignment
     config:
       name: assign-material
       flowchartId: assign-material
       operand: MATERIAL
-      value: "DATA[0] if len(DATA) == 1 else None"
+      value: 'DATA[0] if len(DATA) == 1 else None'
       input:
         - name: DATA
           scope: io-material

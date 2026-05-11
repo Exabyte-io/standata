@@ -1,7 +1,6 @@
+import serverUtils from "@mat3ra/utils/server";
 import fs from "fs";
 import path from "path";
-
-import serverUtils from "@mat3ra/utils/server";
 
 import { BUILD_CONFIG } from "../../build-config";
 
@@ -31,4 +30,3 @@ executable_flavor_map_by_application_data = json.loads(r'''${JSON.stringify(cont
 fs.writeFileSync(targetPyPath, pyContent, "utf8");
 // eslint-disable-next-line no-console
 console.log(`Written Python Module to "${targetPyPath}"`);
-

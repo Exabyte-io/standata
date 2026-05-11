@@ -17,12 +17,12 @@ units:
       name: init-bulk
       flowchartId: init-bulk
       operand: BULK
-      value: "None"
+      value: 'None'
   - type: condition
     config:
       name: check-bulk-id
       flowchartId: check-bulk-id
-      statement: "BULK_ID is None"
+      statement: 'BULK_ID is None'
       then: done
       else: io-bulk
   - type: io
@@ -32,18 +32,19 @@ units:
       subtype: input
       source: api
       input:
-        - endpoint: materials
+        - type: api
+          endpoint: materials
           endpoint_options:
             params:
               query: "{'_id': BULK_ID}"
-              projection: "{}"
+              projection: '{}'
           name: DATA
   - type: assignment
     config:
       name: assign-bulk
       flowchartId: assign-bulk
       operand: BULK
-      value: "DATA[0] if DATA else None"
+      value: 'DATA[0] if DATA else None'
       input:
         - name: DATA
           scope: io-bulk
@@ -52,7 +53,7 @@ units:
       name: done
       flowchartId: done
       operand: BULK
-      value: "BULK"
+      value: 'BULK'
       input:
         - name: BULK
           scope: global

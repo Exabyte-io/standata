@@ -16,10 +16,11 @@ units:
       subtype: input
       source: api
       input:
-        - endpoint: refined-properties
+        - type: api
+          endpoint: refined-properties
           endpoint_options:
             params:
-#             `APP` is used as a placeholder meant to be replaced by an app shortname in the workflow yaml that uses it
+              #             `APP` is used as a placeholder meant to be replaced by an app shortname in the workflow yaml that uses it
               query: "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'APP:'}}"
               projection: "{'sort': {'precision.value': -1}, 'limit': 1}"
           name: DATA
@@ -28,7 +29,7 @@ units:
       name: assign-e-bulk
       flowchartId: assign-e-bulk
       operand: E_BULK
-      value: "DATA[0].data.value if DATA else None"
+      value: 'DATA[0].data.value if DATA else None'
       input:
         - name: DATA
           scope: io-e-bulk
@@ -36,7 +37,7 @@ units:
     config:
       name: assert-e-bulk
       flowchartId: assert-e-bulk
-      statement: "E_BULK != None"
+      statement: 'E_BULK != None'
       errorMessage: >-
         Bulk total energy does not exist for the resolved bulk material. Run a
         bulk total energy workflow first.

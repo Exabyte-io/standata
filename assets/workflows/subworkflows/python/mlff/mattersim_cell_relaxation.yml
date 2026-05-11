@@ -13,17 +13,18 @@ units:
       source: api
       flowchartId: io-material-flowchart-id-ac93759e
       input:
-        - endpoint: materials
+        - type: api
+          endpoint: materials
           endpoint_options:
             params:
               query: "{'_id': MATERIAL_ID}"
-              projection: "{}"
+              projection: '{}'
           name: DATA
     type: io
   - config:
       name: assign-material
       operand: MATERIAL
-      value: "DATA[0]"
+      value: 'DATA[0]'
       input:
         - name: DATA
           scope: io-material-flowchart-id-ac93759e
@@ -36,8 +37,8 @@ units:
     attributes:
       results:
         - name: file_content
-          basename: "initial_structure.png"
-          filetype: "image"
+          basename: 'initial_structure.png'
+          filetype: 'image'
         - name: file_content
-          basename: "relaxed_structure.png"
-          filetype: "image"
+          basename: 'relaxed_structure.png'
+          filetype: 'image'

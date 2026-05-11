@@ -43,34 +43,29 @@
             "statusTrack": [],
             "tags": [],
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
                 "isLicensed": true,
                 "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
-                "isDefault": true,
                 "applicationName": "vasp",
+                "applicationVersion": "*",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
-                "preProcessors": [],
-                "postProcessors": [],
-                "results": [
-                    {
-                        "name": "reaction_energy_barrier"
-                    },
-                    {
-                        "name": "reaction_energy_profile"
-                    }
-                ],
                 "applicationName": "vasp",
+                "applicationVersion": "*",
                 "executableName": "vasp",
                 "input": [
                     {
@@ -82,19 +77,30 @@
                         "templateName": "KPOINTS"
                     }
                 ],
+                "isDefault": false,
                 "monitors": [
                     {
                         "name": "standard_output"
                     }
                 ],
                 "name": "vasp_neb",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
+                "postProcessors": [],
+                "preProcessors": [],
+                "results": [
+                    {
+                        "name": "reaction_energy_barrier"
+                    },
+                    {
+                        "name": "reaction_energy_profile"
+                    }
+                ],
+                "schemaVersion": "2022.8.16"
             },
             "input": [
                 {
                     "template": {
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
                         "content": "ISTART = 0\nIBRION = 1\nEDIFFG = -0.001\nENCUT = 500\nNELM = 100\nNSW = 100\nIMAGES = {{ input.INTERMEDIATE_IMAGES.length or neb.nImages }}\nSPRING = -5\nISPIN = 2\n",
                         "contextProviders": [
                             {
@@ -114,6 +120,7 @@
                 {
                     "template": {
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
                         "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
                         "contextProviders": [
                             {

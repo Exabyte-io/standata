@@ -7,13 +7,15 @@
             "_id": "542f7e87-cf65-5579-952c-ddd9611ac558",
             "name": "Variable-cell Relaxation",
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
                 "isLicensed": true,
                 "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
@@ -86,29 +88,63 @@
                     "statusTrack": [],
                     "tags": [],
                     "application": {
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
+                        "isDefaultVersion": true,
                         "isLicensed": true,
                         "isUsingMaterial": true,
                         "name": "vasp",
                         "shortName": "vasp",
                         "summary": "Vienna Ab-initio Simulation Package",
-                        "build": "GNU",
-                        "isDefault": true,
                         "version": "5.4.4",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
-                        "isDefault": true,
                         "applicationName": "vasp",
+                        "applicationVersion": "*",
+                        "hasAdvancedComputeOptions": false,
+                        "isDefault": true,
                         "name": "vasp",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
-                        "preProcessors": [],
+                        "applicationName": "vasp",
+                        "applicationVersion": "*",
+                        "executableName": "vasp",
+                        "input": [
+                            {
+                                "name": "INCAR",
+                                "templateName": "INCAR_VC_RELAX"
+                            },
+                            {
+                                "name": "KPOINTS",
+                                "templateName": "KPOINTS"
+                            },
+                            {
+                                "name": "POSCAR",
+                                "templateName": "POSCAR"
+                            }
+                        ],
+                        "isDefault": false,
+                        "monitors": [
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            },
+                            {
+                                "name": "convergence_ionic"
+                            }
+                        ],
+                        "name": "vasp_vc_relax",
                         "postProcessors": [
                             {
                                 "name": "prepare_restart"
                             }
                         ],
+                        "preProcessors": [],
                         "results": [
                             {
                                 "name": "total_energy"
@@ -132,41 +168,13 @@
                                 "name": "final_structure"
                             }
                         ],
-                        "applicationName": "vasp",
-                        "executableName": "vasp",
-                        "input": [
-                            {
-                                "name": "INCAR",
-                                "templateName": "INCAR_VC_RELAX"
-                            },
-                            {
-                                "name": "KPOINTS",
-                                "templateName": "KPOINTS"
-                            },
-                            {
-                                "name": "POSCAR",
-                                "templateName": "POSCAR"
-                            }
-                        ],
-                        "monitors": [
-                            {
-                                "name": "standard_output"
-                            },
-                            {
-                                "name": "convergence_electronic"
-                            },
-                            {
-                                "name": "convergence_ionic"
-                            }
-                        ],
-                        "name": "vasp_vc_relax",
-                        "schemaVersion": "2022.8.16",
-                        "isDefault": false
+                        "schemaVersion": "2022.8.16"
                     },
                     "input": [
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "ISMEAR = 0\nSIGMA = 0.05\nISIF = 3\nIBRION = 2\nNSW = 300\nLWAVE = .FALSE.\nLCHARG = .FALSE.\n",
                                 "contextProviders": [
                                     {
@@ -183,6 +191,7 @@
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
                                 "contextProviders": [
                                     {
@@ -202,6 +211,7 @@
                         {
                             "template": {
                                 "applicationName": "vasp",
+                                "applicationVersion": "*",
                                 "content": "{{ input.POSCAR }}\n",
                                 "contextProviders": [
                                     {
@@ -253,7 +263,6 @@
     ],
     "workflows": [],
     "schemaVersion": "2022.8.16",
-    "isDefault": false,
     "tags": [
         "variable-cell_relaxation"
     ],

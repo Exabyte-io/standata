@@ -159,10 +159,27 @@ function createSubworkflowFromUnitData(
     subworkflows: SubworkflowsTree,
     cache?: string[],
 ): SubworkflowSchema {
-    const subworkflowData = subworkflows[appName]?.[unitData.name];
+    /**
+     * Pick `(targetAppName, unitName)` so we can load `subworkflows[targetAppName][unitName]`.
+     * `SubworkflowsTree` is keyed by application folder, then by subworkflow id (the YAML stem),
+     * not by full nested paths—middle segments (e.g. `utils` in `shell/utils/get_material_by_id`)
+     * match asset directories but are ignored for lookup; only the last `/`-separated segment is
+     * `unitName`.
+     *
+     * If `unitData.name` has no `/`, it refers to a subworkflow in the same app as the enclosing
+     * workflow: use `appName` passed from `createWorkflowFromWorkflowData`.
+     *
+     * If it contains `/`, the first segment names another app's subtree (e.g. a `vasp/surface_energy`
+     * workflow can reference `shell/utils/get_material_by_id`, where `shell` selects `subworkflows.shell`
+     * and `get_material_by_id` is the unit key).
+     */
+    const names = unitData.name.split("/");
+    const targetAppName = names.length > 1 ? names[0] : appName;
+    const unitName = names[names.length - 1];
+    const subworkflowData = subworkflows[targetAppName]?.[unitName];
 
     if (!subworkflowData) {
-        throw new Error(`Subworkflow ${unitData.name} not found in ${appName}!`);
+        throw new Error(`Subworkflow ${unitName} not found in ${targetAppName}!`);
     }
 
     const patchedSubworkflowData = patchSubworkflowData(subworkflowData, unitData);
