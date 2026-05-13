@@ -25,7 +25,7 @@ def get_material_from_context_variable() -> dict:
     from re-parsing the JSON's backslashes, and `json.loads` converts JSON
     true/false/null to Python.
     """
-    return json.loads(r"""{% raw %}{{ MATERIAL | tojson }}{% endraw %}""")
+    return json.loads(r"""{% raw %}{{ MATERIAL | default({}) | tojson }}{% endraw %}""")
 
 
 def save_structure_png(atoms, filename):
