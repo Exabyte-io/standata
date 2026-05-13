@@ -23,7 +23,7 @@ from mattersim.applications.relax import Relaxer
 
 # calculation parameters
 MAX_STEPS = 500  # Maximum number of steps to relax for
-FMAX = 0.01  # Force threshold
+FMAX = 0.05  # Force threshold
 CELL_RELAXATION_TYPE = "fixed"  # or "variable"
 OPTIMIZER_TYPE = "BFGS"  # or "FIRE"
 
@@ -41,6 +41,7 @@ ase_atoms = to_ase(get_material_from_context_variable())
 # alternatively, material can be defined via ase, e.g.:
 # from ase.build import bulk
 # ase_atoms = bulk("Si", "diamond", a=5.43)
+# ase_atoms = bulk("GaN", "wurtzite", a=3.189, c=5.185)
 
 ase_atoms.calc = MatterSimCalculator(device=device)
 initial_structure = ase_atoms.copy()  # make deep copy
