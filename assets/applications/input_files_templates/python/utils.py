@@ -30,6 +30,17 @@ def get_material_from_context_variable() -> dict:
     return json.loads(r"""{% raw %}{{ MATERIAL | default({}) | tojson }}{% endraw %}""")
 
 
+def _fmt_coord(v: float, sig_digits: int = 4, zero_below: float = 1e-4) -> str:
+    """Format `v` with `sig_digits` significant digits; collapse near-zero to '0'.
+
+    Avoids the scientific notation that `.4g` would otherwise produce for very
+    small magnitudes (e.g. numerical-noise coordinates near the origin).
+    """
+    if abs(v) < zero_below:
+        return "0"
+    return f"{v:.{sig_digits}g}"
+
+
 def save_structure_png(atoms, filename):
     """Render an ASE `Atoms` object to a PNG with annotated lattice info.
 
@@ -67,26 +78,21 @@ def save_structure_png(atoms, filename):
 
     projected_xy = pv.positions[: len(atoms), :2]
 
-    for i, (x, y) in enumerate(projected_xy, start=1):
+    for (x, y), a in zip(projected_xy, atoms):
+        label = f"{a.symbol} ({_fmt_coord(a.position[0])}, {_fmt_coord(a.position[1])}, {_fmt_coord(a.position[2])})"
         ax.text(
             x,
             y,
-            str(i),
-            fontsize=10,
-            ha="left",
-            va="center",
+            label,
+            fontsize=9,
+            ha="center",
+            va="bottom",
             bbox=dict(facecolor="white", alpha=0.7, edgecolor="none", pad=1),
         )
 
-    # Add atom positions and lattice vectors below the plot
+    # Add lattice vectors below the plot
     cell = atoms.get_cell()
-    atom_lines = "\n".join(
-        f"{i:>2}: {a.symbol:<2} ({a.position[0]:8.4f}, {a.position[1]:8.4f}, {a.position[2]:8.4f})"
-        for i, a in enumerate(atoms, start=1)
-    )
     caption_text = (
-        f"Atom Positions:\n"
-        f"{atom_lines}\n\n"
         f"Lattice Vectors:\n"
         f"a: [{cell[0,0]:.4f}, {cell[0,1]:.4f}, {cell[0,2]:.4f}]\n"
         f"b: [{cell[1,0]:.4f}, {cell[1,1]:.4f}, {cell[1,2]:.4f}]\n"
@@ -101,6 +107,7 @@ def save_structure_png(atoms, filename):
         fontsize=10,
         ha="center",
         va="top",
+        ma="left",
         family="monospace",
         bbox=dict(facecolor="ghostwhite", alpha=0.8, edgecolor="gray", boxstyle="round"),
     )
