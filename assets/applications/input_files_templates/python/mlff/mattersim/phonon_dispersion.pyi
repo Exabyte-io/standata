@@ -38,6 +38,7 @@ ase_atoms = to_ase(get_material_from_context_variable())
 # alternatively, material can be defined via ase, e.g.:
 # from ase.build import bulk
 # ase_atoms = bulk("Si", "diamond", a=5.43)
+# ase_atoms = bulk("GaN", "wurtzite", a=3.189, c=5.185)
 
 ase_atoms.calc = MatterSimCalculator(device=device)
 
