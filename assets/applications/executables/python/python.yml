@@ -395,12 +395,12 @@ flavors:
     monitors:
       - standard_output
     results:
-        - name: file_content
-          basename: "initial_structure.png"
-          filetype: "image"
-        - name: file_content
-          basename: "relaxed_structure.png"
-          filetype: "image"
+      - name: file_content
+        basename: "initial_structure.png"
+        filetype: "image"
+      - name: file_content
+        basename: "relaxed_structure.png"
+        filetype: "image"
     applicationName: python
     executableName: python
 
@@ -415,11 +415,11 @@ flavors:
     monitors:
       - standard_output
     results:
-        - name: file_content
-          basename: "phonon_band.png"
-          filetype: "image"
-        - name: file_content
-          basename: "phonon_dos.png"
-          filetype: "image"
+      - name: file_content
+        basename: "phonon_band.png"
+        filetype: "image"
+      - name: file_content
+        basename: "phonon_dos.png"
+        filetype: "image"
     applicationName: python
     executableName: python
