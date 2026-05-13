@@ -12,7 +12,9 @@
 
 import json
 import matplotlib.pyplot as plt
+import numpy as np
 from ase.data import covalent_radii
+from ase.io.utils import PlottingVariables
 from ase.visualize.plot import plot_atoms
 
 
@@ -42,37 +44,49 @@ def save_structure_png(atoms, filename):
         Output path for the rendered PNG. Saved at 150 dpi with a tight
         bounding box.
     """
+    rotation = "15x,45y,15z"
+    show_unit_cell = 2
+
     fig, ax = plt.subplots(figsize=(8, 8))
 
     # Use smaller radii for atoms visualization
-    current_radii = [covalent_radii[a.number] * 0.5 for a in atoms]
+    current_radii = np.array([covalent_radii[a.number] * 0.5 for a in atoms])
 
-    # Plot atoms
-    plot_atoms(atoms, ax, radii=current_radii, rotation="15x,45y,15z", show_unit_cell=2)
+    plot_atoms(atoms, ax, radii=current_radii, rotation=rotation, show_unit_cell=show_unit_cell)
 
-    # View settings
     ax.set_axis_off()
-    ax.autoscale_view()
 
-    # Add atom labels
-    for a in atoms:
-        label = f"{a.symbol} ({a.position[0]:.3f}, {a.position[1]:.3f}, {a.position[2]:.3f})"
-        x_offset = a.position[0] + 1.0
-        y_offset = a.position[1] + 0.5
+    # Replicate plot_atoms' internal rotation + offset + scale
+    pv = PlottingVariables(
+        atoms,
+        scale=1.0,
+        rotation=rotation,
+        show_unit_cell=show_unit_cell,
+        radii=current_radii,
+    )
 
+    projected_xy = pv.positions[: len(atoms), :2]
+
+    for i, (x, y) in enumerate(projected_xy, start=1):
         ax.text(
-            x_offset,
-            y_offset,
-            label,
+            x,
+            y,
+            str(i),
             fontsize=10,
             ha="left",
-            va="bottom",
+            va="center",
             bbox=dict(facecolor="white", alpha=0.7, edgecolor="none", pad=1),
         )
 
-    # Add Lattice Vectors below the plot
+    # Add atom positions and lattice vectors below the plot
     cell = atoms.get_cell()
-    lattice_text = (
+    atom_lines = "\n".join(
+        f"{i:>2}: {a.symbol:<2} ({a.position[0]:8.4f}, {a.position[1]:8.4f}, {a.position[2]:8.4f})"
+        for i, a in enumerate(atoms, start=1)
+    )
+    caption_text = (
+        f"Atom Positions:\n"
+        f"{atom_lines}\n\n"
         f"Lattice Vectors:\n"
         f"a: [{cell[0,0]:.4f}, {cell[0,1]:.4f}, {cell[0,2]:.4f}]\n"
         f"b: [{cell[1,0]:.4f}, {cell[1,1]:.4f}, {cell[1,2]:.4f}]\n"
@@ -82,7 +96,7 @@ def save_structure_png(atoms, filename):
     ax.text(
         0.5,
         -0.05,
-        lattice_text,
+        caption_text,
         transform=ax.transAxes,
         fontsize=10,
         ha="center",
