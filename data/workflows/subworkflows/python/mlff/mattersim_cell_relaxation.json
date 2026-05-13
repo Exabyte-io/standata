@@ -85,14 +85,14 @@
             "head": false,
             "results": [
                 {
-                    "name": "file_content",
                     "basename": "initial_structure.png",
-                    "filetype": "image"
+                    "filetype": "image",
+                    "name": "file_content"
                 },
                 {
-                    "name": "file_content",
                     "basename": "relaxed_structure.png",
-                    "filetype": "image"
+                    "filetype": "image",
+                    "name": "file_content"
                 }
             ],
             "monitors": [
@@ -142,7 +142,16 @@
                     "standard_output"
                 ],
                 "results": [
-                    "file_content"
+                    {
+                        "basename": "initial_structure.png",
+                        "filetype": "image",
+                        "name": "file_content"
+                    },
+                    {
+                        "basename": "relaxed_structure.png",
+                        "filetype": "image",
+                        "name": "file_content"
+                    }
                 ],
                 "name": "mlff:mattersim:cell_relaxation",
                 "schemaVersion": "2022.8.16",

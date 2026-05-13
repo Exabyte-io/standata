@@ -1128,7 +1128,11 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                             templateName: string;
                         }[];
                         monitors: string[];
-                        results: string[];
+                        results: {
+                            basename: string;
+                            filetype: string;
+                            name: string;
+                        }[];
                     };
                     "mlff:mattersim:phonon_dispersion": {
                         applicationName: string;
@@ -1138,7 +1142,11 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                             templateName: string;
                         }[];
                         monitors: string[];
-                        results: string[];
+                        results: {
+                            basename: string;
+                            filetype: string;
+                            name: string;
+                        }[];
                     };
                     "mlff:mattersim:total_energy": {
                         applicationName: string;
@@ -1148,7 +1156,11 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                             templateName: string;
                         }[];
                         monitors: string[];
-                        results: string[];
+                        results: {
+                            basename: string;
+                            filetype: string;
+                            name: string;
+                        }[];
                     };
                     plot_wavefunction: {
                         applicationName: string;

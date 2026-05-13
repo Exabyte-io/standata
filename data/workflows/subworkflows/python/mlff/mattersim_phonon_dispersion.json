@@ -85,14 +85,14 @@
             "head": false,
             "results": [
                 {
-                    "name": "file_content",
                     "basename": "phonon_band.png",
-                    "filetype": "image"
+                    "filetype": "image",
+                    "name": "file_content"
                 },
                 {
-                    "name": "file_content",
                     "basename": "phonon_dos.png",
-                    "filetype": "image"
+                    "filetype": "image",
+                    "name": "file_content"
                 }
             ],
             "monitors": [
@@ -142,7 +142,16 @@
                     "standard_output"
                 ],
                 "results": [
-                    "file_content"
+                    {
+                        "basename": "phonon_band.png",
+                        "filetype": "image",
+                        "name": "file_content"
+                    },
+                    {
+                        "basename": "phonon_dos.png",
+                        "filetype": "image",
+                        "name": "file_content"
+                    }
                 ],
                 "name": "mlff:mattersim:phonon_dispersion",
                 "schemaVersion": "2022.8.16",

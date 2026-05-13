@@ -33,11 +33,3 @@ units:
       flavorName: mlff:mattersim:phonon_dispersion
       name: mattersim_phonon_dispersion
     type: executionBuilder
-    attributes:
-      results:
-        - name: file_content
-          basename: "phonon_band.png"
-          filetype: "image"
-        - name: file_content
-          basename: "phonon_dos.png"
-          filetype: "image"

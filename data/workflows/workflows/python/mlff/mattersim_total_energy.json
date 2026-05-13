@@ -95,9 +95,9 @@
                     "head": false,
                     "results": [
                         {
-                            "name": "file_content",
                             "basename": "results.csv",
-                            "filetype": "csv"
+                            "filetype": "csv",
+                            "name": "file_content"
                         }
                     ],
                     "monitors": [
@@ -147,7 +147,11 @@
                             "standard_output"
                         ],
                         "results": [
-                            "file_content"
+                            {
+                                "basename": "results.csv",
+                                "filetype": "csv",
+                                "name": "file_content"
+                            }
                         ],
                         "name": "mlff:mattersim:total_energy",
                         "schemaVersion": "2022.8.16",
