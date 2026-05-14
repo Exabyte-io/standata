@@ -367,13 +367,59 @@ flavors:
     applicationName: python
     executableName: python
 
-  'mlff:mattersim':
+  'mlff:mattersim:total_energy':
     input:
       - name: script.py
-        templateName: mattersim.pyi
+        templateName: mattersim_total_energy.py
+      - name: utils.py
+        templateName: utils.py
       - name: requirements.txt
-        templateName: requirements_mattersim.txt
+        templateName: mattersim_requirements.txt
     monitors:
       - standard_output
+    results:
+      - name: file_content
+        basename: "results.csv"
+        filetype: "csv"
+    applicationName: python
+    executableName: python
+
+  'mlff:mattersim:cell_relaxation':
+    input:
+      - name: script.py
+        templateName: mattersim_cell_relaxation.py
+      - name: utils.py
+        templateName: utils.py
+      - name: requirements.txt
+        templateName: mattersim_requirements.txt
+    monitors:
+      - standard_output
+    results:
+      - name: file_content
+        basename: "initial_structure.png"
+        filetype: "image"
+      - name: file_content
+        basename: "relaxed_structure.png"
+        filetype: "image"
+    applicationName: python
+    executableName: python
+
+  'mlff:mattersim:phonon_dispersion':
+    input:
+      - name: script.py
+        templateName: mattersim_phonon_dispersion.py
+      - name: utils.py
+        templateName: utils.py
+      - name: requirements.txt
+        templateName: mattersim_requirements.txt
+    monitors:
+      - standard_output
+    results:
+      - name: file_content
+        basename: "phonon_band.png"
+        filetype: "image"
+      - name: file_content
+        basename: "phonon_dos.png"
+        filetype: "image"
     applicationName: python
     executableName: python

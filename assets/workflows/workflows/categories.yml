@@ -8,6 +8,7 @@ categories:
     - density_of_states
     - dielectric_tensor
     - fermi_energy
+    - file_content
     - final_structure
     - homo_energy
     - lumo_energy
@@ -18,7 +19,6 @@ categories:
     - reaction_energy_barrier
     - reaction_energy_profile
     - stress_tensor
-    - surface_energy
     - thermal_correction_to_energy
     - thermal_correction_to_enthalpy
     - total_energy
@@ -290,15 +290,7 @@ entities:
       - espresso
   - filename: espresso/surface_energy.json
     categories:
-      - atomic_forces
       - espresso
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - surface_energy
-      - total_energy
-      - total_energy_contributions
-      - total_force
   - filename: espresso/total_energy.json
     categories:
       - atomic_forces
@@ -385,8 +377,17 @@ entities:
   - filename: python/ml/regression_workflow.json
     categories:
       - python
-  - filename: python/mlff/mattersim.json
+  - filename: python/mlff/mattersim_cell_relaxation.json
     categories:
+      - file_content
+      - python
+  - filename: python/mlff/mattersim_phonon_dispersion.json
+    categories:
+      - file_content
+      - python
+  - filename: python/mlff/mattersim_total_energy.json
+    categories:
+      - file_content
       - python
   - filename: python/python_script.json
     categories:
@@ -478,14 +479,6 @@ entities:
       - vasp
   - filename: vasp/surface_energy.json
     categories:
-      - atomic_forces
-      - fermi_energy
-      - pressure
-      - stress_tensor
-      - surface_energy
-      - total_energy
-      - total_energy_contributions
-      - total_force
       - vasp
   - filename: vasp/total_energy.json
     categories:

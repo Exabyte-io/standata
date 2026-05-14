@@ -9,9 +9,9 @@ import { BaseWorkflowSubworkflowProcessor } from "./BaseWorkflowSubworkflowProce
 export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
     public static defaultCategoryKeys = ["properties", "isMultimaterial", "tags", "application"];
 
-    private subworkflowMapByApplication: Record<any, string>;
+    private subworkflowMapByApplication: Record<string, Record<string, any>>;
 
-    constructor(rootDir: string, subworkflowsMapByApplication: Record<any, string>) {
+    constructor(rootDir: string, subworkflowsMapByApplication: Record<string, Record<string, any>>) {
         super({
             rootDir,
             entityNamePlural: "workflows",
@@ -28,8 +28,43 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
     private get workflowSubworkflowMapByApplication(): { workflows: any; subworkflows: any } {
         const workflowSubworkflowMapByApplication = { workflows: {}, subworkflows: {} } as any;
         workflowSubworkflowMapByApplication.workflows = this.entityMapByApplication;
-        workflowSubworkflowMapByApplication.subworkflows = this.subworkflowMapByApplication;
+        workflowSubworkflowMapByApplication.subworkflows =
+            this.subworkflowMapWithCrossApplicationReferences;
         return workflowSubworkflowMapByApplication;
+    }
+
+    private get subworkflowMapWithCrossApplicationReferences(): Record<string, any> {
+        return Object.fromEntries(
+            Object.entries(this.subworkflowMapByApplication).map(([applicationName, subworkflows]) => [
+                applicationName,
+                {
+                    ...subworkflows,
+                    ...this.getCrossApplicationReferences(applicationName),
+                },
+            ]),
+        );
+    }
+
+    private getCrossApplicationReferences(applicationName: string): Record<string, any> {
+        const references: Record<string, any> = {};
+        const unitsToVisit = Object.values(this.entityMapByApplication[applicationName] || {}).flatMap(
+            (workflowData: any) => workflowData.units || [],
+        );
+
+        while (unitsToVisit.length) {
+            const unitData = unitsToVisit.pop();
+            unitsToVisit.push(...(unitData.units || []));
+            const [sourceApplicationName, ...pathParts] = String(unitData.name || "").split("/");
+            const pathInSource = pathParts.join("/");
+            const sourceSubworkflows = this.subworkflowMapByApplication[sourceApplicationName];
+            if (!pathInSource || sourceApplicationName === applicationName || !sourceSubworkflows) continue;
+
+            const subworkflowData = Object.values(sourceSubworkflows).find((subworkflow: any) => {
+                return subworkflow.__path__ === pathInSource;
+            });
+            if (subworkflowData) references[unitData.name] = subworkflowData;
+        }
+        return references;
     }
 
     protected buildEntityConfigs(): any[] {
