@@ -1,0 +1,354 @@
+# Valence band offset for polar interfaces via the potential lineup method with linear fitting.
+# Designed to work with 3D heterostructures where ESP shows linear gradient due to internal electric field.
+# The workflow assumes 3 structures being present:
+#   - Interface - e.g. AlN/GaN heterostructure (material index 0)
+#   - Interface Left - e.g. AlN (material index 1)
+#   - Interface Right - e.g. GaN (material index 2)
+#
+# Z-coordinate regions are automatically extracted from material structures to define
+# fitting regions for linear regression on ESP profiles.
+#
+# Relevant references:
+#   - Choudhary & Garrity, arXiv:2401.02021 (InterMat)
+#   - http://dx.doi.org/10.1103/PhysRevLett.61.734
+#   - http://dx.doi.org/10.1103/physrevb.44.5572
+
+name: Valence Band Offset (Polar)
+units:
+  # ============================================================================
+  # PHASE 1: Run all DFT calculations and extract coordinates
+  # ============================================================================
+
+  # --- INTERFACE (Material 0) ---
+  - name: average_electrostatic_potential_via_band_structure
+    type: subworkflow
+    config:
+      attributes:
+        name: BS + Avg ESP (Interface)
+    unitConfigs:
+      - index: 0
+        type: assignment
+        config:
+          attributes:
+            name: Set Material Index (Interface)
+            value: "0"
+      - index: 4
+        type: assignment
+        config:
+          attributes:
+            operand: VBM
+      - index: 7
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: average-electrostatic-potential
+      - index: 8
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: average_potential_profile
+                scope: average-electrostatic-potential
+
+  # --- LEFT (Material 1): DFT + Coordinate Extraction ---
+  - name: average_electrostatic_potential_via_band_structure
+    type: subworkflow
+    config:
+      attributes:
+        name: BS + Avg ESP (Interface Left)
+    unitConfigs:
+      - index: 0
+        type: assignment
+        config:
+          attributes:
+            name: Set Material Index (Interface Left)
+            value: "1"
+      - index: 2
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: pw-bands-calculate-band-gap-left
+      - index: 3
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: band_gaps
+                scope: pw-bands-calculate-band-gap-left
+      - index: 4
+        type: assignment
+        config:
+          attributes:
+            operand: VBM_LEFT
+      - index: 7
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: average-electrostatic-potential-left
+      - index: 8
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: average_potential_profile
+                scope: average-electrostatic-potential-left
+
+  - name: extract_slab_coordinates
+    type: subworkflow
+    config:
+      attributes:
+        name: Extract Left Coordinates
+    unitConfigs:
+      - index: 0
+        type: assignment
+        config:
+          attributes:
+            value: "1"
+      - index: 1
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: python-extract-coords-left
+      - index: 2
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: STDOUT
+                scope: python-extract-coords-left
+
+  # --- RIGHT (Material 2): DFT + Coordinate Extraction ---
+  - name: average_electrostatic_potential_via_band_structure
+    type: subworkflow
+    config:
+      attributes:
+        name: BS + Avg ESP (Interface Right)
+    unitConfigs:
+      - index: 0
+        type: assignment
+        config:
+          attributes:
+            name: Set Material Index (Interface Right)
+            value: "2"
+      - index: 2
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: pw-bands-calculate-band-gap-right
+      - index: 3
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: band_gaps
+                scope: pw-bands-calculate-band-gap-right
+      - index: 4
+        type: assignment
+        config:
+          attributes:
+            operand: VBM_RIGHT
+      - index: 7
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: average-electrostatic-potential-right
+      - index: 8
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: average_potential_profile
+                scope: average-electrostatic-potential-right
+
+  - name: extract_slab_coordinates
+    type: subworkflow
+    config:
+      attributes:
+        name: Extract Right Coordinates
+    unitConfigs:
+      - index: 0
+        type: assignment
+        config:
+          attributes:
+            value: "2"
+      - index: 1
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: python-extract-coords-right
+      - index: 2
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: STDOUT
+                scope: python-extract-coords-right
+
+  # ============================================================================
+  # PHASE 2: Fit ESP profiles (now all coordinates are available)
+  # ============================================================================
+
+  # --- INTERFACE FIT: Uses Left coords for slab1, Right coords for slab2 ---
+  - name: average_electrostatic_potential_fit_polar
+    type: subworkflow
+    config:
+      attributes:
+        name: Fit Polar ESP (Interface)
+    unitConfigs:
+      # Import average_potential_profile from Interface ESP
+      - index: 0
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: average_potential_profile
+                scope: average-electrostatic-potential
+      # Import slab1 coords from Left extraction execution unit
+      - index: 1
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: STDOUT
+                scope: python-extract-coords-left
+      # Import slab2 coords from Right extraction execution unit
+      - index: 2
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: STDOUT
+                scope: python-extract-coords-right
+      # Set interface part label
+      - index: 7
+        type: assignment
+        config:
+          attributes:
+            value: "'Interface'"
+      # Set unique flowchartId for execution
+      - index: 8
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: python-fit-esp-polar-interface
+      # Set output variable name and scope
+      - index: 9
+        type: assignment
+        config:
+          attributes:
+            operand: AVG_ESP_INTERFACE
+            input:
+              - name: STDOUT
+                scope: python-fit-esp-polar-interface
+
+  # --- LEFT STANDALONE FIT: Uses Left coords for both slabs ---
+  - name: average_electrostatic_potential_fit_polar
+    type: subworkflow
+    config:
+      attributes:
+        name: Fit Polar ESP (Interface Left)
+    unitConfigs:
+      # Import average_potential_profile from Left ESP
+      - index: 0
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: average_potential_profile
+                scope: average-electrostatic-potential-left
+      # Import slab1 coords from Left extraction (same material for both slabs)
+      - index: 1
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: STDOUT
+                scope: python-extract-coords-left
+      # Import slab2 coords from Left extraction (same material for both slabs)
+      - index: 2
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: STDOUT
+                scope: python-extract-coords-left
+      # Set interface part label
+      - index: 7
+        type: assignment
+        config:
+          attributes:
+            value: "'Left'"
+      # Set unique flowchartId for execution
+      - index: 8
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: python-fit-esp-polar-left
+      # Set output variable name and scope
+      - index: 9
+        type: assignment
+        config:
+          attributes:
+            operand: AVG_ESP_LEFT
+            input:
+              - name: STDOUT
+                scope: python-fit-esp-polar-left
+
+  # --- RIGHT STANDALONE FIT: Uses Right coords for both slabs ---
+  - name: average_electrostatic_potential_fit_polar
+    type: subworkflow
+    config:
+      attributes:
+        name: Fit Polar ESP (Interface Right)
+    unitConfigs:
+      # Import average_potential_profile from Right ESP
+      - index: 0
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: average_potential_profile
+                scope: average-electrostatic-potential-right
+      # Import slab1 coords from Right extraction (same material for both slabs)
+      - index: 1
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: STDOUT
+                scope: python-extract-coords-right
+      # Import slab2 coords from Right extraction (same material for both slabs)
+      - index: 2
+        type: assignment
+        config:
+          attributes:
+            input:
+              - name: STDOUT
+                scope: python-extract-coords-right
+      # Set interface part label
+      - index: 7
+        type: assignment
+        config:
+          attributes:
+            value: "'Right'"
+      # Set unique flowchartId for execution
+      - index: 8
+        type: executionBuilder
+        config:
+          attributes:
+            flowchartId: python-fit-esp-polar-right
+      # Set output variable name and scope
+      - index: 9
+        type: assignment
+        config:
+          attributes:
+            operand: AVG_ESP_RIGHT
+            input:
+              - name: STDOUT
+                scope: python-fit-esp-polar-right
+
+  # ============================================================================
+  # PHASE 3: Calculate final VBO
+  # ============================================================================
+  - name: valence_band_offset_calc_from_previous_esp_vbm
+    type: subworkflow

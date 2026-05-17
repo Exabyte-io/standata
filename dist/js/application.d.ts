@@ -1069,6 +1069,16 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
         python: {
             python: {
                 flavors: {
+                    "espresso:processing:fit_esp_polar": {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                        results: string[];
+                    };
                     espresso_extract_kpoints: {
                         applicationName: string;
                         executableName: string;
@@ -1090,6 +1100,15 @@ export declare class ApplicationStandata extends Standata<ApplicationVersionsMap
                         monitors: string[];
                     };
                     "generic:post_processing:plot:matplotlib": {
+                        applicationName: string;
+                        executableName: string;
+                        input: {
+                            name: string;
+                            templateName: string;
+                        }[];
+                        monitors: string[];
+                    };
+                    "generic:processing:extract_slab_coordinates": {
                         applicationName: string;
                         executableName: string;
                         input: {
