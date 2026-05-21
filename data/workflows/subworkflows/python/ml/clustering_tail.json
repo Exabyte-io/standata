@@ -524,12 +524,18 @@
             "head": false,
             "results": [
                 {
+                    "basename": "train_test_split.png",
+                    "filetype": "image",
                     "name": "file_content"
                 },
                 {
+                    "basename": "train_clusters.png",
+                    "filetype": "image",
                     "name": "file_content"
                 },
                 {
+                    "basename": "test_clusters.png",
+                    "filetype": "image",
                     "name": "file_content"
                 }
             ],

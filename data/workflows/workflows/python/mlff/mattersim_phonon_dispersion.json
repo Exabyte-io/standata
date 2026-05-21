@@ -92,10 +92,14 @@
                     "head": false,
                     "results": [
                         {
-                            "name": "file_content"
+                            "name": "file_content",
+                            "basename": "phonon_band.png",
+                            "filetype": "image"
                         },
                         {
-                            "name": "file_content"
+                            "name": "file_content",
+                            "basename": "phonon_dos.png",
+                            "filetype": "image"
                         }
                     ],
                     "monitors": [

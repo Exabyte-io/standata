@@ -78,7 +78,9 @@
             "head": false,
             "results": [
                 {
-                    "name": "file_content"
+                    "name": "file_content",
+                    "basename": "results.csv",
+                    "filetype": "csv"
                 }
             ],
             "monitors": [
