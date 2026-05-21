@@ -1268,7 +1268,17 @@
                 }
             ],
             "properties": [],
-            "workflows": []
+            "workflows": [],
+            "compute": {
+                "ppn": 1,
+                "nodes": 1,
+                "queue": "D",
+                "timeLimit": "01:00:00",
+                "notify": "n",
+                "cluster": {
+                    "fqdn": ""
+                }
+            }
         }
     ],
     "schemaVersion": "2022.8.16",

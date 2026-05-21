@@ -9,10 +9,11 @@ import createSubworkflow, {
     type AnyUnitConfig,
     type AttributesConfig,
     type SubworkflowData,
-    type SubworkflowFunctionsConfig,
 } from "./createSubworkflow";
 import { defaultMapConfig, defaultSubworkflowUnitConfig } from "./defaults";
 import {
+    type FunctionsConfig,
+    applyFunctionsConfig,
     generateDefaultWorkflowId,
     generateFlowChartId,
     generateWorkflowId,
@@ -29,7 +30,7 @@ type WorkflowUnitData = {
 type SubworkflowUnitData = {
     name: string;
     type: "subworkflow";
-    config?: AttributesConfig & SubworkflowFunctionsConfig & Partial<SubworkflowSchema>;
+    config?: AttributesConfig & FunctionsConfig & Partial<SubworkflowSchema>;
     unitConfigs?: SubworkflowUnitConfig[];
 };
 
@@ -58,7 +59,7 @@ type MapUnitConfig = {
     };
 };
 
-type WorkflowUnitConfig = WorkflowConfig & MapUnitConfig;
+type WorkflowUnitConfig = WorkflowConfig & MapUnitConfig & FunctionsConfig;
 
 type SubworkflowUnitConfig = UnitConfig & { index: number };
 
@@ -202,7 +203,10 @@ function createWorkflowFromWorkflowData(
 
     const workflowWithUnits = workflowData.units.reduce((acc, unitData) => {
         if (unitData.type === "workflow") {
-            const workflow = createWorkflowFromWorkflowData(appName, unitData, subworkflows, cache);
+            const workflow = applyFunctionsConfig(
+                createWorkflowFromWorkflowData(appName, unitData, subworkflows, cache),
+                unitData.config?.functions,
+            );
             return addWorkflowToWorkflow(acc, workflow, unitData.config);
         }
 

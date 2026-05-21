@@ -4,10 +4,37 @@ import type {
     ApplicationSchema,
     BaseMethod,
     BaseModel,
+    ComputeArgumentsSchema,
+    ComputePropertySchema,
     SubworkflowSchema,
 } from "@mat3ra/esse/dist/js/types";
 import * as ajv from "@mat3ra/esse/dist/js/utils/ajv";
+import { getDefaultComputeConfig } from "@mat3ra/ide";
 import { Utils } from "@mat3ra/utils";
+
+export type FunctionsConfig = {
+    functions?: {
+        setDefaultCompute: null;
+    };
+};
+
+export function applyFunctionsConfig<T extends Partial<ComputePropertySchema>>(
+    entity: T,
+    functionsConfig?: FunctionsConfig["functions"],
+): T {
+    const functions = {
+        setDefaultCompute: (): ComputePropertySchema => {
+            return { compute: getDefaultComputeConfig() as ComputeArgumentsSchema };
+        },
+    };
+
+    return Object.entries(functionsConfig || {}).reduce((acc, [funcName]) => {
+        return {
+            ...acc,
+            ...functions[funcName as keyof typeof functions]?.(),
+        };
+    }, entity);
+}
 
 export function validateData<T extends object>(data: T, schemaId: string): T {
     const jsonSchema = JSONSchemasInterface.getSchemaById(schemaId);
