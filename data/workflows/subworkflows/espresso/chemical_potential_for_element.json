@@ -1,0 +1,204 @@
+{
+    "_id": "b661c5bf-33ec-5a0d-8e50-1f5b5045eb49",
+    "name": "Chemical Potential For Element",
+    "application": {
+        "name": "espresso"
+    },
+    "properties": [
+        "chemical_potential"
+    ],
+    "model": {
+        "type": "dft",
+        "subtype": "gga",
+        "method": {
+            "type": "pseudopotential",
+            "subtype": "us",
+            "data": {}
+        },
+        "functional": {
+            "slug": "pbe"
+        },
+        "refiners": [],
+        "modifiers": []
+    },
+    "units": [
+        {
+            "name": "io-element-material",
+            "type": "io",
+            "subtype": "input",
+            "flowchartId": "io-element-material",
+            "source": "api",
+            "input": [
+                {
+                    "endpoint": "materials",
+                    "endpoint_options": {
+                        "params": {
+                            "query": "{'metadata.element': ELEMENT_SYMBOL}",
+                            "projection": "{}"
+                        }
+                    },
+                    "name": "DATA"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "assign-element-material",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-element-material",
+            "type": "assignment",
+            "operand": "ELEMENT_MATERIAL",
+            "value": "DATA[0] if DATA else None",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-element-material"
+                }
+            ],
+            "flowchartId": "assign-element-material",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assert-element-material",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assert-element-material",
+            "type": "assertion",
+            "statement": "ELEMENT_MATERIAL != None",
+            "errorMessage": "Elemental reference material not found on the Platform for ELEMENT_SYMBOL.",
+            "flowchartId": "assert-element-material",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "io-chemical-potential",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "io-chemical-potential",
+            "type": "io",
+            "subtype": "input",
+            "flowchartId": "io-chemical-potential",
+            "source": "api",
+            "input": [
+                {
+                    "endpoint": "refined-properties",
+                    "endpoint_options": {
+                        "params": {
+                            "query": "{'exabyteId': ELEMENT_MATERIAL.exabyteId, 'data.name': 'total_energy'}",
+                            "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
+                        }
+                    },
+                    "name": "DATA"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-mu",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-mu",
+            "type": "assignment",
+            "operand": "MU",
+            "value": "DATA[0].data.value if DATA else None",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-chemical-potential"
+                }
+            ],
+            "flowchartId": "assign-mu",
+            "results": [
+                {
+                    "name": "chemical_potential"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assert-mu",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assert-mu",
+            "type": "assertion",
+            "statement": "MU != None",
+            "errorMessage": "Total energy not found for elemental reference ELEMENT_SYMBOL.",
+            "flowchartId": "assert-mu",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        }
+    ]
+}

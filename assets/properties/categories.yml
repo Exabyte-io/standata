@@ -38,6 +38,10 @@ categories:
     - shell
 
 entities:
+  - filename: chemical_potential.json
+    categories:
+      - scalar
+      - chemical
   - filename: valence_band_offset.json
     categories:
       - scalar

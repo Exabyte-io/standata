@@ -133,6 +133,9 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
+  - filename: espresso/chemical_potentials.json
+    categories:
+      - espresso
   - filename: espresso/dielectric_tensor.json
     categories:
       - atomic_forces
@@ -393,6 +396,9 @@ entities:
     categories:
       - python
   - filename: shell/batch_espresso_pwscf.json
+    categories:
+      - shell
+  - filename: shell/get_chemical_potential.json
     categories:
       - shell
   - filename: shell/hello_world.json

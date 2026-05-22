@@ -5,6 +5,7 @@ categories:
     - band_gaps
     - band_structure
     - charge_density_profile
+    - chemical_potential
     - density_of_states
     - dielectric_tensor
     - fermi_energy
@@ -160,6 +161,10 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
+  - filename: espresso/chemical_potential_for_element.json
+    categories:
+      - chemical_potential
+      - espresso
   - filename: espresso/dielectric_tensor.json
     categories:
       - atomic_forces
@@ -473,6 +478,15 @@ entities:
     categories:
       - shell
   - filename: shell/hello_world.json
+    categories:
+      - shell
+  - filename: shell/utils/assign_elements_from_material.json
+    categories:
+      - shell
+  - filename: shell/utils/get_chemical_potential_for_element.json
+    categories:
+      - shell
+  - filename: shell/utils/get_chemical_potential.json
     categories:
       - shell
   - filename: shell/utils/get_e_bulk.json

@@ -1,0 +1,335 @@
+{
+    "name": "Get Chemical Potential",
+    "subworkflows": [
+        {
+            "_id": "c6a75827-1478-538e-8768-2e5aaf600152",
+            "name": "Get Chemical Potential",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            },
+            "properties": [],
+            "model": {
+                "type": "unknown",
+                "subtype": "unknown",
+                "method": {
+                    "type": "unknown",
+                    "subtype": "unknown",
+                    "data": {}
+                }
+            },
+            "units": [
+                {
+                    "name": "io-material",
+                    "type": "io",
+                    "subtype": "input",
+                    "flowchartId": "io-material",
+                    "source": "api",
+                    "input": [
+                        {
+                            "endpoint": "materials",
+                            "endpoint_options": {
+                                "params": {
+                                    "query": "{'_id': MATERIAL_ID}",
+                                    "projection": "{}"
+                                }
+                            },
+                            "name": "DATA"
+                        }
+                    ],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": true,
+                    "next": "assign-material",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-material",
+                    "type": "assignment",
+                    "operand": "MATERIAL",
+                    "value": "DATA[0] if DATA else None",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-material"
+                        }
+                    ],
+                    "flowchartId": "assign-material",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assert-material",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assert-material",
+                    "type": "assertion",
+                    "statement": "MATERIAL != None",
+                    "errorMessage": "Workflow material not found on the Platform.",
+                    "flowchartId": "assert-material",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-element-symbol",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-element-symbol",
+                    "type": "assignment",
+                    "operand": "ELEMENT_SYMBOL",
+                    "value": "list(set([e['value'] for e in MATERIAL.basis.elements]))[0]",
+                    "input": [],
+                    "flowchartId": "assign-element-symbol",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assert-single-element",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assert-single-element",
+                    "type": "assertion",
+                    "statement": "len(set([e['value'] for e in MATERIAL.basis.elements])) == 1",
+                    "errorMessage": "Material must contain a single element type. For compounds, use a parent workflow that sets MU per element.",
+                    "flowchartId": "assert-single-element",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "io-element-material",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "io-element-material",
+                    "type": "io",
+                    "subtype": "input",
+                    "flowchartId": "io-element-material",
+                    "source": "api",
+                    "input": [
+                        {
+                            "endpoint": "materials",
+                            "endpoint_options": {
+                                "params": {
+                                    "query": "{'metadata.element': ELEMENT_SYMBOL}",
+                                    "projection": "{}"
+                                }
+                            },
+                            "name": "DATA"
+                        }
+                    ],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-element-material",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-element-material",
+                    "type": "assignment",
+                    "operand": "ELEMENT_MATERIAL",
+                    "value": "DATA[0] if DATA else None",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-element-material"
+                        }
+                    ],
+                    "flowchartId": "assign-element-material",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assert-element-material",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assert-element-material",
+                    "type": "assertion",
+                    "statement": "ELEMENT_MATERIAL != None",
+                    "errorMessage": "Elemental reference material for ELEMENT_SYMBOL not found on the Platform. Upload it from Standata first.",
+                    "flowchartId": "assert-element-material",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "io-chemical-potential",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "io-chemical-potential",
+                    "type": "io",
+                    "subtype": "input",
+                    "flowchartId": "io-chemical-potential",
+                    "source": "api",
+                    "input": [
+                        {
+                            "endpoint": "refined-properties",
+                            "endpoint_options": {
+                                "params": {
+                                    "query": "{'exabyteId': ELEMENT_MATERIAL.exabyteId, 'data.name': 'total_energy'}",
+                                    "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
+                                }
+                            },
+                            "name": "DATA"
+                        }
+                    ],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-mu",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-mu",
+                    "type": "assignment",
+                    "operand": "MU",
+                    "value": "DATA[0].data.value if DATA else None",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-chemical-potential"
+                        }
+                    ],
+                    "flowchartId": "assign-mu",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assert-mu",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assert-mu",
+                    "type": "assertion",
+                    "statement": "MU != None",
+                    "errorMessage": "Total energy not found for the elemental reference material. Run total energy on the Standata elemental material (metadata.element), not only on a job final structure.",
+                    "flowchartId": "assert-mu",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                }
+            ]
+        }
+    ],
+    "units": [
+        {
+            "name": "Get Chemical Potential",
+            "type": "subworkflow",
+            "_id": "c6a75827-1478-538e-8768-2e5aaf600152",
+            "status": "idle",
+            "statusTrack": [],
+            "flowchartId": "30c3f6be-2cb3-5c18-8a97-b0dcf9cdc51d",
+            "tags": [],
+            "head": true
+        }
+    ],
+    "properties": [],
+    "_id": "009ba351-0040-589d-9f2f-cad9257b485b",
+    "workflows": [],
+    "schemaVersion": "2022.8.16",
+    "isDefault": false,
+    "application": {
+        "name": "shell"
+    }
+}
