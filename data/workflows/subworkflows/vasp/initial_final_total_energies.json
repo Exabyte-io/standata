@@ -149,9 +149,6 @@
                         "contextProviders": [
                             {
                                 "name": "NEBFormDataManager"
-                            },
-                            {
-                                "name": "VASPNEBInputDataManager"
                             }
                         ],
                         "executableName": "vasp",
@@ -169,9 +166,6 @@
                         "contextProviders": [
                             {
                                 "name": "KGridFormDataManager"
-                            },
-                            {
-                                "name": "VASPInputDataManager"
                             }
                         ],
                         "executableName": "vasp",
@@ -187,9 +181,6 @@
                         "applicationVersion": "*",
                         "content": "{{ input.FIRST_IMAGE }}\n",
                         "contextProviders": [
-                            {
-                                "name": "NEBFormDataManager"
-                            },
                             {
                                 "name": "VASPNEBInputDataManager"
                             }
@@ -332,9 +323,6 @@
                         "contextProviders": [
                             {
                                 "name": "NEBFormDataManager"
-                            },
-                            {
-                                "name": "VASPNEBInputDataManager"
                             }
                         ],
                         "executableName": "vasp",
@@ -352,9 +340,6 @@
                         "contextProviders": [
                             {
                                 "name": "KGridFormDataManager"
-                            },
-                            {
-                                "name": "VASPInputDataManager"
                             }
                         ],
                         "executableName": "vasp",
@@ -370,9 +355,6 @@
                         "applicationVersion": "*",
                         "content": "{{ input.LAST_IMAGE }}\n",
                         "contextProviders": [
-                            {
-                                "name": "NEBFormDataManager"
-                            },
                             {
                                 "name": "VASPNEBInputDataManager"
                             }

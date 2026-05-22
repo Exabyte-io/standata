@@ -158,11 +158,7 @@
                                 "applicationName": "vasp",
                                 "applicationVersion": "*",
                                 "content": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n",
-                                "contextProviders": [
-                                    {
-                                        "name": "VASPInputDataManager"
-                                    }
-                                ],
+                                "contextProviders": [],
                                 "executableName": "vasp",
                                 "name": "INCAR",
                                 "schemaVersion": "2022.8.16"
@@ -178,9 +174,6 @@
                                 "contextProviders": [
                                     {
                                         "name": "KGridFormDataManager"
-                                    },
-                                    {
-                                        "name": "VASPInputDataManager"
                                     }
                                 ],
                                 "executableName": "vasp",

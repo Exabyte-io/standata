@@ -22,6 +22,7 @@ import {
     resolveFromRoot,
 } from "../utils";
 import { EntityProcessor } from "./EntityProcessor";
+import { validateTemplateContextProviders } from "./utils/contextProviders";
 import { validateData } from "./utils/utils";
 
 type ApplicationYAMLTree = Record<string, ApplicationYAMLItem>;
@@ -208,6 +209,8 @@ export class ApplicationsProcessor extends EntityProcessor {
         });
 
         this.allTemplates = templatesTree.map(templateAssetToSchemas);
+
+        validateTemplateContextProviders(this.allTemplates);
 
         this.allTemplates = this.allTemplates.map((template) => {
             return validateData(template, "software/template");
