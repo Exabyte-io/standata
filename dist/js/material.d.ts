@@ -226,6 +226,9 @@ export declare class MaterialStandata extends Standata {
                     origin: boolean;
                 };
                 isNonPeriodic: boolean;
+                metadata: {
+                    element: string;
+                };
             };
             "Si-[Silicene]-HEX_[P-3m1]_2D_[Monolayer]-[2dm-5934].json": {
                 name: string;
