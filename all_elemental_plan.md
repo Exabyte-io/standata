@@ -15,15 +15,18 @@ Myabe they should be marked with a tag or in metadata`elemental`?
 #### 2.1.When to upload?
 **Issue:** Upon DB startup? Whenver it is added from Standata and saved to the platform?
 **Solution:** We can save the top 20 most used elements to the platform manually (or with NB) as we debug it. Then they will be added as we or users load them from Standata and save to the platform.
+**Issue:** How to verify that elemental material is correct? Metadata with `elemental` can be added easily to any material.
+
 
 #### 2.2. Multiple Stable Phases
 **Issue:** Some elements have multiple phases (C: graphite vs diamond, Fe: BCC vs FCC)
-**Solution:** Use most stable at standard conditions, flag with `metadata.stable_phase: "BCC"`
+**Solution:** Use most stable at standard conditions (what's in the PR for https://github.com/Exabyte-io/exabyte-benchmarks-suite-old/pull/9/changes)
 
 ### 3. Run "Total Energy" jobs for each
 #### 3.1. Settings Consistency
 **Issue:** Elemental energies MUST use identical DFT settings as defect calculations
 **Solution:** Version tag (`espresso:elemental:v1`) + documented standard settings for workflow (AI suggestion)
+Can we add tag to the workflow or property? 
 
 #### 3.2. Convergence Criteria
 **Issue:** What precision is "good enough" for reference energies?
@@ -36,7 +39,11 @@ Myabe they should be marked with a tag or in metadata`elemental`?
 #### 3.4. Store job results on Platform
 #### How to find the property for element?
 **Issue:** Need to mark the elemental materials properties
-**Solution:**  with a tag `curators` + `elemental_material`, group `espresso:elemental:v1` 
+**Solution:**  Tag only the material itself with a tag `curators` + `elemental_material`
+
+#### 3.5. How to lookup query for μ
+- **Tight:** filter by `group` — e.g. `'$regex': 'qe:'` or exact `'qe:dft:gga:pbe'` (so we need to set that in the WF)
+- **Loose:** no `group`; `metadata.element` + `exabyteId` + best `precision` (what we use now)
 
 ### 5. Other workflows query elemental energies by `element` in each material to find reference energies
 #### 5.1. How to use in the target WF?
