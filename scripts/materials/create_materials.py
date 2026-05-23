@@ -131,11 +131,14 @@ def create_material_config(material_config: Dict, source: Dict) -> Dict:
             "url": source["url"],
             "origin": True
         },
-        "isNonPeriodic": False
+        "isNonPeriodic": source.get("isNonPeriodic", False),
     }
 
     if "metadata" in source:
         final_config["metadata"] = source["metadata"]
+
+    if "tags" in source:
+        final_config["tags"] = source["tags"]
 
     return final_config
 

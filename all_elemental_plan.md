@@ -5,16 +5,22 @@
 Only 1 in phase 1
 Then 20 most used elements.
 Then the rest
-Myabe they should be marked with a tag or in metadata`elemental`?
+We still need to set element, because for "O" the unit will need to find the "O" element, not "O2" formula.
+```yaml
+metadata:
+  element: Si
+tags:
+  - elemental
+```
 
 #### 1.1.How to deal with molecules?
 **Issue:** H2, O2, N2, F2, Cl2 exist as molecules
-**Solution:** Molecule in a 10x10x10 Angstrom box (let's check for H2, O2 if WFN doesn't spill beyond PBC)
+**Solution:** Use `isNonPeriodic=True` and it'll automatically create the structure.
 
 ### 2. Upload materials to Platform 
 #### 2.1.When to upload?
 **Issue:** Upon DB startup? Whenver it is added from Standata and saved to the platform?
-**Solution:** We can save the top 20 most used elements to the platform manually (or with NB) as we debug it. Then they will be added as we or users load them from Standata and save to the platform.
+**Solution:** Whenever they are saved from Standata (or we can add via NB as we use them).
 **Issue:** How to verify that elemental material is correct? Metadata with `elemental` can be added easily to any material.
 
 
@@ -30,11 +36,11 @@ Can we add tag to the workflow or property?
 
 #### 3.2. Convergence Criteria
 **Issue:** What precision is "good enough" for reference energies?
-**Solution:** EDIFF=1e-7, PREC=Accurate, KPPRA≥8000, verify |dE|<1meV (AI suggestion)
+**Solution:** Default settings, use the difficulty convention from https://arxiv.org/pdf/1807.05623
 
 #### 3.3. Magnetic Elements calculation (AI suggestion)
 **Issue:** Fe, Ni, Co, Mn need spin-polarization
-**Solution:** ISPIN=2, element-specific MAGMOM in workflow (AI suggestion)
+**Solution:** Use the default KPPRA, use the difficulty convention from https://arxiv.org/pdf/1807.05623
 
 #### 3.4. Store job results on Platform
 #### How to find the property for element?

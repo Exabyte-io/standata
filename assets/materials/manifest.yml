@@ -209,6 +209,8 @@ sources:
     url: https://next-gen.materialsproject.org/materials/mp-149
     metadata:
       element: Si
+    tags:
+      - elemental
 
   - filename: mp-7000.poscar
     common_name: Quartz
