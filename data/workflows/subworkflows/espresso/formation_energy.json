@@ -1,0 +1,78 @@
+{
+    "_id": "bd567528-dc35-579a-8a59-84493faee20e",
+    "name": "Formation Energy - QE",
+    "application": {
+        "name": "espresso"
+    },
+    "properties": [
+        "formation_energy"
+    ],
+    "model": {
+        "type": "dft",
+        "subtype": "gga",
+        "method": {
+            "type": "pseudopotential",
+            "subtype": "us",
+            "data": {}
+        },
+        "functional": {
+            "slug": "pbe"
+        },
+        "refiners": [],
+        "modifiers": []
+    },
+    "units": [
+        {
+            "name": "assign-n-atoms",
+            "type": "assignment",
+            "operand": "N_ATOMS",
+            "value": "len(MATERIAL.basis.elements)",
+            "input": [],
+            "flowchartId": "assign-n-atoms",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "assign-formation-energy",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-formation-energy",
+            "type": "assignment",
+            "operand": "FORMATION_ENERGY",
+            "value": "(E_MATERIAL - E_ELEMENTAL_SUM) / N_ATOMS",
+            "input": [],
+            "flowchartId": "assign-formation-energy",
+            "results": [
+                {
+                    "name": "formation_energy"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        }
+    ]
+}

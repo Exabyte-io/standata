@@ -1,0 +1,121 @@
+{
+    "_id": "17adeec3-aa75-5d67-9617-9b4a0e4b06e9",
+    "name": "Get Elemental Energies",
+    "application": {
+        "name": "shell"
+    },
+    "properties": [],
+    "model": {
+        "type": "unknown",
+        "subtype": "unknown",
+        "method": {
+            "type": "unknown",
+            "subtype": "unknown",
+            "data": {}
+        }
+    },
+    "units": [
+        {
+            "name": "io-elemental-energies",
+            "type": "io",
+            "subtype": "input",
+            "flowchartId": "io-elemental-energies",
+            "source": "api",
+            "input": [
+                {
+                    "endpoint": "refined-properties",
+                    "endpoint_options": {
+                        "params": {
+                            "query": "{'exabyteId': {'$in': [ELEMENT_MATERIALS[el].exabyteId for el in ELEMENTS]}, 'slug': 'total_energy'}",
+                            "projection": "{'sort': {'precision.value': -1}}"
+                        }
+                    },
+                    "name": "DATA"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "assign-elemental-energies",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-elemental-energies",
+            "type": "assignment",
+            "operand": "E_ELEMENTAL_BY_SYMBOL",
+            "value": "{el: ([d.data.value for d in DATA if ELEMENT_MATERIALS[el].exabyteId in d.exabyteId] or [None])[0] for el in ELEMENTS}",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-elemental-energies"
+                }
+            ],
+            "flowchartId": "assign-elemental-energies",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assert-elemental-energies",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assert-elemental-energies",
+            "type": "assertion",
+            "statement": "all(E_ELEMENTAL_BY_SYMBOL[el] is not None for el in ELEMENTS)",
+            "errorMessage": "Elemental total energy not found for one or more elements. Run QE total energy on the Standata elemental materials first.",
+            "flowchartId": "assert-elemental-energies",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-elemental-energy-sum",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-elemental-energy-sum",
+            "type": "assignment",
+            "operand": "E_ELEMENTAL_SUM",
+            "value": "sum(E_ELEMENTAL_BY_SYMBOL[e['value']] for e in MATERIAL.basis.elements)",
+            "input": [],
+            "flowchartId": "assign-elemental-energy-sum",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        }
+    ]
+}

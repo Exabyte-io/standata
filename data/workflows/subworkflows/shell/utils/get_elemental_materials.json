@@ -1,6 +1,6 @@
 {
-    "_id": "ba2d2b48-cf93-5f9d-a8a9-5b27cf7be861",
-    "name": "Get Chemical Potential For Element",
+    "_id": "196c6da2-465d-5140-989e-48b1fb1cbb72",
+    "name": "Get Elemental Materials",
     "application": {
         "name": "shell"
     },
@@ -16,17 +16,60 @@
     },
     "units": [
         {
-            "name": "io-element-material",
+            "name": "assign-elements",
+            "type": "assignment",
+            "operand": "ELEMENTS",
+            "value": "sorted(list(set([e['value'] for e in MATERIAL.basis.elements])))",
+            "input": [],
+            "flowchartId": "assign-elements",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "assert-elements",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assert-elements",
+            "type": "assertion",
+            "statement": "len(ELEMENTS) > 0",
+            "errorMessage": "Material has no elements in its basis.",
+            "flowchartId": "assert-elements",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "io-elemental-materials",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "io-elemental-materials",
             "type": "io",
             "subtype": "input",
-            "flowchartId": "io-element-material",
+            "flowchartId": "io-elemental-materials",
             "source": "api",
             "input": [
                 {
                     "endpoint": "materials",
                     "endpoint_options": {
                         "params": {
-                            "query": "{'metadata.element': ELEMENT_SYMBOL}",
+                            "query": "{'tags': 'elemental', 'metadata.element': {'$in': ELEMENTS}}",
                             "projection": "{}"
                         }
                     },
@@ -36,8 +79,8 @@
             "status": "idle",
             "statusTrack": [],
             "tags": [],
-            "head": true,
-            "next": "assign-element-material",
+            "head": false,
+            "next": "assign-element-materials",
             "application": {
                 "name": "shell",
                 "shortName": "sh",
@@ -49,22 +92,22 @@
             }
         },
         {
-            "name": "assign-element-material",
+            "name": "assign-element-materials",
             "type": "assignment",
-            "operand": "ELEMENT_MATERIAL",
-            "value": "DATA[0] if DATA else None",
+            "operand": "ELEMENT_MATERIALS",
+            "value": "{m['metadata']['element']: m for m in DATA if m.get('metadata') and m['metadata'].get('element') in ELEMENTS}",
             "input": [
                 {
                     "name": "DATA",
-                    "scope": "io-element-material"
+                    "scope": "io-elemental-materials"
                 }
             ],
-            "flowchartId": "assign-element-material",
+            "flowchartId": "assign-element-materials",
             "status": "idle",
             "statusTrack": [],
             "tags": [],
             "head": false,
-            "next": "assert-element-material",
+            "next": "assert-element-materials",
             "application": {
                 "name": "shell",
                 "shortName": "sh",
@@ -76,92 +119,11 @@
             }
         },
         {
-            "name": "assert-element-material",
+            "name": "assert-element-materials",
             "type": "assertion",
-            "statement": "ELEMENT_MATERIAL != None",
-            "errorMessage": "Elemental reference material not found on the Platform for ELEMENT_SYMBOL. Upload it from Standata first.",
-            "flowchartId": "assert-element-material",
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "head": false,
-            "next": "io-chemical-potential",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
-            "name": "io-chemical-potential",
-            "type": "io",
-            "subtype": "input",
-            "flowchartId": "io-chemical-potential",
-            "source": "api",
-            "input": [
-                {
-                    "endpoint": "refined-properties",
-                    "endpoint_options": {
-                        "params": {
-                            "query": "{'exabyteId': ELEMENT_MATERIAL.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'APP:'}}",
-                            "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
-                        }
-                    },
-                    "name": "DATA"
-                }
-            ],
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "head": false,
-            "next": "assign-mu",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
-            "name": "assign-mu",
-            "type": "assignment",
-            "operand": "MU",
-            "value": "DATA[0].data.value if DATA else None",
-            "input": [
-                {
-                    "name": "DATA",
-                    "scope": "io-chemical-potential"
-                }
-            ],
-            "flowchartId": "assign-mu",
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "head": false,
-            "next": "assert-mu",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
-        },
-        {
-            "name": "assert-mu",
-            "type": "assertion",
-            "statement": "MU != None",
-            "errorMessage": "Total energy not found for elemental reference ELEMENT_SYMBOL. Run total energy on the Standata elemental material first.",
-            "flowchartId": "assert-mu",
+            "statement": "set(ELEMENT_MATERIALS.keys()) == set(ELEMENTS)",
+            "errorMessage": "Elemental reference material(s) not found on the Platform. Import missing elements from Standata Materials Bank (tags: elemental, metadata.element).",
+            "flowchartId": "assert-element-materials",
             "status": "idle",
             "statusTrack": [],
             "tags": [],

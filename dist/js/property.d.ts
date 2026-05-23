@@ -16,6 +16,11 @@ export declare class PropertyStandata extends Standata {
                 };
                 yDataSeries: number[][];
             };
+            "chemical_potential.json": {
+                name: string;
+                units: string;
+                value: number;
+            };
             "valence_band_offset.json": {
                 name: string;
                 units: string;
