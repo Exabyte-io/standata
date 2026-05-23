@@ -5,12 +5,12 @@ categories:
     - band_gaps
     - band_structure
     - charge_density_profile
-    - chemical_potential
     - density_of_states
     - dielectric_tensor
     - fermi_energy
     - file_content
     - final_structure
+    - formation_energy
     - homo_energy
     - lumo_energy
     - phonon_dispersions
@@ -161,10 +161,6 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
-  - filename: espresso/chemical_potential_for_element.json
-    categories:
-      - chemical_potential
-      - espresso
   - filename: espresso/dielectric_tensor.json
     categories:
       - atomic_forces
@@ -241,6 +237,10 @@ entities:
       - stress_tensor
       - total_energy
       - total_force
+  - filename: espresso/formation_energy.json
+    categories:
+      - espresso
+      - formation_energy
   - filename: espresso/gw_band_structure_band_gap_full_frequency.json
     categories:
       - atomic_forces
@@ -360,6 +360,16 @@ entities:
       - pressure
       - stress_tensor
       - surface_energy
+      - total_energy
+      - total_energy_contributions
+      - total_force
+  - filename: espresso/total_energy_for_material.json
+    categories:
+      - atomic_forces
+      - espresso
+      - fermi_energy
+      - pressure
+      - stress_tensor
       - total_energy
       - total_energy_contributions
       - total_force
@@ -483,13 +493,13 @@ entities:
   - filename: shell/utils/assign_elements_from_material.json
     categories:
       - shell
-  - filename: shell/utils/get_chemical_potential_for_element.json
-    categories:
-      - shell
-  - filename: shell/utils/get_chemical_potential.json
-    categories:
-      - shell
   - filename: shell/utils/get_e_bulk.json
+    categories:
+      - shell
+  - filename: shell/utils/get_elemental_energies.json
+    categories:
+      - shell
+  - filename: shell/utils/get_elemental_materials.json
     categories:
       - shell
   - filename: shell/utils/get_material_by_id.json

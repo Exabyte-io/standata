@@ -1,0 +1,51 @@
+# Expects MATERIAL, ELEMENTS, and ELEMENT_MATERIALS in context. Loads total_energy
+# refined properties for each elemental reference (same pattern as get_e_bulk).
+application:
+  name: shell
+method:
+  name: UnknownMethod
+model:
+  name: UnknownModel
+name: Get Elemental Energies
+units:
+  - type: io
+    config:
+      name: io-elemental-energies
+      flowchartId: io-elemental-energies
+      subtype: input
+      source: api
+      input:
+        - endpoint: refined-properties
+          endpoint_options:
+            params:
+              query: >-
+                {'exabyteId': {'$in': [ELEMENT_MATERIALS[el].exabyteId for el in ELEMENTS]},
+                'slug': 'total_energy'}
+              projection: "{'sort': {'precision.value': -1}}"
+          name: DATA
+  - type: assignment
+    config:
+      name: assign-elemental-energies
+      flowchartId: assign-elemental-energies
+      operand: E_ELEMENTAL_BY_SYMBOL
+      value: >-
+        {el: ([d.data.value for d in DATA
+        if ELEMENT_MATERIALS[el].exabyteId in d.exabyteId] or [None])[0]
+        for el in ELEMENTS}
+      input:
+        - name: DATA
+          scope: io-elemental-energies
+  - type: assertion
+    config:
+      name: assert-elemental-energies
+      flowchartId: assert-elemental-energies
+      statement: "all(E_ELEMENTAL_BY_SYMBOL[el] is not None for el in ELEMENTS)"
+      errorMessage: >-
+        Elemental total energy not found for one or more elements. Run QE total
+        energy on the Standata elemental materials first.
+  - type: assignment
+    config:
+      name: assign-elemental-energy-sum
+      flowchartId: assign-elemental-energy-sum
+      operand: E_ELEMENTAL_SUM
+      value: "sum(E_ELEMENTAL_BY_SYMBOL[e['value']] for e in MATERIAL.basis.elements)"

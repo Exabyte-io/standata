@@ -1,0 +1,23 @@
+# Formation energy per atom: (E_material - sum_i E_element,i) / N_atoms.
+# Elemental refs: Standata bank materials (tags: elemental, metadata.element).
+name: Formation Energy
+properties:
+  - atomic_forces
+  - fermi_energy
+  - formation_energy
+  - pressure
+  - stress_tensor
+  - total_energy
+  - total_energy_contributions
+  - total_force
+units:
+  - name: shell/utils/get_material_by_id
+    type: subworkflow
+  - name: shell/utils/get_elemental_materials
+    type: subworkflow
+  - name: shell/utils/get_elemental_energies
+    type: subworkflow
+  - name: total_energy_for_material
+    type: subworkflow
+  - name: formation_energy
+    type: subworkflow

@@ -1,0 +1,24 @@
+application:
+  name: espresso
+  version: "6.3"
+method:
+  name: PseudopotentialMethod
+model:
+  name: DFTModel
+name: Total Energy For Material - QE
+units:
+  - config:
+      execName: pw.x
+      flavorName: pw_scf
+      flowchartId: pw-scf-formation-energy
+      name: pw_scf
+    type: executionBuilder
+  - type: assignment
+    config:
+      name: assign-e-material
+      flowchartId: assign-e-material
+      operand: E_MATERIAL
+      value: total_energy
+      input:
+        - name: total_energy
+          scope: pw-scf-formation-energy

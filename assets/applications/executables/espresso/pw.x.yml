@@ -13,6 +13,7 @@ results:
   - charge_density_profile
   - density_of_states
   - fermi_energy
+  - formation_energy
   - final_structure
   - magnetic_moments
   - potential_profile

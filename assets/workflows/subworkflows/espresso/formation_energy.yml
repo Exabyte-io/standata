@@ -1,0 +1,24 @@
+# Expects E_MATERIAL, E_ELEMENTAL_SUM, and MATERIAL in context.
+application:
+  name: espresso
+  version: "6.3"
+method:
+  name: PseudopotentialMethod
+model:
+  name: DFTModel
+name: Formation Energy - QE
+units:
+  - type: assignment
+    config:
+      name: assign-n-atoms
+      flowchartId: assign-n-atoms
+      operand: N_ATOMS
+      value: "len(MATERIAL.basis.elements)"
+  - type: assignment
+    config:
+      name: assign-formation-energy
+      flowchartId: assign-formation-energy
+      operand: FORMATION_ENERGY
+      value: "(E_MATERIAL - E_ELEMENTAL_SUM) / N_ATOMS"
+      results:
+        - name: formation_energy
