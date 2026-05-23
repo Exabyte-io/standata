@@ -54,5 +54,8 @@
   "isNonPeriodic": false,
   "metadata": {
     "element": "Si"
-  }
+  },
+  "tags": [
+    "elemental"
+  ]
 }
