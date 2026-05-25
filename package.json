@@ -36,7 +36,7 @@
         "@mat3ra/standata": "file:./",
         "@mat3ra/tsconfig": "^2024.6.3-0",
         "@mat3ra/utils": "^2026.4.15-1",
-        "@mat3ra/wode": "^2026.4.9-0",
+        "@mat3ra/wode": "git+https://github.com/Exabyte-io/wode.git#aeaff5103061fb2f698f6c9fb635d4b2992d9332",
         "@types/chai": "^4.3.20",
         "@types/js-yaml": "^4.0.9",
         "@types/mocha": "^10.0.10",

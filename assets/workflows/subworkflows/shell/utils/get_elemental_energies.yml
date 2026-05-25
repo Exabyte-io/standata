@@ -48,4 +48,7 @@ units:
       name: assign-elemental-energy-sum
       flowchartId: assign-elemental-energy-sum
       operand: E_ELEMENTAL_SUM
-      value: "sum(E_ELEMENTAL_BY_SYMBOL[e['value']] for e in MATERIAL.basis.elements)"
+      value: >-
+        sum(E_ELEMENTAL_BY_SYMBOL[e['value']]
+        / len(ELEMENT_MATERIALS[e['value']].basis.elements)
+        for e in MATERIAL.basis.elements)
