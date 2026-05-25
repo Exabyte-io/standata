@@ -16,10 +16,11 @@ units:
       subtype: input
       source: api
       input:
-        - endpoint: refined-properties
+        - type: api
+          endpoint: refined-properties
           endpoint_options:
             params:
-#             `APP` is used as a placeholder meant to be replaced by an app shortname in the workflow yaml that uses it
+              #             `APP` is used as a placeholder meant to be replaced by an app shortname in the workflow yaml that uses it
               query: "{'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': 'APP:'}}"
               projection: "{'sort': {'precision.value': -1}, 'limit': 1}"
           name: DATA

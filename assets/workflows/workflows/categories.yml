@@ -19,6 +19,7 @@ categories:
     - reaction_energy_barrier
     - reaction_energy_profile
     - stress_tensor
+    - surface_energy
     - thermal_correction_to_energy
     - thermal_correction_to_enthalpy
     - total_energy
@@ -294,7 +295,15 @@ entities:
       - espresso
   - filename: espresso/surface_energy.json
     categories:
+      - atomic_forces
       - espresso
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - surface_energy
+      - total_energy
+      - total_energy_contributions
+      - total_force
   - filename: espresso/total_energy.json
     categories:
       - atomic_forces
@@ -388,12 +397,8 @@ entities:
     categories:
       - file_content
       - python
-<<<<<<< HEAD
       - workflow:pyml_predict
-  - filename: python/mlff/mattersim.json
-=======
   - filename: python/mlff/mattersim_cell_relaxation.json
->>>>>>> ee23e1a0bf1f01e082e52c18fe2d2df9fa641612
     categories:
       - file_content
       - python
@@ -497,6 +502,14 @@ entities:
       - vasp
   - filename: vasp/surface_energy.json
     categories:
+      - atomic_forces
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - surface_energy
+      - total_energy
+      - total_energy_contributions
+      - total_force
       - vasp
   - filename: vasp/total_energy.json
     categories:

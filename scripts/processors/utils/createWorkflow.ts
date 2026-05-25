@@ -159,7 +159,11 @@ function createSubworkflowFromUnitData(
     subworkflows: SubworkflowsTree,
     cache?: string[],
 ): SubworkflowSchema {
-    const subworkflowData = subworkflows[appName]?.[unitData.name];
+    const names = unitData.name.split("/");
+    const resolvedAppName = names.length > 1 ? names[0] : appName;
+    const resolvedSubworkflowName = names.length > 1 ? names[names.length - 1] : unitData.name;
+
+    const subworkflowData = subworkflows[resolvedAppName]?.[resolvedSubworkflowName];
 
     if (!subworkflowData) {
         throw new Error(`Subworkflow ${unitData.name} not found in ${appName}!`);

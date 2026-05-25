@@ -1,5 +1,5 @@
 {
-    "_id": "68512987-de73-5614-bab2-0f8b575cffa3",
+    "_id": "847e467b-e76b-5bc4-b152-3faaba15e0fb",
     "name": "Surface Energy",
     "subworkflows": [
         {
@@ -29,10 +29,18 @@
                     "name": "io-material",
                     "type": "io",
                     "subtype": "input",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "flowchartId": "io-material",
                     "source": "api",
                     "input": [
                         {
+                            "type": "api",
                             "endpoint": "materials",
                             "endpoint_options": {
                                 "params": {
@@ -43,20 +51,10 @@
                             "name": "DATA"
                         }
                     ],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "head": true,
                     "next": "assign-material",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-material",
@@ -69,22 +67,21 @@
                             "scope": "io-material"
                         }
                     ],
-                    "flowchartId": "assign-material",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-material",
                     "head": false,
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "31958c8b-58fc-53c0-be83-c2675f37c7aa",
@@ -115,21 +112,18 @@
                     "operand": "BULK_ID",
                     "value": "SLAB.metadata.get('bulkId') if SLAB.metadata else None",
                     "input": [],
-                    "flowchartId": "assign-bulk-id",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-bulk-id",
                     "head": true,
                     "next": "init-bulk",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "init-bulk",
@@ -137,57 +131,56 @@
                     "operand": "BULK",
                     "value": "None",
                     "input": [],
-                    "flowchartId": "init-bulk",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "init-bulk",
                     "head": false,
                     "next": "check-bulk-id",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "check-bulk-id",
                     "type": "condition",
                     "input": [],
-                    "results": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "then": "done",
-                    "else": "io-bulk",
                     "statement": "BULK_ID is None",
                     "maxOccurrences": 100,
-                    "flowchartId": "check-bulk-id",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "check-bulk-id",
+                    "then": "done",
+                    "else": "io-bulk",
                     "head": false,
                     "next": "io-bulk",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "io-bulk",
                     "type": "io",
                     "subtype": "input",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "flowchartId": "io-bulk",
                     "source": "api",
                     "input": [
                         {
+                            "type": "api",
                             "endpoint": "materials",
                             "endpoint_options": {
                                 "params": {
@@ -198,20 +191,10 @@
                             "name": "DATA"
                         }
                     ],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "head": false,
                     "next": "assign-bulk",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-bulk",
@@ -224,21 +207,18 @@
                             "scope": "io-bulk"
                         }
                     ],
-                    "flowchartId": "assign-bulk",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-bulk",
                     "head": false,
                     "next": "done",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "done",
@@ -251,22 +231,21 @@
                             "scope": "global"
                         }
                     ],
-                    "flowchartId": "done",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "done",
                     "head": false,
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "f7daa3d8-1174-57e4-8d23-7c1f7a476f31",
@@ -295,28 +274,22 @@
                     "name": "is-bulk-present",
                     "type": "condition",
                     "input": [],
-                    "results": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "then": "done",
-                    "else": "assign-crystal",
                     "statement": "BULK is not None",
                     "maxOccurrences": 100,
-                    "flowchartId": "is-bulk-present",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "is-bulk-present",
+                    "then": "done",
+                    "else": "assign-crystal",
                     "head": true,
                     "next": "assign-crystal",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-crystal",
@@ -324,21 +297,18 @@
                     "operand": "LAST_BUILD_CRYSTAL",
                     "value": "(((SLAB.metadata.get('build') or [{}])[-1].get('configuration') or {}).get( 'stack_components' ) or [{}])[0].get('crystal') if SLAB.metadata else None",
                     "input": [],
-                    "flowchartId": "assign-crystal",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-crystal",
                     "head": false,
                     "next": "assign-bulk-query",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-bulk-query",
@@ -346,51 +316,53 @@
                     "operand": "BULK_QUERY",
                     "value": "{'scaledHash': LAST_BUILD_CRYSTAL.get('scaledHash')} if LAST_BUILD_CRYSTAL and LAST_BUILD_CRYSTAL.get('scaledHash') else {'hash': LAST_BUILD_CRYSTAL.get('hash')} if LAST_BUILD_CRYSTAL and LAST_BUILD_CRYSTAL.get('hash') else None",
                     "input": [],
-                    "flowchartId": "assign-bulk-query",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-bulk-query",
                     "head": false,
                     "next": "assert-bulk-query",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assert-bulk-query",
                     "type": "assertion",
                     "statement": "BULK_QUERY != None",
                     "errorMessage": "Surface slab build metadata does not carry a crystal scaledHash or hash. Upload the bulk material and run its total energy workflow first.",
-                    "flowchartId": "assert-bulk-query",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assert-bulk-query",
                     "head": false,
                     "next": "io-bulk",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "io-bulk",
                     "type": "io",
                     "subtype": "input",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "flowchartId": "io-bulk",
                     "source": "api",
                     "input": [
                         {
+                            "type": "api",
                             "endpoint": "materials",
                             "endpoint_options": {
                                 "params": {
@@ -401,20 +373,10 @@
                             "name": "DATA"
                         }
                     ],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "head": false,
                     "next": "assign-bulk",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-bulk",
@@ -427,42 +389,36 @@
                             "scope": "io-bulk"
                         }
                     ],
-                    "flowchartId": "assign-bulk",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-bulk",
                     "head": false,
                     "next": "assert-bulk",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assert-bulk",
                     "type": "assertion",
                     "statement": "BULK != None",
                     "errorMessage": "No bulk material matched the resolved slab build metadata query. Upload the bulk material and run its total energy workflow first.",
-                    "flowchartId": "assert-bulk",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assert-bulk",
                     "head": false,
                     "next": "done",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "done",
@@ -475,22 +431,21 @@
                             "scope": "global"
                         }
                     ],
-                    "flowchartId": "done",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "done",
                     "head": false,
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
@@ -519,10 +474,18 @@
                     "name": "io-e-bulk",
                     "type": "io",
                     "subtype": "input",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "flowchartId": "io-e-bulk",
                     "source": "api",
                     "input": [
                         {
+                            "type": "api",
                             "endpoint": "refined-properties",
                             "endpoint_options": {
                                 "params": {
@@ -533,20 +496,10 @@
                             "name": "DATA"
                         }
                     ],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "head": true,
                     "next": "assign-e-bulk",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-e-bulk",
@@ -559,43 +512,39 @@
                             "scope": "io-e-bulk"
                         }
                     ],
-                    "flowchartId": "assign-e-bulk",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-e-bulk",
                     "head": false,
                     "next": "assert-e-bulk",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assert-e-bulk",
                     "type": "assertion",
                     "statement": "E_BULK != None",
                     "errorMessage": "Bulk total energy does not exist for the resolved bulk material. Run a bulk total energy workflow first.",
-                    "flowchartId": "assert-e-bulk",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assert-e-bulk",
                     "head": false,
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "f9de6348-fcc4-54b7-a09d-c6496e22d33a",
@@ -619,8 +568,7 @@
                 "surface_energy",
                 "total_energy",
                 "total_energy_contributions",
-                "total_force",
-                "surface_energy"
+                "total_force"
             ],
             "model": {
                 "type": "dft",
@@ -634,286 +582,23 @@
             },
             "units": [
                 {
-<<<<<<< HEAD
-                    "type": "io",
-                    "name": "io-slab",
-                    "head": true,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "e463ef46-a36e-5168-87dd-e21eb980dfb8",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "subtype": "input",
-                    "source": "api",
-                    "input": [
-                        {
-                            "type": "api",
-                            "endpoint": "materials",
-                            "endpoint_options": {
-                                "params": {
-                                    "query": "{'_id': MATERIAL_ID}",
-                                    "projection": "{}"
-                                }
-                            },
-                            "name": "DATA"
-                        }
-                    ],
-                    "next": "ee7abb4e-7848-5aeb-960d-0d441909e2d1",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "type": "assignment",
-                    "name": "slab",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "ee7abb4e-7848-5aeb-960d-0d441909e2d1",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "input": [
-                        {
-                            "name": "DATA",
-                            "scope": "e463ef46-a36e-5168-87dd-e21eb980dfb8"
-                        }
-                    ],
-                    "operand": "SLAB",
-                    "value": "DATA[0]",
-                    "next": "44263820-0c80-5bd1-b854-9da8d198eac1",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "type": "io",
-                    "name": "io-bulk",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "44263820-0c80-5bd1-b854-9da8d198eac1",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "subtype": "input",
-                    "source": "api",
-                    "input": [
-                        {
-                            "type": "api",
-                            "endpoint": "materials",
-                            "endpoint_options": {
-                                "params": {
-                                    "query": "{'_id': SLAB.metadata.bulkId}",
-                                    "projection": "{}"
-                                }
-                            },
-                            "name": "DATA"
-                        }
-                    ],
-                    "next": "b70656f1-a394-57f4-b4de-00096969df4b",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "type": "assignment",
-                    "name": "bulk",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "b70656f1-a394-57f4-b4de-00096969df4b",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "input": [
-                        {
-                            "name": "DATA",
-                            "scope": "44263820-0c80-5bd1-b854-9da8d198eac1"
-                        }
-                    ],
-                    "operand": "BULK",
-                    "value": "DATA[0] if DATA else None",
-                    "next": "6ca4006a-e3ae-56ea-91a1-06b9790b5f7e",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "type": "assertion",
-                    "name": "assert-bulk",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "6ca4006a-e3ae-56ea-91a1-06b9790b5f7e",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "statement": "BULK != None",
-                    "errorMessage": "Bulk material does not exist!",
-                    "next": "490635e0-c593-5809-9eb2-c794b96cfed1",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "type": "io",
-                    "name": "io-e-bulk",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "490635e0-c593-5809-9eb2-c794b96cfed1",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "subtype": "input",
-                    "source": "api",
-                    "input": [
-                        {
-                            "type": "api",
-                            "endpoint": "refined-properties",
-                            "endpoint_options": {
-                                "params": {
-                                    "query": "{ 'exabyteId': BULK.exabyteId, 'data.name': 'total_energy', 'group': {'$regex': ''.join((SUBWORKFLOW.application.shortName, ':'))} }",
-                                    "projection": "{'sort': {'precision.value': -1}, 'limit': 1}"
-                                }
-                            },
-                            "name": "DATA"
-                        }
-                    ],
-                    "next": "bbe13b97-4243-5a85-8f61-a279d0b797aa",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "type": "assignment",
-                    "name": "e-bulk",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "bbe13b97-4243-5a85-8f61-a279d0b797aa",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "input": [
-                        {
-                            "name": "DATA",
-                            "scope": "490635e0-c593-5809-9eb2-c794b96cfed1"
-                        }
-                    ],
-                    "operand": "E_BULK",
-                    "value": "DATA[0].data.value if DATA else None",
-                    "next": "a06c9f43-7670-5fd0-ac42-7028a472235a",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "type": "assertion",
-                    "name": "assert-e-bulk",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "a06c9f43-7670-5fd0-ac42-7028a472235a",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "statement": "E_BULK != None",
-                    "errorMessage": "E_BULK does not exist!",
-                    "next": "cdf210be-26ed-585a-b4ac-d55795ba2975",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "type": "assignment",
-                    "name": "surface",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "cdf210be-26ed-585a-b4ac-d55795ba2975",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "input": [],
-                    "operand": "A",
-                    "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
-                    "next": "ffa8e43d-096a-555b-b8d0-6d283365ef47",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "type": "assignment",
-                    "name": "n-bulk",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "ffa8e43d-096a-555b-b8d0-6d283365ef47",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "input": [],
-                    "operand": "N_BULK",
-                    "value": "len(BULK.basis.elements)",
-                    "next": "a0336ec5-a6da-5e4c-bb48-82b70cf5245f",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "type": "assignment",
-                    "name": "n-slab",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "a0336ec5-a6da-5e4c-bb48-82b70cf5245f",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "input": [],
-                    "operand": "N_SLAB",
-                    "value": "len(SLAB.basis.elements)",
-                    "next": "9fc7a088-5533-5f70-bb33-f676ec65f565",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-=======
                     "name": "assign-surface-area",
                     "type": "assignment",
                     "operand": "A",
                     "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
                     "input": [],
-                    "flowchartId": "assign-surface-area",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-surface-area",
                     "head": true,
                     "next": "assign-n-bulk",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-n-bulk",
@@ -921,23 +606,18 @@
                     "operand": "N_BULK",
                     "value": "len(BULK.basis.elements)",
                     "input": [],
-                    "flowchartId": "assign-n-bulk",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-n-bulk",
                     "head": false,
                     "next": "assign-n-slab",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-n-slab",
@@ -945,24 +625,18 @@
                     "operand": "N_SLAB",
                     "value": "len(SLAB.basis.elements)",
                     "input": [],
-                    "flowchartId": "assign-n-slab",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-n-slab",
                     "head": false,
                     "next": "pw-scf-surface-energy",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
->>>>>>> ee23e1a0bf1f01e082e52c18fe2d2df9fa641612
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "type": "execution",
@@ -1092,42 +766,10 @@
                             "isManuallyChanged": false
                         }
                     ],
-<<<<<<< HEAD
                     "context": [],
-                    "next": "fcd88119-817c-5ac1-a430-ba892ac743eb",
+                    "next": "assign-e-slab",
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
-                },
-                {
-                    "type": "assignment",
-                    "name": "e-slab",
-                    "head": false,
-                    "results": [],
-                    "monitors": [],
-                    "flowchartId": "fcd88119-817c-5ac1-a430-ba892ac743eb",
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "input": [
-                        {
-                            "name": "total_energy",
-                            "scope": "9fc7a088-5533-5f70-bb33-f676ec65f565"
-                        }
-                    ],
-                    "operand": "E_SLAB",
-                    "value": "total_energy",
-                    "next": "542ea9ad-8a07-5a76-b233-f72fb27c4fc6",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "type": "assignment",
-                    "name": "surface-energy",
-                    "head": false,
-=======
-                    "next": "assign-e-slab"
                 },
                 {
                     "name": "assign-e-slab",
@@ -1140,23 +782,18 @@
                             "scope": "pw-scf-surface-energy"
                         }
                     ],
-                    "flowchartId": "assign-e-slab",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-e-slab",
                     "head": false,
                     "next": "assign-surface-energy",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-surface-energy",
@@ -1164,43 +801,21 @@
                     "operand": "SURFACE_ENERGY",
                     "value": "1 / (2 * A) * (E_SLAB - E_BULK * (N_SLAB / N_BULK))",
                     "input": [],
-                    "flowchartId": "assign-surface-energy",
->>>>>>> ee23e1a0bf1f01e082e52c18fe2d2df9fa641612
                     "results": [
                         {
                             "name": "surface_energy"
                         }
                     ],
-<<<<<<< HEAD
                     "monitors": [],
-                    "flowchartId": "542ea9ad-8a07-5a76-b233-f72fb27c4fc6",
                     "preProcessors": [],
                     "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
-                    "input": [],
-                    "operand": "SURFACE_ENERGY",
-                    "value": "1 / (2 * A) * (E_SLAB - E_BULK * (N_SLAB/N_BULK))",
+                    "flowchartId": "assign-surface-energy",
+                    "head": false,
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
-=======
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
->>>>>>> ee23e1a0bf1f01e082e52c18fe2d2df9fa641612
                 }
             ],
             "schemaVersion": "2022.8.16",
@@ -1209,9 +824,8 @@
     ],
     "units": [
         {
-<<<<<<< HEAD
             "type": "subworkflow",
-            "name": "Surface Energy",
+            "name": "Get Material By ID",
             "results": [],
             "monitors": [],
             "preProcessors": [],
@@ -1219,8 +833,68 @@
             "status": "idle",
             "statusTrack": [],
             "tags": [],
-            "_id": "3e05a2b5-4171-54a2-9d2d-9e46118a56bf",
-            "flowchartId": "d81dc9ce-bb50-5bc6-af1d-e5ede03bb0a6",
+            "_id": "ad32fd60-cdf4-5c4a-8ad8-0cd8eafa4572",
+            "flowchartId": "77568205-b615-5ad5-ae25-9038d20a94de",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
+        },
+        {
+            "type": "subworkflow",
+            "name": "Resolve Bulk From Slab By Bulk ID",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "31958c8b-58fc-53c0-be83-c2675f37c7aa",
+            "flowchartId": "657a54c3-8a46-5e16-b56e-0c11cb40bdc0",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
+        },
+        {
+            "type": "subworkflow",
+            "name": "Resolve Bulk From Slab By Build",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "f7daa3d8-1174-57e4-8d23-7c1f7a476f31",
+            "flowchartId": "31273a7c-b460-5dd4-8ff8-5d7e027914b7",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
+        },
+        {
+            "type": "subworkflow",
+            "name": "Get Bulk Energy",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
+            "flowchartId": "772d0df2-fe8f-5842-bd5d-0fd2c9605955",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
+        },
+        {
+            "type": "subworkflow",
+            "name": "Surface Energy - QE",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "f9de6348-fcc4-54b7-a09d-c6496e22d33a",
+            "flowchartId": "ff05c104-effc-5c80-bb6a-ac041b833b71",
             "schemaVersion": "2022.8.16",
             "isDefault": false
         }
@@ -1235,64 +909,6 @@
         "total_energy_contributions",
         "total_force"
     ],
-=======
-            "name": "Get Material By ID",
-            "type": "subworkflow",
-            "_id": "ad32fd60-cdf4-5c4a-8ad8-0cd8eafa4572",
-            "status": "idle",
-            "statusTrack": [],
-            "flowchartId": "77568205-b615-5ad5-ae25-9038d20a94de",
-            "tags": [],
-            "head": true,
-            "next": "657a54c3-8a46-5e16-b56e-0c11cb40bdc0"
-        },
-        {
-            "name": "Resolve Bulk From Slab By Bulk ID",
-            "type": "subworkflow",
-            "_id": "31958c8b-58fc-53c0-be83-c2675f37c7aa",
-            "status": "idle",
-            "statusTrack": [],
-            "flowchartId": "657a54c3-8a46-5e16-b56e-0c11cb40bdc0",
-            "tags": [],
-            "head": false,
-            "next": "31273a7c-b460-5dd4-8ff8-5d7e027914b7"
-        },
-        {
-            "name": "Resolve Bulk From Slab By Build",
-            "type": "subworkflow",
-            "_id": "f7daa3d8-1174-57e4-8d23-7c1f7a476f31",
-            "status": "idle",
-            "statusTrack": [],
-            "flowchartId": "31273a7c-b460-5dd4-8ff8-5d7e027914b7",
-            "tags": [],
-            "head": false,
-            "next": "772d0df2-fe8f-5842-bd5d-0fd2c9605955"
-        },
-        {
-            "name": "Get Bulk Energy",
-            "type": "subworkflow",
-            "_id": "8bcfd726-4fcd-5b2f-b91e-493c61ee9014",
-            "status": "idle",
-            "statusTrack": [],
-            "flowchartId": "772d0df2-fe8f-5842-bd5d-0fd2c9605955",
-            "tags": [],
-            "head": false,
-            "next": "ff05c104-effc-5c80-bb6a-ac041b833b71"
-        },
-        {
-            "name": "Surface Energy - QE",
-            "type": "subworkflow",
-            "_id": "f9de6348-fcc4-54b7-a09d-c6496e22d33a",
-            "status": "idle",
-            "statusTrack": [],
-            "flowchartId": "ff05c104-effc-5c80-bb6a-ac041b833b71",
-            "tags": [],
-            "head": false
-        }
-    ],
-    "properties": [],
-    "_id": "847e467b-e76b-5bc4-b152-3faaba15e0fb",
->>>>>>> ee23e1a0bf1f01e082e52c18fe2d2df9fa641612
     "workflows": [],
     "schemaVersion": "2022.8.16",
     "isDefault": false,

@@ -29,7 +29,8 @@ units:
         config:
           attributes:
             input:
-              - endpoint: refined-properties
+              - type: api
+                endpoint: refined-properties
                 endpoint_options:
                   params:
                     query: >-

@@ -34,8 +34,3 @@ units:
       flavorName: mlff:mattersim:total_energy
       name: mattersim_total_energy
     type: executionBuilder
-    attributes:
-      results:
-        - name: file_content
-          basename: "results.csv"
-          filetype: "csv"

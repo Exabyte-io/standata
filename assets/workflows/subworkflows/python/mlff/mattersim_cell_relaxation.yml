@@ -13,7 +13,8 @@ units:
       source: api
       flowchartId: io-material-flowchart-id-ac93759e
       input:
-        - endpoint: materials
+        - type: api
+          endpoint: materials
           endpoint_options:
             params:
               query: "{'_id': MATERIAL_ID}"
@@ -33,11 +34,3 @@ units:
       flavorName: mlff:mattersim:cell_relaxation
       name: mattersim_cell_relaxation
     type: executionBuilder
-    attributes:
-      results:
-        - name: file_content
-          basename: "initial_structure.png"
-          filetype: "image"
-        - name: file_content
-          basename: "relaxed_structure.png"
-          filetype: "image"
