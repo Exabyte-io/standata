@@ -1,4 +1,6 @@
 # Expects E_MATERIAL, E_ELEMENTAL_SUM, and MATERIAL in context.
+# E_ELEMENTAL_SUM is set by get_elemental_energies (sum of E_ref/n_ref per atom in MATERIAL.basis).
+# Per cell: E_form = E_tot(material) - sum_i E_tot(element_i ref) / n_i.
 application:
   name: espresso
   version: "6.3"
@@ -10,15 +12,9 @@ name: Formation Energy - QE
 units:
   - type: assignment
     config:
-      name: assign-n-atoms
-      flowchartId: assign-n-atoms
-      operand: N_ATOMS
-      value: "len(MATERIAL.basis.elements)"
-  - type: assignment
-    config:
       name: assign-formation-energy
       flowchartId: assign-formation-energy
       operand: FORMATION_ENERGY
-      value: "(E_MATERIAL - E_ELEMENTAL_SUM) / N_ATOMS"
+      value: "E_MATERIAL - E_ELEMENTAL_SUM"
       results:
         - name: formation_energy

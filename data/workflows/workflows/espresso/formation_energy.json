@@ -268,7 +268,7 @@
                             "endpoint_options": {
                                 "params": {
                                     "query": "{'exabyteId': {'$in': [ELEMENT_MATERIALS[el].exabyteId for el in ELEMENTS]}, 'slug': 'total_energy'}",
-                                    "projection": "{'sort': {'precision.value': -1}}"
+                                    "projection": "{'sort': {'precision.value': -1}, 'limit': min(500, max(20, len(ELEMENTS) * 10))}"
                                 }
                             },
                             "name": "DATA"
@@ -293,7 +293,7 @@
                     "name": "assign-elemental-energies",
                     "type": "assignment",
                     "operand": "E_ELEMENTAL_BY_SYMBOL",
-                    "value": "{el: ([d.data.value for d in DATA if ELEMENT_MATERIALS[el].exabyteId in d.exabyteId] or [None])[0] for el in ELEMENTS}",
+                    "value": "{el: ([d.data.value for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)] or [None])[0] for el in ELEMENTS}",
                     "input": [
                         {
                             "name": "DATA",
@@ -301,6 +301,50 @@
                         }
                     ],
                     "flowchartId": "assign-elemental-energies",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-missing-elemental-energies",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-missing-elemental-energies",
+                    "type": "assignment",
+                    "operand": "MISSING_ELEMENTAL_ENERGIES",
+                    "value": "[el for el in ELEMENTS if E_ELEMENTAL_BY_SYMBOL[el] is None]",
+                    "input": [],
+                    "flowchartId": "assign-missing-elemental-energies",
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "head": false,
+                    "next": "assign-elemental-energies-error",
+                    "application": {
+                        "name": "shell",
+                        "shortName": "sh",
+                        "summary": "Shell Script",
+                        "build": "GNU",
+                        "isDefault": true,
+                        "version": "5.1.8",
+                        "schemaVersion": "2022.8.16"
+                    }
+                },
+                {
+                    "name": "assign-elemental-energies-error",
+                    "type": "assignment",
+                    "operand": "ELEMENTAL_ENERGIES_ERROR_MSG",
+                    "value": "'Missing elemental total_energy for: ' + ', '.join(MISSING_ELEMENTAL_ENERGIES) + '. Run QE total energy on Standata elemental materials (tags: elemental).' + ' exabyteIds: ' + ', '.join([el + '=' + ELEMENT_MATERIALS[el].exabyteId for el in MISSING_ELEMENTAL_ENERGIES])",
+                    "input": [],
+                    "flowchartId": "assign-elemental-energies-error",
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
@@ -319,8 +363,8 @@
                 {
                     "name": "assert-elemental-energies",
                     "type": "assertion",
-                    "statement": "all(E_ELEMENTAL_BY_SYMBOL[el] is not None for el in ELEMENTS)",
-                    "errorMessage": "Elemental total energy not found for one or more elements. Run QE total energy on the Standata elemental materials first.",
+                    "statement": "len(MISSING_ELEMENTAL_ENERGIES) == 0",
+                    "errorMessage": "ELEMENTAL_ENERGIES_ERROR_MSG",
                     "flowchartId": "assert-elemental-energies",
                     "status": "idle",
                     "statusTrack": [],
@@ -575,34 +619,10 @@
             },
             "units": [
                 {
-                    "name": "assign-n-atoms",
-                    "type": "assignment",
-                    "operand": "N_ATOMS",
-                    "value": "len(MATERIAL.basis.elements)",
-                    "input": [],
-                    "flowchartId": "assign-n-atoms",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": true,
-                    "next": "assign-formation-energy",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
                     "name": "assign-formation-energy",
                     "type": "assignment",
                     "operand": "FORMATION_ENERGY",
-                    "value": "(E_MATERIAL - E_ELEMENTAL_SUM) / N_ATOMS",
+                    "value": "E_MATERIAL - E_ELEMENTAL_SUM",
                     "input": [],
                     "flowchartId": "assign-formation-energy",
                     "results": [
@@ -613,7 +633,7 @@
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
-                    "head": false,
+                    "head": true,
                     "application": {
                         "isUsingMaterial": true,
                         "name": "espresso",

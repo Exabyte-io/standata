@@ -1,4 +1,4 @@
-# Formation energy per atom: (E_material - sum_i E_element,i) / N_atoms.
+# Formation energy per cell: E_tot(material) - sum_i E_tot(element_i ref) / n_i.
 # Elemental refs: Standata bank materials (tags: elemental, metadata.element).
 name: Formation Energy
 properties:

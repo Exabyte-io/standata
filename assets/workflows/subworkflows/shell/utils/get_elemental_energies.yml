@@ -1,5 +1,10 @@
-# Expects MATERIAL, ELEMENTS, and ELEMENT_MATERIALS in context. Loads total_energy
-# refined properties for each elemental reference (same pattern as get_e_bulk).
+# Expects MATERIAL, ELEMENTS, and ELEMENT_MATERIALS in context.
+# Fetches total_energy refined properties for all elemental reference exabyteIds,
+# then assigns one TE per element in E_ELEMENTAL_BY_SYMBOL (keyed by symbol).
+# Do not use projection limit 1 here (unlike get_e_bulk): that limit applies to the
+# whole API response. With multiple elements, limit 1 returns only one property total.
+# Per-element TE is chosen in assign-elemental-energies by filtering DATA on each
+# ELEMENT_MATERIALS[el].exabyteId and taking the highest-precision match ([0] after sort).
 application:
   name: shell
 method:
@@ -21,7 +26,9 @@ units:
               query: >-
                 {'exabyteId': {'$in': [ELEMENT_MATERIALS[el].exabyteId for el in ELEMENTS]},
                 'slug': 'total_energy'}
-              projection: "{'sort': {'precision.value': -1}}"
+              projection: >-
+                {'sort': {'precision.value': -1},
+                'limit': min(500, max(20, len(ELEMENTS) * 10))}
           name: DATA
   - type: assignment
     config:
@@ -30,19 +37,37 @@ units:
       operand: E_ELEMENTAL_BY_SYMBOL
       value: >-
         {el: ([d.data.value for d in DATA
-        if ELEMENT_MATERIALS[el].exabyteId in d.exabyteId] or [None])[0]
+        if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId
+        or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)] or [None])[0]
         for el in ELEMENTS}
       input:
         - name: DATA
           scope: io-elemental-energies
+  - type: assignment
+    config:
+      name: assign-missing-elemental-energies
+      flowchartId: assign-missing-elemental-energies
+      operand: MISSING_ELEMENTAL_ENERGIES
+      value: >-
+        [el for el in ELEMENTS if E_ELEMENTAL_BY_SYMBOL[el] is None]
+  - type: assignment
+    config:
+      name: assign-elemental-energies-error
+      flowchartId: assign-elemental-energies-error
+      operand: ELEMENTAL_ENERGIES_ERROR_MSG
+      value: >-
+        'Missing elemental total_energy for: '
+        + ', '.join(MISSING_ELEMENTAL_ENERGIES)
+        + '. Run QE total energy on Standata elemental materials (tags: elemental).'
+        + ' exabyteIds: '
+        + ', '.join([el + '=' + ELEMENT_MATERIALS[el].exabyteId for el in
+        MISSING_ELEMENTAL_ENERGIES])
   - type: assertion
     config:
       name: assert-elemental-energies
       flowchartId: assert-elemental-energies
-      statement: "all(E_ELEMENTAL_BY_SYMBOL[el] is not None for el in ELEMENTS)"
-      errorMessage: >-
-        Elemental total energy not found for one or more elements. Run QE total
-        energy on the Standata elemental materials first.
+      statement: "len(MISSING_ELEMENTAL_ENERGIES) == 0"
+      errorMessage: ELEMENTAL_ENERGIES_ERROR_MSG
   - type: assignment
     config:
       name: assign-elemental-energy-sum
