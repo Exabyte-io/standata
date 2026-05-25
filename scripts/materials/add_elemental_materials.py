@@ -17,6 +17,22 @@ git checkout feature/SOF-1409
 - Appends entries directly to manifest.yml
 - Appends entries to categories.yml
 - Lattice types written by AI
+
+Missing:
+Alkali / alkaline earth:
+Fr, Ra
+
+Post-transition / metalloids / halogens:
+Po, At
+
+Noble gases omitted from noble list:
+Rn, Og
+
+Actinides:
+Cm, Bk, Cf, Es, Fm, Md, No, Lr
+
+Superheavy / transactinides:
+Rf, Db, Sg, Bh, Hs, Mt, Ds, Rg, Cn, Nh, Fl, Mc, Lv, Ts
 """
 
 import yaml
