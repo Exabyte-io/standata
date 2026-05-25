@@ -20,6 +20,10 @@ sources:
     source: MaterialsProject
     doi: 10.17188/1208406
     url: https://next-gen.materialsproject.org/materials/mp-48
+    metadata:
+      element: C
+    tags:
+      - elemental
 
   - filename: 2dm-4991.poscar
     common_name: Hexagonal Boron Nitride
@@ -75,6 +79,10 @@ sources:
     source: MaterialsProject
     doi: 10.17188/1307925
     url: https://next-gen.materialsproject.org/materials/mp-81
+    metadata:
+      element: Au
+    tags:
+      - elemental
 
   - filename: mp-30.poscar
     common_name: Copper
@@ -86,6 +94,10 @@ sources:
     source: MaterialsProject
     doi: 10.17188/1204433
     url: https://next-gen.materialsproject.org/materials/mp-30s
+    metadata:
+      element: Cu
+    tags:
+      - elemental
 
   - filename: mp-2534.poscar
     common_name: Gallium Arsenide
@@ -185,6 +197,10 @@ sources:
     source: MaterialsProject
     doi: 10.17188/1199153
     url: https://next-gen.materialsproject.org/materials/mp-23
+    metadata:
+      element: Ni
+    tags:
+      - elemental
 
   - filename: 2dm-5934.poscar
     common_name: Silicene
@@ -354,6 +370,10 @@ sources:
     source: MaterialsProject
     doi: 10.17188/1204433
     url: https://next-gen.materialsproject.org/materials/mp-126
+    metadata:
+      element: Pt
+    tags:
+      - elemental
 
   - filename: mp-5229.poscar
     common_name: Strontium Titanate
@@ -508,3 +528,7 @@ sources:
     source: MaterialsProject
     doi: 10.17188/1206032
     url: https://next-gen.materialsproject.org/materials/mp-32
+    metadata:
+        element: Ge
+    tags:
+      - elemental
