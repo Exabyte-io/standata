@@ -39,6 +39,24 @@ def read_manifest(manifest_path: str):
     return manifest['sources']
 
 
+def strip_poscar_comments(poscar: str) -> str:
+    """
+    Removes inline comments from POSCAR file content.
+
+    Args:
+        poscar (str): Raw POSCAR file content.
+
+    Returns:
+        str: POSCAR content with inline comments removed.
+    """
+    cleaned_lines = []
+    for line in poscar.split('\n'):
+        if '!' in line:
+            line = line.split('!')[0].rstrip()
+        cleaned_lines.append(line)
+    return '\n'.join(cleaned_lines)
+
+
 def convert_to_esse(poscar: str):
     """
     Converts a POSCAR structure to ESSE format.
@@ -49,8 +67,10 @@ def convert_to_esse(poscar: str):
     Returns:
         dict: ESSE material configuration.
     """
+    cleaned_poscar = strip_poscar_comments(poscar)
+
     kwargs = {
-        "structure_string": poscar,
+        "structure_string": cleaned_poscar,
         "cell_type": "original",
         "structure_format": "poscar",
     }
