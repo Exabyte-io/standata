@@ -8,9 +8,15 @@ Usage:
 3. Comment out elements in ELEMENT_DATA to skip them
 
 This script:
-- Copies POSCAR files from local cloned repo
+- Copies POSCAR files from local cloned repo:
+```
+clone git@github.com:Exabyte-io/exabyte-benchmarks-suite-old.git
+git fetch origin pull/9/head:feature/SOF-1409
+git checkout feature/SOF-1409
+```
 - Appends entries directly to manifest.yml
 - Appends entries to categories.yml
+- Lattice types written by AI
 """
 
 import yaml
@@ -34,13 +40,21 @@ EXISTING_ELEMENTS = {"C", "Au", "Cu", "Ge", "Ni", "Pt", "Si"}
 # Molecular elements (diatomic molecules in a box - need isNonPeriodic: True)
 MOLECULAR_ELEMENTS = {"H", "N", "O", "F", "Cl", "Br", "I"}
 
+# Noble gases (separated - may need special POSCAR construction later)
+NOBLE_GASES = {
+    "He": {"name": "Helium", "crystal": "HEX"},
+    "Ne": {"name": "Neon", "crystal": "FCC"},
+    "Ar": {"name": "Argon", "crystal": "FCC"},
+    "Kr": {"name": "Krypton", "crystal": "FCC"},
+    "Xe": {"name": "Xenon", "crystal": "FCC"},
+}
+
 # Element metadata - comment out elements to skip them
 ELEMENT_DATA = {
     "Ac": {"name": "Actinium", "crystal": "FCC"},
     "Ag": {"name": "Silver", "crystal": "FCC"},
     "Al": {"name": "Aluminum", "crystal": "FCC"},
     "Am": {"name": "Americium", "crystal": "HEX"},
-    "Ar": {"name": "Argon", "crystal": "FCC"},
     "As": {"name": "Arsenic", "crystal": "RHL"},
     "B": {"name": "Boron", "crystal": "RHL"},
     "Ba": {"name": "Barium", "crystal": "BCC"},
@@ -62,7 +76,6 @@ ELEMENT_DATA = {
     "Ga": {"name": "Gallium", "crystal": "ORC"},
     "Gd": {"name": "Gadolinium", "crystal": "HEX"},
     "H": {"name": "Hydrogen", "crystal": "HEX"},  # H2 molecule
-    "He": {"name": "Helium", "crystal": "HEX"},
     "Hf": {"name": "Hafnium", "crystal": "HEX"},
     "Hg": {"name": "Mercury", "crystal": "RHL"},
     "Ho": {"name": "Holmium", "crystal": "HEX"},
@@ -70,7 +83,6 @@ ELEMENT_DATA = {
     "In": {"name": "Indium", "crystal": "TET"},
     "Ir": {"name": "Iridium", "crystal": "FCC"},
     "K": {"name": "Potassium", "crystal": "BCC"},
-    "Kr": {"name": "Krypton", "crystal": "FCC"},
     "La": {"name": "Lanthanum", "crystal": "HEX"},
     "Li": {"name": "Lithium", "crystal": "BCC"},
     "Lu": {"name": "Lutetium", "crystal": "HEX"},
@@ -81,7 +93,6 @@ ELEMENT_DATA = {
     "Na": {"name": "Sodium", "crystal": "BCC"},
     "Nb": {"name": "Niobium", "crystal": "BCC"},
     "Nd": {"name": "Neodymium", "crystal": "HEX"},
-    "Ne": {"name": "Neon", "crystal": "FCC"},
     "Np": {"name": "Neptunium", "crystal": "ORC"},
     "O": {"name": "Oxygen", "crystal": "MCL"},  # O2 molecule
     "Os": {"name": "Osmium", "crystal": "HEX"},
@@ -114,7 +125,6 @@ ELEMENT_DATA = {
     "U": {"name": "Uranium", "crystal": "ORC"},
     "V": {"name": "Vanadium", "crystal": "BCC"},
     "W": {"name": "Tungsten", "crystal": "BCC"},
-    "Xe": {"name": "Xenon", "crystal": "FCC"},
     "Y": {"name": "Yttrium", "crystal": "HEX"},
     "Yb": {"name": "Ytterbium", "crystal": "FCC"},
     "Zn": {"name": "Zinc", "crystal": "HEX"},
