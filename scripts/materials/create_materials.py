@@ -112,11 +112,26 @@ def construct_filename(material_config: Dict[str, str], source: Dict[str, str]) 
         str: Filename of the JSON file.
     """
 
+    # Noble gases (monoatomic gases)
+    NOBLE_GASES = {"He", "Ne", "Ar", "Kr", "Xe"}
+
+    # For molecular structures, use unitCellFormula which gives molecular formula (e.g., Br2)
+    # instead of reduced formula (e.g., Br)
+    # Exception: noble gases should use just element symbol (He, Ne, etc.), not He2, Ne1, etc.
+    if source.get("isNonPeriodic", False):
+        element = source.get("metadata", {}).get("element", "")
+        if element in NOBLE_GASES:
+            formula = element
+        else:
+            formula = material_config.get("unitCellFormula", material_config["formula"])
+    else:
+        formula = material_config["formula"]
+
     # Slugify the common name
     common_name = source["common_name"].replace(' ', '_')
     # Create slugified filename
     filename_parts = [
-        material_config["formula"],
+        formula,
         f'[{common_name}]',
         f'{source["lattice_type"]}_[{source["space_group"]}]_{source["dimensionality"]}_[{source["form_factor"]}]',
         f'[{source["source_id"]}]'
