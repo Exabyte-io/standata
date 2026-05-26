@@ -1,14 +1,13 @@
 {
     "name": "lammps",
     "shortName": "lmp",
-    "build": "GNU",
-    "version": "2025.07.22.2",
     "summary": "LAMMPS",
-    "isLicensed": false,
     "isUsingMaterial": true,
-    "hasAdvancedComputeOptions": false,
+    "version": "2025.07.22.2",
     "isDefault": true,
     "isDefaultVersion": true,
+    "build": "GNU",
+    "hasAdvancedComputeOptions": false,
     "buildConfig": {
         "moduleName": "2025.07.22.2-gnu",
         "imageName": "lammps",

@@ -160,11 +160,7 @@
                                 "applicationName": "vasp",
                                 "applicationVersion": "*",
                                 "content": "ISTART = 0\nENCUT = 500\nISPIN = 2\n",
-                                "contextProviders": [
-                                    {
-                                        "name": "NEBFormDataManager"
-                                    }
-                                ],
+                                "contextProviders": [],
                                 "executableName": "vasp",
                                 "name": "INCAR",
                                 "schemaVersion": "2022.8.16"
@@ -334,11 +330,7 @@
                                 "applicationName": "vasp",
                                 "applicationVersion": "*",
                                 "content": "ISTART = 0\nENCUT = 500\nISPIN = 2\n",
-                                "contextProviders": [
-                                    {
-                                        "name": "NEBFormDataManager"
-                                    }
-                                ],
+                                "contextProviders": [],
                                 "executableName": "vasp",
                                 "name": "INCAR",
                                 "schemaVersion": "2022.8.16"
@@ -416,7 +408,6 @@
                 "hasAdvancedComputeOptions": false,
                 "isDefault": true,
                 "isDefaultVersion": true,
-                "isLicensed": false,
                 "isUsingMaterial": false,
                 "name": "shell",
                 "shortName": "sh",
@@ -456,7 +447,6 @@
                         "hasAdvancedComputeOptions": false,
                         "isDefault": true,
                         "isDefaultVersion": true,
-                        "isLicensed": false,
                         "isUsingMaterial": false,
                         "name": "shell",
                         "shortName": "sh",

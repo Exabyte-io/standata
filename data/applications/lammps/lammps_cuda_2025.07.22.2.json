@@ -1,14 +1,13 @@
 {
     "name": "lammps",
     "shortName": "lmp",
-    "build": "CUDA",
-    "version": "2025.07.22.2",
     "summary": "LAMMPS",
-    "isLicensed": false,
     "isUsingMaterial": true,
-    "hasAdvancedComputeOptions": false,
+    "version": "2025.07.22.2",
     "isDefault": false,
     "isDefaultVersion": true,
+    "build": "CUDA",
+    "hasAdvancedComputeOptions": false,
     "buildConfig": {
         "moduleName": "2025.07.22.2-intel-2023.1-cuda-12.8",
         "imageName": "lammps",

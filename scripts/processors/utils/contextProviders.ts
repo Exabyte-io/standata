@@ -1,40 +1,24 @@
 import type { TemplateSchema } from "@mat3ra/esse/dist/js/types";
+import serverUtils from "@mat3ra/utils/server";
+import * as path from "path";
+
+import { BUILD_CONFIG } from "../../../build-config";
 
 /**
  * Maps Standata template `contextProviders[].name` (wode class names) to the Jinja
  * rendering-context key each provider exposes via `ContextProvider.name`.
  *
+ * Source: dist/js/runtime_data/applications/contextProviderJinjaKeysByClassName.json
  * Keep in sync with `PROVIDER_REGISTRY` in `@mat3ra/wode` (`context/providers/index.ts`).
  */
-const CONTEXT_PROVIDER_JINJA_KEYS = {
-    PlanewaveCutoffDataManager: "cutoffs",
-    KGridFormDataManager: "kgrid",
-    QGridFormDataManager: "qgrid",
-    IGridFormDataManager: "igrid",
-    QPathFormDataManager: "qpath",
-    IPathFormDataManager: "ipath",
-    KPathFormDataManager: "kpath",
-    ExplicitKPathFormDataManager: "explicitKPath",
-    ExplicitKPath2PIBAFormDataManager: "explicitKPath2PIBA",
-    HubbardJContextManager: "hubbard_j",
-    HubbardUContextManager: "hubbard_u",
-    HubbardVContextManager: "hubbard_v",
-    HubbardContextManagerLegacy: "hubbard_legacy",
-    NEBFormDataManager: "neb",
-    BoundaryConditionsFormDataManager: "boundaryConditions",
-    MLSettingsDataManager: "mlSettings",
-    MLTrainTestSplitDataManager: "mlTrainTestSplit",
-    IonDynamicsContextProvider: "dynamics",
-    CollinearMagnetizationDataManager: "collinearMagnetization",
-    NonCollinearMagnetizationDataManager: "nonCollinearMagnetization",
-    QEPWXInputDataManager: "input",
-    QENEBInputDataManager: "input",
-    VASPInputDataManager: "input",
-    VASPNEBInputDataManager: "input",
-    NWChemInputDataManager: "input",
-} as const;
-
-type ContextProviderClassName = keyof typeof CONTEXT_PROVIDER_JINJA_KEYS;
+const CONTEXT_PROVIDER_JINJA_KEYS = serverUtils.json.readJSONFileSync(
+    path.resolve(
+        __dirname,
+        "../../..",
+        BUILD_CONFIG.distRuntimeDataDir,
+        "applications/contextProviderJinjaKeysByClassName.json",
+    ),
+) as Record<string, string>;
 
 type UnusedTemplateContextProviderIssue = {
     applicationName: string;
@@ -50,33 +34,8 @@ type TemplateForLint = Pick<
     "name" | "content" | "contextProviders" | "applicationName" | "executableName"
 >;
 
-/**
- * Templates may declare context providers that are not referenced in Jinja when the
- * provider is required for unit-level UI (e.g. Important settings) on the same execution unit.
- */
-const TEMPLATE_CONTEXT_PROVIDER_LINT_ALLOWLIST = new Set<string>([
-    // NEB image count is edited in Important settings; static INCAR for initial/final endpoints.
-    "vasp/vasp/INCAR_NEB_INITIAL_FINAL/NEBFormDataManager",
-]);
-
 function getContextProviderJinjaKey(providerClassName: string): string | undefined {
-    return CONTEXT_PROVIDER_JINJA_KEYS[providerClassName as ContextProviderClassName];
-}
-
-function isTemplateContextProviderLintAllowed(templateRef: {
-    applicationName: string;
-    executableName: string;
-    name: string;
-    providerClassName: string;
-}): boolean {
-    const key = [
-        templateRef.applicationName,
-        templateRef.executableName,
-        templateRef.name,
-        templateRef.providerClassName,
-    ].join("/");
-
-    return TEMPLATE_CONTEXT_PROVIDER_LINT_ALLOWLIST.has(key);
+    return CONTEXT_PROVIDER_JINJA_KEYS[providerClassName];
 }
 
 function stripJinjaRawBlocks(templateContent: string): string {
@@ -94,19 +53,8 @@ function findUnusedTemplateContextProviders(
 ): UnusedTemplateContextProviderIssue[] {
     const content = template.content ?? "";
 
-    return (template.contextProviders ?? []).flatMap((provider) => {
+    return template.contextProviders.flatMap((provider) => {
         const providerClassName = provider.name;
-
-        if (
-            isTemplateContextProviderLintAllowed({
-                applicationName: template.applicationName,
-                executableName: template.executableName,
-                name: template.name,
-                providerClassName,
-            })
-        ) {
-            return [];
-        }
 
         const jinjaKey = getContextProviderJinjaKey(providerClassName);
         if (!jinjaKey) {
@@ -149,7 +97,7 @@ export function validateTemplateContextProviders(templates: TemplateForLint[]): 
         if (issue.reason === "unknown-provider") {
             return [
                 `${issue.applicationName}/${issue.executableName} template "${issue.templateName}":`,
-                `  unknown context provider "${issue.providerClassName}" (not in CONTEXT_PROVIDER_JINJA_KEYS)`,
+                `  unknown context provider "${issue.providerClassName}" (not in contextProviderJinjaKeysByClassName.json)`,
             ].join("\n");
         }
 
@@ -165,7 +113,7 @@ export function validateTemplateContextProviders(templates: TemplateForLint[]): 
             "",
             ...lines,
             "",
-            "Each template must reference every declared context provider's Jinja key, or be listed in contextProviders.ts allowlist.",
+            "Each template must reference every declared context provider's Jinja key.",
         ].join("\n"),
     );
 }

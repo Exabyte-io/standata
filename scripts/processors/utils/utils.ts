@@ -18,7 +18,14 @@ export type FunctionsConfig = {
     };
 };
 
-export function applyFunctionsConfig<T extends Partial<ComputePropertySchema>>(
+/**
+ * Applies optional post-build hooks declared in workflow/subworkflow YAML `config.functions`.
+ *
+ * Keys are hook names; values are ignored (`null` in YAML marks presence only). Each enabled
+ * hook merges its return value into the entity. Used when building standata workflows and
+ * subworkflows (e.g. `setDefaultCompute` injects default `compute` from `@mat3ra/ide`).
+ */
+export function applyFunctionsFromConfig<T extends Partial<ComputePropertySchema>>(
     entity: T,
     functionsConfig?: FunctionsConfig["functions"],
 ): T {

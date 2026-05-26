@@ -34,7 +34,7 @@ import ExecutionUnitConfigBuilder, {
 } from "./unitBuilders/ExecutionUnitConfigBuilder";
 import {
     type FunctionsConfig,
-    applyFunctionsConfig,
+    applyFunctionsFromConfig,
     generateFlowChartId,
     generateSubworkflowId,
     validateData,
@@ -249,7 +249,7 @@ export default function createSubworkflow(subworkflowData: SubworkflowData, cach
         ...config?.attributes,
     };
 
-    const finalSubworkflow = applyFunctionsConfig(subworkflow, config?.functions);
+    const finalSubworkflow = applyFunctionsFromConfig(subworkflow, config?.functions);
 
     return validateData(finalSubworkflow, "workflow/subworkflow");
 }

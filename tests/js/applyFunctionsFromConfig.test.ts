@@ -1,18 +1,18 @@
 import { expect } from "chai";
 
-import { applyFunctionsConfig } from "../../scripts/processors/utils/utils";
+import { applyFunctionsFromConfig } from "../../scripts/processors/utils/utils";
 
-describe("applyFunctionsConfig", () => {
+describe("applyFunctionsFromConfig", () => {
     it("leaves entity unchanged when functions config is absent", () => {
         const entity = { name: "test-workflow" };
 
-        expect(applyFunctionsConfig(entity)).to.deep.equal(entity);
+        expect(applyFunctionsFromConfig(entity)).to.deep.equal(entity);
     });
 
     it("applies setDefaultCompute when requested", () => {
         const entity = { name: "phonon_map_workflow" };
 
-        const result = applyFunctionsConfig(entity, { setDefaultCompute: null });
+        const result = applyFunctionsFromConfig(entity, { setDefaultCompute: null });
 
         expect(result).to.have.property("compute");
         expect(result.compute).to.include({

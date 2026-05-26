@@ -13,7 +13,7 @@ import createSubworkflow, {
 import { defaultMapConfig, defaultSubworkflowUnitConfig } from "./defaults";
 import {
     type FunctionsConfig,
-    applyFunctionsConfig,
+    applyFunctionsFromConfig,
     generateDefaultWorkflowId,
     generateFlowChartId,
     generateWorkflowId,
@@ -203,7 +203,7 @@ function createWorkflowFromWorkflowData(
 
     const workflowWithUnits = workflowData.units.reduce((acc, unitData) => {
         if (unitData.type === "workflow") {
-            const workflow = applyFunctionsConfig(
+            const workflow = applyFunctionsFromConfig(
                 createWorkflowFromWorkflowData(appName, unitData, subworkflows, cache),
                 unitData.config?.functions,
             );

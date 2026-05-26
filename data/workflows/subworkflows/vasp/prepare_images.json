@@ -36,7 +36,6 @@
                 "hasAdvancedComputeOptions": false,
                 "isDefault": true,
                 "isDefaultVersion": true,
-                "isLicensed": false,
                 "isUsingMaterial": false,
                 "name": "shell",
                 "shortName": "sh",

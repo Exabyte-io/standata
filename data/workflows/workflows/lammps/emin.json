@@ -10,7 +10,6 @@
                 "hasAdvancedComputeOptions": false,
                 "isDefault": true,
                 "isDefaultVersion": true,
-                "isLicensed": false,
                 "isUsingMaterial": true,
                 "name": "lammps",
                 "runConfig": {
@@ -54,7 +53,6 @@
                         "hasAdvancedComputeOptions": false,
                         "isDefault": true,
                         "isDefaultVersion": true,
-                        "isLicensed": false,
                         "isUsingMaterial": true,
                         "name": "lammps",
                         "runConfig": {

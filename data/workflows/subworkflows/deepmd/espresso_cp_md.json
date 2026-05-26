@@ -37,7 +37,6 @@
                 "hasAdvancedComputeOptions": true,
                 "isDefault": true,
                 "isDefaultVersion": true,
-                "isLicensed": false,
                 "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",

@@ -38,16 +38,16 @@ function applicationAssetToSchemas(appData: ApplicationYAMLItem) {
         const app: ApplicationWithBuildConfig = {
             name: appData.name,
             shortName: appData.shortName,
-            build: version.build,
-            version: version.version,
             summary: appData.summary,
-            isLicensed: Boolean(appData.isLicensed),
             isUsingMaterial: Boolean(appData.isUsingMaterial),
-            hasAdvancedComputeOptions: Boolean(version.hasAdvancedComputeOptions),
+            version: version.version,
             isDefault: Boolean(version.isDefault),
             isDefaultVersion: appData.defaultVersion === version.version,
+            build: version.build,
+            hasAdvancedComputeOptions: Boolean(version.hasAdvancedComputeOptions),
             buildConfig: version.buildConfig,
             runConfig: appData.runConfig,
+            isLicensed: appData.isLicensed ? true : undefined,
         };
 
         return app;

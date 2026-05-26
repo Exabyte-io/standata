@@ -84,20 +84,6 @@ describe("template context provider lint", () => {
         ).to.throw(/unknown context provider "NotARealProvider"/);
     });
 
-    it("respects the lint allowlist for ui-only provider declarations", () => {
-        expect(() =>
-            validateTemplateContextProviders([
-                {
-                    name: "INCAR_NEB_INITIAL_FINAL",
-                    applicationName: "vasp",
-                    executableName: "vasp",
-                    content: "ISTART = 0",
-                    contextProviders: [{ name: "NEBFormDataManager" }],
-                },
-            ]),
-        ).to.not.throw();
-    });
-
     it("throws a formatted error when validation fails", () => {
         expect(() =>
             validateTemplateContextProviders([
