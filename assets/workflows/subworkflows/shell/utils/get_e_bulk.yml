@@ -29,7 +29,7 @@ units:
       name: assign-e-bulk
       flowchartId: assign-e-bulk
       operand: E_BULK
-      value: 'DATA[0].data.value if DATA else None'
+      value: "DATA[0].data.value if DATA else None"
       input:
         - name: DATA
           scope: io-e-bulk
@@ -37,7 +37,7 @@ units:
     config:
       name: assert-e-bulk
       flowchartId: assert-e-bulk
-      statement: 'E_BULK != None'
+      statement: "E_BULK != None"
       errorMessage: >-
         Bulk total energy does not exist for the resolved bulk material. Run a
         bulk total energy workflow first.

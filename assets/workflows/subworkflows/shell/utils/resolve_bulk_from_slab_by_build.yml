@@ -10,7 +10,7 @@ units:
     config:
       name: is-bulk-present
       flowchartId: is-bulk-present
-      statement: 'BULK is not None'
+      statement: "BULK is not None"
       then: done
       else: assign-crystal
   - type: assignment
@@ -37,7 +37,7 @@ units:
     config:
       name: assert-bulk-query
       flowchartId: assert-bulk-query
-      statement: 'BULK_QUERY != None'
+      statement: "BULK_QUERY != None"
       errorMessage: >-
         Surface slab build metadata does not carry a crystal scaledHash or hash.
         Upload the bulk material and run its total energy workflow first.
@@ -52,15 +52,15 @@ units:
           endpoint: materials
           endpoint_options:
             params:
-              query: 'BULK_QUERY'
-              projection: '{}'
+              query: "BULK_QUERY"
+              projection: "{}"
           name: DATA
   - type: assignment
     config:
       name: assign-bulk
       flowchartId: assign-bulk
       operand: BULK
-      value: 'DATA[0] if DATA else None'
+      value: "DATA[0] if DATA else None"
       input:
         - name: DATA
           scope: io-bulk
@@ -68,7 +68,7 @@ units:
     config:
       name: assert-bulk
       flowchartId: assert-bulk
-      statement: 'BULK != None'
+      statement: "BULK != None"
       errorMessage: >-
         No bulk material matched the resolved slab build metadata query.
         Upload the bulk material and run its total energy workflow first.
@@ -77,7 +77,7 @@ units:
       name: done
       flowchartId: done
       operand: BULK
-      value: 'BULK'
+      value: "BULK"
       input:
         - name: BULK
           scope: global

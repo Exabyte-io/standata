@@ -18,13 +18,13 @@ units:
           endpoint_options:
             params:
               query: "{'_id': MATERIAL_ID}"
-              projection: '{}'
+              projection: "{}"
           name: DATA
     type: io
   - config:
       name: assign-material
       operand: MATERIAL
-      value: 'DATA[0]'
+      value: "DATA[0]"
       input:
         - name: DATA
           scope: io-material-flowchart-id-ac93759e
