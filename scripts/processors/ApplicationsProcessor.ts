@@ -47,6 +47,7 @@ function applicationAssetToSchemas(appData: ApplicationYAMLItem) {
             isDefault: Boolean(version.isDefault),
             isDefaultVersion: appData.defaultVersion === version.version,
             buildConfig: version.buildConfig,
+            runConfig: appData.runConfig,
         };
 
         return app;

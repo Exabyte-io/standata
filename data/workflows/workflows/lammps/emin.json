@@ -13,6 +13,10 @@
                 "isLicensed": false,
                 "isUsingMaterial": true,
                 "name": "lammps",
+                "runConfig": {
+                    "commandTemplate": "{BASE_CMD} &&\n{MODULE_CMD}\n$EXEC_CMD mpirun -machinefile {MACHINEFILE} -np {NP} {EXECUTABLE} -i {INPUTFILE} -l {OUTPUTFILE}\n",
+                    "outFileName": "log.out"
+                },
                 "shortName": "lmp",
                 "summary": "LAMMPS",
                 "version": "2025.07.22.2",
@@ -53,6 +57,10 @@
                         "isLicensed": false,
                         "isUsingMaterial": true,
                         "name": "lammps",
+                        "runConfig": {
+                            "commandTemplate": "{BASE_CMD} &&\n{MODULE_CMD}\n$EXEC_CMD mpirun -machinefile {MACHINEFILE} -np {NP} {EXECUTABLE} -i {INPUTFILE} -l {OUTPUTFILE}\n",
+                            "outFileName": "log.out"
+                        },
                         "shortName": "lmp",
                         "summary": "LAMMPS",
                         "version": "2025.07.22.2",

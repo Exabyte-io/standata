@@ -23,5 +23,9 @@
             "APPTAINERENV_I_MPI_ROOT": "$env(SOFTWARE_LIBRARIES_PATH)/intel-oneapi/2023.1.0/mpi/2021.9.0",
             "APPTAINERENV_MKLROOT": "$env(SOFTWARE_LIBRARIES_PATH)/intel-oneapi/2023.1.0/mkl/2023.1.0"
         }
+    },
+    "runConfig": {
+        "commandTemplate": "{BASE_CMD} &&\n{MODULE_CMD}\n$EXEC_CMD mpirun -machinefile {MACHINEFILE} -np {NP} {EXECUTABLE} -i {INPUTFILE} -l {OUTPUTFILE}\n",
+        "outFileName": "log.out"
     }
 }

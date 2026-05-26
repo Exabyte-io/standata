@@ -1,6 +1,6 @@
 import { type RuntimeItemsSchema, type TemplateSchema, ApplicationSchema, ExecutableSchema, FlavorSchema } from "@mat3ra/esse/dist/js/types";
 type VersionFields = "isDefault" | "build" | "hasAdvancedComputeOptions" | "version";
-type ApplicationFields = "name" | "shortName" | "summary" | "isLicensed" | "isUsingMaterial";
+type ApplicationFields = "name" | "shortName" | "summary" | "isLicensed" | "isUsingMaterial" | "runConfig";
 type RuntimeItemsFields = keyof RuntimeItemsSchema;
 type PartialPick<T, K extends keyof T> = Partial<Pick<T, K>>;
 type ApplicationVersion = Pick<ApplicationSchema, VersionFields> & {
