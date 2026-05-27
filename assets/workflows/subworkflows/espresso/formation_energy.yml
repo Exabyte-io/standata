@@ -1,6 +1,6 @@
-# Expects E_MATERIAL, E_ELEMENTAL_SUM, and MATERIAL in context.
-# E_ELEMENTAL_SUM is set by get_elemental_energies (sum of E_ref/n_ref per atom in MATERIAL.basis).
-# Per cell: E_form = E_tot(material) - sum_i E_tot(element_i ref) / n_i.
+# Expects E_MATERIAL, E_ELEMENTAL_BY_SYMBOL, ELEMENT_MATERIALS, and MATERIAL in context.
+# E_ELEMENTAL_SUM from get_elemental_energies uses bank total_energy per element.
+# Per atom (eV/atom): E_form = (E_tot(material) - sum_i E_tot(element_i ref) / n_i) / N_atoms.
 application:
   name: espresso
   version: "6.3"
@@ -15,6 +15,6 @@ units:
       name: assign-formation-energy
       flowchartId: assign-formation-energy
       operand: FORMATION_ENERGY
-      value: "E_MATERIAL - E_ELEMENTAL_SUM"
+      value: "(E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)"
       results:
         - name: formation_energy

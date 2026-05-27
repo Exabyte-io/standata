@@ -1,8 +1,6 @@
 # Expects MATERIAL, ELEMENTS, and ELEMENT_MATERIALS in context.
 # Fetches total_energy refined properties for all elemental reference exabyteIds,
 # then assigns one TE per element in E_ELEMENTAL_BY_SYMBOL (keyed by symbol).
-# Do not use projection limit 1 here (unlike get_e_bulk): that limit applies to the
-# whole API response. With multiple elements, limit 1 returns only one property total.
 # Per-element TE is chosen in assign-elemental-energies by filtering DATA on each
 # ELEMENT_MATERIALS[el].exabyteId and taking the highest-precision match ([0] after sort).
 application:
