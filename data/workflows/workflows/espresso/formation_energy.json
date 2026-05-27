@@ -622,7 +622,7 @@
                     "name": "assign-formation-energy",
                     "type": "assignment",
                     "operand": "FORMATION_ENERGY",
-                    "value": "E_MATERIAL - E_ELEMENTAL_SUM",
+                    "value": "(E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)",
                     "input": [],
                     "flowchartId": "assign-formation-energy",
                     "results": [
