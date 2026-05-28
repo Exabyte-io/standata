@@ -2,8 +2,6 @@ import type {
     ApplicationSchema,
     AssertionUnitSchema,
     AssignmentUnitSchema,
-    ComputeArgumentsSchema,
-    ComputePropertySchema,
     ConditionUnitSchema,
     DataIOUnitSchema,
     DFTModelSchema,
@@ -13,7 +11,6 @@ import type {
     UnknownModelSchema,
     WorkflowBaseUnitSchema,
 } from "@mat3ra/esse/dist/js/types";
-import { getDefaultComputeConfig } from "@mat3ra/ide";
 import {
     default_methods as MethodConfigs,
     default_models as ModelConfigs,
@@ -22,8 +19,8 @@ import {
     ModelFactory,
 } from "@mat3ra/mode";
 
-import { type ApplicationConfig, ApplicationStandata } from "../../../src/js/application";
 import { ApplicationMethodStandata } from "../../../src/js/applicationMethod";
+import ApplicationRegistry from "../../../src/js/ApplicationRegistry";
 import { setUnitLinks } from "../../../src/js/utils/unit";
 import {
     defaultAssertionUnit,
@@ -35,7 +32,13 @@ import { dynamicSubworkflowsByApp, getSurfaceEnergySubworkflowUnits } from "./dy
 import ExecutionUnitConfigBuilder, {
     type ExecutionConfig,
 } from "./unitBuilders/ExecutionUnitConfigBuilder";
-import { generateFlowChartId, generateSubworkflowId, validateData } from "./utils";
+import {
+    type FunctionsConfig,
+    applyFunctionsFromConfig,
+    generateFlowChartId,
+    generateSubworkflowId,
+    validateData,
+} from "./utils";
 
 type UnitConfig<T extends { type: string }> = {
     type: T["type"];
@@ -96,17 +99,11 @@ type DynamicSubworkflow = {
     subfolder?: "espresso";
 };
 
-export type SubworkflowFunctionsConfig = {
-    functions?: {
-        setDefaultCompute: null;
-    };
-};
-
-type SubworkflowConfig = AttributesConfig & Partial<SubworkflowSchema> & SubworkflowFunctionsConfig;
+type SubworkflowConfig = AttributesConfig & Partial<SubworkflowSchema> & FunctionsConfig;
 
 export type SubworkflowData = {
     name: string;
-    application: ApplicationConfig;
+    application: Pick<ApplicationSchema, "name" | "version">;
     model: ModelConfig;
     method: MethodConfig;
     units: AnyUnitConfig[];
@@ -207,26 +204,9 @@ function createDynamicUnits<T extends WorkflowBaseUnitSchema>(
     throw new Error(`dynamicSubworkflow=${name} not recognized`);
 }
 
-function applySubworkflowFunctions<T extends Partial<ComputePropertySchema>>(
-    subworkflow: T,
-    functionsConfig?: object,
-) {
-    const functions = {
-        setDefaultCompute: (): ComputePropertySchema => {
-            return { compute: getDefaultComputeConfig() as ComputeArgumentsSchema };
-        },
-    };
-
-    return Object.entries(functionsConfig || {}).reduce((acc, [funcName]) => {
-        return {
-            ...acc,
-            ...functions[funcName]?.(),
-        };
-    }, subworkflow);
-}
-
 export default function createSubworkflow(subworkflowData: SubworkflowData, cache: string[] = []) {
-    const application = new ApplicationStandata().getApplication(subworkflowData.application);
+    const application = new ApplicationRegistry().findApplication(subworkflowData.application);
+
     const model = createModel(subworkflowData.model);
     const method = createMethod(subworkflowData.method, application);
     const units = createUnits(subworkflowData.units, application, cache);
@@ -269,7 +249,7 @@ export default function createSubworkflow(subworkflowData: SubworkflowData, cach
         ...config?.attributes,
     };
 
-    const finalSubworkflow = applySubworkflowFunctions(subworkflow, config?.functions);
+    const finalSubworkflow = applyFunctionsFromConfig(subworkflow, config?.functions);
 
     return validateData(finalSubworkflow, "workflow/subworkflow");
 }

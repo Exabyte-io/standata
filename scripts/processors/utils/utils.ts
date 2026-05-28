@@ -4,10 +4,44 @@ import type {
     ApplicationSchema,
     BaseMethod,
     BaseModel,
+    ComputeArgumentsSchema,
+    ComputePropertySchema,
     SubworkflowSchema,
 } from "@mat3ra/esse/dist/js/types";
 import * as ajv from "@mat3ra/esse/dist/js/utils/ajv";
+import { getDefaultComputeConfig } from "@mat3ra/ide";
 import { Utils } from "@mat3ra/utils";
+
+export type FunctionsConfig = {
+    functions?: {
+        setDefaultCompute: null;
+    };
+};
+
+/**
+ * Applies optional post-build hooks declared in workflow/subworkflow YAML `config.functions`.
+ *
+ * Keys are hook names; values are ignored (`null` in YAML marks presence only). Each enabled
+ * hook merges its return value into the entity. Used when building standata workflows and
+ * subworkflows (e.g. `setDefaultCompute` injects default `compute` from `@mat3ra/ide`).
+ */
+export function applyFunctionsFromConfig<T extends Partial<ComputePropertySchema>>(
+    entity: T,
+    functionsConfig?: FunctionsConfig["functions"],
+): T {
+    const functions = {
+        setDefaultCompute: (): ComputePropertySchema => {
+            return { compute: getDefaultComputeConfig() as ComputeArgumentsSchema };
+        },
+    };
+
+    return Object.entries(functionsConfig || {}).reduce((acc, [funcName]) => {
+        return {
+            ...acc,
+            ...functions[funcName as keyof typeof functions]?.(),
+        };
+    }, entity);
+}
 
 export function validateData<T extends object>(data: T, schemaId: string): T {
     const jsonSchema = JSONSchemasInterface.getSchemaById(schemaId);

@@ -5,7 +5,9 @@
     "isUsingMaterial": true,
     "version": "7.0.2",
     "isDefault": true,
+    "isDefaultVersion": true,
     "build": "GNU",
+    "hasAdvancedComputeOptions": false,
     "buildConfig": {
         "moduleName": "7.0.2-gnu",
         "imageName": "nwchem",

@@ -66,6 +66,9 @@ export const BUILD_CONFIG = {
         build: {
             path: "build/standata/applications",
             templatesList: "templatesList.json",
+            executablesList: "executablesList.json",
+            flavorsList: "flavorsList.json",
+            applicationsList: "applicationsList.json",
             applicationVersionsMapByApplication: "applicationVersionsMapByApplication.json",
             executableFlavorMapByApplication: "executableFlavorMapByApplication.json",
             modelMethodMapByApplication: "modelMethodMapByApplication.json",
@@ -130,6 +133,7 @@ export const BUILD_CONFIG = {
         models: "scripts/models",
         methods: "scripts/methods",
         applications: "scripts/applications",
+        executables: "scripts/executables",
         workflows: "scripts/workflows",
         materials: "scripts/materials",
         properties: "scripts/properties",
@@ -158,4 +162,4 @@ export const BUILD_CONFIG = {
 export const EXCLUDE_KEYS_FROM_SORTING = [
     "SOFTWARE_LIBRARIES_PATH",
     "SOFTWARE_COMPILERS_PATH",
-];
+] as const;

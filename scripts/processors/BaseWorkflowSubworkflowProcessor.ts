@@ -1,9 +1,6 @@
 /* eslint-disable class-methods-use-this */
-// eslint-disable-next-line import/no-extraneous-dependencies
 import workflowSchema from "@mat3ra/esse/dist/js/schema/workflow.json";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { validateAndClean } from "@mat3ra/esse/dist/js/utils/ajv";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Utils } from "@mat3ra/utils";
 import serverUtils from "@mat3ra/utils/server";
 import path from "path";

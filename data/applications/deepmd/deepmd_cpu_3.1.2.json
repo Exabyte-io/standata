@@ -5,7 +5,9 @@
     "isUsingMaterial": true,
     "version": "3.1.2",
     "isDefault": true,
+    "isDefaultVersion": true,
     "build": "CPU",
+    "hasAdvancedComputeOptions": false,
     "buildConfig": {
         "moduleName": "3.1.2-cpu",
         "imageName": "deepmd",

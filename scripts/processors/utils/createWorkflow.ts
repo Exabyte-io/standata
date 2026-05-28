@@ -9,10 +9,11 @@ import createSubworkflow, {
     type AnyUnitConfig,
     type AttributesConfig,
     type SubworkflowData,
-    type SubworkflowFunctionsConfig,
 } from "./createSubworkflow";
 import { defaultMapConfig, defaultSubworkflowUnitConfig } from "./defaults";
 import {
+    type FunctionsConfig,
+    applyFunctionsFromConfig,
     generateDefaultWorkflowId,
     generateFlowChartId,
     generateWorkflowId,
@@ -29,7 +30,7 @@ type WorkflowUnitData = {
 type SubworkflowUnitData = {
     name: string;
     type: "subworkflow";
-    config?: AttributesConfig & SubworkflowFunctionsConfig & Partial<SubworkflowSchema>;
+    config?: AttributesConfig & FunctionsConfig & Partial<SubworkflowSchema>;
     unitConfigs?: SubworkflowUnitConfig[];
 };
 
@@ -58,7 +59,7 @@ type MapUnitConfig = {
     };
 };
 
-type WorkflowUnitConfig = WorkflowConfig & MapUnitConfig;
+type WorkflowUnitConfig = WorkflowConfig & MapUnitConfig & FunctionsConfig;
 
 type SubworkflowUnitConfig = UnitConfig & { index: number };
 
@@ -159,14 +160,27 @@ function createSubworkflowFromUnitData(
     subworkflows: SubworkflowsTree,
     cache?: string[],
 ): SubworkflowSchema {
+    /**
+     * Pick `(targetAppName, unitName)` so we can load `subworkflows[targetAppName][unitName]`.
+     * `SubworkflowsTree` is keyed by application folder, then by subworkflow id (the YAML stem),
+     * not by full nested paths—middle segments (e.g. `utils` in `shell/utils/get_material_by_id`)
+     * match asset directories but are ignored for lookup; only the last `/`-separated segment is
+     * `unitName`.
+     *
+     * If `unitData.name` has no `/`, it refers to a subworkflow in the same app as the enclosing
+     * workflow: use `appName` passed from `createWorkflowFromWorkflowData`.
+     *
+     * If it contains `/`, the first segment names another app's subtree (e.g. a `vasp/surface_energy`
+     * workflow can reference `shell/utils/get_material_by_id`, where `shell` selects `subworkflows.shell`
+     * and `get_material_by_id` is the unit key).
+     */
     const names = unitData.name.split("/");
-    const resolvedAppName = names.length > 1 ? names[0] : appName;
-    const resolvedSubworkflowName = names.length > 1 ? names[names.length - 1] : unitData.name;
-
-    const subworkflowData = subworkflows[resolvedAppName]?.[resolvedSubworkflowName];
+    const targetAppName = names.length > 1 ? names[0] : appName;
+    const unitName = names[names.length - 1];
+    const subworkflowData = subworkflows[targetAppName]?.[unitName];
 
     if (!subworkflowData) {
-        throw new Error(`Subworkflow ${unitData.name} not found in ${appName}!`);
+        throw new Error(`Subworkflow ${unitName} not found in ${targetAppName}!`);
     }
 
     const patchedSubworkflowData = patchSubworkflowData(subworkflowData, unitData);
@@ -189,7 +203,10 @@ function createWorkflowFromWorkflowData(
 
     const workflowWithUnits = workflowData.units.reduce((acc, unitData) => {
         if (unitData.type === "workflow") {
-            const workflow = createWorkflowFromWorkflowData(appName, unitData, subworkflows, cache);
+            const workflow = applyFunctionsFromConfig(
+                createWorkflowFromWorkflowData(appName, unitData, subworkflows, cache),
+                unitData.config?.functions,
+            );
             return addWorkflowToWorkflow(acc, workflow, unitData.config);
         }
 

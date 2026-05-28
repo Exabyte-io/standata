@@ -5,5 +5,7 @@
     "isUsingMaterial": true,
     "version": "3.10.13",
     "isDefault": true,
-    "build": "GNU"
+    "isDefaultVersion": true,
+    "build": "GNU",
+    "hasAdvancedComputeOptions": false
 }
