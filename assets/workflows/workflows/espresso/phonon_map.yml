@@ -2,6 +2,9 @@ name: Phonon Map
 units:
   - name: pw_scf
     type: subworkflow
+    config:
+      attributes:
+        name: Preliminary SCF Calculation
   - name: ph_init_qpoints
     type: subworkflow
   - name: espresso_xml_get_qpt_irr

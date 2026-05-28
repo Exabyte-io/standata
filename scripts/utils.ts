@@ -14,8 +14,22 @@ const ignoreType = new yaml.Type("!ignore", {
 
 const schemaWithIgnore = JsYamlAllSchemas.extend([ignoreType]);
 
-export function readYAMLFileResolved<T extends object>(filePath: string): T {
-    return serverUtils.yaml.readYAMLFile(filePath, { schema: schemaWithIgnore }) as T;
+/**
+ * Loads YAML with shared schema (e.g. !ignore). When `sourcesRoot` is set, temporarily
+ * `chdir`s there so `!include` paths resolve consistently (they use process.cwd()).
+ */
+export function readYAMLFileResolved<T extends object>(filePath: string, sourcesRoot?: string): T {
+    if (!sourcesRoot) {
+        return serverUtils.yaml.readYAMLFile(filePath, { schema: schemaWithIgnore }) as T;
+    }
+    const originalCwd = process.cwd();
+    try {
+        process.chdir(sourcesRoot);
+        const resolvedFilePath = path.resolve(sourcesRoot, filePath);
+        return serverUtils.yaml.readYAMLFile(resolvedFilePath, { schema: schemaWithIgnore }) as T;
+    } finally {
+        process.chdir(originalCwd);
+    }
 }
 
 export function hasIgnoreDirective(data?: { [IGNORE_MARKER]?: boolean }): boolean {
