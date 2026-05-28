@@ -1,4 +1,4 @@
-# Expects E_MATERIAL, E_ELEMENTAL_BY_SYMBOL, ELEMENT_MATERIALS, and MATERIAL in context.
+# Expects E_MATERIAL, E_ELEMENTAL_SUM, ELEMENT_MATERIALS, and MATERIAL in context.
 # E_ELEMENTAL_SUM from get_elemental_energies uses bank total_energy per element.
 # Per atom (eV/atom): E_form = (E_tot(material) - sum_i E_tot(element_i ref) / n_i) / N_atoms.
 application:
@@ -10,11 +10,27 @@ model:
   name: DFTModel
 name: Formation Energy - QE
 units:
+  - type: condition
+    config:
+      name: condition-can-compute-formation-energy
+      flowchartId: condition-can-compute-formation-energy
+      statement: E_ELEMENTAL_SUM is not None
+      then: assign-formation-energy
+      else: assign-formation-energy-skipped
   - type: assignment
     config:
       name: assign-formation-energy
       flowchartId: assign-formation-energy
       operand: FORMATION_ENERGY
-      value: "(E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)"
+      value: (E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)
       results:
         - name: formation_energy
+  - type: assignment
+    config:
+      name: assign-formation-energy-skipped
+      flowchartId: assign-formation-energy-skipped
+      operand: FORMATION_ENERGY_SKIPPED
+      logResult: true
+      value: >-
+        {'reason': 'elemental_references_unavailable',
+        'precision_mismatch': PRECISION_MISMATCH_INFO}
