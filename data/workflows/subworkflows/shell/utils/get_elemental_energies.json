@@ -16,6 +16,27 @@
     },
     "units": [
         {
+            "name": "assert-precision-target",
+            "type": "assertion",
+            "statement": "PRECISION_VALUE is not None",
+            "errorMessage": "Could not read k-point precision from the compound total-energy calculation. Check pw_scf kgrid settings (gridMetricValue / gridMetricType).",
+            "flowchartId": "assert-precision-target",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "io-elemental-energies",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
             "name": "io-elemental-energies",
             "type": "io",
             "subtype": "input",
@@ -36,7 +57,7 @@
             "status": "idle",
             "statusTrack": [],
             "tags": [],
-            "head": true,
+            "head": false,
             "next": "assign-elemental-energies",
             "application": {
                 "name": "shell",
@@ -52,7 +73,7 @@
             "name": "assign-elemental-energies",
             "type": "assignment",
             "operand": "E_ELEMENTAL_BY_SYMBOL",
-            "value": "{el: ([d.data.value for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)] or [None])[0] for el in ELEMENTS}",
+            "value": "{el: ([d.data.value for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId) and d.precision.metric == PRECISION_METRIC and d.precision.value == PRECISION_VALUE] or [None])[0] for el in ELEMENTS}",
             "input": [
                 {
                     "name": "DATA",
@@ -64,7 +85,7 @@
             "statusTrack": [],
             "tags": [],
             "head": false,
-            "next": "assign-missing-elemental-energies",
+            "next": "assign-elemental-te-used-by-symbol",
             "application": {
                 "name": "shell",
                 "shortName": "sh",
@@ -76,17 +97,22 @@
             }
         },
         {
-            "name": "assign-missing-elemental-energies",
+            "name": "assign-elemental-te-used-by-symbol",
             "type": "assignment",
-            "operand": "MISSING_ELEMENTAL_ENERGIES",
-            "value": "[el for el in ELEMENTS if E_ELEMENTAL_BY_SYMBOL[el] is None]",
-            "input": [],
-            "flowchartId": "assign-missing-elemental-energies",
+            "operand": "ELEMENTAL_TE_USED_BY_SYMBOL",
+            "value": "{el: ([{'total_energy': d.data.value, 'precision_value': d.precision.value, 'precision_metric': d.precision.metric, 'exabyteId': d.exabyteId} for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId) and d.precision.metric == PRECISION_METRIC and d.precision.value == PRECISION_VALUE] or [None])[0] for el in ELEMENTS}",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-elemental-energies"
+                }
+            ],
+            "flowchartId": "assign-elemental-te-used-by-symbol",
             "status": "idle",
             "statusTrack": [],
             "tags": [],
             "head": false,
-            "next": "assign-elemental-energies-error",
+            "next": "assign-formation-energy-precision-report",
             "application": {
                 "name": "shell",
                 "shortName": "sh",
@@ -98,17 +124,18 @@
             }
         },
         {
-            "name": "assign-elemental-energies-error",
+            "name": "assign-formation-energy-precision-report",
             "type": "assignment",
-            "operand": "ELEMENTAL_ENERGIES_ERROR_MSG",
-            "value": "'Missing elemental total_energy for: ' + ', '.join(MISSING_ELEMENTAL_ENERGIES) + '. Run QE total energy on Standata elemental materials (tags: elemental).' + ' exabyteIds: ' + ', '.join([el + '=' + ELEMENT_MATERIALS[el].exabyteId for el in MISSING_ELEMENTAL_ENERGIES])",
+            "operand": "FORMATION_ENERGY_PRECISION_REPORT",
+            "value": "{'compound': {'precision_value': PRECISION_VALUE, 'precision_metric': PRECISION_METRIC}, 'elemental': ELEMENTAL_TE_USED_BY_SYMBOL}",
             "input": [],
-            "flowchartId": "assign-elemental-energies-error",
+            "flowchartId": "assign-formation-energy-precision-report",
+            "logResult": true,
             "status": "idle",
             "statusTrack": [],
             "tags": [],
             "head": false,
-            "next": "assert-elemental-energies",
+            "next": "assign-missing-elemental-energies-no-te",
             "application": {
                 "name": "shell",
                 "shortName": "sh",
@@ -120,11 +147,125 @@
             }
         },
         {
-            "name": "assert-elemental-energies",
+            "name": "assign-missing-elemental-energies-no-te",
+            "type": "assignment",
+            "operand": "MISSING_ELEMENTAL_ENERGIES_NO_TE",
+            "value": "[el for el in ELEMENTS if not any((d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId) for d in DATA)]",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-elemental-energies"
+                }
+            ],
+            "flowchartId": "assign-missing-elemental-energies-no-te",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-missing-elemental-energies-wrong-precision",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-missing-elemental-energies-wrong-precision",
+            "type": "assignment",
+            "operand": "MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION",
+            "value": "[el for el in ELEMENTS if el not in MISSING_ELEMENTAL_ENERGIES_NO_TE and E_ELEMENTAL_BY_SYMBOL[el] is None]",
+            "input": [],
+            "flowchartId": "assign-missing-elemental-energies-wrong-precision",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-elemental-energies-no-te-error",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-elemental-energies-no-te-error",
+            "type": "assignment",
+            "operand": "ELEMENTAL_ENERGIES_NO_TE_ERROR_MSG",
+            "value": "'Missing elemental total_energy for: ' + ', '.join(MISSING_ELEMENTAL_ENERGIES_NO_TE) + '. Run QE total energy on Standata elemental materials (tags: elemental).' + ' exabyteIds: ' + ', '.join([el + '=' + ELEMENT_MATERIALS[el].exabyteId for el in MISSING_ELEMENTAL_ENERGIES_NO_TE])",
+            "input": [],
+            "flowchartId": "assign-elemental-energies-no-te-error",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assert-elemental-energies-no-te",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assert-elemental-energies-no-te",
             "type": "assertion",
-            "statement": "len(MISSING_ELEMENTAL_ENERGIES) == 0",
-            "errorMessage": "ELEMENTAL_ENERGIES_ERROR_MSG",
-            "flowchartId": "assert-elemental-energies",
+            "statement": "len(MISSING_ELEMENTAL_ENERGIES_NO_TE) == 0",
+            "errorMessage": "ELEMENTAL_ENERGIES_NO_TE_ERROR_MSG",
+            "flowchartId": "assert-elemental-energies-no-te",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-elemental-energies-wrong-precision-error",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-elemental-energies-wrong-precision-error",
+            "type": "assignment",
+            "operand": "ELEMENTAL_ENERGIES_WRONG_PRECISION_ERROR_MSG",
+            "value": "'Elemental total_energy exists but not at required precision ' + str(PRECISION_VALUE) + ' ' + PRECISION_METRIC + ' for: ' + ', '.join(MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION) + '. Run total energy calculation on those elemental materials with the' + ' required metric.' + ' exabyteIds: ' + ', '.join([el + '=' + ELEMENT_MATERIALS[el].exabyteId for el in MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION])",
+            "input": [],
+            "flowchartId": "assign-elemental-energies-wrong-precision-error",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assert-elemental-energies-precision",
+            "application": {
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "build": "GNU",
+                "isDefault": true,
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assert-elemental-energies-precision",
+            "type": "assertion",
+            "statement": "len(MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION) == 0",
+            "errorMessage": "ELEMENTAL_ENERGIES_WRONG_PRECISION_ERROR_MSG",
+            "flowchartId": "assert-elemental-energies-precision",
             "status": "idle",
             "statusTrack": [],
             "tags": [],

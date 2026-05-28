@@ -158,6 +158,123 @@
             "statusTrack": [],
             "tags": [],
             "head": false,
+            "next": "assign-kgrid",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-kgrid",
+            "type": "assignment",
+            "operand": "KGRID",
+            "value": "(context or {}).get('kgrid') or ({'dimensions': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[:3])], 'shifts': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[3:6])], 'gridMetricType': 'KPPRA'} if 'K_POINTS automatic' in (((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '')) else None) or {}",
+            "input": [
+                {
+                    "name": "context",
+                    "scope": "pw-scf-formation-energy"
+                }
+            ],
+            "flowchartId": "assign-kgrid",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-precision-value",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-precision-value",
+            "type": "assignment",
+            "operand": "PRECISION_VALUE",
+            "value": "KGRID.get('gridMetricValue') if KGRID.get('gridMetricValue') is not None else (math.prod(KGRID.get('dimensions') or []) * len(MATERIAL.basis.elements) if KGRID.get('dimensions') else None)",
+            "input": [
+                {
+                    "name": "KGRID",
+                    "scope": "global"
+                }
+            ],
+            "flowchartId": "assign-precision-value",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-precision-metric",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-precision-metric",
+            "type": "assignment",
+            "operand": "PRECISION_METRIC",
+            "value": "KGRID.get('gridMetricType') or 'KPPRA'",
+            "input": [
+                {
+                    "name": "KGRID",
+                    "scope": "global"
+                }
+            ],
+            "flowchartId": "assign-precision-metric",
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
+            "next": "assign-compound-precision-report",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
+            "name": "assign-compound-precision-report",
+            "type": "assignment",
+            "operand": "COMPOUND_PRECISION_REPORT",
+            "value": "{'precision_value': PRECISION_VALUE, 'precision_metric': PRECISION_METRIC, 'kgrid': KGRID if KGRID else None}",
+            "input": [
+                {
+                    "name": "KGRID",
+                    "scope": "global"
+                }
+            ],
+            "flowchartId": "assign-compound-precision-report",
+            "logResult": true,
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": false,
             "application": {
                 "isUsingMaterial": true,
                 "name": "espresso",
