@@ -1,6 +1,7 @@
 # Formation energy per atom (eV/atom):
 # (E_tot(material) - sum_i E_tot(element_i ref) / n_i) / N_atoms.
 # Elemental refs: Standata bank materials (tags: elemental, metadata.element).
+# Elemental total_energy must match compound pw_scf precision (e.g. KPPRA 8192).
 name: Formation Energy
 properties:
   - atomic_forces
@@ -16,9 +17,9 @@ units:
     type: subworkflow
   - name: shell/utils/get_elemental_materials
     type: subworkflow
-  - name: shell/utils/get_elemental_energies
-    type: subworkflow
   - name: total_energy_for_material
+    type: subworkflow
+  - name: shell/utils/get_elemental_energies
     type: subworkflow
   - name: formation_energy
     type: subworkflow

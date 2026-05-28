@@ -1,8 +1,6 @@
-# Expects MATERIAL, ELEMENTS, and ELEMENT_MATERIALS in context.
-# Fetches total_energy refined properties for all elemental reference exabyteIds,
-# then assigns one TE per element in E_ELEMENTAL_BY_SYMBOL (keyed by symbol).
-# Per-element TE is chosen in assign-elemental-energies by filtering DATA on each
-# ELEMENT_MATERIALS[el].exabyteId and taking the highest-precision match ([0] after sort).
+# Expects MATERIAL, ELEMENTS, ELEMENT_MATERIALS, PRECISION_VALUE, and PRECISION_METRIC.
+# PRECISION_* come from total_energy_for_material (compound pw_scf kgrid settings).
+# Fetches all elemental total_energy properties, then requires an exact precision match.
 application:
   name: shell
 method:
@@ -11,6 +9,14 @@ model:
   name: UnknownModel
 name: Get Elemental Energies
 units:
+  - type: assertion
+    config:
+      name: assert-precision-target
+      flowchartId: assert-precision-target
+      statement: "PRECISION_VALUE is not None"
+      errorMessage: >-
+        Could not read k-point precision from the compound total-energy calculation.
+        Check pw_scf kgrid settings (gridMetricValue / gridMetricType).
   - type: io
     config:
       name: io-elemental-energies
@@ -36,36 +42,104 @@ units:
       value: >-
         {el: ([d.data.value for d in DATA
         if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId
-        or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)] or [None])[0]
+        or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)
+        and d.precision.metric == PRECISION_METRIC
+        and d.precision.value == PRECISION_VALUE] or [None])[0]
         for el in ELEMENTS}
       input:
         - name: DATA
           scope: io-elemental-energies
   - type: assignment
     config:
-      name: assign-missing-elemental-energies
-      flowchartId: assign-missing-elemental-energies
-      operand: MISSING_ELEMENTAL_ENERGIES
+      name: assign-elemental-te-used-by-symbol
+      flowchartId: assign-elemental-te-used-by-symbol
+      operand: ELEMENTAL_TE_USED_BY_SYMBOL
       value: >-
-        [el for el in ELEMENTS if E_ELEMENTAL_BY_SYMBOL[el] is None]
+        {el: ([{'total_energy': d.data.value,
+        'precision_value': d.precision.value,
+        'precision_metric': d.precision.metric,
+        'exabyteId': d.exabyteId}
+        for d in DATA
+        if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId
+        or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)
+        and d.precision.metric == PRECISION_METRIC
+        and d.precision.value == PRECISION_VALUE] or [None])[0]
+        for el in ELEMENTS}
+      input:
+        - name: DATA
+          scope: io-elemental-energies
   - type: assignment
     config:
-      name: assign-elemental-energies-error
-      flowchartId: assign-elemental-energies-error
-      operand: ELEMENTAL_ENERGIES_ERROR_MSG
+      name: assign-formation-energy-precision-report
+      flowchartId: assign-formation-energy-precision-report
+      operand: FORMATION_ENERGY_PRECISION_REPORT
+      logResult: true
+      value: >-
+        {'compound': {'precision_value': PRECISION_VALUE,
+        'precision_metric': PRECISION_METRIC},
+        'elemental': ELEMENTAL_TE_USED_BY_SYMBOL}
+  - type: assignment
+    config:
+      name: assign-missing-elemental-energies-no-te
+      flowchartId: assign-missing-elemental-energies-no-te
+      operand: MISSING_ELEMENTAL_ENERGIES_NO_TE
+      value: >-
+        [el for el in ELEMENTS
+        if not any((d.exabyteId == ELEMENT_MATERIALS[el].exabyteId
+        or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId) for d in DATA)]
+      input:
+        - name: DATA
+          scope: io-elemental-energies
+  - type: assignment
+    config:
+      name: assign-missing-elemental-energies-wrong-precision
+      flowchartId: assign-missing-elemental-energies-wrong-precision
+      operand: MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION
+      value: >-
+        [el for el in ELEMENTS
+        if el not in MISSING_ELEMENTAL_ENERGIES_NO_TE
+        and E_ELEMENTAL_BY_SYMBOL[el] is None]
+  - type: assignment
+    config:
+      name: assign-elemental-energies-no-te-error
+      flowchartId: assign-elemental-energies-no-te-error
+      operand: ELEMENTAL_ENERGIES_NO_TE_ERROR_MSG
       value: >-
         'Missing elemental total_energy for: '
-        + ', '.join(MISSING_ELEMENTAL_ENERGIES)
+        + ', '.join(MISSING_ELEMENTAL_ENERGIES_NO_TE)
         + '. Run QE total energy on Standata elemental materials (tags: elemental).'
         + ' exabyteIds: '
         + ', '.join([el + '=' + ELEMENT_MATERIALS[el].exabyteId for el in
-        MISSING_ELEMENTAL_ENERGIES])
+        MISSING_ELEMENTAL_ENERGIES_NO_TE])
   - type: assertion
     config:
-      name: assert-elemental-energies
-      flowchartId: assert-elemental-energies
-      statement: "len(MISSING_ELEMENTAL_ENERGIES) == 0"
-      errorMessage: ELEMENTAL_ENERGIES_ERROR_MSG
+      name: assert-elemental-energies-no-te
+      flowchartId: assert-elemental-energies-no-te
+      statement: "len(MISSING_ELEMENTAL_ENERGIES_NO_TE) == 0"
+      errorMessage: ELEMENTAL_ENERGIES_NO_TE_ERROR_MSG
+  - type: assignment
+    config:
+      name: assign-elemental-energies-wrong-precision-error
+      flowchartId: assign-elemental-energies-wrong-precision-error
+      operand: ELEMENTAL_ENERGIES_WRONG_PRECISION_ERROR_MSG
+      value: >-
+        'Elemental total_energy exists but not at required precision '
+        + str(PRECISION_VALUE)
+        + ' '
+        + PRECISION_METRIC
+        + ' for: '
+        + ', '.join(MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION)
+        + '. Run total energy calculation on those elemental materials with the'
+        + ' required metric.'
+        + ' exabyteIds: '
+        + ', '.join([el + '=' + ELEMENT_MATERIALS[el].exabyteId for el in
+        MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION])
+  - type: assertion
+    config:
+      name: assert-elemental-energies-precision
+      flowchartId: assert-elemental-energies-precision
+      statement: "len(MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION) == 0"
+      errorMessage: ELEMENTAL_ENERGIES_WRONG_PRECISION_ERROR_MSG
   - type: assignment
     config:
       name: assign-elemental-energy-sum

@@ -22,3 +22,58 @@ units:
       input:
         - name: total_energy
           scope: pw-scf-formation-energy
+  - type: assignment
+    config:
+      name: assign-kgrid
+      flowchartId: assign-kgrid
+      operand: KGRID
+      value: >-
+        (context or {}).get('kgrid')
+        or ({'dimensions': [int(x) for x in (
+        ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0]
+        .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[:3])],
+        'shifts': [int(x) for x in (
+        ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0]
+        .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[3:6])],
+        'gridMetricType': 'KPPRA'}
+        if 'K_POINTS automatic' in (((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0]
+        .get('input') or [{}])[0].get('rendered') or '')) else None)
+        or {}
+      input:
+        - name: context
+          scope: pw-scf-formation-energy
+  - type: assignment
+    config:
+      name: assign-precision-value
+      flowchartId: assign-precision-value
+      operand: PRECISION_VALUE
+      value: >-
+        KGRID.get('gridMetricValue')
+        if KGRID.get('gridMetricValue') is not None
+        else (math.prod(KGRID.get('dimensions') or [])
+        * len(MATERIAL.basis.elements)
+        if KGRID.get('dimensions') else None)
+      input:
+        - name: KGRID
+          scope: global
+  - type: assignment
+    config:
+      name: assign-precision-metric
+      flowchartId: assign-precision-metric
+      operand: PRECISION_METRIC
+      value: "KGRID.get('gridMetricType') or 'KPPRA'"
+      input:
+        - name: KGRID
+          scope: global
+  - type: assignment
+    config:
+      name: assign-compound-precision-report
+      flowchartId: assign-compound-precision-report
+      operand: COMPOUND_PRECISION_REPORT
+      logResult: true
+      value: >-
+        {'precision_value': PRECISION_VALUE, 'precision_metric': PRECISION_METRIC,
+        'kgrid': KGRID if KGRID else None}
+      input:
+        - name: KGRID
+          scope: global
