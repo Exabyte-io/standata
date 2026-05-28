@@ -28,52 +28,70 @@
             "flowchartId": "99304304-e873-5c89-ae83-91e61a7f629c",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
+                "isUsingMaterial": false,
                 "name": "shell",
                 "shortName": "sh",
                 "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
+                "applicationName": "shell",
+                "applicationVersion": "*",
+                "hasAdvancedComputeOptions": false,
                 "isDefault": true,
-                "monitors": [
-                    "standard_output"
-                ],
                 "name": "sh",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
                 "applicationName": "shell",
+                "applicationVersion": "*",
                 "executableName": "sh",
                 "input": [
                     {
                         "name": "espresso_link_outdir_save.sh"
                     }
                 ],
+                "isDefault": false,
                 "monitors": [
-                    "standard_output"
+                    {
+                        "name": "standard_output"
+                    }
                 ],
                 "name": "espresso_link_outdir_save",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
+                "postProcessors": [],
+                "preProcessors": [],
+                "results": [],
+                "schemaVersion": "2022.8.16"
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "shell",
-                    "content": "{% raw %}\n#!/bin/bash\n\nmkdir -p {{ JOB_SCRATCH_DIR }}/outdir/_ph0\ncd {{ JOB_SCRATCH_DIR }}/outdir\ncp -r {{ JOB_WORK_DIR }}/../outdir/__prefix__.* .\n{% endraw %}\n",
-                    "contextProviders": [],
-                    "executableName": "sh",
-                    "name": "espresso_link_outdir_save.sh",
-                    "rendered": "\n#!/bin/bash\n\nmkdir -p {{ JOB_SCRATCH_DIR }}/outdir/_ph0\ncd {{ JOB_SCRATCH_DIR }}/outdir\ncp -r {{ JOB_WORK_DIR }}/../outdir/__prefix__.* .\n\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "shell",
+                        "applicationVersion": "*",
+                        "content": "{% raw %}\n#!/bin/bash\n\nmkdir -p {{ JOB_SCRATCH_DIR }}/outdir/_ph0\ncd {{ JOB_SCRATCH_DIR }}/outdir\ncp -r {{ JOB_WORK_DIR }}/../outdir/__prefix__.* .\n{% endraw %}\n",
+                        "contextProviders": [],
+                        "executableName": "sh",
+                        "name": "espresso_link_outdir_save.sh",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
-            ]
+            ],
+            "context": [],
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

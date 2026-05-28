@@ -1,13 +1,10 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable class-methods-use-this */
 import { CategorizedEntityProcessor } from "./CategorizedEntityProcessor";
 import { EntityProcessorOptions } from "./EntityProcessor";
+import type { CategoryCollectOptions, CategorySets } from "./types";
 
 export interface ModelMethodProcessorOptions extends EntityProcessorOptions {
-    categoryCollectOptions?: {
-        includeUnits?: boolean;
-        includeTags?: boolean;
-        includeEntitiesMap?: boolean;
-    };
+    categoryCollectOptions?: CategoryCollectOptions;
 }
 
 export abstract class BaseModelMethodProcessor extends CategorizedEntityProcessor {
@@ -24,44 +21,47 @@ export abstract class BaseModelMethodProcessor extends CategorizedEntityProcesso
             includeTags: false,
             includeEntitiesMap: false,
             ...this.options.categoryCollectOptions,
-        };
+        } as const;
     }
 
     public addCategoriesFromObject(
-        obj: any,
+        obj: Record<string, unknown>,
         categoryKeys: string[],
         includeTags: boolean,
-        categorySets: Record<string, Set<string>>,
+        categorySets: CategorySets,
     ): void {
-        if (obj?.categories) {
+        const categories = obj?.categories as Record<string, string> | undefined;
+        if (categories) {
             categoryKeys.forEach((key) => {
-                const v = obj.categories[key];
-                if (typeof v === "string" && v) (categorySets as any)[key].add(v);
+                const v = categories[key];
+                if (typeof v === "string" && v) categorySets[key].add(v);
             });
         }
         if (includeTags && Array.isArray(obj?.tags)) {
-            obj.tags.forEach((t: string) => (categorySets as any).tags.add(t));
+            (obj.tags as string[]).forEach((t) => categorySets.tags.add(t));
         }
     }
 
     public addCategoriesToSet(
-        obj: any,
+        obj: Record<string, unknown>,
         categoryKeys: string[],
         includeTags: boolean,
         target: Set<string>,
     ): void {
-        if (obj?.categories) {
+        const categories = obj?.categories as Record<string, string> | undefined;
+        if (categories) {
             categoryKeys.forEach((key) => {
-                const v = obj.categories[key];
+                const v = categories[key];
                 if (typeof v === "string" && v) target.add(v);
             });
         }
-        if (includeTags && Array.isArray(obj?.tags)) obj.tags.forEach((t: string) => target.add(t));
+        if (includeTags && Array.isArray(obj?.tags)) {
+            (obj.tags as string[]).forEach((t) => target.add(t));
+        }
     }
 
-    protected getDataSubdirectory(entity: any): string {
-        const fullPathAsURL = entity.path || "";
-        const finalPath = fullPathAsURL.split("?")[0];
-        return finalPath;
+    protected getDataSubdirectory(entity: Record<string, unknown>): string {
+        const fullPathAsURL = typeof entity.path === "string" ? entity.path : "";
+        return fullPathAsURL.split("?")[0];
     }
 }

@@ -1,6 +1,10 @@
+import ApplicationRegistry from "./ApplicationRegistry";
+import methodTree from "./ui/methodTree.json";
+import modelTree from "./ui/modelTree.json";
+import baseUiSchema from "./ui/schemas.json";
+
 export { Standata } from "./base";
 export { MaterialStandata } from "./material";
-export { ApplicationStandata } from "./application";
 export { PropertyStandata } from "./property";
 export {
     WorkflowStandata,
@@ -12,12 +16,8 @@ export { ApplicationMethodStandata } from "./applicationMethod";
 export { ModelStandata } from "./model";
 export { MethodStandata } from "./method";
 export { ModelMethodFilter, filterMethodsByModel } from "./modelMethodFilter";
+export { applicationVersionSatisfiesSupportedRange } from "./utils/applicationVersion";
+export { setupNunjucksEnvironment } from "./utils/template";
+export { setUnitLinks } from "./utils/unit";
 
-// @ts-ignore
-import modelTree from "./ui/modelTree.json";
-// @ts-ignore
-import methodTree from "./ui/methodTree.json";
-// @ts-ignore
-import baseUiSchema from "./ui/schemas.json";
-
-export { modelTree, methodTree, baseUiSchema };
+export { modelTree, methodTree, baseUiSchema, ApplicationRegistry };

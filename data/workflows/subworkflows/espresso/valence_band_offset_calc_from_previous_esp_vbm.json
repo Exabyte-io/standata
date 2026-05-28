@@ -23,22 +23,18 @@
             "operand": "VBM_DIFF",
             "value": "VBM_LEFT - VBM_RIGHT",
             "input": [],
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "bd4eaa98-b001-5694-87ef-ec77540502ab",
             "tags": [],
+            "flowchartId": "bd4eaa98-b001-5694-87ef-ec77540502ab",
             "head": true,
             "next": "2626f7bb-d392-5fd4-ab71-329b508de347",
-            "application": {
-                "isUsingMaterial": true,
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "3.10.13",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Difference of macroscopically averaged ESP in bulk",
@@ -46,22 +42,18 @@
             "operand": "AVG_ESP_DIFF",
             "value": "AVG_ESP_LEFT[0] - AVG_ESP_RIGHT[0]",
             "input": [],
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "2626f7bb-d392-5fd4-ab71-329b508de347",
             "tags": [],
+            "flowchartId": "2626f7bb-d392-5fd4-ab71-329b508de347",
             "head": false,
             "next": "b7307787-53e2-599b-ad12-d627b04074b4",
-            "application": {
-                "isUsingMaterial": true,
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "3.10.13",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Lineup of macroscopically averaged ESP in interface",
@@ -69,22 +61,18 @@
             "operand": "ESP_LINEUP",
             "value": "np.abs(AVG_ESP_INTERFACE[0] - AVG_ESP_INTERFACE[1])",
             "input": [],
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "b7307787-53e2-599b-ad12-d627b04074b4",
             "tags": [],
+            "flowchartId": "b7307787-53e2-599b-ad12-d627b04074b4",
             "head": false,
             "next": "197f4b4d-cb7b-57be-a885-d44cb1f61905",
-            "application": {
-                "isUsingMaterial": true,
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "3.10.13",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "Valence Band Offset",
@@ -97,21 +85,18 @@
                     "name": "valence_band_offset"
                 }
             ],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "197f4b4d-cb7b-57be-a885-d44cb1f61905",
             "tags": [],
+            "flowchartId": "197f4b4d-cb7b-57be-a885-d44cb1f61905",
             "head": false,
-            "application": {
-                "isUsingMaterial": true,
-                "name": "python",
-                "shortName": "py",
-                "summary": "Python Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "3.10.13",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

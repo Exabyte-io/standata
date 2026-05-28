@@ -18,15 +18,15 @@ class ApplicationMethodStandata extends applicationFilter_1.ApplicationFilterSta
     getAvailableMethods(name) {
         return this.getAvailableEntities(name);
     }
-    getDefaultMethodConfigForApplication(applicationConfig) {
-        const { name, version, build, executable, flavor } = applicationConfig;
+    getDefaultMethodConfigForApplication(application) {
+        const { name, version, build /* executable, flavor */ } = application;
         const availableMethods = this.getAvailableMethods(name);
         if (!availableMethods || Object.keys(availableMethods).length === 0) {
             return { type: "unknown", subtype: "unknown" };
         }
         const methodStandata = new method_1.MethodStandata();
         const allMethods = methodStandata.getAll();
-        return this.filterByApplicationParametersGetDefault(allMethods, name, version, build, executable, flavor);
+        return this.filterByApplicationParametersGetDefault(allMethods, name, version, build);
     }
 }
 exports.ApplicationMethodStandata = ApplicationMethodStandata;
