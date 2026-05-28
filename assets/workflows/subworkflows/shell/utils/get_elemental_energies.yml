@@ -9,14 +9,6 @@ model:
   name: UnknownModel
 name: Get Elemental Energies
 units:
-  - type: assertion
-    config:
-      name: assert-precision-target
-      flowchartId: assert-precision-target
-      statement: "PRECISION_VALUE is not None"
-      errorMessage: >-
-        'Could not read k-point precision from the compound total-energy calculation.'
-        + ' Check pw_scf kgrid settings (gridMetricValue / gridMetricType).'
   - type: io
     config:
       name: io-elemental-energies
@@ -60,20 +52,20 @@ units:
       operand: ELEMENTAL_TE_USED_BY_SYMBOL
       value: >-
         {el: ([{'total_energy': d.data.value,
+        'total_energy_per_atom': d.data.value / len(ELEMENT_MATERIALS[el].basis.elements),
         'precision_value': d.precision.value,
         'precision_metric': d.precision.metric,
-        'exabyteId': d.exabyteId,
-        'exact_precision_match': True}
+        'exabyteId': d.exabyteId}
         for d in DATA
         if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId
         or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)
         and d.precision.metric == PRECISION_METRIC
         and d.precision.value == PRECISION_VALUE]
         or [{'total_energy': d.data.value,
+        'total_energy_per_atom': d.data.value / len(ELEMENT_MATERIALS[el].basis.elements),
         'precision_value': d.precision.value,
         'precision_metric': d.precision.metric,
-        'exabyteId': d.exabyteId,
-        'exact_precision_match': False}
+        'exabyteId': d.exabyteId}
         for d in DATA
         if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId
         or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)]

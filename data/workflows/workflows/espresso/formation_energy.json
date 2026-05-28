@@ -418,7 +418,7 @@
                     "name": "assign-kgrid",
                     "type": "assignment",
                     "operand": "KGRID",
-                    "value": "(context or {}).get('kgrid') or ([(u.get('context') or {}).get('kgrid') for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy' and (u.get('context') or {}).get('kgrid')] + [None])[0] or ({'dimensions': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[:3])], 'shifts': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[3:6])]} if 'K_POINTS automatic' in (((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '')) else None) or {}",
+                    "value": "([kg for kg in [ ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [{}])[0] .get('context') or {}).get('kgrid')), ((context or {}).get('kgrid')) ] if (kg or {}).get('gridMetricValue') is not None] + [None])[0] or ({'dimensions': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[:3])], 'shifts': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[3:6])]} if 'K_POINTS automatic' in (((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '')) else None) or ({})",
                     "input": [
                         {
                             "name": "context",
@@ -556,27 +556,6 @@
             },
             "units": [
                 {
-                    "name": "assert-precision-target",
-                    "type": "assertion",
-                    "statement": "PRECISION_VALUE is not None",
-                    "errorMessage": "'Could not read k-point precision from the compound total-energy calculation.' + ' Check pw_scf kgrid settings (gridMetricValue / gridMetricType).'",
-                    "flowchartId": "assert-precision-target",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": true,
-                    "next": "io-elemental-energies",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
                     "name": "io-elemental-energies",
                     "type": "io",
                     "subtype": "input",
@@ -597,7 +576,7 @@
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
-                    "head": false,
+                    "head": true,
                     "next": "assign-elemental-energies",
                     "application": {
                         "name": "shell",
@@ -640,7 +619,7 @@
                     "name": "assign-elemental-te-used-by-symbol",
                     "type": "assignment",
                     "operand": "ELEMENTAL_TE_USED_BY_SYMBOL",
-                    "value": "{el: ([{'total_energy': d.data.value, 'precision_value': d.precision.value, 'precision_metric': d.precision.metric, 'exabyteId': d.exabyteId, 'exact_precision_match': True} for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId) and d.precision.metric == PRECISION_METRIC and d.precision.value == PRECISION_VALUE] or [{'total_energy': d.data.value, 'precision_value': d.precision.value, 'precision_metric': d.precision.metric, 'exabyteId': d.exabyteId, 'exact_precision_match': False} for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)] or [None])[0] for el in ELEMENTS}",
+                    "value": "{el: ([{'total_energy': d.data.value, 'total_energy_per_atom': d.data.value / len(ELEMENT_MATERIALS[el].basis.elements), 'precision_value': d.precision.value, 'precision_metric': d.precision.metric, 'exabyteId': d.exabyteId} for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId) and d.precision.metric == PRECISION_METRIC and d.precision.value == PRECISION_VALUE] or [{'total_energy': d.data.value, 'total_energy_per_atom': d.data.value / len(ELEMENT_MATERIALS[el].basis.elements), 'precision_value': d.precision.value, 'precision_metric': d.precision.metric, 'exabyteId': d.exabyteId} for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)] or [None])[0] for el in ELEMENTS}",
                     "input": [
                         {
                             "name": "DATA",
