@@ -418,7 +418,7 @@
                     "name": "assign-kgrid",
                     "type": "assignment",
                     "operand": "KGRID",
-                    "value": "(context or {}).get('kgrid') or ({'dimensions': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[:3])], 'shifts': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[3:6])], 'gridMetricType': 'KPPRA'} if 'K_POINTS automatic' in (((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '')) else None) or {}",
+                    "value": "(context or {}).get('kgrid') or ([(u.get('context') or {}).get('kgrid') for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy' and (u.get('context') or {}).get('kgrid')] + [None])[0] or ({'dimensions': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[:3])], 'shifts': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[3:6])]} if 'K_POINTS automatic' in (((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '')) else None) or {}",
                     "input": [
                         {
                             "name": "context",
@@ -447,7 +447,7 @@
                     "name": "assign-precision-value",
                     "type": "assignment",
                     "operand": "PRECISION_VALUE",
-                    "value": "KGRID.get('gridMetricValue') if KGRID.get('gridMetricValue') is not None else (math.prod(KGRID.get('dimensions') or []) * len(MATERIAL.basis.elements) if KGRID.get('dimensions') else None)",
+                    "value": "KGRID.get('gridMetricValue') if KGRID.get('gridMetricValue') is not None else None",
                     "input": [
                         {
                             "name": "KGRID",
@@ -613,7 +613,7 @@
                     "name": "assign-elemental-energies",
                     "type": "assignment",
                     "operand": "E_ELEMENTAL_BY_SYMBOL",
-                    "value": "{el: ([d.data.value for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId) and d.precision.metric == PRECISION_METRIC and d.precision.value == PRECISION_VALUE] or [None])[0] for el in ELEMENTS}",
+                    "value": "{el: ([d.data.value for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId) and d.precision.metric == PRECISION_METRIC and d.precision.value == PRECISION_VALUE] or [d.data.value for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)] or [None])[0] for el in ELEMENTS}",
                     "input": [
                         {
                             "name": "DATA",
@@ -640,7 +640,7 @@
                     "name": "assign-elemental-te-used-by-symbol",
                     "type": "assignment",
                     "operand": "ELEMENTAL_TE_USED_BY_SYMBOL",
-                    "value": "{el: ([{'total_energy': d.data.value, 'precision_value': d.precision.value, 'precision_metric': d.precision.metric, 'exabyteId': d.exabyteId} for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId) and d.precision.metric == PRECISION_METRIC and d.precision.value == PRECISION_VALUE] or [None])[0] for el in ELEMENTS}",
+                    "value": "{el: ([{'total_energy': d.data.value, 'precision_value': d.precision.value, 'precision_metric': d.precision.metric, 'exabyteId': d.exabyteId, 'exact_precision_match': True} for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId) and d.precision.metric == PRECISION_METRIC and d.precision.value == PRECISION_VALUE] or [{'total_energy': d.data.value, 'precision_value': d.precision.value, 'precision_metric': d.precision.metric, 'exabyteId': d.exabyteId, 'exact_precision_match': False} for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)] or [None])[0] for el in ELEMENTS}",
                     "input": [
                         {
                             "name": "DATA",
@@ -694,8 +694,13 @@
                     "name": "assign-missing-elemental-energies-wrong-precision",
                     "type": "assignment",
                     "operand": "MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION",
-                    "value": "[el for el in ELEMENTS if el not in MISSING_ELEMENTAL_ENERGIES_NO_TE and E_ELEMENTAL_BY_SYMBOL[el] is None]",
-                    "input": [],
+                    "value": "[el for el in ELEMENTS if el not in MISSING_ELEMENTAL_ENERGIES_NO_TE and not any((d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId) and d.precision.metric == PRECISION_METRIC and d.precision.value == PRECISION_VALUE for d in DATA)]",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-elemental-energies"
+                        }
+                    ],
                     "flowchartId": "assign-missing-elemental-energies-wrong-precision",
                     "status": "idle",
                     "statusTrack": [],
@@ -743,7 +748,7 @@
                     "name": "assign-precision-mismatch-info",
                     "type": "assignment",
                     "operand": "PRECISION_MISMATCH_INFO",
-                    "value": "{'required_precision': {'value': PRECISION_VALUE, 'metric': PRECISION_METRIC}, 'matched_elements': [el for el in ELEMENTS if E_ELEMENTAL_BY_SYMBOL[el] is not None], 'missing_te': MISSING_ELEMENTAL_ENERGIES_NO_TE, 'wrong_precision': MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION, 'available_precisions': AVAILABLE_ELEMENTAL_PRECISIONS_BY_SYMBOL}",
+                    "value": "{'required_precision': {'value': PRECISION_VALUE, 'metric': PRECISION_METRIC}, 'exact_match_elements': [el for el in ELEMENTS if el not in MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION and el not in MISSING_ELEMENTAL_ENERGIES_NO_TE], 'missing_te': MISSING_ELEMENTAL_ENERGIES_NO_TE, 'wrong_precision': MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION, 'available_precisions': AVAILABLE_ELEMENTAL_PRECISIONS_BY_SYMBOL}",
                     "input": [],
                     "flowchartId": "assign-precision-mismatch-info",
                     "logResult": true,
@@ -832,7 +837,7 @@
                     "name": "assign-elemental-energy-sum",
                     "type": "assignment",
                     "operand": "E_ELEMENTAL_SUM",
-                    "value": "sum(E_ELEMENTAL_BY_SYMBOL[e['value']] / len(ELEMENT_MATERIALS[e['value']].basis.elements) for e in MATERIAL.basis.elements) if len(MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION) == 0 else None",
+                    "value": "sum(E_ELEMENTAL_BY_SYMBOL[e['value']] / len(ELEMENT_MATERIALS[e['value']].basis.elements) for e in MATERIAL.basis.elements)",
                     "input": [],
                     "flowchartId": "assign-elemental-energy-sum",
                     "status": "idle",
@@ -884,35 +889,6 @@
             },
             "units": [
                 {
-                    "name": "condition-can-compute-formation-energy",
-                    "type": "condition",
-                    "input": [],
-                    "results": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "then": "assign-formation-energy",
-                    "else": "assign-formation-energy-skipped",
-                    "statement": "E_ELEMENTAL_SUM is not None",
-                    "maxOccurrences": 100,
-                    "flowchartId": "condition-can-compute-formation-energy",
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": true,
-                    "next": "assign-formation-energy",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
                     "name": "assign-formation-energy",
                     "type": "assignment",
                     "operand": "FORMATION_ENERGY",
@@ -927,32 +903,7 @@
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
-                    "head": false,
-                    "next": "assign-formation-energy-skipped",
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
-                },
-                {
-                    "name": "assign-formation-energy-skipped",
-                    "type": "assignment",
-                    "operand": "FORMATION_ENERGY_SKIPPED",
-                    "value": "{'reason': 'elemental_references_unavailable', 'precision_mismatch': PRECISION_MISMATCH_INFO}",
-                    "input": [],
-                    "flowchartId": "assign-formation-energy-skipped",
-                    "logResult": true,
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "head": false,
+                    "head": true,
                     "application": {
                         "isUsingMaterial": true,
                         "name": "espresso",

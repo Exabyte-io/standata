@@ -175,7 +175,7 @@
             "name": "assign-kgrid",
             "type": "assignment",
             "operand": "KGRID",
-            "value": "(context or {}).get('kgrid') or ({'dimensions': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[:3])], 'shifts': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[3:6])], 'gridMetricType': 'KPPRA'} if 'K_POINTS automatic' in (((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '')) else None) or {}",
+            "value": "(context or {}).get('kgrid') or ([(u.get('context') or {}).get('kgrid') for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy' and (u.get('context') or {}).get('kgrid')] + [None])[0] or ({'dimensions': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[:3])], 'shifts': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[3:6])]} if 'K_POINTS automatic' in (((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '')) else None) or {}",
             "input": [
                 {
                     "name": "context",
@@ -204,7 +204,7 @@
             "name": "assign-precision-value",
             "type": "assignment",
             "operand": "PRECISION_VALUE",
-            "value": "KGRID.get('gridMetricValue') if KGRID.get('gridMetricValue') is not None else (math.prod(KGRID.get('dimensions') or []) * len(MATERIAL.basis.elements) if KGRID.get('dimensions') else None)",
+            "value": "KGRID.get('gridMetricValue') if KGRID.get('gridMetricValue') is not None else None",
             "input": [
                 {
                     "name": "KGRID",

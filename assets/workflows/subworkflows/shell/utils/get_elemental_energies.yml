@@ -1,6 +1,6 @@
 # Expects MATERIAL, ELEMENTS, ELEMENT_MATERIALS, PRECISION_VALUE, and PRECISION_METRIC.
 # PRECISION_* come from total_energy_for_material (compound pw_scf kgrid settings).
-# Fetches elemental total_energy properties; exact KPPRA match required to compute FE.
+# Fetches elemental total_energy properties; prefers exact KPPRA match, else any bank TE.
 application:
   name: shell
 method:
@@ -44,7 +44,11 @@ units:
         if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId
         or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)
         and d.precision.metric == PRECISION_METRIC
-        and d.precision.value == PRECISION_VALUE] or [None])[0]
+        and d.precision.value == PRECISION_VALUE]
+        or [d.data.value for d in DATA
+        if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId
+        or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)]
+        or [None])[0]
         for el in ELEMENTS}
       input:
         - name: DATA
@@ -58,12 +62,22 @@ units:
         {el: ([{'total_energy': d.data.value,
         'precision_value': d.precision.value,
         'precision_metric': d.precision.metric,
-        'exabyteId': d.exabyteId}
+        'exabyteId': d.exabyteId,
+        'exact_precision_match': True}
         for d in DATA
         if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId
         or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)
         and d.precision.metric == PRECISION_METRIC
-        and d.precision.value == PRECISION_VALUE] or [None])[0]
+        and d.precision.value == PRECISION_VALUE]
+        or [{'total_energy': d.data.value,
+        'precision_value': d.precision.value,
+        'precision_metric': d.precision.metric,
+        'exabyteId': d.exabyteId,
+        'exact_precision_match': False}
+        for d in DATA
+        if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId
+        or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)]
+        or [None])[0]
         for el in ELEMENTS}
       input:
         - name: DATA
@@ -88,7 +102,13 @@ units:
       value: >-
         [el for el in ELEMENTS
         if el not in MISSING_ELEMENTAL_ENERGIES_NO_TE
-        and E_ELEMENTAL_BY_SYMBOL[el] is None]
+        and not any((d.exabyteId == ELEMENT_MATERIALS[el].exabyteId
+        or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)
+        and d.precision.metric == PRECISION_METRIC
+        and d.precision.value == PRECISION_VALUE for d in DATA)]
+      input:
+        - name: DATA
+          scope: io-elemental-energies
   - type: assignment
     config:
       name: assign-available-elemental-precisions
@@ -111,7 +131,9 @@ units:
       logResult: true
       value: >-
         {'required_precision': {'value': PRECISION_VALUE, 'metric': PRECISION_METRIC},
-        'matched_elements': [el for el in ELEMENTS if E_ELEMENTAL_BY_SYMBOL[el] is not None],
+        'exact_match_elements': [el for el in ELEMENTS
+        if el not in MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION
+        and el not in MISSING_ELEMENTAL_ENERGIES_NO_TE],
         'missing_te': MISSING_ELEMENTAL_ENERGIES_NO_TE,
         'wrong_precision': MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION,
         'available_precisions': AVAILABLE_ELEMENTAL_PRECISIONS_BY_SYMBOL}
@@ -159,4 +181,3 @@ units:
         sum(E_ELEMENTAL_BY_SYMBOL[e['value']]
         / len(ELEMENT_MATERIALS[e['value']].basis.elements)
         for e in MATERIAL.basis.elements)
-        if len(MISSING_ELEMENTAL_ENERGIES_WRONG_PRECISION) == 0 else None

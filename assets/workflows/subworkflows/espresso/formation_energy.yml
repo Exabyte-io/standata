@@ -10,13 +10,6 @@ model:
   name: DFTModel
 name: Formation Energy - QE
 units:
-  - type: condition
-    config:
-      name: condition-can-compute-formation-energy
-      flowchartId: condition-can-compute-formation-energy
-      statement: E_ELEMENTAL_SUM is not None
-      then: assign-formation-energy
-      else: assign-formation-energy-skipped
   - type: assignment
     config:
       name: assign-formation-energy
@@ -25,12 +18,3 @@ units:
       value: (E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)
       results:
         - name: formation_energy
-  - type: assignment
-    config:
-      name: assign-formation-energy-skipped
-      flowchartId: assign-formation-energy-skipped
-      operand: FORMATION_ENERGY_SKIPPED
-      logResult: true
-      value: >-
-        {'reason': 'elemental_references_unavailable',
-        'precision_mismatch': PRECISION_MISMATCH_INFO}
