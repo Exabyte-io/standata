@@ -1,7 +1,7 @@
 import { Standata } from "./base";
+import { ModelMethodFilter } from "./modelMethodFilter";
 import METHODS from "./runtime_data/methods.json";
 import { MethodConfig, UnitMethod } from "./types/method";
-import { ModelMethodFilter } from "./modelMethodFilter";
 import { ModelConfig } from "./types/model";
 import { getCategoryValue } from "./utils/category";
 

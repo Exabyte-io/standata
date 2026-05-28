@@ -19,10 +19,18 @@
             "name": "io-e-bulk",
             "type": "io",
             "subtype": "input",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "flowchartId": "io-e-bulk",
             "source": "api",
             "input": [
                 {
+                    "type": "api",
                     "endpoint": "refined-properties",
                     "endpoint_options": {
                         "params": {
@@ -33,20 +41,10 @@
                     "name": "DATA"
                 }
             ],
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "head": true,
             "next": "assign-e-bulk",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-e-bulk",
@@ -59,41 +57,37 @@
                     "scope": "io-e-bulk"
                 }
             ],
-            "flowchartId": "assign-e-bulk",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-e-bulk",
             "head": false,
             "next": "assert-e-bulk",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assert-e-bulk",
             "type": "assertion",
             "statement": "E_BULK != None",
             "errorMessage": "Bulk total energy does not exist for the resolved bulk material. Run a bulk total energy workflow first.",
-            "flowchartId": "assert-e-bulk",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assert-e-bulk",
             "head": false,
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

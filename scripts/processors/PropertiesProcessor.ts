@@ -1,9 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
 
 import { BUILD_CONFIG } from "../../build-config";
 import { CategorizedEntityProcessor } from "./CategorizedEntityProcessor";
-import { AssetRecord } from "./EntityProcessor";
 
 export class PropertiesProcessor extends CategorizedEntityProcessor {
     private static defaultCategoryKeys = [
@@ -32,7 +30,7 @@ export class PropertiesProcessor extends CategorizedEntityProcessor {
         });
     }
 
-    public readAssets(): AssetRecord[] {
+    public readAssets() {
         console.log("  Reading existing property JSON files from data directory...");
         const files = serverUtils.file.getFilesInDirectory(this.resolvedPaths.dataDir, [".json"]);
         console.log(`  Found ${files.length} property files`);

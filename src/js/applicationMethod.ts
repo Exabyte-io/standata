@@ -1,3 +1,5 @@
+import type { ApplicationSchema } from "@mat3ra/esse/dist/js/types";
+
 import { MethodStandata } from "./method";
 import MODEL_METHOD_DATA from "./runtime_data/applications/modelMethodMapByApplication.json";
 import { ApplicationMethodParametersInterface } from "./types/applicationFilter";
@@ -31,8 +33,8 @@ export class ApplicationMethodStandata extends ApplicationFilterStandata {
         return this.getAvailableEntities(name);
     }
 
-    getDefaultMethodConfigForApplication(applicationConfig: any): any {
-        const { name, version, build, executable, flavor } = applicationConfig;
+    getDefaultMethodConfigForApplication(application: ApplicationSchema) {
+        const { name, version, build /* executable, flavor */ } = application;
 
         const availableMethods = this.getAvailableMethods(name);
         if (!availableMethods || Object.keys(availableMethods).length === 0) {
@@ -47,8 +49,8 @@ export class ApplicationMethodStandata extends ApplicationFilterStandata {
             name,
             version,
             build,
-            executable,
-            flavor,
+            // executable,
+            // flavor,
         );
     }
 }

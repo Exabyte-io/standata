@@ -1,9 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import serverUtils from "@mat3ra/utils/server";
 
 import { BUILD_CONFIG } from "../../build-config";
 import { CategorizedEntityProcessor } from "./CategorizedEntityProcessor";
-import { AssetRecord } from "./EntityProcessor";
 
 export class MaterialsProcessor extends CategorizedEntityProcessor {
     private static defaultCategoryKeys = [
@@ -33,13 +31,12 @@ export class MaterialsProcessor extends CategorizedEntityProcessor {
         });
     }
 
-    public readAssets(): AssetRecord[] {
+    public readAssets() {
         console.log("  Reading generated materials from data directory...");
         const dataFiles = serverUtils.file.getFilesInDirectory(this.resolvedPaths.dataDir, [
             ".json",
         ]);
         console.log(`  Found ${dataFiles.length} generated material files`);
-        return [];
     }
 
     public cleanDataDirectory(): void {

@@ -14,7 +14,8 @@ class ApplicationVersionsMap {
         return this.map.name;
     }
     get nonVersionProperties() {
-        const { versions, defaultVersion, ...rest } = this.map;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { versions: _, defaultVersion: __, ...rest } = this.map;
         return rest;
     }
     get versionConfigs() {

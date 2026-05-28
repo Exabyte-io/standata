@@ -11,6 +11,9 @@ categories:
     - file_content
     - final_structure
     - homo_energy
+    - hubbard_u
+    - hubbard_v
+    - hubbard_v_nn
     - lumo_energy
     - phonon_dispersions
     - phonon_dos
@@ -260,6 +263,20 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
+  - filename: espresso/hubbard_u_hp.json
+    categories:
+      - atomic_forces
+      - band_gaps
+      - espresso
+      - fermi_energy
+      - hubbard_u
+      - hubbard_v
+      - hubbard_v_nn
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
   - filename: espresso/kpoint_convergence.json
     categories:
       - atomic_forces
@@ -372,7 +389,6 @@ entities:
   - filename: espresso/valence_band_offset_calc_from_previous_esp_vbm.json
     categories:
       - espresso
-      - python
       - valence_band_offset
   - filename: espresso/variable_cell_relaxation.json
     categories:

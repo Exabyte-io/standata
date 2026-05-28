@@ -5,6 +5,7 @@
     "isUsingMaterial": true,
     "version": "6.3",
     "isDefault": true,
+    "isDefaultVersion": true,
     "build": "GNU",
     "hasAdvancedComputeOptions": true,
     "buildConfig": {

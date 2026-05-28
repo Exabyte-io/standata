@@ -1,6 +1,6 @@
+import serverUtils from "@mat3ra/utils/server";
 import * as fs from "fs";
 import * as path from "path";
-import serverUtils from "@mat3ra/utils/server";
 
 import { BUILD_CONFIG } from "../../build-config";
 import { MODEL_NAMES, MODEL_TREE } from "./modelTreeConstants";
