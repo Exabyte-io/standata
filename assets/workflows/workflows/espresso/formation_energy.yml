@@ -7,6 +7,7 @@ properties:
   - atomic_forces
   - fermi_energy
   - formation_energy
+  - formation_energy_references
   - pressure
   - stress_tensor
   - total_energy

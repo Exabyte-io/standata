@@ -9,12 +9,47 @@ method:
 model:
   name: DFTModel
 name: Formation Energy - QE
+properties:
+  - formation_energy
+  - formation_energy_references
 units:
+  - type: assignment
+    config:
+      name: assign-formation-energy-references
+      flowchartId: assign-formation-energy-references
+      operand: FORMATION_ENERGY_REFERENCES
+      value: >-
+        {'rows': (
+        [{'label': MATERIAL.formula or MATERIAL.name,
+        'total_energy': E_MATERIAL,
+        'n_atoms': len(MATERIAL.basis.elements),
+        'total_energy_per_atom': E_MATERIAL / len(MATERIAL.basis.elements),
+        'precision_value': PRECISION_VALUE,
+        'precision_metric': PRECISION_METRIC}
+        
+        + 
+        [{'label': el,
+        'total_energy': ELEMENTAL_TE_USED_BY_SYMBOL[el]['total_energy'],
+        'n_atoms': len(ELEMENT_MATERIALS[el].basis.elements),
+        'total_energy_per_atom': ELEMENTAL_TE_USED_BY_SYMBOL[el]['total_energy_per_atom'],
+        'precision_value': ELEMENTAL_TE_USED_BY_SYMBOL[el]['precision_value'],
+        'precision_metric': ELEMENTAL_TE_USED_BY_SYMBOL[el]['precision_metric']}
+        for el in ELEMENTS if ELEMENTAL_TE_USED_BY_SYMBOL[el]])}
+      results:
+        - name: formation_energy_references
   - type: assignment
     config:
       name: assign-formation-energy
       flowchartId: assign-formation-energy
       operand: FORMATION_ENERGY
+      value: (E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)
+      results:
+        - name: formation_energy
+  - type: assignment
+    config:
+      name: assign-formation-energy
+      flowchartId: assign-formation-energy
+      operand: PRECISION_VALUE
       value: (E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)
       results:
         - name: formation_energy

@@ -11,6 +11,7 @@ categories:
     - file_content
     - final_structure
     - formation_energy
+    - formation_energy_references
     - homo_energy
     - lumo_energy
     - phonon_dispersions
@@ -241,6 +242,7 @@ entities:
     categories:
       - espresso
       - formation_energy
+      - formation_energy_references
   - filename: espresso/gw_band_structure_band_gap_full_frequency.json
     categories:
       - atomic_forces

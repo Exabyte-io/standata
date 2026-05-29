@@ -5,6 +5,7 @@
         "name": "espresso"
     },
     "properties": [
+        "formation_energy_references",
         "formation_energy"
     ],
     "model": {
@@ -23,6 +24,35 @@
     },
     "units": [
         {
+            "name": "assign-formation-energy-references",
+            "type": "assignment",
+            "operand": "FORMATION_ENERGY_REFERENCES",
+            "value": "{'rows': ( [{'label': MATERIAL.formula or MATERIAL.name or 'Compound', 'total_energy': E_MATERIAL, 'n_atoms': len(MATERIAL.basis.elements), 'total_energy_per_atom': E_MATERIAL / len(MATERIAL.basis.elements), 'precision_value': PRECISION_VALUE, 'precision_metric': PRECISION_METRIC}] + [{'label': el, 'total_energy': ELEMENTAL_TE_USED_BY_SYMBOL[el]['total_energy'], 'n_atoms': len(ELEMENT_MATERIALS[el].basis.elements), 'total_energy_per_atom': ELEMENTAL_TE_USED_BY_SYMBOL[el]['total_energy_per_atom'], 'precision_value': ELEMENTAL_TE_USED_BY_SYMBOL[el]['precision_value'], 'precision_metric': ELEMENTAL_TE_USED_BY_SYMBOL[el]['precision_metric']} for el in ELEMENTS if ELEMENTAL_TE_USED_BY_SYMBOL[el]])}",
+            "input": [],
+            "flowchartId": "assign-formation-energy-references",
+            "results": [
+                {
+                    "name": "formation_energy_references"
+                }
+            ],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "head": true,
+            "next": "assign-formation-energy",
+            "application": {
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "version": "6.3",
+                "schemaVersion": "2022.8.16"
+            }
+        },
+        {
             "name": "assign-formation-energy",
             "type": "assignment",
             "operand": "FORMATION_ENERGY",
@@ -37,7 +67,7 @@
             "status": "idle",
             "statusTrack": [],
             "tags": [],
-            "head": true,
+            "head": false,
             "application": {
                 "isUsingMaterial": true,
                 "name": "espresso",
