@@ -13,6 +13,7 @@ results:
   - name: stress_tensor
   - name: total_energy
   - name: total_energy_contributions
+  - name: formation_energy
   - name: total_force
   - name: zero_point_energy
   - name: final_structure
