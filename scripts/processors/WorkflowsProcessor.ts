@@ -1,17 +1,17 @@
 import serverUtils from "@mat3ra/utils/server";
-// @ts-ignore
-import { builders, Subworkflow, UnitFactory, Workflow, createWorkflow } from "@mat3ra/wode";
 import * as path from "path";
 
 import { BUILD_CONFIG } from "../../build-config";
 import { BaseWorkflowSubworkflowProcessor } from "./BaseWorkflowSubworkflowProcessor";
+import type { WorkflowEntityConfig } from "./types";
+import createWorkflow, { type SubworkflowsTree, type WorkflowData } from "./utils/createWorkflow";
 
-export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
+export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor<WorkflowData> {
     public static defaultCategoryKeys = ["properties", "isMultimaterial", "tags", "application"];
 
-    private subworkflowMapByApplication: Record<string, Record<string, any>>;
+    private subworkflowMapByApplication: SubworkflowsTree;
 
-    constructor(rootDir: string, subworkflowsMapByApplication: Record<string, Record<string, any>>) {
+    constructor(rootDir: string, subworkflowsMapByApplication: SubworkflowsTree) {
         super({
             rootDir,
             entityNamePlural: "workflows",
@@ -35,21 +35,23 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
 
     private get subworkflowMapWithCrossApplicationReferences(): Record<string, any> {
         return Object.fromEntries(
-            Object.entries(this.subworkflowMapByApplication).map(([applicationName, subworkflows]) => [
-                applicationName,
-                {
-                    ...subworkflows,
-                    ...this.getCrossApplicationReferences(applicationName),
-                },
-            ]),
+            Object.entries(this.subworkflowMapByApplication).map(
+                ([applicationName, subworkflows]) => [
+                    applicationName,
+                    {
+                        ...subworkflows,
+                        ...this.getCrossApplicationReferences(applicationName),
+                    },
+                ],
+            ),
         );
     }
 
     private getCrossApplicationReferences(applicationName: string): Record<string, any> {
         const references: Record<string, any> = {};
-        const unitsToVisit = Object.values(this.entityMapByApplication[applicationName] || {}).flatMap(
-            (workflowData: any) => workflowData.units || [],
-        );
+        const unitsToVisit = Object.values(
+            this.entityMapByApplication[applicationName] || {},
+        ).flatMap((workflowData: any) => workflowData.units || []);
 
         while (unitsToVisit.length) {
             const unitData = unitsToVisit.pop();
@@ -57,7 +59,8 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
             const [sourceApplicationName, ...pathParts] = String(unitData.name || "").split("/");
             const pathInSource = pathParts.join("/");
             const sourceSubworkflows = this.subworkflowMapByApplication[sourceApplicationName];
-            if (!pathInSource || sourceApplicationName === applicationName || !sourceSubworkflows) continue;
+            if (!pathInSource || sourceApplicationName === applicationName || !sourceSubworkflows)
+                continue;
 
             const subworkflowData = Object.values(sourceSubworkflows).find((subworkflow: any) => {
                 return subworkflow.__path__ === pathInSource;
@@ -67,26 +70,19 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         return references;
     }
 
-    protected buildEntityConfigs(): any[] {
-        const WorkflowCls = Workflow as any;
-        this.enablePredefinedIds();
-        const configs: { appName: string; safeName: string; config: any; tags?: any[] }[] = [];
+    protected buildEntityConfigs(): WorkflowEntityConfig[] {
+        const configs: WorkflowEntityConfig[] = [];
         // For each application (from application_data.yml), look into its folder under assets/workflows/workflows/{appName}
         // and load all YAML files, preserving their relative paths to use as safeName in build/data output structure
         this.applications.forEach((appName) => {
-            const workflows = this.workflowSubworkflowMapByApplication.workflows[appName];
-            if (!workflows) return;
-            Object.keys(workflows).forEach((workflowKey) => {
-                const workflowData = workflows[workflowKey];
-                const workflow = createWorkflow({
+            const workflows = this.entityMapByApplication[appName];
+
+            Object.entries(workflows || {}).forEach(([workflowKey, workflowData]) => {
+                const workflow = createWorkflow(
                     appName,
                     workflowData,
-                    workflowSubworkflowMapByApplication: this.workflowSubworkflowMapByApplication,
-                    workflowCls: WorkflowCls,
-                    SubworkflowCls: Subworkflow,
-                    UnitFactoryCls: UnitFactory,
-                    unitBuilders: { ...builders, Workflow: WorkflowCls },
-                });
+                    this.subworkflowMapByApplication,
+                );
                 const config = this.buildConfigFromEntityData(
                     workflowData,
                     workflowKey,
@@ -99,7 +95,7 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
         return configs;
     }
 
-    protected writeworkflowSubworkflowMapByApplication(): void {
+    protected writeWorkflowSubworkflowMapByApplication(): void {
         serverUtils.json.writeJSONFileSync(
             path.resolve(
                 this.resolvedPaths.buildDir,
@@ -110,7 +106,7 @@ export class WorkflowsProcessor extends BaseWorkflowSubworkflowProcessor {
     }
 
     public writeBuildDirectoryContent(): void {
-        this.writeworkflowSubworkflowMapByApplication();
+        this.writeWorkflowSubworkflowMapByApplication();
         super.writeDataDirectoryContent();
     }
 }

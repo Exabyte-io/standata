@@ -1,6 +1,6 @@
 isDefault: true
 monitors:
-  - standard_output
+  - name: standard_output
 results: []
 flavors:
   espresso_cp_to_deepmd:
@@ -9,7 +9,7 @@ flavors:
       - name: espresso_cp_to_deepmd.py
     results: []
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: deepmd
     executableName: python
 
@@ -19,6 +19,6 @@ flavors:
       - name: espresso_to_lammps_structure.py
     results: []
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: deepmd
     executableName: python

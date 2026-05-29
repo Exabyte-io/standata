@@ -19,10 +19,18 @@
             "name": "io-material",
             "type": "io",
             "subtype": "input",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "flowchartId": "io-material",
             "source": "api",
             "input": [
                 {
+                    "type": "api",
                     "endpoint": "materials",
                     "endpoint_options": {
                         "params": {
@@ -33,20 +41,10 @@
                     "name": "DATA"
                 }
             ],
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "head": true,
             "next": "assign-material",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-material",
@@ -59,20 +57,19 @@
                     "scope": "io-material"
                 }
             ],
-            "flowchartId": "assign-material",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-material",
             "head": false,
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }
