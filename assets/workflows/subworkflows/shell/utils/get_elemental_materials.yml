@@ -27,7 +27,8 @@ units:
       subtype: input
       source: api
       input:
-        - endpoint: materials
+        - type: api
+          endpoint: materials
           endpoint_options:
             params:
               query: "{'tags': 'elemental', 'metadata.element': {'$in': ELEMENTS}}"

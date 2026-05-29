@@ -1,15 +1,19 @@
 {
+    "_id": "847e467b-e76b-5bc4-b152-3faaba15e0fb",
     "name": "Formation Energy",
     "subworkflows": [
         {
             "_id": "ad32fd60-cdf4-5c4a-8ad8-0cd8eafa4572",
             "name": "Get Material By ID",
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
+                "isUsingMaterial": false,
                 "name": "shell",
                 "shortName": "sh",
                 "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             },
@@ -28,10 +32,18 @@
                     "name": "io-material",
                     "type": "io",
                     "subtype": "input",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "flowchartId": "io-material",
                     "source": "api",
                     "input": [
                         {
+                            "type": "api",
                             "endpoint": "materials",
                             "endpoint_options": {
                                 "params": {
@@ -42,20 +54,10 @@
                             "name": "DATA"
                         }
                     ],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "head": true,
                     "next": "assign-material",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-material",
@@ -68,32 +70,34 @@
                             "scope": "io-material"
                         }
                     ],
-                    "flowchartId": "assign-material",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-material",
                     "head": false,
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "196c6da2-465d-5140-989e-48b1fb1cbb72",
             "name": "Get Elemental Materials",
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
+                "isUsingMaterial": false,
                 "name": "shell",
                 "shortName": "sh",
                 "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             },
@@ -114,51 +118,53 @@
                     "operand": "ELEMENTS",
                     "value": "sorted(list(set([e['value'] for e in MATERIAL.basis.elements])))",
                     "input": [],
-                    "flowchartId": "assign-elements",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-elements",
                     "head": true,
                     "next": "assert-elements",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assert-elements",
                     "type": "assertion",
                     "statement": "len(ELEMENTS) > 0",
                     "errorMessage": "Material has no elements in its basis.",
-                    "flowchartId": "assert-elements",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assert-elements",
                     "head": false,
                     "next": "io-elemental-materials",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "io-elemental-materials",
                     "type": "io",
                     "subtype": "input",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "flowchartId": "io-elemental-materials",
                     "source": "api",
                     "input": [
                         {
+                            "type": "api",
                             "endpoint": "materials",
                             "endpoint_options": {
                                 "params": {
@@ -169,20 +175,10 @@
                             "name": "DATA"
                         }
                     ],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "head": false,
                     "next": "assign-element-materials",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-element-materials",
@@ -195,53 +191,52 @@
                             "scope": "io-elemental-materials"
                         }
                     ],
-                    "flowchartId": "assign-element-materials",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-element-materials",
                     "head": false,
                     "next": "assert-element-materials",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assert-element-materials",
                     "type": "assertion",
                     "statement": "set(ELEMENT_MATERIALS.keys()) == set(ELEMENTS)",
                     "errorMessage": "Elemental reference material(s) not found on the Platform. Import missing elements from Standata Materials Bank (tags: elemental, metadata.element).",
-                    "flowchartId": "assert-element-materials",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assert-element-materials",
                     "head": false,
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "17adeec3-aa75-5d67-9617-9b4a0e4b06e9",
             "name": "Get Elemental Energies",
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
+                "isUsingMaterial": false,
                 "name": "shell",
                 "shortName": "sh",
                 "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.1.8",
                 "schemaVersion": "2022.8.16"
             },
@@ -260,10 +255,18 @@
                     "name": "io-elemental-energies",
                     "type": "io",
                     "subtype": "input",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "flowchartId": "io-elemental-energies",
                     "source": "api",
                     "input": [
                         {
+                            "type": "api",
                             "endpoint": "refined-properties",
                             "endpoint_options": {
                                 "params": {
@@ -274,20 +277,10 @@
                             "name": "DATA"
                         }
                     ],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "head": true,
                     "next": "assign-elemental-energies",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-elemental-energies",
@@ -300,21 +293,18 @@
                             "scope": "io-elemental-energies"
                         }
                     ],
-                    "flowchartId": "assign-elemental-energies",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-elemental-energies",
                     "head": false,
                     "next": "assign-missing-elemental-energies",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-missing-elemental-energies",
@@ -322,21 +312,18 @@
                     "operand": "MISSING_ELEMENTAL_ENERGIES",
                     "value": "[el for el in ELEMENTS if E_ELEMENTAL_BY_SYMBOL[el] is None]",
                     "input": [],
-                    "flowchartId": "assign-missing-elemental-energies",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-missing-elemental-energies",
                     "head": false,
                     "next": "assign-elemental-energies-error",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-elemental-energies-error",
@@ -344,42 +331,36 @@
                     "operand": "ELEMENTAL_ENERGIES_ERROR_MSG",
                     "value": "'Missing elemental total_energy for: ' + ', '.join(MISSING_ELEMENTAL_ENERGIES) + '. Run QE total energy on Standata elemental materials (tags: elemental).' + ' exabyteIds: ' + ', '.join([el + '=' + ELEMENT_MATERIALS[el].exabyteId for el in MISSING_ELEMENTAL_ENERGIES])",
                     "input": [],
-                    "flowchartId": "assign-elemental-energies-error",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-elemental-energies-error",
                     "head": false,
                     "next": "assert-elemental-energies",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assert-elemental-energies",
                     "type": "assertion",
                     "statement": "len(MISSING_ELEMENTAL_ENERGIES) == 0",
                     "errorMessage": "ELEMENTAL_ENERGIES_ERROR_MSG",
-                    "flowchartId": "assert-elemental-energies",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assert-elemental-energies",
                     "head": false,
                     "next": "assign-elemental-energy-sum",
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-elemental-energy-sum",
@@ -387,34 +368,34 @@
                     "operand": "E_ELEMENTAL_SUM",
                     "value": "sum(E_ELEMENTAL_BY_SYMBOL[e['value']] / len(ELEMENT_MATERIALS[e['value']].basis.elements) for e in MATERIAL.basis.elements)",
                     "input": [],
-                    "flowchartId": "assign-elemental-energy-sum",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-elemental-energy-sum",
                     "head": false,
-                    "application": {
-                        "name": "shell",
-                        "shortName": "sh",
-                        "summary": "Shell Script",
-                        "build": "GNU",
-                        "isDefault": true,
-                        "version": "5.1.8",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "5f5c6c47-807a-5738-b65a-a1cee1c396a1",
             "name": "Total Energy For Material - QE",
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "isDefaultVersion": true,
                 "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
                 "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
@@ -435,11 +416,7 @@
                     "subtype": "us",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -480,33 +457,32 @@
                     "flowchartId": "pw-scf-formation-energy",
                     "preProcessors": [],
                     "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
                     "application": {
+                        "build": "GNU",
+                        "hasAdvancedComputeOptions": true,
+                        "isDefault": true,
+                        "isDefaultVersion": true,
                         "isUsingMaterial": true,
                         "name": "espresso",
                         "shortName": "qe",
                         "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
                         "version": "6.3",
                         "schemaVersion": "2022.8.16"
                     },
                     "executable": {
+                        "applicationName": "espresso",
+                        "applicationVersion": "*",
                         "hasAdvancedComputeOptions": true,
                         "isDefault": true,
-                        "monitors": [
-                            "standard_output",
-                            "convergence_ionic",
-                            "convergence_electronic"
-                        ],
-                        "postProcessors": [
-                            "remove_non_zero_weight_kpoints"
-                        ],
                         "name": "pw.x",
                         "schemaVersion": "2022.8.16"
                     },
                     "flavor": {
                         "applicationName": "espresso",
+                        "applicationVersion": "*",
                         "executableName": "pw.x",
                         "input": [
                             {
@@ -515,46 +491,70 @@
                         ],
                         "isDefault": true,
                         "monitors": [
-                            "standard_output",
-                            "convergence_electronic"
-                        ],
-                        "results": [
-                            "atomic_forces",
-                            "fermi_energy",
-                            "pressure",
-                            "stress_tensor",
-                            "total_energy",
-                            "total_energy_contributions",
-                            "total_force"
+                            {
+                                "name": "standard_output"
+                            },
+                            {
+                                "name": "convergence_electronic"
+                            }
                         ],
                         "name": "pw_scf",
+                        "postProcessors": [],
+                        "preProcessors": [],
+                        "results": [
+                            {
+                                "name": "atomic_forces"
+                            },
+                            {
+                                "name": "fermi_energy"
+                            },
+                            {
+                                "name": "pressure"
+                            },
+                            {
+                                "name": "stress_tensor"
+                            },
+                            {
+                                "name": "total_energy"
+                            },
+                            {
+                                "name": "total_energy_contributions"
+                            },
+                            {
+                                "name": "total_force"
+                            }
+                        ],
                         "schemaVersion": "2022.8.16"
                     },
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
                     "input": [
                         {
-                            "applicationName": "espresso",
-                            "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{{ input.ATOMIC_SPECIES }}\nATOMIC_POSITIONS crystal\n{{ input.ATOMIC_POSITIONS }}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                            "contextProviders": [
-                                {
-                                    "name": "KGridFormDataManager"
-                                },
-                                {
-                                    "name": "QEPWXInputDataManager"
-                                },
-                                {
-                                    "name": "PlanewaveCutoffDataManager"
-                                }
-                            ],
-                            "executableName": "pw.x",
-                            "name": "pw_scf.in",
-                            "rendered": "&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = 'from_scratch'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = '{{ JOB_WORK_DIR }}/outdir'\n    wfcdir = '{{ JOB_WORK_DIR }}/outdir'\n    prefix = '__prefix__'\n    pseudo_dir = '{{ JOB_WORK_DIR }}/pseudo'\n/\n&SYSTEM\n    ibrav = 0\n    nat = 2\n    ntyp = 1\n    ecutwfc = 40\n    ecutrho = 200\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\nSi 28.0855 \nATOMIC_POSITIONS crystal\nSi     0.000000000    0.000000000    0.000000000 \nSi     0.250000000    0.250000000    0.250000000 \nCELL_PARAMETERS angstrom\n3.348920236 0.000000000 1.933500000\n1.116306745 3.157392278 1.933500000\n0.000000000 0.000000000 3.867000000\nK_POINTS automatic\n2 2 2 0 0 0 \n",
-                            "schemaVersion": "2022.8.16"
+                            "template": {
+                                "applicationName": "espresso",
+                                "applicationVersion": "*",
+                                "content": "{% if subworkflowContext.MATERIAL_INDEX %}\n{%- set input = input.perMaterial[subworkflowContext.MATERIAL_INDEX] -%}\n{% endif -%}\n&CONTROL\n    calculation = 'scf'\n    title = ''\n    verbosity = 'low'\n    restart_mode = '{{ input.RESTART_MODE }}'\n    wf_collect = .true.\n    tstress = .true.\n    tprnfor = .true.\n    outdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    wfcdir = {% raw %}'{{ JOB_WORK_DIR }}/outdir'{% endraw %}\n    prefix = '__prefix__'\n    pseudo_dir = {% raw %}'{{ JOB_WORK_DIR }}/pseudo'{% endraw %}\n/\n&SYSTEM\n    ibrav = {{ input.IBRAV }}\n    nat = {{ input.NAT }}\n    ntyp = {{ input.NTYP }}\n    ecutwfc = {{ cutoffs.wavefunction }}\n    ecutrho = {{ cutoffs.density }}\n    occupations = 'smearing'\n    degauss = 0.005\n/\n&ELECTRONS\n    diagonalization = 'david'\n    diago_david_ndim = 4\n    diago_full_acc = .true.\n    mixing_beta = 0.3\n    startingwfc = 'atomic+random'\n/\n&IONS\n/\n&CELL\n/\nATOMIC_SPECIES\n{% for specie in input.ATOMIC_SPECIES -%}\n{{ specie.X }} {{ specie.Mass_X|sprintf(\"%f\") }} {{ specie.PseudoPot_X }}\n{% endfor %}\nATOMIC_POSITIONS crystal\n{%- set print_constraints = false %}\n{%- for position in input.ATOMIC_POSITIONS %}\n    {%- if position[\"if_pos(1)\"] != 1 or position[\"if_pos(2)\"] != 1 or position[\"if_pos(3)\"] != 1 %}\n        {%- set print_constraints = true %}\n    {%- endif %}\n{%- endfor %}\n{% for position in input.ATOMIC_POSITIONS -%}\n{{ position.X|sprintf(\"%-3s\") }} {{ position.x|sprintf(\"%14.9f\") }} {{ position.y|sprintf(\"%14.9f\") }} {{ position.z|sprintf(\"%14.9f\") }}{% if print_constraints %} {{ position[\"if_pos(1)\"] }} {{ position[\"if_pos(2)\"] }} {{ position[\"if_pos(3)\"] }}{% endif %}\n{% endfor %}\nCELL_PARAMETERS angstrom\n{{ input.CELL_PARAMETERS.v1[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v1[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v2[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v2[2]|sprintf(\"%14.9f\") }}\n{{ input.CELL_PARAMETERS.v3[0]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[1]|sprintf(\"%14.9f\") }} {{ input.CELL_PARAMETERS.v3[2]|sprintf(\"%14.9f\") }}\nK_POINTS automatic\n{% for d in kgrid.dimensions %}{{d}} {% endfor %}{% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                                "contextProviders": [
+                                    {
+                                        "name": "KGridFormDataManager"
+                                    },
+                                    {
+                                        "name": "QEPWXInputDataManager"
+                                    },
+                                    {
+                                        "name": "PlanewaveCutoffDataManager"
+                                    }
+                                ],
+                                "executableName": "pw.x",
+                                "name": "pw_scf.in",
+                                "schemaVersion": "2022.8.16"
+                            },
+                            "rendered": "",
+                            "isManuallyChanged": false
                         }
                     ],
-                    "next": "assign-e-material"
+                    "context": [],
+                    "next": "assign-e-material",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 },
                 {
                     "name": "assign-e-material",
@@ -567,36 +567,34 @@
                             "scope": "pw-scf-formation-energy"
                         }
                     ],
-                    "flowchartId": "assign-e-material",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-e-material",
                     "head": false,
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         },
         {
             "_id": "bd567528-dc35-579a-8a59-84493faee20e",
             "name": "Formation Energy - QE",
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": true,
+                "isDefault": true,
+                "isDefaultVersion": true,
                 "isUsingMaterial": true,
                 "name": "espresso",
                 "shortName": "qe",
                 "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
                 "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
@@ -611,11 +609,7 @@
                     "subtype": "us",
                     "data": {}
                 },
-                "functional": {
-                    "slug": "pbe"
-                },
-                "refiners": [],
-                "modifiers": []
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -624,92 +618,116 @@
                     "operand": "FORMATION_ENERGY",
                     "value": "(E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)",
                     "input": [],
-                    "flowchartId": "assign-formation-energy",
                     "results": [
                         {
                             "name": "formation_energy"
                         }
                     ],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
                     "status": "idle",
                     "statusTrack": [],
                     "tags": [],
+                    "flowchartId": "assign-formation-energy",
                     "head": true,
-                    "application": {
-                        "isUsingMaterial": true,
-                        "name": "espresso",
-                        "shortName": "qe",
-                        "summary": "Quantum ESPRESSO",
-                        "build": "GNU",
-                        "hasAdvancedComputeOptions": true,
-                        "isDefault": true,
-                        "version": "6.3",
-                        "schemaVersion": "2022.8.16"
-                    }
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
                 }
-            ]
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
         }
     ],
     "units": [
         {
+            "type": "subworkflow",
             "name": "Get Material By ID",
-            "type": "subworkflow",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "_id": "ad32fd60-cdf4-5c4a-8ad8-0cd8eafa4572",
-            "status": "idle",
-            "statusTrack": [],
             "flowchartId": "77568205-b615-5ad5-ae25-9038d20a94de",
-            "tags": [],
-            "head": true,
-            "next": "3a879959-d669-5d9d-a27e-5cd2bf33b7ed"
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
+            "type": "subworkflow",
             "name": "Get Elemental Materials",
-            "type": "subworkflow",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "_id": "196c6da2-465d-5140-989e-48b1fb1cbb72",
-            "status": "idle",
-            "statusTrack": [],
             "flowchartId": "3a879959-d669-5d9d-a27e-5cd2bf33b7ed",
-            "tags": [],
-            "head": false,
-            "next": "4c43c6cc-79a3-5771-a25c-ca6372d46e6e"
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
+            "type": "subworkflow",
             "name": "Get Elemental Energies",
-            "type": "subworkflow",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "_id": "17adeec3-aa75-5d67-9617-9b4a0e4b06e9",
-            "status": "idle",
-            "statusTrack": [],
             "flowchartId": "4c43c6cc-79a3-5771-a25c-ca6372d46e6e",
-            "tags": [],
-            "head": false,
-            "next": "7c0c034a-afa7-5575-80d4-6ee1b455af31"
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
+            "type": "subworkflow",
             "name": "Total Energy For Material - QE",
-            "type": "subworkflow",
-            "_id": "5f5c6c47-807a-5738-b65a-a1cee1c396a1",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "7c0c034a-afa7-5575-80d4-6ee1b455af31",
             "tags": [],
-            "head": false,
-            "next": "a1ae2b4a-7e29-5a6c-b9f3-bb9a18b7177c"
+            "_id": "5f5c6c47-807a-5738-b65a-a1cee1c396a1",
+            "flowchartId": "7c0c034a-afa7-5575-80d4-6ee1b455af31",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
-            "name": "Formation Energy - QE",
             "type": "subworkflow",
-            "_id": "bd567528-dc35-579a-8a59-84493faee20e",
+            "name": "Formation Energy - QE",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
-            "flowchartId": "a1ae2b4a-7e29-5a6c-b9f3-bb9a18b7177c",
             "tags": [],
-            "head": false
+            "_id": "bd567528-dc35-579a-8a59-84493faee20e",
+            "flowchartId": "a1ae2b4a-7e29-5a6c-b9f3-bb9a18b7177c",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
-    "properties": [],
-    "_id": "847e467b-e76b-5bc4-b152-3faaba15e0fb",
+    "properties": [
+        "atomic_forces",
+        "fermi_energy",
+        "pressure",
+        "stress_tensor",
+        "total_energy",
+        "total_energy_contributions",
+        "total_force",
+        "formation_energy"
+    ],
     "workflows": [],
     "schemaVersion": "2022.8.16",
-    "isDefault": false,
     "application": {
         "name": "espresso"
     }

@@ -21,51 +21,53 @@
             "operand": "ELEMENTS",
             "value": "sorted(list(set([e['value'] for e in MATERIAL.basis.elements])))",
             "input": [],
-            "flowchartId": "assign-elements",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-elements",
             "head": true,
             "next": "assert-elements",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assert-elements",
             "type": "assertion",
             "statement": "len(ELEMENTS) > 0",
             "errorMessage": "Material has no elements in its basis.",
-            "flowchartId": "assert-elements",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assert-elements",
             "head": false,
             "next": "io-elemental-materials",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "io-elemental-materials",
             "type": "io",
             "subtype": "input",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "flowchartId": "io-elemental-materials",
             "source": "api",
             "input": [
                 {
+                    "type": "api",
                     "endpoint": "materials",
                     "endpoint_options": {
                         "params": {
@@ -76,20 +78,10 @@
                     "name": "DATA"
                 }
             ],
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "head": false,
             "next": "assign-element-materials",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-element-materials",
@@ -102,41 +94,37 @@
                     "scope": "io-elemental-materials"
                 }
             ],
-            "flowchartId": "assign-element-materials",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-element-materials",
             "head": false,
             "next": "assert-element-materials",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assert-element-materials",
             "type": "assertion",
             "statement": "set(ELEMENT_MATERIALS.keys()) == set(ELEMENTS)",
             "errorMessage": "Elemental reference material(s) not found on the Platform. Import missing elements from Standata Materials Bank (tags: elemental, metadata.element).",
-            "flowchartId": "assert-element-materials",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assert-element-materials",
             "head": false,
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

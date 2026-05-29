@@ -19,10 +19,18 @@
             "name": "io-elemental-energies",
             "type": "io",
             "subtype": "input",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "flowchartId": "io-elemental-energies",
             "source": "api",
             "input": [
                 {
+                    "type": "api",
                     "endpoint": "refined-properties",
                     "endpoint_options": {
                         "params": {
@@ -33,20 +41,10 @@
                     "name": "DATA"
                 }
             ],
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "head": true,
             "next": "assign-elemental-energies",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-elemental-energies",
@@ -59,21 +57,18 @@
                     "scope": "io-elemental-energies"
                 }
             ],
-            "flowchartId": "assign-elemental-energies",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-elemental-energies",
             "head": false,
             "next": "assign-missing-elemental-energies",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-missing-elemental-energies",
@@ -81,21 +76,18 @@
             "operand": "MISSING_ELEMENTAL_ENERGIES",
             "value": "[el for el in ELEMENTS if E_ELEMENTAL_BY_SYMBOL[el] is None]",
             "input": [],
-            "flowchartId": "assign-missing-elemental-energies",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-missing-elemental-energies",
             "head": false,
             "next": "assign-elemental-energies-error",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-elemental-energies-error",
@@ -103,42 +95,36 @@
             "operand": "ELEMENTAL_ENERGIES_ERROR_MSG",
             "value": "'Missing elemental total_energy for: ' + ', '.join(MISSING_ELEMENTAL_ENERGIES) + '. Run QE total energy on Standata elemental materials (tags: elemental).' + ' exabyteIds: ' + ', '.join([el + '=' + ELEMENT_MATERIALS[el].exabyteId for el in MISSING_ELEMENTAL_ENERGIES])",
             "input": [],
-            "flowchartId": "assign-elemental-energies-error",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-elemental-energies-error",
             "head": false,
             "next": "assert-elemental-energies",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assert-elemental-energies",
             "type": "assertion",
             "statement": "len(MISSING_ELEMENTAL_ENERGIES) == 0",
             "errorMessage": "ELEMENTAL_ENERGIES_ERROR_MSG",
-            "flowchartId": "assert-elemental-energies",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assert-elemental-energies",
             "head": false,
             "next": "assign-elemental-energy-sum",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-elemental-energy-sum",
@@ -146,20 +132,19 @@
             "operand": "E_ELEMENTAL_SUM",
             "value": "sum(E_ELEMENTAL_BY_SYMBOL[e['value']] / len(ELEMENT_MATERIALS[e['value']].basis.elements) for e in MATERIAL.basis.elements)",
             "input": [],
-            "flowchartId": "assign-elemental-energy-sum",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-elemental-energy-sum",
             "head": false,
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

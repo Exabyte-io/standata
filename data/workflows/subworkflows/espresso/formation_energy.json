@@ -15,11 +15,7 @@
             "subtype": "us",
             "data": {}
         },
-        "functional": {
-            "slug": "pbe"
-        },
-        "refiners": [],
-        "modifiers": []
+        "functional": "pbe"
     },
     "units": [
         {
@@ -28,27 +24,23 @@
             "operand": "FORMATION_ENERGY",
             "value": "(E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)",
             "input": [],
-            "flowchartId": "assign-formation-energy",
             "results": [
                 {
                     "name": "formation_energy"
                 }
             ],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-formation-energy",
             "head": true,
-            "application": {
-                "isUsingMaterial": true,
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

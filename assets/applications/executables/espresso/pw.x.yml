@@ -22,6 +22,7 @@ results:
   - name: stress_tensor
   - name: total_energy
   - name: total_energy_contributions
+  - name: formation_energy
   - name: total_force
 flavors:
   pw_scf:
