@@ -22,7 +22,7 @@ type WorkflowStandataRuntimeData = {
 };
 declare abstract class BaseWorkflowStandata<T extends {
     name?: string;
-}> extends Standata {
+}> extends Standata<T> {
     static runtimeData: WorkflowStandataRuntimeData;
     findByApplication(appName: string): T[];
     findByApplicationAndName(appName: string, displayName: string): T | undefined;

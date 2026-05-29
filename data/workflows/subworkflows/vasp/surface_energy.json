@@ -5,14 +5,14 @@
         "name": "vasp"
     },
     "properties": [
+        "atomic_forces",
+        "fermi_energy",
+        "pressure",
+        "stress_tensor",
+        "surface_energy",
         "total_energy",
         "total_energy_contributions",
-        "pressure",
-        "fermi_energy",
-        "atomic_forces",
-        "total_force",
-        "stress_tensor",
-        "surface_energy"
+        "total_force"
     ],
     "model": {
         "type": "dft",
@@ -22,11 +22,7 @@
             "subtype": "paw",
             "data": {}
         },
-        "functional": {
-            "slug": "pbe"
-        },
-        "refiners": [],
-        "modifiers": []
+        "functional": "pbe"
     },
     "units": [
         {
@@ -35,23 +31,18 @@
             "operand": "A",
             "value": "np.linalg.norm(np.cross(SLAB.lattice.vectors.a, SLAB.lattice.vectors.b))",
             "input": [],
-            "flowchartId": "assign-surface-area",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-surface-area",
             "head": true,
             "next": "assign-n-bulk",
-            "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.4.4",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-n-bulk",
@@ -59,23 +50,18 @@
             "operand": "N_BULK",
             "value": "len(BULK.basis.elements)",
             "input": [],
-            "flowchartId": "assign-n-bulk",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-n-bulk",
             "head": false,
             "next": "assign-n-slab",
-            "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.4.4",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-n-slab",
@@ -83,23 +69,18 @@
             "operand": "N_SLAB",
             "value": "len(SLAB.basis.elements)",
             "input": [],
-            "flowchartId": "assign-n-slab",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-n-slab",
             "head": false,
             "next": "vasp-surface-energy",
-            "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.4.4",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "type": "execution",
@@ -139,34 +120,33 @@
             "flowchartId": "vasp-surface-energy",
             "preProcessors": [],
             "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
                 "isLicensed": true,
                 "isUsingMaterial": true,
                 "name": "vasp",
                 "shortName": "vasp",
                 "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
                 "version": "5.4.4",
                 "schemaVersion": "2022.8.16"
             },
             "executable": {
+                "applicationName": "vasp",
+                "applicationVersion": "*",
+                "hasAdvancedComputeOptions": false,
                 "isDefault": true,
-                "monitors": [
-                    "standard_output",
-                    "convergence_ionic",
-                    "convergence_electronic"
-                ],
-                "postProcessors": [
-                    "error_handler",
-                    "prepare_restart",
-                    "remove_non_zero_weight_kpoints"
-                ],
                 "name": "vasp",
                 "schemaVersion": "2022.8.16"
             },
             "flavor": {
                 "applicationName": "vasp",
+                "applicationVersion": "*",
                 "executableName": "vasp",
                 "input": [
                     {
@@ -180,71 +160,96 @@
                         "name": "POSCAR"
                     }
                 ],
+                "isDefault": false,
                 "monitors": [
-                    "standard_output",
-                    "convergence_electronic"
-                ],
-                "results": [
-                    "total_energy",
-                    "total_energy_contributions",
-                    "pressure",
-                    "fermi_energy",
-                    "atomic_forces",
-                    "total_force",
-                    "stress_tensor"
+                    {
+                        "name": "standard_output"
+                    },
+                    {
+                        "name": "convergence_electronic"
+                    }
                 ],
                 "name": "vasp_symprec",
-                "schemaVersion": "2022.8.16",
-                "isDefault": false
+                "postProcessors": [],
+                "preProcessors": [],
+                "results": [
+                    {
+                        "name": "total_energy"
+                    },
+                    {
+                        "name": "total_energy_contributions"
+                    },
+                    {
+                        "name": "pressure"
+                    },
+                    {
+                        "name": "fermi_energy"
+                    },
+                    {
+                        "name": "atomic_forces"
+                    },
+                    {
+                        "name": "total_force"
+                    },
+                    {
+                        "name": "stress_tensor"
+                    }
+                ],
+                "schemaVersion": "2022.8.16"
             },
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "input": [
                 {
-                    "applicationName": "vasp",
-                    "content": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n# To avoid errors with high precision structures: \"internal error in subroutine SGRCON\"\nSYMPREC = 1e-6\n",
-                    "contextProviders": [
-                        {
-                            "name": "VASPInputDataManager"
-                        }
-                    ],
-                    "executableName": "vasp",
-                    "name": "INCAR",
-                    "rendered": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n# To avoid errors with high precision structures: \"internal error in subroutine SGRCON\"\nSYMPREC = 1e-6\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "vasp",
+                        "applicationVersion": "*",
+                        "content": "ISMEAR = 0\nSIGMA  = 0.05\nLORBIT = 11\n# To avoid errors with high precision structures: \"internal error in subroutine SGRCON\"\nSYMPREC = 1e-6\n",
+                        "contextProviders": [],
+                        "executableName": "vasp",
+                        "name": "INCAR",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 },
                 {
-                    "applicationName": "vasp",
-                    "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
-                    "contextProviders": [
-                        {
-                            "name": "KGridFormDataManager"
-                        },
-                        {
-                            "name": "VASPInputDataManager"
-                        }
-                    ],
-                    "executableName": "vasp",
-                    "name": "KPOINTS",
-                    "rendered": "Automatic mesh\n0\nGamma\n  2 2 2 \n  0 0 0 \n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "vasp",
+                        "applicationVersion": "*",
+                        "content": "Automatic mesh\n0\nGamma\n  {% for d in kgrid.dimensions %}{{d}} {% endfor %}\n  {% for s in kgrid.shifts %}{{s}} {% endfor %}\n",
+                        "contextProviders": [
+                            {
+                                "name": "KGridFormDataManager"
+                            }
+                        ],
+                        "executableName": "vasp",
+                        "name": "KPOINTS",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 },
                 {
-                    "applicationName": "vasp",
-                    "content": "{{ input.POSCAR }}\n",
-                    "contextProviders": [
-                        {
-                            "name": "VASPInputDataManager"
-                        }
-                    ],
-                    "executableName": "vasp",
-                    "name": "POSCAR",
-                    "rendered": "Silicon FCC\n1.0\n   3.348920000\t   0.000000000\t   1.933500000\n   1.116307000\t   3.157392000\t   1.933500000\n   0.000000000\t   0.000000000\t   3.867000000\nSi\n2\ndirect\n   0.000000000    0.000000000    0.000000000  Si\n   0.250000000    0.250000000    0.250000000  Si\n",
-                    "schemaVersion": "2022.8.16"
+                    "template": {
+                        "applicationName": "vasp",
+                        "applicationVersion": "*",
+                        "content": "{{ input.POSCAR }}\n",
+                        "contextProviders": [
+                            {
+                                "name": "VASPInputDataManager"
+                            }
+                        ],
+                        "executableName": "vasp",
+                        "name": "POSCAR",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
                 }
             ],
-            "next": "assign-e-slab"
+            "context": [],
+            "next": "assign-e-slab",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-e-slab",
@@ -257,23 +262,18 @@
                     "scope": "vasp-surface-energy"
                 }
             ],
-            "flowchartId": "assign-e-slab",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-e-slab",
             "head": false,
             "next": "assign-surface-energy",
-            "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.4.4",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-surface-energy",
@@ -281,27 +281,23 @@
             "operand": "SURFACE_ENERGY",
             "value": "1 / (2 * A) * (E_SLAB - E_BULK * (N_SLAB / N_BULK))",
             "input": [],
-            "flowchartId": "assign-surface-energy",
             "results": [
                 {
                     "name": "surface_energy"
                 }
             ],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-surface-energy",
             "head": false,
-            "application": {
-                "isLicensed": true,
-                "isUsingMaterial": true,
-                "name": "vasp",
-                "shortName": "vasp",
-                "summary": "Vienna Ab-initio Simulation Package",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.4.4",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

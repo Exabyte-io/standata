@@ -19,28 +19,22 @@
             "name": "is-bulk-present",
             "type": "condition",
             "input": [],
-            "results": [],
-            "preProcessors": [],
-            "postProcessors": [],
-            "then": "done",
-            "else": "assign-crystal",
             "statement": "BULK is not None",
             "maxOccurrences": 100,
-            "flowchartId": "is-bulk-present",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "is-bulk-present",
+            "then": "done",
+            "else": "assign-crystal",
             "head": true,
             "next": "assign-crystal",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-crystal",
@@ -48,21 +42,18 @@
             "operand": "LAST_BUILD_CRYSTAL",
             "value": "(((SLAB.metadata.get('build') or [{}])[-1].get('configuration') or {}).get( 'stack_components' ) or [{}])[0].get('crystal') if SLAB.metadata else None",
             "input": [],
-            "flowchartId": "assign-crystal",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-crystal",
             "head": false,
             "next": "assign-bulk-query",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-bulk-query",
@@ -70,51 +61,53 @@
             "operand": "BULK_QUERY",
             "value": "{'scaledHash': LAST_BUILD_CRYSTAL.get('scaledHash')} if LAST_BUILD_CRYSTAL and LAST_BUILD_CRYSTAL.get('scaledHash') else {'hash': LAST_BUILD_CRYSTAL.get('hash')} if LAST_BUILD_CRYSTAL and LAST_BUILD_CRYSTAL.get('hash') else None",
             "input": [],
-            "flowchartId": "assign-bulk-query",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-bulk-query",
             "head": false,
             "next": "assert-bulk-query",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assert-bulk-query",
             "type": "assertion",
             "statement": "BULK_QUERY != None",
             "errorMessage": "Surface slab build metadata does not carry a crystal scaledHash or hash. Upload the bulk material and run its total energy workflow first.",
-            "flowchartId": "assert-bulk-query",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assert-bulk-query",
             "head": false,
             "next": "io-bulk",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "io-bulk",
             "type": "io",
             "subtype": "input",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
             "flowchartId": "io-bulk",
             "source": "api",
             "input": [
                 {
+                    "type": "api",
                     "endpoint": "materials",
                     "endpoint_options": {
                         "params": {
@@ -125,20 +118,10 @@
                     "name": "DATA"
                 }
             ],
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
             "head": false,
             "next": "assign-bulk",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assign-bulk",
@@ -151,42 +134,36 @@
                     "scope": "io-bulk"
                 }
             ],
-            "flowchartId": "assign-bulk",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assign-bulk",
             "head": false,
             "next": "assert-bulk",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "assert-bulk",
             "type": "assertion",
             "statement": "BULK != None",
             "errorMessage": "No bulk material matched the resolved slab build metadata query. Upload the bulk material and run its total energy workflow first.",
-            "flowchartId": "assert-bulk",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "assert-bulk",
             "head": false,
             "next": "done",
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         },
         {
             "name": "done",
@@ -199,20 +176,19 @@
                     "scope": "global"
                 }
             ],
-            "flowchartId": "done",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
             "status": "idle",
             "statusTrack": [],
             "tags": [],
+            "flowchartId": "done",
             "head": false,
-            "application": {
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "build": "GNU",
-                "isDefault": true,
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            }
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
-    ]
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false
 }

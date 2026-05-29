@@ -1,5 +1,5 @@
 monitors:
-  - standard_output
+  - name: standard_output
 results: []
 flavors:
   cp:
@@ -8,7 +8,7 @@ flavors:
       - name: cp.in
     results: []
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: cp.x
 
@@ -17,6 +17,6 @@ flavors:
       - name: cp_wf.in
     results: []
     monitors:
-      - standard_output
+      - name: standard_output
     applicationName: espresso
     executableName: cp.x

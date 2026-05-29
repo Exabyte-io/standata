@@ -5,6 +5,7 @@
     "isUsingMaterial": true,
     "version": "7.5",
     "isDefault": false,
+    "isDefaultVersion": false,
     "build": "CUDA",
     "hasAdvancedComputeOptions": true,
     "buildConfig": {
