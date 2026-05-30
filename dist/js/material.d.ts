@@ -86,6 +86,10 @@ export declare class MaterialStandata extends Standata {
                     origin: boolean;
                 };
                 isNonPeriodic: boolean;
+                metadata: {
+                    element: string;
+                };
+                tags: string[];
             };
             "BN-[Hexagonal_Boron_Nitride]-HEX_[P6%2Fmmm]_2D_[Monolayer]-[2dm-4991].json": {
                 name: string;
