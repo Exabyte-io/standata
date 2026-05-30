@@ -20,6 +20,10 @@ sources:
     source: MaterialsProject
     doi: 10.17188/1208406
     url: https://next-gen.materialsproject.org/materials/mp-48
+    metadata:
+      element: C
+    tags:
+      - elemental
 
   - filename: 2dm-4991.poscar
     common_name: Hexagonal Boron Nitride
