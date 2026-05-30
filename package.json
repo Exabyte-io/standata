@@ -66,7 +66,7 @@
     "scripts": {
         "clean": "rm -rf build/standata",
         "build:categories": "ts-node src/js/cli.ts",
-        "create:materials": "python --transpile-only scripts/materials/create_materials.py",
+        "create:materials": "python scripts/materials/create_materials.py",
         "build:materials": "ts-node --transpile-only scripts/materials/build_materials.ts",
         "build:properties": "ts-node --transpile-only scripts/properties/build_properties.ts",
         "build:workflows": "ts-node --transpile-only scripts/workflows/build_workflows.ts",
