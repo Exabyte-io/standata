@@ -44,31 +44,6 @@ units:
           scope: io-elemental-energies
   - type: assignment
     config:
-      name: assign-missing-elemental-energies
-      flowchartId: assign-missing-elemental-energies
-      operand: MISSING_ELEMENTAL_ENERGIES
-      value: >-
-        [el for el in ELEMENTS if E_ELEMENTAL_BY_SYMBOL[el] is None]
-  - type: assignment
-    config:
-      name: assign-elemental-energies-error
-      flowchartId: assign-elemental-energies-error
-      operand: ELEMENTAL_ENERGIES_ERROR_MSG
-      value: >-
-        'Missing elemental total_energy for: '
-        + ', '.join(MISSING_ELEMENTAL_ENERGIES)
-        + '. Run QE total energy on Standata elemental materials (tags: elemental).'
-        + ' exabyteIds: '
-        + ', '.join([el + '=' + ELEMENT_MATERIALS[el].exabyteId for el in
-        MISSING_ELEMENTAL_ENERGIES])
-  - type: assertion
-    config:
-      name: assert-elemental-energies
-      flowchartId: assert-elemental-energies
-      statement: "len(MISSING_ELEMENTAL_ENERGIES) == 0"
-      errorMessage: ELEMENTAL_ENERGIES_ERROR_MSG
-  - type: assignment
-    config:
       name: assign-elemental-energy-sum
       flowchartId: assign-elemental-energy-sum
       operand: E_ELEMENTAL_SUM

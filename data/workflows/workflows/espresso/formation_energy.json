@@ -127,24 +127,6 @@
                     "tags": [],
                     "flowchartId": "assign-elements",
                     "head": true,
-                    "next": "assert-elements",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "name": "assert-elements",
-                    "type": "assertion",
-                    "statement": "len(ELEMENTS) > 0",
-                    "errorMessage": "Material has no elements in its basis.",
-                    "results": [],
-                    "monitors": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "flowchartId": "assert-elements",
-                    "head": false,
                     "next": "io-elemental-materials",
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
@@ -199,24 +181,6 @@
                     "statusTrack": [],
                     "tags": [],
                     "flowchartId": "assign-element-materials",
-                    "head": false,
-                    "next": "assert-element-materials",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "name": "assert-element-materials",
-                    "type": "assertion",
-                    "statement": "set(ELEMENT_MATERIALS.keys()) == set(ELEMENTS)",
-                    "errorMessage": "Elemental reference material(s) not found on the Platform. Import missing elements from Standata Materials Bank (tags: elemental, metadata.element).",
-                    "results": [],
-                    "monitors": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "flowchartId": "assert-element-materials",
                     "head": false,
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
@@ -302,62 +266,6 @@
                     "tags": [],
                     "flowchartId": "assign-elemental-energies",
                     "head": false,
-                    "next": "assign-missing-elemental-energies",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "name": "assign-missing-elemental-energies",
-                    "type": "assignment",
-                    "operand": "MISSING_ELEMENTAL_ENERGIES",
-                    "value": "[el for el in ELEMENTS if E_ELEMENTAL_BY_SYMBOL[el] is None]",
-                    "input": [],
-                    "results": [],
-                    "monitors": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "flowchartId": "assign-missing-elemental-energies",
-                    "head": false,
-                    "next": "assign-elemental-energies-error",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "name": "assign-elemental-energies-error",
-                    "type": "assignment",
-                    "operand": "ELEMENTAL_ENERGIES_ERROR_MSG",
-                    "value": "'Missing elemental total_energy for: ' + ', '.join(MISSING_ELEMENTAL_ENERGIES) + '. Run QE total energy on Standata elemental materials (tags: elemental).' + ' exabyteIds: ' + ', '.join([el + '=' + ELEMENT_MATERIALS[el].exabyteId for el in MISSING_ELEMENTAL_ENERGIES])",
-                    "input": [],
-                    "results": [],
-                    "monitors": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "flowchartId": "assign-elemental-energies-error",
-                    "head": false,
-                    "next": "assert-elemental-energies",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "name": "assert-elemental-energies",
-                    "type": "assertion",
-                    "statement": "len(MISSING_ELEMENTAL_ENERGIES) == 0",
-                    "errorMessage": "ELEMENTAL_ENERGIES_ERROR_MSG",
-                    "results": [],
-                    "monitors": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "flowchartId": "assert-elemental-energies",
-                    "head": false,
                     "next": "assign-elemental-energy-sum",
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
@@ -402,6 +310,7 @@
             "properties": [
                 "atomic_forces",
                 "fermi_energy",
+                "formation_energy",
                 "pressure",
                 "stress_tensor",
                 "total_energy",
@@ -576,42 +485,106 @@
                     "tags": [],
                     "flowchartId": "assign-e-material",
                     "head": false,
+                    "next": "assign-kgrid",
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
-                }
-            ],
-            "schemaVersion": "2022.8.16",
-            "isDraft": false
-        },
-        {
-            "_id": "bd567528-dc35-579a-8a59-84493faee20e",
-            "name": "Formation Energy - QE",
-            "application": {
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "isDefaultVersion": true,
-                "isUsingMaterial": true,
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            },
-            "properties": [
-                "formation_energy"
-            ],
-            "model": {
-                "type": "dft",
-                "subtype": "gga",
-                "method": {
-                    "type": "pseudopotential",
-                    "subtype": "us",
-                    "data": {}
                 },
-                "functional": "pbe"
-            },
-            "units": [
+                {
+                    "name": "assign-kgrid",
+                    "type": "assignment",
+                    "operand": "KGRID",
+                    "value": "([kg for kg in [ ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [{}])[0] .get('context') or {}).get('kgrid')), ((context or {}).get('kgrid')) ] if (kg or {}).get('gridMetricValue') is not None] + [None])[0] or ({'dimensions': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[:3])], 'shifts': [int(x) for x in ( ((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '').split('K_POINTS automatic')[-1].strip().splitlines()[0].split()[3:6])]} if 'K_POINTS automatic' in (((([u for u in (SUBWORKFLOW.get('units') or []) if u.get('flowchartId') == 'pw-scf-formation-energy'] + [None])[0] .get('input') or [{}])[0].get('rendered') or '')) else None) or ({})",
+                    "input": [
+                        {
+                            "name": "context",
+                            "scope": "pw-scf-formation-energy"
+                        }
+                    ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "flowchartId": "assign-kgrid",
+                    "head": false,
+                    "next": "assign-precision-value",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
+                },
+                {
+                    "name": "assign-precision-value",
+                    "type": "assignment",
+                    "operand": "PRECISION_VALUE",
+                    "value": "KGRID.get('gridMetricValue') if KGRID.get('gridMetricValue') is not None else None",
+                    "input": [
+                        {
+                            "name": "KGRID",
+                            "scope": "global"
+                        }
+                    ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "flowchartId": "assign-precision-value",
+                    "head": false,
+                    "next": "assign-precision-metric",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
+                },
+                {
+                    "name": "assign-precision-metric",
+                    "type": "assignment",
+                    "operand": "PRECISION_METRIC",
+                    "value": "KGRID.get('gridMetricType') or 'KPPRA'",
+                    "input": [
+                        {
+                            "name": "KGRID",
+                            "scope": "global"
+                        }
+                    ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "flowchartId": "assign-precision-metric",
+                    "head": false,
+                    "next": "assign-compound-precision-report",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
+                },
+                {
+                    "name": "assign-compound-precision-report",
+                    "type": "assignment",
+                    "operand": "COMPOUND_PRECISION_REPORT",
+                    "value": "{'precision_value': PRECISION_VALUE, 'precision_metric': PRECISION_METRIC, 'kgrid': KGRID if KGRID else None}",
+                    "input": [
+                        {
+                            "name": "KGRID",
+                            "scope": "global"
+                        }
+                    ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "flowchartId": "assign-compound-precision-report",
+                    "head": false,
+                    "next": "assign-formation-energy",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
+                },
                 {
                     "name": "assign-formation-energy",
                     "type": "assignment",
@@ -630,7 +603,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "flowchartId": "assign-formation-energy",
-                    "head": true,
+                    "head": false,
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
                 }
@@ -699,32 +672,17 @@
             "flowchartId": "7c0c034a-afa7-5575-80d4-6ee1b455af31",
             "schemaVersion": "2022.8.16",
             "isDefault": false
-        },
-        {
-            "type": "subworkflow",
-            "name": "Formation Energy - QE",
-            "results": [],
-            "monitors": [],
-            "preProcessors": [],
-            "postProcessors": [],
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "_id": "bd567528-dc35-579a-8a59-84493faee20e",
-            "flowchartId": "a1ae2b4a-7e29-5a6c-b9f3-bb9a18b7177c",
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
         }
     ],
     "properties": [
         "atomic_forces",
         "fermi_energy",
+        "formation_energy",
         "pressure",
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force",
-        "formation_energy"
+        "total_force"
     ],
     "workflows": [],
     "schemaVersion": "2022.8.16",
