@@ -240,10 +240,6 @@ entities:
       - stress_tensor
       - total_energy
       - total_force
-  - filename: espresso/formation_energy.json
-    categories:
-      - espresso
-      - formation_energy
   - filename: espresso/gw_band_structure_band_gap_full_frequency.json
     categories:
       - atomic_forces
@@ -385,6 +381,7 @@ entities:
       - atomic_forces
       - espresso
       - fermi_energy
+      - formation_energy
       - pressure
       - stress_tensor
       - total_energy
