@@ -27,5 +27,5 @@ units:
     type: subworkflow
   - name: total_energy_for_material
     type: subworkflow
-  - name: espresso/compute_formation_energy
+  - name: compute_formation_energy
     type: subworkflow
