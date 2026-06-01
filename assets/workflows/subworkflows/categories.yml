@@ -381,7 +381,6 @@ entities:
       - atomic_forces
       - espresso
       - fermi_energy
-      - formation_energy
       - pressure
       - stress_tensor
       - total_energy
@@ -506,10 +505,11 @@ entities:
   - filename: shell/utils/assign_elements_from_material.json
     categories:
       - shell
-  - filename: shell/utils/get_e_bulk.json
+  - filename: shell/utils/compute_formation_energy.json
     categories:
+      - formation_energy
       - shell
-  - filename: shell/utils/get_elemental_energies.json
+  - filename: shell/utils/get_e_bulk.json
     categories:
       - shell
   - filename: shell/utils/get_elemental_materials.json

@@ -1,10 +1,12 @@
 {
-    "_id": "17adeec3-aa75-5d67-9617-9b4a0e4b06e9",
-    "name": "Get Elemental Energies",
+    "_id": "cafcc523-b64f-5752-a234-0cf328cd09f9",
+    "name": "Compute Formation Energy",
     "application": {
         "name": "shell"
     },
-    "properties": [],
+    "properties": [
+        "formation_energy"
+    ],
     "model": {
         "type": "unknown",
         "subtype": "unknown",
@@ -84,6 +86,53 @@
             "statusTrack": [],
             "tags": [],
             "flowchartId": "assign-elemental-energy-sum",
+            "head": false,
+            "next": "assign-e-material",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
+        },
+        {
+            "name": "assign-e-material",
+            "type": "assignment",
+            "operand": "E_MATERIAL",
+            "value": "total_energy",
+            "input": [
+                {
+                    "name": "total_energy",
+                    "scope": "pw-scf"
+                }
+            ],
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "flowchartId": "assign-e-material",
+            "head": false,
+            "next": "assign-formation-energy",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
+        },
+        {
+            "name": "assign-formation-energy",
+            "type": "assignment",
+            "operand": "FORMATION_ENERGY",
+            "value": "(E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)",
+            "input": [],
+            "results": [
+                {
+                    "name": "formation_energy"
+                }
+            ],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "flowchartId": "assign-formation-energy",
             "head": false,
             "schemaVersion": "2022.8.16",
             "isDefault": false

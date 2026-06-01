@@ -1,10 +1,10 @@
 {
-    "_id": "847e467b-e76b-5bc4-b152-3faaba15e0fb",
+    "_id": "1d586889-bac8-5c13-8338-946f6f6aa1af",
     "name": "Formation Energy",
     "subworkflows": [
         {
-            "_id": "ad32fd60-cdf4-5c4a-8ad8-0cd8eafa4572",
-            "name": "Get Material By ID",
+            "_id": "196c6da2-465d-5140-989e-48b1fb1cbb72",
+            "name": "Get Elemental Materials",
             "application": {
                 "build": "GNU",
                 "hasAdvancedComputeOptions": false,
@@ -79,39 +79,10 @@
                     "tags": [],
                     "flowchartId": "assign-material",
                     "head": false,
+                    "next": "assign-elements",
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
-                }
-            ],
-            "schemaVersion": "2022.8.16",
-            "isDraft": false
-        },
-        {
-            "_id": "196c6da2-465d-5140-989e-48b1fb1cbb72",
-            "name": "Get Elemental Materials",
-            "application": {
-                "build": "GNU",
-                "hasAdvancedComputeOptions": false,
-                "isDefault": true,
-                "isDefaultVersion": true,
-                "isUsingMaterial": false,
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            },
-            "properties": [],
-            "model": {
-                "type": "unknown",
-                "subtype": "unknown",
-                "method": {
-                    "type": "unknown",
-                    "subtype": "unknown",
-                    "data": {}
-                }
-            },
-            "units": [
+                },
                 {
                     "name": "assign-elements",
                     "type": "assignment",
@@ -126,7 +97,7 @@
                     "statusTrack": [],
                     "tags": [],
                     "flowchartId": "assign-elements",
-                    "head": true,
+                    "head": false,
                     "next": "io-elemental-materials",
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
@@ -190,109 +161,6 @@
             "isDraft": false
         },
         {
-            "_id": "17adeec3-aa75-5d67-9617-9b4a0e4b06e9",
-            "name": "Get Elemental Energies",
-            "application": {
-                "build": "GNU",
-                "hasAdvancedComputeOptions": false,
-                "isDefault": true,
-                "isDefaultVersion": true,
-                "isUsingMaterial": false,
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "version": "5.1.8",
-                "schemaVersion": "2022.8.16"
-            },
-            "properties": [],
-            "model": {
-                "type": "unknown",
-                "subtype": "unknown",
-                "method": {
-                    "type": "unknown",
-                    "subtype": "unknown",
-                    "data": {}
-                }
-            },
-            "units": [
-                {
-                    "name": "io-elemental-energies",
-                    "type": "io",
-                    "subtype": "input",
-                    "results": [],
-                    "monitors": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "flowchartId": "io-elemental-energies",
-                    "source": "api",
-                    "input": [
-                        {
-                            "type": "api",
-                            "endpoint": "refined-properties",
-                            "endpoint_options": {
-                                "params": {
-                                    "query": "{'exabyteId': {'$in': [ELEMENT_MATERIALS[el].exabyteId for el in ELEMENTS]}, 'slug': 'total_energy'}",
-                                    "projection": "{'sort': {'precision.value': -1}, 'limit': min(500, max(20, len(ELEMENTS) * 10))}"
-                                }
-                            },
-                            "name": "DATA"
-                        }
-                    ],
-                    "head": true,
-                    "next": "assign-elemental-energies",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "name": "assign-elemental-energies",
-                    "type": "assignment",
-                    "operand": "E_ELEMENTAL_BY_SYMBOL",
-                    "value": "{el: ([d.data.value for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)] or [None])[0] for el in ELEMENTS}",
-                    "input": [
-                        {
-                            "name": "DATA",
-                            "scope": "io-elemental-energies"
-                        }
-                    ],
-                    "results": [],
-                    "monitors": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "flowchartId": "assign-elemental-energies",
-                    "head": false,
-                    "next": "assign-elemental-energy-sum",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "name": "assign-elemental-energy-sum",
-                    "type": "assignment",
-                    "operand": "E_ELEMENTAL_SUM",
-                    "value": "sum(E_ELEMENTAL_BY_SYMBOL[e['value']] / len(ELEMENT_MATERIALS[e['value']].basis.elements) for e in MATERIAL.basis.elements)",
-                    "input": [],
-                    "results": [],
-                    "monitors": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "flowchartId": "assign-elemental-energy-sum",
-                    "head": false,
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                }
-            ],
-            "schemaVersion": "2022.8.16",
-            "isDraft": false
-        },
-        {
             "_id": "5f5c6c47-807a-5738-b65a-a1cee1c396a1",
             "name": "Total Energy For Material - QE",
             "application": {
@@ -310,7 +178,6 @@
             "properties": [
                 "atomic_forces",
                 "fermi_energy",
-                "formation_energy",
                 "pressure",
                 "stress_tensor",
                 "total_energy",
@@ -363,7 +230,7 @@
                             "name": "convergence_electronic"
                         }
                     ],
-                    "flowchartId": "pw-scf-formation-energy",
+                    "flowchartId": "pw-scf",
                     "preProcessors": [],
                     "postProcessors": [],
                     "status": "idle",
@@ -461,6 +328,111 @@
                         }
                     ],
                     "context": [],
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
+                }
+            ],
+            "schemaVersion": "2022.8.16",
+            "isDraft": false
+        },
+        {
+            "_id": "cafcc523-b64f-5752-a234-0cf328cd09f9",
+            "name": "Compute Formation Energy",
+            "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
+                "isUsingMaterial": false,
+                "name": "shell",
+                "shortName": "sh",
+                "summary": "Shell Script",
+                "version": "5.1.8",
+                "schemaVersion": "2022.8.16"
+            },
+            "properties": [
+                "formation_energy"
+            ],
+            "model": {
+                "type": "unknown",
+                "subtype": "unknown",
+                "method": {
+                    "type": "unknown",
+                    "subtype": "unknown",
+                    "data": {}
+                }
+            },
+            "units": [
+                {
+                    "name": "io-elemental-energies",
+                    "type": "io",
+                    "subtype": "input",
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "flowchartId": "io-elemental-energies",
+                    "source": "api",
+                    "input": [
+                        {
+                            "type": "api",
+                            "endpoint": "refined-properties",
+                            "endpoint_options": {
+                                "params": {
+                                    "query": "{'exabyteId': {'$in': [ELEMENT_MATERIALS[el].exabyteId for el in ELEMENTS]}, 'slug': 'total_energy'}",
+                                    "projection": "{'sort': {'precision.value': -1}, 'limit': min(500, max(20, len(ELEMENTS) * 10))}"
+                                }
+                            },
+                            "name": "DATA"
+                        }
+                    ],
+                    "head": true,
+                    "next": "assign-elemental-energies",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
+                },
+                {
+                    "name": "assign-elemental-energies",
+                    "type": "assignment",
+                    "operand": "E_ELEMENTAL_BY_SYMBOL",
+                    "value": "{el: ([d.data.value for d in DATA if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)] or [None])[0] for el in ELEMENTS}",
+                    "input": [
+                        {
+                            "name": "DATA",
+                            "scope": "io-elemental-energies"
+                        }
+                    ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "flowchartId": "assign-elemental-energies",
+                    "head": false,
+                    "next": "assign-elemental-energy-sum",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
+                },
+                {
+                    "name": "assign-elemental-energy-sum",
+                    "type": "assignment",
+                    "operand": "E_ELEMENTAL_SUM",
+                    "value": "sum(E_ELEMENTAL_BY_SYMBOL[e['value']] / len(ELEMENT_MATERIALS[e['value']].basis.elements) for e in MATERIAL.basis.elements)",
+                    "input": [],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "flowchartId": "assign-elemental-energy-sum",
+                    "head": false,
                     "next": "assign-e-material",
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
@@ -473,7 +445,7 @@
                     "input": [
                         {
                             "name": "total_energy",
-                            "scope": "pw-scf-formation-energy"
+                            "scope": "pw-scf"
                         }
                     ],
                     "results": [],
@@ -519,21 +491,6 @@
     "units": [
         {
             "type": "subworkflow",
-            "name": "Get Material By ID",
-            "results": [],
-            "monitors": [],
-            "preProcessors": [],
-            "postProcessors": [],
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "_id": "ad32fd60-cdf4-5c4a-8ad8-0cd8eafa4572",
-            "flowchartId": "77568205-b615-5ad5-ae25-9038d20a94de",
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
-        },
-        {
-            "type": "subworkflow",
             "name": "Get Elemental Materials",
             "results": [],
             "monitors": [],
@@ -544,21 +501,6 @@
             "tags": [],
             "_id": "196c6da2-465d-5140-989e-48b1fb1cbb72",
             "flowchartId": "3a879959-d669-5d9d-a27e-5cd2bf33b7ed",
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
-        },
-        {
-            "type": "subworkflow",
-            "name": "Get Elemental Energies",
-            "results": [],
-            "monitors": [],
-            "preProcessors": [],
-            "postProcessors": [],
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "_id": "17adeec3-aa75-5d67-9617-9b4a0e4b06e9",
-            "flowchartId": "4c43c6cc-79a3-5771-a25c-ca6372d46e6e",
             "schemaVersion": "2022.8.16",
             "isDefault": false
         },
@@ -576,17 +518,32 @@
             "flowchartId": "7c0c034a-afa7-5575-80d4-6ee1b455af31",
             "schemaVersion": "2022.8.16",
             "isDefault": false
+        },
+        {
+            "type": "subworkflow",
+            "name": "Compute Formation Energy",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "_id": "cafcc523-b64f-5752-a234-0cf328cd09f9",
+            "flowchartId": "48757cf7-9388-5f2f-94eb-b87e58ad9126",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
         }
     ],
     "properties": [
         "atomic_forces",
         "fermi_energy",
-        "formation_energy",
         "pressure",
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force"
+        "total_force",
+        "formation_energy"
     ],
     "workflows": [],
     "schemaVersion": "2022.8.16",
