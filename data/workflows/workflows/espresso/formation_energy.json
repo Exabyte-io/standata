@@ -336,31 +336,32 @@
             "isDraft": false
         },
         {
-            "_id": "cafcc523-b64f-5752-a234-0cf328cd09f9",
+            "_id": "ecbec04f-550a-5fc8-a7aa-243b19785540",
             "name": "Compute Formation Energy",
             "application": {
                 "build": "GNU",
-                "hasAdvancedComputeOptions": false,
+                "hasAdvancedComputeOptions": true,
                 "isDefault": true,
                 "isDefaultVersion": true,
-                "isUsingMaterial": false,
-                "name": "shell",
-                "shortName": "sh",
-                "summary": "Shell Script",
-                "version": "5.1.8",
+                "isUsingMaterial": true,
+                "name": "espresso",
+                "shortName": "qe",
+                "summary": "Quantum ESPRESSO",
+                "version": "6.3",
                 "schemaVersion": "2022.8.16"
             },
             "properties": [
                 "formation_energy"
             ],
             "model": {
-                "type": "unknown",
-                "subtype": "unknown",
+                "type": "dft",
+                "subtype": "gga",
                 "method": {
-                    "type": "unknown",
-                    "subtype": "unknown",
+                    "type": "pseudopotential",
+                    "subtype": "us",
                     "data": {}
-                }
+                },
+                "functional": "pbe"
             },
             "units": [
                 {
@@ -433,30 +434,6 @@
                     "tags": [],
                     "flowchartId": "assign-elemental-energy-sum",
                     "head": false,
-                    "next": "assign-e-material",
-                    "schemaVersion": "2022.8.16",
-                    "isDefault": false
-                },
-                {
-                    "name": "assign-e-material",
-                    "type": "assignment",
-                    "operand": "E_MATERIAL",
-                    "value": "total_energy",
-                    "input": [
-                        {
-                            "name": "total_energy",
-                            "scope": "pw-scf"
-                        }
-                    ],
-                    "results": [],
-                    "monitors": [],
-                    "preProcessors": [],
-                    "postProcessors": [],
-                    "status": "idle",
-                    "statusTrack": [],
-                    "tags": [],
-                    "flowchartId": "assign-e-material",
-                    "head": false,
                     "next": "assign-formation-energy",
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
@@ -465,8 +442,13 @@
                     "name": "assign-formation-energy",
                     "type": "assignment",
                     "operand": "FORMATION_ENERGY",
-                    "value": "(E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)",
-                    "input": [],
+                    "value": "(total_energy - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)",
+                    "input": [
+                        {
+                            "name": "total_energy",
+                            "scope": "pw-scf"
+                        }
+                    ],
                     "results": [
                         {
                             "name": "formation_energy"
@@ -529,7 +511,7 @@
             "status": "idle",
             "statusTrack": [],
             "tags": [],
-            "_id": "cafcc523-b64f-5752-a234-0cf328cd09f9",
+            "_id": "ecbec04f-550a-5fc8-a7aa-243b19785540",
             "flowchartId": "48757cf7-9388-5f2f-94eb-b87e58ad9126",
             "schemaVersion": "2022.8.16",
             "isDefault": false
