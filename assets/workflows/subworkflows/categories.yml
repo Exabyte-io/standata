@@ -166,8 +166,15 @@ entities:
       - total_force
   - filename: espresso/compute_formation_energy.json
     categories:
+      - atomic_forces
       - espresso
+      - fermi_energy
       - formation_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
   - filename: espresso/dielectric_tensor.json
     categories:
       - atomic_forces
@@ -377,16 +384,6 @@ entities:
       - pressure
       - stress_tensor
       - surface_energy
-      - total_energy
-      - total_energy_contributions
-      - total_force
-  - filename: espresso/total_energy_for_material.json
-    categories:
-      - atomic_forces
-      - espresso
-      - fermi_energy
-      - pressure
-      - stress_tensor
       - total_energy
       - total_energy_contributions
       - total_force
