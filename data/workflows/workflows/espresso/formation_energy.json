@@ -161,8 +161,8 @@
             "isDraft": false
         },
         {
-            "_id": "ecbec04f-550a-5fc8-a7aa-243b19785540",
-            "name": "Compute Formation Energy",
+            "_id": "96ea3b36-6c3a-507b-8f4f-4d76c137bce0",
+            "name": "Formation Energy",
             "application": {
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
@@ -476,7 +476,7 @@
         },
         {
             "type": "subworkflow",
-            "name": "Compute Formation Energy",
+            "name": "Formation Energy",
             "results": [],
             "monitors": [],
             "preProcessors": [],
@@ -484,8 +484,8 @@
             "status": "idle",
             "statusTrack": [],
             "tags": [],
-            "_id": "ecbec04f-550a-5fc8-a7aa-243b19785540",
-            "flowchartId": "48757cf7-9388-5f2f-94eb-b87e58ad9126",
+            "_id": "96ea3b36-6c3a-507b-8f4f-4d76c137bce0",
+            "flowchartId": "fce0690a-ad69-5555-8766-f77d519517b2",
             "schemaVersion": "2022.8.16",
             "isDefault": false
         }
