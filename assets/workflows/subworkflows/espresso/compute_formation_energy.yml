@@ -1,9 +1,11 @@
-# Fetches elemental reference energies and computes formation energy (eV/atom).
+# Runs QE SCF on compound material and computes formation energy (eV/atom).
 #
-# In:  MATERIAL, ELEMENTS, ELEMENT_MATERIALS, total_energy (from QE subworkflow)
-# Out: E_ELEMENTAL_BY_SYMBOL   map symbol -> total_energy (eV) of that ref, highest precision
-#      E_ELEMENTAL_SUM         sum over compound atoms of (ref total_energy / ref atom count)
-#      formation_energy (property)  (total_energy - E_ELEMENTAL_SUM) / N_atoms, eV/atom
+# In:  MATERIAL, ELEMENTS, ELEMENT_MATERIALS
+# Out: total_energy (property)     compound total energy (eV) from pw.x
+#      E_MATERIAL                  compound total energy (eV) in global scope
+#      E_ELEMENTAL_BY_SYMBOL       map symbol -> total_energy (eV) of that ref, highest precision
+#      E_ELEMENTAL_SUM             sum over compound atoms of (ref total_energy / ref atom count)
+#      formation_energy (property) (E_MATERIAL - E_ELEMENTAL_SUM) / N_atoms, eV/atom
 application:
   name: espresso
   version: "6.3"
@@ -13,8 +15,30 @@ model:
   name: DFTModel
 name: Compute Formation Energy
 properties:
+  - atomic_forces
+  - fermi_energy
   - formation_energy
+  - pressure
+  - stress_tensor
+  - total_energy
+  - total_energy_contributions
+  - total_force
 units:
+  - config:
+      execName: pw.x
+      flavorName: pw_scf
+      flowchartId: pw-scf
+      name: pw_scf
+    type: executionBuilder
+  - type: assignment
+    config:
+      name: assign-e-material
+      flowchartId: assign-e-material
+      operand: E_MATERIAL
+      value: total_energy
+      input:
+        - name: total_energy
+          scope: pw-scf
   - type: io
     config:
       name: io-elemental-energies
@@ -60,9 +84,6 @@ units:
       name: assign-formation-energy
       flowchartId: assign-formation-energy
       operand: FORMATION_ENERGY
-      value: "(total_energy - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)"
-      input:
-        - name: total_energy
-          scope: pw-scf
+      value: "(E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)"
       results:
         - name: formation_energy

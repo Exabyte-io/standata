@@ -161,8 +161,8 @@
             "isDraft": false
         },
         {
-            "_id": "5f5c6c47-807a-5738-b65a-a1cee1c396a1",
-            "name": "Total Energy For Material - QE",
+            "_id": "ecbec04f-550a-5fc8-a7aa-243b19785540",
+            "name": "Compute Formation Energy",
             "application": {
                 "build": "GNU",
                 "hasAdvancedComputeOptions": true,
@@ -178,6 +178,7 @@
             "properties": [
                 "atomic_forces",
                 "fermi_energy",
+                "formation_energy",
                 "pressure",
                 "stress_tensor",
                 "total_energy",
@@ -328,42 +329,34 @@
                         }
                     ],
                     "context": [],
+                    "next": "assign-e-material",
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
-                }
-            ],
-            "schemaVersion": "2022.8.16",
-            "isDraft": false
-        },
-        {
-            "_id": "ecbec04f-550a-5fc8-a7aa-243b19785540",
-            "name": "Compute Formation Energy",
-            "application": {
-                "build": "GNU",
-                "hasAdvancedComputeOptions": true,
-                "isDefault": true,
-                "isDefaultVersion": true,
-                "isUsingMaterial": true,
-                "name": "espresso",
-                "shortName": "qe",
-                "summary": "Quantum ESPRESSO",
-                "version": "6.3",
-                "schemaVersion": "2022.8.16"
-            },
-            "properties": [
-                "formation_energy"
-            ],
-            "model": {
-                "type": "dft",
-                "subtype": "gga",
-                "method": {
-                    "type": "pseudopotential",
-                    "subtype": "us",
-                    "data": {}
                 },
-                "functional": "pbe"
-            },
-            "units": [
+                {
+                    "name": "assign-e-material",
+                    "type": "assignment",
+                    "operand": "E_MATERIAL",
+                    "value": "total_energy",
+                    "input": [
+                        {
+                            "name": "total_energy",
+                            "scope": "pw-scf"
+                        }
+                    ],
+                    "results": [],
+                    "monitors": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "status": "idle",
+                    "statusTrack": [],
+                    "tags": [],
+                    "flowchartId": "assign-e-material",
+                    "head": false,
+                    "next": "io-elemental-energies",
+                    "schemaVersion": "2022.8.16",
+                    "isDefault": false
+                },
                 {
                     "name": "io-elemental-energies",
                     "type": "io",
@@ -390,7 +383,7 @@
                             "name": "DATA"
                         }
                     ],
-                    "head": true,
+                    "head": false,
                     "next": "assign-elemental-energies",
                     "schemaVersion": "2022.8.16",
                     "isDefault": false
@@ -442,13 +435,8 @@
                     "name": "assign-formation-energy",
                     "type": "assignment",
                     "operand": "FORMATION_ENERGY",
-                    "value": "(total_energy - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)",
-                    "input": [
-                        {
-                            "name": "total_energy",
-                            "scope": "pw-scf"
-                        }
-                    ],
+                    "value": "(E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)",
+                    "input": [],
                     "results": [
                         {
                             "name": "formation_energy"
@@ -488,21 +476,6 @@
         },
         {
             "type": "subworkflow",
-            "name": "Total Energy For Material - QE",
-            "results": [],
-            "monitors": [],
-            "preProcessors": [],
-            "postProcessors": [],
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "_id": "5f5c6c47-807a-5738-b65a-a1cee1c396a1",
-            "flowchartId": "7c0c034a-afa7-5575-80d4-6ee1b455af31",
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
-        },
-        {
-            "type": "subworkflow",
             "name": "Compute Formation Energy",
             "results": [],
             "monitors": [],
@@ -520,12 +493,12 @@
     "properties": [
         "atomic_forces",
         "fermi_energy",
+        "formation_energy",
         "pressure",
         "stress_tensor",
         "total_energy",
         "total_energy_contributions",
-        "total_force",
-        "formation_energy"
+        "total_force"
     ],
     "workflows": [],
     "schemaVersion": "2022.8.16",
