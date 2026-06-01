@@ -16,6 +16,61 @@
     },
     "units": [
         {
+            "name": "io-material",
+            "type": "io",
+            "subtype": "input",
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "flowchartId": "io-material",
+            "source": "api",
+            "input": [
+                {
+                    "type": "api",
+                    "endpoint": "materials",
+                    "endpoint_options": {
+                        "params": {
+                            "query": "{'_id': MATERIAL_ID}",
+                            "projection": "{}"
+                        }
+                    },
+                    "name": "DATA"
+                }
+            ],
+            "head": true,
+            "next": "assign-material",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
+        },
+        {
+            "name": "assign-material",
+            "type": "assignment",
+            "operand": "MATERIAL",
+            "value": "DATA[0] if len(DATA) == 1 else None",
+            "input": [
+                {
+                    "name": "DATA",
+                    "scope": "io-material"
+                }
+            ],
+            "results": [],
+            "monitors": [],
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "flowchartId": "assign-material",
+            "head": false,
+            "next": "assign-elements",
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
+        },
+        {
             "name": "assign-elements",
             "type": "assignment",
             "operand": "ELEMENTS",
@@ -29,7 +84,7 @@
             "statusTrack": [],
             "tags": [],
             "flowchartId": "assign-elements",
-            "head": true,
+            "head": false,
             "next": "io-elemental-materials",
             "schemaVersion": "2022.8.16",
             "isDefault": false

@@ -1,7 +1,17 @@
 # Formation energy per atom (eV/atom):
-# (E_tot(material) - sum_i E_tot(element_i ref) / n_i) / N_atoms.
-# Elemental refs: Standata bank materials (tags: elemental, metadata.element).
-# Formation energy assignment is the last unit in total_energy_for_material.
+#   E_form = (E_MATERIAL - E_ELEMENTAL_SUM) / N_atoms
+#
+# Context flow:
+#   MATERIAL_ID (job input)
+#     -> MATERIAL                          compound structure
+#     -> ELEMENTS                         unique element symbols, e.g. ["Ga", "As"]
+#     -> ELEMENT_MATERIALS                elemental ref material per symbol (Standata bank)
+#     -> E_MATERIAL                         compound total_energy (eV) from QE
+#     -> E_ELEMENTAL_BY_SYMBOL              total_energy (eV) per element ref, highest precision
+#     -> E_ELEMENTAL_SUM                    sum of ref energy per atom in compound
+#     -> formation_energy (property)        (E_MATERIAL - E_ELEMENTAL_SUM) / N_atoms, eV/atom
+#
+# Elemental refs: platform materials with tags: elemental, metadata.element.
 name: Formation Energy
 properties:
   - atomic_forces
@@ -13,11 +23,9 @@ properties:
   - total_energy_contributions
   - total_force
 units:
-  - name: shell/utils/get_material_by_id
-    type: subworkflow
   - name: shell/utils/get_elemental_materials
     type: subworkflow
-  - name: shell/utils/get_elemental_energies
-    type: subworkflow
   - name: total_energy_for_material
+    type: subworkflow
+  - name: shell/utils/compute_formation_energy
     type: subworkflow

@@ -1,3 +1,7 @@
+# Runs QE SCF on the compound material.
+#
+# In:  MATERIAL
+# Out: total_energy (property)  compound total energy (eV) from pw.x
 application:
   name: espresso
   version: "6.3"
@@ -10,23 +14,6 @@ units:
   - config:
       execName: pw.x
       flavorName: pw_scf
-      flowchartId: pw-scf-formation-energy
+      flowchartId: pw-scf
       name: pw_scf
     type: executionBuilder
-  - type: assignment
-    config:
-      name: assign-e-material
-      flowchartId: assign-e-material
-      operand: E_MATERIAL
-      value: total_energy
-      input:
-        - name: total_energy
-          scope: pw-scf-formation-energy
-  - type: assignment
-    config:
-      name: assign-formation-energy
-      flowchartId: assign-formation-energy
-      operand: FORMATION_ENERGY
-      value: "(E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)"
-      results:
-        - name: formation_energy

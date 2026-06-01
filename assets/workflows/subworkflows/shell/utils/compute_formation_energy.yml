@@ -1,15 +1,19 @@
-# Expects MATERIAL, ELEMENTS, and ELEMENT_MATERIALS in context.
-# Fetches total_energy refined properties for all elemental reference exabyteIds,
-# then assigns one TE per element in E_ELEMENTAL_BY_SYMBOL (keyed by symbol).
-# Per-element TE is chosen in assign-elemental-energies by filtering DATA on each
-# ELEMENT_MATERIALS[el].exabyteId and taking the highest-precision match ([0] after sort).
+# Fetches elemental reference energies and computes formation energy (eV/atom).
+#
+# In:  MATERIAL, ELEMENTS, ELEMENT_MATERIALS, total_energy (from QE subworkflow)
+# Out: E_ELEMENTAL_BY_SYMBOL   map symbol -> total_energy (eV) of that ref, highest precision
+#      E_ELEMENTAL_SUM         sum over compound atoms of (ref total_energy / ref atom count)
+#      E_MATERIAL              compound total_energy (eV)
+#      formation_energy (property)  (E_MATERIAL - E_ELEMENTAL_SUM) / N_atoms, eV/atom
 application:
   name: shell
 method:
   name: UnknownMethod
 model:
   name: UnknownModel
-name: Get Elemental Energies
+name: Compute Formation Energy
+properties:
+  - formation_energy
 units:
   - type: io
     config:
@@ -51,3 +55,20 @@ units:
         sum(E_ELEMENTAL_BY_SYMBOL[e['value']]
         / len(ELEMENT_MATERIALS[e['value']].basis.elements)
         for e in MATERIAL.basis.elements)
+  - type: assignment
+    config:
+      name: assign-e-material
+      flowchartId: assign-e-material
+      operand: E_MATERIAL
+      value: total_energy
+      input:
+        - name: total_energy
+          scope: pw-scf
+  - type: assignment
+    config:
+      name: assign-formation-energy
+      flowchartId: assign-formation-energy
+      operand: FORMATION_ENERGY
+      value: "(E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)"
+      results:
+        - name: formation_energy

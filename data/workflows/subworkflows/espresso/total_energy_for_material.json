@@ -7,7 +7,6 @@
     "properties": [
         "atomic_forces",
         "fermi_energy",
-        "formation_energy",
         "pressure",
         "stress_tensor",
         "total_energy",
@@ -60,7 +59,7 @@
                     "name": "convergence_electronic"
                 }
             ],
-            "flowchartId": "pw-scf-formation-energy",
+            "flowchartId": "pw-scf",
             "preProcessors": [],
             "postProcessors": [],
             "status": "idle",
@@ -158,53 +157,6 @@
                 }
             ],
             "context": [],
-            "next": "assign-e-material",
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
-        },
-        {
-            "name": "assign-e-material",
-            "type": "assignment",
-            "operand": "E_MATERIAL",
-            "value": "total_energy",
-            "input": [
-                {
-                    "name": "total_energy",
-                    "scope": "pw-scf-formation-energy"
-                }
-            ],
-            "results": [],
-            "monitors": [],
-            "preProcessors": [],
-            "postProcessors": [],
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "flowchartId": "assign-e-material",
-            "head": false,
-            "next": "assign-formation-energy",
-            "schemaVersion": "2022.8.16",
-            "isDefault": false
-        },
-        {
-            "name": "assign-formation-energy",
-            "type": "assignment",
-            "operand": "FORMATION_ENERGY",
-            "value": "(E_MATERIAL - E_ELEMENTAL_SUM) / len(MATERIAL.basis.elements)",
-            "input": [],
-            "results": [
-                {
-                    "name": "formation_energy"
-                }
-            ],
-            "monitors": [],
-            "preProcessors": [],
-            "postProcessors": [],
-            "status": "idle",
-            "statusTrack": [],
-            "tags": [],
-            "flowchartId": "assign-formation-energy",
-            "head": false,
             "schemaVersion": "2022.8.16",
             "isDefault": false
         }
