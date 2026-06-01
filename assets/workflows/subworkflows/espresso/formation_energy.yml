@@ -13,16 +13,7 @@ method:
   name: PseudopotentialMethod
 model:
   name: DFTModel
-name: Compute Formation Energy
-properties:
-  - atomic_forces
-  - fermi_energy
-  - formation_energy
-  - pressure
-  - stress_tensor
-  - total_energy
-  - total_energy_contributions
-  - total_force
+name: Formation Energy
 units:
   - config:
       execName: pw.x

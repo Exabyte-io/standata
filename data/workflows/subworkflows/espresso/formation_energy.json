@@ -1,6 +1,6 @@
 {
-    "_id": "ecbec04f-550a-5fc8-a7aa-243b19785540",
-    "name": "Compute Formation Energy",
+    "_id": "96ea3b36-6c3a-507b-8f4f-4d76c137bce0",
+    "name": "Formation Energy",
     "application": {
         "name": "espresso"
     },
