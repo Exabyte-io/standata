@@ -75,5 +75,11 @@
     "url": "https://next-gen.materialsproject.org/materials/mp-48",
     "origin": true
   },
-  "isNonPeriodic": false
+  "isNonPeriodic": false,
+  "metadata": {
+    "element": "C"
+  },
+  "tags": [
+    "elemental"
+  ]
 }
