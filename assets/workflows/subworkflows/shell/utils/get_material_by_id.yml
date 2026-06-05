@@ -1,3 +1,7 @@
+# Loads the compound structure selected for the job.
+#
+# In:  MATERIAL_ID (job/workflow input)
+# Out: MATERIAL (material document)
 application:
   name: shell
 method:

@@ -10,6 +10,7 @@ categories:
     - fermi_energy
     - file_content
     - final_structure
+    - formation_energy
     - homo_energy
     - lumo_energy
     - phonon_dispersions
@@ -203,6 +204,17 @@ entities:
       - pressure
       - stress_tensor
       - total_energy
+      - total_force
+  - filename: espresso/formation_energy.json
+    categories:
+      - atomic_forces
+      - espresso
+      - fermi_energy
+      - formation_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
       - total_force
   - filename: espresso/gw_band_structure_band_gap_full_frequency.json
     categories:
