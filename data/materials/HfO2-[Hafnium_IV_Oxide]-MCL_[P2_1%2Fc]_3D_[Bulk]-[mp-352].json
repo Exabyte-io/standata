@@ -1,7 +1,6 @@
 {
   "name": "HfO2, Hafnium IV Oxide, MCL (P2_1/c) 3D (Bulk), mp-352",
   "lattice": {
-    "type": "MCL",
     "a": 5.142319,
     "b": 5.195148,
     "c": 5.326038,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "MCL"
   },
   "basis": {
     "elements": [
@@ -163,8 +163,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-352",

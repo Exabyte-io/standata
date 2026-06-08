@@ -1,7 +1,6 @@
 {
   "name": "C, Graphene Zigzag Nanoribbon (W=4 L=10), ORC (Pmm2) 2D (Nanoribbon), m3-z53HK5wLAvRoWDwr6",
   "lattice": {
-    "type": "ORC",
     "a": 36.97433,
     "b": 19.21243,
     "c": 19.99673,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "ORC"
   },
   "basis": {
     "elements": [
@@ -979,8 +979,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "m3-z53HK5wLAvRoWDwr6",

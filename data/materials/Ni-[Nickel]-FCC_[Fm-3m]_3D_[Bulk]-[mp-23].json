@@ -1,7 +1,6 @@
 {
   "name": "Ni, Nickel, FCC (Fm-3m) 3D (Bulk), mp-23",
   "lattice": {
-    "type": "FCC",
     "a": 2.478974,
     "b": 2.478974,
     "c": 2.478974,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "FCC"
   },
   "basis": {
     "elements": [
@@ -31,8 +31,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-23",

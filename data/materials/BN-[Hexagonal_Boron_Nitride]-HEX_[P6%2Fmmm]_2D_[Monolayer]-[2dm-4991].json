@@ -1,7 +1,6 @@
 {
   "name": "BN, Hexagonal Boron Nitride, HEX (P6/mmm) 2D (Monolayer), 2dm-4991",
   "lattice": {
-    "type": "HEX",
     "a": 2.508995,
     "b": 2.508996,
     "c": 20.0,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
     "elements": [
@@ -43,8 +43,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "2dm-4991",

@@ -1,7 +1,6 @@
 {
   "name": "GaN, Gallium Nitride, HEX (P6_3mc) 3D (Bulk), mp-804",
   "lattice": {
-    "type": "HEX",
     "a": 3.21629,
     "b": 3.21629,
     "c": 5.239962,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
     "elements": [
@@ -67,8 +67,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-804",
