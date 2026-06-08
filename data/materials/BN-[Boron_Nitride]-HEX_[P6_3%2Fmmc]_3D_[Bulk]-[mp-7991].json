@@ -1,7 +1,6 @@
 {
   "name": "BN, Boron Nitride, HEX (P6_3/mmc) 3D (Bulk), mp-7991",
   "lattice": {
-    "type": "HEX",
     "a": 2.5116,
     "b": 2.5116,
     "c": 8.267796,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
     "elements": [
@@ -67,8 +67,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-7991",

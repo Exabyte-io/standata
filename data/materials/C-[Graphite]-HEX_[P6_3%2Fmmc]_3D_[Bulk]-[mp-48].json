@@ -1,7 +1,6 @@
 {
   "name": "C, Graphite, HEX (P6_3/mmc) 3D (Bulk), mp-48",
   "lattice": {
-    "type": "HEX",
     "a": 2.467291,
     "b": 2.467291,
     "c": 7.803073,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
     "elements": [
@@ -67,8 +67,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-48",

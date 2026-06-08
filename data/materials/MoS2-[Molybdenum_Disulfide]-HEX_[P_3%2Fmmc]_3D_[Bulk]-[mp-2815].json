@@ -1,7 +1,6 @@
 {
   "name": "MoS2, Molybdenum Disulfide, HEX (P_3/mmc) 3D (Bulk), mp-2815",
   "lattice": {
-    "type": "HEX",
     "a": 3.192238,
     "b": 3.192238,
     "c": 13.37829,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
     "elements": [
@@ -91,8 +91,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-2815",

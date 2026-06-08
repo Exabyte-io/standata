@@ -1,7 +1,6 @@
 {
   "name": "WSe2, Tungsten Diselenide, HEX (P-6m2) 2D (Monolayer), 2dm-3594",
   "lattice": {
-    "type": "HEX",
     "a": 3.330619,
     "b": 3.330619,
     "c": 23.362456,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
     "elements": [
@@ -55,8 +55,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "2dm-3594",

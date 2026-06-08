@@ -1,7 +1,6 @@
 {
   "name": "Au, Gold, FCC (Fm-3m) 3D (Bulk), mp-81",
   "lattice": {
-    "type": "FCC",
     "a": 2.949546,
     "b": 2.949546,
     "c": 2.949546,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "FCC"
   },
   "basis": {
     "elements": [
@@ -31,8 +31,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-81",

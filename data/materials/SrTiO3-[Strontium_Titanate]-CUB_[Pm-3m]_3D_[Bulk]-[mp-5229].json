@@ -1,7 +1,6 @@
 {
   "name": "SrTiO3, Strontium Titanate, CUB (Pm-3m) 3D (Bulk), mp-5229",
   "lattice": {
-    "type": "CUB",
     "a": 3.912701,
     "b": 3.912701,
     "c": 3.912701,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "CUB"
   },
   "basis": {
     "elements": [
@@ -79,8 +79,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-5229",

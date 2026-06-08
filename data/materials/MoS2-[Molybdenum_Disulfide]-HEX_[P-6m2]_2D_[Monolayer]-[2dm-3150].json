@@ -1,7 +1,6 @@
 {
   "name": "MoS2, Molybdenum Disulfide, HEX (P-6m2) 2D (Monolayer), 2dm-3150",
   "lattice": {
-    "type": "HEX",
     "a": 3.196223,
     "b": 3.196223,
     "c": 23.12983,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
     "elements": [
@@ -55,8 +55,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "2dm-3150",

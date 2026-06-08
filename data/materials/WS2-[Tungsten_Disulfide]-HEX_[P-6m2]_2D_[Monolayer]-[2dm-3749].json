@@ -1,7 +1,6 @@
 {
   "name": "WS2, Tungsten Disulfide, HEX (P-6m2) 2D (Monolayer), 2dm-3749",
   "lattice": {
-    "type": "HEX",
     "a": 3.193434,
     "b": 3.193434,
     "c": 23.131045,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
     "elements": [
@@ -55,8 +55,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "2dm-3749",

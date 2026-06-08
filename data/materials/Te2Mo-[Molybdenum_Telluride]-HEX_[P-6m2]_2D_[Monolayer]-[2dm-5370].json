@@ -1,7 +1,6 @@
 {
   "name": "Te2Mo, Molybdenum Telluride, HEX (P-6m2) 2D (Monolayer), 2dm-5370",
   "lattice": {
-    "type": "HEX",
     "a": 3.567851,
     "b": 3.56785,
     "c": 23.619353,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
     "elements": [
@@ -55,8 +55,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "2dm-5370",

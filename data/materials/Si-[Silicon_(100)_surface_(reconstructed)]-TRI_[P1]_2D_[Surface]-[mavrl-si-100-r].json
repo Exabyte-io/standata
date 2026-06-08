@@ -1,7 +1,6 @@
 {
   "name": "Si, Silicon (100) surface (reconstructed), TRI (P1) 2D (Surface), mavrl-si-100-r",
   "lattice": {
-    "type": "TRI",
     "a": 7.733949,
     "b": 3.866975,
     "c": 21.874912,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "TRI"
   },
   "basis": {
     "elements": [
@@ -211,8 +211,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mavrl-si-100-r",

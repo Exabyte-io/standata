@@ -1,7 +1,6 @@
 {
   "name": "AlN, Aluminum Nitride, HEX (P6_3mc) 3D (Bulk), mp-661",
   "lattice": {
-    "type": "HEX",
     "a": 3.128588,
     "b": 3.128588,
     "c": 5.016955,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
     "elements": [
@@ -67,8 +67,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-661",

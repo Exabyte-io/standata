@@ -1,7 +1,6 @@
 {
   "name": "GaAs, Gallium Arsenide, FCC (F-43m) 3D (Bulk), mp-2534",
   "lattice": {
-    "type": "FCC",
     "a": 4.065993,
     "b": 4.065993,
     "c": 4.065993,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "FCC"
   },
   "basis": {
     "elements": [
@@ -43,8 +43,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-2534",

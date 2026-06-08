@@ -1,7 +1,6 @@
 {
   "name": "NaCl, Sodium Chloride, FCC (Fm-3m) 3D (Bulk), mp-22862",
   "lattice": {
-    "type": "FCC",
     "a": 4.024635,
     "b": 4.024635,
     "c": 4.024635,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "FCC"
   },
   "basis": {
     "elements": [
@@ -43,8 +43,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-22862",

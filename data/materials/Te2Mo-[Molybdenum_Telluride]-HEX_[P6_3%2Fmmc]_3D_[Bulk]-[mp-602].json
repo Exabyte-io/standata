@@ -1,7 +1,6 @@
 {
   "name": "Te2Mo, Molybdenum Telluride, HEX (P6_3/mmc) 3D (Bulk), mp-602",
   "lattice": {
-    "type": "HEX",
     "a": 3.558711,
     "b": 3.558711,
     "c": 15.34665,
@@ -11,7 +10,8 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
     "elements": [
@@ -91,8 +91,8 @@
       }
     ],
     "units": "crystal",
-    "labels": [],
-    "constraints": []
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-602",
