@@ -51,31 +51,24 @@ def read_manifest(manifest_path: str):
 
 
 def convert_to_esse(poscar: str, is_non_periodic: bool = False) -> Dict:
-    if is_non_periodic:
-        material_dict = from_poscar_molecule(poscar)
-    else:
-        material_dict = from_poscar(poscar)
-
+    material_dict = from_poscar_molecule(poscar) if is_non_periodic else from_poscar(poscar)
     material = Material.create(material_dict)
-    lattice = material.lattice
-
-    round_length = lambda v: RoundNumericValuesMixin.round_array_or_number(v, LATTICE_LENGTH_PRECISION)
-    round_angle = lambda v: RoundNumericValuesMixin.round_array_or_number(v, LATTICE_ANGLE_PRECISION)
-
-    return {
-        "lattice": {
-            "type": lattice.type.value if hasattr(lattice.type, 'value') else lattice.type,
-            "a": round_length(lattice.a),
-            "b": round_length(lattice.b),
-            "c": round_length(lattice.c),
-            "alpha": round_angle(lattice.alpha),
-            "beta": round_angle(lattice.beta),
-            "gamma": round_angle(lattice.gamma),
-            "units": {"length": "angstrom", "angle": "degree"},
-        },
-        "basis": material.basis.to_dict(),
-        "formula": to_pymatgen(material).composition.reduced_formula,
-    }
+    
+    # Round lattice values for human-readable JSON output
+    for key in ['a', 'b', 'c']:
+        material_dict['lattice'][key] = RoundNumericValuesMixin.round_array_or_number(
+            material_dict['lattice'][key], LATTICE_LENGTH_PRECISION
+        )
+    for key in ['alpha', 'beta', 'gamma']:
+        material_dict['lattice'][key] = RoundNumericValuesMixin.round_array_or_number(
+            material_dict['lattice'][key], LATTICE_ANGLE_PRECISION
+        )
+    del material_dict['lattice']['vectors']
+    
+    # Add reduced formula (Made doesn't populate this by default)
+    material_dict['formula'] = to_pymatgen(material).composition.reduced_formula
+    
+    return material_dict
 
 
 def construct_name(material_config: Dict[str, str], source: Dict[str, str]) -> str:
