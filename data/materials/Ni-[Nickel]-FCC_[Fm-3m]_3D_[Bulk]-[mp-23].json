@@ -39,5 +39,11 @@
     "url": "https://next-gen.materialsproject.org/materials/mp-23",
     "origin": true
   },
-  "isNonPeriodic": false
+  "isNonPeriodic": false,
+  "metadata": {
+    "element": "Ni"
+  },
+  "tags": [
+    "elemental"
+  ]
 }
