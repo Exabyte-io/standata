@@ -1,7 +1,7 @@
 {
   "name": "C, Diamond, FCC (Fd-3m) 3D (Bulk), mp-66",
   "lattice": {
-    "type": "CUB",
+    "type": "FCC",
     "a": 3.560745,
     "b": 3.560745,
     "c": 3.560745,
@@ -14,7 +14,6 @@
     }
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -114,7 +113,10 @@
           0.75
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "labels": [],
+    "constraints": []
   },
   "external": {
     "id": "mp-66",
