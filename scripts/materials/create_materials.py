@@ -3,12 +3,22 @@ import re
 from typing import Dict
 
 import yaml
-from express import ExPrESS
+from mat3ra.made.material import Material
+from mat3ra.made.tools.convert import (
+    from_poscar,
+    from_poscar_molecule,
+    to_pymatgen,
+)
+from mat3ra.utils.mixins import RoundNumericValuesMixin
+
+LATTICE_LENGTH_PRECISION = 6
+LATTICE_ANGLE_PRECISION = 4
 
 # Paths configured in build-config.js: BUILD_CONFIG.materials.*
 MANIFEST_PATH = 'assets/materials/manifest.yml'  # BUILD_CONFIG.materials.assets.path + manifest
-SOURCES_PATH = 'assets/materials'                 # BUILD_CONFIG.materials.assets.path
-DESTINATION_PATH = 'data/materials'                # BUILD_CONFIG.materials.data.path
+SOURCES_PATH = 'assets/materials'  # BUILD_CONFIG.materials.assets.path
+DESTINATION_PATH = 'data/materials'  # BUILD_CONFIG.materials.data.path
+
 
 def read_build_config():
     """
@@ -16,13 +26,14 @@ def read_build_config():
     """
     with open('build-config.ts', 'r') as f:
         content = f.read()
-        # Extract jsonFormat.spaces value
-        match = re.search(r'jsonFormat:\s*{\s*spaces:\s*(\d+)', content)
+        match = re.search(r"jsonFormat:\s*{\s*spaces:\s*(\d+)", content)
         if match:
             return int(match.group(1))
     return 2  # Default fallback
 
+
 JSON_INDENT = read_build_config()
+
 
 def read_manifest(manifest_path: str):
     """
@@ -36,28 +47,35 @@ def read_manifest(manifest_path: str):
     """
     with open(manifest_path, 'r') as file:
         manifest = yaml.safe_load(file)
-    return manifest['sources']
+    return manifest["sources"]
 
 
-def convert_to_esse(poscar: str):
-    """
-    Converts a POSCAR structure to ESSE format.
+def convert_to_esse(poscar: str, is_non_periodic: bool = False) -> Dict:
+    if is_non_periodic:
+        material_dict = from_poscar_molecule(poscar)
+    else:
+        material_dict = from_poscar(poscar)
 
-    Args:
-        poscar (str): POSCAR structure.
+    material = Material.create(material_dict)
+    lattice = material.lattice
 
-    Returns:
-        dict: ESSE material configuration.
-    """
-    kwargs = {
-        "structure_string": poscar,
-        "cell_type": "original",
-        "structure_format": "poscar",
+    round_length = lambda v: RoundNumericValuesMixin.round_array_or_number(v, LATTICE_LENGTH_PRECISION)
+    round_angle = lambda v: RoundNumericValuesMixin.round_array_or_number(v, LATTICE_ANGLE_PRECISION)
+
+    return {
+        "lattice": {
+            "type": lattice.type.value if hasattr(lattice.type, 'value') else lattice.type,
+            "a": round_length(lattice.a),
+            "b": round_length(lattice.b),
+            "c": round_length(lattice.c),
+            "alpha": round_angle(lattice.alpha),
+            "beta": round_angle(lattice.beta),
+            "gamma": round_angle(lattice.gamma),
+            "units": {"length": "angstrom", "angle": "degree"},
+        },
+        "basis": material.basis.to_dict(),
+        "formula": to_pymatgen(material).composition.reduced_formula,
     }
-    handler = ExPrESS("structure", **kwargs)
-    esse = handler.property("material", **kwargs)
-    return esse
-
 
 
 def construct_name(material_config: Dict[str, str], source: Dict[str, str]) -> str:
@@ -75,37 +93,22 @@ def construct_name(material_config: Dict[str, str], source: Dict[str, str]) -> s
         material_config["formula"],
         source["common_name"],
         f'{source["lattice_type"]} ({source["space_group"]}) {source["dimensionality"]} ({source["form_factor"]})',
-        source["source_id"]
+        source["source_id"],
     ]
-    return ', '.join(name_parts)
+    return ", ".join(name_parts)
 
 
 def construct_filename(material_config: Dict[str, str], source: Dict[str, str]) -> str:
-    """
-    Constructs the filename of the JSON file used to store the ESSE material configuration.
-
-    Args:
-        material_config (dict): ESSE material configuration.
-        source (dict): Source information.
-
-    Returns:
-        str: Filename of the JSON file.
-    """
-
-    # Slugify the common name
-    common_name = source["common_name"].replace(' ', '_')
-    # Create slugified filename
+    common_name = source["common_name"].replace(" ", "_")
     filename_parts = [
         material_config["formula"],
-        f'[{common_name}]',
-        f'{source["lattice_type"]}_[{source["space_group"]}]_{source["dimensionality"]}_[{source["form_factor"]}]',
-        f'[{source["source_id"]}]'
+        f"[{common_name}]",
+        f"{source['lattice_type']}_[{source['space_group']}]_{source['dimensionality']}_[{source['form_factor']}]",
+        f"[{source['source_id']}]",
     ]
-    filename = '-'.join(filename_parts)
-    # replace special characters with URL encoding
-    filename = filename.replace('/', '%2F')
+    filename = "-".join(filename_parts)
+    return filename.replace("/", "%2F")
 
-    return filename
 
 def create_material_config(material_config: Dict, source: Dict) -> Dict:
     """
@@ -129,10 +132,13 @@ def create_material_config(material_config: Dict, source: Dict) -> Dict:
             "source": source["source"],
             "doi": source["doi"],
             "url": source["url"],
-            "origin": True
+            "origin": True,
         },
         "isNonPeriodic": source.get("isNonPeriodic", False),
     }
+
+    if source.get("lattice_type") and not source.get("isNonPeriodic", False):
+        final_config["lattice"]["type"] = source["lattice_type"]
 
     if "metadata" in source:
         final_config["metadata"] = source["metadata"]
@@ -142,25 +148,26 @@ def create_material_config(material_config: Dict, source: Dict) -> Dict:
 
     return final_config
 
+
 def main():
     """
     Main function to create materials listed in the sources manifest.
     """
     materials = []
     for source in read_manifest(MANIFEST_PATH):
-        with open(f"{SOURCES_PATH}/{source['filename']}", 'r') as file:
+        with open(f"{SOURCES_PATH}/{source['filename']}", "r") as file:
             poscar = file.read()
-            material_config = convert_to_esse(poscar)
+            is_non_periodic = source.get("isNonPeriodic", False)
+            material_config = convert_to_esse(poscar, is_non_periodic=is_non_periodic)
             final_config = create_material_config(material_config, source)
             filename = construct_filename(material_config, source)
 
-            # Write JSON file with formatting from build-config.js
-            with open(f'{DESTINATION_PATH}/{filename}.json', 'w') as file:
+            with open(f"{DESTINATION_PATH}/{filename}.json", "w") as file:
                 json.dump(final_config, file, indent=JSON_INDENT)
-                file.write('\n')
+                file.write("\n")
             materials.append(final_config)
-        print(f'Created {filename}.json')
-    print(f'Total materials created: {len(materials)}')
+        print(f"Created {filename}.json")
+    print(f"Total materials created: {len(materials)}")
 
 
 main()
