@@ -14,7 +14,6 @@
     }
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -90,7 +89,10 @@
           0.62618858
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "labels": [],
+    "constraints": []
   },
   "external": {
     "id": "mp-10033",

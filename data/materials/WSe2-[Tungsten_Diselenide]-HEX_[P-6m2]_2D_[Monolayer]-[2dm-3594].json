@@ -14,7 +14,6 @@
     }
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -54,7 +53,10 @@
           0.572018
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "labels": [],
+    "constraints": []
   },
   "external": {
     "id": "2dm-3594",
