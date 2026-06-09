@@ -75,5 +75,11 @@
     "url": "https://next-gen.materialsproject.org/materials/mp-126",
     "origin": true
   },
-  "isNonPeriodic": false
+  "isNonPeriodic": false,
+  "metadata": {
+    "element": "Pt"
+  },
+  "tags": [
+    "elemental"
+  ]
 }
