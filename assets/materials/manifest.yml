@@ -799,3 +799,45 @@ sources:
       element: Zr
     tags:
       - elemental
+  - filename: mp-12957.poscar
+    common_name: Oxygen
+    lattice_type: MCLC
+    space_group: C2/m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-12957
+    source: MaterialsProject
+    doi: 10.17188/1189289
+    url: https://next-gen.materialsproject.org/materials/mp-12957
+    metadata:
+      element: O
+    tags:
+      - elemental
+  - filename: mp-22848.poscar
+    common_name: Chlorine
+    lattice_type: ORC
+    space_group: Cmce
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-22848
+    source: MaterialsProject
+    doi: 10.17188/1199013
+    url: https://next-gen.materialsproject.org/materials/mp-22848
+    metadata:
+      element: Cl
+    tags:
+      - elemental
+  - filename: mp-154.poscar
+    common_name: Nitrogen
+    lattice_type: FCC
+    space_group: P2_13
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-154
+    source: MaterialsProject
+    doi: 10.17188/1191155
+    url: https://next-gen.materialsproject.org/materials/mp-154
+    metadata:
+      element: N
+    tags:
+      - elemental
