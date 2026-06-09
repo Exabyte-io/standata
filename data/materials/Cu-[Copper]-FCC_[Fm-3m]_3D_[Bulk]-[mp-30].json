@@ -39,5 +39,11 @@
     "url": "https://next-gen.materialsproject.org/materials/mp-30s",
     "origin": true
   },
-  "isNonPeriodic": false
+  "isNonPeriodic": false,
+  "metadata": {
+    "element": "Cu"
+  },
+  "tags": [
+    "elemental"
+  ]
 }
