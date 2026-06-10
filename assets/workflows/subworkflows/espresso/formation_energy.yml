@@ -99,14 +99,15 @@ units:
       name: assign-formation-energy-compound-contribution
       flowchartId: assign-formation-energy-compound-contribution
       operand: FORMATION_ENERGY_COMPOUND_CONTRIBUTION
+      # precision value and metric wil be extracted from scopeTrack or another source later
       value: >-
         {'formula': MATERIAL.formula or MATERIAL.name,
         'n_atoms': len(MATERIAL.basis.elements),
         'is_elemental': False,
         'total_energy': E_MATERIAL,
         'total_energy_per_atom': E_MATERIAL / len(MATERIAL.basis.elements),
-        'precision_value': locals().get('PRECISION_VALUE', -1),
-        'precision_metric': locals().get('PRECISION_METRIC', 'unknown')}
+        'precision_value': -1,
+        'precision_metric': 'unknown'}
   - type: assignment
     config:
       name: assign-formation-energy-contributions
