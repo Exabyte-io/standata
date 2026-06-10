@@ -307,7 +307,7 @@
             "name": "assign-formation-energy-compound-contribution",
             "type": "assignment",
             "operand": "FORMATION_ENERGY_COMPOUND_CONTRIBUTION",
-            "value": "{'formula': MATERIAL.formula or MATERIAL.name, 'n_atoms': len(MATERIAL.basis.elements), 'is_elemental': False, 'total_energy': E_MATERIAL, 'total_energy_per_atom': E_MATERIAL / len(MATERIAL.basis.elements), 'precision_value': locals().get('PRECISION_VALUE', -1), 'precision_metric': locals().get('PRECISION_METRIC', 'unknown')}",
+            "value": "{'formula': MATERIAL.formula or MATERIAL.name, 'n_atoms': len(MATERIAL.basis.elements), 'is_elemental': False, 'total_energy': E_MATERIAL, 'total_energy_per_atom': E_MATERIAL / len(MATERIAL.basis.elements), 'precision_value': -1, 'precision_metric': 'unknown'}",
             "input": [],
             "results": [],
             "monitors": [],
