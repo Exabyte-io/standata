@@ -80,4 +80,8 @@ units:
       name: assert-elemental-materials-found
       flowchartId: assert-elemental-materials-found
       statement: "len(MISSING_ELEMENTAL_MATERIAL_SYMBOLS) == 0"
-      errorMessage: Missing Standata elemental reference material(s) for {{ MISSING_ELEMENTAL_MATERIAL_SYMBOLS | join(', ') }}. Add elemental material(s) with tags elemental and metadata.element before running Formation Energy.
+      errorMessage: >-
+        Missing Standata elemental reference material(s) for
+        {{ MISSING_ELEMENTAL_MATERIAL_SYMBOLS | join(', ') }}.
+        Add elemental material(s) with tags elemental and metadata.element
+        before running Formation Energy.
