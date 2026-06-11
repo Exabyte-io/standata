@@ -532,3 +532,312 @@ sources:
       element: Ge
     tags:
       - elemental
+
+  - filename: mp-134.poscar
+    common_name: Aluminum
+    lattice_type: FCC
+    space_group: Fm-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-134
+    source: MaterialsProject
+    doi: 10.17188/1189564
+    url: https://next-gen.materialsproject.org/materials/mp-134
+    metadata:
+      element: Al
+    tags:
+      - elemental
+  - filename: mp-158.poscar
+    common_name: Arsenic
+    lattice_type: ORC
+    space_group: Cmce
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-158
+    source: MaterialsProject
+    doi: 10.17188/1191388
+    url: https://next-gen.materialsproject.org/materials/mp-158
+    metadata:
+      element: As
+    tags:
+      - elemental
+  - filename: mp-160.poscar
+    common_name: Boron
+    lattice_type: RHL
+    space_group: R-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-160
+    source: MaterialsProject
+    doi: 10.17188/1191505
+    url: https://next-gen.materialsproject.org/materials/mp-160
+    metadata:
+      element: B
+    tags:
+      - elemental
+  - filename: mp-142.poscar
+    common_name: Gallium
+    lattice_type: ORC
+    space_group: Cmce
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-142
+    source: MaterialsProject
+    doi: 10.17188/1190202
+    url: https://next-gen.materialsproject.org/materials/mp-142
+    metadata:
+      element: Ga
+    tags:
+      - elemental
+  - filename: mp-103.poscar
+    common_name: Hafnium
+    lattice_type: HEX
+    space_group: P6_3/mmc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-103
+    source: MaterialsProject
+    doi: 10.17188/1186884
+    url: https://next-gen.materialsproject.org/materials/mp-103
+    metadata:
+      element: Hf
+    tags:
+      - elemental
+  - filename: mp-129.poscar
+    common_name: Molybdenum
+    lattice_type: BCC
+    space_group: Im-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-129
+    source: MaterialsProject
+    doi: 10.17188/1189253
+    url: https://next-gen.materialsproject.org/materials/mp-129
+    metadata:
+      element: Mo
+    tags:
+      - elemental
+  - filename: mp-10172.poscar
+    common_name: Sodium
+    lattice_type: HEX
+    space_group: P6_3/mmc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-10172
+    source: MaterialsProject
+    doi: 10.17188/1186701
+    url: https://next-gen.materialsproject.org/materials/mp-10172
+    metadata:
+      element: Na
+    tags:
+      - elemental
+  - filename: mp-75.poscar
+    common_name: Niobium
+    lattice_type: BCC
+    space_group: Im-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-75
+    source: MaterialsProject
+    doi: 10.17188/1288516
+    url: https://next-gen.materialsproject.org/materials/mp-75
+    metadata:
+      element: Nb
+    tags:
+      - elemental
+  - filename: mp-77.poscar
+    common_name: Sulfur
+    lattice_type: ORC
+    space_group: Fddd
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-77
+    source: MaterialsProject
+    doi: 10.17188/1299376
+    url: https://next-gen.materialsproject.org/materials/mp-77
+    metadata:
+      element: S
+    tags:
+      - elemental
+  - filename: mp-570481.poscar
+    common_name: Selenium
+    lattice_type: MCL
+    space_group: P2_1/c
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-570481
+    source: MaterialsProject
+    doi: 10.17188/1275729
+    url: https://next-gen.materialsproject.org/materials/mp-570481
+    metadata:
+      element: Se
+    tags:
+      - elemental
+  - filename: mp-117.poscar
+    common_name: Tin
+    lattice_type: FCC
+    space_group: Fd-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-117
+    source: MaterialsProject
+    doi: 10.17188/1188292
+    url: https://next-gen.materialsproject.org/materials/mp-117
+    metadata:
+      element: Sn
+    tags:
+      - elemental
+  - filename: mp-139.poscar
+    common_name: Strontium
+    lattice_type: HEX
+    space_group: P6_3/mmc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-139
+    source: MaterialsProject
+    doi: 10.17188/1189798
+    url: https://next-gen.materialsproject.org/materials/mp-139
+    metadata:
+      element: Sr
+    tags:
+      - elemental
+  - filename: mp-19.poscar
+    common_name: Tellurium
+    lattice_type: RHL
+    space_group: P3_121
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-19
+    source: MaterialsProject
+    doi: 10.17188/1193780
+    url: https://next-gen.materialsproject.org/materials/mp-19
+    metadata:
+      element: Te
+    tags:
+      - elemental
+  - filename: mp-72.poscar
+    common_name: Titanium
+    lattice_type: HEX
+    space_group: P6/mmm
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-72
+    source: MaterialsProject
+    doi: 10.17188/1287108
+    url: https://next-gen.materialsproject.org/materials/mp-72
+    metadata:
+      element: Ti
+    tags:
+      - elemental
+  - filename: mp-146.poscar
+    common_name: Vanadium
+    lattice_type: BCC
+    space_group: Im-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-146
+    source: MaterialsProject
+    doi: 10.17188/1190785
+    url: https://next-gen.materialsproject.org/materials/mp-146
+    metadata:
+      element: V
+    tags:
+      - elemental
+  - filename: mp-91.poscar
+    common_name: Tungsten
+    lattice_type: BCC
+    space_group: Im-3m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-91
+    source: MaterialsProject
+    doi: 10.17188/1312984
+    url: https://next-gen.materialsproject.org/materials/mp-91
+    metadata:
+      element: W
+    tags:
+      - elemental
+  - filename: mp-112.poscar
+    common_name: Yttrium
+    lattice_type: HEX
+    space_group: P6_3/mmc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-112
+    source: MaterialsProject
+    doi: 10.17188/1187627
+    url: https://next-gen.materialsproject.org/materials/mp-112
+    metadata:
+      element: Y
+    tags:
+      - elemental
+  - filename: mp-79.poscar
+    common_name: Zinc
+    lattice_type: HEX
+    space_group: P6_3/mmc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-79
+    source: MaterialsProject
+    doi: 10.17188/1307804
+    url: https://next-gen.materialsproject.org/materials/mp-79
+    metadata:
+      element: Zn
+    tags:
+      - elemental
+  - filename: mp-131.poscar
+    common_name: Zirconium
+    lattice_type: HEX
+    space_group: P6_3/mmc
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-131
+    source: MaterialsProject
+    doi: 10.17188/1189385
+    url: https://next-gen.materialsproject.org/materials/mp-131
+    metadata:
+      element: Zr
+    tags:
+      - elemental
+  - filename: mp-12957.poscar
+    common_name: Oxygen
+    lattice_type: MCLC
+    space_group: C2/m
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-12957
+    source: MaterialsProject
+    doi: 10.17188/1189289
+    url: https://next-gen.materialsproject.org/materials/mp-12957
+    metadata:
+      element: O
+    tags:
+      - elemental
+  - filename: mp-22848.poscar
+    common_name: Chlorine
+    lattice_type: ORC
+    space_group: Cmce
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-22848
+    source: MaterialsProject
+    doi: 10.17188/1199013
+    url: https://next-gen.materialsproject.org/materials/mp-22848
+    metadata:
+      element: Cl
+    tags:
+      - elemental
+  - filename: mp-154.poscar
+    common_name: Nitrogen
+    lattice_type: CUB
+    space_group: P2_13
+    dimensionality: 3D
+    form_factor: Bulk
+    source_id: mp-154
+    source: MaterialsProject
+    doi: 10.17188/1191155
+    url: https://next-gen.materialsproject.org/materials/mp-154
+    metadata:
+      element: N
+    tags:
+      - elemental
