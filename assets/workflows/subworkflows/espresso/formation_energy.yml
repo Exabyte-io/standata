@@ -72,14 +72,11 @@ units:
         [el for el in ELEMENTS if ELEMENTAL_TE_HOLDER_BY_SYMBOL[el] is None]
   - type: assertion
     config:
+      enableRender: true
       name: assert-elemental-total-energies-found
       flowchartId: assert-elemental-total-energies-found
       statement: "len(MISSING_ELEMENTAL_TOTAL_ENERGY_SYMBOLS) == 0"
-      errorMessage: >-
-        'Missing total_energy for elemental reference material(s): '
-        + ', '.join(MISSING_ELEMENTAL_TOTAL_ENERGY_SYMBOLS)
-        + '. Run the QE Total Energy workflow for the corresponding Standata '
-        + 'elemental material(s) before running Formation Energy.'
+      errorMessage: Missing total_energy for elemental reference material(s) {{ MISSING_ELEMENTAL_TOTAL_ENERGY_SYMBOLS | join(', ') }}. Run the QE Total Energy workflow for the corresponding Standata elemental material(s) before running Formation Energy.
   - type: assignment
     config:
       name: assign-elemental-te-used-by-symbol

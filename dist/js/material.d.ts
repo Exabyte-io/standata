@@ -374,6 +374,10 @@ export declare class MaterialStandata extends Standata {
                     origin: boolean;
                 };
                 isNonPeriodic: boolean;
+                metadata: {
+                    element: string;
+                };
+                tags: string[];
             };
             "Cu-[Copper]-FCC_[Fm-3m]_3D_[Bulk]-[mp-30].json": {
                 name: string;
@@ -409,6 +413,10 @@ export declare class MaterialStandata extends Standata {
                     origin: boolean;
                 };
                 isNonPeriodic: boolean;
+                metadata: {
+                    element: string;
+                };
+                tags: string[];
             };
             "Au-[Gold]-FCC_[Fm-3m]_3D_[Bulk]-[mp-81].json": {
                 name: string;
@@ -444,6 +452,10 @@ export declare class MaterialStandata extends Standata {
                     origin: boolean;
                 };
                 isNonPeriodic: boolean;
+                metadata: {
+                    element: string;
+                };
+                tags: string[];
             };
             "ZnO-[Zinc_Oxide]-HEX_[P6_3mc]_3D_[Bulk]-[mp-2133].json": {
                 name: string;
@@ -1144,6 +1156,10 @@ export declare class MaterialStandata extends Standata {
                     origin: boolean;
                 };
                 isNonPeriodic: boolean;
+                metadata: {
+                    element: string;
+                };
+                tags: string[];
             };
             "SrTiO3-[Strontium_Titanate]-CUB_[Pm-3m]_3D_[Bulk]-[mp-5229].json": {
                 name: string;
@@ -1634,6 +1650,10 @@ export declare class MaterialStandata extends Standata {
                     origin: boolean;
                 };
                 isNonPeriodic: boolean;
+                metadata: {
+                    element: string;
+                };
+                tags: string[];
             };
         };
     };
