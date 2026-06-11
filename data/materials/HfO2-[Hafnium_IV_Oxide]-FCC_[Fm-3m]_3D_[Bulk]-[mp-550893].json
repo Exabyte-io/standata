@@ -1,7 +1,6 @@
 {
   "name": "HfO2, Hafnium IV Oxide, FCC (Fm-3m) 3D (Bulk), mp-550893",
   "lattice": {
-    "type": "CUB",
     "a": 5.032159,
     "b": 5.032159,
     "c": 5.032159,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "FCC"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -162,7 +161,10 @@
           0.75
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-550893",

@@ -1,7 +1,6 @@
 {
   "name": "SiO2, Cristobalite, TET (I-42d) 3D (Bulk), mp-546794",
   "lattice": {
-    "type": "TET",
     "a": 4.954581,
     "b": 4.954581,
     "c": 7.311342,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "TET"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -162,7 +161,10 @@
           0.125
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-546794",

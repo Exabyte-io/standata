@@ -1,7 +1,6 @@
 {
   "name": "HfO2, Hafnium IV Oxide, ORC (Pnma) 3D (Bulk), mp-741",
   "lattice": {
-    "type": "ORC",
     "a": 3.333597,
     "b": 5.556395,
     "c": 6.504995,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "ORC"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -162,7 +161,10 @@
           0.4234
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-741",

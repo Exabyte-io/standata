@@ -1,7 +1,6 @@
 {
   "name": "SiGe, Silicon-Germanium, FCC (F-43m) 3D (Bulk), mp-1219182",
   "lattice": {
-    "type": "FCC",
     "a": 3.92,
     "b": 3.92,
     "c": 3.92,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "FCC"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -42,7 +41,10 @@
           0.25
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-1219182",

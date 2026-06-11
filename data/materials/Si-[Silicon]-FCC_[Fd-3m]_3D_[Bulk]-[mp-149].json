@@ -1,7 +1,6 @@
 {
   "name": "Si, Silicon, FCC (Fd-3m) 3D (Bulk), mp-149",
   "lattice": {
-    "type": "FCC",
     "a": 3.866976,
     "b": 3.866975,
     "c": 3.866975,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "FCC"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -42,7 +41,10 @@
           0.125
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-149",

@@ -1,7 +1,6 @@
 {
   "name": "TiO2, Titanium Oxide, TET (P4_2/mnm) 3D (Bulk), mp-2657",
   "lattice": {
-    "type": "TET",
     "a": 2.969203,
     "b": 4.653272,
     "c": 4.653272,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "TET"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -90,7 +89,10 @@
           0.69542
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-2657",

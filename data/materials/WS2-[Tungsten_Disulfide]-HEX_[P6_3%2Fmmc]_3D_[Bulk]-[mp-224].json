@@ -1,7 +1,6 @@
 {
   "name": "WS2, Tungsten Disulfide, HEX (P6_3/mmc) 3D (Bulk), mp-224",
   "lattice": {
-    "type": "HEX",
     "a": 3.190731,
     "b": 3.19073,
     "c": 14.2024,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -90,7 +89,10 @@
           0.860759
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-224",

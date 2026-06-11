@@ -1,7 +1,6 @@
 {
   "name": "C, Graphene, HEX (P6/mmm) 2D (Monolayer), 2dm-3993",
   "lattice": {
-    "type": "HEX",
     "a": 2.464955,
     "b": 2.464956,
     "c": 19.996729,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -42,7 +41,10 @@
           0.5
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "2dm-3993",

@@ -1,7 +1,6 @@
 {
   "name": "Al2O3, Sapphire, RHL (R-3c) 3D (Bulk), mp-1143",
   "lattice": {
-    "type": "RHL",
     "a": 5.177955,
     "b": 5.177954,
     "c": 5.177956,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "RHL"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -138,7 +137,10 @@
           0.249999
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-1143",

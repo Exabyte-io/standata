@@ -1,7 +1,6 @@
 {
   "name": "Y2O3, Yttrium III Oxide, MCLC (C2/m) 3D (Bulk), mp-558573",
   "lattice": {
-    "type": "MCLC",
     "a": 3.515998,
     "b": 7.276947,
     "c": 8.695337,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "MCLC"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -198,7 +197,10 @@
           0.718228
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-558573",
