@@ -829,7 +829,7 @@ sources:
       - elemental
   - filename: mp-154.poscar
     common_name: Nitrogen
-    lattice_type: FCC
+    lattice_type: CUB
     space_group: P2_13
     dimensionality: 3D
     form_factor: Bulk
