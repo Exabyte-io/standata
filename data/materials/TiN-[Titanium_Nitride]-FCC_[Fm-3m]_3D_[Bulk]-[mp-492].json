@@ -1,7 +1,6 @@
 {
   "name": "TiN, Titanium Nitride, FCC (Fm-3m) 3D (Bulk), mp-492",
   "lattice": {
-    "type": "CUB",
     "a": 4.241247,
     "b": 4.241247,
     "c": 4.241247,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "FCC"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -114,7 +113,10 @@
           0.0
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-492",

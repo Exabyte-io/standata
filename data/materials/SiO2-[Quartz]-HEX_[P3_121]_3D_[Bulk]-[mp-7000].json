@@ -1,7 +1,6 @@
 {
   "name": "SiO2, Quartz, HEX (P3_121) 3D (Bulk), mp-7000",
   "lattice": {
-    "type": "HEX",
     "a": 5.021502,
     "b": 5.021502,
     "c": 5.51057,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -126,7 +125,10 @@
           0.872123
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-7000",

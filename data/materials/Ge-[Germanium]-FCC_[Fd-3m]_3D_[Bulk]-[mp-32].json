@@ -1,7 +1,6 @@
 {
   "name": "Ge, Germanium, FCC (Fd-3m) 3D (Bulk), mp-32",
   "lattice": {
-    "type": "FCC",
     "a": 4.01,
     "b": 4.01,
     "c": 4.01,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "FCC"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -42,7 +41,10 @@
           0.25
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-32",

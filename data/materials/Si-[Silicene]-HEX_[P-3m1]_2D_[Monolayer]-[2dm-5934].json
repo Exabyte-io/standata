@@ -1,7 +1,6 @@
 {
   "name": "Si, Silicene, HEX (P-3m1) 2D (Monolayer), 2dm-5934",
   "lattice": {
-    "type": "HEX",
     "a": 3.875909,
     "b": 3.875457,
     "c": 20.688228,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -42,7 +41,10 @@
           0.512272
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "2dm-5934",

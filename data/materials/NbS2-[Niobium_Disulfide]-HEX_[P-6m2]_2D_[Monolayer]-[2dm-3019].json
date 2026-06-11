@@ -1,7 +1,6 @@
 {
   "name": "NbS2, Niobium Disulfide, HEX (P-6m2) 2D (Monolayer), 2dm-3019",
   "lattice": {
-    "type": "HEX",
     "a": 3.36526,
     "b": 3.36526,
     "c": 23.132218,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -54,7 +53,10 @@
           0.567797
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "2dm-3019",

@@ -1,7 +1,6 @@
 {
   "name": "VO2, Vanadium IV Oxide, TET (P4_2/mnm) 3D (Bulk), mp-19094",
   "lattice": {
-    "type": "TET",
     "a": 3.038141,
     "b": 4.51531,
     "c": 4.51531,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "TET"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -90,7 +89,10 @@
           0.299236
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-19094",

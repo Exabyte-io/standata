@@ -1,7 +1,6 @@
 {
   "name": "SnO, Tin Oxide, TET (P4/nmm) 3D (Bulk), mp-2097",
   "lattice": {
-    "type": "TET",
     "a": 3.813695,
     "b": 3.813695,
     "c": 4.886913,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "TET"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -66,7 +65,10 @@
           0.0
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-2097",
