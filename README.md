@@ -1,6 +1,6 @@
 # Standata
 
-Standard data for digital materials R&D entities in the [ESSE](https://github.com/Exabyte-io/esse) data format.
+Standard data (stan-data) for digital materials R&D entities in the [ESSE](https://github.com/Exabyte-io/esse) data format.
 
 ## 1. Installation
 
