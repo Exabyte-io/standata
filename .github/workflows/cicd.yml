@@ -1,13 +1,34 @@
 name: Continuous Testing and Publication
 
-on: [push] # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
+  push:
+  pull_request:
+    branches:
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
+  validate-pyproject-for-pypi:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Set up Python
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        with:
+          python-version: "3.11"
+
+      - name: Validate pyproject publishability
+        run: python scripts/check_pyproject_publishability.py
+
   run-py-linter:
+    if: github.event_name == 'push'
     runs-on: ubuntu-24.04
     strategy:
       matrix:
@@ -38,6 +59,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
   run-py-tests:
+    if: github.event_name == 'push'
     needs: run-py-linter
     runs-on: ubuntu-24.04
     strategy:
@@ -68,6 +90,7 @@ jobs:
           unit-test-directory: tests/py/unit
 
   run-js-tests:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -100,8 +123,7 @@ jobs:
   publish-js-package:
     needs: [run-js-tests]
     runs-on: ubuntu-latest
-    # yamllint disable-line rule:line-length
-    if: (github.repository != 'Exabyte-io/template-definitions-js-py') && (github.ref_name == 'main')
+    if: github.event_name == 'push' && (github.repository != 'Exabyte-io/template-definitions-js-py') && (github.ref_name == 'main')
 
     steps:
       - name: Checkout this repository
@@ -125,8 +147,8 @@ jobs:
   publish-py-package:
     needs: [publish-js-package]
     runs-on: ubuntu-latest
-    # yamllint disable-line rule:line-length
-    if: (github.repository != 'Exabyte-io/template-definitions-js-py') && (github.ref_name == 'main')
+    if: github.event_name == 'push' && (github.repository != 'Exabyte-io/template-definitions-js-py') && (github.ref_name == 'main')
+
     steps:
       - name: Checkout this repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
