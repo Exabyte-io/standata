@@ -80,6 +80,9 @@
         "build:ui": "ts-node ui/scripts/build_ui_trees.ts",
         "build:symlink": "test -L src/js/runtime_data || ln -s ../../dist/js/runtime_data src/js/runtime_data",
         "build": "npm run clean && npm run transpile && npm run build:symlink && npm run build:models-related && npm run build:models && npm run build:methods && npm run build:applications && npm run build:properties && npm run build:workflows && npm run build:materials && npm run build:ui",
+        "lint:assets-yaml": "prettier --check \"assets/{applications,methods,models,properties,workflows}/**/*.{yml,yaml}\"",
+        "lint:assets-yaml:fix": "prettier --write \"assets/{applications,methods,models,properties,workflows}/**/*.{yml,yaml}\"",
+        "lint:assets-workflow-python": "python3 scripts/format_yaml_embedded_python.py",
         "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
         "lint:staged": "lint-staged",
@@ -94,6 +97,7 @@
     "lint-staged": {
         "*.{js,ts,tsx,!dist/**/*,!*runtime_data*}": "eslint --cache --fix",
         "*.{js,ts,tsx,css,!dist/**/*,!*runtime_data*}": "prettier --write",
+        "assets/workflows/**/*.yml": "python3 scripts/format_yaml_embedded_python.py",
         "dist/js/runtime_data/**/*.json": "npm run check:json-minified"
     }
 }

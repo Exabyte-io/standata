@@ -34,6 +34,16 @@ repos:
         exclude: ^dist/
   - repo: local
     hooks:
+      - id: format-yaml-embedded-python
+        name: format-yaml-embedded-python
+        language: python
+        additional_dependencies:
+          - black==24.8.0
+          - ruamel.yaml==0.18.10
+        entry: python scripts/format_yaml_embedded_python.py
+        pass_filenames: false
+        verbose: true
+        files: ^assets/workflows/.*\.yml$
       - id: check-json-minified
         name: check-json-minified
         language: system
