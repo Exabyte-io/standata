@@ -138,7 +138,7 @@ units:
       name: assign-formation-energy-compound-contribution
       flowchartId: assign-formation-energy-compound-contribution
       operand: FORMATION_ENERGY_COMPOUND_CONTRIBUTION
-      # precision value and metric wil be extracted from scopeTrack or another source later
+      # TODO: extract precision value and metric from scopeTrack or another source later
       value: >-
         {
             "formula": MATERIAL.formula,
