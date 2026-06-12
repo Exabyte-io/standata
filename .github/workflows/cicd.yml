@@ -19,13 +19,13 @@ jobs:
       - name: Checkout this repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Set up Python
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
-        with:
-          python-version: "3.11"
-
       - name: Validate pyproject publishability
-        run: python scripts/check_pyproject_publishability.py
+        run: |
+          if grep -En '^\s*"[^"]+\s@\s*(git\+|hg\+|svn\+|bzr\+|https://|http://|ssh://|file://)|^\s*"(git\+|hg\+|svn\+|bzr\+|https://|http://|ssh://|file://)' pyproject.toml; then
+            echo "pyproject.toml contains direct URL/VCS dependencies that PyPI will reject."
+            exit 1
+          fi
+          echo "pyproject.toml publishability check passed."
 
   run-py-linter:
     if: github.event_name == 'push'
