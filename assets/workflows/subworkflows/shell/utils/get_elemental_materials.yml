@@ -4,6 +4,7 @@
 # Out: MATERIAL              compound structure
 #      ELEMENTS              sorted unique symbols, e.g. ["Ga", "As"]
 #      ELEMENT_MATERIALS     map symbol -> material; Standata bank, tags: elemental
+#      MISSING_ELEMENTAL_MATERIAL_SYMBOLS symbols without Standata elemental materials
 application:
   name: shell
 method:
@@ -66,3 +67,21 @@ units:
       input:
         - name: DATA
           scope: io-elemental-materials
+  - type: assignment
+    config:
+      name: assign-missing-elemental-material-symbols
+      flowchartId: assign-missing-elemental-material-symbols
+      operand: MISSING_ELEMENTAL_MATERIAL_SYMBOLS
+      value: >-
+        [el for el in ELEMENTS if el not in ELEMENT_MATERIALS]
+  - type: assertion
+    config:
+      enableRender: true
+      name: assert-elemental-materials-found
+      flowchartId: assert-elemental-materials-found
+      statement: "len(MISSING_ELEMENTAL_MATERIAL_SYMBOLS) == 0"
+      errorMessage: >-
+        Missing Standata elemental reference material(s) for
+        {{ MISSING_ELEMENTAL_MATERIAL_SYMBOLS | join(', ') }}.
+        Add elemental material(s) with tags elemental and metadata.element
+        before running Formation Energy.
