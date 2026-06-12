@@ -1,7 +1,6 @@
 {
   "name": "WSe2, Tungsten Diselenide, HEX (P6_3/mmc) 3D (Bulk), mp-1821",
   "lattice": {
-    "type": "HEX",
     "a": 3.327069,
     "b": 3.327069,
     "c": 15.06895,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -90,7 +89,10 @@
           0.138431
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-1821",

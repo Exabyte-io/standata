@@ -1,7 +1,6 @@
 {
   "name": "NbS2, Niobium Disulfide, HEX (P6_3/mmc) 3D (Bulk), mp-10033",
   "lattice": {
-    "type": "HEX",
     "a": 3.368768,
     "b": 3.368768,
     "c": 12.624666,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -90,7 +89,10 @@
           0.62618858
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-10033",

@@ -1,7 +1,6 @@
 {
   "name": "ZnO, Zinc Oxide, HEX (P6_3mc) 3D (Bulk), mp-2133",
   "lattice": {
-    "type": "HEX",
     "a": 3.289103,
     "b": 3.289103,
     "c": 5.306821,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -66,7 +65,10 @@
           0.379762
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-2133",

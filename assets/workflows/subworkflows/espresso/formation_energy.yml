@@ -44,11 +44,15 @@ units:
           endpoint_options:
             params:
               query: >-
-                {'exabyteId': {'$in': [ELEMENT_MATERIALS[el].exabyteId for el in ELEMENTS]},
-                'slug': 'total_energy'}
+                {
+                    "exabyteId": {"$in": [ELEMENT_MATERIALS[el].exabyteId for el in ELEMENTS]},
+                    "slug": "total_energy",
+                }
               projection: >-
-                {'sort': {'precision.value': -1},
-                'limit': min(500, max(20, len(ELEMENTS) * 10))}
+                {
+                    "sort": {"precision.value": -1},
+                    "limit": min(500, max(20, len(ELEMENTS) * 10)),
+                }
           name: DATA
   - type: assignment
     config:
@@ -56,10 +60,20 @@ units:
       flowchartId: assign-elemental-te-holder-by-symbol
       operand: ELEMENTAL_TE_HOLDER_BY_SYMBOL
       value: >-
-        {el: ([d for d in DATA
-        if (d.exabyteId == ELEMENT_MATERIALS[el].exabyteId
-        or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId)] or [None])[0]
-        for el in ELEMENTS}
+        {
+            el: (
+                [
+                    d
+                    for d in DATA
+                    if (
+                        d.exabyteId == ELEMENT_MATERIALS[el].exabyteId
+                        or ELEMENT_MATERIALS[el].exabyteId in d.exabyteId
+                    )
+                ]
+                or [None]
+            )[0]
+            for el in ELEMENTS
+        }
       input:
         - name: DATA
           scope: io-elemental-energies
@@ -76,30 +90,41 @@ units:
       name: assert-elemental-total-energies-found
       flowchartId: assert-elemental-total-energies-found
       statement: "len(MISSING_ELEMENTAL_TOTAL_ENERGY_SYMBOLS) == 0"
-      errorMessage: Missing total_energy for elemental reference material(s) {{ MISSING_ELEMENTAL_TOTAL_ENERGY_SYMBOLS | join(', ') }}. Run the QE Total Energy workflow for the corresponding Standata elemental material(s) before running Formation Energy.
+      errorMessage: >-
+        Missing total_energy for elemental reference material(s)
+        {{ MISSING_ELEMENTAL_TOTAL_ENERGY_SYMBOLS | join(', ') }}.
+        Run the QE Total Energy workflow for the corresponding Standata
+        elemental material(s) before running Formation Energy.
   - type: assignment
     config:
       name: assign-elemental-te-used-by-symbol
       flowchartId: assign-elemental-te-used-by-symbol
       operand: ELEMENTAL_TE_USED_BY_SYMBOL
       value: >-
-        {el: {'formula': el,
-        'n_atoms': len(ELEMENT_MATERIALS[el].basis.elements),
-        'is_elemental': True,
-        'total_energy': ELEMENTAL_TE_HOLDER_BY_SYMBOL[el].data.value,
-        'total_energy_per_atom': ELEMENTAL_TE_HOLDER_BY_SYMBOL[el].data.value
-        / len(ELEMENT_MATERIALS[el].basis.elements),
-        'precision_value': ELEMENTAL_TE_HOLDER_BY_SYMBOL[el].precision.value,
-        'precision_metric': ELEMENTAL_TE_HOLDER_BY_SYMBOL[el].precision.metric}
-        for el in ELEMENTS if ELEMENTAL_TE_HOLDER_BY_SYMBOL[el]}
+        {
+            el: {
+                "formula": el,
+                "n_atoms": len(ELEMENT_MATERIALS[el].basis.elements),
+                "is_elemental": True,
+                "total_energy": ELEMENTAL_TE_HOLDER_BY_SYMBOL[el].data.value,
+                "total_energy_per_atom": ELEMENTAL_TE_HOLDER_BY_SYMBOL[el].data.value
+                / len(ELEMENT_MATERIALS[el].basis.elements),
+                "precision_value": ELEMENTAL_TE_HOLDER_BY_SYMBOL[el].precision.value,
+                "precision_metric": ELEMENTAL_TE_HOLDER_BY_SYMBOL[el].precision.metric,
+            }
+            for el in ELEMENTS
+            if ELEMENTAL_TE_HOLDER_BY_SYMBOL[el]
+        }
   - type: assignment
     config:
       name: assign-elemental-energy-sum
       flowchartId: assign-elemental-energy-sum
       operand: E_ELEMENTAL_SUM
       value: >-
-        sum(ELEMENTAL_TE_USED_BY_SYMBOL[e['value']]['total_energy_per_atom']
-        for e in MATERIAL.basis.elements)
+        sum(
+            ELEMENTAL_TE_USED_BY_SYMBOL[e["value"]]["total_energy_per_atom"]
+            for e in MATERIAL.basis.elements
+        )
   - type: assignment
     config:
       name: assign-formation-energy
@@ -113,23 +138,27 @@ units:
       name: assign-formation-energy-compound-contribution
       flowchartId: assign-formation-energy-compound-contribution
       operand: FORMATION_ENERGY_COMPOUND_CONTRIBUTION
-      # precision value and metric wil be extracted from scopeTrack or another source later
+      # TODO: extract precision value and metric from scopeTrack or another source later
       value: >-
-        {'formula': MATERIAL.formula or MATERIAL.name,
-        'n_atoms': len(MATERIAL.basis.elements),
-        'is_elemental': False,
-        'total_energy': E_MATERIAL,
-        'total_energy_per_atom': E_MATERIAL / len(MATERIAL.basis.elements),
-        'precision_value': -1,
-        'precision_metric': 'unknown'}
+        {
+            "formula": MATERIAL.formula,
+            "n_atoms": len(MATERIAL.basis.elements),
+            "is_elemental": False,
+            "total_energy": E_MATERIAL,
+            "total_energy_per_atom": E_MATERIAL / len(MATERIAL.basis.elements),
+            "precision_value": -1,
+            "precision_metric": "unknown",
+        }
   - type: assignment
     config:
       name: assign-formation-energy-contributions
       flowchartId: assign-formation-energy-contributions
       operand: FORMATION_ENERGY_CONTRIBUTIONS
       value: >-
-        [FORMATION_ENERGY_COMPOUND_CONTRIBUTION]
-        + [ELEMENTAL_TE_USED_BY_SYMBOL[el] for el in ELEMENTS
-        if el in ELEMENTAL_TE_USED_BY_SYMBOL]
+        [FORMATION_ENERGY_COMPOUND_CONTRIBUTION] + [
+            ELEMENTAL_TE_USED_BY_SYMBOL[el]
+            for el in ELEMENTS
+            if el in ELEMENTAL_TE_USED_BY_SYMBOL
+        ]
       results:
         - name: formation_energy_contributions

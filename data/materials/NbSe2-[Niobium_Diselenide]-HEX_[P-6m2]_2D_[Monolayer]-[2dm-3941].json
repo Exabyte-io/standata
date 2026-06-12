@@ -1,7 +1,6 @@
 {
   "name": "NbSe2, Niobium Diselenide, HEX (P-6m2) 2D (Monolayer), 2dm-3941",
   "lattice": {
-    "type": "HEX",
     "a": 3.491454,
     "b": 3.491454,
     "c": 23.369992,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -54,7 +53,10 @@
           0.427886
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "2dm-3941",

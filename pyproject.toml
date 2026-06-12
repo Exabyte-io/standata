@@ -30,7 +30,7 @@ dev = [
     "isort",
     "mypy",
     "pip-tools",
-    "express-py"
+    "mat3ra-made[tools]"
 ]
 tests = [
     "coverage[toml]>=5.3",

@@ -1,7 +1,6 @@
 {
   "name": "NbSe2, Niobium Diselenide, HEX (P6_3/mmc) 3D (Bulk), mp-2207",
   "lattice": {
-    "type": "HEX",
     "a": 3.499048,
     "b": 3.499048,
     "c": 13.413739,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "HEX"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -90,7 +89,10 @@
           0.87459342
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-2207",

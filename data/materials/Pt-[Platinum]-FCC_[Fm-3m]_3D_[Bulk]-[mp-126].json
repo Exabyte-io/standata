@@ -1,7 +1,6 @@
 {
   "name": "Pt, Platinum, FCC (Fm-3m) 3D (Bulk), mp-126",
   "lattice": {
-    "type": "CUB",
     "a": 3.94315,
     "b": 3.94315,
     "c": 3.94315,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "FCC"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -66,7 +65,10 @@
           0.0
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-126",

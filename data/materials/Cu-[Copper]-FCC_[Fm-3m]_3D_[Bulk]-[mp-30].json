@@ -1,7 +1,6 @@
 {
   "name": "Cu, Copper, FCC (Fm-3m) 3D (Bulk), mp-30",
   "lattice": {
-    "type": "FCC",
     "a": 2.560619,
     "b": 2.56062,
     "c": 2.560619,
@@ -11,10 +10,10 @@
     "units": {
       "length": "angstrom",
       "angle": "degree"
-    }
+    },
+    "type": "FCC"
   },
   "basis": {
-    "units": "crystal",
     "elements": [
       {
         "id": 0,
@@ -30,7 +29,10 @@
           0.0
         ]
       }
-    ]
+    ],
+    "units": "crystal",
+    "constraints": [],
+    "labels": []
   },
   "external": {
     "id": "mp-30",
