@@ -89,7 +89,7 @@
         "pretest": "npm run build",
         "test": "mocha",
         "transpile": "tsc && cp -r build/standata/* ./dist/js/runtime_data/ || true",
-        "prepare": "npm run build"
+        "prepublishOnly": "npm run build"
     },
     "engines": {
         "node": ">=20.0.0"
