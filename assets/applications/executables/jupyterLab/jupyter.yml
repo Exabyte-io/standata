@@ -4,47 +4,40 @@ monitors:
   - name: jupyter_notebook_endpoint
 results: []
 flavors:
-  notebook:
+  notebook_v4.6.0:
     # The version ranges below are disjoint, so each version line has exactly one default flavor.
     isDefault: true
     supportedApplicationVersions: "~4.6"
     input:
       - name: requirements.txt
+        templateName: requirements_v4.6.0.txt
     monitors:
       - name: standard_output
       - name: jupyter_notebook_endpoint
     applicationName: jupyterLab
     executableName: jupyter
 
-  notebook_430:
+  notebook_v4.3.0:
     isDefault: true
     supportedApplicationVersions: "~4.3"
     input:
       - name: requirements.txt
-        templateName: requirements_430.txt
+        templateName: requirements_v4.3.0.txt
     monitors:
       - name: standard_output
       - name: jupyter_notebook_endpoint
     applicationName: jupyterLab
     executableName: jupyter
 
-  notebook_303:
-    isDefault: true
-    supportedApplicationVersions: "<4"
-    input:
-      - name: requirements.txt
-        templateName: requirements_303.txt
-    monitors:
-      - name: standard_output
-      - name: jupyter_notebook_endpoint
-    applicationName: jupyterLab
-    executableName: jupyter
-
-  notebook_mat3ra:
+  notebook_v460_mat3ra_pkgs:
+    description: >-
+      JupyterLab 4.6 with the Mat3ra Python packages and the common scientific stack
+      preinstalled — api-client, made[tools], standata, notebooks-utils, ase, numpy,
+      pandas, matplotlib, plotly, ipywidgets.
     supportedApplicationVersions: "~4.6"
     input:
       - name: requirements.txt
-        templateName: requirements_mat3ra.txt
+        templateName: requirements_v460_mat3ra_pkgs.txt
     monitors:
       - name: standard_output
       - name: jupyter_notebook_endpoint

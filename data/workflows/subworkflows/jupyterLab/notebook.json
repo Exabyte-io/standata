@@ -60,7 +60,8 @@
                 "executableName": "jupyter",
                 "input": [
                     {
-                        "name": "requirements.txt"
+                        "name": "requirements.txt",
+                        "templateName": "requirements_v4.6.0.txt"
                     }
                 ],
                 "isDefault": true,
@@ -72,7 +73,7 @@
                         "name": "jupyter_notebook_endpoint"
                     }
                 ],
-                "name": "notebook",
+                "name": "notebook_v4.6.0",
                 "postProcessors": [],
                 "preProcessors": [],
                 "results": [],

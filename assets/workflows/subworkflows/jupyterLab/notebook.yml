@@ -9,6 +9,6 @@ name: Jupyter Notebook
 units:
   - config:
       execName: jupyter
-      flavorName: notebook
+      flavorName: notebook_v4.6.0
       name: notebook
     type: executionBuilder

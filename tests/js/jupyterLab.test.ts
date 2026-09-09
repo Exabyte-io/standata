@@ -7,7 +7,7 @@ describe("jupyterLab versions", () => {
     const standata = new ApplicationRegistry(new StandataDriver());
 
     it("resolves every version to its default build", () => {
-        ["4.6.0", "4.3.0", "3.0.3"].forEach((version) => {
+        ["4.6.0", "4.3.0"].forEach((version) => {
             const application = standata.findApplication({ name: "jupyterLab", version });
 
             expect(application.version).to.equal(version);
@@ -17,9 +17,16 @@ describe("jupyterLab versions", () => {
 
     it("gives every version line its own default flavor and requirements", () => {
         const cases = [
-            { version: "4.6.0", flavorName: "notebook", template: "requirements.txt" },
-            { version: "4.3.0", flavorName: "notebook_430", template: "requirements_430.txt" },
-            { version: "3.0.3", flavorName: "notebook_303", template: "requirements_303.txt" },
+            {
+                version: "4.6.0",
+                flavorName: "notebook_v4.6.0",
+                template: "requirements_v4.6.0.txt",
+            },
+            {
+                version: "4.3.0",
+                flavorName: "notebook_v4.3.0",
+                template: "requirements_v4.3.0.txt",
+            },
         ] as const;
 
         cases.forEach(({ version, flavorName, template }) => {

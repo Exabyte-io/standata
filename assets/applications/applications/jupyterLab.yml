@@ -11,8 +11,3 @@ versions:
   - version: '4.3.0'
     isDefault: true
     build: Default
-  - version: '3.0.3'
-    isDefault: true
-    build: Default
-  - version: '3.0.3'
-    build: with-pre-installed-packages
