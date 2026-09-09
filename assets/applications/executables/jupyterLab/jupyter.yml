@@ -29,7 +29,7 @@ flavors:
     applicationName: jupyterLab
     executableName: jupyter
 
-  notebook_v460_mat3ra_pkgs:
+  notebook_v4.6.0_mat3ra_pkgs:
     description: >-
       JupyterLab 4.6 with the Mat3ra Python packages and the common scientific stack
       preinstalled — api-client, made[tools], standata, notebooks-utils, ase, numpy,
@@ -37,7 +37,7 @@ flavors:
     supportedApplicationVersions: "~4.6"
     input:
       - name: requirements.txt
-        templateName: requirements_v460_mat3ra_pkgs.txt
+        templateName: requirements_v4.6.0_mat3ra_pkgs.txt
     monitors:
       - name: standard_output
       - name: jupyter_notebook_endpoint
