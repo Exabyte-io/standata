@@ -4,8 +4,13 @@ monitors:
   - name: jupyter_notebook_endpoint
 results: []
 flavors:
+  # Each flavor is one requirements.txt — the unit's whole Python environment, installed before
+  # the server starts. `notebook` is always pinned alongside `jupyterlab` because rupy launches
+  # the unit with `jupyter notebook`, not `jupyter lab`.
+  # The supportedApplicationVersions ranges are disjoint, so exactly one default flavor matches
+  # any given jupyterLab version.
   notebook_v4.6.0:
-    # The version ranges below are disjoint, so each version line has exactly one default flavor.
+    description: JupyterLab 4.6 and notebook 7, nothing else. Default for 4.6 jobs.
     isDefault: true
     supportedApplicationVersions: "~4.6"
     input:
@@ -18,6 +23,7 @@ flavors:
     executableName: jupyter
 
   notebook_v4.3.0:
+    description: JupyterLab 4.3 and notebook 7, nothing else. Default for 4.3 jobs.
     isDefault: true
     supportedApplicationVersions: "~4.3"
     input:
@@ -31,9 +37,9 @@ flavors:
 
   notebook_v4.6.0_mat3ra_pkgs:
     description: >-
-      JupyterLab 4.6 with the Mat3ra Python packages and the common scientific stack
-      preinstalled — api-client, made[tools], standata, notebooks-utils, ase, numpy,
-      pandas, matplotlib, plotly, ipywidgets.
+      JupyterLab 4.6 plus the packages the api-examples notebooks import, so they run without a
+      pip install first: mat3ra api-client, made[tools], standata and notebooks-utils, with ase,
+      numpy, pandas, matplotlib, plotly and ipywidgets. Not a default — opt in per unit.
     supportedApplicationVersions: "~4.6"
     input:
       - name: requirements.txt
