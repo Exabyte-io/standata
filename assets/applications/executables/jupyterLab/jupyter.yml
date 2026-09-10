@@ -4,10 +4,6 @@ monitors:
   - name: jupyter_notebook_endpoint
 results: []
 flavors:
-  # Each flavor is one requirements.txt — the unit's whole Python environment, installed before
-  # the server starts. `notebook` is always pinned alongside `jupyterlab` because rupy launches
-  # the unit with `jupyter notebook`, not `jupyter lab`.
-  # supportedApplicationVersions is what ties a flavor to a version line.
   notebook_v4.6.0:
     description: JupyterLab 4.6 and notebook 7, nothing else.
     isDefault: true
