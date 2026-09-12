@@ -1,0 +1,11 @@
+{
+    "name": "python",
+    "shortName": "py",
+    "summary": "Python Script",
+    "isUsingMaterial": true,
+    "version": "3.12.7",
+    "isDefault": true,
+    "isDefaultVersion": false,
+    "build": "GNU",
+    "hasAdvancedComputeOptions": false
+}

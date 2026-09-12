@@ -1,0 +1,17 @@
+- content: !readFile 'input_files_templates/jupyterLab/requirements_v4.6.0.j2.txt'
+  name: requirements_v4.6.0.txt
+  contextProviders: []
+  applicationName: jupyterLab
+  executableName: jupyter
+
+- content: !readFile 'input_files_templates/jupyterLab/requirements_v4.3.0.j2.txt'
+  name: requirements_v4.3.0.txt
+  contextProviders: []
+  applicationName: jupyterLab
+  executableName: jupyter
+
+- content: !readFile 'input_files_templates/jupyterLab/requirements_v4.6.0_mat3ra_pkgs.j2.txt'
+  name: requirements_v4.6.0_mat3ra_pkgs.txt
+  contextProviders: []
+  applicationName: jupyterLab
+  executableName: jupyter

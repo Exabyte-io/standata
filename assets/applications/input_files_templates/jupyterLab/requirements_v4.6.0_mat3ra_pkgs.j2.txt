@@ -1,0 +1,13 @@
+jupyterlab==4.6.*
+# rupy launches `jupyter notebook`, so the notebook package is required, not just jupyterlab.
+notebook>=7,<8
+mat3ra-api-client
+mat3ra-made[tools]
+mat3ra-standata
+mat3ra-notebooks-utils
+ase
+numpy
+pandas
+matplotlib
+plotly
+ipywidgets
