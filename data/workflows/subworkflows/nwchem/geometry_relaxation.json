@@ -1,0 +1,130 @@
+{
+    "systemName": "nwchem-geometry-relaxation",
+    "_id": "7a234777-f928-5332-a347-775f207431a2",
+    "name": "Geometry Relaxation",
+    "application": {
+        "name": "nwchem"
+    },
+    "properties": [
+        "final_structure",
+        "total_energy",
+        "total_energy_contributions"
+    ],
+    "model": {
+        "type": "dft",
+        "subtype": "gga",
+        "method": {
+            "type": "localorbital",
+            "subtype": "pople",
+            "data": {}
+        },
+        "functional": "pbe"
+    },
+    "units": [
+        {
+            "type": "execution",
+            "name": "nwchem_relaxation",
+            "head": true,
+            "results": [
+                {
+                    "name": "total_energy"
+                },
+                {
+                    "name": "total_energy_contributions"
+                },
+                {
+                    "name": "final_structure"
+                }
+            ],
+            "monitors": [
+                {
+                    "name": "standard_output"
+                }
+            ],
+            "flowchartId": "4c77ed68-7ff8-590a-92db-b52e919f10f4",
+            "preProcessors": [],
+            "postProcessors": [],
+            "status": "idle",
+            "statusTrack": [],
+            "tags": [],
+            "application": {
+                "build": "GNU",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "isDefaultVersion": true,
+                "isUsingMaterial": true,
+                "name": "nwchem",
+                "shortName": "nwchem",
+                "summary": "NWChem",
+                "version": "7.0.2",
+                "schemaVersion": "2022.8.16"
+            },
+            "executable": {
+                "applicationName": "nwchem",
+                "applicationVersion": "*",
+                "hasAdvancedComputeOptions": false,
+                "isDefault": true,
+                "name": "nwchem",
+                "schemaVersion": "2022.8.16"
+            },
+            "flavor": {
+                "applicationName": "nwchem",
+                "applicationVersion": "*",
+                "executableName": "nwchem",
+                "input": [
+                    {
+                        "name": "nwchem_relaxation.inp"
+                    }
+                ],
+                "isDefault": false,
+                "monitors": [
+                    {
+                        "name": "standard_output"
+                    }
+                ],
+                "name": "nwchem_relaxation",
+                "postProcessors": [],
+                "preProcessors": [],
+                "results": [
+                    {
+                        "name": "total_energy"
+                    },
+                    {
+                        "name": "total_energy_contributions"
+                    },
+                    {
+                        "name": "final_structure"
+                    }
+                ],
+                "schemaVersion": "2022.8.16"
+            },
+            "input": [
+                {
+                    "template": {
+                        "applicationName": "nwchem",
+                        "applicationVersion": "*",
+                        "content": " start nwchem\n title \"Test\"\n charge {{ input.CHARGE }}\n geometry units angstrom noautosym\n {{ input.ATOMIC_POSITIONS }}\n end\n basis\n   * library {{ input.BASIS }}\n end\n dft\n xc {{ input.FUNCTIONAL }}\n mult {{ input.MULT }}\n end\n driver\n maxiter 256\n inhess 1\n print default\n end\n task dft optimize\n",
+                        "contextProviders": [
+                            {
+                                "name": "NWChemInputDataManager"
+                            }
+                        ],
+                        "executableName": "nwchem",
+                        "name": "nwchem_relaxation.inp",
+                        "schemaVersion": "2022.8.16"
+                    },
+                    "rendered": "",
+                    "isManuallyChanged": false
+                }
+            ],
+            "context": [],
+            "schemaVersion": "2022.8.16",
+            "isDefault": false
+        }
+    ],
+    "schemaVersion": "2022.8.16",
+    "isDraft": false,
+    "tags": [
+        "variable-cell_relaxation"
+    ]
+}

@@ -5,6 +5,7 @@ categories:
     - band_gaps
     - band_structure
     - charge_density_profile
+    - defect_formation_energy
     - density_of_states
     - dielectric_tensor
     - fermi_energy
@@ -40,6 +41,7 @@ categories:
   application:
     - deepmd
     - espresso
+    - jupyterLab
     - lammps
     - nwchem
     - python
@@ -132,6 +134,17 @@ entities:
     categories:
       - atomic_forces
       - band_structure
+      - espresso
+      - fermi_energy
+      - pressure
+      - stress_tensor
+      - total_energy
+      - total_energy_contributions
+      - total_force
+  - filename: espresso/defect_formation_energy.json
+    categories:
+      - atomic_forces
+      - defect_formation_energy
       - espresso
       - fermi_energy
       - pressure
@@ -391,6 +404,9 @@ entities:
       - total_energy_contributions
       - total_force
       - zero_point_energy
+  - filename: jupyterLab/notebook.json
+    categories:
+      - jupyterLab
   - filename: lammps/emin.json
     categories:
       - lammps
@@ -402,6 +418,13 @@ entities:
       - total_energy
       - total_energy_contributions
       - zero_point_energy
+  - filename: nwchem/geometry_relaxation.json
+    categories:
+      - final_structure
+      - nwchem
+      - total_energy
+      - total_energy_contributions
+      - variable-cell_relaxation
   - filename: nwchem/total_energy.json
     categories:
       - homo_energy
@@ -409,6 +432,9 @@ entities:
       - nwchem
       - total_energy
       - total_energy_contributions
+  - filename: python/custom_script.json
+    categories:
+      - python
   - filename: python/ml/classification_workflow.json
     categories:
       - file_content
@@ -440,6 +466,9 @@ entities:
     categories:
       - python
   - filename: shell/batch_espresso_pwscf.json
+    categories:
+      - shell
+  - filename: shell/custom_script.json
     categories:
       - shell
   - filename: shell/hello_world.json

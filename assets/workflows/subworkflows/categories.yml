@@ -5,6 +5,7 @@ categories:
     - band_gaps
     - band_structure
     - charge_density_profile
+    - defect_formation_energy
     - density_of_states
     - dielectric_tensor
     - fermi_energy
@@ -47,6 +48,7 @@ categories:
   application:
     - deepmd
     - espresso
+    - jupyterLab
     - lammps
     - nwchem
     - python
@@ -166,6 +168,10 @@ entities:
       - total_energy
       - total_energy_contributions
       - total_force
+  - filename: espresso/defect_formation_energy.json
+    categories:
+      - defect_formation_energy
+      - espresso
   - filename: espresso/dielectric_tensor.json
     categories:
       - atomic_forces
@@ -244,16 +250,9 @@ entities:
       - total_force
   - filename: espresso/formation_energy.json
     categories:
-      - atomic_forces
       - espresso
-      - fermi_energy
       - formation_energy
       - formation_energy_contributions
-      - pressure
-      - stress_tensor
-      - total_energy
-      - total_energy_contributions
-      - total_force
   - filename: espresso/gw_band_structure_band_gap_full_frequency.json
     categories:
       - atomic_forces
@@ -390,6 +389,9 @@ entities:
     categories:
       - band_structure
       - espresso
+  - filename: espresso/resolve_elemental_total_energies.json
+    categories:
+      - espresso
   - filename: espresso/surface_energy.json
     categories:
       - atomic_forces
@@ -452,6 +454,9 @@ entities:
       - total_energy_contributions
       - total_force
       - zero_point_energy
+  - filename: jupyterLab/notebook.json
+    categories:
+      - jupyterLab
   - filename: lammps/emin.json
     categories:
       - lammps
@@ -463,6 +468,13 @@ entities:
       - total_energy
       - total_energy_contributions
       - zero_point_energy
+  - filename: nwchem/geometry_relaxation.json
+    categories:
+      - final_structure
+      - nwchem
+      - total_energy
+      - total_energy_contributions
+      - variable-cell_relaxation
   - filename: nwchem/total_energy.json
     categories:
       - homo_energy
@@ -470,6 +482,9 @@ entities:
       - nwchem
       - total_energy
       - total_energy_contributions
+  - filename: python/custom_script.json
+    categories:
+      - python
   - filename: python/ml/classification_tail.json
     categories:
       - creates-predictions-csv-during-predict-phase
@@ -514,6 +529,9 @@ entities:
   - filename: shell/batch_espresso_pwscf.json
     categories:
       - shell
+  - filename: shell/custom_script.json
+    categories:
+      - shell
   - filename: shell/fetch_bulk_total_energy.json
     categories:
       - shell
@@ -539,6 +557,9 @@ entities:
     categories:
       - shell
   - filename: shell/utils/resolve_bulk_from_slab_by_bulk_id.json
+    categories:
+      - shell
+  - filename: shell/utils/resolve_elemental_materials.json
     categories:
       - shell
   - filename: vasp/band_gap.json
