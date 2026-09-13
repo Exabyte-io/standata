@@ -3,7 +3,7 @@
     "name": "Total energy - Q3",
     "subworkflows": [
         {
-            "_id": "149e68bf-d438-5084-8164-bcc1cadd72df",
+            "_id": "def1fa2c-6052-52ef-bd37-df300e931e73",
             "name": "Total Energy",
             "application": {
                 "build": "GNU",
@@ -22,8 +22,8 @@
                 "type": "dft",
                 "subtype": "gga",
                 "method": {
-                    "type": "unknown",
-                    "subtype": "unknown",
+                    "type": "pseudopotential",
+                    "subtype": "us",
                     "data": {}
                 },
                 "functional": "pbe"
@@ -121,7 +121,7 @@
             "status": "idle",
             "statusTrack": [],
             "tags": [],
-            "_id": "149e68bf-d438-5084-8164-bcc1cadd72df",
+            "_id": "def1fa2c-6052-52ef-bd37-df300e931e73",
             "flowchartId": "6059d61a-6a92-5657-9130-02208639aff8",
             "schemaVersion": "2022.8.16",
             "isDefault": false
